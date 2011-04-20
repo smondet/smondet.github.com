@@ -162,17 +162,17 @@ div.content {
     text-align: justify;
 }</style>
 <link rel="shortcut icon" href="http://seb.mondet.org/images/sm.ico">
-<title>Software</title>
+<title>Seb's Blog: Hack Of The Day: PDF Versions And Printers</title>
 </head>
 <body>
 <div class="sidepane">
 <h1>Sebastien Mondet</h1><br/>
 <b>Menu: </b><div class="p">
 <ul>
-  <li> <a href="./index.html">Home</a>  </li>
-<li> <a href="./publications.html">Publications</a>  </li>
-<li> <b>Software</b>  </li>
-<li> <a href="./blog/index.html">Blog</a> </li>
+  <li> <a href="../../index.html">Home</a>  </li>
+<li> <a href="../../publications.html">Publications</a>  </li>
+<li> <a href="../../software.html">Software</a>  </li>
+<li> <a href="../../blog/index.html">Blog</a> </li>
 </ul>
  </div>
 <br/>
@@ -180,24 +180,57 @@ div.content {
 <br/>
 <br/>
 <small><div class="p"> Site generated thanks to  <a href="http://martin.jambon.free.fr/camlmix/">camlmix</a>, <a href="http://sebib.forge.ocamlcore.org/">sebib</a>, and <a href="http://bracetax.berlios.de/">bracetax</a>. <br/>
- Updated on Wed, 20 Apr 2011  15:36:13  +0200. <br/>
+ Updated on Wed, 20 Apr 2011  15:36:15  +0200. <br/>
  <a href="http://seb.mondet.org">Sebastien Mondet</a> </small> </div>
 <br/>
 </div>
 <div class="content">
 <div class="p"></div>
-<h2 id="Pieces_Of_Software">Pieces Of Software</h2>
-<div class="p">   Among the few <i>acceptable</i> programming languages (ML, Haskell, Ada), <b><a href="http://caml.inria.fr">OCaml</a></b> is for me the best compromise between <b>safety, performance, and fun</b>. I have collected <a href="http://www.google.com/url?q=http://sites.google.com/site/smtmisc/ocaml_links">some links</a> about the Caml system, and made available some pieces of code:   <br/>
+<h2 id="Hack_Of_The_Day__PDF_Versions_And_Printers">Hack Of The Day: PDF Versions And Printers</h2>
+<div class="p"> <small> ➲&nbsp;&nbsp;<b>Date:</b> <i>Tue, 18 Apr 2011 15:25:42 +0200</i>; <b>Tags:</b> <tt>[<a href="../feed/hack_of_the_day.rss"><tt>hack_of_the_day</tt></a>; <a href="../feed/pdf.rss"><tt>pdf</tt></a>; <a href="../feed/printers.rss"><tt>printers</tt></a>]</tt>. </small><br/>
 <br/>
-   <a href="http://sebib.forge.ocamlcore.org/">Sebib</a>, i.e. &ldquo;S-Expressions for BIBliography&rdquo;, is a hackable <i>&ldquo;Bibliographic References Management System&rdquo;</i>. <br/>
- <br/>
-  <a href="http://bracetax.berlios.de/">Bracetax</a> is a simple and deterministic text-processing syntax for wikis and more. <br/>
-<br/>
-  <a href="http://code.google.com/p/yaboon/">YaBooN</a>, is Yet Another Bunch Of Ocaml Modules.  <br/>
-<br/>
-  <a href="http://code.google.com/p/locoseq/">locoseq</a> is (or <i>was</i>) a midi-sequencer designed for live performance (development stalled). <br/>
-<br/>
-  </div>
+             </div>
+<div class="p">  <b>The Problem:</b> <br/>
+ Your PDF file looks awsome on screen, but once you send it to your printer: 
+<ul>
+ <li> some UTF-8 characters are wrong, </li>
+<li> some vectorial drawings with transparency get wrong colors, or </li>
+<li> other figures get out of their bounding-boxes. </li>
+</ul>
+ I did a few experiments with a bunch of printers I have access to.  It seems that some of them simply do not handle the version 1.4 of the PDF <i>standard</i> (which is, 10 damn' years old, also the basis for the <a href="http://en.wikipedia.org/wiki/PDF/A">ISO 19005-1:2005</a> standard, and of course  the version used by PDFLaTeX, XeLaTeX, Inkscape&nbsp;&hellip;).  </div>
+<div class="p"> <b>The Solution:</b> <br/>
+ Just use <i>Ghostscript</i> to convert to PDF 1.2: <pre>
+gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.2 \
+  -dNOPAUSE -dQUIET -dBATCH
+  -sOutputFile=FILE_OUT.pdf FILE_IN.pdf
+</pre> Or, if you think you're going to need it often: <pre>
+pdfto12 () {
+    if [ $# -ne 2 ]; then
+        echo "usage: pdfto12 &lt;pdf-in&gt; &lt;pdf-out&gt;"
+        return
+    fi
+    gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.2  \
+       -dNOPAUSE -dQUIET -dBATCH -sOutputFile=$2 $1
+}
+</pre>  </div>
+<div class="p"><div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'sebmondetblog'; // required: replace example with your forum shortname
+
+    // The following are highly recommended additional parameters. Remove the slashes in front to use.
+    var disqus_identifier = 'hack-of-the-day-pdf-versions-and-printers';
+    var disqus_url = 'http://seb.mondet.org/./blog/post/hack-of-the-day-pdf-versions-and-printers.html';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a></div>
 
 <div id="pagefoot" />
 </div>

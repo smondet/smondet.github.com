@@ -162,17 +162,17 @@ div.content {
     text-align: justify;
 }</style>
 <link rel="shortcut icon" href="http://seb.mondet.org/images/sm.ico">
-<title>Software</title>
+<title>Seb's Blog: Anyweb, Document Source Code The Way You Like</title>
 </head>
 <body>
 <div class="sidepane">
 <h1>Sebastien Mondet</h1><br/>
 <b>Menu: </b><div class="p">
 <ul>
-  <li> <a href="./index.html">Home</a>  </li>
-<li> <a href="./publications.html">Publications</a>  </li>
-<li> <b>Software</b>  </li>
-<li> <a href="./blog/index.html">Blog</a> </li>
+  <li> <a href="../../index.html">Home</a>  </li>
+<li> <a href="../../publications.html">Publications</a>  </li>
+<li> <a href="../../software.html">Software</a>  </li>
+<li> <a href="../../blog/index.html">Blog</a> </li>
 </ul>
  </div>
 <br/>
@@ -180,24 +180,38 @@ div.content {
 <br/>
 <br/>
 <small><div class="p"> Site generated thanks to  <a href="http://martin.jambon.free.fr/camlmix/">camlmix</a>, <a href="http://sebib.forge.ocamlcore.org/">sebib</a>, and <a href="http://bracetax.berlios.de/">bracetax</a>. <br/>
- Updated on Wed, 20 Apr 2011  15:36:13  +0200. <br/>
+ Updated on Wed, 20 Apr 2011  15:36:15  +0200. <br/>
  <a href="http://seb.mondet.org">Sebastien Mondet</a> </small> </div>
 <br/>
 </div>
 <div class="content">
 <div class="p"></div>
-<h2 id="Pieces_Of_Software">Pieces Of Software</h2>
-<div class="p">   Among the few <i>acceptable</i> programming languages (ML, Haskell, Ada), <b><a href="http://caml.inria.fr">OCaml</a></b> is for me the best compromise between <b>safety, performance, and fun</b>. I have collected <a href="http://www.google.com/url?q=http://sites.google.com/site/smtmisc/ocaml_links">some links</a> about the Caml system, and made available some pieces of code:   <br/>
+<h2 id="Anyweb__Document_Source_Code_The_Way_You_Like">Anyweb, Document Source Code The Way You Like</h2>
+<div class="p"> <small> ➲&nbsp;&nbsp;<b>Date:</b> <i>Tue, 19 Apr 2011 21:26:42 +0200</i>; <b>Tags:</b> <tt>[<a href="../feed/hack_of_the_day.rss"><tt>hack_of_the_day</tt></a>; <a href="../feed/anyweb.rss"><tt>anyweb</tt></a>; <a href="../feed/coq.rss"><tt>coq</tt></a>; <a href="../feed/ocaml.rss"><tt>ocaml</tt></a>]</tt>. </small><br/>
 <br/>
-   <a href="http://sebib.forge.ocamlcore.org/">Sebib</a>, i.e. &ldquo;S-Expressions for BIBliography&rdquo;, is a hackable <i>&ldquo;Bibliographic References Management System&rdquo;</i>. <br/>
- <br/>
-  <a href="http://bracetax.berlios.de/">Bracetax</a> is a simple and deterministic text-processing syntax for wikis and more. <br/>
-<br/>
-  <a href="http://code.google.com/p/yaboon/">YaBooN</a>, is Yet Another Bunch Of Ocaml Modules.  <br/>
-<br/>
-  <a href="http://code.google.com/p/locoseq/">locoseq</a> is (or <i>was</i>) a midi-sequencer designed for live performance (development stalled). <br/>
-<br/>
-  </div>
+             </div>
+<div class="p">   I was playing with Adam Chlipala's &ldquo;<a href="http://adam.chlipala.net/cpdt/">CPDT</a>&rdquo; book and I wanted to take notes on some notations. I also wanted to do it in a <a href="http://en.wikipedia.org/wiki/Literate_programming"><i>Literate Programming</i></a> way: in a <tt>.v</tt> Coq file with  <a href="http://bracetax.berlios.de/">a familiar and practical syntax</a>&nbsp;&hellip; </div>
+<div class="p">  That's where  <a href="http://seb.mondet.org/anyweb/">Anyweb</a> comes into play. </div>
+<div class="p">  This one-day hack is a simple parser and printer which looks for special string-markers (like <tt>(*B</tt> and <tt>B*)</tt> in Coq or OCaml sources) and does <i>stuff</i> (like calling <tt>coqdoc</tt> or <tt>source-highlight</tt>) depending on where it is in the source. The transformer uses an automaton and a stack, so any kind of <i>recursive</i> embedding seems possible. </div>
+<div class="p">  The <a href="https://github.com/smondet/anyweb/blob/master/anyweb.ml">code</a> is <i>of course</i> self-documenting (<a href="http://seb.mondet.org/anyweb/">HTML</a>, or <a href="http://seb.mondet.org/anyweb/anyweb.pdf">PDF</a>). The bunch of notes on CPDT which motivated the hack is also <a href="https://github.com/smondet/anyweb/blob/master/subset_notes.v">available</a> (<a href="http://seb.mondet.org/anyweb/coq_example.html">HTML</a>, and <a href="http://seb.mondet.org/anyweb/coq_example.pdf">PDF</a>).  </div>
+<div class="p"><div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'sebmondetblog'; // required: replace example with your forum shortname
+
+    // The following are highly recommended additional parameters. Remove the slashes in front to use.
+    var disqus_identifier = 'anyweb-document-source-code-the-way-you-like';
+    var disqus_url = 'http://seb.mondet.org/./blog/post/anyweb-document-source-code-the-way-you-like.html';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a></div>
 
 <div id="pagefoot" />
 </div>
