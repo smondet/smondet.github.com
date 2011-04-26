@@ -4,13 +4,13 @@
     <title>Seb's Blog: RSS feed for all posts</title>
     <description></description>
     <link>http://seb.mondet.org/blog/</link>
-    <lastBuildDate>Tue, 26 Apr 2011  9:42:42  +0200</lastBuildDate>
-    <pubDate>Tue, 26 Apr 2011  9:42:42  +0200</pubDate>
+    <lastBuildDate>Tue, 26 Apr 2011  09:56:50  +0200</lastBuildDate>
+    <pubDate>Tue, 26 Apr 2011  09:56:50  +0200</pubDate>
     <item>
          <title>Hack Of The Day: PDF Versions And Printers</title>
          <description>Hack Of The Day: PDF Versions And Printers</description>
          <link>http://seb.mondet.org/blog/post/hack-of-the-day-pdf-versions-and-printers.html</link>
-         <guid>hack-of-the-day-pdf-versions-and-printers</guid>
+         <guid>http://seb.mondet.org/blog/post/hack-of-the-day-pdf-versions-and-printers.html</guid>
          <pubDate>Tue, 18 Apr 2011 15:25:42 +0200</pubDate>
      </item>
 
@@ -19,7 +19,7 @@
          <title>Anyweb, Document Source Code The Way You Like</title>
          <description>Anyweb, Document Source Code The Way You Like</description>
          <link>http://seb.mondet.org/blog/post/anyweb-document-source-code-the-way-you-like.html</link>
-         <guid>anyweb-document-source-code-the-way-you-like</guid>
+         <guid>http://seb.mondet.org/blog/post/anyweb-document-source-code-the-way-you-like.html</guid>
          <pubDate>Tue, 19 Apr 2011 21:26:42 +0200</pubDate>
      </item>
 
@@ -28,7 +28,7 @@
          <title>Third Post; New Blog Engine</title>
          <description>Third Post; New Blog Engine</description>
          <link>http://seb.mondet.org/blog/post/third-post-new-blog-engine.html</link>
-         <guid>third-post-new-blog-engine</guid>
+         <guid>http://seb.mondet.org/blog/post/third-post-new-blog-engine.html</guid>
          <pubDate>Tue, 26 Apr 2011 09:28:20 +0200</pubDate>
      </item>
 </channel>
