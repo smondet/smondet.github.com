@@ -197,6 +197,35 @@ ul, ol {
          margin: 0em;
          margin-left: 1em;
        }
+table.tablefigure {
+    margin-right:auto;
+    margin-left: auto;
+    border-collapse: collapse;
+    min-width: 80%;
+    margin-bottom: 1em;
+}
+caption.tablefigure {
+    caption-side:bottom;
+}
+div.figure:after, caption.tablefigure:after { content: " [" attr(id) "]"; }
+td, th {
+    padding: 0.4em;
+}
+img {
+    border: none;
+    padding-bottom: 0.5em;
+}div.figure, div.tablefigure {
+    text-align: center;
+    font-size:90%;
+    border: thin #959595 solid;
+    padding: 1ex;
+    margin: 1em;
+    width: 90%;
+    margin-left: 5%;
+    margin-right: 0em;
+    clear: both;
+
+}
 small.notebegin { counter-increment: footnote; }
 small.noteend:before {  content: counter(footnote) }
 small.note:before { content: counter(footnote) ": " }
@@ -226,7 +255,7 @@ div.sidepane {
     bottom: 2px;
 }
 div.content {
-max-width : 50em; left: 21.000000%; right: 0.5%; padding: 0.2em;
+max-width : 45em; left: 21.000000%; right: 0.5%; padding: 0.2em;
     top: 2px;
     position: absolute;
 }
@@ -316,7 +345,7 @@ dbw run path/to/Blog.brtx
 <br/>
 <br/>
 <small><div class="p"> Site generated thanks to  <a href="http://martin.jambon.free.fr/camlmix/">camlmix</a>, <a href="http://sebib.forge.ocamlcore.org/">sebib</a>, and <a href="http://bracetax.berlios.de/">bracetax</a>. <br/>
- Updated on Tue, 26 Apr 2011 10:08:06 +0200. <br/>
+ Updated on Wed, 27 Apr 2011 18:15:15 +0200. <br/>
  <a href="http://seb.mondet.org">Sebastien Mondet</a> </small> </div>
 <br/>
 </div>

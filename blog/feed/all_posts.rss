@@ -4,8 +4,8 @@
     <title>Seb's Blog: RSS feed for all posts</title>
     <description></description>
     <link>http://seb.mondet.org/blog/</link>
-    <lastBuildDate>Tue, 26 Apr 2011 10:08:06 +0200</lastBuildDate>
-    <pubDate>Tue, 26 Apr 2011 10:08:06 +0200</pubDate>
+    <lastBuildDate>Wed, 27 Apr 2011 18:15:15 +0200</lastBuildDate>
+    <pubDate>Wed, 27 Apr 2011 18:15:15 +0200</pubDate>
     <item>
          <title>Hack Of The Day: PDF Versions And Printers</title>
          <description>Hack Of The Day: PDF Versions And Printers</description>
@@ -30,6 +30,24 @@
          <link>http://seb.mondet.org/blog/post/third-post-new-blog-engine.html</link>
          <guid>http://seb.mondet.org/blog/post/third-post-new-blog-engine.html</guid>
          <pubDate>Tue, 26 Apr 2011 09:28:20 +0200</pubDate>
+     </item>
+
+
+    <item>
+         <title>Style Guides</title>
+         <description>Style Guides</description>
+         <link>http://seb.mondet.org/blog/post/english-writing-guides.html</link>
+         <guid>http://seb.mondet.org/blog/post/english-writing-guides.html</guid>
+         <pubDate>Wed, 27 Apr 2011 18:15:11 +0200</pubDate>
+     </item>
+
+
+    <item>
+         <title>Taking (MIDI) Notes With Your Guitar</title>
+         <description>Taking (MIDI) Notes With Your Guitar</description>
+         <link>http://seb.mondet.org/blog/post/taking-midi-notes.html</link>
+         <guid>http://seb.mondet.org/blog/post/taking-midi-notes.html</guid>
+         <pubDate>Wed, 27 Apr 2011 00:07:51 +0200</pubDate>
      </item>
 </channel>
 </rss>

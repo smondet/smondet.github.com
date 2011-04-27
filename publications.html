@@ -50,89 +50,113 @@ body {
    font-family: serif;
    text-align: left;
    font-size: 90%;
+
 }
  {
    font-family: serif;
    text-align: left;
    font-size: 90%;
+
 }
 div.header {
    text-align: center;
+
 }
 h1 {
    font-size: 200%;
    font-variant: small-caps;
+
 }
 div.authors {
    font-size: 110%;
+
 }
 div.subtitle {
-   font-size: 110%;   font-style: italic;
+   font-size: 110%;
+   font-style: italic;
 }
 h2 {
    font-size: 180%;
+
 }
 h3 {
    font-size: 150%;
+
 }
 h4 {
    font-size: 130%;
+
 }
 h5 {
    font-size: 108%;
+
 }
 a {
    text-decoration: underline thin;
 }
 tt,code,pre {
    font-family: monospace;
+
 }
 div.figure,div.tablefigure {
    font-size: 90%;
+
 }
 .content body {
    font-family: serif;
    text-align: justify;
    font-size: 100%;
+
 }
 .content  {
    font-family: serif;
    text-align: justify;
    font-size: 100%;
+
 }
 .content div.header {
    text-align: center;
+
 }
 .content h1 {
    font-size: 200%;
    font-variant: small-caps;
+
 }
 .content div.authors {
    font-size: 110%;
+
 }
 .content div.subtitle {
-   font-size: 110%;   font-style: italic;
+   font-size: 110%;
+   font-style: italic;
 }
 .content h2 {
    font-size: 180%;
+
 }
 .content h3 {
    font-size: 150%;
+
 }
 .content h4 {
    font-size: 130%;
+
 }
 .content h5 {
    font-size: 108%;
+
 }
 .content a {
    text-decoration: underline thin;
 }
 .content tt,code,pre {
    font-family: monospace;
+
 }
 .content div.figure,div.tablefigure {
    font-size: 90%;
+
 }
 div.header {
     text-align: center;
@@ -142,7 +166,8 @@ div.header {
     margin-bottom: 3em;
 }
 div.p {
-    padding-bottom: 0em;}
+    padding-bottom: 0em;
+}
 div.p + div.p { padding-top: 0.5em; }
 body {overflow: auto;}
 code,pre {overflow: auto}
@@ -172,6 +197,35 @@ ul, ol {
          margin: 0em;
          margin-left: 1em;
        }
+table.tablefigure {
+    margin-right:auto;
+    margin-left: auto;
+    border-collapse: collapse;
+    min-width: 80%;
+    margin-bottom: 1em;
+}
+caption.tablefigure {
+    caption-side:bottom;
+}
+div.figure:after, caption.tablefigure:after { content: " [" attr(id) "]"; }
+td, th {
+    padding: 0.4em;
+}
+img {
+    border: none;
+    padding-bottom: 0.5em;
+}div.figure, div.tablefigure {
+    text-align: center;
+    font-size:90%;
+    border: thin #959595 solid;
+    padding: 1ex;
+    margin: 1em;
+    width: 90%;
+    margin-left: 5%;
+    margin-right: 0em;
+    clear: both;
+
+}
 small.notebegin { counter-increment: footnote; }
 small.noteend:before {  content: counter(footnote) }
 small.note:before { content: counter(footnote) ": " }
@@ -189,7 +243,8 @@ small.note {
 }
 h2 { border: #B41D1D solid 2px; padding: 0.2em; }
 h3 { text-decoration: underline;}
-pre {    position: relative; left: 5%; width: 90%; clear: left;
+pre {
+    position: relative; left: 5%; width: 90%; clear: left;
 }
 div.sidepane {
   left: 0.5%; width: 19.000000%; padding: 0.5%;
@@ -200,14 +255,74 @@ div.sidepane {
     bottom: 2px;
 }
 div.content {
-max-width : 50em; left: 21.000000%; right: 0.5%; padding: 0.2em;
+max-width : 45em; left: 21.000000%; right: 0.5%; padding: 0.2em;
     top: 2px;
     position: absolute;
-}</style>
+}
+</style>
 <link rel="shortcut icon" href="http://seb.mondet.org/images/sm.ico">
 <title>Publications</title>
 </head>
 <body>
+<div class="content">
+<div class="p"></div>
+<h2 id="Publications_List">Publications List</h2>
+<div class="p"> <table  border="0"  ><td><i>Modeling Progressive Mesh Streaming: Does Data Dependency     Matter?</i><br/>
+<a href="http://www.comp.nus.edu.sg/~chengwe2/">Wei Cheng</a>, <a href="http://www.comp.nus.edu.sg/~ooiwt/">Wei Tsang Ooi</a>, <a href="http://seb.mondet.org">Sebastien Mondet</a>, <a href="http://morin.perso.enseeiht.fr/">Géraldine Morin</a>, and <a href="http://grigoras.perso.enseeiht.fr">Romulus Grigoras</a>.<br/>
+ ACM TOMCCAP, Vol. 7, Is. 2, 2011.  [<tt><a href="http://dx.doi.org/10.1145/1925101.1925105">DOI</a></tt>]<br/>
+ <br/>
+</td></table><table  border="0"  ><td><i>Resource-Aware Complex Event Processing for Mobile Ubiquitous     Environments.</i><br/>
+<a href="http://piotr.at.ifi.uio.no/">Piotr Kamisiński</a>, <a href="http://seb.mondet.org">Sebastien Mondet</a>, <a href="http://goebel.at.ifi.uio.no">Vera Goebel</a>, and <a href="http://plageman.at.ifi.uio.no">Thomas Plagemann</a>.<br/>
+ UbiComp'10; OPPORTUNITY Workshop, 2010.  [<tt><a href="http://www.wearable.ethz.ch/resources/UbicompWorkshop_OpportunisticUbiquitousSystems">URL</a></tt>]<br/>
+ <br/>
+</td></table><table  border="0"  ><td><i>Network-Aware Streaming of Partially Ordered Media.</i><br/>
+<a href="http://www.comp.nus.edu.sg/~chengwe2/">Wei Cheng</a>, <a href="http://seb.mondet.org">Sebastien Mondet</a>, <a href="http://www.comp.nus.edu.sg/~ooiwt/">Wei Tsang Ooi</a>, <a href="http://grigoras.perso.enseeiht.fr">Romulus Grigoras</a>, and <a href="http://morin.perso.enseeiht.fr/">Géraldine Morin</a>.<br/>
+ IEEE COMSOC MMTC E-letter Volume 5, Number 6, 2010.  [<tt><a href="http://www.comsoc.org/~mmc">URL</a></tt>, <tt><a href="http://committees.comsoc.org/mmc/e-news/E-Letter-November10.pdf">PDF</a></tt>]<br/>
+ <br/>
+</td></table><table  border="0"  ><td><a href="./images//doran09.jpg"><img src="./images//doran09_thumb200.jpg" width="100px"  alt="./images//doran09.jpg"/></a></td><td><i>A demonstration of MobiTree: progressive 3D tree models     streaming on mobile clients.</i><br/>
+<a href="http://vortex.enseeiht.fr/andradoran/">Andra Doran</a>, <a href="http://seb.mondet.org">Sebastien Mondet</a>, <a href="http://grigoras.perso.enseeiht.fr">Romulus Grigoras</a>, <a href="http://morin.perso.enseeiht.fr/">Géraldine Morin</a>, <a href="http://www.comp.nus.edu.sg/~ooiwt/">Wei Tsang Ooi</a>, and <a href="https://www-sop.inria.fr/virtualplants/personnel/Frederic.Boudon/boudon.php">Frédéric Boudon</a>.<br/>
+ ACM Multimedia (Technical Demonstration), 2009.  [<tt><a href="http://vortex.enseeiht.fr/andradoran/Doran_acmmm09.pdf">PDF</a></tt>, <tt><a href="http://doi.acm.org/10.1145/1631272.1631465">DOI</a></tt>]<br/>
+ <br/>
+</td></table><table  border="0"  ><td><a href="./images//tomccap09_firstpage.jpg"><img src="./images//tomccap09_firstpage_thumb200.jpg" width="100px"  alt="./images//tomccap09_firstpage.jpg"/></a></td><td><i>Compact and progressive plant models for streaming in     networked virtual environments.</i><br/>
+<a href="http://seb.mondet.org">Sebastien Mondet</a>, <a href="http://www.comp.nus.edu.sg/~chengwe2/">Wei Cheng</a>, <a href="http://morin.perso.enseeiht.fr/">Géraldine Morin</a>, <a href="http://grigoras.perso.enseeiht.fr">Romulus Grigoras</a>, <a href="https://www-sop.inria.fr/virtualplants/personnel/Frederic.Boudon/boudon.php">Frédéric Boudon</a>, and <a href="http://www.comp.nus.edu.sg/~ooiwt/">Wei Tsang Ooi</a>.<br/>
+ ACM TOMCCAP, Vol. 5, Is. 3, 2009.  [<tt><a href="http://doi.acm.org/10.1145/1556134.1556138">DOI</a></tt>]<br/>
+ <br/>
+</td></table><table  border="0"  ><td><a href="./images//smt_thesis_p1.jpg"><img src="./images//smt_thesis_p1_thumb200.jpg" width="100px"  alt="./images//smt_thesis_p1.jpg"/></a></td><td><i>Adaptive Modeling and Distribution of Large Natural Scenes.</i><br/>
+<a href="http://seb.mondet.org">Sebastien Mondet</a>.<br/>
+ PhD Thesis of the University of Toulouse, 2009.  [<tt><a href="http://vortex.enseeiht.fr/smthesis/">URL</a></tt>]<br/>
+  Defended on June 8, 2009;      <a href="http://ethesis.inp-toulouse.fr/view/prix/Prix_L=E9opold_Escande_2009.html">awarded</a> of the      <a href="http://seb.mondet.org/images/smthesis_award.JPG">Léopold Escande Price 2009</a>. <br/>
+</td></table><table  border="0"  ><td><i>On Streaming of Realistic 3D Models.</i><br/>
+<a href="http://seb.mondet.org">Sebastien Mondet</a>, <a href="http://www.comp.nus.edu.sg/~chengwe2/">Wei Cheng</a>, <a href="http://morin.perso.enseeiht.fr/">Géraldine Morin</a>, and <a href="http://grigoras.perso.enseeiht.fr">Romulus Grigoras</a>.<br/>
+ SinFra symposium, 2009. <br/>
+ <br/>
+</td></table><table  border="0"  ><td><a href="./images//streamingPlants_acm08.jpg"><img src="./images//streamingPlants_acm08_thumb200.jpg" width="100px"  alt="./images//streamingPlants_acm08.jpg"/></a></td><td><i>Streaming of Plants in Distributed Virtual Environments.</i><br/>
+<a href="http://seb.mondet.org">Sebastien Mondet</a>, <a href="http://www.comp.nus.edu.sg/~chengwe2/">Wei Cheng</a>, <a href="http://morin.perso.enseeiht.fr/">Géraldine Morin</a>, <a href="http://grigoras.perso.enseeiht.fr">Romulus Grigoras</a>, <a href="https://www-sop.inria.fr/virtualplants/personnel/Frederic.Boudon/boudon.php">Frédéric Boudon</a>, and <a href="http://www.comp.nus.edu.sg/~ooiwt/">Wei Tsang Ooi</a>.<br/>
+ 16th ACM international conference on Multimedia, 2008.  [<tt><a href="http://sebmondet.ifrance.com/mondet_streaming_plants_acmmm08.pdf">PDF</a></tt>, <tt><a href="http://doi.acm.org/10.1145/1459359.1459361">DOI</a></tt>]<br/>
+  <b><a href="http://www.flickr.com/photos/32347549@N03/3024535677/">Best Paper Award</a></b>. <br/>
+</td></table><table  border="0"  ><td><a href="./images//progMeshes_acm07.jpg"><img src="./images//progMeshes_acm07_thumb200.jpg" width="100px"  alt="./images//progMeshes_acm07.jpg"/></a></td><td><i>An Analytical Model for Progressive Mesh Streaming.</i><br/>
+<a href="http://www.comp.nus.edu.sg/~chengwe2/">Wei Cheng</a>, <a href="http://www.comp.nus.edu.sg/~ooiwt/">Wei Tsang Ooi</a>, <a href="http://seb.mondet.org">Sebastien Mondet</a>, <a href="http://morin.perso.enseeiht.fr/">Géraldine Morin</a>, and <a href="http://grigoras.perso.enseeiht.fr">Romulus Grigoras</a>.<br/>
+ 15th ACM international conference on Multimedia, 2007.  [<tt><a href="http://sebmondet.ifrance.com/cheng_analytical_model_acmmm07.pdf">PDF</a></tt>, <tt><a href="http://doi.acm.org/10.1145/1291233.1291399">DOI</a></tt>]<br/>
+ <br/>
+</td></table><table  border="0"  ><td><i>Compression progressive de modèles de plantes à base de     cylindres généralisés.</i><br/>
+<a href="http://seb.mondet.org">Sebastien Mondet</a>, <a href="https://www-sop.inria.fr/virtualplants/personnel/Frederic.Boudon/boudon.php">Frédéric Boudon</a>, Jean-Christophe Hoelt, <a href="http://morin.perso.enseeiht.fr/">Géraldine Morin</a>, <a href="http://grigoras.perso.enseeiht.fr">Romulus Grigoras</a>, Christophe Pradal, and <a href="http://www.irit.fr/~Mathias.Paulin/">Mathias Paulin</a>.<br/>
+ AFIG, 2007 (<i>in French</i>). <br/>
+ <br/>
+</td></table><table  border="0"  ><td><i>Optimized Box-Trees For Server-side Viewpoint Culling On     Large 3D Scenes.</i><br/>
+<a href="http://seb.mondet.org">Sebastien Mondet</a>, <a href="http://morin.perso.enseeiht.fr/">Géraldine Morin</a>, and <a href="http://grigoras.perso.enseeiht.fr">Romulus Grigoras</a>.<br/>
+ GTMG, 2007. <br/>
+ <br/>
+</td></table><table  border="0"  ><td><i>Mise en ligne de modèles 3D echelonables basés points.</i><br/>
+<a href="http://seb.mondet.org">Sebastien Mondet</a>, <a href="http://morin.perso.enseeiht.fr/">Géraldine Morin</a>, and <a href="http://grigoras.perso.enseeiht.fr">Romulus Grigoras</a>.<br/>
+ AFIG, 2005 (<i>in French</i>).  [<tt><a href="http://vortex.enseeiht.fr/papers/MondetMorinGrigoras_AFIG2005.pdf">PDF</a></tt>]<br/>
+ <br/>
+</td></table><table  border="0"  ><td><a href="./images//smtmaster.jpg"><img src="./images//smtmaster_thumb200.jpg" width="100px"  alt="./images//smtmaster.jpg"/></a></td><td><i>Mise en ligne de modèles 3D echelonables basés points.</i><br/>
+<a href="http://seb.mondet.org">Sebastien Mondet</a>.<br/>
+ Master Thesis of the INP Toulouse, 2005 (<i>in French</i>).  [<tt><a href="http://vortex.enseeiht.fr/papers/RapportMaster_SebMONDET.pdf">PDF</a></tt>]<br/>
+ <br/>
+</td></table></div>
+
+<div id="pagefoot" />
+</div>
 <div class="sidepane">
 <h1>Sebastien Mondet</h1><br/>
 <b>Menu: </b><div class="p">
@@ -222,68 +337,10 @@ max-width : 50em; left: 21.000000%; right: 0.5%; padding: 0.2em;
 <br/>
 <br/>
 <br/>
+<br/>
 <small><div class="p"> Site generated thanks to  <a href="http://martin.jambon.free.fr/camlmix/">camlmix</a>, <a href="http://sebib.forge.ocamlcore.org/">sebib</a>, and <a href="http://bracetax.berlios.de/">bracetax</a>. <br/>
- Updated on Thu, 21 Apr 2011  11:38:54  +0200. <br/>
+ Updated on Wed, 27 Apr 2011 14:26:35 +0200. <br/>
  <a href="http://seb.mondet.org">Sebastien Mondet</a> </small> </div>
 <br/>
-</div>
-<div class="content">
-<div class="p"></div>
-<h2 id="Publications_List">Publications List</h2>
-<div class="p"> <table class="tablefigure"  border="0"  ><td></td><td><i>Modeling Progressive Mesh Streaming: Does Data Dependency     Matter?</i><br/>
-<a href="http://www.comp.nus.edu.sg/~chengwe2/">Wei Cheng</a>, <a href="http://www.comp.nus.edu.sg/~ooiwt/">Wei Tsang Ooi</a>, <a href="http://seb.mondet.org">Sebastien Mondet</a>, <a href="http://morin.perso.enseeiht.fr/">Géraldine Morin</a>, and <a href="http://grigoras.perso.enseeiht.fr">Romulus Grigoras</a>.<br/>
- ACM TOMCCAP, Vol. 7, Is. 2, 2011.  [<tt><a href="http://dx.doi.org/10.1145/1925101.1925105">DOI</a></tt>]<br/>
- <br/>
-</td></table><table class="tablefigure"  border="0"  ><td></td><td><i>Resource-Aware Complex Event Processing for Mobile Ubiquitous     Environments.</i><br/>
-<a href="http://piotr.at.ifi.uio.no/">Piotr Kamisiński</a>, <a href="http://seb.mondet.org">Sebastien Mondet</a>, <a href="http://goebel.at.ifi.uio.no">Vera Goebel</a>, and <a href="http://plageman.at.ifi.uio.no">Thomas Plagemann</a>.<br/>
- UbiComp'10; OPPORTUNITY Workshop, 2010.  [<tt><a href="http://www.wearable.ethz.ch/resources/UbicompWorkshop_OpportunisticUbiquitousSystems">URL</a></tt>]<br/>
- <br/>
-</td></table><table class="tablefigure"  border="0"  ><td></td><td><i>Network-Aware Streaming of Partially Ordered Media.</i><br/>
-<a href="http://www.comp.nus.edu.sg/~chengwe2/">Wei Cheng</a>, <a href="http://seb.mondet.org">Sebastien Mondet</a>, <a href="http://www.comp.nus.edu.sg/~ooiwt/">Wei Tsang Ooi</a>, <a href="http://grigoras.perso.enseeiht.fr">Romulus Grigoras</a>, and <a href="http://morin.perso.enseeiht.fr/">Géraldine Morin</a>.<br/>
- IEEE COMSOC MMTC E-letter Volume 5, Number 6, 2010.  [<tt><a href="http://www.comsoc.org/~mmc">URL</a></tt>, <tt><a href="http://committees.comsoc.org/mmc/e-news/E-Letter-November10.pdf">PDF</a></tt>]<br/>
- <br/>
-</td></table><table class="tablefigure"  border="0"  ><td><a href="./images//doran09.jpg"><img src="./images//doran09_thumb200.jpg" width="100px"  alt="./images//doran09.jpg"/></a></td><td><i>A demonstration of MobiTree: progressive 3D tree models     streaming on mobile clients.</i><br/>
-<a href="http://vortex.enseeiht.fr/andradoran/">Andra Doran</a>, <a href="http://seb.mondet.org">Sebastien Mondet</a>, <a href="http://grigoras.perso.enseeiht.fr">Romulus Grigoras</a>, <a href="http://morin.perso.enseeiht.fr/">Géraldine Morin</a>, <a href="http://www.comp.nus.edu.sg/~ooiwt/">Wei Tsang Ooi</a>, and <a href="https://www-sop.inria.fr/virtualplants/personnel/Frederic.Boudon/boudon.php">Frédéric Boudon</a>.<br/>
- ACM Multimedia (Technical Demonstration), 2009.  [<tt><a href="http://vortex.enseeiht.fr/andradoran/Doran_acmmm09.pdf">PDF</a></tt>, <tt><a href="http://doi.acm.org/10.1145/1631272.1631465">DOI</a></tt>]<br/>
- <br/>
-</td></table><table class="tablefigure"  border="0"  ><td><a href="./images//tomccap09_firstpage.jpg"><img src="./images//tomccap09_firstpage_thumb200.jpg" width="100px"  alt="./images//tomccap09_firstpage.jpg"/></a></td><td><i>Compact and progressive plant models for streaming in     networked virtual environments.</i><br/>
-<a href="http://seb.mondet.org">Sebastien Mondet</a>, <a href="http://www.comp.nus.edu.sg/~chengwe2/">Wei Cheng</a>, <a href="http://morin.perso.enseeiht.fr/">Géraldine Morin</a>, <a href="http://grigoras.perso.enseeiht.fr">Romulus Grigoras</a>, <a href="https://www-sop.inria.fr/virtualplants/personnel/Frederic.Boudon/boudon.php">Frédéric Boudon</a>, and <a href="http://www.comp.nus.edu.sg/~ooiwt/">Wei Tsang Ooi</a>.<br/>
- ACM TOMCCAP, Vol. 5, Is. 3, 2009.  [<tt><a href="http://doi.acm.org/10.1145/1556134.1556138">DOI</a></tt>]<br/>
- <br/>
-</td></table><table class="tablefigure"  border="0"  ><td><a href="./images//smt_thesis_p1.jpg"><img src="./images//smt_thesis_p1_thumb200.jpg" width="100px"  alt="./images//smt_thesis_p1.jpg"/></a></td><td><i>Adaptive Modeling and Distribution of Large Natural Scenes.</i><br/>
-<a href="http://seb.mondet.org">Sebastien Mondet</a>.<br/>
- PhD Thesis of the University of Toulouse, 2009.  [<tt><a href="http://vortex.enseeiht.fr/smthesis/">URL</a></tt>]<br/>
-  Defended on June 8, 2009;      <a href="http://ethesis.inp-toulouse.fr/view/prix/Prix_L=E9opold_Escande_2009.html">awarded</a> of the      <a href="http://seb.mondet.org/images/smthesis_award.JPG">Léopold Escande Price 2009</a>. <br/>
-</td></table><table class="tablefigure"  border="0"  ><td></td><td><i>On Streaming of Realistic 3D Models.</i><br/>
-<a href="http://seb.mondet.org">Sebastien Mondet</a>, <a href="http://www.comp.nus.edu.sg/~chengwe2/">Wei Cheng</a>, <a href="http://morin.perso.enseeiht.fr/">Géraldine Morin</a>, and <a href="http://grigoras.perso.enseeiht.fr">Romulus Grigoras</a>.<br/>
- SinFra symposium, 2009. <br/>
- <br/>
-</td></table><table class="tablefigure"  border="0"  ><td><a href="./images//streamingPlants_acm08.jpg"><img src="./images//streamingPlants_acm08_thumb200.jpg" width="100px"  alt="./images//streamingPlants_acm08.jpg"/></a></td><td><i>Streaming of Plants in Distributed Virtual Environments.</i><br/>
-<a href="http://seb.mondet.org">Sebastien Mondet</a>, <a href="http://www.comp.nus.edu.sg/~chengwe2/">Wei Cheng</a>, <a href="http://morin.perso.enseeiht.fr/">Géraldine Morin</a>, <a href="http://grigoras.perso.enseeiht.fr">Romulus Grigoras</a>, <a href="https://www-sop.inria.fr/virtualplants/personnel/Frederic.Boudon/boudon.php">Frédéric Boudon</a>, and <a href="http://www.comp.nus.edu.sg/~ooiwt/">Wei Tsang Ooi</a>.<br/>
- 16th ACM international conference on Multimedia, 2008.  [<tt><a href="http://sebmondet.ifrance.com/mondet_streaming_plants_acmmm08.pdf">PDF</a></tt>, <tt><a href="http://doi.acm.org/10.1145/1459359.1459361">DOI</a></tt>]<br/>
-  <b><a href="http://www.flickr.com/photos/32347549@N03/3024535677/">Best Paper Award</a></b>. <br/>
-</td></table><table class="tablefigure"  border="0"  ><td><a href="./images//progMeshes_acm07.jpg"><img src="./images//progMeshes_acm07_thumb200.jpg" width="100px"  alt="./images//progMeshes_acm07.jpg"/></a></td><td><i>An Analytical Model for Progressive Mesh Streaming.</i><br/>
-<a href="http://www.comp.nus.edu.sg/~chengwe2/">Wei Cheng</a>, <a href="http://www.comp.nus.edu.sg/~ooiwt/">Wei Tsang Ooi</a>, <a href="http://seb.mondet.org">Sebastien Mondet</a>, <a href="http://morin.perso.enseeiht.fr/">Géraldine Morin</a>, and <a href="http://grigoras.perso.enseeiht.fr">Romulus Grigoras</a>.<br/>
- 15th ACM international conference on Multimedia, 2007.  [<tt><a href="http://sebmondet.ifrance.com/cheng_analytical_model_acmmm07.pdf">PDF</a></tt>, <tt><a href="http://doi.acm.org/10.1145/1291233.1291399">DOI</a></tt>]<br/>
- <br/>
-</td></table><table class="tablefigure"  border="0"  ><td></td><td><i>Compression progressive de modèles de plantes à base de     cylindres généralisés.</i><br/>
-<a href="http://seb.mondet.org">Sebastien Mondet</a>, <a href="https://www-sop.inria.fr/virtualplants/personnel/Frederic.Boudon/boudon.php">Frédéric Boudon</a>, Jean-Christophe Hoelt, <a href="http://morin.perso.enseeiht.fr/">Géraldine Morin</a>, <a href="http://grigoras.perso.enseeiht.fr">Romulus Grigoras</a>, Christophe Pradal, and <a href="http://www.irit.fr/~Mathias.Paulin/">Mathias Paulin</a>.<br/>
- AFIG, 2007 (<i>in French</i>). <br/>
- <br/>
-</td></table><table class="tablefigure"  border="0"  ><td></td><td><i>Optimized Box-Trees For Server-side Viewpoint Culling On     Large 3D Scenes.</i><br/>
-<a href="http://seb.mondet.org">Sebastien Mondet</a>, <a href="http://morin.perso.enseeiht.fr/">Géraldine Morin</a>, and <a href="http://grigoras.perso.enseeiht.fr">Romulus Grigoras</a>.<br/>
- GTMG, 2007. <br/>
- <br/>
-</td></table><table class="tablefigure"  border="0"  ><td></td><td><i>Mise en ligne de modèles 3D echelonables basés points.</i><br/>
-<a href="http://seb.mondet.org">Sebastien Mondet</a>, <a href="http://morin.perso.enseeiht.fr/">Géraldine Morin</a>, and <a href="http://grigoras.perso.enseeiht.fr">Romulus Grigoras</a>.<br/>
- AFIG, 2005 (<i>in French</i>).  [<tt><a href="http://vortex.enseeiht.fr/papers/MondetMorinGrigoras_AFIG2005.pdf">PDF</a></tt>]<br/>
- <br/>
-</td></table><table class="tablefigure"  border="0"  ><td><a href="./images//smtmaster.jpg"><img src="./images//smtmaster_thumb200.jpg" width="100px"  alt="./images//smtmaster.jpg"/></a></td><td><i>Mise en ligne de modèles 3D echelonables basés points.</i><br/>
-<a href="http://seb.mondet.org">Sebastien Mondet</a>.<br/>
- Master Thesis of the INP Toulouse, 2005 (<i>in French</i>).  [<tt><a href="http://vortex.enseeiht.fr/papers/RapportMaster_SebMONDET.pdf">PDF</a></tt>]<br/>
- <br/>
-</td></table></div>
-
-<div id="pagefoot" />
 </div>
 </body></html>

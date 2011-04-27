@@ -50,89 +50,113 @@ body {
    font-family: serif;
    text-align: left;
    font-size: 90%;
+
 }
  {
    font-family: serif;
    text-align: left;
    font-size: 90%;
+
 }
 div.header {
    text-align: center;
+
 }
 h1 {
    font-size: 200%;
    font-variant: small-caps;
+
 }
 div.authors {
    font-size: 110%;
+
 }
 div.subtitle {
-   font-size: 110%;   font-style: italic;
+   font-size: 110%;
+   font-style: italic;
 }
 h2 {
    font-size: 180%;
+
 }
 h3 {
    font-size: 150%;
+
 }
 h4 {
    font-size: 130%;
+
 }
 h5 {
    font-size: 108%;
+
 }
 a {
    text-decoration: underline thin;
 }
 tt,code,pre {
    font-family: monospace;
+
 }
 div.figure,div.tablefigure {
    font-size: 90%;
+
 }
 .content body {
    font-family: serif;
    text-align: justify;
    font-size: 100%;
+
 }
 .content  {
    font-family: serif;
    text-align: justify;
    font-size: 100%;
+
 }
 .content div.header {
    text-align: center;
+
 }
 .content h1 {
    font-size: 200%;
    font-variant: small-caps;
+
 }
 .content div.authors {
    font-size: 110%;
+
 }
 .content div.subtitle {
-   font-size: 110%;   font-style: italic;
+   font-size: 110%;
+   font-style: italic;
 }
 .content h2 {
    font-size: 180%;
+
 }
 .content h3 {
    font-size: 150%;
+
 }
 .content h4 {
    font-size: 130%;
+
 }
 .content h5 {
    font-size: 108%;
+
 }
 .content a {
    text-decoration: underline thin;
 }
 .content tt,code,pre {
    font-family: monospace;
+
 }
 .content div.figure,div.tablefigure {
    font-size: 90%;
+
 }
 div.header {
     text-align: center;
@@ -142,7 +166,8 @@ div.header {
     margin-bottom: 3em;
 }
 div.p {
-    padding-bottom: 0em;}
+    padding-bottom: 0em;
+}
 div.p + div.p { padding-top: 0.5em; }
 body {overflow: auto;}
 code,pre {overflow: auto}
@@ -172,6 +197,35 @@ ul, ol {
          margin: 0em;
          margin-left: 1em;
        }
+table.tablefigure {
+    margin-right:auto;
+    margin-left: auto;
+    border-collapse: collapse;
+    min-width: 80%;
+    margin-bottom: 1em;
+}
+caption.tablefigure {
+    caption-side:bottom;
+}
+div.figure:after, caption.tablefigure:after { content: " [" attr(id) "]"; }
+td, th {
+    padding: 0.4em;
+}
+img {
+    border: none;
+    padding-bottom: 0.5em;
+}div.figure, div.tablefigure {
+    text-align: center;
+    font-size:90%;
+    border: thin #959595 solid;
+    padding: 1ex;
+    margin: 1em;
+    width: 90%;
+    margin-left: 5%;
+    margin-right: 0em;
+    clear: both;
+
+}
 small.notebegin { counter-increment: footnote; }
 small.noteend:before {  content: counter(footnote) }
 small.note:before { content: counter(footnote) ": " }
@@ -189,7 +243,8 @@ small.note {
 }
 h2 { border: #B41D1D solid 2px; padding: 0.2em; }
 h3 { text-decoration: underline;}
-pre {    position: relative; left: 5%; width: 90%; clear: left;
+pre {
+    position: relative; left: 5%; width: 90%; clear: left;
 }
 div.sidepane {
   left: 0.5%; width: 19.000000%; padding: 0.5%;
@@ -200,14 +255,28 @@ div.sidepane {
     bottom: 2px;
 }
 div.content {
-max-width : 50em; left: 21.000000%; right: 0.5%; padding: 0.2em;
+max-width : 45em; left: 21.000000%; right: 0.5%; padding: 0.2em;
     top: 2px;
     position: absolute;
-}</style>
+}
+</style>
 <link rel="shortcut icon" href="http://seb.mondet.org/images/sm.ico">
 <title>Sebastien Mondet</title>
 </head>
 <body>
+<div class="content">
+<div class="p"></div>
+<h2 id="Presentation">Presentation</h2>
+<div class="p"> <table  border="0"  ><td><a href="./images//ganache_seb_01.jpg"><img src="./images//ganache_seb_01_thumb300.jpg" width="210px"  alt="./images//ganache_seb_01.jpg"/></a></td><td>  I'm Sebastien MONDET, a.k.a. Sebastian Mondet Yañez. <br/>
+<br/>
+ After a PhD at the <a href="http://www.univ-toulouse.fr/">University of Toulouse</a>, I'm currently doing a <a href="http://en.wikipedia.org/wiki/Postdoctoral_research">post-doc</a> in the <a href="http://www.ifi.uio.no/research/groups/dmms/">DMMS group</a> of the <a href="http://www.uio.no/english/">University of Oslo</a>. <br/>
+<br/>
+ Here is my <b><a href="./CV_SebastienMONDET.pdf">CV&nbsp;/&nbsp;Resume</a></b>. <br/>
+<br/>
+ Contact: <tt>seb <i>&lt;at&gt;</i> mondet.org</tt>.  </td></table></div>
+
+<div id="pagefoot" />
+</div>
 <div class="sidepane">
 <h1>Sebastien Mondet</h1><br/>
 <b>Menu: </b><div class="p">
@@ -222,22 +291,10 @@ max-width : 50em; left: 21.000000%; right: 0.5%; padding: 0.2em;
 <br/>
 <br/>
 <br/>
+<br/>
 <small><div class="p"> Site generated thanks to  <a href="http://martin.jambon.free.fr/camlmix/">camlmix</a>, <a href="http://sebib.forge.ocamlcore.org/">sebib</a>, and <a href="http://bracetax.berlios.de/">bracetax</a>. <br/>
- Updated on Thu, 21 Apr 2011  11:38:54  +0200. <br/>
+ Updated on Wed, 27 Apr 2011 14:26:35 +0200. <br/>
  <a href="http://seb.mondet.org">Sebastien Mondet</a> </small> </div>
 <br/>
-</div>
-<div class="content">
-<div class="p"></div>
-<h2 id="Presentation">Presentation</h2>
-<div class="p"> <table class="tablefigure"  border="0"  ><td><a href="./images//ganache_seb_01.jpg"><img src="./images//ganache_seb_01_thumb300.jpg" width="210px"  alt="./images//ganache_seb_01.jpg"/></a></td><td>  I'm Sebastien MONDET, a.k.a. Sebastian Mondet Yañez. <br/>
-<br/>
- After a PhD at the <a href="http://www.univ-toulouse.fr/">University of Toulouse</a>, I'm currently doing a <a href="http://en.wikipedia.org/wiki/Postdoctoral_research">post-doc</a> in the <a href="http://www.ifi.uio.no/research/groups/dmms/">DMMS group</a> of the <a href="http://www.uio.no/english/">University of Oslo</a>. <br/>
-<br/>
- Here is my <b><a href="./CV_SebastienMONDET.pdf">CV&nbsp;/&nbsp;Resume</a></b>. <br/>
-<br/>
- Contact: <tt>seb <i>&lt;at&gt;</i> mondet.org</tt>.  </td></table></div>
-
-<div id="pagefoot" />
 </div>
 </body></html>
