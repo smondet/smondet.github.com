@@ -262,38 +262,45 @@ max-width : 45em; left: 21.000000%; right: 0.5%; padding: 0.2em;
 </style>
 <link rel="shortcut icon" href="http://seb.mondet.org/images/sm.ico">
 <link rel="alternate" type="application/rss+xml" title="RSS" href="http://seb.mondet.org/blog/feed/all_posts.rss">
-<title>Seb's Blog: Hack Of The Day: PDF Versions And Printers</title>
+<title>Seb's Blog: Taking (MIDI) Notes With Your Guitar</title>
 </head>
 <body>
 <div class="content">
 <div class="p"></div>
-<h2 id="Hack_Of_The_Day__PDF_Versions_And_Printers">Hack Of The Day: PDF Versions And Printers</h2>
-<div class="p"> <small> ➲&nbsp;&nbsp;<b>Date:</b> <i>Mon, 18 Apr 2011 15:25:42 +0200</i>; <b>Tags:</b> <tt>[<a href="../feed/hack_of_the_day.rss"><tt>hack_of_the_day</tt></a>; <a href="../feed/pdf.rss"><tt>pdf</tt></a>; <a href="../feed/printers.rss"><tt>printers</tt></a>]</tt>. </small><br/>
+<h2 id="Taking__MIDI__Notes_With_Your_Guitar">Taking (MIDI) Notes With Your Guitar</h2>
+<div class="p"> <small> ➲&nbsp;&nbsp;<b>Date:</b> <i>Fri, 29 Apr 2011 11:34:41 +0200</i>; <b>Tags:</b> <tt>[<a href="../feed/hack_of_the_day.rss"><tt>hack_of_the_day</tt></a>; <a href="../feed/linux-audio.rss"><tt>linux-audio</tt></a>]</tt>. </small><br/>
 <br/>
              </div>
-<div class="p">  <b>The Problem:</b> <br/>
- Your PDF file looks awsome on screen, but once you send it to your printer: 
+<div class="p">  I always thought it required a lot of signal processing black magic and many hours spent setting up mysterious knobs to get the conversion of any piece of sound to an <i>acceptable</i> stream of MIDI events. </div>
+<div class="p">  Well&nbsp;&hellip; I guess I was right&nbsp;&hellip; but, if we relax the constraint on the meaning of &lsquo;<i>acceptable</i>&rsquo;, we can maybe work something useful out. </div>
+<div class="p">  Actually, we can  quite easily use a guitar to <i>&lsquo;take notes&rsquo;</i> of some piece of melody. Indeed, I just discovered <a href="http://rakarrack.sourceforge.net/">Rakarrack</a> which has an extremely simple Guitar-to-MIDI converter. From there, the steps are easy (all software used here is in Debian and Ubuntu's APT): 
 <ul>
- <li> some UTF-8 characters are wrong, </li>
-<li> some vectorial drawings with transparency get wrong colors, or </li>
-<li> other figures get out of their bounding-boxes. </li>
+ <li> connect your guitar to Rakarrack (for example using <a href="http://qjackctl.sourceforge.net">QJackCtl</a> in the figure&nbsp;<a href="#img:audio_connections">img:audio_connections</a>); </li>
+<li> connect Rakarrack's MIDI output to a MIDI recorder (I used <a href="http://www.rosegardenmusic.com">Rosegarden</a>), c.f. the figure&nbsp;<a href="#img:midi_connections">img:midi_connections</a>; </li>
+<li> <i>push</i> Rakarrack's settings <i>to eleven</i> as in the figure&nbsp;<a href="#img:rakarrack_midi">img:rakarrack_midi</a>; </li>
+<li> press record in Rosegarden and try to play. </li>
 </ul>
- I did a few experiments with a bunch of printers I have access to.  It seems that some of them simply do not handle the version 1.4 of the PDF <i>standard</i> (which is, 10 damn' years old, also the basis for the <a href="http://en.wikipedia.org/wiki/PDF/A">ISO 19005-1:2005</a> standard, and of course  the version used by PDFLaTeX, XeLaTeX, Inkscape&nbsp;&hellip;).  </div>
-<div class="p"> <b>The Solution:</b> <br/>
- Just use <i>Ghostscript</i> to convert to PDF 1.2: <pre>
-gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.2 \
-  -dNOPAUSE -dQUIET -dBATCH
-  -sOutputFile=FILE_OUT.pdf FILE_IN.pdf
-</pre> Or, if you think you're going to need it often: <pre>
-pdfto12 () {
-    if [ $# -ne 2 ]; then
-        echo "usage: pdfto12 &lt;pdf-in&gt; &lt;pdf-out&gt;"
-        return
-    fi
-    gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.2  \
-       -dNOPAUSE -dQUIET -dBATCH -sOutputFile=$2 $1
-}
-</pre>  </div>
+ One can only play a single note at a time, <i>strictly</i>, and the audio-to-MIDI conversion adds <i>a lot</i> of random delay. But after a few attempts, it is possible to <i>take notes</i>. Maybe the reader can recognise a piece of the most famous Norwegian melody in the figure <a href="#img:rosegarden">img:rosegarden</a>.  
+<div class="figure" id="img:audio_connections" >
+  <a href="https://lh5.googleusercontent.com/_50sOZh_gXI8/TbdBWMbNliI/AAAAAAAACEo/ilkr6Kgg1G4/s400/audio_connections.png">
+    <img src="https://lh5.googleusercontent.com/_50sOZh_gXI8/TbdBWMbNliI/AAAAAAAACEo/ilkr6Kgg1G4/s400/audio_connections.png" width="60%" id="img:audio_connections"  alt="https://lh5.googleusercontent.com/_50sOZh_gXI8/TbdBWMbNliI/AAAAAAAACEo/ilkr6Kgg1G4/s400/audio_connections.png"/>
+  </a><br/>
+The Audio Connections In QJackCtl</div>  
+<div class="figure" id="img:midi_connections" >
+  <a href="https://lh5.googleusercontent.com/_50sOZh_gXI8/TbdBWAqhgoI/AAAAAAAACEs/dIxWdGCGvFw/s400/midi_connections.png">
+    <img src="https://lh5.googleusercontent.com/_50sOZh_gXI8/TbdBWAqhgoI/AAAAAAAACEs/dIxWdGCGvFw/s400/midi_connections.png" width="60%" id="img:midi_connections"  alt="https://lh5.googleusercontent.com/_50sOZh_gXI8/TbdBWAqhgoI/AAAAAAAACEs/dIxWdGCGvFw/s400/midi_connections.png"/>
+  </a><br/>
+The (Alsa) MIDI Connections In QJackCtl</div>  
+<div class="figure" id="img:rakarrack_midi" >
+  <a href="https://lh4.googleusercontent.com/_50sOZh_gXI8/Tbc1czZpyXI/AAAAAAAACEM/JjyckjkfZvM/s800/rakarrack.png">
+    <img src="https://lh4.googleusercontent.com/_50sOZh_gXI8/Tbc1czZpyXI/AAAAAAAACEM/JjyckjkfZvM/s800/rakarrack.png" width="40%" id="img:rakarrack_midi"  alt="https://lh4.googleusercontent.com/_50sOZh_gXI8/Tbc1czZpyXI/AAAAAAAACEM/JjyckjkfZvM/s800/rakarrack.png"/>
+  </a><br/>
+Settings For Rakarrack</div>  
+<div class="figure" id="img:rosegarden" >
+  <a href="https://lh5.googleusercontent.com/_50sOZh_gXI8/Tbc1dYakv5I/AAAAAAAACEQ/oHOkZKz10yU/s400/rosegarden_part.png">
+    <img src="https://lh5.googleusercontent.com/_50sOZh_gXI8/Tbc1dYakv5I/AAAAAAAACEQ/oHOkZKz10yU/s400/rosegarden_part.png" width="60%" id="img:rosegarden"  alt="https://lh5.googleusercontent.com/_50sOZh_gXI8/Tbc1dYakv5I/AAAAAAAACEQ/oHOkZKz10yU/s400/rosegarden_part.png"/>
+  </a><br/>
+What We Can Get In Rosegarden</div>  </div>
 <div class="p"><div id="disqus_thread"></div>
   <script type="text/javascript">
       var disqus_shortname = 'sebmondetblog'; 
@@ -301,8 +308,8 @@ pdfto12 () {
   
       // The following are highly recommended additional
       // parameters. Remove the slashes in front to use.
-      var disqus_identifier = 'hack-of-the-day-pdf-versions-and-printers';
-      var disqus_url = 'http://seb.mondet.org/./blog/post/hack-of-the-day-pdf-versions-and-printers.html';
+      var disqus_identifier = 'taking-midi-notes';
+      var disqus_url = 'http://seb.mondet.org/./blog/post/taking-midi-notes.html';
   
       /* * * DON'T EDIT BELOW THIS LINE * * */
       (function() {

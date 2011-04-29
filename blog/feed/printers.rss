@@ -4,11 +4,34 @@
     <title>Seb's Blog: RSS feed for tag: printers</title>
     <description></description>
     <link>http://seb.mondet.org/blog/</link>
-    <lastBuildDate>Wed, 27 Apr 2011 18:18:07 +0200</lastBuildDate>
-    <pubDate>Wed, 27 Apr 2011 18:18:07 +0200</pubDate>
+    <lastBuildDate>Fri, 29 Apr 2011 11:36:46 +0200</lastBuildDate>
+    <pubDate>Fri, 29 Apr 2011 11:36:46 +0200</pubDate>
     <item>
          <title>Hack Of The Day: PDF Versions And Printers</title>
-         <description>Hack Of The Day: PDF Versions And Printers</description>
+         <description>&lt;div class="p"&gt;&lt;b&gt;The Problem:&lt;/b&gt; &lt;br/&gt;
+ Your PDF file looks awsome on screen, but once you send it to your printer: 
+&lt;ul&gt;
+ &lt;li&gt; some UTF-8 characters are wrong, &lt;/li&gt;
+&lt;li&gt; some vectorial drawings with transparency get wrong colors, or &lt;/li&gt;
+&lt;li&gt; other figures get out of their bounding-boxes. &lt;/li&gt;
+&lt;/ul&gt;
+ I did a few experiments with a bunch of printers I have access to.  It seems that some of them simply do not handle the version 1.4 of the PDF &lt;i&gt;standard&lt;/i&gt; (which is, 10 damn' years old, also the basis for the &lt;a href="http://en.wikipedia.org/wiki/PDF/A"&gt;ISO 19005-1:2005&lt;/a&gt; standard, and of course  the version used by PDFLaTeX, XeLaTeX, Inkscape&amp;nbsp;&amp;hellip;).  &lt;/div&gt;
+&lt;div class="p"&gt; &lt;b&gt;The Solution:&lt;/b&gt; &lt;br/&gt;
+ Just use &lt;i&gt;Ghostscript&lt;/i&gt; to convert to PDF 1.2: &lt;pre&gt;
+gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.2 \
+  -dNOPAUSE -dQUIET -dBATCH
+  -sOutputFile=FILE_OUT.pdf FILE_IN.pdf
+&lt;/pre&gt; Or, if you think you're going to need it often: &lt;pre&gt;
+pdfto12 () {
+    if [ $# -ne 2 ]; then
+        echo "usage: pdfto12 &amp;lt;pdf-in&amp;gt; &amp;lt;pdf-out&amp;gt;"
+        return
+    fi
+    gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.2  \
+       -dNOPAUSE -dQUIET -dBATCH -sOutputFile=$2 $1
+}
+&lt;/pre&gt;  &lt;/div&gt;
+</description>
          <link>http://seb.mondet.org/blog/post/hack-of-the-day-pdf-versions-and-printers.html</link>
          <guid>http://seb.mondet.org/blog/post/hack-of-the-day-pdf-versions-and-printers.html</guid>
          <pubDate>Mon, 18 Apr 2011 15:25:42 +0200</pubDate>

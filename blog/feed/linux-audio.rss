@@ -1,56 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <rss version="2.0">
 <channel>
-    <title>Seb's Blog: RSS feed for tag: hack_of_the_day</title>
+    <title>Seb's Blog: RSS feed for tag: linux-audio</title>
     <description></description>
     <link>http://seb.mondet.org/blog/</link>
     <lastBuildDate>Fri, 29 Apr 2011 11:36:46 +0200</lastBuildDate>
     <pubDate>Fri, 29 Apr 2011 11:36:46 +0200</pubDate>
-    <item>
-         <title>Hack Of The Day: PDF Versions And Printers</title>
-         <description>&lt;div class="p"&gt;&lt;b&gt;The Problem:&lt;/b&gt; &lt;br/&gt;
- Your PDF file looks awsome on screen, but once you send it to your printer: 
-&lt;ul&gt;
- &lt;li&gt; some UTF-8 characters are wrong, &lt;/li&gt;
-&lt;li&gt; some vectorial drawings with transparency get wrong colors, or &lt;/li&gt;
-&lt;li&gt; other figures get out of their bounding-boxes. &lt;/li&gt;
-&lt;/ul&gt;
- I did a few experiments with a bunch of printers I have access to.  It seems that some of them simply do not handle the version 1.4 of the PDF &lt;i&gt;standard&lt;/i&gt; (which is, 10 damn' years old, also the basis for the &lt;a href="http://en.wikipedia.org/wiki/PDF/A"&gt;ISO 19005-1:2005&lt;/a&gt; standard, and of course  the version used by PDFLaTeX, XeLaTeX, Inkscape&amp;nbsp;&amp;hellip;).  &lt;/div&gt;
-&lt;div class="p"&gt; &lt;b&gt;The Solution:&lt;/b&gt; &lt;br/&gt;
- Just use &lt;i&gt;Ghostscript&lt;/i&gt; to convert to PDF 1.2: &lt;pre&gt;
-gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.2 \
-  -dNOPAUSE -dQUIET -dBATCH
-  -sOutputFile=FILE_OUT.pdf FILE_IN.pdf
-&lt;/pre&gt; Or, if you think you're going to need it often: &lt;pre&gt;
-pdfto12 () {
-    if [ $# -ne 2 ]; then
-        echo "usage: pdfto12 &amp;lt;pdf-in&amp;gt; &amp;lt;pdf-out&amp;gt;"
-        return
-    fi
-    gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.2  \
-       -dNOPAUSE -dQUIET -dBATCH -sOutputFile=$2 $1
-}
-&lt;/pre&gt;  &lt;/div&gt;
-</description>
-         <link>http://seb.mondet.org/blog/post/hack-of-the-day-pdf-versions-and-printers.html</link>
-         <guid>http://seb.mondet.org/blog/post/hack-of-the-day-pdf-versions-and-printers.html</guid>
-         <pubDate>Mon, 18 Apr 2011 15:25:42 +0200</pubDate>
-     </item>
-
-
-    <item>
-         <title>Anyweb, Document Source Code The Way You Like</title>
-         <description>&lt;div class="p"&gt;  I was playing with Adam Chlipala's &amp;ldquo;&lt;a href="http://adam.chlipala.net/cpdt/"&gt;CPDT&lt;/a&gt;&amp;rdquo; book and I wanted to take notes on some notations. I also wanted to do it in a &lt;a href="http://en.wikipedia.org/wiki/Literate_programming"&gt;&lt;i&gt;Literate Programming&lt;/i&gt;&lt;/a&gt; way: in a &lt;tt&gt;.v&lt;/tt&gt; Coq file with  &lt;a href="http://bracetax.berlios.de/"&gt;a familiar and practical syntax&lt;/a&gt;&amp;nbsp;&amp;hellip; &lt;/div&gt;
-&lt;div class="p"&gt;  That's where  &lt;a href="http://seb.mondet.org/anyweb/"&gt;Anyweb&lt;/a&gt; comes into play. &lt;/div&gt;
-&lt;div class="p"&gt;  This one-day hack is a simple parser and printer which looks for special string-markers (like &lt;tt&gt;(*B&lt;/tt&gt; and &lt;tt&gt;B*)&lt;/tt&gt; in Coq or OCaml sources) and does &lt;i&gt;stuff&lt;/i&gt; (like calling &lt;tt&gt;coqdoc&lt;/tt&gt; or &lt;tt&gt;source-highlight&lt;/tt&gt;) depending on where it is in the source. The transformer uses an automaton and a stack, so any kind of &lt;i&gt;recursive&lt;/i&gt; embedding seems possible. &lt;/div&gt;
-&lt;div class="p"&gt;  The &lt;a href="https://github.com/smondet/anyweb/blob/master/anyweb.ml"&gt;code&lt;/a&gt; is &lt;i&gt;of course&lt;/i&gt; self-documenting (&lt;a href="http://seb.mondet.org/anyweb/"&gt;HTML&lt;/a&gt;, or &lt;a href="http://seb.mondet.org/anyweb/anyweb.pdf"&gt;PDF&lt;/a&gt;). The bunch of notes on CPDT which motivated the hack is also &lt;a href="https://github.com/smondet/anyweb/blob/master/subset_notes.v"&gt;available&lt;/a&gt; (&lt;a href="http://seb.mondet.org/anyweb/coq_example.html"&gt;HTML&lt;/a&gt;, and &lt;a href="http://seb.mondet.org/anyweb/coq_example.pdf"&gt;PDF&lt;/a&gt;).  &lt;/div&gt;
-</description>
-         <link>http://seb.mondet.org/blog/post/anyweb-document-source-code-the-way-you-like.html</link>
-         <guid>http://seb.mondet.org/blog/post/anyweb-document-source-code-the-way-you-like.html</guid>
-         <pubDate>Tue, 19 Apr 2011 21:26:42 +0200</pubDate>
-     </item>
-
-
     <item>
          <title>Taking (MIDI) Notes With Your Guitar</title>
          <description>&lt;div class="p"&gt; I always thought it required a lot of signal processing black magic and many hours spent setting up mysterious knobs to get the conversion of any piece of sound to an &lt;i&gt;acceptable&lt;/i&gt; stream of MIDI events. &lt;/div&gt;

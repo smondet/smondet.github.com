@@ -4,11 +4,34 @@
     <title>Seb's Blog: RSS feed for all posts</title>
     <description></description>
     <link>http://seb.mondet.org/blog/</link>
-    <lastBuildDate>Wed, 27 Apr 2011 18:18:07 +0200</lastBuildDate>
-    <pubDate>Wed, 27 Apr 2011 18:18:07 +0200</pubDate>
+    <lastBuildDate>Fri, 29 Apr 2011 11:36:46 +0200</lastBuildDate>
+    <pubDate>Fri, 29 Apr 2011 11:36:46 +0200</pubDate>
     <item>
          <title>Hack Of The Day: PDF Versions And Printers</title>
-         <description>Hack Of The Day: PDF Versions And Printers</description>
+         <description>&lt;div class="p"&gt;&lt;b&gt;The Problem:&lt;/b&gt; &lt;br/&gt;
+ Your PDF file looks awsome on screen, but once you send it to your printer: 
+&lt;ul&gt;
+ &lt;li&gt; some UTF-8 characters are wrong, &lt;/li&gt;
+&lt;li&gt; some vectorial drawings with transparency get wrong colors, or &lt;/li&gt;
+&lt;li&gt; other figures get out of their bounding-boxes. &lt;/li&gt;
+&lt;/ul&gt;
+ I did a few experiments with a bunch of printers I have access to.  It seems that some of them simply do not handle the version 1.4 of the PDF &lt;i&gt;standard&lt;/i&gt; (which is, 10 damn' years old, also the basis for the &lt;a href="http://en.wikipedia.org/wiki/PDF/A"&gt;ISO 19005-1:2005&lt;/a&gt; standard, and of course  the version used by PDFLaTeX, XeLaTeX, Inkscape&amp;nbsp;&amp;hellip;).  &lt;/div&gt;
+&lt;div class="p"&gt; &lt;b&gt;The Solution:&lt;/b&gt; &lt;br/&gt;
+ Just use &lt;i&gt;Ghostscript&lt;/i&gt; to convert to PDF 1.2: &lt;pre&gt;
+gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.2 \
+  -dNOPAUSE -dQUIET -dBATCH
+  -sOutputFile=FILE_OUT.pdf FILE_IN.pdf
+&lt;/pre&gt; Or, if you think you're going to need it often: &lt;pre&gt;
+pdfto12 () {
+    if [ $# -ne 2 ]; then
+        echo "usage: pdfto12 &amp;lt;pdf-in&amp;gt; &amp;lt;pdf-out&amp;gt;"
+        return
+    fi
+    gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.2  \
+       -dNOPAUSE -dQUIET -dBATCH -sOutputFile=$2 $1
+}
+&lt;/pre&gt;  &lt;/div&gt;
+</description>
          <link>http://seb.mondet.org/blog/post/hack-of-the-day-pdf-versions-and-printers.html</link>
          <guid>http://seb.mondet.org/blog/post/hack-of-the-day-pdf-versions-and-printers.html</guid>
          <pubDate>Mon, 18 Apr 2011 15:25:42 +0200</pubDate>
@@ -17,7 +40,11 @@
 
     <item>
          <title>Anyweb, Document Source Code The Way You Like</title>
-         <description>Anyweb, Document Source Code The Way You Like</description>
+         <description>&lt;div class="p"&gt;  I was playing with Adam Chlipala's &amp;ldquo;&lt;a href="http://adam.chlipala.net/cpdt/"&gt;CPDT&lt;/a&gt;&amp;rdquo; book and I wanted to take notes on some notations. I also wanted to do it in a &lt;a href="http://en.wikipedia.org/wiki/Literate_programming"&gt;&lt;i&gt;Literate Programming&lt;/i&gt;&lt;/a&gt; way: in a &lt;tt&gt;.v&lt;/tt&gt; Coq file with  &lt;a href="http://bracetax.berlios.de/"&gt;a familiar and practical syntax&lt;/a&gt;&amp;nbsp;&amp;hellip; &lt;/div&gt;
+&lt;div class="p"&gt;  That's where  &lt;a href="http://seb.mondet.org/anyweb/"&gt;Anyweb&lt;/a&gt; comes into play. &lt;/div&gt;
+&lt;div class="p"&gt;  This one-day hack is a simple parser and printer which looks for special string-markers (like &lt;tt&gt;(*B&lt;/tt&gt; and &lt;tt&gt;B*)&lt;/tt&gt; in Coq or OCaml sources) and does &lt;i&gt;stuff&lt;/i&gt; (like calling &lt;tt&gt;coqdoc&lt;/tt&gt; or &lt;tt&gt;source-highlight&lt;/tt&gt;) depending on where it is in the source. The transformer uses an automaton and a stack, so any kind of &lt;i&gt;recursive&lt;/i&gt; embedding seems possible. &lt;/div&gt;
+&lt;div class="p"&gt;  The &lt;a href="https://github.com/smondet/anyweb/blob/master/anyweb.ml"&gt;code&lt;/a&gt; is &lt;i&gt;of course&lt;/i&gt; self-documenting (&lt;a href="http://seb.mondet.org/anyweb/"&gt;HTML&lt;/a&gt;, or &lt;a href="http://seb.mondet.org/anyweb/anyweb.pdf"&gt;PDF&lt;/a&gt;). The bunch of notes on CPDT which motivated the hack is also &lt;a href="https://github.com/smondet/anyweb/blob/master/subset_notes.v"&gt;available&lt;/a&gt; (&lt;a href="http://seb.mondet.org/anyweb/coq_example.html"&gt;HTML&lt;/a&gt;, and &lt;a href="http://seb.mondet.org/anyweb/coq_example.pdf"&gt;PDF&lt;/a&gt;).  &lt;/div&gt;
+</description>
          <link>http://seb.mondet.org/blog/post/anyweb-document-source-code-the-way-you-like.html</link>
          <guid>http://seb.mondet.org/blog/post/anyweb-document-source-code-the-way-you-like.html</guid>
          <pubDate>Tue, 19 Apr 2011 21:26:42 +0200</pubDate>
@@ -26,7 +53,38 @@
 
     <item>
          <title>Third Post; New Blog Engine</title>
-         <description>Third Post; New Blog Engine</description>
+         <description>&lt;div class="p"&gt; I got quickly annoyed by Wordpress' interface, and by the engine itself,  and by those ugly themes, and&amp;nbsp;&amp;hellip; OK, let's stop bad-mouthing other people&amp;nbsp;&amp;hellip; &lt;/div&gt;
+&lt;div class="p"&gt;  &lt;blockquote&gt;&lt;div class="p"&gt;&lt;i&gt;&amp;lsquo;On n'est jamais mieux servi que par soi-même &lt;a href="http://forum.wordreference.com/showthread.php?t=263500"&gt;&amp;hellip;&lt;/a&gt;&amp;rsquo;&lt;/i&gt;&lt;/div&gt;&lt;/blockquote&gt; &lt;/div&gt;
+&lt;div class="p"&gt;  I added a &lt;tt&gt;Blog&lt;/tt&gt; module to &lt;a href="https://github.com/smondet/dibrawi"&gt;Dibrawi&lt;/a&gt;'s helper interface for &lt;a href="http://martin.jambon.free.fr/camlmix/"&gt;Camlmix&lt;/a&gt;. Let's say &lt;i&gt;Dibrawi&lt;/i&gt; is a Wiki engine &lt;i&gt;under heavy development&lt;/i&gt;, based on  the &lt;a href="http://bracetax.berlios.de/"&gt;Bracetax&lt;/a&gt; syntax, bibliography management with &lt;a href="http://sebib.forge.ocamlcore.org/"&gt;Sebib&lt;/a&gt;, and other stuff (e.g. an address book).  It has a &lt;i&gt;wiki&lt;/i&gt; default running mode, which only converts the wiki pages, the bibliography, and the address book to HTML. The &lt;i&gt;wiki&lt;/i&gt; mode is fast and &lt;i&gt;seems&lt;/i&gt; secure&lt;small class="notebegin"&gt;(&lt;/small&gt;&lt;small class="note"&gt;or at least it is more secure than any other wiki engine I know&amp;nbsp;&amp;hellip;&lt;/small&gt;&lt;small class="noteend"&gt;)&lt;/small&gt;. On the other hand, each page can be &lt;i&gt;preprocessed&lt;/i&gt; separately (locally, on command line) while activating OCaml code (&lt;i&gt;Camlmix&lt;/i&gt;). This code will be compiled and run to generate whatever the user wants (like a  &lt;a href="http://seb.mondet.org"&gt;web site&lt;/a&gt;, or a &lt;a href="http://seb.mondet.org/CV_SebastienMONDET.pdf"&gt;PDF&lt;/a&gt;). In &lt;i&gt;wiki&lt;/i&gt; mode, the OCaml code is just displayed as &lt;tt&gt;code&lt;/tt&gt; or ignored. &lt;/div&gt;
+&lt;div class="p"&gt;  Henceforth, this new blog engine is a nice occasion to start showing some of the ideas behind &lt;i&gt;Dibrawi&lt;/i&gt;. With some OCaml code one can quickly and easily generate a static blog (which uses &lt;a href="http://disqus.com/"&gt;Disqus&lt;/a&gt; as comment system). The bunch of HTML files together with the RSS feeds can be uploaded to any hosting facility (like &lt;a href="http://github.com"&gt;GitHub&lt;/a&gt;&amp;nbsp;&lt;tt&gt;;&amp;#150;)&lt;/tt&gt;). &lt;/div&gt;
+&lt;div class="p"&gt;  The idea is to play with the  &lt;a href="https://github.com/smondet/dibrawi/blob/f38296ac3b6b7fa168ac38c4baec7e0e24b387ba/src/lib/dibrawi_mix.ml#L782"&gt;&lt;tt&gt;Blog&lt;/tt&gt; module&lt;/a&gt;'s functions (and the rest of the &lt;tt&gt;dibrawi&lt;/tt&gt; library) to generate a full blog. Here is a full example: 
+&lt;ul&gt;
+ &lt;li&gt;  &lt;a href="https://github.com/smondet/dibrawi/blob/master/doc/examples/Blog.brtx"&gt;&lt;b&gt;The file &lt;tt&gt;Blog.brtx&lt;/tt&gt;&lt;/b&gt;&lt;/a&gt;: We see the &lt;i&gt;tags&lt;/i&gt; &lt;tt&gt;{mix:code}&lt;/tt&gt;, &lt;tt&gt;{mix:ignore}&lt;/tt&gt; and &lt;tt&gt;{mix:end}&lt;/tt&gt;  which are the &lt;i&gt;main&lt;/i&gt; escape commands to put OCaml code within &lt;i&gt;Dibrawi&lt;/i&gt; (replacing the &amp;ldquo;&lt;tt&gt;##&lt;/tt&gt;&amp;rdquo; family in Camlmix).  &lt;/li&gt;
+&lt;li&gt;  &lt;a href="http://seb.mondet.org/dibrawi/wiki/examples/Blog.html"&gt;&lt;b&gt;The &lt;i&gt;wiki&lt;/i&gt; mode version&lt;/b&gt;&lt;/a&gt; displays the OCaml code which used &lt;tt&gt;{mix:code}&lt;/tt&gt;. &lt;/li&gt;
+&lt;li&gt; &lt;a href="http://seb.mondet.org/dibrawi/blog/"&gt;&lt;b&gt;The blog&lt;/b&gt;&lt;/a&gt; (HTML and RSS files) is generated by the code  at the end of the source. &lt;/li&gt;
+&lt;/ul&gt;
+ &lt;/div&gt;
+&lt;div class="p"&gt; Once the framework is set up, each new blog post is just some text enclosed between &lt;tt&gt;blog#new_post&lt;/tt&gt; and &lt;tt&gt;blog#end_post&lt;/tt&gt; calls, e.g.:   &lt;pre&gt;
+{mix:code} blog#new_post 
+  ~title:"Anyweb, Document Source Code The Way You Like"
+  ~date:"Tue, 19 Apr 2011 21:26:42 +0200"
+  ~tags:[ "hack_of_the_day"; "anyweb"; "coq"; "ocaml" ]
+  "anyweb-document-source-code-the-way-you-like"
+{mix:end}
+ 
+I was playing with Adam Chlipala's
+{q|{link http://adam.chlipala.net/cpdt/ |CPDT}} book
+and I wanted to take notes on some notations.
+I also wanted to do it in a
+ 
+  # Quite a lot of text ... 
+ 
+{mix:code} blog#end_post {mix:end}
+&lt;/pre&gt;    &lt;/div&gt;
+&lt;div class="p"&gt;   Each time, generating the blog is as simple as calling &lt;tt&gt;dbw&lt;/tt&gt; with  the &lt;tt&gt;run&lt;/tt&gt; command: &lt;pre&gt;
+dbw run path/to/Blog.brtx 
+&lt;/pre&gt; and that's all for today folks!  &lt;/div&gt;
+</description>
          <link>http://seb.mondet.org/blog/post/third-post-new-blog-engine.html</link>
          <guid>http://seb.mondet.org/blog/post/third-post-new-blog-engine.html</guid>
          <pubDate>Tue, 26 Apr 2011 09:28:20 +0200</pubDate>
@@ -35,10 +93,55 @@
 
     <item>
          <title>Style Guides</title>
-         <description>Style Guides</description>
+         <description>&lt;div class="p"&gt; At least, one thing is clear: there is no &lt;a href="http://en.wikipedia.org/wiki/International_English"&gt;International English&lt;/a&gt;, and, like in computer science, &amp;lsquo;&lt;a href="http://en.wikipedia.org/wiki/International_English#Dual_standard"&gt;Dual standard&lt;/a&gt;&amp;rsquo; is mostly equivalent to &amp;lsquo;No Standard&amp;rsquo;. &lt;/div&gt;
+&lt;div class="p"&gt;  Nevertheless, for a given piece of publication, one should at least try to stick to one set of &lt;i&gt;rules&lt;/i&gt;. There are actually  many more-or-less-official institutions around the world which edit &lt;a href="http://en.wikipedia.org/wiki/List_of_style_guides"&gt;quite a few incompatible style guides&lt;/a&gt;. However, as most of these books are actually &lt;i&gt;printed&lt;/i&gt; (and expensive) books, I have been trying to find content freely available on-line&amp;nbsp;&amp;hellip; &lt;/div&gt;
+&lt;div class="p"&gt;  For American English, the most famous style guide is &amp;lsquo;&lt;a href="http://en.wikipedia.org/wiki/The_Chicago_Manual_of_Style"&gt;The Chicago Manual of Style&lt;/a&gt;&amp;rsquo;. It is actually &lt;a href="http://www.chicagomanualofstyle.org/home.html"&gt;on-line&lt;/a&gt; but it is free only during a 30 days trial period. You may find particular style guides actually based on it like the &lt;a href="http://www.aaanet.org/publications/guidelines.cfm"&gt;one provided&lt;/a&gt; by the American Anthropological Association. &lt;/div&gt;
+&lt;div class="p"&gt;  One nice set of guides for British English has been made freely available by the European Union. The &lt;a href="http://publications.europa.eu/code/en/en-000100.htm"&gt;Interinstitutional style guide&lt;/a&gt; is a mix of general rules and EU-specific formatting guidelines. Better, their &lt;a href="http://ec.europa.eu/translation/index_en.htm"&gt;Translation and drafting resources&lt;/a&gt; give access to their valuable &lt;a href="http://ec.europa.eu/translation/english/guidelines/documents/styleguide_english_dgt_en.pdf"&gt;English style guide&lt;/a&gt; (PDF) and their &amp;lsquo;&lt;a href="http://ec.europa.eu/translation/writing/clear_writing/how_to_write_clearly_en.pdf"&gt;How To Write Clearly&lt;/a&gt;&amp;rsquo; publication (PDF too). &lt;/div&gt;
+&lt;div class="p"&gt;  Finally, free as in &lt;i&gt;Free Speech&lt;/i&gt;, there is Wikipedia's &lt;a href="http://en.wikipedia.org/wiki/Wikipedia:Manual_of_Style"&gt;Manual of Style&lt;/a&gt;. It tries to accommodate with both American and British Englishes and with many &lt;i&gt;legacy&lt;/i&gt; usages. It is very detailed though, and it links to  &lt;a href="http://en.wikipedia.org/wiki/Wikipedia:Manual_of_Style_(list_of_specialized_Manual_of_Style_articles)"&gt;many interesting specialised guides&lt;/a&gt;. &lt;/div&gt;
+&lt;div class="p"&gt;  I look forward to get any other interesting link on the matter&amp;nbsp;&amp;hellip; especially on American English.  &lt;/div&gt;
+</description>
          <link>http://seb.mondet.org/blog/post/english-writing-guides.html</link>
          <guid>http://seb.mondet.org/blog/post/english-writing-guides.html</guid>
          <pubDate>Wed, 27 Apr 2011 18:15:11 +0200</pubDate>
+     </item>
+
+
+    <item>
+         <title>Taking (MIDI) Notes With Your Guitar</title>
+         <description>&lt;div class="p"&gt; I always thought it required a lot of signal processing black magic and many hours spent setting up mysterious knobs to get the conversion of any piece of sound to an &lt;i&gt;acceptable&lt;/i&gt; stream of MIDI events. &lt;/div&gt;
+&lt;div class="p"&gt;  Well&amp;nbsp;&amp;hellip; I guess I was right&amp;nbsp;&amp;hellip; but, if we relax the constraint on the meaning of &amp;lsquo;&lt;i&gt;acceptable&lt;/i&gt;&amp;rsquo;, we can maybe work something useful out. &lt;/div&gt;
+&lt;div class="p"&gt;  Actually, we can  quite easily use a guitar to &lt;i&gt;&amp;lsquo;take notes&amp;rsquo;&lt;/i&gt; of some piece of melody. Indeed, I just discovered &lt;a href="http://rakarrack.sourceforge.net/"&gt;Rakarrack&lt;/a&gt; which has an extremely simple Guitar-to-MIDI converter. From there, the steps are easy (all software used here is in Debian and Ubuntu's APT): 
+&lt;ul&gt;
+ &lt;li&gt; connect your guitar to Rakarrack (for example using &lt;a href="http://qjackctl.sourceforge.net"&gt;QJackCtl&lt;/a&gt; in the figure&amp;nbsp;&lt;a href="#img:audio_connections"&gt;img:audio_connections&lt;/a&gt;); &lt;/li&gt;
+&lt;li&gt; connect Rakarrack's MIDI output to a MIDI recorder (I used &lt;a href="http://www.rosegardenmusic.com"&gt;Rosegarden&lt;/a&gt;), c.f. the figure&amp;nbsp;&lt;a href="#img:midi_connections"&gt;img:midi_connections&lt;/a&gt;; &lt;/li&gt;
+&lt;li&gt; &lt;i&gt;push&lt;/i&gt; Rakarrack's settings &lt;i&gt;to eleven&lt;/i&gt; as in the figure&amp;nbsp;&lt;a href="#img:rakarrack_midi"&gt;img:rakarrack_midi&lt;/a&gt;; &lt;/li&gt;
+&lt;li&gt; press record in Rosegarden and try to play. &lt;/li&gt;
+&lt;/ul&gt;
+ One can only play a single note at a time, &lt;i&gt;strictly&lt;/i&gt;, and the audio-to-MIDI conversion adds &lt;i&gt;a lot&lt;/i&gt; of random delay. But after a few attempts, it is possible to &lt;i&gt;take notes&lt;/i&gt;. Maybe the reader can recognise a piece of the most famous Norwegian melody in the figure &lt;a href="#img:rosegarden"&gt;img:rosegarden&lt;/a&gt;.  
+&lt;div class="figure" id="img:audio_connections" &gt;
+  &lt;a href="https://lh5.googleusercontent.com/_50sOZh_gXI8/TbdBWMbNliI/AAAAAAAACEo/ilkr6Kgg1G4/s400/audio_connections.png"&gt;
+    &lt;img src="https://lh5.googleusercontent.com/_50sOZh_gXI8/TbdBWMbNliI/AAAAAAAACEo/ilkr6Kgg1G4/s400/audio_connections.png" width="60%" id="img:audio_connections"  alt="https://lh5.googleusercontent.com/_50sOZh_gXI8/TbdBWMbNliI/AAAAAAAACEo/ilkr6Kgg1G4/s400/audio_connections.png"/&gt;
+  &lt;/a&gt;&lt;br/&gt;
+The Audio Connections In QJackCtl&lt;/div&gt;  
+&lt;div class="figure" id="img:midi_connections" &gt;
+  &lt;a href="https://lh5.googleusercontent.com/_50sOZh_gXI8/TbdBWAqhgoI/AAAAAAAACEs/dIxWdGCGvFw/s400/midi_connections.png"&gt;
+    &lt;img src="https://lh5.googleusercontent.com/_50sOZh_gXI8/TbdBWAqhgoI/AAAAAAAACEs/dIxWdGCGvFw/s400/midi_connections.png" width="60%" id="img:midi_connections"  alt="https://lh5.googleusercontent.com/_50sOZh_gXI8/TbdBWAqhgoI/AAAAAAAACEs/dIxWdGCGvFw/s400/midi_connections.png"/&gt;
+  &lt;/a&gt;&lt;br/&gt;
+The (Alsa) MIDI Connections In QJackCtl&lt;/div&gt;  
+&lt;div class="figure" id="img:rakarrack_midi" &gt;
+  &lt;a href="https://lh4.googleusercontent.com/_50sOZh_gXI8/Tbc1czZpyXI/AAAAAAAACEM/JjyckjkfZvM/s800/rakarrack.png"&gt;
+    &lt;img src="https://lh4.googleusercontent.com/_50sOZh_gXI8/Tbc1czZpyXI/AAAAAAAACEM/JjyckjkfZvM/s800/rakarrack.png" width="40%" id="img:rakarrack_midi"  alt="https://lh4.googleusercontent.com/_50sOZh_gXI8/Tbc1czZpyXI/AAAAAAAACEM/JjyckjkfZvM/s800/rakarrack.png"/&gt;
+  &lt;/a&gt;&lt;br/&gt;
+Settings For Rakarrack&lt;/div&gt;  
+&lt;div class="figure" id="img:rosegarden" &gt;
+  &lt;a href="https://lh5.googleusercontent.com/_50sOZh_gXI8/Tbc1dYakv5I/AAAAAAAACEQ/oHOkZKz10yU/s400/rosegarden_part.png"&gt;
+    &lt;img src="https://lh5.googleusercontent.com/_50sOZh_gXI8/Tbc1dYakv5I/AAAAAAAACEQ/oHOkZKz10yU/s400/rosegarden_part.png" width="60%" id="img:rosegarden"  alt="https://lh5.googleusercontent.com/_50sOZh_gXI8/Tbc1dYakv5I/AAAAAAAACEQ/oHOkZKz10yU/s400/rosegarden_part.png"/&gt;
+  &lt;/a&gt;&lt;br/&gt;
+What We Can Get In Rosegarden&lt;/div&gt;  &lt;/div&gt;
+</description>
+         <link>http://seb.mondet.org/blog/post/taking-midi-notes.html</link>
+         <guid>http://seb.mondet.org/blog/post/taking-midi-notes.html</guid>
+         <pubDate>Fri, 29 Apr 2011 11:34:41 +0200</pubDate>
      </item>
 </channel>
 </rss>
