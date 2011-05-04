@@ -262,19 +262,80 @@ max-width : 45em; left: 21.000000%; right: 0.5%; padding: 0.2em;
 }
 </style>
 <link rel="shortcut icon" href="http://seb.mondet.org/images/sm.ico">
-<title>Sebastien Mondet</title>
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://seb.mondet.org/blog/feed/all_posts.rss">
+<title>Seb's Blog: Vim-like Leader Keys In Emacs</title>
 </head>
 <body>
 <div class="content">
 <div class="p"></div>
-<h2 id="Presentation">Presentation</h2>
-<div class="p"> <table  border="0"  ><td><a href="./images//ganache_seb_01.jpg"><img src="./images//ganache_seb_01_thumb300.jpg" width="210px"  alt="./images//ganache_seb_01.jpg"/></a></td><td>  I'm Sebastien MONDET, a.k.a. Sebastian Mondet Yañez. <br/>
+<h2 id="Vim_like_Leader_Keys_In_Emacs">Vim-like Leader Keys In Emacs</h2>
+<div class="p"> <small> ➲&nbsp;&nbsp;<b>Date:</b> <i>Wed, 04 May 2011 13:18:02 +0200</i>; <b>Tags:</b> <tt>[<a href="../feed/hack_of_the_day.rss"><tt>hack_of_the_day</tt></a>; <a href="../feed/emacs.rss"><tt>emacs</tt></a>]</tt>. </small><br/>
 <br/>
- After a PhD at the <a href="http://www.univ-toulouse.fr/">University of Toulouse</a>, I'm currently doing a <a href="http://en.wikipedia.org/wiki/Postdoctoral_research">post-doc</a> in the <a href="http://www.ifi.uio.no/research/groups/dmms/">DMMS group</a> of the <a href="http://www.uio.no/english/">University of Oslo</a>. <br/>
-<br/>
- Here is my <b><a href="./CV_SebastienMONDET.pdf">CV&nbsp;/&nbsp;Resume</a></b>. <br/>
-<br/>
- Contact: <tt>seb <i>&lt;at&gt;</i> mondet.org</tt>.  </td></table></div>
+             </div>
+<div class="p">  </div>
+<h4 id="The_Problem">The Problem</h4>
+<div class="p">  We want an equivalent of Vim's <tt>Leader</tt> keys  (c.f. <a href="http://stackoverflow.com/questions/1764263/what-is-the-leader-in-a-vimrc-file">this stackoverflow question</a>) for our own key-bindings. In other words, we want to prefix all the defined shortcuts with a given key-binding in order not to mess too much with Emacs or with modes implemented by other people. We also want to make it easy to define new keys, for functions or for any piece of code, and we want to be able to easily change the <tt>Leader</tt> key.  </div>
+<h4 id="The_Current_Solution">The Current Solution</h4>
+<div class="p">  In your <tt>.emacs</tt> file, before all the nasty hacks that you want to prefix, the idea is first to define a new &ldquo;keymap&rdquo; for your bindings. It is called <tt>dkeys</tt> for no particular reason here: <pre>
+(setq dkeys-map (make-sparse-keymap))
+</pre> Then we choose one arbitrary leading key, here <tt>Ctrl-D</tt><small class="notebegin">(</small><small class="note">I use the <a href="http://ergoemacs.org/">ErgoEmacs</a>' and <a href="http://www.emacswiki.org/CuaMode">CUA</a> modes, so <tt>Ctrl-D</tt> is unused in my setup.</small><small class="noteend">)</small>, but any combination of keystrokes may be used. The <tt>global-unset-key</tt> should be applied only to the first of the string: <pre>
+(setq dkeys-leading-key "\C-d")
+(global-unset-key "\C-d")
+</pre> </div>
+<div class="p">  To be &ldquo;clean&rdquo;, we define a minor mode, and activate it<small class="notebegin">(</small><small class="note">the minor mode is actually not mandatory but this way you can define many different ones, and activate them on-demand.</small><small class="noteend">)</small>: <pre>
+(define-minor-mode dkeys-mode
+  "C-d-Keys mode"
+  :lighter " Dkey"
+  :global t
+  :keymap dkeys-map)
+(dkeys-mode 1)
+</pre> </div>
+<div class="p">  To simplify key-bindings we create a function to bind a key-sequence to a function: <pre>
+(defun set-dkey(key function)
+  (define-key dkeys-map 
+              (concat dkeys-leading-key key)
+              function))
+</pre> The function just adds the <tt>Leader</tt>, and defines the key-binding in the minor mode. </div>
+<div class="p">  As we are lazy, we define a macro<small class="notebegin">(</small><small class="note">When hacking macros you might want to use the <tt>macroexpand</tt> function <a href="http://www.gnu.org/software/emacs/elisp/html_node/Expansion.html">to solve some headaches</a>.</small><small class="noteend">)</small> which defines <i>interactive</i> functions, and binds them to the keys at once: <pre>
+(defmacro dkeys-funkey (key name function)
+  (list
+   'progn
+   (list 'defun name '()
+     '(interactive) function)
+   (list 'define-key 'dkeys-map 
+     (list 'concat 'dkeys-leading-key key) 
+     (list 'quote name))))
+</pre> </div>
+<div class="p">  Finally, each definition can be simply added to that minor mode. For example, this <i>key-bound-function</i>, inserts some text when <tt>"C-d o o"</tt> is typed: <pre>
+(dkeys-funkey "oo" express-astonishment
+            (progn
+              (insert "oooooohhhh!!!")))
+</pre> </div>
+<div class="p">  That's it. Happy Emacs Hacking!  </div>
+<div class="p"><div id="disqus_thread"></div>
+  <script type="text/javascript">
+      var disqus_shortname = 'sebmondetblog'; 
+      // required: replace example with your forum shortname
+  
+      // The following are highly recommended additional
+      // parameters. Remove the slashes in front to use.
+      var disqus_identifier = 'emacs-vim-like-leader';
+      var disqus_url = 'http://seb.mondet.org/./blog/post/emacs-vim-like-leader.html';
+  
+      /* * * DON'T EDIT BELOW THIS LINE * * */
+      (function() {
+          var dsq = document.createElement('script');
+          dsq.type = 'text/javascript'; dsq.async = true;
+          dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('head')[0] ||
+             document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+  </script>
+  <noscript>Please enable JavaScript to view the
+  <a href="http://disqus.com/?ref_noscript">comments powered
+  by Disqus.</a></noscript>
+  <a href="http://disqus.com" class="dsq-brlink">blog
+  comments powered by <span class="logo-disqus">Disqus</span></a></div>
 
 <div id="pagefoot" />
 </div>
@@ -282,10 +343,10 @@ max-width : 45em; left: 21.000000%; right: 0.5%; padding: 0.2em;
 <h1>Sebastien Mondet</h1><br/>
 <b>Menu: </b><div class="p">
 <ul>
-  <li> <b>Home</b>  </li>
-<li> <a href="./publications.html">Publications</a>  </li>
-<li> <a href="./software.html">Software</a>  </li>
-<li> <a href="./blog/index.html">Blog</a> </li>
+  <li> <a href="../../index.html">Home</a>  </li>
+<li> <a href="../../publications.html">Publications</a>  </li>
+<li> <a href="../../software.html">Software</a>  </li>
+<li> <a href="../../blog/index.html">Blog</a> </li>
 </ul>
  </div>
 <br/>
@@ -294,7 +355,7 @@ max-width : 45em; left: 21.000000%; right: 0.5%; padding: 0.2em;
 <br/>
 <br/>
 <small><div class="p"> Site generated thanks to  <a href="http://bracetax.berlios.de/">bracetax</a>, <a href="http://martin.jambon.free.fr/camlmix/">camlmix</a>, <a href="http://sebib.forge.ocamlcore.org/">sebib</a>, and <a href="https://github.com/smondet/dibrawi">more&nbsp;&hellip;</a> <br/>
- Updated on Wed, 4 May 2011 13:16:31 +0200. <br/>
+ Updated on Wed, 4 May 2011 13:18:05 +0200. <br/>
  <a href="http://seb.mondet.org">Sebastien Mondet</a><br/>
 <br/>
  </small>

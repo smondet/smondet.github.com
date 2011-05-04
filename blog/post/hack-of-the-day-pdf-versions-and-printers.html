@@ -226,15 +226,16 @@ img {
     clear: both;
 
 }
-small.notebegin { counter-increment: footnote; }
+small.notebegin { font-size: 70%; vertical-align: super; counter-increment: footnote; }
+small.noteend { font-size: 70%; vertical-align: super; }
 small.noteend:before {  content: counter(footnote) }
 small.note:before { content: counter(footnote) ": " }
 body { counter-reset: section subsection subsubsection footnote; }
 
 small.note {
-    font-size: 70%;
+    font-size: 76%;
     clear: right;
-    width: 40%;
+    width: 32%;
     border: thin #959595 solid;
     float: right;
     margin: 0.5em;
@@ -244,7 +245,7 @@ small.note {
 h2 { border: #B41D1D solid 2px; padding: 0.2em; }
 h3 { text-decoration: underline;}
 pre {
-    position: relative; left: 5%; width: 90%; clear: left;
+    position: relative; left: 5%; max-width: 90%; clear: left;
 }
 div.sidepane {
   left: 0.5%; width: 19.000000%; padding: 0.5%;
@@ -336,9 +337,16 @@ pdfto12 () {
 <br/>
 <br/>
 <br/>
-<small><div class="p"> Site generated thanks to  <a href="http://martin.jambon.free.fr/camlmix/">camlmix</a>, <a href="http://sebib.forge.ocamlcore.org/">sebib</a>, and <a href="http://bracetax.berlios.de/">bracetax</a>. <br/>
- Updated on Fri, 29 Apr 2011 11:36:46 +0200. <br/>
- <a href="http://seb.mondet.org">Sebastien Mondet</a> </small> </div>
+<small><div class="p"> Site generated thanks to  <a href="http://bracetax.berlios.de/">bracetax</a>, <a href="http://martin.jambon.free.fr/camlmix/">camlmix</a>, <a href="http://sebib.forge.ocamlcore.org/">sebib</a>, and <a href="https://github.com/smondet/dibrawi">more&nbsp;&hellip;</a> <br/>
+ Updated on Wed, 4 May 2011 13:18:05 +0200. <br/>
+ <a href="http://seb.mondet.org">Sebastien Mondet</a><br/>
+<br/>
+ </small>
+<a href="http://caml.inria.fr/">
+  <img src="http://caml.inria.fr//pub/logos/caml-powered.80x30.png"
+       alt="Powered by Caml"
+       style="border: none;" />
+</a> </div>
 <br/>
 </div>
 </body></html>

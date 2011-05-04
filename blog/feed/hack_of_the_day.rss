@@ -4,8 +4,8 @@
     <title>Seb's Blog: RSS feed for tag: hack_of_the_day</title>
     <description></description>
     <link>http://seb.mondet.org/blog/</link>
-    <lastBuildDate>Fri, 29 Apr 2011 11:36:46 +0200</lastBuildDate>
-    <pubDate>Fri, 29 Apr 2011 11:36:46 +0200</pubDate>
+    <lastBuildDate>Wed, 4 May 2011 13:18:05 +0200</lastBuildDate>
+    <pubDate>Wed, 4 May 2011 13:18:05 +0200</pubDate>
     <item>
          <title>Hack Of The Day: PDF Versions And Printers</title>
          <description>&lt;div class="p"&gt;&lt;b&gt;The Problem:&lt;/b&gt; &lt;br/&gt;
@@ -87,6 +87,55 @@ What We Can Get In Rosegarden&lt;/div&gt;  &lt;/div&gt;
          <link>http://seb.mondet.org/blog/post/taking-midi-notes.html</link>
          <guid>http://seb.mondet.org/blog/post/taking-midi-notes.html</guid>
          <pubDate>Fri, 29 Apr 2011 11:34:41 +0200</pubDate>
+     </item>
+
+
+    <item>
+         <title>Vim-like Leader Keys In Emacs</title>
+         <description>&lt;div class="p"&gt;&lt;/div&gt;
+&lt;h4 id="The_Problem"&gt;The Problem&lt;/h4&gt;
+&lt;div class="p"&gt;  We want an equivalent of Vim's &lt;tt&gt;Leader&lt;/tt&gt; keys  (c.f. &lt;a href="http://stackoverflow.com/questions/1764263/what-is-the-leader-in-a-vimrc-file"&gt;this stackoverflow question&lt;/a&gt;) for our own key-bindings. In other words, we want to prefix all the defined shortcuts with a given key-binding in order not to mess too much with Emacs or with modes implemented by other people. We also want to make it easy to define new keys, for functions or for any piece of code, and we want to be able to easily change the &lt;tt&gt;Leader&lt;/tt&gt; key.  &lt;/div&gt;
+&lt;h4 id="The_Current_Solution"&gt;The Current Solution&lt;/h4&gt;
+&lt;div class="p"&gt;  In your &lt;tt&gt;.emacs&lt;/tt&gt; file, before all the nasty hacks that you want to prefix, the idea is first to define a new &amp;ldquo;keymap&amp;rdquo; for your bindings. It is called &lt;tt&gt;dkeys&lt;/tt&gt; for no particular reason here: &lt;pre&gt;
+(setq dkeys-map (make-sparse-keymap))
+&lt;/pre&gt; Then we choose one arbitrary leading key, here &lt;tt&gt;Ctrl-D&lt;/tt&gt;&lt;small class="notebegin"&gt;(&lt;/small&gt;&lt;small class="note"&gt;I use the &lt;a href="http://ergoemacs.org/"&gt;ErgoEmacs&lt;/a&gt;' and &lt;a href="http://www.emacswiki.org/CuaMode"&gt;CUA&lt;/a&gt; modes, so &lt;tt&gt;Ctrl-D&lt;/tt&gt; is unused in my setup.&lt;/small&gt;&lt;small class="noteend"&gt;)&lt;/small&gt;, but any combination of keystrokes may be used. The &lt;tt&gt;global-unset-key&lt;/tt&gt; should be applied only to the first of the string: &lt;pre&gt;
+(setq dkeys-leading-key "\C-d")
+(global-unset-key "\C-d")
+&lt;/pre&gt; &lt;/div&gt;
+&lt;div class="p"&gt;  To be &amp;ldquo;clean&amp;rdquo;, we define a minor mode, and activate it&lt;small class="notebegin"&gt;(&lt;/small&gt;&lt;small class="note"&gt;the minor mode is actually not mandatory but this way you can define many different ones, and activate them on-demand.&lt;/small&gt;&lt;small class="noteend"&gt;)&lt;/small&gt;: &lt;pre&gt;
+(define-minor-mode dkeys-mode
+  "C-d-Keys mode"
+  :lighter " Dkey"
+  :global t
+  :keymap dkeys-map)
+(dkeys-mode 1)
+&lt;/pre&gt; &lt;/div&gt;
+&lt;div class="p"&gt;  To simplify key-bindings we create a function to bind a key-sequence to a function: &lt;pre&gt;
+(defun set-dkey(key function)
+  (define-key dkeys-map 
+              (concat dkeys-leading-key key)
+              function))
+&lt;/pre&gt; The function just adds the &lt;tt&gt;Leader&lt;/tt&gt;, and defines the key-binding in the minor mode. &lt;/div&gt;
+&lt;div class="p"&gt;  As we are lazy, we define a macro&lt;small class="notebegin"&gt;(&lt;/small&gt;&lt;small class="note"&gt;When hacking macros you might want to use the &lt;tt&gt;macroexpand&lt;/tt&gt; function &lt;a href="http://www.gnu.org/software/emacs/elisp/html_node/Expansion.html"&gt;to solve some headaches&lt;/a&gt;.&lt;/small&gt;&lt;small class="noteend"&gt;)&lt;/small&gt; which defines &lt;i&gt;interactive&lt;/i&gt; functions, and binds them to the keys at once: &lt;pre&gt;
+(defmacro dkeys-funkey (key name function)
+  (list
+   'progn
+   (list 'defun name '()
+     '(interactive) function)
+   (list 'define-key 'dkeys-map 
+     (list 'concat 'dkeys-leading-key key) 
+     (list 'quote name))))
+&lt;/pre&gt; &lt;/div&gt;
+&lt;div class="p"&gt;  Finally, each definition can be simply added to that minor mode. For example, this &lt;i&gt;key-bound-function&lt;/i&gt;, inserts some text when &lt;tt&gt;"C-d o o"&lt;/tt&gt; is typed: &lt;pre&gt;
+(dkeys-funkey "oo" express-astonishment
+            (progn
+              (insert "oooooohhhh!!!")))
+&lt;/pre&gt; &lt;/div&gt;
+&lt;div class="p"&gt;  That's it. Happy Emacs Hacking!  &lt;/div&gt;
+</description>
+         <link>http://seb.mondet.org/blog/post/emacs-vim-like-leader.html</link>
+         <guid>http://seb.mondet.org/blog/post/emacs-vim-like-leader.html</guid>
+         <pubDate>Wed, 04 May 2011 13:18:02 +0200</pubDate>
      </item>
 </channel>
 </rss>

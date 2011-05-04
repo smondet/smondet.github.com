@@ -4,8 +4,8 @@
     <title>Seb's Blog: RSS feed for tag: ocaml</title>
     <description></description>
     <link>http://seb.mondet.org/blog/</link>
-    <lastBuildDate>Fri, 29 Apr 2011 11:36:46 +0200</lastBuildDate>
-    <pubDate>Fri, 29 Apr 2011 11:36:46 +0200</pubDate>
+    <lastBuildDate>Wed, 4 May 2011 13:18:05 +0200</lastBuildDate>
+    <pubDate>Wed, 4 May 2011 13:18:05 +0200</pubDate>
     <item>
          <title>Anyweb, Document Source Code The Way You Like</title>
          <description>&lt;div class="p"&gt;  I was playing with Adam Chlipala's &amp;ldquo;&lt;a href="http://adam.chlipala.net/cpdt/"&gt;CPDT&lt;/a&gt;&amp;rdquo; book and I wanted to take notes on some notations. I also wanted to do it in a &lt;a href="http://en.wikipedia.org/wiki/Literate_programming"&gt;&lt;i&gt;Literate Programming&lt;/i&gt;&lt;/a&gt; way: in a &lt;tt&gt;.v&lt;/tt&gt; Coq file with  &lt;a href="http://bracetax.berlios.de/"&gt;a familiar and practical syntax&lt;/a&gt;&amp;nbsp;&amp;hellip; &lt;/div&gt;
