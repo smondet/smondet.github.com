@@ -4,8 +4,8 @@
     <title>Seb's Blog: RSS feed for tag: hack_of_the_day</title>
     <description></description>
     <link>http://seb.mondet.org/blog/</link>
-    <lastBuildDate>Wed, 4 May 2011 13:18:05 +0200</lastBuildDate>
-    <pubDate>Wed, 4 May 2011 13:18:05 +0200</pubDate>
+    <lastBuildDate>Mon, 13 Jun 2011 15:17:01 +0200</lastBuildDate>
+    <pubDate>Mon, 13 Jun 2011 15:17:01 +0200</pubDate>
     <item>
          <title>Hack Of The Day: PDF Versions And Printers</title>
          <description>&lt;div class="p"&gt;&lt;b&gt;The Problem:&lt;/b&gt; &lt;br/&gt;
@@ -136,6 +136,32 @@ What We Can Get In Rosegarden&lt;/div&gt;  &lt;/div&gt;
          <link>http://seb.mondet.org/blog/post/emacs-vim-like-leader.html</link>
          <guid>http://seb.mondet.org/blog/post/emacs-vim-like-leader.html</guid>
          <pubDate>Wed, 04 May 2011 13:18:02 +0200</pubDate>
+     </item>
+
+
+    <item>
+         <title>Quick And Dirty Web-Slides</title>
+         <description>&lt;div class="p"&gt; Today's quick and dirty hack is about putting your presentation on-line as a list of images so that anyone can quickly see it without downloading the PDF. &lt;/div&gt;
+&lt;div class="p"&gt;  First, be sure you start from something &amp;ldquo;clean&amp;rdquo;: &lt;pre&gt;
+rm -fr slides/
+mkdir -p slides/
+&lt;/pre&gt; Then, use &lt;a href="http://www.imagemagick.org/"&gt;ImageMagick&lt;/a&gt; to convert your slides into images: &lt;pre&gt;
+convert -density 200 Presentation.pdf \
+    -resize 500x -quality 80 +adjoin slides/slide.png
+&lt;/pre&gt; It creates numbered files &lt;tt&gt;slide-0.png&lt;/tt&gt;,&amp;nbsp;&amp;hellip; &lt;tt&gt;slide-42.png&lt;/tt&gt;. So we just create an HTML file containing all the images:  &lt;pre&gt;
+nb=`\ls -1 --color=none slides/*.png | wc -l`
+echo "&amp;lt;html&amp;gt;&amp;lt;body&amp;gt;" &amp;gt; slides/index.html
+for i in `seq 0 $[$nb - 1]` ; do
+    echo "&amp;lt;img src=\"slide-$i.png\" /&amp;gt;" &amp;gt;&amp;gt; slides/index.html
+done
+echo "&amp;lt;/html&amp;gt;&amp;lt;/body&amp;gt;" &amp;gt;&amp;gt; slides/index.html
+&lt;/pre&gt; Here is an example (my latest talk): &lt;a href="http://smondet.at.ifi.uio.no/resources/Promiwag_SMondet_IFIPSec11.pdf"&gt;PDF&lt;/a&gt;, &lt;a href="http://smondet.at.ifi.uio.no/resources/Promiwag_SMondet_IFIPSec11/"&gt;HTML/PNG&lt;/a&gt;. &lt;/div&gt;
+&lt;div class="p"&gt;  Adding the verbose &lt;tt&gt;DOCTYPE&lt;/tt&gt; stuff is left as exercise&amp;nbsp;&amp;hellip; ;) &lt;/div&gt;
+&lt;div class="p"&gt;  &lt;/div&gt;
+</description>
+         <link>http://seb.mondet.org/blog/post/qad-slides-webpage.html</link>
+         <guid>http://seb.mondet.org/blog/post/qad-slides-webpage.html</guid>
+         <pubDate>Mon, 13 Jun 2011 15:16:47 +0200</pubDate>
      </item>
 </channel>
 </rss>
