@@ -4,8 +4,8 @@
     <title>Seb's Blog: RSS feed for tag: ocaml</title>
     <description></description>
     <link>http://seb.mondet.org/blog/</link>
-    <lastBuildDate>Mon, 13 Jun 2011 15:17:01 +0200</lastBuildDate>
-    <pubDate>Mon, 13 Jun 2011 15:17:01 +0200</pubDate>
+    <lastBuildDate>Thu, 16 Jun 2011 14:45:35 +0200</lastBuildDate>
+    <pubDate>Thu, 16 Jun 2011 14:45:35 +0200</pubDate>
     <item>
          <title>Anyweb, Document Source Code The Way You Like</title>
          <description>&lt;div class="p"&gt;  I was playing with Adam Chlipala's &amp;ldquo;&lt;a href="http://adam.chlipala.net/cpdt/"&gt;CPDT&lt;/a&gt;&amp;rdquo; book and I wanted to take notes on some notations. I also wanted to do it in a &lt;a href="http://en.wikipedia.org/wiki/Literate_programming"&gt;&lt;i&gt;Literate Programming&lt;/i&gt;&lt;/a&gt; way: in a &lt;tt&gt;.v&lt;/tt&gt; Coq file with  &lt;a href="http://bracetax.berlios.de/"&gt;a familiar and practical syntax&lt;/a&gt;&amp;nbsp;&amp;hellip; &lt;/div&gt;
@@ -56,6 +56,18 @@ dbw run path/to/Blog.brtx
          <link>http://seb.mondet.org/blog/post/third-post-new-blog-engine.html</link>
          <guid>http://seb.mondet.org/blog/post/third-post-new-blog-engine.html</guid>
          <pubDate>Tue, 26 Apr 2011 09:28:20 +0200</pubDate>
+     </item>
+
+
+    <item>
+         <title>Back From IFIP SEC 2011</title>
+         <description>&lt;div class="p"&gt; Back from 3 days of conference in the beautiful little town of &lt;a href="http://en.wikipedia.org/wiki/Lucerne"&gt;Lucerne&lt;/a&gt;, in Switzerland, where was the &lt;a href="http://sec2011.org/"&gt;IFIP SEC 2011&lt;/a&gt; conference. &lt;/div&gt;
+&lt;div class="p"&gt;  Among the 24 papers presented, at least 2 where based on OCaml work. One paper (Demay et al.) uses and extends  &lt;a href="http://frama-c.com/"&gt;Frama-C&lt;/a&gt; to analyse and instrument C code; the other (ours) generates code from an OCaml program and proves security properties on it thanks to  &lt;a href="http://why.lri.fr/"&gt;Why&lt;/a&gt; and &lt;a href="http://alt-ergo.lri.fr/"&gt;Alt-Ergo&lt;/a&gt;. &lt;/div&gt;
+&lt;div class="p"&gt;  There were funny hacker-style papers as well as boring ones  (and a few which I did not understand&amp;nbsp;&amp;hellip;).  I have put my  &lt;a href="http://smondet.at.ifi.uio.no/resources/report_ifipsec11.html"&gt;notes on the conference&lt;/a&gt; on-line (of course made with &lt;a href="https://github.com/smondet/dibrawi"&gt;Dibrawi&lt;/a&gt;). If you have comments, questions, or if you recognise yourself and do not approve what I have written, do not hesitate to drop me a line.   &lt;/div&gt;
+</description>
+         <link>http://seb.mondet.org/blog/post/ifip-sec-2011.html</link>
+         <guid>http://seb.mondet.org/blog/post/ifip-sec-2011.html</guid>
+         <pubDate>Thu, 16 Jun 2011 14:45:32 +0200</pubDate>
      </item>
 </channel>
 </rss>
