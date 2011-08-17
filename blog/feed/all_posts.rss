@@ -4,8 +4,8 @@
     <title>Seb's Blog: RSS feed for all posts</title>
     <description></description>
     <link>http://seb.mondet.org/blog/</link>
-    <lastBuildDate>Thu, 16 Jun 2011 14:45:35 +0200</lastBuildDate>
-    <pubDate>Thu, 16 Jun 2011 14:45:35 +0200</pubDate>
+    <lastBuildDate>Wed, 17 Aug 2011 21:13:07 +0200</lastBuildDate>
+    <pubDate>Wed, 17 Aug 2011 21:13:07 +0200</pubDate>
     <item>
          <title>Hack Of The Day: PDF Versions And Printers</title>
          <description>&lt;div class="p"&gt;&lt;b&gt;The Problem:&lt;/b&gt; &lt;br/&gt;
@@ -229,6 +229,16 @@ echo "&amp;lt;/body&amp;gt;&amp;lt;/html&amp;gt;" &amp;gt;&amp;gt; slides/index.
          <link>http://seb.mondet.org/blog/post/ifip-sec-2011.html</link>
          <guid>http://seb.mondet.org/blog/post/ifip-sec-2011.html</guid>
          <pubDate>Thu, 16 Jun 2011 14:45:32 +0200</pubDate>
+     </item>
+
+
+    <item>
+         <title>Coq Programming with Subsets</title>
+         <description>&lt;div class="p"&gt;A discussion about learning Coq for programming purposes     (with OCaml extraction) and a &lt;i&gt;first&lt;/i&gt;     dissected Coq development investigating &amp;ldquo;subsets&amp;rdquo;     (the &lt;tt&gt;sig&lt;/tt&gt; type)&amp;nbsp;&amp;hellip; &lt;a href="http://seb.mondet.org/blog/post/coqtests-01-subsets.html"&gt;Read more&lt;/a&gt;.&lt;/div&gt;
+</description>
+         <link>http://seb.mondet.org/blog/post/coqtests-01-subsets.html</link>
+         <guid>http://seb.mondet.org/blog/post/coqtests-01-subsets.html</guid>
+         <pubDate>Wed, 17 Aug 2011 21:01:56 +0200</pubDate>
      </item>
 </channel>
 </rss>
