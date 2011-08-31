@@ -4,8 +4,8 @@
     <title>Seb's Blog: RSS feed for all posts</title>
     <description></description>
     <link>http://seb.mondet.org/blog/</link>
-    <lastBuildDate>Wed, 17 Aug 2011 21:13:07 +0200</lastBuildDate>
-    <pubDate>Wed, 17 Aug 2011 21:13:07 +0200</pubDate>
+    <lastBuildDate>Wed, 31 Aug 2011 10:02:19 +0200</lastBuildDate>
+    <pubDate>Wed, 31 Aug 2011 10:02:19 +0200</pubDate>
     <item>
          <title>Hack Of The Day: PDF Versions And Printers</title>
          <description>&lt;div class="p"&gt;&lt;b&gt;The Problem:&lt;/b&gt; &lt;br/&gt;
@@ -239,6 +239,16 @@ echo "&amp;lt;/body&amp;gt;&amp;lt;/html&amp;gt;" &amp;gt;&amp;gt; slides/index.
          <link>http://seb.mondet.org/blog/post/coqtests-01-subsets.html</link>
          <guid>http://seb.mondet.org/blog/post/coqtests-01-subsets.html</guid>
          <pubDate>Wed, 17 Aug 2011 21:01:56 +0200</pubDate>
+     </item>
+
+
+    <item>
+         <title>Programming Decisions with Coq's Sumbools</title>
+         <description>&lt;div class="p"&gt;A dissected Coq development with some experiments     about the &lt;tt&gt;sumbool&lt;/tt&gt; type&amp;nbsp;&amp;hellip; &lt;a href="http://seb.mondet.org/blog/post/coqtests-02-sumbools.html"&gt;Read more&lt;/a&gt;.&lt;/div&gt;
+</description>
+         <link>http://seb.mondet.org/blog/post/coqtests-02-sumbools.html</link>
+         <guid>http://seb.mondet.org/blog/post/coqtests-02-sumbools.html</guid>
+         <pubDate>Wed, 31 Aug 2011 09:59:59 +0200</pubDate>
      </item>
 </channel>
 </rss>

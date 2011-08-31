@@ -1,0 +1,955 @@
+<!DOCTYPE html
+PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<!-- Generated with Dibrawi, BraceTax, Sebib, and some more hacks -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<style type="text/css">
+body {
+   color: #020202;
+   background-color: #fff;
+}
+div.content {
+   color: #020202;
+   background-color: #fff;
+}
+div.sidepane {
+   color: #020202;
+   background-color: #fff;
+}
+ {
+   color: #020202;
+   background-color: #fff;
+}
+a:link {
+   color: #B41D1D;
+}
+a:visited {
+   color: #671010;
+}
+a:hover {
+   background-color: #BFFCD1;
+}
+tt {
+   color: #1B3A23;
+}pre {
+   color: #1B3A23;
+}code {
+   color: #1B3A23;
+}
+.dbwmixcode {
+   background-color: #BFFCD1;
+}
+div.figure:after {
+   color: #B41D1D;
+}caption.tablefigure:after {
+   color: #B41D1D;
+}
+body {
+   font-family: serif;
+   text-align: left;
+   font-size: 90%;
+
+}
+ {
+   font-family: serif;
+   text-align: left;
+   font-size: 90%;
+
+}
+div.header {
+   text-align: center;
+
+}
+h1 {
+   font-size: 200%;
+   font-variant: small-caps;
+
+}
+div.authors {
+   font-size: 110%;
+
+}
+div.subtitle {
+   font-size: 110%;
+   font-style: italic;
+}
+h2 {
+   font-size: 180%;
+
+}
+h3 {
+   font-size: 150%;
+
+}
+h4 {
+   font-size: 130%;
+
+}
+h5 {
+   font-size: 108%;
+
+}
+a {
+   text-decoration: underline thin;
+}
+tt,code,pre {
+   font-family: monospace;
+
+}
+div.figure,div.tablefigure {
+   font-size: 90%;
+
+}
+.content body {
+   font-family: serif;
+   text-align: justify;
+   font-size: 100%;
+
+}
+.content  {
+   font-family: serif;
+   text-align: justify;
+   font-size: 100%;
+
+}
+.content div.header {
+   text-align: center;
+
+}
+.content h1 {
+   font-size: 200%;
+   font-variant: small-caps;
+
+}
+.content div.authors {
+   font-size: 110%;
+
+}
+.content div.subtitle {
+   font-size: 110%;
+   font-style: italic;
+}
+.content h2 {
+   font-size: 180%;
+
+}
+.content h3 {
+   font-size: 150%;
+
+}
+.content h4 {
+   font-size: 130%;
+
+}
+.content h5 {
+   font-size: 108%;
+
+}
+.content a {
+   text-decoration: underline thin;
+}
+.content tt,code,pre {
+   font-family: monospace;
+
+}
+.content div.figure,div.tablefigure {
+   font-size: 90%;
+
+}
+div.header {
+    text-align: center;
+    border:  #B41D1D solid 5px;
+    padding-top:    2.1em;
+    padding-bottom: 2.05em;
+    margin-bottom: 3em;
+}
+div.p {
+    padding-bottom: 0em;
+}
+div.p + div.p { padding-top: 0.5em; }
+body {overflow: auto;}
+code,pre {overflow: auto}
+blockquote {
+    border-left: 2px solid #020202;
+    padding-left: 1em;
+}
+ul, ol {
+    padding-top: 0em;
+    padding-bottom: 0em;
+    padding-left:  1.8em;
+    margin-top: 0em;
+    margin-bottom: 0em;
+}
+.dibrawicomment:before { content:  "["; }
+.dibrawicomment:after { content: "]"; }
+.dibrawicomment {
+    background-color: yellow;
+    color: red;
+}
+.dibrawimenudir { display: block; }
+         ul  li.dibrawi_menuli {
+           display: inline;
+         } 
+         ul.dibrawi_menuul {
+           padding: 0em;
+           margin: 0em;
+           margin-left: 1em;
+         }
+table.tablefigure {
+    margin-right:auto;
+    margin-left: auto;
+    border-collapse: collapse;
+    min-width: 80%;
+    margin-bottom: 1em;
+}
+caption.tablefigure {
+    caption-side:bottom;
+}
+div.figure:after, caption.tablefigure:after { content: " [" attr(id) "]"; }
+td, th {
+    padding: 0.4em;
+}
+img {
+    border: none;
+    padding-bottom: 0.5em;
+}div.figure, div.tablefigure {
+    text-align: center;
+    font-size:90%;
+    border: thin #959595 solid;
+    padding: 1ex;
+    margin: 1em;
+    width: 90%;
+    margin-left: 5%;
+    margin-right: 0em;
+    clear: both;
+
+}
+small.notebegin { font-size: 70%; vertical-align: super; counter-increment: footnote; }
+small.noteend { font-size: 70%; vertical-align: super; }
+small.noteend:before {  content: counter(footnote) }
+small.note:before { content: counter(footnote) ": " }
+body { counter-reset: section subsection subsubsection footnote; }
+
+small.note {
+    font-size: 76%;
+    clear: right;
+    width: 32%;
+    border: thin #959595 solid;
+    float: right;
+    margin: 0.5em;
+    margin-right: 0em;
+    padding: 0.5em;
+}
+h2 { border: #B41D1D solid 2px; padding: 0.2em; }
+h3 { text-decoration: underline;}
+pre {
+    position: relative; left: 5%; max-width: 90%; clear: left;
+}
+div.sidepane {
+  left: 0.5%; width: 19.000000%; padding: 0.5%;
+  border-right: #B41D1D ridge 1px;
+    top: 2px;
+    position:fixed;
+    overflow: auto;
+    bottom: 2px;
+}
+div.content {
+max-width : 45em; left: 21.000000%; right: 0.5%; padding: 0.2em;
+    top: 2px;
+    position: absolute;
+}
+</style>
+<link rel="shortcut icon" href="http://seb.mondet.org/images/sm.ico">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://seb.mondet.org/blog/feed/all_posts.rss">
+<title>Seb's Blog: Programming Decisions with Coq's Sumbools</title>
+</head>
+<body>
+<div class="content">
+<div class="p"></div>
+<h2 id="Programming_Decisions_with_Coq_s_Sumbools">Programming Decisions with Coq's Sumbools</h2>
+<div class="p"> <small> ➲&nbsp;&nbsp;<b>Date:</b> <i>Wed, 31 Aug 2011 09:59:59 +0200</i>; <b>Tags:</b> <tt>[<a href="../feed/ocaml.rss"><tt>ocaml</tt></a>; <a href="../feed/coq.rss"><tt>coq</tt></a>]</tt>. </small><br/>
+<br/>
+             </div>
+<div class="p">  Today, let's investigate the <tt>sumbool</tt> type. This post follows  <a href="../post/coqtests-01-subsets.html">the one on the <tt>sig</tt> type</a>. It is also a Coq development  <a href="../media/sumbools.v">available on-line</a>.  All the disclaimers still apply here (coq-beginner, nothing &ldquo;new&rdquo;, etc.).  <style type="text/css">.comment { 
+    display: inline;
+    font-family: monospace;
+    color: red; } 
+.code, pre {
+    font-size: 90%;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding: 4px;
+    /* margin-left: 3em;  */
+    /* margin-right: 3em; */
+    display: block;
+    font-family: monospace;  clear: both; } 
+.maincoq {background-color: #ddf; clear: both; text-align: left;} 
+pre {background-color: #eee; } 
+.coqexample {background-color: #eee; clear: both;
+margin-left: 5%; max-width: 92%; }
+
+.id { display: inline; }
+
+.id[type="constructor"] { 
+    color: rgb(60%,0%,0%);
+}
+
+.id[type="var"] { 
+    color: rgb(40%,0%,40%);
+}
+
+.id[type="variable"] { 
+    color: rgb(40%,0%,40%);
+}
+
+.id[type="definition"] { 
+    color: rgb(0%,40%,0%);
+}
+
+.id[type="abbreviation"] { 
+    color: rgb(0%,40%,0%);
+}
+
+.id[type="lemma"] { 
+    color: rgb(0%,40%,0%);
+}
+
+.id[type="instance"] { 
+    color: rgb(0%,40%,0%);
+}
+
+.id[type="projection"] { 
+    color: rgb(0%,40%,0%);
+}
+
+.id[type="method"] { 
+    color: rgb(0%,40%,0%);
+}
+
+.id[type="inductive"] { 
+    color: rgb(0%,0%,80%);
+}
+
+.id[type="record"] { 
+    color: rgb(0%,0%,80%);
+}
+
+.id[type="class"] { 
+    color: rgb(0%,0%,80%);
+}
+
+.id[type="keyword"] { 
+ color : #cf1d1d;
+/*     color: black; */
+}
+</style>  </div>
+<h3 id="The__tt_sumbool__tt__Type">The <tt>sumbool</tt> Type</h3>
+<div class="p">   It is defined in the <a href="http://coq.inria.fr/stdlib/Coq.Init.Specif.html#">Specif</a> module. <tt>sumbool</tt> <i>&lsquo;is a boolean type equipped with the justification of their value&rsquo;:</i> <div class="coqexample"><div class="code">
+<span class="id" type="keyword">Inductive</span> <span class="id" type="var">sumbool</span> (<span class="id" type="var">A</span> <span class="id" type="var">B</span>:<span class="id" type="keyword">Prop</span>) : <span class="id" type="keyword">Set</span> :=<br/>
+&nbsp;&nbsp;| <span class="id" type="var">left</span> : <span class="id" type="var">A</span> -&gt; {<span class="id" type="var">A</span>} + {<span class="id" type="var">B</span>}<br/>
+&nbsp;&nbsp;| <span class="id" type="var">right</span> : <span class="id" type="var">B</span> -&gt; {<span class="id" type="var">A</span>} + {<span class="id" type="var">B</span>}<br/>
+&nbsp;<span class="id" type="var">where </span>"{ A } + { B }" := (<span class="id" type="var">sumbool</span> <span class="id" type="var">A</span> <span class="id" type="var">B</span>) : <span class="id" type="var">type_scope</span>.<br/>
+
+<br/>
+<span class="id" type="keyword">Add</span> <span class="id" type="var">Printing</span> <span class="id" type="var">If</span> <span class="id" type="var">sumbool</span>.<br/>
+</div>
+</div> Indeed, like <tt>bool</tt> and  <a href="http://coq.inria.fr/refman/Reference-Manual004.html#toc15">many other 2-constructors</a> types it can use the &ldquo;<tt>if ... then ... else ...</tt>&rdquo; construct; with the <a href="http://coq.inria.fr/refman/Reference-Manual004.html#@command42">Add Printing If</a> it is also printed this way. </div>
+<div class="p">  It is used everywhere in Coq's standard library. Just by <i>importing</i> standard lists, we get quite a bunch of decision procedures: <div class="maincoq"><div class="code">
+<span class="id" type="keyword">Set</span> <span class="id" type="keyword">Implicit</span> <span class="id" type="var">Arguments</span>.<br/>
+<span class="id" type="keyword">Require</span> <span class="id" type="keyword">Import</span> <span class="id" type="var">List</span>.<br/>
+<span class="id" type="var">Search</span><span class="id" type="var">About</span> <span class="id" type="var">sumbool</span>.<br/>
+</div>
+</div> The search gives about 100 lines of output.  Let's have a closer look at one of them: <div class="maincoq"><div class="code">
+<span class="id" type="keyword">Check</span> <span class="id" type="var">Compare_dec.zerop</span>.<br/>
+</div>
+</div> <pre>
+Compare_dec.zerop
+     : forall n : nat, {n = 0} + {0 &lt; n}
+</pre> We can use it in programs: <div class="maincoq"><div class="code">
+<span class="id" type="keyword">Eval</span> <span class="id" type="tactic">compute</span> <span class="id" type="keyword">in</span> (<span class="id" type="keyword">if</span> <span class="id" type="var">Compare_dec.zerop</span> 42 <span class="id" type="keyword">then</span> 51 <span class="id" type="keyword">else</span> 69).<br/>
+</div>
+</div> <pre>
+= 69
+: nat
+</pre> and extraction works as expected: <div class="maincoq"><div class="code">
+<span class="id" type="var">Extraction</span> <span class="id" type="var">Compare_dec.zerop</span>.<br/>
+</div>
+</div> <!-- Generator: GNU source-highlight 3.1.4
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-style: italic"><span style="color: #9A1900">(** val zerop : nat -&gt; sumbool **)</span></span>
+
+<span style="font-weight: bold"><span style="color: #0000FF">let</span></span> zerop <span style="color: #990000">=</span> <span style="font-weight: bold"><span style="color: #0000FF">function</span></span>
+<span style="color: #990000">|</span> <span style="color: #009900">O</span> <span style="color: #990000">-&gt;</span> <span style="color: #009900">Left</span>
+<span style="color: #990000">|</span> <span style="color: #009900">S</span> n0 <span style="color: #990000">-&gt;</span> <span style="color: #009900">Right</span>
+</tt></pre>
+ </div>
+<div class="p"> Note that it can be made more practical: <div class="maincoq"><div class="code">
+<span class="id" type="var">Extract</span> <span class="id" type="keyword">Inductive</span> <span class="id" type="var">sumbool</span> =&gt; "bool" ["true" "false"].<br/>
+<span class="id" type="var">Extraction</span> <span class="id" type="var">Compare_dec.zerop</span>.<br/>
+</div>
+</div> <!-- Generator: GNU source-highlight 3.1.4
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-style: italic"><span style="color: #9A1900">(** val zerop : nat -&gt; bool **)</span></span>
+
+<span style="font-weight: bold"><span style="color: #0000FF">let</span></span> zerop <span style="color: #990000">=</span> <span style="font-weight: bold"><span style="color: #0000FF">function</span></span>
+<span style="color: #990000">|</span> <span style="color: #009900">O</span> <span style="color: #990000">-&gt;</span> <span style="font-weight: bold"><span style="color: #0000FF">true</span></span>
+<span style="color: #990000">|</span> <span style="color: #009900">S</span> n0 <span style="color: #990000">-&gt;</span> <span style="font-weight: bold"><span style="color: #0000FF">false</span></span>
+</tt></pre>
+ </div>
+<div class="p">   In proofs, <tt>sumbool</tt> gives us something <i>more</i>: the &ldquo;justifications&rdquo;.  Let's compare it with this classical <tt>bool</tt> version: <div class="maincoq"><div class="code">
+<span class="id" type="keyword">Definition</span> <span class="id" type="var">bool_zerop</span> (<span class="id" type="var">n</span> : <span class="id" type="var">nat</span>) :=<br/>
+&nbsp;&nbsp;<span class="id" type="keyword">match</span> <span class="id" type="var">n</span> <span class="id" type="keyword">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id" type="var">O</span> =&gt; <span class="id" type="var">true</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id" type="var">S</span> <span class="id" type="var">_</span> =&gt; <span class="id" type="var">false</span><br/>
+&nbsp;&nbsp;<span class="id" type="keyword">end</span>.<br/>
+</div>
+</div> If we are proving something (even stupid): <div class="maincoq"><div class="code">
+<span class="id" type="keyword">Goal</span>  (<span class="id" type="keyword">if</span> (<span class="id" type="var">Compare_dec.zerop</span> 42) <span class="id" type="keyword">then</span> 51 <span class="id" type="keyword">else</span> 69) = 69.<br/>
+<span class="id" type="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">destruct</span> (<span class="id" type="var">Compare_dec.zerop</span> 42).<br/>
+</div>
+</div> There, we have a <i>hypothesis</i> in the context (i.e. as      a Prop with Coq's default &ldquo;<tt>=</tt>&rdquo;): <pre>
+  e : 42 = 0
+  ============================
+   51 = 69
+</pre> So, that's easy. <div class="maincoq"><div class="code">
+&nbsp;&nbsp;<span class="id" type="tactic">inversion</span> <span class="id" type="var">e</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">reflexivity</span>.<br/>
+&nbsp;&nbsp;<span class="comment">(*&nbsp;Proof&nbsp;completed.&nbsp;*)</span><br/>
+<span class="id" type="keyword">Qed</span>.<br/>
+</div>
+</div> Whereas with <tt>bool_zerop</tt>: <div class="maincoq"><div class="code">
+<span class="id" type="keyword">Goal</span>  (<span class="id" type="keyword">if</span> (<span class="id" type="var">bool_zerop</span> 42) <span class="id" type="keyword">then</span> 51 <span class="id" type="keyword">else</span> 69) = 69.<br/>
+<span class="id" type="keyword">Proof</span>.<br/>
+&nbsp;<span class="id" type="tactic">destruct</span> (<span class="id" type="var">bool_zerop</span> 42).<br/>
+</div>
+</div>  we don't have <i>the knowledge</i>: <pre>  
+  ============================
+   51 = 69
+</pre> It is not impossible (requires a <tt>remember</tt>, and then a few theorems) but much more tedious. <div class="maincoq"><div class="code">
+<span class="id" type="keyword">Abort</span>.<br/>
+</div>
+</div>  </div>
+<div class="p"> Before going further, let's add a few notations: <div class="maincoq"><div class="code">
+<span class="id" type="var">Notation </span>"'Decide_left'" := (<span class="id" type="var">left</span> <span class="id" type="var">_</span> <span class="id" type="var">_</span>).<br/>
+<span class="id" type="var">Notation </span>"'Decide_right'" := (<span class="id" type="var">right</span> <span class="id" type="var">_</span> <span class="id" type="var">_</span>).<br/>
+<span class="id" type="var">Notation </span>"'Decide_with' x" :=<br/>
+&nbsp;&nbsp;(<span class="id" type="keyword">if</span> <span class="id" type="var">x</span> <span class="id" type="keyword">then</span> <span class="id" type="var">Decide_left</span> <span class="id" type="keyword">else</span> <span class="id" type="var">Decide_right</span>) (<span class="id" type="tactic">at</span> <span class="id" type="var">level</span> 42).<br/>
+</div>
+</div>     </div>
+<h3 id="A_Schoolbook_Example">A Schoolbook Example</h3>
+<div class="p">  The common example is the decision about equality of natural numbers <tt>eq_nat_dec</tt> (also explained in <a href="http://adam.chlipala.net/cpdt/html/Subset.html">CPDT</a>). The <i>fixpoint</i> just compares the numbers like <i>anyone</i> would do. All the goals generated by <tt>refine</tt> are equalities and non-equalities, they can be solved by the <a href="http://coq.inria.fr/refman/Reference-Manual011.html#@tactic164">congruence</a> tactic which <i>&lsquo;is a decision procedure for ground equalities with uninterpreted symbols&rsquo;</i>.  <div class="maincoq"><div class="code">
+<span class="id" type="keyword">Definition</span> <span class="id" type="var">eq_nat_dec</span> : <span class="id" type="keyword">forall</span> <span class="id" type="var">n</span> <span class="id" type="var">m</span> : <span class="id" type="var">nat</span>, {<span class="id" type="var">n</span> = <span class="id" type="var">m</span>} + {<span class="id" type="var">n</span> &lt;&gt; <span class="id" type="var">m</span>}.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">refine</span> (<span class="id" type="var">fix</span> <span class="id" type="var">f</span> (<span class="id" type="var">n</span> <span class="id" type="var">m</span> : <span class="id" type="var">nat</span>) : {<span class="id" type="var">n</span> = <span class="id" type="var">m</span>} + {<span class="id" type="var">n</span> &lt;&gt; <span class="id" type="var">m</span>} :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="keyword">match</span> <span class="id" type="var">n</span>, <span class="id" type="var">m</span> <span class="id" type="keyword">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id" type="var">O</span>, <span class="id" type="var">O</span> =&gt; <span class="id" type="var">Decide_left</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id" type="var">S</span> <span class="id" type="var">n'</span>, <span class="id" type="var">S</span> <span class="id" type="var">m'</span> =&gt; <span class="id" type="var">Decide_with</span> (<span class="id" type="var">f</span> <span class="id" type="var">n'</span> <span class="id" type="var">m'</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id" type="var">_</span>, <span class="id" type="var">_</span> =&gt; <span class="id" type="var">Decide_right</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="keyword">end</span>); <span class="id" type="tactic">congruence</span>.<br/>
+<span class="id" type="keyword">Defined</span>.<br/>
+</div>
+</div>  </div>
+<div class="p"> Let's make a few tests: <div class="maincoq"><div class="code">
+<span class="id" type="keyword">Eval</span> <span class="id" type="tactic">compute</span> <span class="id" type="keyword">in</span> <span class="id" type="var">eq_nat_dec</span> 42 42.<br/>
+</div>
+</div> <pre>
+= Decide_left
+: {42 = 42} + {42 &lt;&gt; 42}
+</pre> <div class="maincoq"><div class="code">
+<span class="id" type="keyword">Eval</span> <span class="id" type="tactic">compute</span> <span class="id" type="keyword">in</span> <span class="id" type="var">eq_nat_dec</span> 42 51.<br/>
+</div>
+</div> <pre>
+= Decide_right
+: {42 = 51} + {42 &lt;&gt; 51}
+</pre>  and have a look at some OCaml code: <div class="maincoq"><div class="code">
+<span class="id" type="var">Extract</span> <span class="id" type="keyword">Inductive</span> <span class="id" type="var">sumbool</span> =&gt; "bool" ["true" "false"].<br/>
+<span class="id" type="var">Extraction</span> <span class="id" type="var">eq_nat_dec</span>.<br/>
+</div>
+</div> <!-- Generator: GNU source-highlight 3.1.4
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-style: italic"><span style="color: #9A1900">(** val eq_nat_dec : nat -&gt; nat -&gt; bool **)</span></span>
+
+<span style="font-weight: bold"><span style="color: #0000FF">let</span></span> <span style="font-weight: bold"><span style="color: #0000FF">rec</span></span> eq_nat_dec n m <span style="color: #990000">=</span>
+  <span style="font-weight: bold"><span style="color: #0000FF">match</span></span> n <span style="font-weight: bold"><span style="color: #0000FF">with</span></span>
+  <span style="color: #990000">|</span> <span style="color: #009900">O</span> <span style="color: #990000">-&gt;</span>
+    <span style="color: #990000">(</span><span style="font-weight: bold"><span style="color: #0000FF">match</span></span> m <span style="font-weight: bold"><span style="color: #0000FF">with</span></span>
+     <span style="color: #990000">|</span> <span style="color: #009900">O</span> <span style="color: #990000">-&gt;</span> <span style="font-weight: bold"><span style="color: #0000FF">true</span></span>
+     <span style="color: #990000">|</span> <span style="color: #009900">S</span> n0 <span style="color: #990000">-&gt;</span> <span style="font-weight: bold"><span style="color: #0000FF">false</span></span><span style="color: #990000">)</span>
+  <span style="color: #990000">|</span> <span style="color: #009900">S</span> n' <span style="color: #990000">-&gt;</span>
+    <span style="color: #990000">(</span><span style="font-weight: bold"><span style="color: #0000FF">match</span></span> m <span style="font-weight: bold"><span style="color: #0000FF">with</span></span>
+     <span style="color: #990000">|</span> <span style="color: #009900">O</span> <span style="color: #990000">-&gt;</span> <span style="font-weight: bold"><span style="color: #0000FF">false</span></span>
+     <span style="color: #990000">|</span> <span style="color: #009900">S</span> m' <span style="color: #990000">-&gt;</span> eq_nat_dec n' m'<span style="color: #990000">)</span>
+</tt></pre>
+ </div>
+<div class="p">    </div>
+<div class="p"> For automatically dealing with this kind of functions, there is a tactic called <tt><a href="http://coq.inria.fr/refman/Reference-Manual011.html#@tactic119">decide equality</a></tt>. It solves <i>&lsquo;a goal of the form <tt>forall x y:R, {x=y}+{~x=y}</tt>, where <tt>R</tt> is an inductive type such that its constructors do not take proofs or functions as arguments, nor objects in dependent types&rsquo;</i>: <div class="maincoq"><div class="code">
+<span class="id" type="keyword">Definition</span> <span class="id" type="var">eq_nat_autodec</span> (<span class="id" type="var">n</span> <span class="id" type="var">m</span> : <span class="id" type="var">nat</span>) : {<span class="id" type="var">n</span> = <span class="id" type="var">m</span>} + {<span class="id" type="var">n</span> &lt;&gt; <span class="id" type="var">m</span>}.<br/>
+&nbsp;&nbsp;<span class="id" type="var">decide</span> <span class="id" type="var">equality</span>.<br/>
+<span class="id" type="keyword">Defined</span>.<br/>
+</div>
+</div> In this case, the code is as beautiful as before: <div class="maincoq"><div class="code">
+<span class="id" type="var">Extraction</span> <span class="id" type="var">eq_nat_autodec</span>.<br/>
+</div>
+</div> <!-- Generator: GNU source-highlight 3.1.4
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-style: italic"><span style="color: #9A1900">(** val eq_nat_autodec : nat -&gt; nat -&gt; bool **)</span></span>
+
+<span style="font-weight: bold"><span style="color: #0000FF">let</span></span> <span style="font-weight: bold"><span style="color: #0000FF">rec</span></span> eq_nat_autodec n m0 <span style="color: #990000">=</span>
+  <span style="font-weight: bold"><span style="color: #0000FF">match</span></span> n <span style="font-weight: bold"><span style="color: #0000FF">with</span></span>
+  <span style="color: #990000">|</span> <span style="color: #009900">O</span> <span style="color: #990000">-&gt;</span>
+    <span style="color: #990000">(</span><span style="font-weight: bold"><span style="color: #0000FF">match</span></span> m0 <span style="font-weight: bold"><span style="color: #0000FF">with</span></span>
+     <span style="color: #990000">|</span> <span style="color: #009900">O</span> <span style="color: #990000">-&gt;</span> <span style="font-weight: bold"><span style="color: #0000FF">true</span></span>
+     <span style="color: #990000">|</span> <span style="color: #009900">S</span> n0 <span style="color: #990000">-&gt;</span> <span style="font-weight: bold"><span style="color: #0000FF">false</span></span><span style="color: #990000">)</span>
+  <span style="color: #990000">|</span> <span style="color: #009900">S</span> n0 <span style="color: #990000">-&gt;</span>
+    <span style="color: #990000">(</span><span style="font-weight: bold"><span style="color: #0000FF">match</span></span> m0 <span style="font-weight: bold"><span style="color: #0000FF">with</span></span>
+     <span style="color: #990000">|</span> <span style="color: #009900">O</span> <span style="color: #990000">-&gt;</span> <span style="font-weight: bold"><span style="color: #0000FF">false</span></span>
+     <span style="color: #990000">|</span> <span style="color: #009900">S</span> n1 <span style="color: #990000">-&gt;</span> eq_nat_autodec n0 n1<span style="color: #990000">)</span>
+</tt></pre>
+    </div>
+<h3 id="Decisions_on_Character_Strings">Decisions on Character Strings</h3>
+<div class="p">  Let's try to do something with the <tt>sumbool</tt> type&nbsp;&hellip;  In the same time, we start exploring some stuff from the  standard library: <a href="http://coq.inria.fr/stdlib/Coq.Strings.Ascii.html">Ascii</a> and <a href="http://coq.inria.fr/stdlib/Coq.Strings.String.html">String</a>.  <div class="maincoq"><div class="code">
+<span class="id" type="keyword">Require</span> <span class="id" type="keyword">Import</span> <span class="id" type="var">Ascii</span> <span class="id" type="var">String</span>.<br/>
+</div>
+</div> It gives us <div class="coqexample"><div class="code">
+<span class="id" type="keyword">Inductive</span> <span class="id" type="var">string</span> : <span class="id" type="keyword">Set</span> :=<br/>
+&nbsp;&nbsp;| <span class="id" type="var">EmptyString</span> : <span class="id" type="var">string</span><br/>
+&nbsp;&nbsp;| <span class="id" type="var">String</span> : <span class="id" type="var">ascii</span> -&gt; <span class="id" type="var">string</span> -&gt; <span class="id" type="var">string</span>.<br/>
+</div>
+</div> where  <div class="coqexample"><div class="code">
+<span class="id" type="keyword">Inductive</span> <span class="id" type="var">ascii</span> : <span class="id" type="keyword">Set</span> := <span class="id" type="var">Ascii</span> (<span class="id" type="var">_</span> <span class="id" type="var">_</span> <span class="id" type="var">_</span> <span class="id" type="var">_</span> <span class="id" type="var">_</span> <span class="id" type="var">_</span> <span class="id" type="var">_</span> <span class="id" type="var">_</span> : <span class="id" type="var">bool</span>).<br/>
+<span class="id" type="keyword">Definition</span> <span class="id" type="var">zero</span> := <br/>
+&nbsp;&nbsp;<span class="id" type="var">Ascii</span> <span class="id" type="var">false</span> <span class="id" type="var">false</span> <span class="id" type="var">false</span> <span class="id" type="var">false</span> <span class="id" type="var">false</span> <span class="id" type="var">false</span> <span class="id" type="var">false</span> <span class="id" type="var">false</span>.<br/>
+<span class="id" type="keyword">Definition</span> <span class="id" type="var">one</span> :=<br/>
+&nbsp;&nbsp;<span class="id" type="var">Ascii</span> <span class="id" type="var">true</span> <span class="id" type="var">false</span> <span class="id" type="var">false</span> <span class="id" type="var">false</span> <span class="id" type="var">false</span> <span class="id" type="var">false</span> <span class="id" type="var">false</span> <span class="id" type="var">false</span>.<br/>
+</div>
+</div> So, strings here are lists of 8-bits integers, lower bits on the left.  </div>
+<h4 id="The_String_Equality">The String Equality</h4>
+<div class="p">  Let's write <tt>string_eq_dec</tt>, the equality between strings,  using the lower-lever <tt>ascii_dec</tt>:  <div class="maincoq"><div class="code">
+<span class="id" type="keyword">Check</span> <span class="id" type="var">ascii_dec</span>.<br/>
+</div>
+</div> <pre>
+ascii_dec
+     : forall a b : ascii, {a = b} + {a &lt;&gt; b}
+</pre>  <div class="maincoq"><div class="code">
+<span class="id" type="keyword">Definition</span> <span class="id" type="var">string_eq_dec</span>: <br/>
+&nbsp;&nbsp;<span class="id" type="keyword">forall</span> <span class="id" type="var">sa</span> <span class="id" type="var">sb</span> : <span class="id" type="var">string</span>, { <span class="id" type="var">sa</span> = <span class="id" type="var">sb</span> } + { <span class="id" type="var">sa</span> &lt;&gt; <span class="id" type="var">sb</span> }.<br/>
+<span class="id" type="tactic">refine</span> (<span class="id" type="var">fix</span> <span class="id" type="var">frec</span> (<span class="id" type="var">sa</span> <span class="id" type="var">sb</span> : <span class="id" type="var">string</span>): <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{ <span class="id" type="var">sa</span> = <span class="id" type="var">sb</span> } + { <span class="id" type="var">sa</span> &lt;&gt; <span class="id" type="var">sb</span> } :=<br/>
+&nbsp;&nbsp;<span class="id" type="keyword">match</span> <span class="id" type="var">sa</span> <span class="id" type="keyword">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id" type="var">EmptyString</span> =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="keyword">match</span> <span class="id" type="var">sb</span> <span class="id" type="keyword">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id" type="var">EmptyString</span> =&gt; <span class="id" type="var">Decide_left</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id" type="var">String</span> <span class="id" type="var">_</span> <span class="id" type="var">_</span> =&gt; <span class="id" type="var">Decide_right</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="keyword">end</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id" type="var">String</span> <span class="id" type="var">ch_a</span> <span class="id" type="var">tl_a</span> =&gt; <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="keyword">match</span> <span class="id" type="var">sb</span> <span class="id" type="keyword">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id" type="var">EmptyString</span> =&gt; <span class="id" type="var">Decide_right</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id" type="var">String</span> <span class="id" type="var">ch_b</span> <span class="id" type="var">tl_b</span> =&gt; <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="keyword">if</span> <span class="id" type="var">ascii_dec</span> <span class="id" type="var">ch_a</span> <span class="id" type="var">ch_b</span> <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="keyword">then</span> <span class="id" type="var">Decide_with</span> (<span class="id" type="var">frec</span> <span class="id" type="var">tl_a</span> <span class="id" type="var">tl_b</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="keyword">else</span> <span class="id" type="var">Decide_right</span>         <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="keyword">end</span><br/>
+&nbsp;&nbsp;<span class="id" type="keyword">end</span>); <span class="id" type="tactic">congruence</span>.<br/>
+<span class="id" type="keyword">Defined</span>.<br/>
+</div>
+</div> </div>
+<div class="p">  Here one single <tt>decide equality</tt> does not seem to be enough, but repeating it gives <i>something</i>: <div class="maincoq"><div class="code">
+<span class="id" type="keyword">Definition</span> <span class="id" type="var">string_eq_autodec</span>:<br/>
+&nbsp;&nbsp;<span class="id" type="keyword">forall</span> <span class="id" type="var">sa</span> <span class="id" type="var">sb</span> : <span class="id" type="var">string</span>, { <span class="id" type="var">sa</span> = <span class="id" type="var">sb</span> } + { <span class="id" type="var">sa</span> &lt;&gt; <span class="id" type="var">sb</span> }.<br/>
+<span class="id" type="tactic">repeat</span> <span class="id" type="var">decide</span> <span class="id" type="var">equality</span>.<br/>
+<span class="id" type="keyword">Defined</span>.<br/>
+</div>
+</div> The problem is that the <tt>repeat</tt> goes too far <i>inside</i> the Ascii characters.  <div class="maincoq"><div class="code">
+<span class="id" type="var">Extraction</span> <span class="id" type="var">string_eq_autodec</span>.<br/>
+</div>
+</div> It gives an ugly piece of code comparing every single bit of Ascii character: <!-- Generator: GNU source-highlight 3.1.4
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-style: italic"><span style="color: #9A1900">(** val string_eq_autodec : string -&gt; string -&gt; bool **)</span></span>
+
+<span style="font-weight: bold"><span style="color: #0000FF">let</span></span> <span style="font-weight: bold"><span style="color: #0000FF">rec</span></span> string_eq_autodec s sb0 <span style="color: #990000">=</span>
+  <span style="font-weight: bold"><span style="color: #0000FF">match</span></span> s <span style="font-weight: bold"><span style="color: #0000FF">with</span></span>
+  <span style="color: #990000">|</span> <span style="color: #009900">EmptyString</span> <span style="color: #990000">-&gt;</span>
+    <span style="color: #990000">(</span><span style="font-weight: bold"><span style="color: #0000FF">match</span></span> sb0 <span style="font-weight: bold"><span style="color: #0000FF">with</span></span>
+     <span style="color: #990000">|</span> <span style="color: #009900">EmptyString</span> <span style="color: #990000">-&gt;</span> <span style="font-weight: bold"><span style="color: #0000FF">true</span></span>
+     <span style="color: #990000">|</span> <span style="color: #009900">String</span> <span style="color: #990000">(</span>a<span style="color: #990000">,</span> s0<span style="color: #990000">)</span> <span style="color: #990000">-&gt;</span> <span style="font-weight: bold"><span style="color: #0000FF">false</span></span><span style="color: #990000">)</span>
+  <span style="color: #990000">|</span> <span style="color: #009900">String</span> <span style="color: #990000">(</span>a<span style="color: #990000">,</span> s0<span style="color: #990000">)</span> <span style="color: #990000">-&gt;</span>
+    <span style="color: #990000">(</span><span style="font-weight: bold"><span style="color: #0000FF">match</span></span> sb0 <span style="font-weight: bold"><span style="color: #0000FF">with</span></span>
+     <span style="color: #990000">|</span> <span style="color: #009900">EmptyString</span> <span style="color: #990000">-&gt;</span> <span style="font-weight: bold"><span style="color: #0000FF">false</span></span>
+     <span style="color: #990000">|</span> <span style="color: #009900">String</span> <span style="color: #990000">(</span>a0<span style="color: #990000">,</span> s1<span style="color: #990000">)</span> <span style="color: #990000">-&gt;</span>
+       <span style="font-weight: bold"><span style="color: #0000FF">let</span></span> <span style="color: #009900">Ascii</span> <span style="color: #990000">(</span>x<span style="color: #990000">,</span> x0<span style="color: #990000">,</span> x1<span style="color: #990000">,</span> x2<span style="color: #990000">,</span> x3<span style="color: #990000">,</span> x4<span style="color: #990000">,</span> x5<span style="color: #990000">,</span> x6<span style="color: #990000">)</span> <span style="color: #990000">=</span> a <span style="font-weight: bold"><span style="color: #0000FF">in</span></span>
+       <span style="font-weight: bold"><span style="color: #0000FF">let</span></span> <span style="color: #009900">Ascii</span> <span style="color: #990000">(</span>b7<span style="color: #990000">,</span> b8<span style="color: #990000">,</span> b9<span style="color: #990000">,</span> b10<span style="color: #990000">,</span> b11<span style="color: #990000">,</span> b12<span style="color: #990000">,</span> b13<span style="color: #990000">,</span> b14<span style="color: #990000">)</span> <span style="color: #990000">=</span> a0 <span style="font-weight: bold"><span style="color: #0000FF">in</span></span>
+       <span style="color: #990000">(</span><span style="font-weight: bold"><span style="color: #0000FF">match</span></span> x <span style="font-weight: bold"><span style="color: #0000FF">with</span></span>
+        <span style="color: #990000">|</span> <span style="color: #009900">True</span> <span style="color: #990000">-&gt;</span>
+          <span style="color: #990000">(</span><span style="font-weight: bold"><span style="color: #0000FF">match</span></span> b7 <span style="font-weight: bold"><span style="color: #0000FF">with</span></span>
+           <span style="color: #990000">|</span> <span style="color: #009900">True</span> <span style="color: #990000">-&gt;</span>
+             <span style="color: #990000">(</span><span style="font-weight: bold"><span style="color: #0000FF">match</span></span> x0 <span style="font-weight: bold"><span style="color: #0000FF">with</span></span>
+              <span style="color: #990000">|</span> <span style="color: #009900">True</span> <span style="color: #990000">-&gt;</span>
+              
+                  <span style="font-style: italic"><span style="color: #9A1900">(* ... hundreds of lines ... *)</span></span>
+</tt></pre>
+ </div>
+<div class="p">  The <i>hand-written</i> one looks much better: <div class="maincoq"><div class="code">
+<span class="id" type="var">Extraction</span> <span class="id" type="var">string_eq_dec</span>.<br/>
+</div>
+</div> <!-- Generator: GNU source-highlight 3.1.4
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-style: italic"><span style="color: #9A1900">(** val string_eq_dec : string -&gt; string -&gt; bool **)</span></span>
+
+<span style="font-weight: bold"><span style="color: #0000FF">let</span></span> <span style="font-weight: bold"><span style="color: #0000FF">rec</span></span> string_eq_dec sa sb <span style="color: #990000">=</span>
+  <span style="font-weight: bold"><span style="color: #0000FF">match</span></span> sa <span style="font-weight: bold"><span style="color: #0000FF">with</span></span>
+  <span style="color: #990000">|</span> <span style="color: #009900">EmptyString</span> <span style="color: #990000">-&gt;</span>
+    <span style="color: #990000">(</span><span style="font-weight: bold"><span style="color: #0000FF">match</span></span> sb <span style="font-weight: bold"><span style="color: #0000FF">with</span></span>
+     <span style="color: #990000">|</span> <span style="color: #009900">EmptyString</span> <span style="color: #990000">-&gt;</span> <span style="font-weight: bold"><span style="color: #0000FF">true</span></span>
+     <span style="color: #990000">|</span> <span style="color: #009900">String</span> <span style="color: #990000">(</span>a<span style="color: #990000">,</span> s<span style="color: #990000">)</span> <span style="color: #990000">-&gt;</span> <span style="font-weight: bold"><span style="color: #0000FF">false</span></span><span style="color: #990000">)</span>
+  <span style="color: #990000">|</span> <span style="color: #009900">String</span> <span style="color: #990000">(</span>ch_a<span style="color: #990000">,</span> tl_a<span style="color: #990000">)</span> <span style="color: #990000">-&gt;</span>
+    <span style="color: #990000">(</span><span style="font-weight: bold"><span style="color: #0000FF">match</span></span> sb <span style="font-weight: bold"><span style="color: #0000FF">with</span></span>
+     <span style="color: #990000">|</span> <span style="color: #009900">EmptyString</span> <span style="color: #990000">-&gt;</span> <span style="font-weight: bold"><span style="color: #0000FF">false</span></span>
+     <span style="color: #990000">|</span> <span style="color: #009900">String</span> <span style="color: #990000">(</span>ch_b<span style="color: #990000">,</span> tl_b<span style="color: #990000">)</span> <span style="color: #990000">-&gt;</span>
+       <span style="font-weight: bold"><span style="color: #0000FF">if</span></span> ascii_dec ch_a ch_b <span style="font-weight: bold"><span style="color: #0000FF">then</span></span>
+         string_eq_dec tl_a tl_b
+       <span style="font-weight: bold"><span style="color: #0000FF">else</span></span>
+         <span style="font-weight: bold"><span style="color: #0000FF">false</span></span><span style="color: #990000">)</span>
+</tt></pre>
+   </div>
+<h4 id="Lexicographic_Order">Lexicographic Order</h4>
+<div class="p">  We now try to specify and implement the lexicographic order on strings. </div>
+<div class="p">  </div>
+<h5 id="Specification">Specification</h5>
+<div class="p"> For the order  on Ascii characters,  we will use <tt>nat_of_ascii</tt> and then the order on naturals. There are a few theorems on that embedding: <div class="maincoq"><div class="code">
+<span class="id" type="keyword">Check</span> <span class="id" type="var">ascii_nat_embedding</span>.<br/>
+</div>
+</div> <pre>
+ascii_nat_embedding
+     : forall a : ascii, ascii_of_nat (nat_of_ascii a) = a
+</pre>  <div class="maincoq"><div class="code">
+<span class="id" type="keyword">Check</span> <span class="id" type="var">nat_ascii_embedding</span>.<br/>
+</div>
+</div> <pre>
+nat_ascii_embedding
+     : forall n : nat,
+         n &lt; 256 -&gt; nat_of_ascii (ascii_of_nat n) = n
+</pre>    </div>
+<div class="p"> We first specify what it <i>means</i> for 2 strings to be in lexicographic order. <div class="maincoq"><div class="code">
+<span class="id" type="keyword">Inductive</span> <span class="id" type="var">in_lex_order</span>: <span class="id" type="var">string</span> -&gt; <span class="id" type="var">string</span> -&gt; <span class="id" type="keyword">Prop</span> :=<br/>
+| <span class="id" type="var">lexord_empty_strings</span>:   <span class="comment">(*&nbsp;""&nbsp;&lt;=&nbsp;""&nbsp;*)</span><br/>
+&nbsp;&nbsp;<span class="id" type="var">in_lex_order</span> <span class="id" type="var">EmptyString</span> <span class="id" type="var">EmptyString</span><br/>
+| <span class="id" type="var">lexord_chars_different</span>:  <span class="comment">(*&nbsp;"A..."&nbsp;&lt;=&nbsp;"B..."&nbsp;*)</span><br/>
+&nbsp;&nbsp;<span class="id" type="keyword">forall</span> (<span class="id" type="var">c1</span> <span class="id" type="var">c2</span>: <span class="id" type="var">ascii</span>) (<span class="id" type="var">s1</span> <span class="id" type="var">s2</span>: <span class="id" type="var">string</span>),<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="var">nat_of_ascii</span> <span class="id" type="var">c1</span> &lt; <span class="id" type="var">nat_of_ascii</span> <span class="id" type="var">c2</span> -&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="var">in_lex_order</span> (<span class="id" type="var">String</span> <span class="id" type="var">c1</span> <span class="id" type="var">s1</span>) (<span class="id" type="var">String</span> <span class="id" type="var">c2</span> <span class="id" type="var">s2</span>)<br/>
+| <span class="id" type="var">lexord_chars_equal</span>:     <span class="comment">(*&nbsp;s1&nbsp;&lt;=&nbsp;s2&nbsp;&nbsp;-&gt;&nbsp;&nbsp;&nbsp;As1&nbsp;&lt;=&nbsp;As2&nbsp;*)</span><br/>
+&nbsp;&nbsp;<span class="id" type="keyword">forall</span> (<span class="id" type="var">c</span>: <span class="id" type="var">ascii</span>) (<span class="id" type="var">s1</span> <span class="id" type="var">s2</span>: <span class="id" type="var">string</span>),<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="var">in_lex_order</span> <span class="id" type="var">s1</span> <span class="id" type="var">s2</span> -&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="var">in_lex_order</span> (<span class="id" type="var">String</span> <span class="id" type="var">c</span> <span class="id" type="var">s1</span>) (<span class="id" type="var">String</span> <span class="id" type="var">c</span> <span class="id" type="var">s2</span>)<br/>
+| <span class="id" type="var">lexord_string_shorter</span>: <span class="comment">(*&nbsp;"aaa"&nbsp;&lt;=&nbsp;"aaaaa"&nbsp;*)</span><br/>
+&nbsp;&nbsp;<span class="id" type="keyword">forall</span> <span class="id" type="var">s</span>, <span class="id" type="var">in_lex_order</span> <span class="id" type="var">EmptyString</span> <span class="id" type="var">s</span>.<br/>
+</div>
+</div>  </div>
+<div class="p"> We add the 4 constructors to <tt>auto</tt>'s database. <div class="maincoq"><div class="code">
+<span class="id" type="keyword">Hint</span> <span class="id" type="var">Constructors</span> <span class="id" type="var">in_lex_order</span>.<br/>
+</div>
+</div>  </div>
+<div class="p"> Let's check it with a few examples<small class="notebegin">(</small><small class="note">Of course, it is by doing the examples that I got the inductive definition right little by little&nbsp;;)</small><small class="noteend">)</small>&nbsp;&hellip;  <div class="maincoq"><div class="code">
+<span class="id" type="keyword">Example</span> <span class="id" type="var">ex_lex_01</span>: <span class="id" type="var">in_lex_order</span> "AAA" "AAB".<br/>
+<span class="id" type="keyword">Proof</span>. <span class="id" type="tactic">auto</span>. <span class="id" type="keyword">Qed</span>.<br/>
+<span class="id" type="keyword">Example</span> <span class="id" type="var">ex_lex_02</span>: <span class="id" type="var">in_lex_order</span> "AAA" "AAA".<br/>
+<span class="id" type="keyword">Proof</span>. <span class="id" type="tactic">auto</span>. <span class="id" type="keyword">Qed</span>.<br/>
+</div>
+</div> <tt>ex_lex_03</tt> made me fight a bit. Here is the first version: <div class="maincoq"><div class="code">
+<span class="id" type="keyword">Example</span> <span class="id" type="var">ex_lex_03</span>: ~ <span class="id" type="var">in_lex_order</span> "AAB" "AAA".<br/>
+<span class="id" type="keyword">Proof</span>. <span class="id" type="tactic">unfold</span> <span class="id" type="var">not</span>. <span class="id" type="tactic">intros</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="var">Time</span> <span class="id" type="tactic">repeat</span> <span class="id" type="keyword">match</span> <span class="id" type="var">goal</span> <span class="id" type="keyword">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="var">H</span>: <span class="id" type="var">in_lex_order</span> <span class="id" type="var">_</span> <span class="id" type="var">_</span> |- <span class="id" type="var">_</span> =&gt; <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">inversion</span> <span class="id" type="var">H</span>; <span class="id" type="tactic">clear</span> <span class="id" type="var">H</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="keyword">end</span>;<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">repeat</span> <span class="id" type="keyword">match</span> <span class="id" type="var">goal</span> <span class="id" type="keyword">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="var">H</span>: <span class="id" type="var">nat_of_ascii</span> <span class="id" type="var">_</span> &lt; <span class="id" type="var">nat_of_ascii</span> <span class="id" type="var">_</span> |- <span class="id" type="var">_</span> =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">compute</span> <span class="id" type="keyword">in</span> <span class="id" type="var">H</span> <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="keyword">end</span>;<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">repeat</span> <span class="id" type="keyword">match</span> <span class="id" type="var">goal</span> <span class="id" type="keyword">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="var">H</span>: <span class="id" type="var">S</span> <span class="id" type="var">_</span> &lt;=  <span class="id" type="var">_</span> |- <span class="id" type="var">_</span> =&gt; <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">inversion</span> <span class="id" type="var">H</span>; <span class="id" type="tactic">clear</span> <span class="id" type="var">H</span>; <span class="id" type="tactic">subst</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="keyword">end</span>.<br/>
+&nbsp;&nbsp;<span class="comment">(*&nbsp;Proof&nbsp;Completed.&nbsp;*)</span><br/>
+</div>
+</div> After forcing the unfolding of <tt>not</tt>,    
+<ul>
+    <li> we invert all the hypotheses using our inductive proposition;    </li>
+<li> we force the computation of the <tt>nat_of_ascii</tt> functions;    </li>
+<li> we invert the (<i>false</i>) inequalities.    </li>
+</ul>
+ We use <a href="http://coq.inria.fr/refman/Reference-Manual009.html#@command156">Time</a> to see that this makes <i>a lot</i> of steps:   <pre>
+Proof completed.
+Finished transaction in 1. secs (0.u,1.71174s)
+</pre> The type-checking of the proof gets even worse:  <div class="maincoq"><div class="code">
+<span class="id" type="var">Time</span> <span class="id" type="keyword">Qed</span>.<br/>
+</div>
+</div> <pre>
+ex_lex_03 is defined
+Finished transaction in 8. secs (6.997937u,0.046993s)
+</pre>   </div>
+<div class="p"> The problem is the last repeated step, on the inequalities. Just remember, when we play with naturals, <tt>omega</tt> is our friend. <div class="maincoq"><div class="code">
+<span class="id" type="keyword">Require</span> <span class="id" type="keyword">Import</span> <span class="id" type="var">Omega</span>.<br/>
+<span class="id" type="keyword">Example</span> <span class="id" type="var">ex_lex_03'</span>: ~ <span class="id" type="var">in_lex_order</span> "AAB" "AAA".<br/>
+<span class="id" type="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">unfold</span> <span class="id" type="var">not</span>; <span class="id" type="tactic">intros</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">repeat</span> <span class="id" type="keyword">match</span> <span class="id" type="var">goal</span> <span class="id" type="keyword">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="var">H</span>: <span class="id" type="var">in_lex_order</span> <span class="id" type="var">_</span> <span class="id" type="var">_</span> |- <span class="id" type="var">_</span> =&gt; <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">inversion</span> <span class="id" type="var">H</span>; <span class="id" type="tactic">clear</span> <span class="id" type="var">H</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="keyword">end</span>;<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">repeat</span> <span class="id" type="keyword">match</span> <span class="id" type="var">goal</span> <span class="id" type="keyword">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="var">H</span>: <span class="id" type="var">nat_of_ascii</span> <span class="id" type="var">_</span> &lt; <span class="id" type="var">nat_of_ascii</span> <span class="id" type="var">_</span> |- <span class="id" type="var">_</span> =&gt; <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">compute</span> <span class="id" type="keyword">in</span> <span class="id" type="var">H</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="keyword">end</span>;<br/>
+&nbsp;&nbsp;<span class="id" type="keyword">match</span> <span class="id" type="var">goal</span> <span class="id" type="keyword">with</span> <span class="id" type="var">H</span>: <span class="id" type="var">S</span> <span class="id" type="var">_</span> &lt;=  <span class="id" type="var">_</span> |- <span class="id" type="var">_</span> =&gt; <span class="id" type="tactic">omega</span> <span class="id" type="keyword">end</span>.<br/>
+<span class="id" type="var">Time</span> <span class="id" type="keyword">Qed</span>.<br/>
+</div>
+</div> <pre>
+ex_lex_03' is defined
+Finished transaction in 0. secs (0.040994u,0.s)
+</pre>  <div class="maincoq"><div class="code">
+<span class="id" type="keyword">Example</span> <span class="id" type="var">ex_lex_04</span>: <span class="id" type="var">in_lex_order</span> "AAA" "AAAA".<br/>
+<span class="id" type="keyword">Proof</span>. <span class="id" type="tactic">auto</span>. <span class="id" type="keyword">Qed</span>.<br/>
+</div>
+</div> <tt>ex_lex_05</tt> works like <tt>ex_lex_03</tt>: <div class="maincoq"><div class="code">
+<span class="id" type="keyword">Example</span> <span class="id" type="var">ex_lex_05</span>: ~ <span class="id" type="var">in_lex_order</span> "AAAA" "AAA".<br/>
+<span class="id" type="keyword">Proof</span>. <span class="id" type="tactic">unfold</span> <span class="id" type="var">not</span>. <span class="id" type="tactic">intros</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">repeat</span> <span class="id" type="keyword">match</span> <span class="id" type="var">goal</span> <span class="id" type="keyword">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="var">H</span>: <span class="id" type="var">in_lex_order</span> <span class="id" type="var">_</span> <span class="id" type="var">_</span> |- <span class="id" type="var">_</span> =&gt; <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">inversion</span> <span class="id" type="var">H</span>; <span class="id" type="tactic">clear</span> <span class="id" type="var">H</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="keyword">end</span>;<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">repeat</span> <span class="id" type="keyword">match</span> <span class="id" type="var">goal</span> <span class="id" type="keyword">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="var">H</span>: <span class="id" type="var">nat_of_ascii</span> <span class="id" type="var">_</span> &lt; <span class="id" type="var">nat_of_ascii</span> <span class="id" type="var">_</span> |- <span class="id" type="var">_</span> =&gt; <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">compute</span> <span class="id" type="keyword">in</span> <span class="id" type="var">H</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="keyword">end</span>;<br/>
+&nbsp;&nbsp;<span class="id" type="keyword">match</span> <span class="id" type="var">goal</span> <span class="id" type="keyword">with</span> <span class="id" type="var">H</span>: <span class="id" type="var">S</span> <span class="id" type="var">_</span> &lt;=  <span class="id" type="var">_</span> |- <span class="id" type="var">_</span> =&gt; <span class="id" type="tactic">omega</span> <span class="id" type="keyword">end</span>.<br/>
+<span class="id" type="keyword">Qed</span>.<br/>
+</div>
+</div>   </div>
+<h5 id="Implementation">Implementation</h5>
+<div class="p">  That was the specification; now the implementation. We just give a name to the intended return type:  <div class="maincoq"><div class="code">
+<span class="id" type="keyword">Definition</span> <span class="id" type="var">lexicographic_decision</span> (<span class="id" type="var">a</span> <span class="id" type="var">b</span> : <span class="id" type="var">string</span>) := <br/>
+&nbsp;&nbsp;{ <span class="id" type="var">in_lex_order</span> <span class="id" type="var">a</span> <span class="id" type="var">b</span> } + { ~ (<span class="id" type="var">in_lex_order</span> <span class="id" type="var">a</span> <span class="id" type="var">b</span>) }.<br/>
+</div>
+</div>  </div>
+<div class="p"> First, we will need this lemma about <tt>nat_of_ascii</tt>.  <div class="maincoq"><div class="code">
+<span class="id" type="keyword">Lemma</span> <span class="id" type="var">nat_of_ascii_injective</span>: <br/>
+&nbsp;&nbsp;<span class="id" type="keyword">forall</span> <span class="id" type="var">c1</span> <span class="id" type="var">c2</span>, <span class="id" type="var">nat_of_ascii</span> <span class="id" type="var">c1</span> = <span class="id" type="var">nat_of_ascii</span> <span class="id" type="var">c2</span> -&gt; <span class="id" type="var">c1</span> = <span class="id" type="var">c2</span>.<br/>
+<span class="id" type="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">intros</span>; <span class="id" type="tactic">simpl</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">assert</span> (<span class="id" type="var">ascii_of_nat</span> (<span class="id" type="var">nat_of_ascii</span> <span class="id" type="var">c1</span>) = <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="var">ascii_of_nat</span> (<span class="id" type="var">nat_of_ascii</span> <span class="id" type="var">c2</span>))<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="keyword">as</span> <span class="id" type="var">Hinvol</span>. <span class="id" type="tactic">auto</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">repeat</span> <span class="id" type="tactic">rewrite</span> <span class="id" type="var">ascii_nat_embedding</span> <span class="id" type="keyword">in</span> <span class="id" type="var">Hinvol</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">trivial</span>.<br/>
+<span class="id" type="keyword">Qed</span>.<br/>
+</div>
+</div>  </div>
+<div class="p"> <tt>nat_of_ascii_injective</tt> is used to prove the following one, which will allow <i>intuition auto</i> to finish its job <i>nicely</i>:  <div class="maincoq"><div class="code">
+<span class="id" type="keyword">Lemma</span> <span class="id" type="var">tricky_step_in_decide_lex_order</span>:<br/>
+&nbsp;&nbsp;<span class="id" type="keyword">forall</span> <span class="id" type="var">c1</span> <span class="id" type="var">c2</span> <span class="id" type="var">s1</span> <span class="id" type="var">s2</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;~ <span class="id" type="var">nat_of_ascii</span> <span class="id" type="var">c1</span> &lt; <span class="id" type="var">nat_of_ascii</span> <span class="id" type="var">c2</span> -&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;~ <span class="id" type="var">nat_of_ascii</span> <span class="id" type="var">c2</span> &lt; <span class="id" type="var">nat_of_ascii</span> <span class="id" type="var">c1</span> -&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="var">in_lex_order</span> <span class="id" type="var">s1</span> <span class="id" type="var">s2</span> -&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="var">in_lex_order</span> (<span class="id" type="var">String</span> <span class="id" type="var">c1</span> <span class="id" type="var">s1</span>) (<span class="id" type="var">String</span> <span class="id" type="var">c2</span> <span class="id" type="var">s2</span>).<br/>
+<span class="id" type="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">intros</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">assert</span> (<span class="id" type="var">nat_of_ascii</span> <span class="id" type="var">c1</span> = <span class="id" type="var">nat_of_ascii</span> <span class="id" type="var">c2</span>) <span class="id" type="keyword">as</span> <span class="id" type="var">c1_c2_nat_eq</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">omega</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">apply</span> <span class="id" type="var">nat_of_ascii_injective</span> <span class="id" type="keyword">in</span> <span class="id" type="var">c1_c2_nat_eq</span>; <span class="id" type="tactic">subst</span>; <span class="id" type="tactic">auto</span>.<br/>
+<span class="id" type="keyword">Qed</span>.<br/>
+</div>
+</div>  </div>
+<div class="p">  And now is the definition of <b><tt>decide_lex_order</tt></b>. We use <tt>Compare_dec.lt_dec</tt> to compare naturals, it has a <tt>sumbool</tt> type too<small class="notebegin">(</small><small class="note">Note that  there is also <tt>lt_eq_lt_dec</tt> but  we are not ready to use it for now (it is a <tt>sumbool</tt> embedded in a <tt>sumor</tt>, so, maybe another time <tt>:)</tt>).</small><small class="noteend">)</small>: <pre>forall n m : nat, {n &lt; m} + {~ n &lt; m}</pre> </div>
+<div class="p">    <div class="maincoq"><div class="code">
+<span class="id" type="keyword">Require</span> <span class="id" type="keyword">Import</span> <span class="id" type="var">Compare_dec</span>.<br/>
+
+<br/>
+<span class="id" type="keyword">Definition</span> <span class="id" type="var">decide_lex_order</span>:<br/>
+&nbsp;&nbsp;<span class="id" type="keyword">forall</span> <span class="id" type="var">a</span> <span class="id" type="var">b</span> : <span class="id" type="var">string</span>, <span class="id" type="var">lexicographic_decision</span> <span class="id" type="var">a</span> <span class="id" type="var">b</span>.<br/>
+
+<br/>
+<span class="id" type="tactic">refine</span> (<span class="id" type="var">fix</span> <span class="id" type="var">fcontinue</span> <span class="id" type="var">a</span> <span class="id" type="var">b</span>: <span class="id" type="var">lexicographic_decision</span> <span class="id" type="var">a</span> <span class="id" type="var">b</span> := <br/>
+&nbsp;&nbsp;<span class="id" type="keyword">match</span> <span class="id" type="var">a</span>, <span class="id" type="var">b</span> <span class="id" type="keyword">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id" type="var">EmptyString</span>, <span class="id" type="var">EmptyString</span> =&gt; <span class="id" type="var">Decide_left</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id" type="var">EmptyString</span>, <span class="id" type="var">_</span> =&gt; <span class="id" type="var">Decide_left</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id" type="var">_</span>, <span class="id" type="var">EmptyString</span> =&gt; <span class="id" type="var">Decide_right</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id" type="var">String</span> <span class="id" type="var">c1</span> <span class="id" type="var">s1</span>, <span class="id" type="var">String</span> <span class="id" type="var">c2</span> <span class="id" type="var">s2</span> =&gt; <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="keyword">match</span> <span class="id" type="var">lt_dec</span> (<span class="id" type="var">nat_of_ascii</span> <span class="id" type="var">c1</span>) (<span class="id" type="var">nat_of_ascii</span> <span class="id" type="var">c2</span>) <span class="id" type="keyword">with</span> <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id" type="var">Decide_left</span> =&gt; <span class="id" type="var">Decide_left</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id" type="var">Decide_right</span> =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="keyword">match</span> <span class="id" type="var">lt_dec</span> (<span class="id" type="var">nat_of_ascii</span> <span class="id" type="var">c2</span>) (<span class="id" type="var">nat_of_ascii</span> <span class="id" type="var">c1</span>) <span class="id" type="keyword">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id" type="var">Decide_left</span> =&gt; <span class="id" type="var">Decide_right</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id" type="var">Decide_right</span> =&gt; <span class="id" type="var">Decide_with</span> (<span class="id" type="var">fcontinue</span> <span class="id" type="var">s1</span> <span class="id" type="var">s2</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="keyword">end</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="keyword">end</span><br/>
+&nbsp;&nbsp;<span class="id" type="keyword">end</span>);<br/>
+&nbsp;&nbsp;<span class="id" type="var">solve</span> [<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">intuition</span> <span class="id" type="tactic">auto</span> <span class="id" type="keyword">using</span> <span class="id" type="var">tricky_step_in_decide_lex_order</span> <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id" type="keyword">match</span> <span class="id" type="var">goal</span> <span class="id" type="keyword">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|- ~ <span class="id" type="var">in_lex_order</span> <span class="id" type="var">_</span> <span class="id" type="var">_</span> =&gt; <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">unfold</span> <span class="id" type="var">not</span>; <span class="id" type="tactic">intro</span> <span class="id" type="var">H</span>; <span class="id" type="tactic">inversion</span> <span class="id" type="var">H</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">subst</span>; <span class="id" type="tactic">intuition</span> <span class="id" type="tactic">auto</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="keyword">end</span>   ].<br/>
+<span class="id" type="keyword">Defined</span>.<br/>
+</div>
+</div> Just for the record, the following is how looked my first &ldquo;Proof Complete&rdquo; on that one. The idea is to explore with wild ugly tactics or inline lemmas, and then do the <i>factorisation</i>, <i>cleaning</i>, and <i>optimisations</i>. <div class="coqexample"><div class="code">
+<span class="id" type="tactic">unfold</span> <span class="id" type="var">not</span> <span class="id" type="keyword">in</span> *; <span class="id" type="tactic">intros</span>; <span class="id" type="tactic">auto</span>.<br/>
+
+<br/>
+<span class="id" type="tactic">inversion</span> <span class="id" type="var">H</span>.<br/>
+
+<br/>
+<span class="id" type="tactic">inversion</span> <span class="id" type="var">H</span>. <span class="id" type="tactic">intuition</span>.<br/>
+<span class="id" type="tactic">subst</span>. <span class="id" type="tactic">intuition</span>.<br/>
+
+<br/>
+<span class="id" type="tactic">assert</span> (<span class="id" type="var">nat_of_ascii</span> <span class="id" type="var">c1</span> = <span class="id" type="var">nat_of_ascii</span> <span class="id" type="var">c2</span>). <span class="id" type="tactic">omega</span>.<br/>
+
+<br/>
+<span class="id" type="keyword">Lemma</span> <span class="id" type="var">nat_of_ascii_injective</span>: <span class="id" type="keyword">forall</span> <span class="id" type="var">c1</span> <span class="id" type="var">c2</span>, <br/>
+&nbsp;&nbsp;<span class="id" type="var">nat_of_ascii</span> <span class="id" type="var">c1</span> = <span class="id" type="var">nat_of_ascii</span> <span class="id" type="var">c2</span> -&gt; <span class="id" type="var">c1</span> = <span class="id" type="var">c2</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">intros</span>; <span class="id" type="tactic">simpl</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">assert</span> (<span class="id" type="var">ascii_of_nat</span> (<span class="id" type="var">nat_of_ascii</span> <span class="id" type="var">c1</span>) =<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="var">ascii_of_nat</span> (<span class="id" type="var">nat_of_ascii</span> <span class="id" type="var">c2</span>)).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">auto</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">repeat</span> <span class="id" type="tactic">rewrite</span> <span class="id" type="var">ascii_nat_embedding</span> <span class="id" type="keyword">in</span> <span class="id" type="var">H0</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">trivial</span>.<br/>
+<span class="id" type="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" type="tactic">apply</span> <span class="id" type="var">nat_of_ascii_injective</span> <span class="id" type="keyword">in</span> <span class="id" type="var">H</span>.<br/>
+<span class="id" type="tactic">subst</span>.<br/>
+<span class="id" type="tactic">auto</span>.<br/>
+
+<br/>
+<span class="id" type="tactic">inversion</span> <span class="id" type="var">H</span>; <span class="id" type="tactic">subst</span>.<br/>
+
+<br/>
+<span class="id" type="tactic">intuition</span> <span class="id" type="tactic">auto</span>.<br/>
+<span class="id" type="tactic">intuition</span> <span class="id" type="tactic">auto</span>.<br/>
+<span class="id" type="keyword">Defined</span>.<br/>
+</div>
+</div>   We can give it a try: <div class="maincoq"><div class="code">
+<span class="id" type="keyword">Eval</span> <span class="id" type="tactic">compute</span> <span class="id" type="keyword">in</span> (<span class="id" type="var">decide_lex_order</span> "AAA" "BBB").<br/>
+</div>
+</div> <pre>
+     = Decide_left
+     : lexicographic_decision "AAA" "BBB"
+</pre>  <div class="maincoq"><div class="code">
+<span class="id" type="var">Time</span> <span class="id" type="keyword">Eval</span> <span class="id" type="tactic">compute</span> <span class="id" type="keyword">in</span> (<span class="id" type="var">decide_lex_order</span> "AAA" "ABB").<br/>
+</div>
+</div> <pre>
+     = Decide_left
+     : lexicographic_decision "AAA" "ABB"
+Finished transaction in 4. secs (0.u,3.544461s)
+</pre>  <div class="maincoq"><div class="code">
+<span class="id" type="var">Time</span> <span class="id" type="keyword">Eval</span> <span class="id" type="tactic">compute</span> <span class="id" type="keyword">in</span> (<span class="id" type="var">decide_lex_order</span> "AAA" "AAB").<br/>
+</div>
+</div> <pre>
+     = Decide_left
+     : lexicographic_decision "AAA" "AAB"
+Finished transaction in 9. secs (0.u,8.202753s)
+</pre>  <div class="maincoq"><div class="code">
+<span class="id" type="var">Time</span> <span class="id" type="keyword">Eval</span> <span class="id" type="tactic">compute</span> <span class="id" type="keyword">in</span> (<span class="id" type="var">decide_lex_order</span> "AA" "A").<br/>
+</div>
+</div> <pre>
+     = Decide_right
+     : lexicographic_decision "AA" "A"
+Finished transaction in 13. secs (0.u,12.995024s)
+</pre> </div>
+<div class="p">   The tactic <a href="http://coq.inria.fr/refman/Reference-Manual011.html#@tactic61">vm_compute</a> does not seem to improve the speed there. But anyway, the important performance-wise is the OCaml code, and it looks pretty good: <div class="maincoq"><div class="code">
+<span class="id" type="var">Extraction</span> <span class="id" type="var">decide_lex_order</span>.<br/>
+</div>
+</div> <!-- Generator: GNU source-highlight 3.1.4
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-style: italic"><span style="color: #9A1900">(** val decide_lex_order : </span></span>
+<span style="font-style: italic"><span style="color: #9A1900">      string -&gt; string -&gt; lexicographic_decision **)</span></span>
+
+<span style="font-weight: bold"><span style="color: #0000FF">let</span></span> <span style="font-weight: bold"><span style="color: #0000FF">rec</span></span> decide_lex_order a b <span style="color: #990000">=</span>
+  <span style="font-weight: bold"><span style="color: #0000FF">match</span></span> a <span style="font-weight: bold"><span style="color: #0000FF">with</span></span>
+  <span style="color: #990000">|</span> <span style="color: #009900">EmptyString</span> <span style="color: #990000">-&gt;</span> <span style="font-weight: bold"><span style="color: #0000FF">true</span></span>
+  <span style="color: #990000">|</span> <span style="color: #009900">String</span> <span style="color: #990000">(</span>c1<span style="color: #990000">,</span> s1<span style="color: #990000">)</span> <span style="color: #990000">-&gt;</span>
+    <span style="color: #990000">(</span><span style="font-weight: bold"><span style="color: #0000FF">match</span></span> b <span style="font-weight: bold"><span style="color: #0000FF">with</span></span>
+     <span style="color: #990000">|</span> <span style="color: #009900">EmptyString</span> <span style="color: #990000">-&gt;</span> <span style="font-weight: bold"><span style="color: #0000FF">false</span></span>
+     <span style="color: #990000">|</span> <span style="color: #009900">String</span> <span style="color: #990000">(</span>c2<span style="color: #990000">,</span> s2<span style="color: #990000">)</span> <span style="color: #990000">-&gt;</span>
+       <span style="font-weight: bold"><span style="color: #0000FF">if</span></span> lt_dec <span style="color: #990000">(</span>nat_of_ascii c1<span style="color: #990000">)</span> <span style="color: #990000">(</span>nat_of_ascii c2<span style="color: #990000">)</span>
+       <span style="font-weight: bold"><span style="color: #0000FF">then</span></span> <span style="font-weight: bold"><span style="color: #0000FF">true</span></span>
+       <span style="font-weight: bold"><span style="color: #0000FF">else</span></span> <span style="font-weight: bold"><span style="color: #0000FF">if</span></span> lt_dec <span style="color: #990000">(</span>nat_of_ascii c2<span style="color: #990000">)</span> <span style="color: #990000">(</span>nat_of_ascii c1<span style="color: #990000">)</span>
+            <span style="font-weight: bold"><span style="color: #0000FF">then</span></span> <span style="font-weight: bold"><span style="color: #0000FF">false</span></span>
+            <span style="font-weight: bold"><span style="color: #0000FF">else</span></span> decide_lex_order s1 s2<span style="color: #990000">)</span>
+</tt></pre>
+      </div>
+<h3 id="Conclusion">Conclusion</h3>
+<div class="p">  Now we have subsets (<tt>{ _ : _ | _ }</tt>) and decisions (<tt>{ _ } + { _ }</tt>); next time we will try to play with the <tt>sumor</tt> type.   </div>
+<div class="p"><hr/><div id="disqus_thread"></div>
+  <script type="text/javascript">
+      var disqus_shortname = 'sebmondetblog'; 
+      // required: replace example with your forum shortname
+  
+      // The following are highly recommended additional
+      // parameters. Remove the slashes in front to use.
+      var disqus_identifier = 'coqtests-02-sumbools';
+      var disqus_url = 'http://seb.mondet.org/./blog/post/coqtests-02-sumbools.html';
+  
+      /* * * DON'T EDIT BELOW THIS LINE * * */
+      (function() {
+          var dsq = document.createElement('script');
+          dsq.type = 'text/javascript'; dsq.async = true;
+          dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('head')[0] ||
+             document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+  </script>
+  <noscript>Please enable JavaScript to view the
+  <a href="http://disqus.com/?ref_noscript">comments powered
+  by Disqus.</a></noscript>
+  <a href="http://disqus.com" class="dsq-brlink">blog
+  comments powered by <span class="logo-disqus">Disqus</span></a></div>
+
+<div id="pagefoot" />
+</div>
+<div class="sidepane">
+<h1>Sebastien Mondet</h1><br/>
+<b>Menu: </b><div class="p">
+<ul>
+  <li> <a href="../../index.html">Home</a>  </li>
+<li> <a href="../../publications.html">Publications</a>  </li>
+<li> <a href="../../software.html">Software</a>  </li>
+<li> <a href="../../blog/index.html">Blog</a> </li>
+</ul>
+ </div>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<small><div class="p"> Site generated thanks to  <a href="http://bracetax.berlios.de/">bracetax</a>, <a href="http://martin.jambon.free.fr/camlmix/">camlmix</a>, <a href="http://sebib.forge.ocamlcore.org/">sebib</a>, and <a href="https://github.com/smondet/dibrawi">more&nbsp;&hellip;</a> <br/>
+ Updated on Wed, 31 Aug 2011 10:02:19 +0200. <br/>
+ <a href="http://seb.mondet.org">Sebastien Mondet</a><br/>
+<br/>
+ </small>
+<a href="http://caml.inria.fr/">
+  <img src="http://caml.inria.fr//pub/logos/caml-powered.80x30.png"
+       alt="Powered by Caml"
+       style="border: none;" />
+</a> </div>
+<br/>
+</div>
+</body></html>
