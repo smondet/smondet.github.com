@@ -4,11 +4,11 @@
     <title>Seb's Blog: RSS feed for tag: anyweb</title>
     <description></description>
     <link>http://seb.mondet.org/blog/</link>
-    <lastBuildDate>Wed, 31 Aug 2011 10:02:19 +0200</lastBuildDate>
-    <pubDate>Wed, 31 Aug 2011 10:02:19 +0200</pubDate>
+    <lastBuildDate>Sat, 10 Dec 2011 12:46:34 -0500</lastBuildDate>
+    <pubDate>Sat, 10 Dec 2011 12:46:34 -0500</pubDate>
     <item>
          <title>Anyweb, Document Source Code The Way You Like</title>
-         <description>&lt;div class="p"&gt;  I was playing with Adam Chlipala's &amp;ldquo;&lt;a href="http://adam.chlipala.net/cpdt/"&gt;CPDT&lt;/a&gt;&amp;rdquo; book and I wanted to take notes on some notations. I also wanted to do it in a &lt;a href="http://en.wikipedia.org/wiki/Literate_programming"&gt;&lt;i&gt;Literate Programming&lt;/i&gt;&lt;/a&gt; way: in a &lt;tt&gt;.v&lt;/tt&gt; Coq file with  &lt;a href="http://bracetax.berlios.de/"&gt;a familiar and practical syntax&lt;/a&gt;&amp;nbsp;&amp;hellip; &lt;/div&gt;
+         <description>&lt;div class="p"&gt;  I was playing with Adam Chlipala's &amp;ldquo;&lt;a href="http://adam.chlipala.net/cpdt/"&gt;CPDT&lt;/a&gt;&amp;rdquo; book and I wanted to take notes on some notations. I also wanted to do it in a &lt;a href="http://en.wikipedia.org/wiki/Literate_programming"&gt;&lt;i&gt;Literate Programming&lt;/i&gt;&lt;/a&gt; way: in a &lt;tt&gt;.v&lt;/tt&gt; Coq file with  &lt;a href="http://seb.mondet.org/bracetax/"&gt;a familiar and practical syntax&lt;/a&gt;&amp;nbsp;&amp;hellip; &lt;/div&gt;
 &lt;div class="p"&gt;  That's where  &lt;a href="http://seb.mondet.org/anyweb/"&gt;Anyweb&lt;/a&gt; comes into play. &lt;/div&gt;
 &lt;div class="p"&gt;  This one-day hack is a simple parser and printer which looks for special string-markers (like &lt;tt&gt;(*B&lt;/tt&gt; and &lt;tt&gt;B*)&lt;/tt&gt; in Coq or OCaml sources) and does &lt;i&gt;stuff&lt;/i&gt; (like calling &lt;tt&gt;coqdoc&lt;/tt&gt; or &lt;tt&gt;source-highlight&lt;/tt&gt;) depending on where it is in the source. The transformer uses an automaton and a stack, so any kind of &lt;i&gt;recursive&lt;/i&gt; embedding seems possible. &lt;/div&gt;
 &lt;div class="p"&gt;  The &lt;a href="https://github.com/smondet/anyweb/blob/master/anyweb.ml"&gt;code&lt;/a&gt; is &lt;i&gt;of course&lt;/i&gt; self-documenting (&lt;a href="http://seb.mondet.org/anyweb/"&gt;HTML&lt;/a&gt;, or &lt;a href="http://seb.mondet.org/anyweb/anyweb.pdf"&gt;PDF&lt;/a&gt;). The bunch of notes on CPDT which motivated the hack is also &lt;a href="https://github.com/smondet/anyweb/blob/master/subset_notes.v"&gt;available&lt;/a&gt; (&lt;a href="http://seb.mondet.org/anyweb/coq_example.html"&gt;HTML&lt;/a&gt;, and &lt;a href="http://seb.mondet.org/anyweb/coq_example.pdf"&gt;PDF&lt;/a&gt;).  &lt;/div&gt;
