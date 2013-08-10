@@ -248,19 +248,28 @@ h3 { text-decoration: underline;}
 pre {
     position: relative; left: 5%; max-width: 90%; clear: left;
 }
-div.sidepane {
-  left: 0.5%; width: 19.000000%; padding: 0.5%;
-  border-right: #B41D1D ridge 1px;
-    top: 2px;
-    position:fixed;
-    overflow: auto;
-    bottom: 2px;
+@media (min-width: 768px) {
+    div.sidepane {
+        left: 0.5%; width: 19.000000%; padding: 0.5%;
+        border-right: #B41D1D ridge 1px;
+        top: 2px;
+        position:fixed;
+        overflow: auto;
+        bottom: 2px;
+    }
+    div.content {
+        max-width : 45em; left: 21.000000%; right: 0.5%; padding: 0.2em;
+        top: 2px;
+        position: absolute;
+    }
 }
-div.content {
-max-width : 45em; left: 21.000000%; right: 0.5%; padding: 0.2em;
-    top: 2px;
-    position: absolute;
+@media (max-width: 767px) {
+   div.content {
+       font-size: 80%;
+   }
+
 }
+
 </style>
 <link rel="shortcut icon" href="http://seb.mondet.org/images/sm.ico">
 <title>Software</title>

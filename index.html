@@ -248,18 +248,26 @@ h3 { text-decoration: underline;}
 pre {
     position: relative; left: 5%; max-width: 90%; clear: left;
 }
-div.sidepane {
-  left: 0.5%; width: 19.000000%; padding: 0.5%;
-  border-right: #B41D1D ridge 1px;
-    top: 2px;
-    position:fixed;
-    overflow: auto;
-    bottom: 2px;
+@media (min-width: 768px) {
+   div.sidepane {
+     left: 0.5%; width: 19.000000%; padding: 0.5%;
+     border-right: #B41D1D ridge 1px;
+       top: 2px;
+       position:fixed;
+       overflow: auto;
+       bottom: 2px;
+   }
+   div.content {
+   max-width : 45em; left: 21.000000%; right: 0.5%; padding: 0.2em;
+       top: 2px;
+       position: absolute;
+   }
 }
-div.content {
-max-width : 45em; left: 21.000000%; right: 0.5%; padding: 0.2em;
-    top: 2px;
-    position: absolute;
+@media (max-width: 767px) {
+   div.content {
+       font-size: 80%;
+   }
+
 }
 </style>
 <link rel="shortcut icon" href="http://seb.mondet.org/images/sm.ico">
@@ -269,14 +277,14 @@ max-width : 45em; left: 21.000000%; right: 0.5%; padding: 0.2em;
 <div class="content">
 <div class="p"></div>
 <h2 id="Presentation">Presentation</h2>
-<div class="p"> <table  border="0"  ><td><a href="./images//ganache_seb_01.jpg"><img src="./images//ganache_seb_01_thumb300.jpg" width="210px"  alt="./images//ganache_seb_01.jpg"/></a></td><td>  
+<div class="p"> 
+    <a href="./images//ganache_seb_01.jpg"><img src="./images//ganache_seb_01_thumb300.jpg" width="210px"  alt="./images//ganache_seb_01.jpg"/></a>
             
           
-<p>I am Sebastien Mondet, a.k.a. Sebastián Mondet Yañez, I work in the Biology Department of New York University as a computer scientist.</p>
-<p>Here is my <strong><a href="./CV_SebastienMONDET.pdf">CV / Resume</a></strong>.</p>
-<p>Contact: <code>seb &lt;at&gt; mondet.org</code>.</p>
+    <p>I am Sebastien Mondet, a.k.a. Sebastián Mondet Yañez, I work in the Biology Department of New York University as a computer scientist.</p>
+    <p>Here is my <strong><a href="./CV_SebastienMONDET.pdf">CV / Resume</a></strong>.</p>
+    <p>Contact: <code>seb &lt;at&gt; mondet.org</code>.</p>
 
-</td></table>
 
 <p>When, I am not <a href="./software.html">working/hacking software</a>, I am most often making music, currently I play bass in <a href="http://lucrativejacket.com">Lucrative Jacket</a> and acoustic guitar in <a href="http://youtube.com/plasmonicwood">Plasmonic Wood</a>.</p>
 
