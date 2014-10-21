@@ -1,0 +1,360 @@
+<html><head>
+<link rel="stylesheet" href="style.css" type="text/css">
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<link rel="Start" href="index.html">
+<link title="Index of types" rel=Appendix href="index_types.html">
+<link title="Index of exceptions" rel=Appendix href="index_exceptions.html">
+<link title="Index of values" rel=Appendix href="index_values.html">
+<link title="Index of modules" rel=Appendix href="index_modules.html">
+<link title="Nonstd" rel="Chapter" href="Nonstd.html"><title>Nonstd</title>
+</head>
+<body>
+<code class="code"><br>
+<span class="keyword">external</span>&nbsp;(|&gt;)&nbsp;:&nbsp;<span class="keywordsign">'</span>a&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;(<span class="keywordsign">'</span>a&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keywordsign">'</span>b)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keywordsign">'</span>b&nbsp;=&nbsp;<span class="string">"%revapply"</span><br>
+<br>
+<span class="keyword">include</span>&nbsp;<span class="constructor">Printf</span><br>
+<br>
+<span class="keyword">module</span>&nbsp;<span class="constructor">List</span>&nbsp;=&nbsp;<span class="keyword">struct</span><br>
+<br>
+&nbsp;&nbsp;<span class="comment">(*&nbsp;This&nbsp;module&nbsp;takes&nbsp;code&nbsp;from&nbsp;Janestreet's&nbsp;Core&nbsp;library:<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Copyright&nbsp;(C)&nbsp;2008-<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Jane&nbsp;Street&nbsp;Holding,&nbsp;LLC<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1&nbsp;New&nbsp;York&nbsp;Plaza,&nbsp;33rd&nbsp;Floor<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;New&nbsp;York,&nbsp;NY&nbsp;10004<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;USA<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;email:&nbsp;opensource@janestreet.com<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;contents&nbsp;of&nbsp;some&nbsp;files&nbsp;in&nbsp;this&nbsp;distribution&nbsp;was&nbsp;derived&nbsp;from&nbsp;external<br>
+&nbsp;&nbsp;&nbsp;&nbsp;sources&nbsp;with&nbsp;compatible&nbsp;licenses.&nbsp;The&nbsp;original&nbsp;copyright&nbsp;and&nbsp;license<br>
+&nbsp;&nbsp;&nbsp;&nbsp;notice&nbsp;was&nbsp;preserved&nbsp;in&nbsp;the&nbsp;affected&nbsp;files.<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;See&nbsp;https://github.com/janestreet/core/blob/master/COPYRIGHT.txt<br>
+&nbsp;&nbsp;*)</span><br>
+&nbsp;&nbsp;<span class="keyword">include</span>&nbsp;<span class="constructor">ListLabels</span><br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;hd_exn&nbsp;=&nbsp;hd<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;hd&nbsp;=&nbsp;<span class="keyword">function</span>&nbsp;o&nbsp;::&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Some</span>&nbsp;o&nbsp;<span class="keywordsign">|</span>&nbsp;[]&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">None</span><br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;tl_exn&nbsp;=&nbsp;tl<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;tl&nbsp;=&nbsp;<span class="keyword">function</span>&nbsp;[]&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">None</span>&nbsp;<span class="keywordsign">|</span>&nbsp;_&nbsp;::&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Some</span>&nbsp;t<br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;nth&nbsp;t&nbsp;n&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span>&nbsp;n&nbsp;&lt;&nbsp;0&nbsp;<span class="keyword">then</span>&nbsp;<span class="constructor">None</span>&nbsp;<span class="keyword">else</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;<span class="keyword">rec</span>&nbsp;nth_aux&nbsp;t&nbsp;n&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">match</span>&nbsp;t&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;[]&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">None</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;a&nbsp;::&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keyword">if</span>&nbsp;n&nbsp;=&nbsp;0&nbsp;<span class="keyword">then</span>&nbsp;<span class="constructor">Some</span>&nbsp;a&nbsp;<span class="keyword">else</span>&nbsp;nth_aux&nbsp;t&nbsp;(n-1)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;nth_aux&nbsp;t&nbsp;n<br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;nth_exn&nbsp;t&nbsp;n&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">match</span>&nbsp;nth&nbsp;t&nbsp;n&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">None</span>&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ksprintf&nbsp;invalid_arg&nbsp;<span class="string">"List.nth_exn&nbsp;%d&nbsp;called&nbsp;on&nbsp;list&nbsp;of&nbsp;length&nbsp;%d"</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;n&nbsp;(length&nbsp;t)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Some</span>&nbsp;a&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;a<br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;fold&nbsp;~init&nbsp;~f&nbsp;l&nbsp;=&nbsp;fold_left&nbsp;~init&nbsp;~f&nbsp;l<br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;rev_filter&nbsp;t&nbsp;~f&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;<span class="keyword">rec</span>&nbsp;find&nbsp;~f&nbsp;accu&nbsp;=&nbsp;<span class="keyword">function</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;[]&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;accu<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;x&nbsp;::&nbsp;l&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keyword">if</span>&nbsp;f&nbsp;x&nbsp;<span class="keyword">then</span>&nbsp;find&nbsp;~f&nbsp;(x&nbsp;::&nbsp;accu)&nbsp;l&nbsp;<span class="keyword">else</span>&nbsp;find&nbsp;~f&nbsp;accu&nbsp;l<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;find&nbsp;~f&nbsp;[]&nbsp;t<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;filter&nbsp;t&nbsp;~f&nbsp;=&nbsp;rev&nbsp;(rev_filter&nbsp;t&nbsp;~f)<br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;find_map&nbsp;t&nbsp;~f&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;<span class="keyword">rec</span>&nbsp;loop&nbsp;=&nbsp;<span class="keyword">function</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;[]&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">None</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;x&nbsp;::&nbsp;l&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">match</span>&nbsp;f&nbsp;x&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">None</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;loop&nbsp;l<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Some</span>&nbsp;_&nbsp;<span class="keyword">as</span>&nbsp;r&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;r<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;loop&nbsp;t<br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;find&nbsp;t&nbsp;~f&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;<span class="keyword">rec</span>&nbsp;loop&nbsp;=&nbsp;<span class="keyword">function</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;[]&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">None</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;x&nbsp;::&nbsp;l&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keyword">if</span>&nbsp;f&nbsp;x&nbsp;<span class="keyword">then</span>&nbsp;<span class="constructor">Some</span>&nbsp;x&nbsp;<span class="keyword">else</span>&nbsp;loop&nbsp;l<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;loop&nbsp;t<br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;find_exn&nbsp;t&nbsp;~f&nbsp;=&nbsp;<span class="constructor">List</span>.find&nbsp;t&nbsp;~f<br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;findi&nbsp;t&nbsp;~f&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;<span class="keyword">rec</span>&nbsp;loop&nbsp;i&nbsp;t&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">match</span>&nbsp;t&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;[]&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">None</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;x&nbsp;::&nbsp;l&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keyword">if</span>&nbsp;f&nbsp;i&nbsp;x&nbsp;<span class="keyword">then</span>&nbsp;<span class="constructor">Some</span>&nbsp;(i,&nbsp;x)&nbsp;<span class="keyword">else</span>&nbsp;loop&nbsp;(i&nbsp;+&nbsp;1)&nbsp;l<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;loop&nbsp;0&nbsp;t<br>
+<br>
+&nbsp;&nbsp;</code><table><tr><td>&nbsp;&nbsp;</td><td><span class="comment">(** changing the order of arguments on some standard <code class="code"><span class="constructor">List</span></code> functions. *)</span></td></tr></table><code class="code"><br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;exists&nbsp;t&nbsp;~f&nbsp;=&nbsp;exists&nbsp;t&nbsp;~f<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;for_all&nbsp;t&nbsp;~f&nbsp;=&nbsp;for_all&nbsp;t&nbsp;~f<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;iter&nbsp;t&nbsp;~f&nbsp;=&nbsp;iter&nbsp;t&nbsp;~f<br>
+<br>
+&nbsp;&nbsp;</code><table><tr><td>&nbsp;&nbsp;</td><td><span class="comment">(** For the container interface. *)</span></td></tr></table><code class="code"><br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;fold&nbsp;t&nbsp;~init&nbsp;~f&nbsp;=&nbsp;fold_left&nbsp;t&nbsp;~f&nbsp;~init<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;fold_left&nbsp;=&nbsp;fold<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;to_array&nbsp;=&nbsp;<span class="constructor">Array</span>.of_list<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;to_list&nbsp;t&nbsp;=&nbsp;t<br>
+<br>
+&nbsp;&nbsp;</code><table><tr><td>&nbsp;&nbsp;</td><td><span class="comment">(** Tail recursive versions of standard <code class="code"><span class="constructor">List</span></code> module *)</span></td></tr></table><code class="code"><br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;slow_append&nbsp;l1&nbsp;l2&nbsp;=&nbsp;rev_append&nbsp;(rev&nbsp;l1)&nbsp;l2<br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;<span class="keyword">rec</span>&nbsp;count_append&nbsp;l1&nbsp;l2&nbsp;count&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">match</span>&nbsp;l2&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;[]&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;l1<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">match</span>&nbsp;l1&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;[]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;l2<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;[x1]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;x1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::&nbsp;l2<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;[x1;&nbsp;x2]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;x1&nbsp;::&nbsp;x2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::&nbsp;l2<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;[x1;&nbsp;x2;&nbsp;x3]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;x1&nbsp;::&nbsp;x2&nbsp;::&nbsp;x3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::&nbsp;l2<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;[x1;&nbsp;x2;&nbsp;x3;&nbsp;x4]&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;x1&nbsp;::&nbsp;x2&nbsp;::&nbsp;x3&nbsp;::&nbsp;x4&nbsp;::&nbsp;l2<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;x1&nbsp;::&nbsp;x2&nbsp;::&nbsp;x3&nbsp;::&nbsp;x4&nbsp;::&nbsp;x5&nbsp;::&nbsp;tl&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;x1&nbsp;::&nbsp;x2&nbsp;::&nbsp;x3&nbsp;::&nbsp;x4&nbsp;::&nbsp;x5&nbsp;::<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="keyword">if</span>&nbsp;count&nbsp;&gt;&nbsp;1000<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">then</span>&nbsp;slow_append&nbsp;tl&nbsp;l2<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">else</span>&nbsp;count_append&nbsp;tl&nbsp;l2&nbsp;(count&nbsp;+&nbsp;1))<br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;append&nbsp;l1&nbsp;l2&nbsp;=&nbsp;count_append&nbsp;l1&nbsp;l2&nbsp;0<br>
+<br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;map_slow&nbsp;l&nbsp;~f&nbsp;=&nbsp;rev&nbsp;(rev_map&nbsp;~f&nbsp;l)<br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;<span class="keyword">rec</span>&nbsp;count_map&nbsp;~f&nbsp;l&nbsp;ctr&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">match</span>&nbsp;l&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;[]&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;[]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;[x1]&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;f1&nbsp;=&nbsp;f&nbsp;x1&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[f1]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;[x1;&nbsp;x2]&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;f1&nbsp;=&nbsp;f&nbsp;x1&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;f2&nbsp;=&nbsp;f&nbsp;x2&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[f1;&nbsp;f2]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;[x1;&nbsp;x2;&nbsp;x3]&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;f1&nbsp;=&nbsp;f&nbsp;x1&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;f2&nbsp;=&nbsp;f&nbsp;x2&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;f3&nbsp;=&nbsp;f&nbsp;x3&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[f1;&nbsp;f2;&nbsp;f3]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;[x1;&nbsp;x2;&nbsp;x3;&nbsp;x4]&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;f1&nbsp;=&nbsp;f&nbsp;x1&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;f2&nbsp;=&nbsp;f&nbsp;x2&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;f3&nbsp;=&nbsp;f&nbsp;x3&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;f4&nbsp;=&nbsp;f&nbsp;x4&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[f1;&nbsp;f2;&nbsp;f3;&nbsp;f4]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;x1&nbsp;::&nbsp;x2&nbsp;::&nbsp;x3&nbsp;::&nbsp;x4&nbsp;::&nbsp;x5&nbsp;::&nbsp;tl&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;f1&nbsp;=&nbsp;f&nbsp;x1&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;f2&nbsp;=&nbsp;f&nbsp;x2&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;f3&nbsp;=&nbsp;f&nbsp;x3&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;f4&nbsp;=&nbsp;f&nbsp;x4&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;f5&nbsp;=&nbsp;f&nbsp;x5&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;f1&nbsp;::&nbsp;f2&nbsp;::&nbsp;f3&nbsp;::&nbsp;f4&nbsp;::&nbsp;f5&nbsp;::<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="keyword">if</span>&nbsp;ctr&nbsp;&gt;&nbsp;1000<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">then</span>&nbsp;map_slow&nbsp;~f&nbsp;tl<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">else</span>&nbsp;count_map&nbsp;~f&nbsp;tl&nbsp;(ctr&nbsp;+&nbsp;1))<br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;map&nbsp;l&nbsp;~f&nbsp;=&nbsp;count_map&nbsp;~f&nbsp;l&nbsp;0<br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;fold_right&nbsp;l&nbsp;~f&nbsp;~init&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;fold&nbsp;~f:(<span class="keyword">fun</span>&nbsp;a&nbsp;b&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;f&nbsp;b&nbsp;a)&nbsp;~init&nbsp;(<span class="constructor">List</span>.rev&nbsp;l)<br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;rev_mapi&nbsp;l&nbsp;~f&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;<span class="keyword">rec</span>&nbsp;loop&nbsp;i&nbsp;acc&nbsp;=&nbsp;<span class="keyword">function</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;[]&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;acc<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;h&nbsp;::&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;loop&nbsp;(i&nbsp;+&nbsp;1)&nbsp;(f&nbsp;i&nbsp;h&nbsp;::&nbsp;acc)&nbsp;t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;loop&nbsp;0&nbsp;[]&nbsp;l<br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;mapi&nbsp;l&nbsp;~f&nbsp;=&nbsp;<span class="constructor">List</span>.rev&nbsp;(rev_mapi&nbsp;l&nbsp;~f)<br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;iteri&nbsp;l&nbsp;~f&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ignore&nbsp;(fold&nbsp;l&nbsp;~init:0&nbsp;~f:(<span class="keyword">fun</span>&nbsp;i&nbsp;x&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;f&nbsp;i&nbsp;x;&nbsp;i&nbsp;+&nbsp;1))<br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;foldi&nbsp;t&nbsp;~f&nbsp;~init&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;snd&nbsp;(fold&nbsp;t&nbsp;~init:(0,&nbsp;init)&nbsp;~f:(<span class="keyword">fun</span>&nbsp;(i,&nbsp;acc)&nbsp;v&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;(i&nbsp;+&nbsp;1,&nbsp;f&nbsp;i&nbsp;acc&nbsp;v)))<br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;filteri&nbsp;l&nbsp;~f&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">List</span>.rev&nbsp;(foldi&nbsp;l<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;~f:(<span class="keyword">fun</span>&nbsp;pos&nbsp;acc&nbsp;x&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span>&nbsp;f&nbsp;pos&nbsp;x&nbsp;<span class="keyword">then</span>&nbsp;x&nbsp;::&nbsp;acc&nbsp;<span class="keyword">else</span>&nbsp;acc)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;~init:[])<br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;reduce&nbsp;l&nbsp;~f&nbsp;=&nbsp;<span class="keyword">match</span>&nbsp;l&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;[]&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">None</span><br>
+&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;hd&nbsp;::&nbsp;tl&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Some</span>&nbsp;(fold&nbsp;~init:hd&nbsp;~f&nbsp;tl)<br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;concat_map&nbsp;l&nbsp;~f&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;<span class="keyword">rec</span>&nbsp;aux&nbsp;acc&nbsp;=&nbsp;<span class="keyword">function</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;[]&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">List</span>.rev&nbsp;acc<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;hd&nbsp;::&nbsp;tl&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;aux&nbsp;(rev_append&nbsp;(f&nbsp;hd)&nbsp;acc)&nbsp;tl<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;aux&nbsp;[]&nbsp;l<br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;concat_mapi&nbsp;l&nbsp;~f&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;<span class="keyword">rec</span>&nbsp;aux&nbsp;cont&nbsp;acc&nbsp;=&nbsp;<span class="keyword">function</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;[]&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">List</span>.rev&nbsp;acc<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;hd&nbsp;::&nbsp;tl&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;aux&nbsp;(cont&nbsp;+&nbsp;1)&nbsp;(rev_append&nbsp;(f&nbsp;cont&nbsp;hd)&nbsp;acc)&nbsp;tl<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;aux&nbsp;0&nbsp;[]&nbsp;l<br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;merge&nbsp;l1&nbsp;l2&nbsp;~cmp&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;<span class="keyword">rec</span>&nbsp;loop&nbsp;acc&nbsp;l1&nbsp;l2&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">match</span>&nbsp;l1,l2&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;[],&nbsp;l2&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;rev_append&nbsp;acc&nbsp;l2<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;l1,&nbsp;[]&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;rev_append&nbsp;acc&nbsp;l1<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;h1&nbsp;::&nbsp;t1,&nbsp;h2&nbsp;::&nbsp;t2&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span>&nbsp;cmp&nbsp;h1&nbsp;h2&nbsp;&lt;=&nbsp;0<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">then</span>&nbsp;loop&nbsp;(h1&nbsp;::&nbsp;acc)&nbsp;t1&nbsp;l2<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">else</span>&nbsp;loop&nbsp;(h2&nbsp;::&nbsp;acc)&nbsp;l1&nbsp;t2<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;loop&nbsp;[]&nbsp;l1&nbsp;l2<br>
+<br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;<span class="keyword">rec</span>&nbsp;last&nbsp;list&nbsp;=&nbsp;<span class="keyword">match</span>&nbsp;list&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;[x]&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Some</span>&nbsp;x<br>
+&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;_&nbsp;::&nbsp;tl&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;last&nbsp;tl<br>
+&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;[]&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">None</span><br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;remove_consecutive_duplicates&nbsp;list&nbsp;~equal&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;<span class="keyword">rec</span>&nbsp;loop&nbsp;list&nbsp;accum&nbsp;=&nbsp;<span class="keyword">match</span>&nbsp;list&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;[]&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;accum<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;hd&nbsp;::&nbsp;[]&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;hd&nbsp;::&nbsp;accum<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;hd1&nbsp;::&nbsp;hd2&nbsp;::&nbsp;tl&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span>&nbsp;equal&nbsp;hd1&nbsp;hd2<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">then</span>&nbsp;loop&nbsp;(hd2&nbsp;::&nbsp;tl)&nbsp;accum<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">else</span>&nbsp;loop&nbsp;(hd2&nbsp;::&nbsp;tl)&nbsp;(hd1&nbsp;::&nbsp;accum)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;rev&nbsp;(loop&nbsp;list&nbsp;[])<br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;dedup&nbsp;?(compare=<span class="constructor">Pervasives</span>.compare)&nbsp;list&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;equal&nbsp;x&nbsp;x'&nbsp;=&nbsp;compare&nbsp;x&nbsp;x'&nbsp;=&nbsp;0&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;sorted&nbsp;=&nbsp;sort&nbsp;~cmp:compare&nbsp;list&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;remove_consecutive_duplicates&nbsp;~equal&nbsp;sorted<br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;contains_dup&nbsp;?compare&nbsp;lst&nbsp;=&nbsp;length&nbsp;(dedup&nbsp;?compare&nbsp;lst)&nbsp;&lt;&gt;&nbsp;length&nbsp;lst<br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;find_a_dup&nbsp;?(compare=<span class="constructor">Pervasives</span>.compare)&nbsp;l&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;sorted&nbsp;=&nbsp;sort&nbsp;~cmp:compare&nbsp;l&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;<span class="keyword">rec</span>&nbsp;loop&nbsp;l&nbsp;=&nbsp;<span class="keyword">match</span>&nbsp;l&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[]&nbsp;<span class="keywordsign">|</span>&nbsp;[_]&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">None</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;hd1&nbsp;::&nbsp;hd2&nbsp;::&nbsp;tl&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span>&nbsp;compare&nbsp;hd1&nbsp;hd2&nbsp;=&nbsp;0&nbsp;<span class="keyword">then</span>&nbsp;<span class="constructor">Some</span>&nbsp;(hd1)&nbsp;<span class="keyword">else</span>&nbsp;loop&nbsp;(hd2&nbsp;::&nbsp;tl)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;loop&nbsp;sorted<br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;init&nbsp;n&nbsp;~f&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span>&nbsp;n&nbsp;&lt;&nbsp;0&nbsp;<span class="keyword">then</span>&nbsp;[]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">else</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;<span class="keyword">rec</span>&nbsp;loop&nbsp;i&nbsp;accum&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">assert</span>&nbsp;(i&nbsp;&gt;=&nbsp;0);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span>&nbsp;i&nbsp;=&nbsp;0&nbsp;<span class="keyword">then</span>&nbsp;accum<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">else</span>&nbsp;loop&nbsp;(i-1)&nbsp;(f&nbsp;(i-1)&nbsp;::&nbsp;accum)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;loop&nbsp;n&nbsp;[]<br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;rev_filter_map&nbsp;l&nbsp;~f&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;<span class="keyword">rec</span>&nbsp;loop&nbsp;l&nbsp;accum&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">match</span>&nbsp;l&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;[]&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;accum<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;hd&nbsp;::&nbsp;tl&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">match</span>&nbsp;f&nbsp;hd&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Some</span>&nbsp;x&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;loop&nbsp;tl&nbsp;(x&nbsp;::&nbsp;accum)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">None</span>&nbsp;&nbsp;&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;loop&nbsp;tl&nbsp;accum<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;loop&nbsp;l&nbsp;[]<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;filter_map&nbsp;l&nbsp;~f&nbsp;=&nbsp;<span class="constructor">List</span>.rev&nbsp;(rev_filter_map&nbsp;l&nbsp;~f)<br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;filter_opt&nbsp;l&nbsp;=&nbsp;filter_map&nbsp;l&nbsp;~f:(<span class="keyword">fun</span>&nbsp;x&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;x)<br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;partition_map&nbsp;t&nbsp;~f&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;<span class="keyword">rec</span>&nbsp;loop&nbsp;t&nbsp;fst&nbsp;snd&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">match</span>&nbsp;t&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;[]&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;(rev&nbsp;fst,&nbsp;rev&nbsp;snd)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;x&nbsp;::&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">match</span>&nbsp;f&nbsp;x&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Fst</span>&nbsp;y&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;loop&nbsp;t&nbsp;(y&nbsp;::&nbsp;fst)&nbsp;snd<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Snd</span>&nbsp;y&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;loop&nbsp;t&nbsp;fst&nbsp;(y&nbsp;::&nbsp;snd)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;loop&nbsp;t&nbsp;[]&nbsp;[]<br>
+<br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;split_n&nbsp;t_orig&nbsp;n&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span>&nbsp;n&nbsp;&lt;=&nbsp;0&nbsp;<span class="keyword">then</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;([],&nbsp;t_orig)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">else</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;<span class="keyword">rec</span>&nbsp;loop&nbsp;n&nbsp;t&nbsp;accum&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span>&nbsp;n&nbsp;=&nbsp;0&nbsp;<span class="keyword">then</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">List</span>.rev&nbsp;accum,&nbsp;t)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">else</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">match</span>&nbsp;t&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;[]&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;(t_orig,&nbsp;[])&nbsp;<span class="comment">(*&nbsp;in&nbsp;this&nbsp;case,&nbsp;t_orig&nbsp;=&nbsp;List.rev&nbsp;accum&nbsp;*)</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;hd&nbsp;::&nbsp;tl&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;loop&nbsp;(n&nbsp;-&nbsp;1)&nbsp;tl&nbsp;(hd&nbsp;::&nbsp;accum)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;loop&nbsp;n&nbsp;t_orig&nbsp;[]<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;take&nbsp;t&nbsp;n&nbsp;=&nbsp;fst&nbsp;(split_n&nbsp;t&nbsp;n)<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;drop&nbsp;t&nbsp;n&nbsp;=&nbsp;snd&nbsp;(split_n&nbsp;t&nbsp;n)<br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;split_while&nbsp;xs&nbsp;~f&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;<span class="keyword">rec</span>&nbsp;loop&nbsp;acc&nbsp;=&nbsp;<span class="keyword">function</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;hd&nbsp;::&nbsp;tl&nbsp;<span class="keyword">when</span>&nbsp;f&nbsp;hd&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;loop&nbsp;(hd&nbsp;::&nbsp;acc)&nbsp;tl<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;(rev&nbsp;acc,&nbsp;t)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;loop&nbsp;[]&nbsp;xs<br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;take_while&nbsp;t&nbsp;~f&nbsp;=&nbsp;fst&nbsp;(split_while&nbsp;t&nbsp;~f)<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;drop_while&nbsp;t&nbsp;~f&nbsp;=&nbsp;snd&nbsp;(split_while&nbsp;t&nbsp;~f)<br>
+<br>
+<br>
+<span class="keyword">end</span><br>
+<br>
+<span class="keyword">module</span>&nbsp;<span class="constructor">Array</span>&nbsp;=&nbsp;<span class="constructor">ArrayLabels</span><br>
+<br>
+<span class="keyword">module</span>&nbsp;<span class="constructor">Option</span>&nbsp;=&nbsp;<span class="keyword">struct</span><br>
+&nbsp;&nbsp;<span class="keyword">exception</span>&nbsp;<span class="constructor">No_value</span>&nbsp;<span class="keyword">of</span>&nbsp;string<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;value&nbsp;o&nbsp;~default&nbsp;=&nbsp;<span class="keyword">match</span>&nbsp;o&nbsp;<span class="keyword">with</span>&nbsp;<span class="constructor">Some</span>&nbsp;s&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;s&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">None</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;default<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;value_exn&nbsp;o&nbsp;~msg&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">match</span>&nbsp;o&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Some</span>&nbsp;o&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;o<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">None</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;raise&nbsp;(<span class="constructor">No_value</span>&nbsp;msg)<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;map&nbsp;o&nbsp;~f&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">match</span>&nbsp;o&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">None</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">None</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Some</span>&nbsp;s&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Some</span>&nbsp;(f&nbsp;s)<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;value_map&nbsp;o&nbsp;~default&nbsp;~f&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">match</span>&nbsp;o&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Some</span>&nbsp;s&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;f&nbsp;s<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">None</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;default<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;return&nbsp;s&nbsp;=&nbsp;<span class="constructor">Some</span>&nbsp;s<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;bind&nbsp;o&nbsp;~f&nbsp;=&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">match</span>&nbsp;o&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">None</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">None</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Some</span>&nbsp;s&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;f&nbsp;s<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;(&gt;&gt;=)&nbsp;x&nbsp;f&nbsp;=&nbsp;bind&nbsp;x&nbsp;~f<br>
+<br>
+<br>
+<span class="keyword">end</span><br>
+<br>
+<br>
+<span class="keyword">module</span>&nbsp;<span class="constructor">Int</span>&nbsp;=&nbsp;<span class="keyword">struct</span><br>
+&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;t&nbsp;=&nbsp;int<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;compare&nbsp;(a:&nbsp;int)&nbsp;(b:&nbsp;int)&nbsp;=&nbsp;compare&nbsp;a&nbsp;b<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;to_string&nbsp;i&nbsp;=&nbsp;string_of_int&nbsp;i<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;of_string&nbsp;s&nbsp;=&nbsp;<span class="keyword">try</span>&nbsp;<span class="constructor">Some</span>&nbsp;(int_of_string&nbsp;s)&nbsp;<span class="keyword">with</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">None</span><br>
+<br>
+<span class="keyword">end</span><br>
+<span class="keyword">module</span>&nbsp;<span class="constructor">Float</span>&nbsp;=&nbsp;<span class="keyword">struct</span><br>
+<br>
+&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;t&nbsp;=&nbsp;float<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;compare&nbsp;(a:&nbsp;float)&nbsp;(b:&nbsp;float)&nbsp;=&nbsp;compare&nbsp;a&nbsp;b<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;to_string&nbsp;i&nbsp;=&nbsp;string_of_float&nbsp;i<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;of_string&nbsp;s&nbsp;=&nbsp;<span class="keyword">try</span>&nbsp;<span class="constructor">Some</span>&nbsp;(float_of_string&nbsp;s)&nbsp;<span class="keyword">with</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">None</span><br>
+<span class="keyword">end</span><br>
+</code></body></html>

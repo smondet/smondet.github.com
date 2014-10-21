@@ -1,0 +1,37 @@
+ <!DOCTYPE html> <html> <head><link rel="stylesheet" href="https://cdn.rawgit.com/hammerlab/ketrew/2d1c430cca52caa71e363a765ff8775a6ae14ba9/src/doc/code_style.css" type="text/css">
+<link rel="stylesheet" href="http://cdn.jsdelivr.net/bootstrap/3.1.1/css/bootstrap.min.css" type="text/css">
+<link rel="stylesheet" href="http://cdn.jsdelivr.net/bootstrap/3.1.1/css/bootstrap-theme.min.css" type="text/css"><meta charset="utf-8"><title>Ketrew: Plugin-Usage Example</title></head><body><div class="container"><h1>Ketrew: Plugin-Usage Example</h1><div class="row">
+<div class="col-md-3">
+<h2>Contents</h2><h2>Menu</h2><ul>
+ <li><a href='index.html'>Home</a></li>
+ <li><a href='Alternative_CLI_Application.html'>Alternative CLI Application</a></li>
+ <li><a href='Developer_Documentation.html'>Developer Documentation</a></li>
+ <li><a href='Long-Running_Plugins.html'>Long-Running Plugins</a></li>
+ <li><a href='Server_Commands.html'>Server Commands</a></li>
+ <li><a href='The_Configuration_File.html'>The Configuration File</a></li>
+ <li><a href='The_HTTP_API.html'>The HTTP API</a></li>
+ <li><a href='Workflow_Examples.html'>Workflow Examples</a></li>
+ <li><a href='dummy_plugin.html'>Plugin Example</a></li>
+ <li><a href='dummy_plugin_user.html'>Plugin-Usage Example</a></li>
+ <li><a href='integration.html'>Integration Test</a></li>
+ <li><a href='main.html'>Main Test</a></li>
+ <li><a href='preconfigured_main.html'>Preconfigured Main Example</a></li>
+ <li><a href='./api/index.html'>API Documentation</a></li>
+ <li>Repository <a href='https://github.com/hammerlab/ketrew'>at Github</a></li>
+ <li>Up: <a href='../index.html'>Software Projects</a></li>
+</ul>
+</div><div class="col-md-9">
+
+<p>This is a workflow script using <code>Dummy_plugin</code> to create a (local) target.</p>
+
+<pre><span class="text">
+</span><span class="kw">open</span><span class="text"> </span><span class="kw2">Printf</span><span class="text">
+</span><span class="kw">let</span><span class="text"> () =
+  </span><span class="kw">let</span><span class="text"> </span><span class="kw">open</span><span class="text"> </span><span class="kw2">Ketrew</span><span class="text">.</span><span class="kw2">EDSL</span><span class="text"> </span><span class="kw">in</span><span class="text">
+  </span><span class="id">run</span><span class="text"> (
+    </span><span class="id">target</span><span class="text"> (</span><span class="id">sprintf</span><span class="text"> </span><span class="string">&quot;%S with dummy-plugin&quot;</span><span class="text"> </span><span class="kw2">Sys</span><span class="text">.</span><span class="id">argv</span><span class="text">.(</span><span class="numeric">1</span><span class="text">))
+      </span><span class="kw4">~make</span><span class="text">:(</span><span class="kw2">Dummy_plugin</span><span class="text">.</span><span class="id">create</span><span class="text">
+               </span><span class="kw4">~host</span><span class="text">:(</span><span class="kw2">Host</span><span class="text">.</span><span class="id">parse</span><span class="text"> </span><span class="string">&quot;/tmp&quot;</span><span class="text">)
+               (</span><span class="kw2">Program</span><span class="text">.</span><span class="id">sh</span><span class="text"> </span><span class="kw2">Sys</span><span class="text">.</span><span class="id">argv</span><span class="text">.(</span><span class="numeric">1</span><span class="text">)))
+  )
+</span></pre></div></div></div></body><html>

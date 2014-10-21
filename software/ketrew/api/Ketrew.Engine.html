@@ -1,0 +1,133 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<link rel="stylesheet" href="style.css" type="text/css">
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<link rel="Start" href="index.html">
+<link rel="previous" href="Ketrew.Configuration.html">
+<link rel="next" href="Ketrew.Command_line.html">
+<link rel="Up" href="Ketrew.html">
+<link title="Index of types" rel=Appendix href="index_types.html">
+<link title="Index of values" rel=Appendix href="index_values.html">
+<link title="Index of class methods" rel=Appendix href="index_methods.html">
+<link title="Index of class types" rel=Appendix href="index_class_types.html">
+<link title="Index of modules" rel=Appendix href="index_modules.html">
+<link title="Index of module types" rel=Appendix href="index_module_types.html">
+<link title="Ketrew" rel="Chapter" href="Ketrew.html">
+<link title="Ketrew_artifact" rel="Chapter" href="Ketrew_artifact.html">
+<link title="Ketrew_client" rel="Chapter" href="Ketrew_client.html">
+<link title="Ketrew_command_line" rel="Chapter" href="Ketrew_command_line.html">
+<link title="Ketrew_configuration" rel="Chapter" href="Ketrew_configuration.html">
+<link title="Ketrew_daemonize" rel="Chapter" href="Ketrew_daemonize.html">
+<link title="Ketrew_database" rel="Chapter" href="Ketrew_database.html">
+<link title="Ketrew_edsl" rel="Chapter" href="Ketrew_edsl.html">
+<link title="Ketrew_engine" rel="Chapter" href="Ketrew_engine.html">
+<link title="Ketrew_error" rel="Chapter" href="Ketrew_error.html">
+<link title="Ketrew_host" rel="Chapter" href="Ketrew_host.html">
+<link title="Ketrew_long_running" rel="Chapter" href="Ketrew_long_running.html">
+<link title="Ketrew_lsf" rel="Chapter" href="Ketrew_lsf.html">
+<link title="Ketrew_monitored_script" rel="Chapter" href="Ketrew_monitored_script.html">
+<link title="Ketrew_path" rel="Chapter" href="Ketrew_path.html">
+<link title="Ketrew_pervasives" rel="Chapter" href="Ketrew_pervasives.html">
+<link title="Ketrew_plugin" rel="Chapter" href="Ketrew_plugin.html">
+<link title="Ketrew_program" rel="Chapter" href="Ketrew_program.html">
+<link title="Ketrew_protocol" rel="Chapter" href="Ketrew_protocol.html">
+<link title="Ketrew_server" rel="Chapter" href="Ketrew_server.html">
+<link title="Ketrew_target" rel="Chapter" href="Ketrew_target.html">
+<link title="Ketrew_unix_process" rel="Chapter" href="Ketrew_unix_process.html"><title>Ketrew API : Ketrew.Engine</title>
+</head>
+<body>
+<div class="navbar"><a class="pre" href="Ketrew.Configuration.html" title="Ketrew.Configuration">Previous</a>
+&nbsp;<a class="up" href="Ketrew.html" title="Ketrew">Up</a>
+&nbsp;<a class="post" href="Ketrew.Command_line.html" title="Ketrew.Command_line">Next</a>
+</div>
+<h1>Module <a href="type_Ketrew.Engine.html">Ketrew.Engine</a> (<a href="code_Ketrew.Engine.html">.ml</a>)</h1>
+
+<pre><span class="keyword">module</span> Engine: <code class="type">Ketrew_engine</code></pre><hr width="100%">
+
+<pre><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> </pre>
+<div class="info ">
+The contents of the application engine.<br>
+</div>
+
+
+<pre><span id="VALwith_engine"><span class="keyword">val</span> <a href="code_VALKetrew_engine.with_engine.html">with_engine</a></span> : <code class="type">configuration:<a href="Ketrew_configuration.html#TYPEengine">Ketrew_configuration.engine</a> -><br>       (engine:<a href="Ketrew_engine.html#TYPEt">t</a> -><br>        (unit,<br>         [> `Database of <a href="Ketrew_database.html#TYPEerror">Ketrew_database.error</a><br>          | `Database_unavailable of <a href="Ketrew_target.html#TYPEid">Ketrew_target.id</a><br>          | `Dyn_plugin of [> `Dynlink_error of Dynlink.error | `Findlib of exn ]<br>          | `Failure of string ]<br>         as 'merge_error)<br>        Ketrew_pervasives.Deferred_result.t) -><br>       (unit, 'merge_error) Ketrew_pervasives.Deferred_result.t</code></pre><div class="info ">
+Create a <code class="code">engine.t</code>, run the function passed as argument, and properly dispose of it.<br>
+</div>
+
+<pre><span id="VALload"><span class="keyword">val</span> <a href="code_VALKetrew_engine.load.html">load</a></span> : <code class="type">configuration:<a href="Ketrew_configuration.html#TYPEengine">Ketrew_configuration.engine</a> -><br>       (<a href="Ketrew_engine.html#TYPEt">t</a>,<br>        [> `Database of <a href="Ketrew_database.html#TYPEerror">Ketrew_database.error</a><br>         | `Dyn_plugin of [> `Dynlink_error of Dynlink.error | `Findlib of exn ]<br>         | `Failure of string ])<br>       Ketrew_pervasives.Deferred_result.t</code></pre>
+<pre><span id="VALunload"><span class="keyword">val</span> <a href="code_VALKetrew_engine.unload.html">unload</a></span> : <code class="type"><a href="Ketrew_engine.html#TYPEt">t</a> -><br>       (unit,<br>        [> `Database of [> `Act of <a href="Ketrew_database.html#TYPEaction">Ketrew_database.action</a> | `Close ] * string<br>         | `Database_unavailable of <a href="Ketrew_target.html#TYPEid">Ketrew_target.id</a> ])<br>       Ketrew_pervasives.Deferred_result.t</code></pre>
+<pre><span id="VALdatabase"><span class="keyword">val</span> <a href="code_VALKetrew_engine.database.html">database</a></span> : <code class="type"><a href="Ketrew_engine.html#TYPEt">t</a> -><br>       (<a href="Ketrew_database.html#TYPEt">Ketrew_database.t</a>, [> `Database of [> `Load of string ] * string ])<br>       Ketrew_pervasives.Deferred_result.t</code></pre><div class="info ">
+Get the database handle managed by the engine.<br>
+</div>
+
+<pre><span id="VALconfiguration"><span class="keyword">val</span> <a href="code_VALKetrew_engine.configuration.html">configuration</a></span> : <code class="type"><a href="Ketrew_engine.html#TYPEt">t</a> -> <a href="Ketrew_configuration.html#TYPEengine">Ketrew_configuration.engine</a></code></pre><div class="info ">
+Retrieve the configuration.<br>
+</div>
+
+<pre><span id="VALadd_targets"><span class="keyword">val</span> <a href="code_VALKetrew_engine.add_targets.html">add_targets</a></span> : <code class="type"><a href="Ketrew_engine.html#TYPEt">t</a> -><br>       <a href="Ketrew_target.html#TYPEt">Ketrew_target.t</a> list -><br>       (unit,<br>        [> `Database of <a href="Ketrew_database.html#TYPEerror">Ketrew_database.error</a><br>         | `Database_unavailable of <a href="Ketrew_target.html#TYPEid">Ketrew_target.id</a><br>         | `Missing_data of <a href="Ketrew_target.html#TYPEid">Ketrew_target.id</a><br>         | `Persistent_state of [> `Deserilization of string ]<br>         | `Target of [> `Deserilization of string ] ])<br>       Ketrew_pervasives.Deferred_result.t</code></pre><div class="info ">
+Add a list of targets to the engine.<br>
+</div>
+
+<pre><span id="VALget_target"><span class="keyword">val</span> <a href="code_VALKetrew_engine.get_target.html">get_target</a></span> : <code class="type"><a href="Ketrew_engine.html#TYPEt">t</a> -><br>       Ketrew_pervasives.Unique_id.t -><br>       (<a href="Ketrew_target.html#TYPEt">Ketrew_target.t</a>,<br>        [> `Database of <a href="Ketrew_database.html#TYPEerror">Ketrew_database.error</a><br>         | `Missing_data of string<br>         | `Persistent_state of [> `Deserilization of string ]<br>         | `Target of [> `Deserilization of string ] ])<br>       Ketrew_pervasives.Deferred_result.t</code></pre><div class="info ">
+Get a target from its id.<br>
+</div>
+
+<pre><span id="VALcurrent_targets"><span class="keyword">val</span> <a href="code_VALKetrew_engine.current_targets.html">current_targets</a></span> : <code class="type"><a href="Ketrew_engine.html#TYPEt">t</a> -><br>       (<a href="Ketrew_target.html#TYPEt">Ketrew_target.t</a> list,<br>        [> `Database of <a href="Ketrew_database.html#TYPEerror">Ketrew_database.error</a><br>         | `IO of<br>             [> `Read_file_exn of string * exn | `Write_file_exn of string * exn ]<br>         | `Missing_data of <a href="Ketrew_target.html#TYPEid">Ketrew_target.id</a><br>         | `Persistent_state of [> `Deserilization of string ]<br>         | `System of [> `File_info of string ] * [> `Exn of exn ]<br>         | `Target of [> `Deserilization of string ] ])<br>       Ketrew_pervasives.Deferred_result.t</code></pre><div class="info ">
+Get the list of targets currently handled.<br>
+</div>
+
+<pre><span id="VALarchived_targets"><span class="keyword">val</span> <a href="code_VALKetrew_engine.archived_targets.html">archived_targets</a></span> : <code class="type"><a href="Ketrew_engine.html#TYPEt">t</a> -><br>       (<a href="Ketrew_target.html#TYPEt">Ketrew_target.t</a> list,<br>        [> `Database of <a href="Ketrew_database.html#TYPEerror">Ketrew_database.error</a><br>         | `IO of<br>             [> `Read_file_exn of string * exn | `Write_file_exn of string * exn ]<br>         | `Missing_data of <a href="Ketrew_target.html#TYPEid">Ketrew_target.id</a><br>         | `Persistent_state of [> `Deserilization of string ]<br>         | `System of [> `File_info of string ] * [> `Exn of exn ]<br>         | `Target of [> `Deserilization of string ] ])<br>       Ketrew_pervasives.Deferred_result.t</code></pre><div class="info ">
+Get the list of targets that have been archived.<br>
+</div>
+
+<pre><span id="VALis_archived"><span class="keyword">val</span> <a href="code_VALKetrew_engine.is_archived.html">is_archived</a></span> : <code class="type"><a href="Ketrew_engine.html#TYPEt">t</a> -><br>       Ketrew_pervasives.Unique_id.t -><br>       (bool,<br>        [> `Database of <a href="Ketrew_database.html#TYPEerror">Ketrew_database.error</a><br>         | `Missing_data of <a href="Ketrew_target.html#TYPEid">Ketrew_target.id</a><br>         | `Persistent_state of [> `Deserilization of string ]<br>         | `Target of [> `Deserilization of string ] ])<br>       Ketrew_pervasives.Deferred_result.t</code></pre><div class="info ">
+Check whether a target is in the “archive”.<br>
+</div>
+
+<pre><span id="TYPEhappening"><span class="keyword">type</span> <code class="type"></code>happening</span> = <code class="type">Ketrew_gen_base_v0.Happening.t</code> </pre>
+<div class="info ">
+Structured log of what can happen during <a href="Ketrew_engine.html#VALstep"><code class="code"><span class="constructor">Ketrew_engine</span>.step</code></a> or <a href="Ketrew_engine.html#VALkill"><code class="code"><span class="constructor">Ketrew_engine</span>.kill</code></a>.<br>
+</div>
+
+
+<pre><span id="VALwhat_happened_to_string"><span class="keyword">val</span> <a href="code_VALKetrew_engine.what_happened_to_string.html">what_happened_to_string</a></span> : <code class="type"><a href="Ketrew_engine.html#TYPEhappening">happening</a> -> string</code></pre><div class="info ">
+Transform an item of the result of <a href="Ketrew_engine.html#VALstep"><code class="code"><span class="constructor">Ketrew_engine</span>.step</code></a> to a human-readable string.<br>
+</div>
+
+<pre><span id="VALlog_what_happened"><span class="keyword">val</span> <a href="code_VALKetrew_engine.log_what_happened.html">log_what_happened</a></span> : <code class="type"><a href="Ketrew_engine.html#TYPEhappening">happening</a> -> Ketrew_pervasives.Log.t</code></pre><div class="info ">
+Transform a <a href="Ketrew_engine.html#TYPEhappening"><code class="code"><span class="constructor">Ketrew_engine</span>.happening</code></a> into <code class="code"><span class="constructor">Log</span>.t</code> document.<br>
+</div>
+
+<pre><span id="VALstep"><span class="keyword">val</span> <a href="code_VALKetrew_engine.step.html">step</a></span> : <code class="type"><a href="Ketrew_engine.html#TYPEt">t</a> -><br>       (<a href="Ketrew_engine.html#TYPEhappening">happening</a> list,<br>        [> `Database of <a href="Ketrew_database.html#TYPEerror">Ketrew_database.error</a><br>         | `Database_unavailable of <a href="Ketrew_target.html#TYPEid">Ketrew_target.id</a><br>         | `Host of<br>             [> `Execution of<br>                  < host : string; message : string; stderr : string option;<br>                    stdout : string option ><br>              | `Non_zero of string * int<br>              | `Ssh_failure of<br>                  [> `Wrong_log of string<br>                   | `Wrong_status of <a href="Ketrew_unix_process.Exit_code.html#TYPEt">Ketrew_unix_process.Exit_code.t</a> ] *<br>                  string<br>              | `System of [> `Sleep of float ] * [> `Exn of exn ]<br>              | `Timeout of float<br>              | `Unix_exec of string ]<br>             <a href="Ketrew_host.Error.html#TYPEexecution">Ketrew_host.Error.execution</a> <a href="Ketrew_host.Error.html#TYPEnon_zero_execution">Ketrew_host.Error.non_zero_execution</a><br>         | `IO of<br>             [> `Read_file_exn of string * exn | `Write_file_exn of string * exn ]<br>         | `Missing_data of <a href="Ketrew_target.html#TYPEid">Ketrew_target.id</a><br>         | `Persistent_state of [> `Deserilization of string ]<br>         | `System of [> `File_info of string ] * [> `Exn of exn ]<br>         | `Target of [> `Deserilization of string ]<br>         | `Volume of [> `No_size of Ketrew_pervasives.Log.t ] ])<br>       Ketrew_pervasives.Deferred_result.t</code></pre><div class="info ">
+Run one step of the engine; <code class="code">step</code> returns a list of “things that
+    happened”.<br>
+</div>
+
+<pre><span id="VALfix_point"><span class="keyword">val</span> <a href="code_VALKetrew_engine.fix_point.html">fix_point</a></span> : <code class="type"><a href="Ketrew_engine.html#TYPEt">t</a> -><br>       ([ `Steps of int ] * <a href="Ketrew_engine.html#TYPEhappening">happening</a> list list,<br>        [> `Database of <a href="Ketrew_database.html#TYPEerror">Ketrew_database.error</a><br>         | `Database_unavailable of <a href="Ketrew_target.html#TYPEid">Ketrew_target.id</a><br>         | `Host of<br>             [> `Execution of<br>                  < host : string; message : string; stderr : string option;<br>                    stdout : string option ><br>              | `Non_zero of string * int<br>              | `Ssh_failure of<br>                  [> `Wrong_log of string<br>                   | `Wrong_status of <a href="Ketrew_unix_process.Exit_code.html#TYPEt">Ketrew_unix_process.Exit_code.t</a> ] *<br>                  string<br>              | `System of [> `Sleep of float ] * [> `Exn of exn ]<br>              | `Timeout of float<br>              | `Unix_exec of string ]<br>             <a href="Ketrew_host.Error.html#TYPEexecution">Ketrew_host.Error.execution</a> <a href="Ketrew_host.Error.html#TYPEnon_zero_execution">Ketrew_host.Error.non_zero_execution</a><br>         | `IO of<br>             [> `Read_file_exn of string * exn | `Write_file_exn of string * exn ]<br>         | `Missing_data of <a href="Ketrew_target.html#TYPEid">Ketrew_target.id</a><br>         | `Persistent_state of [> `Deserilization of string ]<br>         | `System of [> `File_info of string ] * [> `Exn of exn ]<br>         | `Target of [> `Deserilization of string ]<br>         | `Volume of [> `No_size of Ketrew_pervasives.Log.t ] ])<br>       Ketrew_pervasives.Deferred_result.t</code></pre><div class="info ">
+Run <a href="Ketrew_engine.html#VALstep"><code class="code"><span class="constructor">Ketrew_engine</span>.step</code></a> many times until nothing happens or nothing “new” happens.<br>
+</div>
+
+<pre><span id="VALget_status"><span class="keyword">val</span> <a href="code_VALKetrew_engine.get_status.html">get_status</a></span> : <code class="type"><a href="Ketrew_engine.html#TYPEt">t</a> -><br>       <a href="Ketrew_target.html#TYPEid">Ketrew_target.id</a> -><br>       (<a href="Ketrew_target.html#TYPEworkflow_state">Ketrew_target.workflow_state</a>,<br>        [> `Database of <a href="Ketrew_database.html#TYPEerror">Ketrew_database.error</a><br>         | `IO of<br>             [> `Read_file_exn of string * exn | `Write_file_exn of string * exn ]<br>         | `Missing_data of string<br>         | `Persistent_state of [> `Deserilization of string ]<br>         | `System of [> `File_info of string ] * [> `Exn of exn ]<br>         | `Target of [> `Deserilization of string ] ])<br>       Ketrew_pervasives.Deferred_result.t</code></pre><div class="info ">
+Get the state description of a given target (by “id”).<br>
+</div>
+
+<pre><span id="VALkill"><span class="keyword">val</span> <a href="code_VALKetrew_engine.kill.html">kill</a></span> : <code class="type"><a href="Ketrew_engine.html#TYPEt">t</a> -><br>       id:<a href="Ketrew_target.html#TYPEid">Ketrew_target.id</a> -><br>       (<a href="Ketrew_engine.html#TYPEhappening">happening</a> list,<br>        [> `Database of <a href="Ketrew_database.html#TYPEerror">Ketrew_database.error</a><br>         | `Database_unavailable of string<br>         | `Failed_to_kill of string<br>         | `IO of<br>             [> `Read_file_exn of string * exn | `Write_file_exn of string * exn ]<br>         | `Missing_data of string<br>         | `Not_implemented of string<br>         | `Persistent_state of [> `Deserilization of string ]<br>         | `System of [> `File_info of string ] * [> `Exn of exn ]<br>         | `Target of [> `Deserilization of string ] ])<br>       Ketrew_pervasives.Deferred_result.t</code></pre><div class="info ">
+Kill a target<br>
+</div>
+
+<pre><span id="VALarchive_target"><span class="keyword">val</span> <a href="code_VALKetrew_engine.archive_target.html">archive_target</a></span> : <code class="type"><a href="Ketrew_engine.html#TYPEt">t</a> -><br>       <a href="Ketrew_target.html#TYPEid">Ketrew_target.id</a> -><br>       (<a href="Ketrew_engine.html#TYPEhappening">happening</a> list,<br>        [> `Database of <a href="Ketrew_database.html#TYPEerror">Ketrew_database.error</a><br>         | `Database_unavailable of <a href="Ketrew_target.html#TYPEid">Ketrew_target.id</a><br>         | `Missing_data of <a href="Ketrew_target.html#TYPEid">Ketrew_target.id</a><br>         | `Persistent_state of [> `Deserilization of string ]<br>         | `Target of [> `Deserilization of string ] ])<br>       Ketrew_pervasives.Deferred_result.t</code></pre><div class="info ">
+Move a target to the “archived” list.<br>
+</div>
+
+<pre><span id="VALrestart_target"><span class="keyword">val</span> <a href="code_VALKetrew_engine.restart_target.html">restart_target</a></span> : <code class="type"><a href="Ketrew_engine.html#TYPEt">t</a> -><br>       <a href="Ketrew_target.html#TYPEid">Ketrew_target.id</a> -><br>       (<a href="Ketrew_engine.html#TYPEhappening">happening</a> list,<br>        [> `Database of <a href="Ketrew_database.html#TYPEerror">Ketrew_database.error</a><br>         | `Database_unavailable of <a href="Ketrew_target.html#TYPEid">Ketrew_target.id</a><br>         | `Missing_data of <a href="Ketrew_target.html#TYPEid">Ketrew_target.id</a><br>         | `Persistent_state of [> `Deserilization of string ]<br>         | `Target of [> `Deserilization of string ] ])<br>       Ketrew_pervasives.Deferred_result.t</code></pre><div class="info ">
+Make new activated targets out of a given target and its “transitive
+    reverse dependencies”<br>
+</div>
+
+<pre><span class="keyword">module</span> <a href="Ketrew_engine.Target_graph.html">Target_graph</a>: <code class="code"><span class="keyword">sig</span></code> <a href="Ketrew_engine.Target_graph.html">..</a> <code class="code"><span class="keyword">end</span></code></pre><div class="info">
+A module to manipulate the graph of dependencies.
+</div>
+
+<pre><span class="keyword">module</span> <a href="Ketrew_engine.Measure.html">Measure</a>: <code class="code"><span class="keyword">sig</span></code> <a href="Ketrew_engine.Measure.html">..</a> <code class="code"><span class="keyword">end</span></code></pre>
+<pre><span class="keyword">module</span> <a href="Ketrew_engine.Measurements.html">Measurements</a>: <code class="code"><span class="keyword">sig</span></code> <a href="Ketrew_engine.Measurements.html">..</a> <code class="code"><span class="keyword">end</span></code></pre></body></html>

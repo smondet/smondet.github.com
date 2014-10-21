@@ -1,0 +1,78 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<link rel="stylesheet" href="style.css" type="text/css">
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<link rel="Start" href="index.html">
+<link rel="previous" href="Ketrew_client.Standalone.html">
+<link rel="Up" href="Ketrew_client.html">
+<link title="Index of types" rel=Appendix href="index_types.html">
+<link title="Index of values" rel=Appendix href="index_values.html">
+<link title="Index of class methods" rel=Appendix href="index_methods.html">
+<link title="Index of class types" rel=Appendix href="index_class_types.html">
+<link title="Index of modules" rel=Appendix href="index_modules.html">
+<link title="Index of module types" rel=Appendix href="index_module_types.html">
+<link title="Ketrew" rel="Chapter" href="Ketrew.html">
+<link title="Ketrew_artifact" rel="Chapter" href="Ketrew_artifact.html">
+<link title="Ketrew_client" rel="Chapter" href="Ketrew_client.html">
+<link title="Ketrew_command_line" rel="Chapter" href="Ketrew_command_line.html">
+<link title="Ketrew_configuration" rel="Chapter" href="Ketrew_configuration.html">
+<link title="Ketrew_daemonize" rel="Chapter" href="Ketrew_daemonize.html">
+<link title="Ketrew_database" rel="Chapter" href="Ketrew_database.html">
+<link title="Ketrew_edsl" rel="Chapter" href="Ketrew_edsl.html">
+<link title="Ketrew_engine" rel="Chapter" href="Ketrew_engine.html">
+<link title="Ketrew_error" rel="Chapter" href="Ketrew_error.html">
+<link title="Ketrew_host" rel="Chapter" href="Ketrew_host.html">
+<link title="Ketrew_long_running" rel="Chapter" href="Ketrew_long_running.html">
+<link title="Ketrew_lsf" rel="Chapter" href="Ketrew_lsf.html">
+<link title="Ketrew_monitored_script" rel="Chapter" href="Ketrew_monitored_script.html">
+<link title="Ketrew_path" rel="Chapter" href="Ketrew_path.html">
+<link title="Ketrew_pervasives" rel="Chapter" href="Ketrew_pervasives.html">
+<link title="Ketrew_plugin" rel="Chapter" href="Ketrew_plugin.html">
+<link title="Ketrew_program" rel="Chapter" href="Ketrew_program.html">
+<link title="Ketrew_protocol" rel="Chapter" href="Ketrew_protocol.html">
+<link title="Ketrew_server" rel="Chapter" href="Ketrew_server.html">
+<link title="Ketrew_target" rel="Chapter" href="Ketrew_target.html">
+<link title="Ketrew_unix_process" rel="Chapter" href="Ketrew_unix_process.html"><title>Ketrew API : Ketrew_client.Http_client</title>
+</head>
+<body>
+<div class="navbar"><a class="pre" href="Ketrew_client.Standalone.html" title="Ketrew_client.Standalone">Previous</a>
+&nbsp;<a class="up" href="Ketrew_client.html" title="Ketrew_client">Up</a>
+&nbsp;</div>
+<h1>Module <a href="type_Ketrew_client.Http_client.html">Ketrew_client.Http_client</a> (<a href="code_Ketrew_client.Http_client.html">.ml</a>)</h1>
+
+<pre><span class="keyword">module</span> Http_client: <code class="code"><span class="keyword">sig</span></code> <a href="Ketrew_client.Http_client.html">..</a> <code class="code"><span class="keyword">end</span></code></pre><hr width="100%">
+
+<pre><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code></pre><table class="typetable">
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTt.configuration">configuration</span>&nbsp;: <code class="type"><a href="Ketrew_configuration.html#TYPEclient">Ketrew_configuration.client</a></code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTt.base_uri">base_uri</span>&nbsp;: <code class="type">Uri.t</code>;</code></td>
+
+</tr></table>
+}
+
+
+
+<pre><span id="VALcreate"><span class="keyword">val</span> <a href="code_VALKetrew_client.Http_client.create.html">create</a></span> : <code class="type"><a href="Ketrew_configuration.html#TYPEclient">Ketrew_configuration.client</a> -><br>       (<a href="Ketrew_client.Http_client.html#TYPEt">t</a>,<br>        [> `Wrong_configuration of [> `Found of string ] * [> `Exn of exn ] ])<br>       Ketrew_pervasives.t</code></pre>
+<pre><span id="VALclient_error"><span class="keyword">val</span> <a href="code_VALKetrew_client.Http_client.client_error.html">client_error</a></span> : <code class="type">where:'a -> what:'b -> [> `Client of [> `Http of 'a * 'b ] ]</code></pre>
+<pre><span id="VALclient_error_exn"><span class="keyword">val</span> <a href="code_VALKetrew_client.Http_client.client_error_exn.html">client_error_exn</a></span> : <code class="type">'a -> 'b -> [> `Client of [> `Http of 'a * [> `Exn of 'b ] ] ]</code></pre>
+<pre><span id="VALcall_json"><span class="keyword">val</span> <a href="code_VALKetrew_client.Http_client.call_json.html">call_json</a></span> : <code class="type">?args:(string * string) list -><br>       <a href="Ketrew_client.Http_client.html#TYPEt">t</a> -><br>       meta_meth:[< `Get | `Post_message of Ketrew_gen_protocol_v0.Post_message.t ] -><br>       path:string -><br>       (Yojson.Basic.json,<br>        [> `Client of<br>             [> `Http of<br>                  [> `Call of [> `GET | `POST ] * Uri.t ] *<br>                  [> `Exn of exn<br>                   | `Json_parsing of string * [> `Exn of exn ]<br>                   | `Wrong_response of<br>                       Cohttp_lwt_unix.Client.Response.t * Cohttp_lwt_body.t ] ]<br>         | `Failure of string ])<br>       Ketrew_pervasives.t</code></pre>
+<pre><span id="VALfilter_down_message"><span class="keyword">val</span> <a href="code_VALKetrew_client.Http_client.filter_down_message.html">filter_down_message</a></span> : <code class="type"><a href="Ketrew_pervasives.Json.html#TYPEt">Ketrew_pervasives.Json.t</a> -><br>       f:(Ketrew_gen_protocol_v0.Down_message.t -> 'a option) -><br>       loc:'b -><br>       ('a,<br>        [> `Client of<br>             [> `Http of<br>                  'b *<br>                  [> `Unexpected_message of Ketrew_gen_protocol_v0.Down_message.t<br>                   | `Wrong_json of <a href="Ketrew_pervasives.Json.html#TYPEt">Ketrew_pervasives.Json.t</a> ] ] ])<br>       Ketrew_pervasives.t</code></pre>
+<pre><span id="VALget_current_targets"><span class="keyword">val</span> <a href="code_VALKetrew_client.Http_client.get_current_targets.html">get_current_targets</a></span> : <code class="type">archived:bool -><br>       <a href="Ketrew_client.Http_client.html#TYPEt">t</a> -><br>       (Ketrew_gen_protocol_v0.Target_v0.t list,<br>        [> `Client of<br>             [> `Http of<br>                  [> `Call of [> `GET | `POST ] * Uri.t | `Targets ] *<br>                  [> `Exn of exn<br>                   | `Json_parsing of string * [> `Exn of exn ]<br>                   | `Unexpected_message of Ketrew_gen_protocol_v0.Down_message.t<br>                   | `Wrong_json of <a href="Ketrew_pervasives.Json.html#TYPEt">Ketrew_pervasives.Json.t</a><br>                   | `Wrong_response of<br>                       Cohttp_lwt_unix.Client.Response.t * Cohttp_lwt_body.t ] ]<br>         | `Failure of string ])<br>       Ketrew_pervasives.t</code></pre>
+<pre><span id="VALadd_targets"><span class="keyword">val</span> <a href="code_VALKetrew_client.Http_client.add_targets.html">add_targets</a></span> : <code class="type"><a href="Ketrew_client.Http_client.html#TYPEt">t</a> -><br>       targets:Ketrew_gen_protocol_v0.Target_v0.t list -><br>       (unit,<br>        [> `Client of<br>             [> `Http of<br>                  [> `Call of [> `GET | `POST ] * Uri.t ] *<br>                  [> `Exn of exn<br>                   | `Json_parsing of string * [> `Exn of exn ]<br>                   | `Wrong_response of<br>                       Cohttp_lwt_unix.Client.Response.t * Cohttp_lwt_body.t ] ]<br>         | `Failure of string ])<br>       Ketrew_pervasives.t</code></pre>
+<pre><span id="VALget_target"><span class="keyword">val</span> <a href="code_VALKetrew_client.Http_client.get_target.html">get_target</a></span> : <code class="type"><a href="Ketrew_client.Http_client.html#TYPEt">t</a> -><br>       id:string -><br>       (Ketrew_gen_protocol_v0.Target_v0.t,<br>        [> `Client of<br>             [> `Http of<br>                  [> `Call of [> `GET | `POST ] * Uri.t | `Targets ] *<br>                  [> `Exn of exn<br>                   | `Json_parsing of string * [> `Exn of exn ]<br>                   | `Unexpected_message of Ketrew_gen_protocol_v0.Down_message.t<br>                   | `Wrong_json of <a href="Ketrew_pervasives.Json.html#TYPEt">Ketrew_pervasives.Json.t</a><br>                   | `Wrong_response of<br>                       Cohttp_lwt_unix.Client.Response.t * Cohttp_lwt_body.t ] ]<br>         | `Failure of string ])<br>       Ketrew_pervasives.t</code></pre>
+<pre><span id="VALkill_or_archive"><span class="keyword">val</span> <a href="code_VALKetrew_client.Http_client.kill_or_archive.html">kill_or_archive</a></span> : <code class="type"><a href="Ketrew_client.Http_client.html#TYPEt">t</a> -><br>       [< `Archive_targets of string list<br>        | `Kill_targets of string list<br>        | `Restart_targets of string list ] -><br>       (Ketrew_gen_protocol_v0.Happening_list_v0.t,<br>        [> `Client of<br>             [> `Http of<br>                  [> `Archive_targets of string list<br>                   | `Call of [> `GET | `POST ] * Uri.t<br>                   | `Kill_targets of string list<br>                   | `Restart_targets of string list ] *<br>                  [> `Exn of exn<br>                   | `Json_parsing of string * [> `Exn of exn ]<br>                   | `Unexpected_message of Ketrew_gen_protocol_v0.Down_message.t<br>                   | `Wrong_json of <a href="Ketrew_pervasives.Json.html#TYPEt">Ketrew_pervasives.Json.t</a><br>                   | `Wrong_response of<br>                       Cohttp_lwt_unix.Client.Response.t * Cohttp_lwt_body.t ] ]<br>         | `Failure of string ])<br>       Ketrew_pervasives.t</code></pre>
+<pre><span id="VALkill"><span class="keyword">val</span> <a href="code_VALKetrew_client.Http_client.kill.html">kill</a></span> : <code class="type"><a href="Ketrew_client.Http_client.html#TYPEt">t</a> -><br>       string list -><br>       (Ketrew_gen_protocol_v0.Happening_list_v0.t,<br>        [> `Client of<br>             [> `Http of<br>                  [> `Archive_targets of string list<br>                   | `Call of [> `GET | `POST ] * Uri.t<br>                   | `Kill_targets of string list<br>                   | `Restart_targets of string list ] *<br>                  [> `Exn of exn<br>                   | `Json_parsing of string * [> `Exn of exn ]<br>                   | `Unexpected_message of Ketrew_gen_protocol_v0.Down_message.t<br>                   | `Wrong_json of <a href="Ketrew_pervasives.Json.html#TYPEt">Ketrew_pervasives.Json.t</a><br>                   | `Wrong_response of<br>                       Cohttp_lwt_unix.Client.Response.t * Cohttp_lwt_body.t ] ]<br>         | `Failure of string ])<br>       Ketrew_pervasives.t</code></pre>
+<pre><span id="VALarchive"><span class="keyword">val</span> <a href="code_VALKetrew_client.Http_client.archive.html">archive</a></span> : <code class="type"><a href="Ketrew_client.Http_client.html#TYPEt">t</a> -><br>       string list -><br>       (Ketrew_gen_protocol_v0.Happening_list_v0.t,<br>        [> `Client of<br>             [> `Http of<br>                  [> `Archive_targets of string list<br>                   | `Call of [> `GET | `POST ] * Uri.t<br>                   | `Kill_targets of string list<br>                   | `Restart_targets of string list ] *<br>                  [> `Exn of exn<br>                   | `Json_parsing of string * [> `Exn of exn ]<br>                   | `Unexpected_message of Ketrew_gen_protocol_v0.Down_message.t<br>                   | `Wrong_json of <a href="Ketrew_pervasives.Json.html#TYPEt">Ketrew_pervasives.Json.t</a><br>                   | `Wrong_response of<br>                       Cohttp_lwt_unix.Client.Response.t * Cohttp_lwt_body.t ] ]<br>         | `Failure of string ])<br>       Ketrew_pervasives.t</code></pre>
+<pre><span id="VALrestart"><span class="keyword">val</span> <a href="code_VALKetrew_client.Http_client.restart.html">restart</a></span> : <code class="type"><a href="Ketrew_client.Http_client.html#TYPEt">t</a> -><br>       string list -><br>       (Ketrew_gen_protocol_v0.Happening_list_v0.t,<br>        [> `Client of<br>             [> `Http of<br>                  [> `Archive_targets of string list<br>                   | `Call of [> `GET | `POST ] * Uri.t<br>                   | `Kill_targets of string list<br>                   | `Restart_targets of string list ] *<br>                  [> `Exn of exn<br>                   | `Json_parsing of string * [> `Exn of exn ]<br>                   | `Unexpected_message of Ketrew_gen_protocol_v0.Down_message.t<br>                   | `Wrong_json of <a href="Ketrew_pervasives.Json.html#TYPEt">Ketrew_pervasives.Json.t</a><br>                   | `Wrong_response of<br>                       Cohttp_lwt_unix.Client.Response.t * Cohttp_lwt_body.t ] ]<br>         | `Failure of string ])<br>       Ketrew_pervasives.t</code></pre>
+<pre><span id="VALcall_query"><span class="keyword">val</span> <a href="code_VALKetrew_client.Http_client.call_query.html">call_query</a></span> : <code class="type"><a href="Ketrew_client.Http_client.html#TYPEt">t</a> -><br>       target:<a href="Ketrew_target.html#TYPEt">Ketrew_target.t</a> -><br>       Ketrew_pervasives.Unique_id.t -><br>       (string,<br>        [> `Client of<br>             [> `Http of<br>                  [> `Call of [> `GET | `POST ] * Uri.t<br>                   | `Target_query of<br>                       Ketrew_pervasives.Unique_id.t * Ketrew_pervasives.Unique_id.t ] *<br>                  [> `Exn of exn<br>                   | `Json_parsing of string * [> `Exn of exn ]<br>                   | `Unexpected_message of Ketrew_gen_protocol_v0.Down_message.t<br>                   | `Wrong_json of <a href="Ketrew_pervasives.Json.html#TYPEt">Ketrew_pervasives.Json.t</a><br>                   | `Wrong_response of<br>                       Cohttp_lwt_unix.Client.Response.t * Cohttp_lwt_body.t ] ]<br>         | `Failure of string ])<br>       Ketrew_pervasives.t</code></pre>
+<pre><span id="VALcall_cleanable_targets"><span class="keyword">val</span> <a href="code_VALKetrew_client.Http_client.call_cleanable_targets.html">call_cleanable_targets</a></span> : <code class="type">how_much:([< `Hard | `Soft ] as 'a) -><br>       <a href="Ketrew_client.Http_client.html#TYPEt">t</a> -><br>       ([> `To_kill of string list ] * [> `To_archive of string list ],<br>        [> `Client of<br>             [> `Http of<br>                  [> `Call of [> `GET | `POST ] * Uri.t | `Cleanable_targets of 'a ] *<br>                  [> `Exn of exn<br>                   | `Json_parsing of string * [> `Exn of exn ]<br>                   | `Unexpected_message of Ketrew_gen_protocol_v0.Down_message.t<br>                   | `Wrong_json of <a href="Ketrew_pervasives.Json.html#TYPEt">Ketrew_pervasives.Json.t</a><br>                   | `Wrong_response of<br>                       Cohttp_lwt_unix.Client.Response.t * Cohttp_lwt_body.t ] ]<br>         | `Failure of string ])<br>       Ketrew_pervasives.t</code></pre></body></html>

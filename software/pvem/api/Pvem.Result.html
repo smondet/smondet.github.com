@@ -1,0 +1,36 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<link rel="stylesheet" href="style.css" type="text/css">
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<link rel="Start" href="index.html">
+<link rel="next" href="Pvem.With_deferred.html">
+<link rel="Up" href="Pvem.html">
+<link title="Index of types" rel=Appendix href="index_types.html">
+<link title="Index of values" rel=Appendix href="index_values.html">
+<link title="Index of modules" rel=Appendix href="index_modules.html">
+<link title="Index of module types" rel=Appendix href="index_module_types.html">
+<link title="Pvem" rel="Chapter" href="Pvem.html"><title>Pvem.Result</title>
+</head>
+<body>
+<div class="navbar">&nbsp;<a class="up" href="Pvem.html" title="Pvem">Up</a>
+&nbsp;<a class="post" href="Pvem.With_deferred.html" title="Pvem.With_deferred">Next</a>
+</div>
+<h1>Module <a href="type_Pvem.Result.html">Pvem.Result</a> (<a href="code_Pvem.Result.html">.ml</a>)</h1>
+
+<pre><span class="keyword">module</span> Result: <code class="code"><span class="keyword">sig</span></code> <a href="Pvem.Result.html">..</a> <code class="code"><span class="keyword">end</span></code></pre><div class="info module top">
+Implementation of <code class="code"><span class="constructor">RESULT</span></code><br>
+</div>
+<hr width="100%">
+
+<pre><span id="TYPEt"><span class="keyword">type</span> <code class="type">('a, 'b)</code> t</span> = <code class="type">[ `Error of 'b | `Ok of 'a ]</code> </pre>
+
+
+<pre><span id="VALreturn"><span class="keyword">val</span> <a href="code_VALPvem.Result.return.html">return</a></span> : <code class="type">'a -> [> `Ok of 'a ]</code></pre>
+<pre><span id="VALfail"><span class="keyword">val</span> <a href="code_VALPvem.Result.fail.html">fail</a></span> : <code class="type">'a -> [> `Error of 'a ]</code></pre>
+<pre><span id="VALbind"><span class="keyword">val</span> <a href="code_VALPvem.Result.bind.html">bind</a></span> : <code class="type">[< `Error of 'a | `Ok of 'b ] -> ('b -> ([> `Error of 'a ] as 'c)) -> 'c</code></pre>
+<pre><span id="VAL(>>=)"><span class="keyword">val</span> <a href="code_VALPvem.Result.(_gt__gt__equal_).html">(&gt;&gt;=)</a></span> : <code class="type">[< `Error of 'a | `Ok of 'b ] -> ('b -> ([> `Error of 'a ] as 'c)) -> 'c</code></pre>
+<pre><span id="VALmap"><span class="keyword">val</span> <a href="code_VALPvem.Result.map.html">map</a></span> : <code class="type">[< `Error of 'a | `Ok of 'b ] -> ('b -> 'c) -> [> `Error of 'a | `Ok of 'c ]</code></pre>
+<pre><span id="VAL(>>|)"><span class="keyword">val</span> <a href="code_VALPvem.Result.(_gt__gt__pipe_).html">(&gt;&gt;|)</a></span> : <code class="type">[< `Error of 'a | `Ok of 'b ] -> ('b -> 'c) -> [> `Error of 'a | `Ok of 'c ]</code></pre>
+<pre><span id="VALdestruct"><span class="keyword">val</span> <a href="code_VALPvem.Result.destruct.html">destruct</a></span> : <code class="type">[< ('a, 'b) <a href="Pvem.Result.html#TYPEt">t</a> ] -> ([> ('a, 'b) <a href="Pvem.Result.html#TYPEt">t</a> ] -> 'c) -> 'c</code></pre>
+<pre><span id="VAL(>><)"><span class="keyword">val</span> <a href="code_VALPvem.Result.(_gt__gt__lt_).html">(&gt;&gt;&lt;)</a></span> : <code class="type">[< ('a, 'b) <a href="Pvem.Result.html#TYPEt">t</a> ] -> ([> ('a, 'b) <a href="Pvem.Result.html#TYPEt">t</a> ] -> 'c) -> 'c</code></pre></body></html>

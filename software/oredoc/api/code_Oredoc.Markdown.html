@@ -1,0 +1,169 @@
+<html><head>
+<link rel="stylesheet" href="style.css" type="text/css">
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<link rel="Start" href="index.html">
+<link title="Index of types" rel=Appendix href="index_types.html">
+<link title="Index of values" rel=Appendix href="index_values.html">
+<link title="Index of modules" rel=Appendix href="index_modules.html">
+<link title="Oredoc" rel="Chapter" href="Oredoc.html"><title>Oredoc API : Oredoc.Markdown</title>
+</head>
+<body>
+<code class="code"><span class="keyword">struct</span><br>
+<br>
+&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;<span class="keywordsign">'</span>a&nbsp;configuration&nbsp;=&nbsp;<span class="keywordsign">'</span>a&nbsp;<span class="keyword">constraint</span>&nbsp;<span class="keywordsign">'</span>a&nbsp;=&nbsp;&lt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;catch_module_paths:&nbsp;(string&nbsp;*&nbsp;<span class="constructor">Re</span>.re&nbsp;*&nbsp;string)&nbsp;list;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;..<br>
+&nbsp;&nbsp;&gt;<br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;code_url&nbsp;code&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">String</span>.map&nbsp;code&nbsp;~f:(<span class="keyword">function</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="string">'a'</span>&nbsp;..&nbsp;<span class="string">'z'</span>&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="string">'A'</span>&nbsp;..&nbsp;<span class="string">'Z'</span>&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="string">'0'</span>&nbsp;..&nbsp;<span class="string">'9'</span>&nbsp;<span class="keyword">as</span>&nbsp;c&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;c<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;other&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="string">'_'</span>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;^&nbsp;<span class="string">".html"</span><br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;looks_like_module_path&nbsp;~configuration&nbsp;code&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">List</span>.exists&nbsp;configuration<span class="keywordsign">#</span>catch_module_paths<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;~f:(<span class="keyword">fun</span>&nbsp;(_,&nbsp;re,&nbsp;_)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Re</span>.execp&nbsp;re&nbsp;code)<br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;url_of_module_path&nbsp;~configuration&nbsp;code&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;is_value&nbsp;v&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">match</span>&nbsp;v.[0]&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">None</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keyword">false</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Some</span>&nbsp;c&nbsp;<span class="keyword">when</span>&nbsp;<span class="constructor">Char</span>.lowercase&nbsp;c&nbsp;=&nbsp;c&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keyword">true</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Some</span>&nbsp;c&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keyword">false</span>&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;<span class="keyword">rec</span>&nbsp;loop&nbsp;acc&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">function</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;[]&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="string">""</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;[<span class="string">"t"</span>]&nbsp;&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;acc&nbsp;^&nbsp;<span class="string">"html#TYPEt"</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;[one]&nbsp;<span class="keyword">when</span>&nbsp;is_value&nbsp;one&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;acc&nbsp;^&nbsp;<span class="string">"html#VAL"</span>&nbsp;^&nbsp;one<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;[one]&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;acc&nbsp;^&nbsp;one&nbsp;^&nbsp;<span class="string">".html"</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;modul&nbsp;::&nbsp;more&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;loop&nbsp;(acc&nbsp;^&nbsp;modul&nbsp;^&nbsp;<span class="string">"."</span>)&nbsp;more<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;prefix&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">List</span>.find_map&nbsp;configuration<span class="keywordsign">#</span>catch_module_paths&nbsp;~f:(<span class="keyword">fun</span>&nbsp;(_,&nbsp;re,&nbsp;pr)&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span>&nbsp;<span class="constructor">Re</span>.execp&nbsp;re&nbsp;code&nbsp;<span class="keyword">then</span>&nbsp;<span class="constructor">Some</span>&nbsp;pr&nbsp;<span class="keyword">else</span>&nbsp;<span class="constructor">None</span>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&gt;&nbsp;<span class="constructor">Option</span>.value&nbsp;~default:<span class="string">""</span>&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;loop&nbsp;(<span class="string">"api/"</span>&nbsp;^&nbsp;prefix)&nbsp;(<span class="constructor">String</span>.split&nbsp;code&nbsp;~on:(<span class="keywordsign">`</span><span class="constructor">Character</span>&nbsp;<span class="string">'.'</span>))<br>
+<br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;preprocess&nbsp;~configuration&nbsp;content&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;highligh&nbsp;:&nbsp;<span class="constructor">Omd_representation</span>.extension&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">object</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">method</span>&nbsp;parser_extension&nbsp;t&nbsp;read_tokens&nbsp;=&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;<span class="keyword">open</span>&nbsp;<span class="constructor">Omd_representation</span>&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;highlight_style&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">"color:&nbsp;red;&nbsp;background-color:&nbsp;yellow;&nbsp;font-weight:&nbsp;bold"</span>&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">(*&nbsp;dbg&nbsp;"highlight&nbsp;for:&nbsp;%s"&nbsp;(Omd_lexer.destring_of_tokens&nbsp;~limit:5&nbsp;&nbsp;read_tokens);&nbsp;*)</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">function</span>&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Exclamation</span>&nbsp;::&nbsp;<span class="constructor">Word</span>&nbsp;w&nbsp;::&nbsp;<span class="constructor">Exclamation</span>&nbsp;::&nbsp;more&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;in_red&nbsp;=&nbsp;sprintf&nbsp;&nbsp;<span class="string">"&lt;span&nbsp;style=%S&gt;%s&lt;/span&gt;"</span>&nbsp;highlight_style&nbsp;w&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Some</span>&nbsp;(<span class="constructor">Raw</span>&nbsp;in_red&nbsp;::&nbsp;t,&nbsp;read_tokens,&nbsp;more)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;m&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">(*&nbsp;dbg&nbsp;"none&nbsp;for:&nbsp;%s"&nbsp;(Omd_lexer.destring_of_tokens&nbsp;~limit:4&nbsp;m);&nbsp;*)</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">None</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">method</span>&nbsp;to_string&nbsp;=&nbsp;<span class="string">"highlight"</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;more_stuff_to_do&nbsp;=&nbsp;ref&nbsp;[]&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;<span class="keyword">rec</span>&nbsp;transform_links&nbsp;(t:&nbsp;<span class="constructor">Omd</span>.element)&nbsp;:&nbsp;<span class="constructor">Omd</span>.element&nbsp;&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;<span class="keyword">open</span>&nbsp;<span class="constructor">Omd</span>&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">match</span>&nbsp;t&nbsp;<span class="keyword">with</span>&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Paragraph</span>&nbsp;&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Paragraph</span>&nbsp;(<span class="constructor">List</span>.map&nbsp;~f:transform_links&nbsp;t)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Emph</span>&nbsp;&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Emph</span>&nbsp;(<span class="constructor">List</span>.map&nbsp;~f:transform_links&nbsp;t)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Bold</span>&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Bold</span>&nbsp;(<span class="constructor">List</span>.map&nbsp;~f:transform_links&nbsp;t)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Ul</span>&nbsp;&nbsp;tl&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Ul</span>&nbsp;&nbsp;(<span class="constructor">List</span>.map&nbsp;~f:(<span class="constructor">List</span>.map&nbsp;~f:transform_links)&nbsp;tl)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Ol</span>&nbsp;&nbsp;tl&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Ol</span>&nbsp;&nbsp;(<span class="constructor">List</span>.map&nbsp;~f:(<span class="constructor">List</span>.map&nbsp;~f:transform_links)&nbsp;tl)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Ulp</span>&nbsp;tl&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Ulp</span>&nbsp;(<span class="constructor">List</span>.map&nbsp;~f:(<span class="constructor">List</span>.map&nbsp;~f:transform_links)&nbsp;tl)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Olp</span>&nbsp;tl&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Olp</span>&nbsp;(<span class="constructor">List</span>.map&nbsp;~f:(<span class="constructor">List</span>.map&nbsp;~f:transform_links)&nbsp;tl)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">H1</span>&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">H1</span>&nbsp;(<span class="constructor">List</span>.map&nbsp;~f:transform_links&nbsp;t)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">H2</span>&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">H2</span>&nbsp;(<span class="constructor">List</span>.map&nbsp;~f:transform_links&nbsp;t)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">H3</span>&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">H3</span>&nbsp;(<span class="constructor">List</span>.map&nbsp;~f:transform_links&nbsp;t)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">H4</span>&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">H4</span>&nbsp;(<span class="constructor">List</span>.map&nbsp;~f:transform_links&nbsp;t)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">H5</span>&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">H5</span>&nbsp;(<span class="constructor">List</span>.map&nbsp;~f:transform_links&nbsp;t)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">H6</span>&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">H6</span>&nbsp;(<span class="constructor">List</span>.map&nbsp;~f:transform_links&nbsp;t)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Blockquote</span>&nbsp;&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Blockquote</span>&nbsp;(<span class="constructor">List</span>.map&nbsp;~f:transform_links&nbsp;t)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Text</span>&nbsp;_<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Br</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Hr</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Img_ref</span>&nbsp;_<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Html</span>&nbsp;_<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Html_block</span>&nbsp;_<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Html_comment</span>&nbsp;_<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">NL</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">X</span>&nbsp;_<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Raw</span>&nbsp;_&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Raw_block</span>&nbsp;_<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Img</span>&nbsp;_&nbsp;<span class="keyword">as</span>&nbsp;e&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;e<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Code</span>&nbsp;(lang,&nbsp;code)&nbsp;<span class="keyword">when</span>&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">String</span>.sub&nbsp;code&nbsp;~index:(<span class="constructor">String</span>.length&nbsp;code&nbsp;-&nbsp;6)&nbsp;~length:6&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;<span class="constructor">Some</span>&nbsp;<span class="string">"--help"</span>&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">(*&nbsp;dbg&nbsp;"Code:&nbsp;%s&nbsp;%s"&nbsp;lang&nbsp;code;&nbsp;*)</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;more_stuff_to_do&nbsp;:=&nbsp;<span class="keywordsign">`</span><span class="constructor">Create_man_page</span>&nbsp;code&nbsp;::&nbsp;!more_stuff_to_do;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Url</span>&nbsp;(code_url&nbsp;code,&nbsp;[<span class="constructor">Code</span>&nbsp;(lang,&nbsp;code)],&nbsp;code)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Code</span>&nbsp;(lang,&nbsp;code)&nbsp;<span class="keyword">when</span>&nbsp;looks_like_module_path&nbsp;~configuration&nbsp;code&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Url</span>&nbsp;(url_of_module_path&nbsp;~configuration&nbsp;code,&nbsp;[<span class="constructor">Code</span>&nbsp;(lang,&nbsp;code)],&nbsp;code)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Code</span>&nbsp;(lang,&nbsp;code)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Code</span>&nbsp;(lang,&nbsp;code)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Code_block</span>&nbsp;(lang,&nbsp;code)&nbsp;<span class="keyword">as</span>&nbsp;code_block&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">begin</span>&nbsp;<span class="keyword">try</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;(_&nbsp;:&nbsp;<span class="constructor">Higlo</span>.lexer)&nbsp;=&nbsp;<span class="constructor">Higlo</span>.get_lexer&nbsp;lang&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Raw</span>&nbsp;(<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">"&lt;pre&gt;"</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;^&nbsp;(<span class="constructor">Higlo</span>.to_xtmpl&nbsp;~lang&nbsp;code&nbsp;|&gt;&nbsp;<span class="constructor">Xtmpl</span>.string_of_xmls)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;^&nbsp;<span class="string">"&lt;/pre&gt;"</span>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">with</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;code_block<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Url</span>&nbsp;(href,&nbsp;t,&nbsp;title)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">when</span>&nbsp;<span class="constructor">String</span>.sub&nbsp;href&nbsp;0&nbsp;7&nbsp;=&nbsp;<span class="constructor">Some</span>&nbsp;<span class="string">"http://"</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">||</span>&nbsp;<span class="constructor">String</span>.sub&nbsp;href&nbsp;0&nbsp;8&nbsp;=&nbsp;<span class="constructor">Some</span>&nbsp;<span class="string">"https://"</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">||</span>&nbsp;<span class="constructor">String</span>.sub&nbsp;href&nbsp;0&nbsp;6&nbsp;=&nbsp;<span class="constructor">Some</span>&nbsp;<span class="string">"ftp://"</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Url</span>&nbsp;(href,&nbsp;t,&nbsp;title)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Url</span>&nbsp;(href,&nbsp;t,&nbsp;title)&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">begin</span>&nbsp;<span class="keyword">match</span>&nbsp;<span class="constructor">File_kind</span>.identify_file&nbsp;href&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Markdown</span>&nbsp;m&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Url</span>&nbsp;(sprintf&nbsp;<span class="string">"./%s.html"</span>&nbsp;(<span class="constructor">Filename</span>.basename&nbsp;m),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">List</span>.map&nbsp;~f:transform_links&nbsp;t,&nbsp;title)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Ocaml_interface</span>&nbsp;m&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;modname&nbsp;=&nbsp;<span class="constructor">Filename</span>.basename&nbsp;m&nbsp;|&gt;&nbsp;<span class="constructor">Legacy_string</span>.capitalize&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Url</span>&nbsp;(sprintf&nbsp;<span class="string">"api/%s.html"</span>&nbsp;modname,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">List</span>.map&nbsp;~f:transform_links&nbsp;t,&nbsp;title)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Ocaml_implementation</span>&nbsp;m&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Url</span>&nbsp;(sprintf&nbsp;<span class="string">"%s.html"</span>&nbsp;(<span class="constructor">Filename</span>.basename&nbsp;m),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">List</span>.map&nbsp;~f:transform_links&nbsp;t,&nbsp;title)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Other</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Url</span>&nbsp;(href,&nbsp;<span class="constructor">List</span>.map&nbsp;~f:transform_links&nbsp;t,&nbsp;title)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Ref</span>&nbsp;&nbsp;(ref_container,&nbsp;name,&nbsp;string,&nbsp;_)&nbsp;<span class="keyword">as</span>&nbsp;e&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;e<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;make_paragraphs&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;<span class="keyword">module</span>&nbsp;<span class="constructor">E</span>&nbsp;=&nbsp;<span class="constructor">Omd_parser</span>.<span class="constructor">Default_env</span>(<span class="keyword">struct</span>&nbsp;<span class="keyword">end</span>)&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;<span class="keyword">module</span>&nbsp;<span class="constructor">Parser</span>&nbsp;=&nbsp;<span class="constructor">Omd_parser</span>.<span class="constructor">Make</span>(<span class="constructor">E</span>)&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Parser</span>.make_paragraphs&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Meta_result</span>.return&nbsp;~more_things_todo:!more_stuff_to_do&nbsp;(<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Omd_parser</span>.default_parse<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;~extensions:[highligh]&nbsp;(<span class="constructor">Omd_lexer</span>.lex&nbsp;content)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&gt;&nbsp;make_paragraphs<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&gt;&nbsp;<span class="constructor">List</span>.map&nbsp;~f:transform_links)<br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;to_html&nbsp;~(configuration:_&nbsp;configuration)&nbsp;content&nbsp;=&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Meta_result</span>.(<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;preprocess&nbsp;~configuration&nbsp;content<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;p&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;<span class="constructor">Omd</span>.(to_html&nbsp;p)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;)<br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;to_toc&nbsp;~configuration&nbsp;content&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Meta_result</span>.(<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;preprocess&nbsp;~configuration&nbsp;content<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;p&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;<span class="constructor">Omd</span>.(to_html&nbsp;(toc&nbsp;~start:[0]&nbsp;p))<br>
+&nbsp;&nbsp;&nbsp;&nbsp;)<br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;to_html_and_toc&nbsp;~configuration&nbsp;content&nbsp;=&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Meta_result</span>.(<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;preprocess&nbsp;~configuration&nbsp;content<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;p&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;<span class="constructor">Omd</span>.(to_html&nbsp;p,&nbsp;to_html&nbsp;(toc&nbsp;~start:[1]&nbsp;&nbsp;p))<br>
+&nbsp;&nbsp;&nbsp;&nbsp;)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">(*&nbsp;Omd.(to_html&nbsp;p,&nbsp;to_html&nbsp;(toc&nbsp;&nbsp;~start:[1]&nbsp;p))&nbsp;*)</span><br>
+<br>
+<br>
+<span class="keyword">end</span></code></body></html>

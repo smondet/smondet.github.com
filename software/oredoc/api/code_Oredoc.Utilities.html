@@ -1,0 +1,53 @@
+<html><head>
+<link rel="stylesheet" href="style.css" type="text/css">
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<link rel="Start" href="index.html">
+<link title="Index of types" rel=Appendix href="index_types.html">
+<link title="Index of values" rel=Appendix href="index_values.html">
+<link title="Index of modules" rel=Appendix href="index_modules.html">
+<link title="Oredoc" rel="Chapter" href="Oredoc.html"><title>Oredoc API : Oredoc.Utilities</title>
+</head>
+<body>
+<code class="code"><span class="keyword">struct</span><br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;(//)&nbsp;=&nbsp;<span class="constructor">Filename</span>.concat<br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;env&nbsp;s&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">try</span>&nbsp;<span class="constructor">Some</span>&nbsp;(<span class="constructor">Sys</span>.getenv&nbsp;s)&nbsp;<span class="keyword">with</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">None</span><br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;failwithf&nbsp;fmt&nbsp;=&nbsp;ksprintf&nbsp;failwith&nbsp;fmt<br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;succeed&nbsp;s&nbsp;=&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">match</span>&nbsp;<span class="constructor">Sys</span>.command&nbsp;s&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;0&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;other&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;failwithf&nbsp;<span class="string">"Command&nbsp;%S&nbsp;did&nbsp;not&nbsp;succeed:&nbsp;%d"</span>&nbsp;s&nbsp;other<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;succeedf&nbsp;fmt=&nbsp;ksprintf&nbsp;succeed&nbsp;fmt<br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;all_files&nbsp;dir&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Sys</span>.readdir&nbsp;dir&nbsp;|&gt;&nbsp;<span class="constructor">Array</span>.to_list&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;|&gt;&nbsp;<span class="constructor">List</span>.filter_map&nbsp;~f:(<span class="keyword">fun</span>&nbsp;d&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;p&nbsp;=&nbsp;dir&nbsp;//&nbsp;d&nbsp;<span class="keyword">in</span>&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span>&nbsp;<span class="constructor">Sys</span>.is_directory&nbsp;p&nbsp;<span class="keyword">then</span>&nbsp;<span class="constructor">None</span>&nbsp;<span class="keyword">else</span>&nbsp;<span class="constructor">Some</span>&nbsp;p)<br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;read_file&nbsp;f&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;i&nbsp;=&nbsp;open_in&nbsp;f&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;buf&nbsp;=&nbsp;<span class="constructor">Buffer</span>.create&nbsp;42&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;<span class="keyword">rec</span>&nbsp;loop&nbsp;()&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">try</span>&nbsp;<span class="constructor">Buffer</span>.add_channel&nbsp;buf&nbsp;i&nbsp;1;&nbsp;loop&nbsp;()&nbsp;<span class="keyword">with</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;()&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;loop&nbsp;();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;close_in&nbsp;i;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Buffer</span>.contents&nbsp;buf<br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;write_file&nbsp;f&nbsp;~content&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;o&nbsp;=&nbsp;open_out&nbsp;f&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;output_string&nbsp;o&nbsp;content;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;close_out&nbsp;o<br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;parse_list_of_substitutions&nbsp;s&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;subs&nbsp;=&nbsp;<span class="constructor">String</span>.split&nbsp;~on:(<span class="keywordsign">`</span><span class="constructor">Character</span>&nbsp;<span class="string">','</span>)&nbsp;s&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">List</span>.filter_map&nbsp;subs&nbsp;~f:(<span class="keyword">fun</span>&nbsp;sub&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">match</span>&nbsp;<span class="constructor">String</span>.split&nbsp;~on:(<span class="keywordsign">`</span><span class="constructor">Character</span>&nbsp;<span class="string">':'</span>)&nbsp;(<span class="constructor">String</span>.strip&nbsp;sub)&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;[one;&nbsp;two]&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Some</span>&nbsp;(one,&nbsp;two)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;other&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">None</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)<br>
+<br>
+<span class="keyword">end</span></code></body></html>

@@ -1,0 +1,84 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<link rel="stylesheet" href="style.css" type="text/css">
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<link rel="Start" href="index.html">
+<link rel="next" href="Nonstd.Array.html">
+<link rel="Up" href="Nonstd.html">
+<link title="Index of types" rel=Appendix href="index_types.html">
+<link title="Index of exceptions" rel=Appendix href="index_exceptions.html">
+<link title="Index of values" rel=Appendix href="index_values.html">
+<link title="Index of modules" rel=Appendix href="index_modules.html">
+<link title="Nonstd" rel="Chapter" href="Nonstd.html"><title>Nonstd.List</title>
+</head>
+<body>
+<div class="navbar">&nbsp;<a class="up" href="Nonstd.html" title="Nonstd">Up</a>
+&nbsp;<a class="post" href="Nonstd.Array.html" title="Nonstd.Array">Next</a>
+</div>
+<h1>Module <a href="type_Nonstd.List.html">Nonstd.List</a> (<a href="code_Nonstd.List.html">.ml</a>)</h1>
+
+<pre><span class="keyword">module</span> List: <code class="code"><span class="keyword">sig</span></code> <a href="Nonstd.List.html">..</a> <code class="code"><span class="keyword">end</span></code></pre><hr width="100%">
+
+<pre><span class="keyword">include</span> ListLabels</pre>
+
+<pre><span id="VALhd_exn"><span class="keyword">val</span> <a href="code_VALNonstd.List.hd_exn.html">hd_exn</a></span> : <code class="type">'a list -> 'a</code></pre>
+<pre><span id="VALhd"><span class="keyword">val</span> <a href="code_VALNonstd.List.hd.html">hd</a></span> : <code class="type">'a list -> 'a option</code></pre>
+<pre><span id="VALtl_exn"><span class="keyword">val</span> <a href="code_VALNonstd.List.tl_exn.html">tl_exn</a></span> : <code class="type">'a list -> 'a list</code></pre>
+<pre><span id="VALtl"><span class="keyword">val</span> <a href="code_VALNonstd.List.tl.html">tl</a></span> : <code class="type">'a list -> 'a list option</code></pre>
+<pre><span id="VALnth"><span class="keyword">val</span> <a href="code_VALNonstd.List.nth.html">nth</a></span> : <code class="type">'a list -> int -> 'a option</code></pre>
+<pre><span id="VALnth_exn"><span class="keyword">val</span> <a href="code_VALNonstd.List.nth_exn.html">nth_exn</a></span> : <code class="type">'a list -> int -> 'a</code></pre>
+<pre><span id="VALfold"><span class="keyword">val</span> <a href="code_VALNonstd.List.fold.html">fold</a></span> : <code class="type">'a list -> init:'b -> f:('b -> 'a -> 'b) -> 'b</code></pre>
+<pre><span id="VALrev_filter"><span class="keyword">val</span> <a href="code_VALNonstd.List.rev_filter.html">rev_filter</a></span> : <code class="type">'a list -> f:('a -> bool) -> 'a list</code></pre>
+<pre><span id="VALfilter"><span class="keyword">val</span> <a href="code_VALNonstd.List.filter.html">filter</a></span> : <code class="type">'a list -> f:('a -> bool) -> 'a list</code></pre>
+<pre><span id="VALfind_map"><span class="keyword">val</span> <a href="code_VALNonstd.List.find_map.html">find_map</a></span> : <code class="type">'a list -> f:('a -> 'b option) -> 'b option</code></pre>
+<pre><span id="VALfind"><span class="keyword">val</span> <a href="code_VALNonstd.List.find.html">find</a></span> : <code class="type">'a list -> f:('a -> bool) -> 'a option</code></pre>
+<pre><span id="VALfind_exn"><span class="keyword">val</span> <a href="code_VALNonstd.List.find_exn.html">find_exn</a></span> : <code class="type">((f:'a -> 'b) -> bool) -> f:'a -> (f:'a -> 'b) list -> 'b</code></pre>
+<pre><span id="VALfindi"><span class="keyword">val</span> <a href="code_VALNonstd.List.findi.html">findi</a></span> : <code class="type">'a list -> f:(int -> 'a -> bool) -> (int * 'a) option</code></pre>
+<pre><span id="VALexists"><span class="keyword">val</span> <a href="code_VALNonstd.List.exists.html">exists</a></span> : <code class="type">'a list -> f:('a -> bool) -> bool</code></pre><div class="info ">
+changing the order of arguments on some standard <code class="code"><span class="constructor">List</span></code> functions.<br>
+</div>
+
+<pre><span id="VALfor_all"><span class="keyword">val</span> <a href="code_VALNonstd.List.for_all.html">for_all</a></span> : <code class="type">'a list -> f:('a -> bool) -> bool</code></pre>
+<pre><span id="VALiter"><span class="keyword">val</span> <a href="code_VALNonstd.List.iter.html">iter</a></span> : <code class="type">'a list -> f:('a -> unit) -> unit</code></pre>
+<pre><span id="VALfold"><span class="keyword">val</span> <a href="code_VALNonstd.List.fold.html">fold</a></span> : <code class="type">'a list -> init:'b -> f:('b -> 'a -> 'b) -> 'b</code></pre><div class="info ">
+For the container interface.<br>
+</div>
+
+<pre><span id="VALfold_left"><span class="keyword">val</span> <a href="code_VALNonstd.List.fold_left.html">fold_left</a></span> : <code class="type">'a list -> init:'b -> f:('b -> 'a -> 'b) -> 'b</code></pre>
+<pre><span id="VALto_array"><span class="keyword">val</span> <a href="code_VALNonstd.List.to_array.html">to_array</a></span> : <code class="type">'a list -> 'a array</code></pre>
+<pre><span id="VALto_list"><span class="keyword">val</span> <a href="code_VALNonstd.List.to_list.html">to_list</a></span> : <code class="type">'a -> 'a</code></pre><br>
+Tail recursive versions of standard <code class="code"><span class="constructor">List</span></code> module<br>
+
+<pre><span id="VALslow_append"><span class="keyword">val</span> <a href="code_VALNonstd.List.slow_append.html">slow_append</a></span> : <code class="type">'a list -> 'a list -> 'a list</code></pre>
+<pre><span id="VALcount_append"><span class="keyword">val</span> <a href="code_VALNonstd.List.count_append.html">count_append</a></span> : <code class="type">'a list -> 'a list -> int -> 'a list</code></pre>
+<pre><span id="VALappend"><span class="keyword">val</span> <a href="code_VALNonstd.List.append.html">append</a></span> : <code class="type">'a list -> 'a list -> 'a list</code></pre>
+<pre><span id="VALmap_slow"><span class="keyword">val</span> <a href="code_VALNonstd.List.map_slow.html">map_slow</a></span> : <code class="type">'a list -> f:('a -> 'b) -> 'b list</code></pre>
+<pre><span id="VALcount_map"><span class="keyword">val</span> <a href="code_VALNonstd.List.count_map.html">count_map</a></span> : <code class="type">f:('a -> 'b) -> 'a list -> int -> 'b list</code></pre>
+<pre><span id="VALmap"><span class="keyword">val</span> <a href="code_VALNonstd.List.map.html">map</a></span> : <code class="type">'a list -> f:('a -> 'b) -> 'b list</code></pre>
+<pre><span id="VALfold_right"><span class="keyword">val</span> <a href="code_VALNonstd.List.fold_right.html">fold_right</a></span> : <code class="type">'a list -> f:('a -> 'b -> 'b) -> init:'b -> 'b</code></pre>
+<pre><span id="VALrev_mapi"><span class="keyword">val</span> <a href="code_VALNonstd.List.rev_mapi.html">rev_mapi</a></span> : <code class="type">'a list -> f:(int -> 'a -> 'b) -> 'b list</code></pre>
+<pre><span id="VALmapi"><span class="keyword">val</span> <a href="code_VALNonstd.List.mapi.html">mapi</a></span> : <code class="type">'a list -> f:(int -> 'a -> 'b) -> 'b list</code></pre>
+<pre><span id="VALiteri"><span class="keyword">val</span> <a href="code_VALNonstd.List.iteri.html">iteri</a></span> : <code class="type">'a list -> f:(int -> 'a -> 'b) -> unit</code></pre>
+<pre><span id="VALfoldi"><span class="keyword">val</span> <a href="code_VALNonstd.List.foldi.html">foldi</a></span> : <code class="type">'a list -> f:(int -> 'b -> 'a -> 'b) -> init:'b -> 'b</code></pre>
+<pre><span id="VALfilteri"><span class="keyword">val</span> <a href="code_VALNonstd.List.filteri.html">filteri</a></span> : <code class="type">'a list -> f:(int -> 'a -> bool) -> 'a list</code></pre>
+<pre><span id="VALreduce"><span class="keyword">val</span> <a href="code_VALNonstd.List.reduce.html">reduce</a></span> : <code class="type">'a list -> f:('a -> 'a -> 'a) -> 'a option</code></pre>
+<pre><span id="VALconcat_map"><span class="keyword">val</span> <a href="code_VALNonstd.List.concat_map.html">concat_map</a></span> : <code class="type">'a list -> f:('a -> 'b list) -> 'b list</code></pre>
+<pre><span id="VALconcat_mapi"><span class="keyword">val</span> <a href="code_VALNonstd.List.concat_mapi.html">concat_mapi</a></span> : <code class="type">'a list -> f:(int -> 'a -> 'b list) -> 'b list</code></pre>
+<pre><span id="VALmerge"><span class="keyword">val</span> <a href="code_VALNonstd.List.merge.html">merge</a></span> : <code class="type">'a list -> 'a list -> cmp:('a -> 'a -> int) -> 'a list</code></pre>
+<pre><span id="VALlast"><span class="keyword">val</span> <a href="code_VALNonstd.List.last.html">last</a></span> : <code class="type">'a list -> 'a option</code></pre>
+<pre><span id="VALremove_consecutive_duplicates"><span class="keyword">val</span> <a href="code_VALNonstd.List.remove_consecutive_duplicates.html">remove_consecutive_duplicates</a></span> : <code class="type">'a list -> equal:('a -> 'a -> bool) -> 'a list</code></pre>
+<pre><span id="VALdedup"><span class="keyword">val</span> <a href="code_VALNonstd.List.dedup.html">dedup</a></span> : <code class="type">?compare:('a -> 'a -> int) -> 'a list -> 'a list</code></pre>
+<pre><span id="VALcontains_dup"><span class="keyword">val</span> <a href="code_VALNonstd.List.contains_dup.html">contains_dup</a></span> : <code class="type">?compare:('a -> 'a -> int) -> 'a list -> bool</code></pre>
+<pre><span id="VALfind_a_dup"><span class="keyword">val</span> <a href="code_VALNonstd.List.find_a_dup.html">find_a_dup</a></span> : <code class="type">?compare:('a -> 'a -> int) -> 'a list -> 'a option</code></pre>
+<pre><span id="VALinit"><span class="keyword">val</span> <a href="code_VALNonstd.List.init.html">init</a></span> : <code class="type">int -> f:(int -> 'a) -> 'a list</code></pre>
+<pre><span id="VALrev_filter_map"><span class="keyword">val</span> <a href="code_VALNonstd.List.rev_filter_map.html">rev_filter_map</a></span> : <code class="type">'a list -> f:('a -> 'b option) -> 'b list</code></pre>
+<pre><span id="VALfilter_map"><span class="keyword">val</span> <a href="code_VALNonstd.List.filter_map.html">filter_map</a></span> : <code class="type">'a list -> f:('a -> 'b option) -> 'b list</code></pre>
+<pre><span id="VALfilter_opt"><span class="keyword">val</span> <a href="code_VALNonstd.List.filter_opt.html">filter_opt</a></span> : <code class="type">'a option list -> 'a list</code></pre>
+<pre><span id="VALpartition_map"><span class="keyword">val</span> <a href="code_VALNonstd.List.partition_map.html">partition_map</a></span> : <code class="type">'a list -> f:('a -> [< `Fst of 'b | `Snd of 'c ]) -> 'b list * 'c list</code></pre>
+<pre><span id="VALsplit_n"><span class="keyword">val</span> <a href="code_VALNonstd.List.split_n.html">split_n</a></span> : <code class="type">'a list -> int -> 'a list * 'a list</code></pre>
+<pre><span id="VALtake"><span class="keyword">val</span> <a href="code_VALNonstd.List.take.html">take</a></span> : <code class="type">'a list -> int -> 'a list</code></pre>
+<pre><span id="VALdrop"><span class="keyword">val</span> <a href="code_VALNonstd.List.drop.html">drop</a></span> : <code class="type">'a list -> int -> 'a list</code></pre>
+<pre><span id="VALsplit_while"><span class="keyword">val</span> <a href="code_VALNonstd.List.split_while.html">split_while</a></span> : <code class="type">'a list -> f:('a -> bool) -> 'a list * 'a list</code></pre>
+<pre><span id="VALtake_while"><span class="keyword">val</span> <a href="code_VALNonstd.List.take_while.html">take_while</a></span> : <code class="type">'a list -> f:('a -> bool) -> 'a list</code></pre>
+<pre><span id="VALdrop_while"><span class="keyword">val</span> <a href="code_VALNonstd.List.drop_while.html">drop_while</a></span> : <code class="type">'a list -> f:('a -> bool) -> 'a list</code></pre></body></html>

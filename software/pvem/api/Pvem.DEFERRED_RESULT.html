@@ -1,0 +1,35 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<link rel="stylesheet" href="style.css" type="text/css">
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<link rel="Start" href="index.html">
+<link rel="previous" href="Pvem.DEFERRED.html">
+<link rel="Up" href="Pvem.html">
+<link title="Index of types" rel=Appendix href="index_types.html">
+<link title="Index of values" rel=Appendix href="index_values.html">
+<link title="Index of modules" rel=Appendix href="index_modules.html">
+<link title="Index of module types" rel=Appendix href="index_module_types.html">
+<link title="Pvem" rel="Chapter" href="Pvem.html"><title>Pvem.DEFERRED_RESULT</title>
+</head>
+<body>
+<div class="navbar"><a class="pre" href="Pvem.DEFERRED.html" title="Pvem.DEFERRED">Previous</a>
+&nbsp;<a class="up" href="Pvem.html" title="Pvem">Up</a>
+&nbsp;</div>
+<h1>Module type <a href="type_Pvem.DEFERRED_RESULT.html">Pvem.DEFERRED_RESULT</a></h1>
+
+<pre><span class="keyword">module type</span> DEFERRED_RESULT = <code class="code"><span class="keyword">sig</span></code> <a href="Pvem.DEFERRED_RESULT.html">..</a> <code class="code"><span class="keyword">end</span></code></pre><div class="info modtype top">
+The result of the functor application: <code class="code"><span class="constructor">With_deferred</span>(<span class="constructor">Deferred</span>)</code>.<br>
+</div>
+<hr width="100%">
+
+<pre><span id="TYPEdeferred"><span class="keyword">type</span> <code class="type">'a</code> deferred</span> </pre>
+
+
+<pre><span class="keyword">include</span> <a href="Pvem.ERROR_MONAD.html">Pvem.ERROR_MONAD</a></pre>
+
+<pre><span id="VALof_result"><span class="keyword">val</span> of_result</span> : <code class="type">('a, 'b) Result.t -> ('a, 'b) t</code></pre>
+<pre><span id="VALcatch_deferred"><span class="keyword">val</span> catch_deferred</span> : <code class="type">(unit -> 'a <a href="Pvem.DEFERRED_RESULT.html#TYPEdeferred">deferred</a>) -> ('a, exn) t</code></pre>
+<pre><span id="VALwrap_deferred"><span class="keyword">val</span> wrap_deferred</span> : <code class="type">on_exn:(exn -> 'a) -><br>       (unit -> 'b <a href="Pvem.DEFERRED_RESULT.html#TYPEdeferred">deferred</a>) -> ('b, 'a) t</code></pre>
+<pre><span id="VALmap_option"><span class="keyword">val</span> map_option</span> : <code class="type">'a option -> f:('a -> ('r, 'b) t) -> ('r option, 'b) t</code></pre>
+<pre><span id="VALsome"><span class="keyword">val</span> some</span> : <code class="type">or_fail:'error -> 'a option -> ('a, 'error) t</code></pre></body></html>

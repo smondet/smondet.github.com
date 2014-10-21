@@ -1,0 +1,63 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<link rel="stylesheet" href="style.css" type="text/css">
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<link rel="Start" href="index.html">
+<link rel="previous" href="Ketrew_host.Ssh.html">
+<link rel="Up" href="Ketrew_host.html">
+<link title="Index of types" rel=Appendix href="index_types.html">
+<link title="Index of values" rel=Appendix href="index_values.html">
+<link title="Index of class methods" rel=Appendix href="index_methods.html">
+<link title="Index of class types" rel=Appendix href="index_class_types.html">
+<link title="Index of modules" rel=Appendix href="index_modules.html">
+<link title="Index of module types" rel=Appendix href="index_module_types.html">
+<link title="Ketrew" rel="Chapter" href="Ketrew.html">
+<link title="Ketrew_artifact" rel="Chapter" href="Ketrew_artifact.html">
+<link title="Ketrew_client" rel="Chapter" href="Ketrew_client.html">
+<link title="Ketrew_command_line" rel="Chapter" href="Ketrew_command_line.html">
+<link title="Ketrew_configuration" rel="Chapter" href="Ketrew_configuration.html">
+<link title="Ketrew_daemonize" rel="Chapter" href="Ketrew_daemonize.html">
+<link title="Ketrew_database" rel="Chapter" href="Ketrew_database.html">
+<link title="Ketrew_edsl" rel="Chapter" href="Ketrew_edsl.html">
+<link title="Ketrew_engine" rel="Chapter" href="Ketrew_engine.html">
+<link title="Ketrew_error" rel="Chapter" href="Ketrew_error.html">
+<link title="Ketrew_host" rel="Chapter" href="Ketrew_host.html">
+<link title="Ketrew_long_running" rel="Chapter" href="Ketrew_long_running.html">
+<link title="Ketrew_lsf" rel="Chapter" href="Ketrew_lsf.html">
+<link title="Ketrew_monitored_script" rel="Chapter" href="Ketrew_monitored_script.html">
+<link title="Ketrew_path" rel="Chapter" href="Ketrew_path.html">
+<link title="Ketrew_pbs" rel="Chapter" href="Ketrew_pbs.html">
+<link title="Ketrew_pervasives" rel="Chapter" href="Ketrew_pervasives.html">
+<link title="Ketrew_plugin" rel="Chapter" href="Ketrew_plugin.html">
+<link title="Ketrew_program" rel="Chapter" href="Ketrew_program.html">
+<link title="Ketrew_protocol" rel="Chapter" href="Ketrew_protocol.html">
+<link title="Ketrew_server" rel="Chapter" href="Ketrew_server.html">
+<link title="Ketrew_target" rel="Chapter" href="Ketrew_target.html">
+<link title="Ketrew_unix_process" rel="Chapter" href="Ketrew_unix_process.html"><title>Ketrew API : Ketrew_host.Error</title>
+</head>
+<body>
+<div class="navbar"><a class="pre" href="Ketrew_host.Ssh.html" title="Ketrew_host.Ssh">Previous</a>
+&nbsp;<a class="up" href="Ketrew_host.html" title="Ketrew_host">Up</a>
+&nbsp;</div>
+<h1>Module <a href="type_Ketrew_host.Error.html">Ketrew_host.Error</a> (<a href="code_Ketrew_host.Error.html">.ml</a>)</h1>
+
+<pre><span class="keyword">module</span> Error: <code class="code"><span class="keyword">sig</span></code> <a href="Ketrew_host.Error.html">..</a> <code class="code"><span class="keyword">end</span></code></pre><hr width="100%">
+
+<pre><span id="TYPEexecution"><span class="keyword">type</span> <code class="type">[> `Execution of<br>          < host : string; message : string; stderr : string option;<br>            stdout : string option ><br>      | `Ssh_failure of<br>          [> `Wrong_log of string<br>           | `Wrong_status of <a href="Ketrew_unix_process.Exit_code.html#TYPEt">Ketrew_unix_process.Exit_code.t</a> ] *<br>          string<br>      | `System of [> `Sleep of float ] * [> `Exn of exn ]<br>      | `Timeout of float<br>      | `Unix_exec of string ]</code> execution</span> = <code class="type">[> `Execution of<br>            < host : string; message : string; stderr : string option;<br>              stdout : string option ><br>        | `Ssh_failure of<br>            [> `Wrong_log of string<br>             | `Wrong_status of <a href="Ketrew_unix_process.Exit_code.html#TYPEt">Ketrew_unix_process.Exit_code.t</a> ] *<br>            string<br>        | `System of [> `Sleep of float ] * [> `Exn of exn ]<br>        | `Timeout of float<br>        | `Unix_exec of string ]<br>       as 'a</code> </pre>
+
+
+<pre><span id="TYPEnon_zero_execution"><span class="keyword">type</span> <code class="type">[> `Execution of<br>          < host : string; message : string; stderr : string option;<br>            stdout : string option ><br>      | `Non_zero of string * int<br>      | `Ssh_failure of<br>          [> `Wrong_log of string<br>           | `Wrong_status of <a href="Ketrew_unix_process.Exit_code.html#TYPEt">Ketrew_unix_process.Exit_code.t</a> ] *<br>          string<br>      | `System of [> `Sleep of float ] * [> `Exn of exn ]<br>      | `Timeout of float<br>      | `Unix_exec of string ]<br>     <a href="Ketrew_host.Error.html#TYPEexecution">execution</a></code> non_zero_execution</span> = <code class="type">([> `Execution of<br>             < host : string; message : string; stderr : string option;<br>               stdout : string option ><br>         | `Non_zero of string * int<br>         | `Ssh_failure of<br>             [> `Wrong_log of string<br>              | `Wrong_status of <a href="Ketrew_unix_process.Exit_code.html#TYPEt">Ketrew_unix_process.Exit_code.t</a> ] *<br>             string<br>         | `System of [> `Sleep of float ] * [> `Exn of exn ]<br>         | `Timeout of float<br>         | `Unix_exec of string ]<br>        as 'a)<br>       <a href="Ketrew_host.Error.html#TYPEexecution">execution</a></code> </pre>
+
+
+<pre><span id="VALclassify"><span class="keyword">val</span> <a href="code_VALKetrew_host.Error.classify.html">classify</a></span> : <code class="type">[ `Execution of<br>           < host : string; message : string; stderr : string option;<br>             stdout : string option ><br>       | `Non_zero of string * int<br>       | `Ssh_failure of<br>           [> `Wrong_log of string<br>            | `Wrong_status of <a href="Ketrew_unix_process.Exit_code.html#TYPEt">Ketrew_unix_process.Exit_code.t</a> ] *<br>           string<br>       | `System of [ `Sleep of float ] * [ `Exn of exn ]<br>       | `Timeout of float<br>       | `Unix_exec of string ] -> [ `Execution | `Ssh | `Unix ]</code></pre><div class="info ">
+Get a glance at the gravity of the situation: <ul>
+<li><code class="code"><span class="keywordsign">`</span><span class="constructor">Unix</span></code>: a function of the kind <code class="code"><span class="constructor">Unix</span>.exec</code> failed.</li>
+<li><code class="code"><span class="keywordsign">`</span><span class="constructor">Ssh</span></code>: SSH failed to run something but it does not mean that the
+     actual command is wrong.</li>
+<li><code class="code"><span class="keywordsign">`</span><span class="constructor">Execution</span></code>: SSH/<code class="code"><span class="constructor">Unix</span></code> succeeded but the command failed.</li>
+</ul>
+<br>
+</div>
+
+<pre><span id="VALlog"><span class="keyword">val</span> <a href="code_VALKetrew_host.Error.log.html">log</a></span> : <code class="type">[< `Execution of<br>            < host : string; message : string; stderr : string option;<br>              stdout : string option; .. ><br>        | `Non_zero of string * int<br>        | `Ssh_failure of<br>            [< `Wrong_log of string<br>             | `Wrong_status of <a href="Ketrew_unix_process.Exit_code.html#TYPEt">Ketrew_unix_process.Exit_code.t</a> ] *<br>            string<br>        | `System of [< `Sleep of float ] * [< `Exn of exn ]<br>        | `Timeout of float<br>        | `Unix_exec of string ] -><br>       Ketrew_pervasives.Log.t</code></pre></body></html>

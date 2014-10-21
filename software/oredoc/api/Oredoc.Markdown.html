@@ -1,0 +1,33 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<link rel="stylesheet" href="style.css" type="text/css">
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<link rel="Start" href="index.html">
+<link rel="previous" href="Oredoc.File_kind.html">
+<link rel="next" href="Oredoc.Ocaml.html">
+<link rel="Up" href="Oredoc.html">
+<link title="Index of types" rel=Appendix href="index_types.html">
+<link title="Index of values" rel=Appendix href="index_values.html">
+<link title="Index of modules" rel=Appendix href="index_modules.html">
+<link title="Oredoc" rel="Chapter" href="Oredoc.html"><title>Oredoc API : Oredoc.Markdown</title>
+</head>
+<body>
+<div class="navbar"><a class="pre" href="Oredoc.File_kind.html" title="Oredoc.File_kind">Previous</a>
+&nbsp;<a class="up" href="Oredoc.html" title="Oredoc">Up</a>
+&nbsp;<a class="post" href="Oredoc.Ocaml.html" title="Oredoc.Ocaml">Next</a>
+</div>
+<h1>Module <a href="type_Oredoc.Markdown.html">Oredoc.Markdown</a> (<a href="code_Oredoc.Markdown.html">.ml</a>)</h1>
+
+<pre><span class="keyword">module</span> Markdown: <code class="code"><span class="keyword">sig</span></code> <a href="Oredoc.Markdown.html">..</a> <code class="code"><span class="keyword">end</span></code></pre><hr width="100%">
+
+<pre><span id="TYPEconfiguration"><span class="keyword">type</span> <code class="type">< catch_module_paths : (string * Re.re * string) list; .. ></code> configuration</span> = <code class="type">< catch_module_paths : (string * Re.re * string) list; .. > as 'a</code> </pre>
+
+
+<pre><span id="VALcode_url"><span class="keyword">val</span> <a href="code_VALOredoc.Markdown.code_url.html">code_url</a></span> : <code class="type">Oredoc.String.t -> string</code></pre>
+<pre><span id="VALlooks_like_module_path"><span class="keyword">val</span> <a href="code_VALOredoc.Markdown.looks_like_module_path.html">looks_like_module_path</a></span> : <code class="type">configuration:< catch_module_paths : ('a * Re.re * 'b) list; .. > -><br>       string -> bool</code></pre>
+<pre><span id="VALurl_of_module_path"><span class="keyword">val</span> <a href="code_VALOredoc.Markdown.url_of_module_path.html">url_of_module_path</a></span> : <code class="type">configuration:< catch_module_paths : ('a * Re.re * string) list; .. > -><br>       Oredoc.String.t -> string</code></pre>
+<pre><span id="VALpreprocess"><span class="keyword">val</span> <a href="code_VALOredoc.Markdown.preprocess.html">preprocess</a></span> : <code class="type">configuration:< catch_module_paths : ('a * Re.re * string) list; .. > -><br>       string -><br>       (Omd.element list, [> `Create_man_page of string ]) <a href="Oredoc.Meta_result.html#TYPEt">Oredoc.Meta_result.t</a></code></pre>
+<pre><span id="VALto_html"><span class="keyword">val</span> <a href="code_VALOredoc.Markdown.to_html.html">to_html</a></span> : <code class="type">configuration:< catch_module_paths : (string * Re.re * string) list; .. ><br>                     <a href="Oredoc.Markdown.html#TYPEconfiguration">configuration</a> -><br>       string -> (string, [> `Create_man_page of string ]) <a href="Oredoc.Meta_result.html#TYPEt">Oredoc.Meta_result.t</a></code></pre>
+<pre><span id="VALto_toc"><span class="keyword">val</span> <a href="code_VALOredoc.Markdown.to_toc.html">to_toc</a></span> : <code class="type">configuration:< catch_module_paths : ('a * Re.re * string) list; .. > -><br>       string -> (string, [> `Create_man_page of string ]) <a href="Oredoc.Meta_result.html#TYPEt">Oredoc.Meta_result.t</a></code></pre>
+<pre><span id="VALto_html_and_toc"><span class="keyword">val</span> <a href="code_VALOredoc.Markdown.to_html_and_toc.html">to_html_and_toc</a></span> : <code class="type">configuration:< catch_module_paths : ('a * Re.re * string) list; .. > -><br>       string -><br>       (string * string, [> `Create_man_page of string ]) <a href="Oredoc.Meta_result.html#TYPEt">Oredoc.Meta_result.t</a></code></pre></body></html>

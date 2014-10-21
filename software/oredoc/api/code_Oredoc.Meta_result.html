@@ -1,0 +1,24 @@
+<html><head>
+<link rel="stylesheet" href="style.css" type="text/css">
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<link rel="Start" href="index.html">
+<link title="Index of types" rel=Appendix href="index_types.html">
+<link title="Index of values" rel=Appendix href="index_values.html">
+<link title="Index of modules" rel=Appendix href="index_modules.html">
+<link title="Oredoc" rel="Chapter" href="Oredoc.html"><title>Oredoc API : Oredoc.Meta_result</title>
+</head>
+<body>
+<code class="code"><span class="keyword">struct</span><br>
+<br>
+&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;(<span class="keywordsign">'</span>a,&nbsp;<span class="keywordsign">'</span>b)&nbsp;t&nbsp;=&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;result:&nbsp;<span class="keywordsign">'</span>a;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;more_things_todo:&nbsp;<span class="keywordsign">'</span>b&nbsp;list;<br>
+&nbsp;&nbsp;}<br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;return&nbsp;?(more_things_todo=[])&nbsp;result&nbsp;=&nbsp;{result;&nbsp;more_things_todo}<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;bind&nbsp;m&nbsp;~f&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;next&nbsp;=&nbsp;f&nbsp;m.result&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;next&nbsp;<span class="keyword">with</span>&nbsp;more_things_todo&nbsp;=&nbsp;next.more_things_todo&nbsp;@&nbsp;m.more_things_todo}<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;(&gt;&gt;=)&nbsp;m&nbsp;f&nbsp;=&nbsp;bind&nbsp;m&nbsp;~f<br>
+<br>
+<span class="keyword">end</span></code></body></html>

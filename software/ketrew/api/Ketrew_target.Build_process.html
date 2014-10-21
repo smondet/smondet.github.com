@@ -1,0 +1,65 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<link rel="stylesheet" href="style.css" type="text/css">
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<link rel="Start" href="index.html">
+<link rel="previous" href="Ketrew_target.Command.html">
+<link rel="next" href="Ketrew_target.Condition.html">
+<link rel="Up" href="Ketrew_target.html">
+<link title="Index of types" rel=Appendix href="index_types.html">
+<link title="Index of values" rel=Appendix href="index_values.html">
+<link title="Index of class methods" rel=Appendix href="index_methods.html">
+<link title="Index of class types" rel=Appendix href="index_class_types.html">
+<link title="Index of modules" rel=Appendix href="index_modules.html">
+<link title="Index of module types" rel=Appendix href="index_module_types.html">
+<link title="Ketrew" rel="Chapter" href="Ketrew.html">
+<link title="Ketrew_artifact" rel="Chapter" href="Ketrew_artifact.html">
+<link title="Ketrew_client" rel="Chapter" href="Ketrew_client.html">
+<link title="Ketrew_command_line" rel="Chapter" href="Ketrew_command_line.html">
+<link title="Ketrew_configuration" rel="Chapter" href="Ketrew_configuration.html">
+<link title="Ketrew_daemonize" rel="Chapter" href="Ketrew_daemonize.html">
+<link title="Ketrew_database" rel="Chapter" href="Ketrew_database.html">
+<link title="Ketrew_edsl" rel="Chapter" href="Ketrew_edsl.html">
+<link title="Ketrew_engine" rel="Chapter" href="Ketrew_engine.html">
+<link title="Ketrew_error" rel="Chapter" href="Ketrew_error.html">
+<link title="Ketrew_host" rel="Chapter" href="Ketrew_host.html">
+<link title="Ketrew_long_running" rel="Chapter" href="Ketrew_long_running.html">
+<link title="Ketrew_lsf" rel="Chapter" href="Ketrew_lsf.html">
+<link title="Ketrew_monitored_script" rel="Chapter" href="Ketrew_monitored_script.html">
+<link title="Ketrew_path" rel="Chapter" href="Ketrew_path.html">
+<link title="Ketrew_pervasives" rel="Chapter" href="Ketrew_pervasives.html">
+<link title="Ketrew_plugin" rel="Chapter" href="Ketrew_plugin.html">
+<link title="Ketrew_program" rel="Chapter" href="Ketrew_program.html">
+<link title="Ketrew_protocol" rel="Chapter" href="Ketrew_protocol.html">
+<link title="Ketrew_server" rel="Chapter" href="Ketrew_server.html">
+<link title="Ketrew_target" rel="Chapter" href="Ketrew_target.html">
+<link title="Ketrew_unix_process" rel="Chapter" href="Ketrew_unix_process.html"><title>Ketrew API : Ketrew_target.Build_process</title>
+</head>
+<body>
+<div class="navbar"><a class="pre" href="Ketrew_target.Command.html" title="Ketrew_target.Command">Previous</a>
+&nbsp;<a class="up" href="Ketrew_target.html" title="Ketrew_target">Up</a>
+&nbsp;<a class="post" href="Ketrew_target.Condition.html" title="Ketrew_target.Condition">Next</a>
+</div>
+<h1>Module <a href="type_Ketrew_target.Build_process.html">Ketrew_target.Build_process</a> (<a href="code_Ketrew_target.Build_process.html">.ml</a>)</h1>
+
+<pre><span class="keyword">module</span> Build_process: <code class="code"><span class="keyword">sig</span></code> <a href="Ketrew_target.Build_process.html">..</a> <code class="code"><span class="keyword">end</span></code></pre><hr width="100%">
+
+<pre><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = <code class="type">[ `Artifact of <a href="Ketrew_artifact.html#TYPEt">Ketrew_artifact.t</a><br>       | `Direct_command of <a href="Ketrew_target.Command.html#TYPEt">Ketrew_target.Command.t</a><br>       | `Long_running of string * string ]</code> </pre>
+<div class="info ">
+Specification of how to build a target. <ul>
+<li> <code class="code"><span class="keywordsign">`</span><span class="constructor">Artifact</span> a</code>: literal, already-built, artifact, </li>
+<li><code class="code"><span class="keywordsign">`</span><span class="constructor">Direct_command</span> c</code>: a <code class="code"><span class="constructor">Command</span>.t</code> to run (should produce a <code class="code"><span class="constructor">Volume</span>.t</code>), </li>
+<li><code class="code"><span class="keywordsign">`</span><span class="constructor">Get_output</span> c</code>: a <code class="code"><span class="constructor">Command</span>.t</code> to run and get its <code class="code">stdout</code> (should
+       produce a value), </li>
+<li><code class="code"><span class="keywordsign">`</span><span class="constructor">Long_running</span> (plugin_name, initial_run_parameters)</code>:
+      Use a long-running plugin. </li>
+</ul>
+<br>
+</div>
+
+
+<pre><span id="VALnop"><span class="keyword">val</span> <a href="code_VALKetrew_target.Build_process.nop.html">nop</a></span> : <code class="type"><a href="Ketrew_target.Build_process.html#TYPEt">t</a></code></pre><div class="info ">
+A build process that does nothing.<br>
+</div>
+</body></html>

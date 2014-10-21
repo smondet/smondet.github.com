@@ -1,0 +1,73 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<link rel="stylesheet" href="style.css" type="text/css">
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<link rel="Start" href="index.html">
+<link rel="next" href="Pvem_lwt_unix.SYSTEM.html">
+<link rel="Up" href="Pvem_lwt_unix.html">
+<link title="Index of types" rel=Appendix href="index_types.html">
+<link title="Index of values" rel=Appendix href="index_values.html">
+<link title="Index of modules" rel=Appendix href="index_modules.html">
+<link title="Index of module types" rel=Appendix href="index_module_types.html">
+<link title="Pvem_lwt_unix" rel="Chapter" href="Pvem_lwt_unix.html"><link title="Whole Files" rel="Section" href="#3_WholeFiles">
+<link title="Access To Channels " rel="Section" href="#3_AccessToChannels">
+<title>Pvem_lwt_unix.IO</title>
+</head>
+<body>
+<div class="navbar">&nbsp;<a class="up" href="Pvem_lwt_unix.html" title="Pvem_lwt_unix">Up</a>
+&nbsp;<a class="post" href="Pvem_lwt_unix.SYSTEM.html" title="Pvem_lwt_unix.SYSTEM">Next</a>
+</div>
+<h1>Module type <a href="type_Pvem_lwt_unix.IO.html">Pvem_lwt_unix.IO</a></h1>
+
+<pre><span class="keyword">module type</span> IO = <code class="code"><span class="keyword">sig</span></code> <a href="Pvem_lwt_unix.IO.html">..</a> <code class="code"><span class="keyword">end</span></code></pre><hr width="100%">
+<br>
+Useful I/O functions.<br>
+
+<pre><span id="TYPEpath"><span class="keyword">type</span> <code class="type"></code>path</span> = <code class="type">string</code> </pre>
+<div class="info ">
+The type of file paths<br>
+</div>
+
+<br>
+<h3 id="3_WholeFiles">Whole Files</h3><br>
+
+<pre><span id="VALwrite_file"><span class="keyword">val</span> write_file</span> : <code class="type"><a href="Pvem_lwt_unix.IO.html#TYPEpath">path</a> -><br>       content:string -><br>       (unit, [> `IO of [> `Write_file_exn of <a href="Pvem_lwt_unix.IO.html#TYPEpath">path</a> * exn ] ])<br>       Pvem_lwt_unix.Deferred_result.t</code></pre><div class="info ">
+Write a string to a file.<br>
+</div>
+
+<pre><span id="VALread_file"><span class="keyword">val</span> read_file</span> : <code class="type"><a href="Pvem_lwt_unix.IO.html#TYPEpath">path</a> -><br>       (string, [> `IO of [> `Read_file_exn of <a href="Pvem_lwt_unix.IO.html#TYPEpath">path</a> * exn ] ])<br>       Pvem_lwt_unix.Deferred_result.t</code></pre><div class="info ">
+Read a string from a file.<br>
+</div>
+<br>
+<h3 id="3_AccessToChannels">Access To Channels </h3><br>
+
+<pre><span id="VALwith_out_channel"><span class="keyword">val</span> with_out_channel</span> : <code class="type">?buffer_size:int -><br>       f:(Lwt_io.output_channel -><br>          ('a,<br>           [> `IO of<br>                [> `Exn of exn | `File_exists of string | `Wrong_path of string ] ]<br>           as 'err)<br>          Pvem_lwt_unix.Deferred_result.t) -><br>       [ `Append_to_file of string<br>       | `Channel of Lwt_io.output_channel<br>       | `Create_file of string<br>       | `Overwrite_file of string<br>       | `Stderr<br>       | `Stdout ] -> ('a, 'err) Pvem_lwt_unix.Deferred_result.t</code></pre><div class="info ">
+Run a function <code class="code">f</code> on an output channel, if the channel comes from
+      a <code class="code"><span class="keywordsign">`</span><span class="constructor">File</span> f</code>, it will be closed before returning (in case of success,
+      or error, but not for exceptions).<br>
+</div>
+
+<pre><span id="VALwrite"><span class="keyword">val</span> write</span> : <code class="type">Lwt_io.output_channel -><br>       string -><br>       (unit, [> `IO of [> `Exn of exn ] ]) Pvem_lwt_unix.Deferred_result.t</code></pre><div class="info ">
+Safely call <code class="code"><span class="constructor">Lwt_io</span>.fprint</code>.<br>
+</div>
+
+<pre><span id="VALflush"><span class="keyword">val</span> flush</span> : <code class="type">Lwt_io.output_channel -><br>       (unit, [> `IO of [> `Exn of exn ] ]) Pvem_lwt_unix.Deferred_result.t</code></pre><div class="info ">
+Flush an output channel.<br>
+</div>
+
+<pre><span id="VALwith_in_channel"><span class="keyword">val</span> with_in_channel</span> : <code class="type">[ `Channel of Lwt_io.input_channel | `File of string | `Stdin ] -><br>       ?buffer_size:int -><br>       f:(Lwt_io.input_channel -><br>          ('a, [> `IO of [> `Exn of exn ] ] as 'err) Pvem_lwt_unix.Deferred_result.t) -><br>       ('a, 'err) Pvem_lwt_unix.Deferred_result.t</code></pre><div class="info ">
+Run a function <code class="code">f</code> on an input channel, if the channel comes from
+      a <code class="code"><span class="keywordsign">`</span><span class="constructor">File</span> f</code>, it will be closed before returning (in case of success,
+      or error, but not for exceptions).<br>
+</div>
+
+<pre><span id="VALread"><span class="keyword">val</span> read</span> : <code class="type">?count:int -><br>       Lwt_io.input_channel -><br>       (string, [> `IO of [> `Exn of exn ] ]) Pvem_lwt_unix.Deferred_result.t</code></pre><div class="info ">
+Read <code class="code">count</code> bytes from an input-channel (default: “as much as possible”,
+      c.f. <a href="http://ocsigen.org/lwt/api/Lwt_io#VALread">Lwt_io.read</a>).<br>
+</div>
+
+<pre><span id="VALerror_to_string"><span class="keyword">val</span> error_to_string</span> : <code class="type">[< `IO of<br>            [< `Exn of exn<br>             | `File_exists of string<br>             | `Read_file_exn of string * exn<br>             | `Write_file_exn of string * exn<br>             | `Wrong_path of string ] ] -><br>       string</code></pre><div class="info ">
+Get a human-readable string out of an error produced by this module.<br>
+</div>
+</body></html>

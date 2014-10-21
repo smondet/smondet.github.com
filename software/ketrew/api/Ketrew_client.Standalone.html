@@ -1,0 +1,66 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<link rel="stylesheet" href="style.css" type="text/css">
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<link rel="Start" href="index.html">
+<link rel="next" href="Ketrew_client.Http_client.html">
+<link rel="Up" href="Ketrew_client.html">
+<link title="Index of types" rel=Appendix href="index_types.html">
+<link title="Index of values" rel=Appendix href="index_values.html">
+<link title="Index of class methods" rel=Appendix href="index_methods.html">
+<link title="Index of class types" rel=Appendix href="index_class_types.html">
+<link title="Index of modules" rel=Appendix href="index_modules.html">
+<link title="Index of module types" rel=Appendix href="index_module_types.html">
+<link title="Ketrew" rel="Chapter" href="Ketrew.html">
+<link title="Ketrew_artifact" rel="Chapter" href="Ketrew_artifact.html">
+<link title="Ketrew_client" rel="Chapter" href="Ketrew_client.html">
+<link title="Ketrew_command_line" rel="Chapter" href="Ketrew_command_line.html">
+<link title="Ketrew_configuration" rel="Chapter" href="Ketrew_configuration.html">
+<link title="Ketrew_daemonize" rel="Chapter" href="Ketrew_daemonize.html">
+<link title="Ketrew_database" rel="Chapter" href="Ketrew_database.html">
+<link title="Ketrew_edsl" rel="Chapter" href="Ketrew_edsl.html">
+<link title="Ketrew_engine" rel="Chapter" href="Ketrew_engine.html">
+<link title="Ketrew_error" rel="Chapter" href="Ketrew_error.html">
+<link title="Ketrew_host" rel="Chapter" href="Ketrew_host.html">
+<link title="Ketrew_long_running" rel="Chapter" href="Ketrew_long_running.html">
+<link title="Ketrew_lsf" rel="Chapter" href="Ketrew_lsf.html">
+<link title="Ketrew_monitored_script" rel="Chapter" href="Ketrew_monitored_script.html">
+<link title="Ketrew_path" rel="Chapter" href="Ketrew_path.html">
+<link title="Ketrew_pervasives" rel="Chapter" href="Ketrew_pervasives.html">
+<link title="Ketrew_plugin" rel="Chapter" href="Ketrew_plugin.html">
+<link title="Ketrew_program" rel="Chapter" href="Ketrew_program.html">
+<link title="Ketrew_protocol" rel="Chapter" href="Ketrew_protocol.html">
+<link title="Ketrew_server" rel="Chapter" href="Ketrew_server.html">
+<link title="Ketrew_target" rel="Chapter" href="Ketrew_target.html">
+<link title="Ketrew_unix_process" rel="Chapter" href="Ketrew_unix_process.html"><title>Ketrew API : Ketrew_client.Standalone</title>
+</head>
+<body>
+<div class="navbar">&nbsp;<a class="up" href="Ketrew_client.html" title="Ketrew_client">Up</a>
+&nbsp;<a class="post" href="Ketrew_client.Http_client.html" title="Ketrew_client.Http_client">Next</a>
+</div>
+<h1>Module <a href="type_Ketrew_client.Standalone.html">Ketrew_client.Standalone</a> (<a href="code_Ketrew_client.Standalone.html">.ml</a>)</h1>
+
+<pre><span class="keyword">module</span> Standalone: <code class="code"><span class="keyword">sig</span></code> <a href="Ketrew_client.Standalone.html">..</a> <code class="code"><span class="keyword">end</span></code></pre><hr width="100%">
+
+<pre><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code></pre><table class="typetable">
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTt.configuration">configuration</span>&nbsp;: <code class="type"><a href="Ketrew_configuration.html#TYPEstandalone">Ketrew_configuration.standalone</a></code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTt.engine">engine</span>&nbsp;: <code class="type"><a href="Ketrew_engine.html#TYPEt">Ketrew_engine.t</a></code>;</code></td>
+
+</tr></table>
+}
+
+
+
+<pre><span id="VALcreate"><span class="keyword">val</span> <a href="code_VALKetrew_client.Standalone.create.html">create</a></span> : <code class="type"><a href="Ketrew_configuration.html#TYPEstandalone">Ketrew_configuration.standalone</a> -><br>       (<a href="Ketrew_client.Standalone.html#TYPEt">t</a>,<br>        [> `Database of <a href="Ketrew_database.html#TYPEerror">Ketrew_database.error</a><br>         | `Dyn_plugin of [> `Dynlink_error of Dynlink.error | `Findlib of exn ]<br>         | `Failure of string ])<br>       Ketrew_pervasives.t</code></pre>
+<pre><span id="VALrelease"><span class="keyword">val</span> <a href="code_VALKetrew_client.Standalone.release.html">release</a></span> : <code class="type"><a href="Ketrew_client.Standalone.html#TYPEt">t</a> -><br>       (unit,<br>        [> `Database of [> `Act of <a href="Ketrew_database.html#TYPEaction">Ketrew_database.action</a> | `Close ] * string<br>         | `Database_unavailable of <a href="Ketrew_target.html#TYPEid">Ketrew_target.id</a> ])<br>       Ketrew_pervasives.Deferred_result.t</code></pre></body></html>

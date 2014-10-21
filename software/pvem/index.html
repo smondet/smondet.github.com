@@ -1,0 +1,88 @@
+ <!DOCTYPE html> <html> <head><link rel="stylesheet" href="https://cdn.rawgit.com/hammerlab/ketrew/2d1c430cca52caa71e363a765ff8775a6ae14ba9/src/doc/code_style.css" type="text/css">
+<link rel="stylesheet" href="http://cdn.jsdelivr.net/bootstrap/3.1.1/css/bootstrap.min.css" type="text/css">
+<link rel="stylesheet" href="http://cdn.jsdelivr.net/bootstrap/3.1.1/css/bootstrap-theme.min.css" type="text/css"><meta charset="utf-8"><title>Pvem: Home</title></head><body><div class="container"><h1>Pvem: Home</h1><div class="row">
+<div class="col-md-3">
+<h2>Contents</h2><ul>
+ <li><a href='#Usage'>Usage</a>
+ </li>
+ <li><a href='#Examples'>Examples</a>
+  <ul>
+   <li><a href='#InfixOperators'>Infix Operators</a>
+   </li>
+   <li><a href='#Functor'>Functor</a>
+   </li>
+  </ul>
+
+ </li>
+</ul>
+<h2>Menu</h2><ul>
+ <li><a href='index.html'>Home</a></li>
+ <li><a href='pvem.html'>Literate Implementation</a></li>
+ <li><a href='implementation.html'>Implementation Notes</a></li>
+ <li><a href='./api/index.html'>API Documentation</a></li>
+ <li>Repository <a href='https://bitbucket.org/smondet/pvem'>at Bitbucket</a></li>
+ <li>Up: <a href='../index.html'>Software Projects</a></li>
+</ul>
+</div><div class="col-md-9"><h1 id="PlaywithErrorMonadsinOCaml">Play with Error-Monads in OCaml</h1>
+<p>PVEM actually stands for “Polymorphic Variants-based Error Monads.”</p>
+<h2 id="Usage">Usage</h2>
+<p>The basic idea of these modules is to manipulate:</p><pre><span class="kw">type</span><span class="text"> ('</span><span class="id">ok</span><span class="text">, '</span><span class="id">error</span><span class="text">) </span><span class="id">result</span><span class="text"> = [
+  | `</span><span class="kw2">Ok</span><span class="text"> </span><span class="kw">of</span><span class="text"> '</span><span class="id">ok</span><span class="text">
+  | `</span><span class="kw2">Error</span><span class="text"> </span><span class="kw">of</span><span class="text"> '</span><span class="id">error</span><span class="text">
+]</span></pre>
+<p>or combinations of that type (why polymorphic variants? see
+some <a href='./implementation.html'>implementation notes</a>).</p>
+<p>When you <code>open Pvem</code> (or <code>include</code>) in your source, you get</p>
+<ul>
+ <li>the module <code>Result</code> which implements the interface <a href='api/Pvem.ERROR_MONAD.html' title='ERROR_MONAD'><code>ERROR_MONAD</code></a>
+ with the above type,</li>
+ <li>the functor <code>With_deferred</code>: <a href='api/Pvem.DEFERRED.html' title='DEFERRED'><code>DEFERRED</code></a> → <a href='api/Pvem.DEFERRED_RESULT.html' title='DEFERRED_RESULT'><code>DEFERRED_RESULT</code></a> which
+ builds “error-monads” out of <a href='http://ocsigen.org/lwt'>`Lwt`</a>-like
+ concurrency monads.</li>
+</ul>
+
+<p>Since the monad(s) become pervasive; the
+<a href='api/Pvem.ERROR_MONAD.html' title='ERROR_MONAD'><code>ERROR_MONAD</code></a> module type defines 3 infix operators:</p>
+<ul>
+ <li><code>&gt;&gt;=</code> (<a href='api/Pvem.ERROR_MONAD.html#VALbind' title='ERROR_MONAD.bind'><code>ERROR_MONAD.bind</code></a>): the “standard” bind operator.</li>
+ <li><code>&gt;&gt;|</code> (<a href='api/Pvem.ERROR_MONAD.html#VALmap' title='ERROR_MONAD.map'><code>ERROR_MONAD.map</code></a>): pass the value through a “pure” function.</li>
+ <li><code>&gt;&gt;&lt;</code> (<a href='api/Pvem.ERROR_MONAD.html#VALdestruct' title='ERROR_MONAD.destruct'><code>ERROR_MONAD.destruct</code></a>): “reopen” the error monad to be able to match
+on both the “Ok” and “Error” cases; then return inside the monad like with
+<code>bind</code>.</li>
+</ul>
+
+<h2 id="Examples">Examples</h2>
+<h3 id="InfixOperators">Infix Operators</h3>
+<p>Here is a basic usage example for the 3 infix operators:</p><pre><span class="kw">open</span><span class="text"> </span><span class="kw2">Pvem</span><span class="text">
+</span><span class="kw">open</span><span class="text"> </span><span class="kw2">Result</span><span class="text">
+
+</span><span class="kw">let</span><span class="text"> </span><span class="id">fail_on_42</span><span class="text"> : </span><span class="kw3">int</span><span class="text"> -&gt; (</span><span class="kw3">int</span><span class="text">, </span><span class="kw3">string</span><span class="text">) </span><span class="kw2">Result</span><span class="text">.</span><span class="id">t</span><span class="text"> =
+  </span><span class="kw">function</span><span class="text"> </span><span class="numeric">42</span><span class="text"> -&gt; </span><span class="id">fail</span><span class="text"> </span><span class="string">&quot;42&quot;</span><span class="text"> | </span><span class="id">other</span><span class="text"> -&gt; </span><span class="id">return</span><span class="text"> </span><span class="id">other</span><span class="text">
+
+</span><span class="kw">let</span><span class="text"> </span><span class="id">f_uses_bind_and_return</span><span class="text">: </span><span class="kw3">int</span><span class="text"> -&gt; (</span><span class="kw3">float</span><span class="text">, </span><span class="kw3">string</span><span class="text">) </span><span class="kw2">Result</span><span class="text">.</span><span class="id">t</span><span class="text"> = </span><span class="kw">fun</span><span class="text"> </span><span class="id">x</span><span class="text"> -&gt;
+  </span><span class="id">fail_on_42</span><span class="text"> </span><span class="id">x</span><span class="text">
+  &gt;&gt;= </span><span class="kw">fun</span><span class="text"> </span><span class="id">not_42</span><span class="text"> -&gt;
+  </span><span class="id">return</span><span class="text"> (</span><span class="numeric">2</span><span class="text">. *. </span><span class="kw3">float</span><span class="text"> </span><span class="id">not_42</span><span class="text">)
+
+</span><span class="kw">let</span><span class="text"> </span><span class="id">f_uses_map</span><span class="text">: </span><span class="kw3">int</span><span class="text"> -&gt; (</span><span class="kw3">int</span><span class="text"> * </span><span class="kw3">int</span><span class="text">, </span><span class="kw3">string</span><span class="text">) </span><span class="kw2">Result</span><span class="text">.</span><span class="id">t</span><span class="text"> = </span><span class="kw">fun</span><span class="text"> </span><span class="id">x</span><span class="text"> -&gt;
+  </span><span class="id">fail_on_42</span><span class="text"> </span><span class="id">x</span><span class="text">
+  &gt;&gt;| (</span><span class="kw">fun</span><span class="text"> </span><span class="id">x</span><span class="text"> -&gt; (</span><span class="id">x</span><span class="text">, </span><span class="id">x</span><span class="text">))
+
+</span><span class="kw">let</span><span class="text"> </span><span class="id">f_uses_destruct</span><span class="text">: </span><span class="kw3">int</span><span class="text"> -&gt; (</span><span class="kw3">float</span><span class="text">, </span><span class="kw3">string</span><span class="text"> * </span><span class="kw3">string</span><span class="text">) </span><span class="kw2">Result</span><span class="text">.</span><span class="id">t</span><span class="text"> = </span><span class="kw">fun</span><span class="text"> </span><span class="id">x</span><span class="text"> -&gt;
+  </span><span class="id">fail_on_42</span><span class="text"> </span><span class="id">x</span><span class="text">
+  &gt;&gt;&lt; </span><span class="kw">function</span><span class="text">
+  | `</span><span class="kw2">Ok</span><span class="text"> </span><span class="id">o</span><span class="text"> -&gt; </span><span class="id">return</span><span class="text"> (</span><span class="kw3">float</span><span class="text"> </span><span class="id">o</span><span class="text">)
+  | `</span><span class="kw2">Error</span><span class="text"> </span><span class="id">s</span><span class="text"> -&gt; </span><span class="id">fail</span><span class="text"> (</span><span class="string">&quot;did not convert to float&quot;</span><span class="text">, </span><span class="id">s</span><span class="text">)</span></pre>
+<h3 id="Functor">Functor</h3>
+<p>To get an error monad on top of <a href='http://ocsigen.org/lwt'>Lwt</a>, simply</p><pre><span class="kw">module</span><span class="text"> </span><span class="kw2">Deferred_result</span><span class="text"> = </span><span class="kw2">Pvem</span><span class="text">.</span><span class="kw2">With_deferred</span><span class="text">(</span><span class="kw2">Lwt</span><span class="text">)</span></pre>
+<p>With Jane Street&#39;s <a href='http://janestreet.github.io/'>Async</a> <code>Deferred.t</code>:</p><pre><span class="kw">open</span><span class="text"> </span><span class="kw2">Core_kernel</span><span class="text">.</span><span class="kw2">Std</span><span class="text">
+</span><span class="kw">open</span><span class="text"> </span><span class="kw2">Async</span><span class="text">.</span><span class="kw2">Std</span><span class="text">
+</span><span class="kw">module</span><span class="text"> </span><span class="kw2">Deferred_result</span><span class="text"> = </span><span class="kw2">Pvem</span><span class="text">.</span><span class="kw2">With_deferred</span><span class="text">(</span><span class="kw1">struct</span><span class="text">
+    </span><span class="kw">include</span><span class="text"> </span><span class="kw2">Deferred</span><span class="text">
+    </span><span class="kw">let</span><span class="text"> </span><span class="id">catch</span><span class="text"> </span><span class="id">tri</span><span class="text"> </span><span class="id">wiz</span><span class="text"> =
+      </span><span class="kw2">Async</span><span class="text">.</span><span class="kw2">Std</span><span class="text">.</span><span class="id">try_with</span><span class="text"> </span><span class="id">tri</span><span class="text">
+      &gt;&gt;= </span><span class="kw">function</span><span class="text">
+      | </span><span class="kw2">Ok</span><span class="text"> </span><span class="id">o</span><span class="text"> -&gt; </span><span class="id">return</span><span class="text"> </span><span class="id">o</span><span class="text">
+      | </span><span class="kw2">Error</span><span class="text"> </span><span class="id">e</span><span class="text"> -&gt; </span><span class="id">wiz</span><span class="text"> </span><span class="id">e</span><span class="text">
+  </span><span class="kw1">end</span><span class="text">)</span></pre>
+</div></div></div></body><html>
