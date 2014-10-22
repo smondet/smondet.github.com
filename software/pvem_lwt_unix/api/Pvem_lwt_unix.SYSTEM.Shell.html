@@ -1,0 +1,37 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<link rel="stylesheet" href="style.css" type="text/css">
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<link rel="Start" href="index.html">
+<link rel="Up" href="Pvem_lwt_unix.SYSTEM.html">
+<link title="Index of types" rel=Appendix href="index_types.html">
+<link title="Index of values" rel=Appendix href="index_values.html">
+<link title="Index of modules" rel=Appendix href="index_modules.html">
+<link title="Index of module types" rel=Appendix href="index_module_types.html">
+<link title="Pvem_lwt_unix" rel="Chapter" href="Pvem_lwt_unix.html"><title>Pvem_lwt_unix.SYSTEM.Shell</title>
+</head>
+<body>
+<div class="navbar">&nbsp;<a class="up" href="Pvem_lwt_unix.SYSTEM.html" title="Pvem_lwt_unix.SYSTEM">Up</a>
+&nbsp;</div>
+<h1>Module <a href="type_Pvem_lwt_unix.SYSTEM.Shell.html">Pvem_lwt_unix.SYSTEM.Shell</a></h1>
+
+<pre><span class="keyword">module</span> Shell: <code class="code"><span class="keyword">sig</span></code> <a href="Pvem_lwt_unix.SYSTEM.Shell.html">..</a> <code class="code"><span class="keyword">end</span></code></pre><div class="info module top">
+Manipulate <code class="code">/bin/sh</code> commands (flavors of <code class="code"><span class="constructor">Unix</span>.system</code>).<br>
+</div>
+<hr width="100%">
+
+<pre><span id="VALdo_or_fail"><span class="keyword">val</span> do_or_fail</span> : <code class="type">string -><br>       (unit,<br>        [> `Shell of<br>             string *<br>             [> `Exited of int | `Exn of exn | `Signaled of int | `Stopped of int ] ])<br>       Pvem_lwt_unix.Deferred_result.t</code></pre><div class="info ">
+Make <code class="code">/bin/sh</code> execute a command, fail if it does not return 0.<br>
+</div>
+
+<pre><span id="VALexecute"><span class="keyword">val</span> execute</span> : <code class="type">string -><br>       (string * string * [ `Exited of int | `Signaled of int | `Stopped of int ],<br>        [> `Shell of string * [> `Exn of exn ] ])<br>       Pvem_lwt_unix.Deferred_result.t</code></pre><div class="info ">
+Execute a shell command and return its standard output, standard error,
+        and exit code
+        <code class="code">stdout, stderr</code>.<br>
+</div>
+
+<pre><span id="VALstatus_to_string"><span class="keyword">val</span> status_to_string</span> : <code class="type">[< `Exited of int | `Exn of exn | `Signaled of int | `Stopped of int ] -><br>       string</code></pre><div class="info ">
+Convert a status (or an error) to a human-readable string<br>
+</div>
+</body></html>
