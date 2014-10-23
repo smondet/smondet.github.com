@@ -1,0 +1,100 @@
+ <!DOCTYPE html> <html> <head><link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootswatch/3.2.0/readable/bootstrap.min.css" type="text/css">
+<link rel="stylesheet" href="https://cdn.rawgit.com/hammerlab/ketrew/2d1c430cca52caa71e363a765ff8775a6ae14ba9/src/doc/code_style.css" type="text/css"><meta charset="utf-8"><title>Ketrew: Alternative CLI Application</title></head><body><div class="container"><h1>Ketrew: Alternative CLI Application</h1><div class="row">
+<div class="col-md-3">
+<h2>Contents</h2><ul>
+ <li><a href='#Plugins'>Plugins</a>
+ </li>
+ <li><a href='#Configuration'>Configuration</a>
+ </li>
+ <li><a href='#CommandLineSubcommands'>Command Line “Sub-commands”</a>
+ </li>
+</ul>
+<h2>Menu</h2><ul>
+ <li><a href='index.html'>Home</a></li>
+ <li><a href='Alternative_CLI_Application.html'>Alternative CLI Application</a></li>
+ <li><a href='Developer_Documentation.html'>Developer Documentation</a></li>
+ <li><a href='Long-Running_Plugins.html'>Long-Running Plugins</a></li>
+ <li><a href='Server_Commands.html'>Server Commands</a></li>
+ <li><a href='The_Configuration_File.html'>The Configuration File</a></li>
+ <li><a href='The_HTTP_API.html'>The HTTP API</a></li>
+ <li><a href='Workflow_Examples.html'>Workflow Examples</a></li>
+ <li><a href='dummy_plugin.html'>Plugin Example</a></li>
+ <li><a href='dummy_plugin_user.html'>Plugin-Usage Example</a></li>
+ <li><a href='integration.html'>Integration Test</a></li>
+ <li><a href='main.html'>Main Test</a></li>
+ <li><a href='preconfigured_main.html'>Preconfigured Main Example</a></li>
+ <li><a href='./api/index.html'>API Documentation</a></li>
+ <li><a href='../index.html'><code>master</code></a> branch</li>
+ <li>Repository <a href='https://github.com/hammerlab/ketrew'>at Github</a></li>
+ <li>Up: <a href='../../index.html'>Software Projects</a></li>
+</ul>
+</div><div class="col-md-9"><h1 id="AvoidingDynlinkandConfigFiles">Avoiding Dynlink and Config Files</h1>
+<p>One may not want to use a configuration file (because lacking a file-system or
+so) and/or dynamic linking of plugins (because dynamic-linking can be
+problematic).</p>
+<p>It is <strong>possible</strong>! This document shows how.</p>
+<h2 id="Plugins">Plugins</h2>
+<p>Plugins can be compiled to “good old-school” libraries:</p>
+<pre><code>tmp_dir=/tmp/with_dummy_plugin
+mkdir -p $tmp_dir
+cp src/test/dummy_plugin.ml $tmp_dir
+ocamlfind opt  -package ketrew -thread -c  $tmp_dir/dummy_plugin.ml -o $tmp_dir/dummy_plugin.cmx</code></pre>
+<p>And can be linked-in directly with <code>src/app/main.ml</code>:</p>
+<pre><code>cp src/app/main.ml $tmp_dir
+ocamlfind opt -package ketrew -thread -linkpkg -I $tmp_dir $tmp_dir/dummy_plugin.cmx $tmp_dir/main.ml -o $tmp_dir/new_ketrew_app
+$tmp_dir/new_ketrew_app --help=plain</code></pre>
+<p>We can run the plugin user to add a workflow:</p>
+<pre><code>cp src/test/dummy_plugin_user.ml $tmp_dir
+ocamlfind opt -package ketrew -thread -linkpkg -I $tmp_dir $tmp_dir/dummy_plugin.cmx $tmp_dir/dummy_plugin_user.ml -o $tmp_dir/my_workflow
+$tmp_dir/my_workflow &quot;du -sh $HOME&quot;</code></pre>
+<p>We can run the workflow (type <code>&#39;q&#39;</code> when done):</p>
+<pre><code>$tmp_dir/new_ketrew_app run loop</code></pre>
+<p>And <em>explore</em> to the target, to call the custom query:</p>
+<pre><code>$tmp_dir/new_ketrew_app interact</code></pre>
+<p>(choose the target, <code>&#39;s&#39;</code> for “show-status”, <code>&#39;1&#39;</code> for “display date”).</p>
+<h2 id="Configuration">Configuration</h2>
+<p>The function <a href='api/Ketrew_command_line.html#VALrun_main' title='Ketrew_command_line.run_main'><code>Ketrew_command_line.run_main</code></a> can take an <code>~override_configuration</code> parameter, which can be created with
+<a href='api/Ketrew_configuration.html#VAL{create,create_server}' title='Ketrew_configuration.{create,create_server}'><code>Ketrew_configuration.{create,create_server}</code></a>
+(c.f. 
+<a href='api/Ketrew_command_line.html'><a href='api/Ketrew_command_line.html' title='Ketrew_command_line'><code>Ketrew_command_line</code></a></a> and
+<a href='api/Ketrew_configuration.html'><a href='api/Ketrew_configuration.html' title='Ketrew_configuration'><code>Ketrew_configuration</code></a></a>).</p>
+<p>See the example in
+<a href='preconfigured_main.html'><code>src/test/preconfigured_main.ml</code></a>, here is how
+to compile it:</p>
+<pre><code>tmp_dir=/tmp/with_preconfiguration
+mkdir -p $tmp_dir
+cp src/test/preconfigured_main.ml $tmp_dir
+ocamlfind opt -package ketrew -thread -linkpkg $tmp_dir/preconfigured_main.ml -o $tmp_dir/new_ketrew_app
+$tmp_dir/new_ketrew_app print-configuration</code></pre>
+<p>We can check that no configuration file is read with</p>
+<pre><code>export KETREW_CONFIGURATION=/some/unknown/path/that/really/does/not/exist</code></pre>
+<p>The “normal” ketrew fails:</p>
+<pre><code>ketrew pc</code></pre>
+<pre class='badresult'><code class='badresult'>[ketrew: ERROR]
+    Error: Exception while reading
+    &quot;/some/unknown/path/that/really/does/not/exist&quot;:
+    Unix.Unix_error(Unix.ENOENT, &quot;open&quot;,
+    &quot;/some/unknown/path/that/really/does/not/exist&quot;)</code></pre>
+<p>The new one succeeds:</p>
+<pre><code>$tmp_dir/new_ketrew_app print-configuration</code></pre>
+<pre class='goodresult'><code class='goodresult'>[ketrew]
+    From user-overriden:
+    * Database: &quot;/tmp/somepath&quot;
+    * State-key: &quot;ketrew_persistent_state&quot;
+    * Unix-failure does not turn into target failure
+    * Debug-level: 42
+    * Client with colors
+    * Timeout-upper-bound: 60. seconds
+    * Plugins:
+        * OCamlfind package: &quot;lwt.react&quot;
+        * OCamlfind package: &quot;lwt.unix&quot;
+    Server:
+        Authorized tokens: Some &quot;/tmp/tokens&quot;
+        Listen: TLS:4242 (Certificate: &quot;somecert.pem&quot;,
+            Key: &quot;somekey.pem&quot;)
+        Return-error-messages: false</code></pre>
+<h2 id="CommandLineSubcommands">Command Line “Sub-commands”</h2>
+<p>One can also <em>even</em> add their own sub-commands to the command-line parsing:
+this is also in the example
+<a href='preconfigured_main.html'><code>src/test/preconfigured_main.ml</code></a>.</p>
+</div></div></div></body><html>

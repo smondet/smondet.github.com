@@ -20,8 +20,7 @@
  <li><a href='main.html'>Main Test</a></li>
  <li><a href='preconfigured_main.html'>Preconfigured Main Example</a></li>
  <li><a href='./api/index.html'>API Documentation</a></li>
- <li>Branch/Tag: <a href='./pbs_backend/index.html'><code>pbs_backend</code></a></li>
- <li>Branch/Tag: <a href='./long_running_factorization/index.html'><code>long_running_factorization</code></a></li>
+ <li>Branch/Tag: <a href='./more_queries/index.html'><code>more_queries</code></a></li>
  <li>Repository <a href='https://github.com/hammerlab/ketrew'>at Github</a></li>
  <li>Up: <a href='../index.html'>Software Projects</a></li>
 </ul>
@@ -71,16 +70,29 @@
 
 </span><span class="kw">module</span><span class="text"> </span><span class="kw2">Vagrant_box</span><span class="text"> = </span><span class="kw1">struct</span><span class="text">
 
+  </span><span class="comment">(* 
+  About Torque:
+  https://github.com/audy/vagrant-torque
+  https://redditjs.com/r/bioinformatics/comments/29xz66/vagranttorque_run_a_single_machine_torque_cluster/
+The VM still has a misconfiguration: the machine cannot
+  *)</span><span class="text">
+  </span><span class="kw">type</span><span class="text"> </span><span class="id">initialization</span><span class="text"> = [
+    | `</span><span class="kw2">Precise64</span><span class="text">
+    | `</span><span class="kw2">Audy_torque</span><span class="text">
+  ]
+
   </span><span class="kw">type</span><span class="text"> </span><span class="id">t</span><span class="text"> = {
     </span><span class="id">dir</span><span class="text">: </span><span class="kw3">string</span><span class="text">;
     </span><span class="id">ssh_config</span><span class="text">: </span><span class="kw3">string</span><span class="text">;
     </span><span class="id">hostname</span><span class="text">: </span><span class="kw3">string</span><span class="text">;
+    </span><span class="id">initialization</span><span class="text">: </span><span class="id">initialization</span><span class="text">;
   }
 
-  </span><span class="kw">let</span><span class="text"> </span><span class="id">create</span><span class="text"> </span><span class="id">hostname</span><span class="text"> =
-    </span><span class="kw">let</span><span class="text"> </span><span class="id">dir</span><span class="text"> =
-      </span><span class="kw2">Sys</span><span class="text">.</span><span class="id">getenv</span><span class="text"> </span><span class="string">&quot;HOME&quot;</span><span class="text">  // </span><span class="string">&quot;tmp/vagrant&quot;</span><span class="text"> // </span><span class="id">hostname</span><span class="text"> </span><span class="kw">in</span><span class="text">
-    {</span><span class="id">dir</span><span class="text">; </span><span class="id">ssh_config</span><span class="text"> = </span><span class="id">dir</span><span class="text"> // </span><span class="string">&quot;ssh_config&quot;</span><span class="text">; </span><span class="id">hostname</span><span class="text">}
+  </span><span class="kw">let</span><span class="text"> </span><span class="id">tmp_dir</span><span class="text"> = </span><span class="kw2">Sys</span><span class="text">.</span><span class="id">getenv</span><span class="text"> </span><span class="string">&quot;HOME&quot;</span><span class="text">  // </span><span class="string">&quot;tmp/vagrant&quot;</span><span class="text">
+
+  </span><span class="kw">let</span><span class="text"> </span><span class="id">create</span><span class="text"> </span><span class="id">initialization</span><span class="text"> </span><span class="id">hostname</span><span class="text"> =
+    </span><span class="kw">let</span><span class="text"> </span><span class="id">dir</span><span class="text"> = </span><span class="id">tmp_dir</span><span class="text"> // </span><span class="id">hostname</span><span class="text"> </span><span class="kw">in</span><span class="text">
+    {</span><span class="id">dir</span><span class="text">; </span><span class="id">ssh_config</span><span class="text"> = </span><span class="id">dir</span><span class="text"> // </span><span class="string">&quot;ssh_config&quot;</span><span class="text">; </span><span class="id">hostname</span><span class="text">; </span><span class="id">initialization</span><span class="text">;}
 
   </span><span class="kw">let</span><span class="text"> </span><span class="id">in_dir</span><span class="text"> </span><span class="id">t</span><span class="text"> =
     </span><span class="kw">let</span><span class="text"> </span><span class="kw">open</span><span class="text"> </span><span class="kw2">Ketrew</span><span class="text">.</span><span class="kw2">EDSL</span><span class="text"> </span><span class="kw">in</span><span class="text">
@@ -98,21 +110,44 @@
     </span><span class="kw">let</span><span class="text"> </span><span class="id">host</span><span class="text"> = </span><span class="id">as_host</span><span class="text"> </span><span class="id">t</span><span class="text"> </span><span class="kw">in</span><span class="text">
     </span><span class="id">daemonize</span><span class="text"> </span><span class="kw4">~using</span><span class="text">:`</span><span class="kw2">Nohup_setsid</span><span class="text"> </span><span class="kw4">~host</span><span class="text"> </span><span class="id">program</span><span class="text">
 
-  </span><span class="kw">let</span><span class="text"> </span><span class="id">internal_hostname</span><span class="text"> </span><span class="numeric">_</span><span class="text"> = </span><span class="string">&quot;precise64&quot;</span><span class="text">
+  </span><span class="kw">let</span><span class="text"> </span><span class="id">internal_hostname</span><span class="text"> </span><span class="id">t</span><span class="text"> =
+    </span><span class="kw1">match</span><span class="text"> </span><span class="id">t</span><span class="text">.</span><span class="id">initialization</span><span class="text"> </span><span class="kw1">with</span><span class="text">
+    | `</span><span class="kw2">Precise64</span><span class="text"> -&gt; </span><span class="string">&quot;precise64&quot;</span><span class="text">
+    | `</span><span class="kw2">Audy_torque</span><span class="text"> -&gt; </span><span class="string">&quot;master&quot;</span><span class="text">
+
   </span><span class="kw">let</span><span class="text"> </span><span class="id">internal_username</span><span class="text"> </span><span class="numeric">_</span><span class="text"> = </span><span class="string">&quot;vagrant&quot;</span><span class="text">
+
+  </span><span class="kw">let</span><span class="text"> </span><span class="id">namify</span><span class="text"> </span><span class="id">t</span><span class="text"> </span><span class="id">sub</span><span class="text"> =
+    </span><span class="id">sprintf</span><span class="text"> </span><span class="string">&quot;%s: %s&quot;</span><span class="text"> </span><span class="id">t</span><span class="text">.</span><span class="id">hostname</span><span class="text"> </span><span class="id">sub</span><span class="text">
+
   </span><span class="kw">let</span><span class="text"> </span><span class="id">prepare</span><span class="text"> ?</span><span class="id">success_triggers</span><span class="text"> </span><span class="id">t</span><span class="text"> =
     </span><span class="kw">let</span><span class="text"> </span><span class="kw">open</span><span class="text"> </span><span class="kw2">Ketrew</span><span class="text">.</span><span class="kw2">EDSL</span><span class="text"> </span><span class="kw">in</span><span class="text">
     </span><span class="kw">let</span><span class="text"> </span><span class="id">host</span><span class="text"> = </span><span class="kw2">Test_host</span><span class="text">.</span><span class="id">as_host</span><span class="text"> () </span><span class="kw">in</span><span class="text">
     </span><span class="kw">let</span><span class="text"> </span><span class="id">init</span><span class="text"> =
-      </span><span class="id">file_target</span><span class="text"> </span><span class="kw4">~name</span><span class="text">:</span><span class="string">&quot;init-vagrant&quot;</span><span class="text"> (</span><span class="id">t</span><span class="text">.</span><span class="id">dir</span><span class="text"> // </span><span class="string">&quot;Vagrantfile&quot;</span><span class="text">)
+      </span><span class="id">file_target</span><span class="text"> </span><span class="kw4">~name</span><span class="text">:(</span><span class="id">namify</span><span class="text"> </span><span class="id">t</span><span class="text"> </span><span class="string">&quot;init-vagrant&quot;</span><span class="text">)
+        (</span><span class="id">t</span><span class="text">.</span><span class="id">dir</span><span class="text"> // </span><span class="string">&quot;Vagrantfile&quot;</span><span class="text">)
         </span><span class="kw4">~host</span><span class="text">
         </span><span class="kw4">~make</span><span class="text">:(</span><span class="kw2">Test_host</span><span class="text">.</span><span class="id">do_on</span><span class="text"> </span><span class="kw2">Program</span><span class="text">.(
-            </span><span class="id">in_dir</span><span class="text"> </span><span class="id">t</span><span class="text">
-            &amp;&amp; </span><span class="id">exec</span><span class="text"> [</span><span class="string">&quot;vagrant&quot;</span><span class="text">; </span><span class="string">&quot;init&quot;</span><span class="text">; </span><span class="string">&quot;hashicorp/precise64&quot;</span><span class="text">]
+            </span><span class="id">chain</span><span class="text"> (
+              </span><span class="kw1">match</span><span class="text"> </span><span class="id">t</span><span class="text">.</span><span class="id">initialization</span><span class="text"> </span><span class="kw1">with</span><span class="text">
+              | `</span><span class="kw2">Precise64</span><span class="text"> -&gt; [
+                  </span><span class="id">in_dir</span><span class="text"> </span><span class="id">t</span><span class="text">;
+                  </span><span class="id">exec</span><span class="text"> [</span><span class="string">&quot;vagrant&quot;</span><span class="text">; </span><span class="string">&quot;init&quot;</span><span class="text">; </span><span class="string">&quot;hashicorp/precise64&quot;</span><span class="text">];
+                ]
+              | `</span><span class="kw2">Audy_torque</span><span class="text"> -&gt;
+                [</span><span class="id">shf</span><span class="text"> </span><span class="string">&quot;if [ -d %s ] ; then echo 'Already cloned' ; else \
+                      mkdir -p %s &amp;&amp; cd %s &amp;&amp; \
+                      git clone git@github.com:audy/vagrant-torque &amp;&amp; \
+                      mv vagrant-torque %s ; fi&quot;</span><span class="text">
+                   (</span><span class="kw2">Filename</span><span class="text">.</span><span class="id">quote</span><span class="text"> </span><span class="id">t</span><span class="text">.</span><span class="id">dir</span><span class="text">)
+                   (</span><span class="kw2">Filename</span><span class="text">.</span><span class="id">quote</span><span class="text"> </span><span class="id">tmp_dir</span><span class="text">) (</span><span class="kw2">Filename</span><span class="text">.</span><span class="id">quote</span><span class="text"> </span><span class="id">tmp_dir</span><span class="text">)
+                   (</span><span class="kw2">Filename</span><span class="text">.</span><span class="id">quote</span><span class="text"> </span><span class="id">t</span><span class="text">.</span><span class="id">dir</span><span class="text">);
+                ]
+            )
           ))
     </span><span class="kw">in</span><span class="text">
     </span><span class="kw">let</span><span class="text"> </span><span class="id">running</span><span class="text"> =
-      </span><span class="id">target</span><span class="text"> </span><span class="string">&quot;vagrant-up&quot;</span><span class="text">
+      </span><span class="id">target</span><span class="text"> (</span><span class="id">namify</span><span class="text"> </span><span class="id">t</span><span class="text"> </span><span class="string">&quot;vagrant-up&quot;</span><span class="text">)
         </span><span class="kw4">~dependencies</span><span class="text">:[</span><span class="id">init</span><span class="text">]
         </span><span class="kw4">~make</span><span class="text">:(</span><span class="kw2">Test_host</span><span class="text">.</span><span class="id">do_on</span><span class="text"> </span><span class="kw2">Program</span><span class="text">.(
             </span><span class="id">in_dir</span><span class="text"> </span><span class="id">t</span><span class="text"> &amp;&amp; </span><span class="id">exec</span><span class="text"> [</span><span class="string">&quot;vagrant&quot;</span><span class="text">; </span><span class="string">&quot;up&quot;</span><span class="text">]))
@@ -120,7 +155,8 @@
     </span><span class="kw">let</span><span class="text"> </span><span class="id">make_ssh_config</span><span class="text"> =
       </span><span class="id">target</span><span class="text"> </span><span class="comment">(* not a `file_target`, because we want this file regenerated 
                 every time. We set the `product` but not the “condition”. *)</span><span class="text">
-        </span><span class="string">&quot;vagrant-ssh-config&quot;</span><span class="text"> </span><span class="kw4">~dependencies</span><span class="text">:[</span><span class="id">running</span><span class="text">] ?</span><span class="id">success_triggers</span><span class="text">
+        (</span><span class="id">namify</span><span class="text"> </span><span class="id">t</span><span class="text"> </span><span class="string">&quot;vagrant-ssh-config&quot;</span><span class="text">)
+        </span><span class="kw4">~dependencies</span><span class="text">:[</span><span class="id">running</span><span class="text">] ?</span><span class="id">success_triggers</span><span class="text">
         </span><span class="kw4">~product</span><span class="text">:(</span><span class="id">file</span><span class="text"> </span><span class="kw4">~host</span><span class="text">:(</span><span class="kw2">Test_host</span><span class="text">.</span><span class="id">as_host</span><span class="text"> ()) </span><span class="id">t</span><span class="text">.</span><span class="id">ssh_config</span><span class="text">)
         </span><span class="kw4">~make</span><span class="text">:(</span><span class="kw2">Test_host</span><span class="text">.</span><span class="id">do_on</span><span class="text"> </span><span class="kw2">Program</span><span class="text">.(
             </span><span class="id">in_dir</span><span class="text"> </span><span class="id">t</span><span class="text">
@@ -131,13 +167,13 @@
   </span><span class="kw">let</span><span class="text"> </span><span class="id">destroy</span><span class="text"> </span><span class="id">t</span><span class="text"> =
     </span><span class="kw">let</span><span class="text"> </span><span class="kw">open</span><span class="text"> </span><span class="kw2">Ketrew</span><span class="text">.</span><span class="kw2">EDSL</span><span class="text"> </span><span class="kw">in</span><span class="text">
     </span><span class="kw">let</span><span class="text"> </span><span class="id">kill</span><span class="text"> =
-      </span><span class="id">target</span><span class="text"> </span><span class="string">&quot;kill-vagrant&quot;</span><span class="text">
+      </span><span class="id">target</span><span class="text"> (</span><span class="id">namify</span><span class="text"> </span><span class="id">t</span><span class="text"> </span><span class="string">&quot;kill-vagrant&quot;</span><span class="text">)
         </span><span class="kw4">~make</span><span class="text">:(</span><span class="kw2">Test_host</span><span class="text">.</span><span class="id">do_on</span><span class="text"> </span><span class="kw2">Program</span><span class="text">.(
             </span><span class="id">in_dir</span><span class="text"> </span><span class="id">t</span><span class="text"> &amp;&amp; </span><span class="id">exec</span><span class="text"> [</span><span class="string">&quot;vagrant&quot;</span><span class="text">; </span><span class="string">&quot;destroy&quot;</span><span class="text">; </span><span class="string">&quot;-f&quot;</span><span class="text">]
           ))
     </span><span class="kw">in</span><span class="text">
     </span><span class="kw">let</span><span class="text"> </span><span class="id">rm_temp</span><span class="text"> =
-      </span><span class="id">target</span><span class="text"> </span><span class="string">&quot;rm-temp&quot;</span><span class="text">
+      </span><span class="id">target</span><span class="text"> (</span><span class="id">namify</span><span class="text"> </span><span class="id">t</span><span class="text"> </span><span class="string">&quot;rm-temp&quot;</span><span class="text">)
         </span><span class="kw4">~dependencies</span><span class="text">:[</span><span class="id">kill</span><span class="text">]
         </span><span class="kw4">~make</span><span class="text">:(</span><span class="kw2">Test_host</span><span class="text">.</span><span class="id">do_on</span><span class="text"> </span><span class="kw2">Program</span><span class="text">.(</span><span class="id">exec</span><span class="text"> [</span><span class="string">&quot;rm&quot;</span><span class="text">; </span><span class="string">&quot;-fr&quot;</span><span class="text">; </span><span class="id">t</span><span class="text">.</span><span class="id">dir</span><span class="text">]))
     </span><span class="kw">in</span><span class="text">
@@ -156,6 +192,10 @@
     </span><span class="kw">let</span><span class="text"> </span><span class="kw">open</span><span class="text"> </span><span class="kw2">Ketrew</span><span class="text">.</span><span class="kw2">EDSL</span><span class="text"> </span><span class="kw">in</span><span class="text">
     </span><span class="kw">let</span><span class="text"> </span><span class="id">host</span><span class="text"> = </span><span class="id">as_host</span><span class="text"> </span><span class="id">t</span><span class="text"> </span><span class="kw">in</span><span class="text">
     </span><span class="id">daemonize</span><span class="text"> </span><span class="kw4">~using</span><span class="text">:`</span><span class="kw2">Nohup_setsid</span><span class="text"> </span><span class="kw4">~host</span><span class="text"> </span><span class="id">program</span><span class="text">
+
+  </span><span class="kw">let</span><span class="text"> </span><span class="id">sudo</span><span class="text"> </span><span class="id">cmd</span><span class="text"> =
+    </span><span class="kw">let</span><span class="text"> </span><span class="kw">open</span><span class="text"> </span><span class="kw2">Ketrew</span><span class="text">.</span><span class="kw2">EDSL</span><span class="text"> </span><span class="kw">in</span><span class="text">
+    </span><span class="kw2">Program</span><span class="text">.( </span><span class="id">shf</span><span class="text"> </span><span class="string">&quot;sudo su -c %s&quot;</span><span class="text"> (</span><span class="kw2">Filename</span><span class="text">.</span><span class="id">quote</span><span class="text"> </span><span class="id">cmd</span><span class="text">))
 
   </span><span class="kw">let</span><span class="text"> </span><span class="id">with_installed</span><span class="text"> </span><span class="id">t</span><span class="text"> </span><span class="kw4">~packages</span><span class="text"> =
     </span><span class="kw">let</span><span class="text"> </span><span class="kw">open</span><span class="text"> </span><span class="kw2">Ketrew</span><span class="text">.</span><span class="kw2">EDSL</span><span class="text"> </span><span class="kw">in</span><span class="text">
@@ -320,6 +360,7 @@ https://groups.google.com/forum/#!topic/openlava-users/ezYDlyeb1wk
 127.0.1.1 %s
 &quot;</span><span class="text"> </span><span class="id">hostname</span><span class="text"> </span><span class="id">hostname</span><span class="text">);
 ]
+
 </span><span class="kw">let</span><span class="text"> </span><span class="id">install_lsf</span><span class="text"> </span><span class="kw4">~box</span><span class="text"> =
   </span><span class="kw">let</span><span class="text"> </span><span class="id">packages</span><span class="text"> = [</span><span class="string">&quot;build-essential&quot;</span><span class="text">; </span><span class="string">&quot;libncurses-dev&quot;</span><span class="text">; </span><span class="string">&quot;tk8.4-dev&quot;</span><span class="text">] </span><span class="kw">in</span><span class="text">
   </span><span class="kw">let</span><span class="text"> </span><span class="kw">open</span><span class="text"> </span><span class="kw2">Ketrew</span><span class="text">.</span><span class="kw2">EDSL</span><span class="text"> </span><span class="kw">in</span><span class="text">
@@ -386,27 +427,125 @@ https://groups.google.com/forum/#!topic/openlava-users/ezYDlyeb1wk
         </span><span class="kw4">~queue</span><span class="text">:</span><span class="string">&quot;normal&quot;</span><span class="text">
     )
 
+</span><span class="comment">(* Old stuff:
+let setup_pbs ~box () =
+  let packages =
+    [&quot;torque-server&quot;; &quot;torque-scheduler&quot;; &quot;torque-client&quot;; &quot;torque-mom&quot;] in
+  let open Ketrew.EDSL in
+  let setup = [
+    sprintf &quot;echo '%s' &gt; /var/spool/torque/server_name&quot;
+      (Vagrant_box.internal_hostname box);
+    &quot;sed -i 's/127.0.1.1/127.0.0.1/' /etc/hosts&quot;;
+  ] in
+  target &quot;install-pbs&quot;
+    (* ~done_when:Condition.( Vagrant_box.exec_is_installed box ~exec:&quot;qsub&quot;) *)</span><span class="text">
+    </span><span class="kw4">~tags</span><span class="text">:[</span><span class="string">&quot;intergration&quot;</span><span class="text">]
+    </span><span class="kw4">~dependencies</span><span class="text">:[</span><span class="kw2">Vagrant_box</span><span class="text">.</span><span class="id">with_installed</span><span class="text"> </span><span class="kw4">~packages</span><span class="text"> </span><span class="id">box</span><span class="text">]
+    </span><span class="kw4">~make</span><span class="text">:(
+      </span><span class="kw2">Vagrant_box</span><span class="text">.</span><span class="id">do_on</span><span class="text"> </span><span class="id">box</span><span class="text"> </span><span class="kw4">~program</span><span class="text">:</span><span class="kw2">Program</span><span class="text">.(
+          </span><span class="kw2">List</span><span class="text">.</span><span class="id">map</span><span class="text"> </span><span class="id">setup</span><span class="text"> </span><span class="kw2">Vagrant_box</span><span class="text">.</span><span class="id">sudo</span><span class="text"> |&gt; </span><span class="id">chain</span><span class="text">
+        ))
+*)
+</span><span class="kw">let</span><span class="text"> </span><span class="id">finish_pbs_setup</span><span class="text"> </span><span class="kw4">~box</span><span class="text"> () =
+  </span><span class="kw">let</span><span class="text"> </span><span class="kw">open</span><span class="text"> </span><span class="kw2">Ketrew</span><span class="text">.</span><span class="kw2">EDSL</span><span class="text"> </span><span class="kw">in</span><span class="text">
+  </span><span class="kw">let</span><span class="text"> </span><span class="id">host</span><span class="text"> = </span><span class="kw2">Vagrant_box</span><span class="text">.</span><span class="id">as_host</span><span class="text"> </span><span class="id">box</span><span class="text"> </span><span class="kw">in</span><span class="text">
+  </span><span class="kw">let</span><span class="text"> </span><span class="id">witness</span><span class="text"> = </span><span class="id">file</span><span class="text"> </span><span class="kw4">~host</span><span class="text"> </span><span class="string">&quot;/home/vagrant/.ssh/done&quot;</span><span class="text"> </span><span class="kw">in</span><span class="text">
+  </span><span class="kw">let</span><span class="text"> </span><span class="id">ssh_config</span><span class="text"> =
+    </span><span class="string">&quot;Host master\n\
+    \  StrictHostKeyChecking no\n\
+    \  UserKnownHostsFile=/dev/null\n\
+    &quot;</span><span class="text"> </span><span class="kw">in</span><span class="text">
+  </span><span class="kw">let</span><span class="text"> </span><span class="id">setup</span><span class="text"> = [
+    </span><span class="string">&quot;ssh-keygen -t dsa -P '' -f ~/.ssh/id_dsa&quot;</span><span class="text">;
+    </span><span class="string">&quot;cat .ssh/id_dsa.pub &gt;&gt; .ssh/authorized_keys&quot;</span><span class="text">;
+    </span><span class="id">sprintf</span><span class="text"> </span><span class="string">&quot;echo %s &gt;&gt; .ssh/config&quot;</span><span class="text"> (</span><span class="kw2">Filename</span><span class="text">.</span><span class="id">quote</span><span class="text"> </span><span class="id">ssh_config</span><span class="text">);
+    </span><span class="id">sprintf</span><span class="text"> </span><span class="string">&quot;echo Done &gt; %s&quot;</span><span class="text"> </span><span class="id">witness</span><span class="kw1">#</span><span class="id">path</span><span class="text">;
+  ] </span><span class="kw">in</span><span class="text">
+  </span><span class="id">target</span><span class="text"> </span><span class="string">&quot;install-pbs&quot;</span><span class="text">
+    </span><span class="comment">(* ~done_when:Condition.( Vagrant_box.exec_is_installed box ~exec:&quot;qsub&quot;) *)</span><span class="text">
+    </span><span class="kw4">~done_when</span><span class="text">:(</span><span class="id">witness</span><span class="kw1">#</span><span class="id">exists</span><span class="text">)
+    </span><span class="kw4">~tags</span><span class="text">:[</span><span class="string">&quot;intergration&quot;</span><span class="text">]
+    </span><span class="kw4">~make</span><span class="text">:(</span><span class="kw2">Vagrant_box</span><span class="text">.</span><span class="id">do_on</span><span class="text"> </span><span class="id">box</span><span class="text">
+             </span><span class="kw4">~program</span><span class="text">:</span><span class="kw2">Program</span><span class="text">.( </span><span class="id">chain</span><span class="text"> (</span><span class="kw2">List</span><span class="text">.</span><span class="id">map</span><span class="text"> </span><span class="kw4">~f</span><span class="text">:</span><span class="id">sh</span><span class="text"> </span><span class="id">setup</span><span class="text">)))
+
+</span><span class="kw">let</span><span class="text"> </span><span class="id">pbs_job</span><span class="text"> ?</span><span class="id">success_triggers</span><span class="text"> ?</span><span class="id">if_fails_activate</span><span class="text"> </span><span class="kw4">~box</span><span class="text"> </span><span class="id">kind</span><span class="text"> =
+  </span><span class="kw">let</span><span class="text"> </span><span class="kw">open</span><span class="text"> </span><span class="kw2">Ketrew</span><span class="text">.</span><span class="kw2">EDSL</span><span class="text"> </span><span class="kw">in</span><span class="text">
+  </span><span class="kw">let</span><span class="text"> </span><span class="id">setup</span><span class="text"> = </span><span class="id">finish_pbs_setup</span><span class="text"> </span><span class="kw4">~box</span><span class="text"> () </span><span class="kw">in</span><span class="text">
+  </span><span class="kw1">match</span><span class="text"> </span><span class="id">kind</span><span class="text"> </span><span class="kw1">with</span><span class="text">
+  | `</span><span class="kw2">Always_runs</span><span class="text"> -&gt;
+    </span><span class="kw">let</span><span class="text"> </span><span class="id">host</span><span class="text"> = </span><span class="kw2">Vagrant_box</span><span class="text">.</span><span class="id">as_host</span><span class="text"> </span><span class="id">box</span><span class="text"> </span><span class="kw">in</span><span class="text">
+    </span><span class="kw">let</span><span class="text"> </span><span class="id">name</span><span class="text"> = </span><span class="string">&quot;pbs-2&quot;</span><span class="text"> </span><span class="kw">in</span><span class="text">
+    </span><span class="id">target</span><span class="text"> </span><span class="id">name</span><span class="text"> ?</span><span class="id">success_triggers</span><span class="text"> ?</span><span class="id">if_fails_activate</span><span class="text">
+      </span><span class="kw4">~dependencies</span><span class="text">:[</span><span class="id">setup</span><span class="text">]
+      </span><span class="kw4">~tags</span><span class="text">:[</span><span class="string">&quot;integration&quot;</span><span class="text">; </span><span class="string">&quot;pbs&quot;</span><span class="text">]
+      </span><span class="kw4">~make</span><span class="text">:( </span><span class="id">pbs</span><span class="text"> </span><span class="kw4">~host</span><span class="text"> </span><span class="kw4">~name</span><span class="text"> </span><span class="kw2">Program</span><span class="text">.( 
+          </span><span class="id">shf</span><span class="text"> </span><span class="string">&quot;echo \&quot;PBS-2 Starts:\n%s\&quot;&quot;</span><span class="text">
+            (</span><span class="kw2">List</span><span class="text">.</span><span class="id">map</span><span class="text"> </span><span class="kw4">~f</span><span class="text">:(</span><span class="kw">fun</span><span class="text"> </span><span class="id">s</span><span class="text"> -&gt; </span><span class="id">sprintf</span><span class="text"> </span><span class="string">&quot;%s: $%s\n&quot;</span><span class="text"> </span><span class="id">s</span><span class="text"> </span><span class="id">s</span><span class="text">)
+               [</span><span class="string">&quot;PBS_O_HOST&quot;</span><span class="text">; </span><span class="string">&quot;PBS_SERVER&quot;</span><span class="text">]
+            |&gt; </span><span class="kw2">String</span><span class="text">.</span><span class="id">concat</span><span class="text"> </span><span class="string">&quot;&quot;</span><span class="text">)
+          &amp;&amp; </span><span class="id">sh</span><span class="text"> </span><span class="string">&quot;echo PBS-2 Starts &gt;&amp;2&quot;</span><span class="text">
+          &amp;&amp; </span><span class="id">sh</span><span class="text"> </span><span class="string">&quot;sleep 10&quot;</span><span class="text">
+          &amp;&amp; </span><span class="id">sh</span><span class="text"> </span><span class="string">&quot;echo PBS-2 Ends&quot;</span><span class="text">
+        ))
+  | `</span><span class="kw2">File_target</span><span class="text"> -&gt;
+    </span><span class="kw">let</span><span class="text"> </span><span class="id">output</span><span class="text"> = </span><span class="string">&quot;/tmp/du-sh-slash&quot;</span><span class="text"> </span><span class="kw">in</span><span class="text">
+    </span><span class="kw">let</span><span class="text"> </span><span class="id">host</span><span class="text"> = </span><span class="kw2">Vagrant_box</span><span class="text">.</span><span class="id">as_host</span><span class="text"> </span><span class="id">box</span><span class="text"> </span><span class="kw">in</span><span class="text">
+    </span><span class="kw">let</span><span class="text"> </span><span class="id">name</span><span class="text"> = </span><span class="string">&quot;pbs-1&quot;</span><span class="text"> </span><span class="kw">in</span><span class="text">
+    </span><span class="id">file_target</span><span class="text"> </span><span class="kw4">~host</span><span class="text"> </span><span class="kw4">~name</span><span class="text"> </span><span class="id">output</span><span class="text"> ?</span><span class="id">success_triggers</span><span class="text"> ?</span><span class="id">if_fails_activate</span><span class="text">
+      </span><span class="kw4">~dependencies</span><span class="text">:[</span><span class="id">setup</span><span class="text">]
+      </span><span class="kw4">~tags</span><span class="text">:[</span><span class="string">&quot;integration&quot;</span><span class="text">; </span><span class="string">&quot;pbs&quot;</span><span class="text">]
+      </span><span class="kw4">~make</span><span class="text">:(
+        </span><span class="id">pbs</span><span class="text"> </span><span class="kw4">~host</span><span class="text"> </span><span class="kw4">~name</span><span class="text"> </span><span class="kw2">Program</span><span class="text">.(
+            </span><span class="id">sh</span><span class="text"> </span><span class="string">&quot;sleep 42&quot;</span><span class="text">
+            &amp;&amp; </span><span class="id">shf</span><span class="text"> </span><span class="string">&quot;du -sh / &gt; %s&quot;</span><span class="text"> </span><span class="id">output</span><span class="text">
+            &amp;&amp; </span><span class="id">exec</span><span class="text"> [</span><span class="string">&quot;cat&quot;</span><span class="text">; </span><span class="id">output</span><span class="text">])
+        </span><span class="comment">(* ~queue:&quot;normal&quot; *)</span><span class="text">
+      )
 
 </span><span class="kw">let</span><span class="text"> </span><span class="id">test</span><span class="text"> =
-  </span><span class="kw">let</span><span class="text"> </span><span class="id">lsf_host</span><span class="text"> = </span><span class="kw2">Vagrant_box</span><span class="text">.</span><span class="id">create</span><span class="text"> </span><span class="string">&quot;LsfTestHost&quot;</span><span class="text"> </span><span class="kw">in</span><span class="text">
+  </span><span class="kw">let</span><span class="text"> </span><span class="id">lsf_host</span><span class="text"> = </span><span class="kw2">Vagrant_box</span><span class="text">.</span><span class="id">create</span><span class="text"> `</span><span class="kw2">Precise64</span><span class="text"> </span><span class="string">&quot;LsfTestHost&quot;</span><span class="text"> </span><span class="kw">in</span><span class="text">
+  </span><span class="kw">let</span><span class="text"> </span><span class="id">pbs_host</span><span class="text"> = </span><span class="kw2">Vagrant_box</span><span class="text">.</span><span class="id">create</span><span class="text"> `</span><span class="kw2">Audy_torque</span><span class="text"> </span><span class="string">&quot;PbsTestHost&quot;</span><span class="text"> </span><span class="kw">in</span><span class="text">
   </span><span class="kw1">object</span><span class="text">  (</span><span class="id">self</span><span class="text">)
     </span><span class="kw">method</span><span class="text"> </span><span class="id">prepare</span><span class="text"> =
-      </span><span class="kw2">Vagrant_box</span><span class="text">.</span><span class="id">prepare</span><span class="text"> </span><span class="id">lsf_host</span><span class="text">
-    </span><span class="kw">method</span><span class="text"> </span><span class="id">go</span><span class="text"> =
-      </span><span class="id">lsf_job</span><span class="text"> </span><span class="kw4">~box</span><span class="text">:</span><span class="id">lsf_host</span><span class="text"> ()
-    </span><span class="kw">method</span><span class="text"> </span><span class="id">clean_up</span><span class="text"> =
-      </span><span class="kw2">Vagrant_box</span><span class="text">.</span><span class="id">destroy</span><span class="text"> </span><span class="id">lsf_host</span><span class="text">
-    </span><span class="kw">method</span><span class="text"> </span><span class="id">do_all</span><span class="text"> =
-      </span><span class="kw">let</span><span class="text"> </span><span class="id">clean</span><span class="text"> = </span><span class="kw2">Vagrant_box</span><span class="text">.</span><span class="id">destroy</span><span class="text"> </span><span class="id">lsf_host</span><span class="text"> </span><span class="kw">in</span><span class="text">
-      </span><span class="kw2">Vagrant_box</span><span class="text">.</span><span class="id">prepare</span><span class="text"> </span><span class="id">lsf_host</span><span class="text">
-        </span><span class="kw4">~success_triggers</span><span class="text">:[
-          </span><span class="id">lsf_job</span><span class="text"> </span><span class="kw4">~box</span><span class="text">:</span><span class="id">lsf_host</span><span class="text"> ()
-            </span><span class="kw4">~success_triggers</span><span class="text">:[</span><span class="id">clean</span><span class="text">]
-            </span><span class="kw4">~if_fails_activate</span><span class="text">:[</span><span class="id">clean</span><span class="text">]
+      </span><span class="kw2">Ketrew</span><span class="text">.</span><span class="kw2">EDSL</span><span class="text">.</span><span class="id">target</span><span class="text"> </span><span class="string">&quot;Prepare VMs&quot;</span><span class="text">
+        </span><span class="kw4">~dependencies</span><span class="text">:[
+          </span><span class="kw2">Vagrant_box</span><span class="text">.</span><span class="id">prepare</span><span class="text"> </span><span class="id">lsf_host</span><span class="text">;
+          </span><span class="kw2">Vagrant_box</span><span class="text">.</span><span class="id">prepare</span><span class="text"> </span><span class="id">pbs_host</span><span class="text">;
         ]
-    </span><span class="kw">method</span><span class="text"> </span><span class="id">box_names</span><span class="text"> = [</span><span class="string">&quot;LSF&quot;</span><span class="text">]
+    </span><span class="kw">method</span><span class="text"> </span><span class="id">go</span><span class="text"> =
+      </span><span class="kw2">Ketrew</span><span class="text">.</span><span class="kw2">EDSL</span><span class="text">.</span><span class="id">target</span><span class="text"> </span><span class="string">&quot;Run Tests&quot;</span><span class="text">
+        </span><span class="kw4">~dependencies</span><span class="text">:[
+          </span><span class="id">lsf_job</span><span class="text"> </span><span class="kw4">~box</span><span class="text">:</span><span class="id">lsf_host</span><span class="text"> ();
+          </span><span class="id">pbs_job</span><span class="text"> </span><span class="kw4">~box</span><span class="text">:</span><span class="id">pbs_host</span><span class="text"> `</span><span class="kw2">Always_runs</span><span class="text">;
+          </span><span class="id">pbs_job</span><span class="text"> </span><span class="kw4">~box</span><span class="text">:</span><span class="id">pbs_host</span><span class="text"> `</span><span class="kw2">File_target</span><span class="text">;
+        ]
+    </span><span class="kw">method</span><span class="text"> </span><span class="id">go_and</span><span class="text"> </span><span class="id">clean</span><span class="text"> =
+      </span><span class="kw2">Ketrew</span><span class="text">.</span><span class="kw2">EDSL</span><span class="text">.</span><span class="id">target</span><span class="text"> </span><span class="string">&quot;Run Tests&quot;</span><span class="text">
+        </span><span class="kw4">~dependencies</span><span class="text">:[
+          </span><span class="id">lsf_job</span><span class="text"> </span><span class="kw4">~box</span><span class="text">:</span><span class="id">lsf_host</span><span class="text"> ();
+          </span><span class="id">pbs_job</span><span class="text"> </span><span class="kw4">~box</span><span class="text">:</span><span class="id">pbs_host</span><span class="text"> `</span><span class="kw2">Always_runs</span><span class="text">;
+          </span><span class="id">pbs_job</span><span class="text"> </span><span class="kw4">~box</span><span class="text">:</span><span class="id">pbs_host</span><span class="text"> `</span><span class="kw2">File_target</span><span class="text">;
+        ]
+        </span><span class="kw4">~success_triggers</span><span class="text">:[</span><span class="id">clean</span><span class="text">]
+        </span><span class="kw4">~if_fails_activate</span><span class="text">:[</span><span class="id">clean</span><span class="text">]
+    </span><span class="kw">method</span><span class="text"> </span><span class="id">clean_up</span><span class="text"> =
+      </span><span class="kw2">Ketrew</span><span class="text">.</span><span class="kw2">EDSL</span><span class="text">.</span><span class="id">target</span><span class="text"> </span><span class="string">&quot;Destroy VMs&quot;</span><span class="text">
+        </span><span class="kw4">~dependencies</span><span class="text">:[
+          </span><span class="kw2">Vagrant_box</span><span class="text">.</span><span class="id">destroy</span><span class="text"> </span><span class="id">lsf_host</span><span class="text">;
+          </span><span class="kw2">Vagrant_box</span><span class="text">.</span><span class="id">destroy</span><span class="text"> </span><span class="id">pbs_host</span><span class="text">;
+        ]
+    </span><span class="kw">method</span><span class="text"> </span><span class="id">do_all</span><span class="text"> =
+      </span><span class="kw">let</span><span class="text"> </span><span class="id">clean</span><span class="text"> = </span><span class="id">self</span><span class="kw1">#</span><span class="id">clean_up</span><span class="text"> </span><span class="kw">in</span><span class="text">
+      </span><span class="kw">let</span><span class="text"> </span><span class="id">prepare</span><span class="text"> = </span><span class="id">self</span><span class="kw1">#</span><span class="id">prepare</span><span class="text"> </span><span class="kw">in</span><span class="text">
+      </span><span class="kw2">Ketrew</span><span class="text">.</span><span class="kw2">EDSL</span><span class="text">.</span><span class="id">target</span><span class="text"> </span><span class="string">&quot;All Intergration Tests MiddleTarget (prep → * &lt; {go,clean})&quot;</span><span class="text">
+        </span><span class="kw4">~dependencies</span><span class="text">:[</span><span class="id">prepare</span><span class="text">]
+        </span><span class="kw4">~success_triggers</span><span class="text">:[</span><span class="id">self</span><span class="kw1">#</span><span class="id">go_and</span><span class="text"> </span><span class="id">clean</span><span class="text">]
+        </span><span class="kw4">~if_fails_activate</span><span class="text">:[</span><span class="id">clean</span><span class="text">]
+
+    </span><span class="kw">method</span><span class="text"> </span><span class="id">box_names</span><span class="text"> = [</span><span class="string">&quot;LSF&quot;</span><span class="text">; </span><span class="string">&quot;PBS&quot;</span><span class="text">]
     </span><span class="kw">method</span><span class="text"> </span><span class="id">ssh</span><span class="text"> = </span><span class="kw">function</span><span class="text">
     | </span><span class="string">&quot;LSF&quot;</span><span class="text"> -&gt; </span><span class="kw2">Vagrant_box</span><span class="text">.</span><span class="id">ssh</span><span class="text"> </span><span class="id">lsf_host</span><span class="text">
+    | </span><span class="string">&quot;PBS&quot;</span><span class="text"> -&gt; </span><span class="kw2">Vagrant_box</span><span class="text">.</span><span class="id">ssh</span><span class="text"> </span><span class="id">pbs_host</span><span class="text">
     | </span><span class="id">other</span><span class="text"> -&gt; </span><span class="id">failwithf</span><span class="text"> </span><span class="string">&quot;Unkown “Box”: %S&quot;</span><span class="text"> </span><span class="id">other</span><span class="text">
   </span><span class="kw1">end</span><span class="text">
 
