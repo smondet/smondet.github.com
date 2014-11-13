@@ -1,28 +1,12 @@
  <!DOCTYPE html> <html> <head><link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootswatch/3.2.0/readable/bootstrap.min.css" type="text/css">
 <link rel="stylesheet" href="https://cdn.rawgit.com/hammerlab/ketrew/2d1c430cca52caa71e363a765ff8775a6ae14ba9/src/doc/code_style.css" type="text/css"><meta charset="utf-8"><title>Sosa: Tests & Benchmarks (`sosa_test.ml`)</title></head><body><div class="container"><h1>Sosa: Tests & Benchmarks (`sosa_test.ml`)</h1><div class="row">
 <div class="col-md-3">
-<h2>Contents</h2><ul>
- <li><a href='#TestUtilities'>Test Utilities</a>
- </li>
- <li><a href='#Benchmarks'>Benchmarks</a>
- </li>
- <li><a href='#TestwithFirstClassModules'>Test with First-Class Modules</a>
- </li>
- <li><a href='#AUTF8SpecificTest'>A UTF-8-Specific Test</a>
- </li>
- <li><a href='#TestInstantiations'>Test Instantiations</a>
- </li>
-</ul>
-<h2>Menu</h2><ul>
- <li><a href='index.html'>Home</a></li>
- <li><a href='sosa.html'>Literate Implementation</a></li>
- <li><a href='sosa_test.html'>Tests &amp; Benchmarks (<code>sosa_test.ml</code>)</a></li>
- <li><a href='./api/index.html'>API Documentation</a></li>
- <li><a href='../index.html'><code>master</code></a> branch</li>
- <li>Repository <a href='https://github.com/smondet/sosa'>at Github</a></li>
- <li>Up: <a href='../../index.html'>Software Projects</a></li>
-</ul>
-</div><div class="col-md-9"><pre><span class="kw1">#</span><span class="text">! /</span><span class="id">bin</span><span class="text">/</span><span class="id">sh</span><span class="text">
+<h2>Contents</h2><ul><li><a href='#TestUtilities'>Test Utilities</a>
+</li><li><a href='#Benchmarks'>Benchmarks</a>
+</li><li><a href='#TestwithFirstClassModules'>Test with First-Class Modules</a>
+</li><li><a href='#AUTF8SpecificTest'>A UTF-8-Specific Test</a>
+</li><li><a href='#TestInstantiations'>Test Instantiations</a>
+</li></ul><h2>Menu</h2><ul><li><a href='index.html'>Home</a></li><li><a href='sosa.html'>Literate Implementation</a></li><li><a href='sosa_test.html'>Tests &amp; Benchmarks (<code>sosa_test.ml</code>)</a></li><li><a href='./api/index.html'>API Documentation</a></li><li><a href='../index.html'><code>master</code></a> branch</li><li>Repository <a href='https://github.com/smondet/sosa'>at Github</a></li><li>Up: <a href='../../index.html'>Software Projects</a></li></ul></div><div class="col-md-9"><pre><span class="kw1">#</span><span class="text">! /</span><span class="id">bin</span><span class="text">/</span><span class="id">sh</span><span class="text">
 </span><span class="kw1">#</span><span class="text"> </span><span class="kw2">This</span><span class="text"> </span><span class="id">is</span><span class="text"> </span><span class="id">a</span><span class="text"> </span><span class="id">self</span><span class="text">-</span><span class="id">compiling</span><span class="text"> </span><span class="kw2">OCaml</span><span class="text"> </span><span class="id">script</span><span class="text">
 
 </span><span class="kw2">PACKAGES</span><span class="text">=</span><span class="id">nonstd</span><span class="text">,</span><span class="id">bigarray</span><span class="text">
@@ -54,7 +38,9 @@
 
 </span></pre>
 
+
 <h1 id="TestsoftheSosalibrary">Tests of the Sosa library</h1>
+
 <h2 id="TestUtilities">Test Utilities</h2>
 <pre><span class="text">
 
@@ -124,11 +110,11 @@
 
 </span></pre>
 
+
 <p>This is a set of common denominator native strings, i.e., string that can be
 converted to every other representation. We call them DNA and use only <a href='api/Sosa.A.html' title='A'><code>A</code></a>,
 <a href='api/Sosa.C.html' title='C'><code>C</code></a>, <a href='api/Sosa.G.html' title='G'><code>G</code></a>, <a href='api/Sosa.T.html' title='T'><code>T</code></a> for future implementations which will be using only 2 or 4
 bits per character.</p>
-
 <pre><span class="text">
 </span><span class="kw">let</span><span class="text"> </span><span class="id">dna_test_subjects</span><span class="text"> =
   </span><span class="kw">let</span><span class="text"> </span><span class="id">random_read</span><span class="text"> </span><span class="numeric">_</span><span class="text"> =
@@ -143,10 +129,11 @@ bits per character.</p>
 
 </span></pre>
 
+
 <h2 id="Benchmarks">Benchmarks</h2>
+
 <p>If asked on the command line, each test will run some benchmarks on the
 implementation.</p>
-
 <pre><span class="text">
 </span><span class="kw">module</span><span class="text"> </span><span class="kw2">Benchmark</span><span class="text"> = </span><span class="kw1">struct</span><span class="text">
 
@@ -218,10 +205,11 @@ implementation.</p>
 
 </span></pre>
 
+
 <h2 id="TestwithFirstClassModules">Test with First-Class Modules</h2>
+
 <p>The function <code>do_basic_test</code> below takes a whole OCaml module implementation as
 argument; <a href='api/Sosa.TEST_STRING.html' title='TEST_STRING'><code>TEST_STRING</code></a> is the expected signature:</p>
-
 <pre><span class="text">
 
 </span><span class="kw">module</span><span class="text"> </span><span class="kw">type</span><span class="text"> </span><span class="kw2">TEST_STRING</span><span class="text"> = </span><span class="kw1">sig</span><span class="text">
@@ -1136,6 +1124,7 @@ argument; <a href='api/Sosa.TEST_STRING.html' title='TEST_STRING'><code>TEST_STR
 
 </span></pre>
 
+
 <h2 id="AUTF8SpecificTest">A UTF-8-Specific Test</h2>
 <pre><span class="text">
 </span><span class="kw">let</span><span class="text"> </span><span class="id">utf8_specific_test</span><span class="text"> () =
@@ -1167,6 +1156,7 @@ argument; <a href='api/Sosa.TEST_STRING.html' title='TEST_STRING'><code>TEST_STR
   ()
 
 </span></pre>
+
 
 <h2 id="TestInstantiations">Test Instantiations</h2>
 <pre><span class="text">

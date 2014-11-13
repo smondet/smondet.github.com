@@ -1,36 +1,20 @@
  <!DOCTYPE html> <html> <head><link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootswatch/3.2.0/readable/bootstrap.min.css" type="text/css">
 <link rel="stylesheet" href="https://cdn.rawgit.com/hammerlab/ketrew/2d1c430cca52caa71e363a765ff8775a6ae14ba9/src/doc/code_style.css" type="text/css"><meta charset="utf-8"><title>Oredoc: Literate Implementation</title></head><body><div class="container"><h1>Oredoc: Literate Implementation</h1><div class="row">
 <div class="col-md-3">
-<h2>Contents</h2><ul>
- <li><a href='#YetAnotherMonad'>Yet Another Monad</a>
- </li>
- <li><a href='#IdentifyFilesByExtension'>Identify Files By Extension </a>
- </li>
- <li><a href='#MarkdownToHTML'>Markdown To HTML</a>
- </li>
- <li><a href='#ConvertingOCamltoHTML'>Converting OCaml to HTML</a>
- </li>
- <li><a href='#HTMLTemplate'>HTML Template</a>
- </li>
- <li><a href='#SomeUtilities'>Some Utilities</a>
- </li>
- <li><a href='#Configuration'>Configuration</a>
- </li>
- <li><a href='#MainEntryPoint'>Main Entry Point</a>
- </li>
-</ul>
-<h2>Menu</h2><ul>
- <li><a href='index.html'>Home</a></li>
- <li><a href='oredoc.html'>Literate Implementation</a></li>
- <li><a href='./api/index.html'>API Documentation</a></li>
- <li>Repository <a href='https://github.com/smondet/oredoc'>at Github</a></li>
- <li>Up: <a href='../index.html'>Software Projects</a></li>
-</ul>
-</div><div class="col-md-9">
+<h2>Contents</h2><ul><li><a href='#YetAnotherMonad'>Yet Another Monad</a>
+</li><li><a href='#IdentifyFilesByExtension'>Identify Files By Extension </a>
+</li><li><a href='#MarkdownToHTML'>Markdown To HTML</a>
+</li><li><a href='#ConvertingOCamltoHTML'>Converting OCaml to HTML</a>
+</li><li><a href='#HTMLTemplate'>HTML Template</a>
+</li><li><a href='#SomeUtilities'>Some Utilities</a>
+</li><li><a href='#Configuration'>Configuration</a>
+</li><li><a href='#MainEntryPoint'>Main Entry Point</a>
+</li></ul><h2>Menu</h2><ul><li><a href='index.html'>Home</a></li><li><a href='oredoc.html'>Literate Implementation</a></li><li><a href='./api/index.html'>API Documentation</a></li><li>Repository <a href='https://github.com/smondet/oredoc'>at Github</a></li><li>Up: <a href='../index.html'>Software Projects</a></li></ul></div><div class="col-md-9">
+
 
 <h1 id="ImplementationofOredoc">Implementation of Oredoc</h1>
-<p>Usual “OCaml-configuration” header:</p>
 
+<p>Usual “OCaml-configuration” header:</p>
 <pre><span class="text">
 </span><span class="kw">open</span><span class="text"> </span><span class="kw2">Nonstd</span><span class="text">
 </span><span class="kw">module</span><span class="text"> </span><span class="kw2">Legacy_string</span><span class="text"> = </span><span class="kw2">String</span><span class="text">
@@ -40,10 +24,11 @@
 
 </span></pre>
 
+
 <h2 id="YetAnotherMonad">Yet Another Monad</h2>
+
 <p>The module <code>Meta_result</code> provides a funny monad that allows one to keep track
 of things to do “later” during a computation.</p>
-
 <pre><span class="text">
 </span><span class="kw">module</span><span class="text"> </span><span class="kw2">Meta_result</span><span class="text"> = </span><span class="kw1">struct</span><span class="text">
 
@@ -62,10 +47,11 @@ of things to do “later” during a computation.</p>
 
 </span></pre>
 
+
 <h2 id="IdentifyFilesByExtension">Identify Files By Extension </h2>
+
 <p>This is used for both 1) deciding which treatment to apply to files and 2)
 transforming relative links between them (in Markdown).</p>
-
 <pre><span class="text">
 </span><span class="kw">module</span><span class="text"> </span><span class="kw2">File_kind</span><span class="text"> = </span><span class="kw1">struct</span><span class="text">
 
@@ -92,15 +78,10 @@ transforming relative links between them (in Markdown).</p>
 
 </span></pre>
 <h2 id="MarkdownToHTML">Markdown To HTML</h2>
-<p>Our wrapper around <a href='https://github.com/ocaml/omd'>Omd</a>, which adds a few
-features/extensions:</p>
-<ul>
- <li>There is a special syntax to <span style="color: red; background-color: yellow; font-weight: bold">overhighlight</span> stuff.</li>
- <li>Local links are transformed to be consistent between a repository view
-(Github, Bitbucket) and the generated website.</li>
- <li><a href='some_command___help.html' title='some-command --help'><code>some-command --help</code></a> will be transformed into a link too.</li>
-</ul>
 
+<p>Our wrapper around <a href='https://github.com/ocaml/omd'>Omd</a>, which adds a few
+features/extensions:</p><ul><li>There is a special syntax to <span style="color: red; background-color: yellow; font-weight: bold">overhighlight</span> stuff.</li><li>Local links are transformed to be consistent between a repository view
+(Github, Bitbucket) and the generated website.</li><li><a href='some_command___help.html' title='some-command --help'><code>some-command --help</code></a> will be transformed into a link too.</li></ul>
 <pre><span class="text">
 </span><span class="kw">module</span><span class="text"> </span><span class="kw2">Markdown</span><span class="text"> = </span><span class="kw1">struct</span><span class="text">
 
@@ -264,9 +245,10 @@ features/extensions:</p>
 
 </span></pre>
 
-<h2 id="ConvertingOCamltoHTML">Converting OCaml to HTML</h2>
-<p>OCaml code with special Markdown comments will be transformed into HTML.</p>
 
+<h2 id="ConvertingOCamltoHTML">Converting OCaml to HTML</h2>
+
+<p>OCaml code with special Markdown comments will be transformed into HTML.</p>
 <pre><span class="text">
 </span><span class="kw">module</span><span class="text"> </span><span class="kw2">Ocaml</span><span class="text"> = </span><span class="kw1">struct</span><span class="text">
 
@@ -316,6 +298,7 @@ features/extensions:</p>
 
 </span></pre>
 
+
 <h2 id="HTMLTemplate">HTML Template</h2>
 <pre><span class="text">
 </span><span class="kw">module</span><span class="text"> </span><span class="kw2">Template</span><span class="text"> = </span><span class="kw1">struct</span><span class="text">
@@ -344,6 +327,7 @@ features/extensions:</p>
 </span><span class="kw1">end</span><span class="text">
 
 </span></pre>
+
 
 <h2 id="SomeUtilities">Some Utilities</h2>
 <pre><span class="text">
@@ -396,6 +380,7 @@ features/extensions:</p>
 
 
 </span></pre>
+
 
 <h2 id="Configuration">Configuration</h2>
 <pre><span class="text">
@@ -492,6 +477,7 @@ features/extensions:</p>
   </span><span class="kw1">end</span><span class="text">
 
 </span></pre>
+
 
 <h2 id="MainEntryPoint">Main Entry Point</h2>
 <pre><span class="text">

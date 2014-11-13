@@ -1,156 +1,66 @@
-<!-- Creator     : groff version 1.19.2 -->
-<!-- CreationDate: Thu Oct 23 18:47:31 2014 -->
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta name="generator" content="groff -Thtml, see www.gnu.org">
-<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
-<meta name="Content-Style" content="text/css">
-<style type="text/css">
-       p     { margin-top: 0; margin-bottom: 0; }
-       pre   { margin-top: 0; margin-bottom: 0; }
-       table { margin-top: 0; margin-bottom: 0; }
-</style>
-<title>KETREW</title>
-
-</head>
-<body>
-
-<h1 align=center>KETREW</h1>
-
-<a href="#NAME">NAME</a><br>
-<a href="#SYNOPSIS">SYNOPSIS</a><br>
-<a href="#COMMANDS">COMMANDS</a><br>
-<a href="#OPTIONS">OPTIONS</a><br>
-<a href="#SOME COMMAND ALIASES">SOME COMMAND ALIASES</a><br>
-<a href="#AUTHORS">AUTHORS</a><br>
-<a href="#BUGS">BUGS</a><br>
-
-<hr>
-
-
-<a name="NAME"></a>
-<h2>NAME</h2>
-
-
-<p style="margin-left:11%; margin-top: 1em">ketrew &minus;
-A Workflow Engine for Complex Experimental Workflows</p>
-
-<a name="SYNOPSIS"></a>
-<h2>SYNOPSIS</h2>
-
-
-<p style="margin-left:11%; margin-top: 1em"><b>ketrew</b>
-<i>COMMAND</i> ...</p>
-
-<a name="COMMANDS"></a>
-<h2>COMMANDS</h2>
+ <!DOCTYPE html> <html> <head><link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootswatch/3.2.0/readable/bootstrap.min.css" type="text/css">
+<link rel="stylesheet" href="https://cdn.rawgit.com/hammerlab/ketrew/2d1c430cca52caa71e363a765ff8775a6ae14ba9/src/doc/code_style.css" type="text/css"><meta charset="utf-8"><title>ketrew --help</title></head><body><div class="container"><h1>ketrew --help</h1><div class="row">
+<div class="col-md-3">
+<h2>Contents</h2><h2>Menu</h2><ul><li><a href='index.html'>Home</a></li><li><a href='The_HTTP_API.html'>The HTTP API</a></li><li><a href='The_Configuration_File.html'>The Configuration File</a></li><li><a href='Developer_Documentation.html'>Developer Documentation</a></li><li><a href='Server_Commands.html'>Server Commands</a></li><li><a href='Alternative_CLI_Application.html'>Alternative CLI Application</a></li><li><a href='Long-Running_Plugins.html'>Long-Running Plugins</a></li><li><a href='integration.html'>Integration Test</a></li><li><a href='Workflow_Examples.html'>Workflow Examples</a></li><li><a href='main.html'>Main Test</a></li><li><a href='dummy_plugin_user.html'>Plugin-Usage Example</a></li><li><a href='dummy_plugin.html'>Plugin Example</a></li><li><a href='preconfigured_main.html'>Preconfigured Main Example</a></li><li><a href='./api/index.html'>API Documentation</a></li><li>Branch/Tag: <a href='./dev/index.html'><code>dev</code></a></li><li>Repository <a href='https://github.com/hammerlab/ketrew'>at Github</a></li><li>Up: <a href='../index.html'>Software Projects</a></li></ul></div><div class="col-md-9"><pre><code>KETREW(1)                        Ketrew Manual                       KETREW(1)
 
 
 
-<p style="margin-left:11%; margin-top: 1em"><b>archive</b></p>
+NNAAMMEE
+       ketrew - A Workflow Engine for Complex Experimental Workflows
 
-<p style="margin-left:17%;">Archive targets.</p>
+SSYYNNOOPPSSIISS
+       kkeettrreeww _C_O_M_M_A_N_D ...
 
-<p style="margin-left:11%;"><b>autoclean</b></p>
+CCOOMMMMAANNDDSS
+       aarrcchhiivvee
+           Archive targets.
 
-<p style="margin-left:17%;">Kill &amp; Archive orphan and
-finished targets.</p>
+       aauuttoocclleeaann
+           Kill &amp; Archive orphan and finished targets.
 
-<p style="margin-left:11%;"><b>explore</b></p>
+       eexxpplloorree
+           Run the interactive Target Explorer.
 
-<p style="margin-left:17%;">Run the interactive Target
-Explorer.</p>
+       iinniitt
+           Initialize the client (create config-file)
 
-<p style="margin-left:11%;"><b>init</b></p>
+       iinntteerraacctt
+           Run the interactive menu.
 
-<p style="margin-left:17%;">Initialize the client (create
-config&minus;file)</p>
+       kkiillll
+           Kill a target.
 
-<p style="margin-left:11%;"><b>interact</b></p>
+       pprriinntt--ccoonnffiigguurraattiioonn
+           Display current configuration.
 
-<p style="margin-left:17%;">Run the interactive menu.</p>
+       rruunn--eennggiinnee
+           Run steps of the engine.
 
-<p style="margin-left:11%;"><b>kill</b></p>
+       ssttaarrtt--sseerrvveerr
+           Start the server.
 
-<p style="margin-left:17%;">Kill a target.</p>
+       ssttaattuuss
+           Get info about this instance.
 
+       ssttoopp--sseerrvveerr
+           Stop the server.
 
-<p style="margin-left:11%;"><b>print&minus;configuration</b></p>
+OOPPTTIIOONNSS
+       ----hheellpp[=_F_M_T] (default=pager)
+           Show this help in format _F_M_T (pager, plain or groff).
 
-<p style="margin-left:17%;">Display current
-configuration.</p>
+       ----vveerrssiioonn
+           Show version information.
 
-<p style="margin-left:11%;"><b>run&minus;engine</b></p>
+SSOOMMEE CCOOMMMMAANNDD AALLIIAASSEESS
+       ppcc  An alias for pprriinntt--ccoonnffiigguurraattiioonn.
 
-<p style="margin-left:17%;">Run steps of the engine.</p>
-
-<p style="margin-left:11%;"><b>start&minus;server</b></p>
-
-<p style="margin-left:17%;">Start the server.</p>
-
-<p style="margin-left:11%;"><b>status</b></p>
-
-<p style="margin-left:17%;">Get info about this
-instance.</p>
-
-<p style="margin-left:11%;"><b>stop&minus;server</b></p>
-
-<p style="margin-left:17%;">Stop the server.</p>
-
-<a name="OPTIONS"></a>
-<h2>OPTIONS</h2>
-
-
-
-<p style="margin-left:11%; margin-top: 1em"><b>&minus;&minus;help</b>[=<i>FMT</i>]
-(default=pager)</p>
-
-<p style="margin-left:17%;">Show this help in format
-<i>FMT</i> (pager, plain or groff).</p>
+AAUUTTHHOORRSS
+       Sebastien Mondet &lt;seb@mondet.org&gt;
+BBUUGGSS
+       Browse and report new issues at
+       &lt;https://github.com/hammerlab/ketrew&gt;.
 
 
-<p style="margin-left:11%;"><b>&minus;&minus;version</b></p>
 
-<p style="margin-left:17%;">Show version information.</p>
-
-<a name="SOME COMMAND ALIASES"></a>
-<h2>SOME COMMAND ALIASES</h2>
-
-
-<table width="100%" border=0 rules="none" frame="void"
-       cellspacing="0" cellpadding="0">
-<tr valign="top" align="left">
-<td width="11%"></td>
-<td width="3%">
-
-
-<p style="margin-top: 1em" valign="top"><b>pc</b></p></td>
-<td width="3%"></td>
-<td width="51%">
-
-
-<p style="margin-top: 1em" valign="top">An alias for
-<b>print&minus;configuration</b>.</p> </td>
-<td width="32%">
-</td>
-</table>
-
-<a name="AUTHORS"></a>
-<h2>AUTHORS</h2>
-
-
-<p style="margin-left:11%; margin-top: 1em">Sebastien
-Mondet &lt;seb@mondet.org&gt;</p>
-
-<a name="BUGS"></a>
-<h2>BUGS</h2>
-
-
-<p style="margin-left:11%;">Browse and report new issues at
-<br>
- &lt;https://github.com/hammerlab/ketrew&gt;.</p>
-<hr>
-</body>
-</html>
+Ketrew alpha1-91-geeba428                                            KETREW(1)</code></pre></div></div></div></body><html>

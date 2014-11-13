@@ -1,134 +1,74 @@
  <!DOCTYPE html> <html> <head><link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootswatch/3.2.0/readable/bootstrap.min.css" type="text/css">
 <link rel="stylesheet" href="https://cdn.rawgit.com/hammerlab/ketrew/2d1c430cca52caa71e363a765ff8775a6ae14ba9/src/doc/code_style.css" type="text/css"><meta charset="utf-8"><title>Ketrew: The Configuration File</title></head><body><div class="container"><h1>Ketrew: The Configuration File</h1><div class="row">
 <div class="col-md-3">
-<h2>Contents</h2><ul>
- <li><a href='#TheFormat'>The Format</a>
-  <ul>
-   <li><a href='#TheengineSection'>The <code>engine</code> Section</a>
-   </li>
-   <li><a href='#TheuiSection'>The <code>ui</code> Section</a>
-   </li>
-   <li><a href='#ThepluginsSection'>The <code>plugins</code> Section</a>
-   </li>
-   <li><a href='#TheclientSection'>The <code>client</code> Section</a>
-   </li>
-   <li><a href='#TheserverSection'>The <code>server</code> Section</a>
-   </li>
-  </ul>
+<h2>Contents</h2><ul><li><a href='#TheFormat'>The Format</a>
+<ul><li><a href='#TheengineSection'>The <code>engine</code> Section</a>
+</li><li><a href='#TheuiSection'>The <code>ui</code> Section</a>
+</li><li><a href='#ThepluginsSection'>The <code>plugins</code> Section</a>
+</li><li><a href='#TheclientSection'>The <code>client</code> Section</a>
+</li><li><a href='#TheserverSection'>The <code>server</code> Section</a>
+</li></ul>
+</li><li><a href='#Examples'>Examples</a>
+<ul><li><a href='#Standalone'>Standalone</a>
+</li><li><a href='#Server'>Server</a>
+</li><li><a href='#Client'>Client</a>
+</li></ul>
+</li><li><a href='#PrintTheConfiguration'>Print The Configuration</a>
+</li></ul><h2>Menu</h2><ul><li><a href='index.html'>Home</a></li><li><a href='The_HTTP_API.html'>The HTTP API</a></li><li><a href='The_Configuration_File.html'>The Configuration File</a></li><li><a href='Developer_Documentation.html'>Developer Documentation</a></li><li><a href='Server_Commands.html'>Server Commands</a></li><li><a href='Alternative_CLI_Application.html'>Alternative CLI Application</a></li><li><a href='Long-Running_Plugins.html'>Long-Running Plugins</a></li><li><a href='integration.html'>Integration Test</a></li><li><a href='Workflow_Examples.html'>Workflow Examples</a></li><li><a href='main.html'>Main Test</a></li><li><a href='dummy_plugin_user.html'>Plugin-Usage Example</a></li><li><a href='dummy_plugin.html'>Plugin Example</a></li><li><a href='preconfigured_main.html'>Preconfigured Main Example</a></li><li><a href='./api/index.html'>API Documentation</a></li><li>Branch/Tag: <a href='./dev/index.html'><code>dev</code></a></li><li>Repository <a href='https://github.com/hammerlab/ketrew'>at Github</a></li><li>Up: <a href='../index.html'>Software Projects</a></li></ul></div><div class="col-md-9"><h1 id="ConfigurationFile">Configuration File</h1>
 
- </li>
- <li><a href='#Examples'>Examples</a>
-  <ul>
-   <li><a href='#Standalone'>Standalone</a>
-   </li>
-   <li><a href='#Server'>Server</a>
-   </li>
-   <li><a href='#Client'>Client</a>
-   </li>
-  </ul>
-
- </li>
- <li><a href='#PrintTheConfiguration'>Print The Configuration</a>
- </li>
-</ul>
-<h2>Menu</h2><ul>
- <li><a href='index.html'>Home</a></li>
- <li><a href='Alternative_CLI_Application.html'>Alternative CLI Application</a></li>
- <li><a href='Developer_Documentation.html'>Developer Documentation</a></li>
- <li><a href='Long-Running_Plugins.html'>Long-Running Plugins</a></li>
- <li><a href='Server_Commands.html'>Server Commands</a></li>
- <li><a href='The_Configuration_File.html'>The Configuration File</a></li>
- <li><a href='The_HTTP_API.html'>The HTTP API</a></li>
- <li><a href='Workflow_Examples.html'>Workflow Examples</a></li>
- <li><a href='dummy_plugin.html'>Plugin Example</a></li>
- <li><a href='dummy_plugin_user.html'>Plugin-Usage Example</a></li>
- <li><a href='integration.html'>Integration Test</a></li>
- <li><a href='main.html'>Main Test</a></li>
- <li><a href='preconfigured_main.html'>Preconfigured Main Example</a></li>
- <li><a href='./api/index.html'>API Documentation</a></li>
- <li>Branch/Tag: <a href='./more_queries/index.html'><code>more_queries</code></a></li>
- <li>Repository <a href='https://github.com/hammerlab/ketrew'>at Github</a></li>
- <li>Up: <a href='../index.html'>Software Projects</a></li>
-</ul>
-</div><div class="col-md-9"><h1 id="ConfigurationFile">Configuration File</h1>
 <h2 id="TheFormat">The Format</h2>
+
 <p>The general format used to the configuration file is
-<a href='https://github.com/toml-lang/toml'>Toml</a>.</p>
-<p>Top-level options:</p>
-<ul>
- <li><code>debug-level</code>: integer specifying the amount of verbose messages: <code>0</code>: none,
-<code>1</code>: verbose, <code>2</code>: very verbose.</li>
-</ul>
+<a href='https://github.com/toml-lang/toml'>Toml</a>.</p><p>Top-level options:</p><ul><li><code>debug-level</code>: integer specifying the amount of verbose messages: <code>0</code>: none,
+<code>1</code>: verbose, <code>2</code>: very verbose.</li></ul>
 
 <p>Then the configuration is divided into “sections”:
 <code>engine</code>, <code>client</code>, <code>ui</code>, and <code>server</code>.
 The presence of the <code>client</code> or <code>server</code> sections, defines the running mode
 (if none of both are defined, Ketrew will be in standalone mode, if both are
-defined this will be an error).</p>
-<h3 id="TheengineSection">The <code>engine</code> Section</h3>
+defined this will be an error).</p><h3 id="TheengineSection">The <code>engine</code> Section</h3>
+
 <p>In standalone and server modes, the <code>engine</code> section configures how to run the
-workflows (ignored in <code>client</code> mode).</p>
-<ul>
- <li><code>database-path</code>: the path to the database directory; it&#39;s a
+workflows (ignored in <code>client</code> mode).</p><ul><li><code>database-path</code>: the path to the database directory; it&#39;s a
 currently a Git-repository that one can inspect with usual <code>git</code> commands (the
-default is <code>~/.ketrew/database/</code>).</li>
- <li><code>state-key</code>: the name of the key to the “root of the tree”; if more than one
+default is <code>~/.ketrew/database/</code>).</li><li><code>state-key</code>: the name of the key to the “root of the tree”; if more than one
 application are using the same database, this can be useful to avoid conflicts
-(“normal” users should <em>never</em> need to set this).</li>
- <li><code>turn-unix-ssh-failure-into-target-failure</code>: boolean;
+(“normal” users should <em>never</em> need to set this).</li><li><code>turn-unix-ssh-failure-into-target-failure</code>: boolean;
 when an SSH or system call fails it may not mean that the command in your
 workflow is wrong (could be an SSH configuration or tunneling problem), by
 default (i.e. <code>false</code>), Ketrew tries to be clever and does not make targets
-fail. To change this behavior put the option to <code>true</code>.</li>
- <li><code>host-timeout-upper-bound</code>: float (seconds, default: <code>60.</code>); every
-connection/command time-out will be <code>≤ upper-bound</code>.</li>
-</ul>
+fail. To change this behavior put the option to <code>true</code>.</li><li><code>host-timeout-upper-bound</code>: float (seconds, default: <code>60.</code>); every
+connection/command time-out will be <code>≤ upper-bound</code>.</li></ul>
 
 <h3 id="TheuiSection">The <code>ui</code> Section</h3>
-<p>This section configures the behavior of the User Interface.</p>
-<ul>
- <li><code>color</code>: boolean (default <code>true</code>); tell Ketrew to display <em>f-ANSI</em> colors.</li>
-</ul>
+
+<p>This section configures the behavior of the User Interface.</p><ul><li><code>color</code>: boolean (default <code>true</code>); tell Ketrew to display <em>f-ANSI</em> colors.</li></ul>
 
 <h3 id="ThepluginsSection">The <code>plugins</code> Section</h3>
-<p>This optional section asks Ketrew to dynamically load plugins:</p>
-<ul>
- <li><code>ocamlfind</code>: a package name or a list of package names to find with <code>Findlib</code>
-and to load.</li>
- <li><code>compiled</code>: a path or a list of paths to load.</li>
-</ul>
+
+<p>This optional section asks Ketrew to dynamically load plugins:</p><ul><li><code>ocamlfind</code>: a package name or a list of package names to find with <code>Findlib</code>
+and to load.</li><li><code>compiled</code>: a path or a list of paths to load.</li></ul>
 
 <h3 id="TheclientSection">The <code>client</code> Section</h3>
-<p>This table configures Ketrew in client-mode:</p>
-<ul>
- <li><code>connection</code>: URL to connect to server (e.g. <code>&quot;https://example.com:8443&quot;</code>).</li>
- <li><code>token</code>: API authentication token.</li>
-</ul>
+
+<p>This table configures Ketrew in client-mode:</p><ul><li><code>connection</code>: URL to connect to server (e.g. <code>&quot;https://example.com:8443&quot;</code>).</li><li><code>token</code>: API authentication token.</li></ul>
 
 <h3 id="TheserverSection">The <code>server</code> Section</h3>
-<p>This section configures the HTTP server:</p>
-<ul>
- <li><code>certificate</code>: path to the SSL certificate (<em>mandatory</em>).</li>
- <li><code>private-key</code>: path to the SSL private-key (<em>mandatory</em>).</li>
- <li><code>port</code>: port to listen on (<em>mandatory</em>).</li>
- <li><code>authorized-tokens-path</code>: path to the file giving the authentication tokens
+
+<p>This section configures the HTTP server:</p><ul><li><code>certificate</code>: path to the SSL certificate (<em>mandatory</em>).</li><li><code>private-key</code>: path to the SSL private-key (<em>mandatory</em>).</li><li><code>port</code>: port to listen on (<em>mandatory</em>).</li><li><code>authorized-tokens-path</code>: path to the file giving the authentication tokens
 that the server accepts (<em>mandatory-ish</em> since
 authentication-less server-side is not implemented so far). The format of the
-file is the SSH <code>authorized_keys</code> style.</li>
- <li><code>command-pipe-path</code>: if set this asks the server to listen on a named pipe
-for control commands (<em>highly recommended</em>).</li>
- <li><code>daemonize</code>: if <code>true</code>, ask the server to detach from current terminal.</li>
- <li><code>log-path</code>: if set together with <code>daemonize</code>, ask the server to redirect logs
-to this path (if not set logs go to <code>/dev/null</code>).</li>
- <li><code>return-error-messages</code>: if <code>true</code>, the server will return real error
+file is the SSH <code>authorized_keys</code> style.</li><li><code>command-pipe-path</code>: if set this asks the server to listen on a named pipe
+for control commands (<em>highly recommended</em>).</li><li><code>daemonize</code>: if <code>true</code>, ask the server to detach from current terminal.</li><li><code>log-path</code>: if set together with <code>daemonize</code>, ask the server to redirect logs
+to this path (if not set logs go to <code>/dev/null</code>).</li><li><code>return-error-messages</code>: if <code>true</code>, the server will return real error
 messages (in the <em>body</em> of the response) to the client; if <code>false</code> (the
-default), any kind of error will result in the same uninformative message.</li>
-</ul>
+default), any kind of error will result in the same uninformative message.</li></ul>
 
 <h2 id="Examples">Examples</h2>
+
 <p>Note the <code>please.sh</code> script can generate configuration files for testing
-(<code>please.sh test-env</code>).</p>
-<h3 id="Standalone">Standalone</h3>
+(<code>please.sh test-env</code>).</p><h3 id="Standalone">Standalone</h3>
+
 <pre class='toml'><code class='toml'># How much noise do you want on your terminal:
 debug-level = 2
 
@@ -142,7 +82,9 @@ debug-level = 2
 
 [ui]
   color = true</code></pre>
+
 <h3 id="Server">Server</h3>
+
 <pre class='toml'><code class='toml'>debug-level = 1
 
 [engine]
@@ -161,13 +103,15 @@ debug-level = 2
   log-path = &quot;/var/log/logs-of-ketrew-server.txt&quot;
   daemonize = true
   command-pipe-path = &quot;/var/run/ketrew-command.pipe&quot;</code></pre>
+
 <h3 id="Client">Client</h3>
+
 <pre class='toml'><code class='toml'>debug-level = 2
 
 [client]
   connection = &quot;https://example.com:8443&quot;
   token = &quot;aldskfjdalksjfiilfldksaj&quot;</code></pre>
+
 <h2 id="PrintTheConfiguration">Print The Configuration</h2>
-<p>One can always test their configuration with:</p>
-<pre><code>ketrew print-configuration</code></pre>
-</div></div></div></body><html>
+
+<p>One can always test their configuration with:</p><pre><code>ketrew print-configuration</code></pre></div></div></div></body><html>

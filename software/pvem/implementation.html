@@ -1,43 +1,25 @@
  <!DOCTYPE html> <html> <head><link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootswatch/3.2.0/readable/bootstrap.min.css" type="text/css">
 <link rel="stylesheet" href="https://cdn.rawgit.com/hammerlab/ketrew/2d1c430cca52caa71e363a765ff8775a6ae14ba9/src/doc/code_style.css" type="text/css"><meta charset="utf-8"><title>Pvem: Implementation Notes</title></head><body><div class="container"><h1>Pvem: Implementation Notes</h1><div class="row">
 <div class="col-md-3">
-<h2>Contents</h2><ul>
- <li><a href='#WhyPolymorphicVariants'>Why Polymorphic Variants</a>
- </li>
- <li><a href='#Alternatives'>Alternatives</a>
- </li>
-</ul>
-<h2>Menu</h2><ul>
- <li><a href='index.html'>Home</a></li>
- <li><a href='pvem.html'>Literate Implementation</a></li>
- <li><a href='implementation.html'>Implementation Notes</a></li>
- <li><a href='./api/index.html'>API Documentation</a></li>
- <li>Repository <a href='https://bitbucket.org/smondet/pvem'>at Bitbucket</a></li>
- <li>Up: <a href='../index.html'>Software Projects</a></li>
-</ul>
-</div><div class="col-md-9"><h1 id="ImplementationNotes">Implementation Notes</h1>
+<h2>Contents</h2><ul><li><a href='#WhyPolymorphicVariants'>Why Polymorphic Variants</a>
+</li><li><a href='#Alternatives'>Alternatives</a>
+</li></ul><h2>Menu</h2><ul><li><a href='index.html'>Home</a></li><li><a href='pvem.html'>Literate Implementation</a></li><li><a href='implementation.html'>Implementation Notes</a></li><li><a href='./api/index.html'>API Documentation</a></li><li>Repository <a href='https://bitbucket.org/smondet/pvem'>at Bitbucket</a></li><li>Up: <a href='../index.html'>Software Projects</a></li></ul></div><div class="col-md-9"><h1 id="ImplementationNotes">Implementation Notes</h1>
+
 <h2 id="WhyPolymorphicVariants">Why Polymorphic Variants</h2>
+
 <p>Using</p><pre><span class="kw">type</span><span class="text"> ('</span><span class="id">a</span><span class="text">, '</span><span class="id">b</span><span class="text">) </span><span class="id">t</span><span class="text"> =
   | </span><span class="kw2">Ok</span><span class="text"> </span><span class="kw">of</span><span class="text"> '</span><span class="id">a</span><span class="text">
   | </span><span class="kw2">Error</span><span class="text"> </span><span class="kw">of</span><span class="text"> '</span><span class="id">b</span></pre>
-<p>gives two annoying alternatives:</p>
-<ul>
- <li>be incompatible with <code>Core_kernel</code>&#39;s <code>Result.t</code>, or</li>
- <li>depend on <code>Core_kernel</code>.</li>
-</ul>
+
+<p>gives two annoying alternatives:</p><ul><li>be incompatible with <code>Core_kernel</code>&#39;s <code>Result.t</code>, or</li><li>depend on <code>Core_kernel</code>.</li></ul>
 
 <p>Type equality constraints do not work <em>twice</em>. I.e. one cannot write:</p><pre><span class="kw">type</span><span class="text"> ('</span><span class="id">a</span><span class="text">, '</span><span class="id">b</span><span class="text">) </span><span class="id">result_core</span><span class="text"> = ('</span><span class="id">a</span><span class="text">, '</span><span class="id">b</span><span class="text">) </span><span class="kw2">Result</span><span class="text">.</span><span class="id">t</span><span class="text">  = </span><span class="kw2">Ok</span><span class="text"> </span><span class="kw">of</span><span class="text"> '</span><span class="id">a</span><span class="text"> | </span><span class="kw2">Error</span><span class="text"> </span><span class="kw">of</span><span class="text"> '</span><span class="id">b</span><span class="text">
 </span><span class="kw">type</span><span class="text"> ('</span><span class="id">a</span><span class="text">, '</span><span class="id">b</span><span class="text">) </span><span class="id">result_err</span><span class="text"> = ('</span><span class="id">a</span><span class="text">, '</span><span class="id">b</span><span class="text">) </span><span class="kw2">Err</span><span class="text">.</span><span class="id">t</span><span class="text">  = </span><span class="kw2">Ok</span><span class="text"> </span><span class="kw">of</span><span class="text"> '</span><span class="id">a</span><span class="text"> | </span><span class="kw2">Error</span><span class="text"> </span><span class="kw">of</span><span class="text"> '</span><span class="id">b</span><span class="text">
 </span><span class="kw">type</span><span class="text"> ('</span><span class="id">a</span><span class="text">, '</span><span class="id">b</span><span class="text">) </span><span class="id">result</span><span class="text"> = ('</span><span class="id">a</span><span class="text">, '</span><span class="id">b</span><span class="text">) </span><span class="id">result_err</span><span class="text">  = ('</span><span class="id">a</span><span class="text">, '</span><span class="id">b</span><span class="text">) </span><span class="id">result_core</span></pre>
-<p>Polymorphic Variants are safe while not enforcing library dependencies.</p>
-<h2 id="Alternatives">Alternatives</h2>
+
+<p>Polymorphic Variants are safe while not enforcing library dependencies.</p><h2 id="Alternatives">Alternatives</h2>
+
 <p>The following libraries use “regular/ordinary” variants and hence are
-all incompatible from each other:</p>
-<ul>
- <li>Core&#39;s
-<a href='https://ocaml.janestreet.com/ocaml-core/latest/doc/core_kernel/Result.html'><code>Core.Std.Result</code></a></li>
- <li>Batteries&#39;
-<a href='http://ocaml-batteries-team.github.io/batteries-included/hdoc/BatResult.html'><code>BatResult</code></a></li>
- <li><a href='https://bitbucket.org/deplai_j/ocaml-monad-exn'>ocaml-monad-exn</a></li>
-</ul>
-</div></div></div></body><html>
+all incompatible from each other:</p><ul><li>Core&#39;s
+<a href='https://ocaml.janestreet.com/ocaml-core/latest/doc/core_kernel/Result.html'><code>Core.Std.Result</code></a></li><li>Batteries&#39;
+<a href='http://ocaml-batteries-team.github.io/batteries-included/hdoc/BatResult.html'><code>BatResult</code></a></li><li><a href='https://bitbucket.org/deplai_j/ocaml-monad-exn'>ocaml-monad-exn</a></li></ul></div></div></div></body><html>
