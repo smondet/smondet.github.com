@@ -1,46 +1,137 @@
- <!DOCTYPE html> <html> <head><link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootswatch/3.2.0/readable/bootstrap.min.css" type="text/css">
-<link rel="stylesheet" href="https://cdn.rawgit.com/hammerlab/ketrew/2d1c430cca52caa71e363a765ff8775a6ae14ba9/src/doc/code_style.css" type="text/css"><meta charset="utf-8"><title>ketrew run-engine --help</title></head><body><div class="container"><h1>ketrew run-engine --help</h1><div class="row">
-<div class="col-md-3">
-<h2>Contents</h2><h2>Menu</h2><ul><li><a href='index.html'>Home</a></li><li><a href='The_HTTP_API.html'>The HTTP API</a></li><li><a href='The_Configuration_File.html'>The Configuration File</a></li><li><a href='Developer_Documentation.html'>Developer Documentation</a></li><li><a href='Server_Commands.html'>Server Commands</a></li><li><a href='Alternative_CLI_Application.html'>Alternative CLI Application</a></li><li><a href='Long-Running_Plugins.html'>Long-Running Plugins</a></li><li><a href='integration.html'>Integration Test</a></li><li><a href='Workflow_Examples.html'>Workflow Examples</a></li><li><a href='main.html'>Main Test</a></li><li><a href='dummy_plugin_user.html'>Plugin-Usage Example</a></li><li><a href='dummy_plugin.html'>Plugin Example</a></li><li><a href='preconfigured_main.html'>Preconfigured Main Example</a></li><li><a href='./api/index.html'>API Documentation</a></li><li>Branch/Tag: <a href='./dev/index.html'><code>dev</code></a></li><li>Repository <a href='https://github.com/hammerlab/ketrew'>at Github</a></li><li>Up: <a href='../index.html'>Software Projects</a></li></ul></div><div class="col-md-9"><pre><code>KETREW-RUN-ENGINE(1)             Ketrew Manual            KETREW-RUN-ENGINE(1)
+<!-- Creator     : groff version 1.22.2 -->
+<!-- CreationDate: Thu Nov 13 17:11:12 2014 -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta name="generator" content="groff -Thtml, see www.gnu.org">
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<meta name="Content-Style" content="text/css">
+<style type="text/css">
+       p       { margin-top: 0; margin-bottom: 0; vertical-align: top }
+       pre     { margin-top: 0; margin-bottom: 0; vertical-align: top }
+       table   { margin-top: 0; margin-bottom: 0; vertical-align: top }
+       h1      { text-align: center }
+</style>
+<title>KETREW-RUN-ENGINE</title>
+
+</head>
+<body>
+
+<h1 align="center">KETREW-RUN-ENGINE</h1>
+
+<a href="#NAME">NAME</a><br>
+<a href="#SYNOPSIS">SYNOPSIS</a><br>
+<a href="#ARGUMENTS">ARGUMENTS</a><br>
+<a href="#COMMON OPTIONS">COMMON OPTIONS</a><br>
+<a href="#OPTIONS">OPTIONS</a><br>
+<a href="#THE HOW ARGUMENT">THE HOW ARGUMENT</a><br>
+
+<hr>
+
+
+<h2>NAME
+<a name="NAME"></a>
+</h2>
 
 
 
-NNAAMMEE
-       ketrew-run-engine - Run steps of the engine.
+<p style="margin-left:11%; margin-top: 1em">ketrew&minus;run&minus;engine
+&minus; Run steps of the engine.</p>
 
-SSYYNNOOPPSSIISS
-       kkeettrreeww rruunn--eennggiinnee [_O_P_T_I_O_N]... _H_O_W...
-
-AARRGGUUMMEENNTTSS
-       _H_O_W Tell Ketrew to run in a given mode (see below)
-
-CCOOMMMMOONN OOPPTTIIOONNSS
-       --CC _F_I_L_E, ----ccoonnffiigguurraattiioonn--ffiillee=_F_I_L_E
-       (absent=_test_env/server-config-file.toml)
-           Use _F_I_L_E as configuration file (can be overriden also with
-           `KETREW_CONFIGURATION`).
-
-       ----hheellpp[=_F_M_T] (default=pager)
-           Show this help in format _F_M_T (pager, plain or groff).
-
-       ----vveerrssiioonn
-           Show version information.
-
-OOPPTTIIOONNSS
-       ----mmaaxx--sslleeeepp=_S_E_C_O_N_D_S (absent=60.)
-           Maximal sleep time between 2 steps (applies to `loop`)
-
-TTHHEE HHOOWW AARRGGUUMMEENNTT
-       The following _r_u_n methods are available:
-
-       `step`
-           run one single step
-       `fix`
-           run steps until nothing new happens
-       `loop`
-           loop `fix` until pressing &#39;q&#39; (there is a timed-wait starting at 2
-           seconds until `--max-sleep`)
+<h2>SYNOPSIS
+<a name="SYNOPSIS"></a>
+</h2>
 
 
+<p style="margin-left:11%; margin-top: 1em"><b>ketrew
+run&minus;engine</b> [<i>OPTION</i>]... <i>HOW</i>...</p>
 
-Ketrew alpha1-91-geeba428                                 KETREW-RUN-ENGINE(1)</code></pre></div></div></div></body><html>
+<h2>ARGUMENTS
+<a name="ARGUMENTS"></a>
+</h2>
+
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="4%">
+
+
+<p style="margin-top: 1em"><i>HOW</i></p></td>
+<td width="2%"></td>
+<td width="71%">
+
+
+<p style="margin-top: 1em">Tell Ketrew to run in a given
+mode (see below)</p></td>
+<td width="12%">
+</td></tr>
+</table>
+
+<h2>COMMON OPTIONS
+<a name="COMMON OPTIONS"></a>
+</h2>
+
+
+
+<p style="margin-left:11%; margin-top: 1em"><b>&minus;C</b>
+<i>FILE</i>,
+<b>&minus;&minus;configuration&minus;file</b>=<i>FILE</i>
+<br>
+(absent=_test_env/server&minus;config&minus;file.toml)</p>
+
+<p style="margin-left:17%;">Use <i>FILE</i> as
+configuration file (can be overriden also with
+&rsquo;KETREW_CONFIGURATION&rsquo;).</p>
+
+
+<p style="margin-left:11%;"><b>&minus;&minus;help</b>[=<i>FMT</i>]
+(default=pager)</p>
+
+<p style="margin-left:17%;">Show this help in format
+<i>FMT</i> (pager, plain or groff).</p>
+
+
+<p style="margin-left:11%;"><b>&minus;&minus;version</b></p>
+
+<p style="margin-left:17%;">Show version information.</p>
+
+<h2>OPTIONS
+<a name="OPTIONS"></a>
+</h2>
+
+
+
+<p style="margin-left:11%; margin-top: 1em"><b>&minus;&minus;max&minus;sleep</b>=<i>SECONDS</i>
+(absent=60.)</p>
+
+<p style="margin-left:17%;">Maximal sleep time between 2
+steps (applies to &rsquo;loop&rsquo;)</p>
+
+<h2>THE HOW ARGUMENT
+<a name="THE HOW ARGUMENT"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em">The following
+<i>&acirc;run&acirc;</i> methods are available: <br>
+&rsquo;step&rsquo;</p>
+
+<p style="margin-left:17%;">run one single step</p>
+
+<p style="margin-left:11%;">&rsquo;fix&rsquo;</p>
+
+<p style="margin-left:17%;">run steps until nothing new
+happens</p>
+
+<p style="margin-left:11%;">&rsquo;loop&rsquo;</p>
+
+<p style="margin-left:17%;">loop &rsquo;fix&rsquo; until
+pressing &rsquo;q&rsquo; (there is a timed&minus;wait
+starting at 2 seconds until
+&rsquo;&minus;&minus;max&minus;sleep&rsquo;)</p>
+<hr>
+</body>
+</html>
