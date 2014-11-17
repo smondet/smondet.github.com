@@ -6,8 +6,14 @@
 <ul><li><a href='#ExampleFromTheREADME'>Example From The README</a>
 </li><li><a href='#DaemonizeWithNohupSetsid'>Daemonize With Nohup/Setsid</a>
 </li><li><a href='#DaemonizeWithThePythonHack'>Daemonize With “The Python Hack”</a>
+</li><li><a href='#AFirstDependencyChain'>A First Dependency Chain</a>
+</li><li><a href='#WithaCondition'>With a Condition</a>
+</li><li><a href='#WebsiteBuildingWorkfow'>Website Building Workfow</a>
+</li><li><a href='#ExampleBackupWorkflow'>Example “Backup” Workflow</a>
+</li><li><a href='#BuildKetrewOnaVagrantVM'>Build Ketrew On a Vagrant VM</a>
 </li></ul>
-</li></ul><h2>Menu</h2><ul><li><a href='index.html'>Home</a></li><li><a href='The_HTTP_API.html'>The HTTP API</a></li><li><a href='The_Configuration_File.html'>The Configuration File</a></li><li><a href='Developer_Documentation.html'>Developer Documentation</a></li><li><a href='Glossary.html'>Glossary</a></li><li><a href='Server_Commands.html'>Server Commands</a></li><li><a href='Alternative_CLI_Application.html'>Alternative CLI Application</a></li><li><a href='Long-Running_Plugins.html'>Long-Running Plugins</a></li><li><a href='integration.html'>Integration Test</a></li><li><a href='Workflow_Examples.html'>Workflow Examples</a></li><li><a href='main.html'>Main Test</a></li><li><a href='dummy_plugin_user.html'>Plugin-Usage Example</a></li><li><a href='dummy_plugin.html'>Plugin Example</a></li><li><a href='preconfigured_main.html'>Preconfigured Main Example</a></li><li><a href='./api/index.html'>API Documentation</a></li><li><a href='../index.html'><code>master</code></a> branch</li><li>Repository <a href='https://github.com/hammerlab/ketrew'>at Github</a></li><li>Up: <a href='../../index.html'>Software Projects</a></li></ul></div><div class="col-md-9">
+</li><li><a href='#MainOftheModule'>“Main” Of the Module</a>
+</li></ul><h2>Menu</h2><ul><li><a href='index.html'>Home</a></li><li><a href='Alternative_CLI_Application.html'>Alternative CLI Application</a></li><li><a href='Developer_Documentation.html'>Developer Documentation</a></li><li><a href='Glossary.html'>Glossary</a></li><li><a href='Long-Running_Plugins.html'>Long-Running Plugins</a></li><li><a href='Server_Commands.html'>Server Commands</a></li><li><a href='The_Configuration_File.html'>The Configuration File</a></li><li><a href='The_HTTP_API.html'>The HTTP API</a></li><li><a href='Workflow_Examples.html'>Workflow Examples</a></li><li><a href='dummy_plugin.html'>Plugin Example</a></li><li><a href='dummy_plugin_user.html'>Plugin-Usage Example</a></li><li><a href='integration.html'>Integration Test</a></li><li><a href='main.html'>Main Test</a></li><li><a href='preconfigured_main.html'>Preconfigured Main Example</a></li><li><a href='./api/index.html'>API Documentation</a></li><li><a href='../index.html'><code>master</code></a> branch</li><li>Repository <a href='https://github.com/hammerlab/ketrew'>at Github</a></li><li>Up: <a href='../../index.html'>Software Projects</a></li></ul></div><div class="col-md-9">
 
 
 <h2 id="WorkflowExamples">Workflow Examples</h2>
@@ -84,19 +90,11 @@ the “python daemon hack” instead.</p>
 </span></pre>
 
 
-<p>The &lt;code&gt;<code>Python_daemon&lt;/code&gt; way of daemonizing was hacked together because
-MacOSX does not support the </code>nohup<code>and</code>setsid<code>commands any more.
+<p>The <code>`Python_daemon</code> way of daemonizing was hacked together because
+MacOSX does not support the <code>nohup</code> and <code>setsid</code> commands any more.</p><h3 id="AFirstDependencyChain">A First Dependency Chain</h3>
 
-
-
-### A First Dependency Chain
-
-This function runs a workflow with no less than 2 nodes!
-
--</code>target2<code>depends on</code>target1<code>.
-- We call </code>run<code>on</code>target2<code>(the last target, i.e. the root of the dependency
-  arborescence).
--</code>target1<code>will run and if it succeeds</code>target2` will run.</p>
+<p>This function runs a workflow with no less than 2 nodes!</p><ul><li><code>target2</code> depends on <code>target1</code>.</li><li>We call <code>run</code> on <code>target2</code> (the last target, i.e. the root of the dependency
+ arborescence).</li><li><code>target1</code> will run and if it succeeds <code>target2</code> will run.</li></ul>
 <pre><span class="text">
 </span><span class="kw">let</span><span class="text"> </span><span class="id">run_2_commands_with_python_hack</span><span class="text"> </span><span class="kw4">~host</span><span class="text"> </span><span class="id">cmd1</span><span class="text"> </span><span class="id">cmd2</span><span class="text"> =
   </span><span class="kw">let</span><span class="text"> </span><span class="kw">open</span><span class="text"> </span><span class="kw2">Ketrew</span><span class="text">.</span><span class="kw2">EDSL</span><span class="text"> </span><span class="kw">in</span><span class="text">
@@ -152,8 +150,9 @@ Failed: Process Failure: the target did not ensure (Volume
 &quot;some-inexistent-file&quot;)} exists)</code></pre><h3 id="WebsiteBuildingWorkfow">Website Building Workfow</h3>
 
 <p>A function that creates a workflow that builds the website for given list of
-Git-branches.</p><p>It used to be simple but got pretty complex with time, because it
-is really used to build Ketrew&#39;s <a href='http://hammerlab.github.io/ketrew/'>website</a>:</p><ul><li>take a list of branch names (<code>[]</code> meaning “default branch”)</li><li>clone the repository in a temporary locations</li><li><em>for each branch:</em> checkout the branch, and build the documentation</li><li>checkout the <code>gh-pages</code> branch</li><li>put <code>_doc/</code> at the top-level</li><li>commit and push back to the **current repository</li></ul>
+Git-branches.</p><p>It used to be simple but got pretty complex with time as it
+was really used to build Ketrew&#39;s
+<a href='http://seb.mondet.org/software/ketrew/'>website</a>:</p><ul><li>take a list of branch names (<code>[]</code> meaning “default branch”)</li><li>clone the repository in a temporary locations</li><li><em>for each branch:</em> checkout the branch, and build the documentation</li><li>checkout the <code>gh-pages</code> branch</li><li>put <code>_doc/</code> at the top-level</li><li>commit and push back to the **current repository</li></ul>
 
 <p>The workflow can also fail in many ways (e.g. Git commit forbidden because of
 nothing is new) which show ketrew&#39;s handling of errors in dependencies.</p>
@@ -263,6 +262,7 @@ call <code>gpg -c</code> and delete the tar.gz.</p><p>The passphrase for GPG mus
 <pre><span class="text">
 </span><span class="kw">let</span><span class="text"> </span><span class="id">make_targz_on_host</span><span class="text"> ?(</span><span class="id">gpg</span><span class="text">=</span><span class="constant">true</span><span class="text">) ?</span><span class="id">dest_prefix</span><span class="text"> </span><span class="kw4">~host</span><span class="text"> </span><span class="kw4">~dir</span><span class="text"> () =
   </span><span class="kw">let</span><span class="text"> </span><span class="kw">open</span><span class="text"> </span><span class="kw2">Ketrew</span><span class="text">.</span><span class="kw2">EDSL</span><span class="text"> </span><span class="kw">in</span><span class="text">
+  </span><span class="kw">let</span><span class="text"> </span><span class="id">daemonize</span><span class="text"> = </span><span class="id">daemonize</span><span class="text"> </span><span class="kw4">~using</span><span class="text">:`</span><span class="kw2">Python_daemon</span><span class="text"> </span><span class="kw">in</span><span class="text">
   </span><span class="kw">let</span><span class="text"> </span><span class="id">dest_base</span><span class="text"> =
     </span><span class="kw1">match</span><span class="text"> </span><span class="id">dest_prefix</span><span class="text"> </span><span class="kw1">with</span><span class="text">
     | </span><span class="kw2">Some</span><span class="text"> </span><span class="id">s</span><span class="text"> -&gt; </span><span class="id">s</span><span class="text">
@@ -292,7 +292,7 @@ call <code>gpg -c</code> and delete the tar.gz.</p><p>The passphrase for GPG mus
     </span><span class="kw1">match</span><span class="text"> </span><span class="id">gpg</span><span class="text"> </span><span class="kw1">with</span><span class="text">
     | </span><span class="constant">false</span><span class="text"> -&gt; []
     | </span><span class="constant">true</span><span class="text"> -&gt;
-      </span><span class="kw">let</span><span class="text"> </span><span class="id">gpg_file</span><span class="text"> = </span><span class="id">destination</span><span class="text"> </span><span class="string">&quot;gpg&quot;</span><span class="text"> </span><span class="kw">in</span><span class="text">
+      </span><span class="kw">let</span><span class="text"> </span><span class="id">gpg_file</span><span class="text"> = </span><span class="id">destination</span><span class="text"> </span><span class="string">&quot;tar.gz.gpg&quot;</span><span class="text"> </span><span class="kw">in</span><span class="text">
       </span><span class="kw">let</span><span class="text"> </span><span class="id">make_it</span><span class="text"> =
         </span><span class="id">target</span><span class="text"> </span><span class="string">&quot;make-gpg-of-tar.gz&quot;</span><span class="text"> </span><span class="kw4">~done_when</span><span class="text">:</span><span class="id">gpg_file</span><span class="kw1">#</span><span class="id">exists</span><span class="text"> </span><span class="kw4">~dependencies</span><span class="text">:[</span><span class="id">make_targz</span><span class="text">]
           </span><span class="kw4">~make</span><span class="text">:(</span><span class="id">daemonize</span><span class="text"> </span><span class="kw4">~host</span><span class="text">

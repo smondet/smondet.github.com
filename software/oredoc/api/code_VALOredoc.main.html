@@ -81,7 +81,10 @@
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">in</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;output_file&nbsp;=&nbsp;configuration<span class="keywordsign">#</span>output_directory&nbsp;//&nbsp;<span class="constructor">Markdown</span>.code_url&nbsp;cmd&nbsp;<span class="keyword">in</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">begin</span>&nbsp;<span class="keyword">try</span>&nbsp;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;succeedf&nbsp;<span class="string">"set&nbsp;-o&nbsp;pipefail&nbsp;;&nbsp;%s=groff&nbsp;|&nbsp;groff&nbsp;-Thtml&nbsp;-mandoc&nbsp;&gt;&nbsp;%s"</span>&nbsp;actual_cmd&nbsp;output_file;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;bash_cmd&nbsp;=&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sprintf&nbsp;<span class="string">"set&nbsp;-o&nbsp;pipefail&nbsp;;&nbsp;%s=groff&nbsp;|&nbsp;groff&nbsp;-Thtml&nbsp;-mandoc&nbsp;&gt;&nbsp;%s"</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;actual_cmd&nbsp;output_file&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;succeedf&nbsp;<span class="string">"bash&nbsp;-c&nbsp;%s"</span>&nbsp;(<span class="constructor">Filename</span>.quote&nbsp;bash_cmd)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">with</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;e&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ignore&nbsp;(<br>

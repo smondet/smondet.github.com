@@ -554,7 +554,10 @@ features/extensions:</p><ul><li>There is a special syntax to <span style="color:
     </span><span class="kw">in</span><span class="text">
     </span><span class="kw">let</span><span class="text"> </span><span class="id">output_file</span><span class="text"> = </span><span class="id">configuration</span><span class="kw1">#</span><span class="id">output_directory</span><span class="text"> // </span><span class="kw2">Markdown</span><span class="text">.</span><span class="id">code_url</span><span class="text"> </span><span class="id">cmd</span><span class="text"> </span><span class="kw">in</span><span class="text">
     </span><span class="kw1">begin</span><span class="text"> </span><span class="kw1">try</span><span class="text"> 
-      </span><span class="id">succeedf</span><span class="text"> </span><span class="string">&quot;set -o pipefail ; %s=groff | groff -Thtml -mandoc &gt; %s&quot;</span><span class="text"> </span><span class="id">actual_cmd</span><span class="text"> </span><span class="id">output_file</span><span class="text">;
+      </span><span class="kw">let</span><span class="text"> </span><span class="id">bash_cmd</span><span class="text"> = 
+        </span><span class="id">sprintf</span><span class="text"> </span><span class="string">&quot;set -o pipefail ; %s=groff | groff -Thtml -mandoc &gt; %s&quot;</span><span class="text">
+          </span><span class="id">actual_cmd</span><span class="text"> </span><span class="id">output_file</span><span class="text"> </span><span class="kw">in</span><span class="text">
+      </span><span class="id">succeedf</span><span class="text"> </span><span class="string">&quot;bash -c %s&quot;</span><span class="text"> (</span><span class="kw2">Filename</span><span class="text">.</span><span class="id">quote</span><span class="text"> </span><span class="id">bash_cmd</span><span class="text">)
     </span><span class="kw1">with</span><span class="text">
     | </span><span class="id">e</span><span class="text"> -&gt; 
       </span><span class="id">ignore</span><span class="text"> (

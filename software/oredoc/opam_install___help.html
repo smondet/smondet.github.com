@@ -1,254 +1,464 @@
- <!DOCTYPE html> <html> <head><link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootswatch/3.2.0/readable/bootstrap.min.css" type="text/css">
-<link rel="stylesheet" href="https://cdn.rawgit.com/hammerlab/ketrew/2d1c430cca52caa71e363a765ff8775a6ae14ba9/src/doc/code_style.css" type="text/css"><meta charset="utf-8"><title>opam install --help</title></head><body><div class="container"><h1>opam install --help</h1><div class="row">
-<div class="col-md-3">
-<h2>Contents</h2><h2>Menu</h2><ul><li><a href='index.html'>Home</a></li><li><a href='oredoc.html'>Literate Implementation</a></li><li><a href='./api/index.html'>API Documentation</a></li><li>Repository <a href='https://github.com/smondet/oredoc'>at Github</a></li><li>Up: <a href='../index.html'>Software Projects</a></li></ul></div><div class="col-md-9"><pre><code>OPAM-INSTALL(1)                   Opam Manual                  OPAM-INSTALL(1)
+<!-- Creator     : groff version 1.19.2 -->
+<!-- CreationDate: Mon Nov 17 17:54:23 2014 -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta name="generator" content="groff -Thtml, see www.gnu.org">
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<meta name="Content-Style" content="text/css">
+<style type="text/css">
+       p     { margin-top: 0; margin-bottom: 0; }
+       pre   { margin-top: 0; margin-bottom: 0; }
+       table { margin-top: 0; margin-bottom: 0; }
+</style>
+<title>OPAM-INSTALL</title>
 
-
-
-NNAAMMEE
-       opam-install - Install a list of packages.
-
-SSYYNNOOPPSSIISS
-       ooppaamm iinnssttaallll [_O_P_T_I_O_N]... _P_A_C_K_A_G_E_S...
-
-DDEESSCCRRIIPPTTIIOONN
-       This command installs one or more packages to the currently selected
-       compiler. To install packages for another compiler, you need to switch
-       compilers using ooppaamm sswwiittcchh. You can remove installed packages with
-       ooppaamm rreemmoovvee, and list installed packages with ooppaamm lliisstt --ii. See ooppaamm
-       ppiinn as well to understand how to manage package versions.
-
-       This command makes OPAM use the dependency solver to compute the
-       transitive closure of dependencies to be installed, and will also
-       handle conflicts. If the dependency solver returns more than one
-       solution, OPAM will arbitrarily select the first one. If dependencies
-       are to be installed, OPAM will confirm if the installation should
-       proceed.
-
-AARRGGUUMMEENNTTSS
-       _P_A_C_K_A_G_E_S
-           List of package names, with an optional version or constraint, e.g
-           `pkg&#39;, `pkg.1.0&#39; or `pkg&gt;=0.5&#39;.
-
-OOPPTTIIOONNSS
-       --bb, ----kkeeeepp--bbuuiilldd--ddiirr
-           Keep the build directory. This is equivalent to setting
-           $$OOPPAAMMKKEEEEPPBBUUIILLDDDDIIRR to &quot;true&quot;.
-
-       --dd, ----bbuuiilldd--ddoocc
-           Build the package documentation. This is equivalent to setting
-           $$OOPPAAMMBBUUIILLDDDDOOCC to &quot;true&quot;.
-
-       ----ddeeppss--oonnllyy
-           Install all its dependencies, but don&#39;t actually install the
-           package.
-
-       ----ddrryy--rruunn
-           Simulate the command, but don&#39;t actually perform any changes.
-
-       --ee _T_A_G_S, ----eexxtteerrnnaall=_T_A_G_S
-           Display the external packages associated to the given tags.
-
-       ----ffaakkee
-           This option registers the actions into the OPAM database, without
-           actually performing them. WARNING: This option is dangerous and
-           likely to break your OPAM environment. You probably want
-           `--dry-run&#39;. You&#39;ve been warned.
-
-       --jj _J_O_B_S, ----jjoobbss=_J_O_B_S
-           Set the maximal number of concurrent jobs to use. You can also set
-           it using the $$OOPPAAMMJJOOBBSS environment variable.
-
-       ----jjssoonn=_F_I_L_E_N_A_M_E
-           Save the result output of an OPAM run in a computer-readable file
-
-       --mm _M_A_K_E, ----mmaakkee=_M_A_K_E
-           Use _M_A_K_E as the default &#39;make&#39; command.
-
-       ----nnoo--cchheecckkssuummss
-           Do not verify the checksum of downloaded archives.This is
-           equivalent to setting $$OOPPAAMMNNOOCCHHEECCKKSSUUMMSS to &quot;true&quot;.
-
-       ----rreeqquuiirree--cchheecckkssuummss
-           Reject the installation of packages that don&#39;t provide a checksum
-           for the upstream archives. This is equivalent to setting
-           $$OOPPAAMMRREEQQUUIIRREECCHHEECCKKSSUUMMSS to &quot;true&quot;.
-
-       ----sseett--rroooott
-           Mark given packages as installed roots. This is the default for
-           newly manually-installed packages.
-
-       ----sshhooww--aaccttiioonnss
-           Call the solver and display the actions. Don&#39;t perform any changes.
-
-       --tt, ----bbuuiilldd--tteesstt
-           Build and rruunn the package unit-tests. This is equivalent to setting
-           $$OOPPAAMMBBUUIILLDDTTEESSTT to &quot;true&quot;.
-
-       ----uunnsseett--rroooott
-           Mark given packages as &quot;installed automatically&quot;.
-
-CCOOMMMMOONN OOPPTTIIOONNSS
-       These options are common to all commands.
-
-       ----ccoolloorr=_W_H_E_N (absent=auto)
-           Colorize the output. _W_H_E_N must be `always&#39;, `never&#39; or `auto&#39;.
-
-       ----ccoommppaatt--mmooddee--11..00
-           Compatibility mode with OPAM 1.0
-
-       ----ccrriitteerriiaa=_C_R_I_T_E_R_I_A
-           Specify user _p_r_e_f_e_r_e_n_c_e_s for dependency solving for this run.
-           Overrides both $$OOPPAAMMCCRRIITTEERRIIAA and $$OOPPAAMMUUPPGGRRAADDEECCRRIITTEERRIIAA. For details
-           on the supported language, and the external solvers available, see
-           _h_t_t_p_:_/_/_o_p_a_m_._o_c_a_m_l_._o_r_g_/_d_o_c_/_S_p_e_c_i_f_y_i_n_g___S_o_l_v_e_r___P_r_e_f_e_r_e_n_c_e_s_._h_t_m_l. A
-           general guide to using solver preferences can be found at
-           _h_t_t_p_:_/_/_w_w_w_._d_i_c_o_s_m_o_._o_r_g_/_A_r_t_i_c_l_e_s_/_u_s_e_r_c_r_i_t_e_r_i_a_._p_d_f. The default value
-           is -count(down),-count(removed),-notuptodate(solution),-count(new)
-           for upgrades, and
-           -count(removed),-notuptodate(request),-count(down),-notuptodate(changed),-count(changed),-notuptodate(solution)
-           otherwise.
+</head>
+<body>
 
-       ----ccuuddff=_F_I_L_E_N_A_M_E
-           Debug option: Save the CUDF requests sent to the solver to
-           _F_I_L_E_N_A_M_E-&lt;n&gt;.cudf.
+<h1 align=center>OPAM-INSTALL</h1>
 
-       ----ddeebbuugg
-           Print debug message to stderr. This is equivalent to setting
-           $$OOPPAAMMDDEEBBUUGG to &quot;true&quot;.
+<a href="#NAME">NAME</a><br>
+<a href="#SYNOPSIS">SYNOPSIS</a><br>
+<a href="#DESCRIPTION">DESCRIPTION</a><br>
+<a href="#ARGUMENTS">ARGUMENTS</a><br>
+<a href="#OPTIONS">OPTIONS</a><br>
+<a href="#COMMON OPTIONS">COMMON OPTIONS</a><br>
+<a href="#ENVIRONMENT VARIABLES">ENVIRONMENT VARIABLES</a><br>
+<a href="#FURTHER DOCUMENTATION">FURTHER DOCUMENTATION</a><br>
+<a href="#AUTHORS">AUTHORS</a><br>
+<a href="#BUGS">BUGS</a><br>
 
-       ----ddeebbuugg--lleevveell=_L_E_V_E_L
-           Like `--debug&#39;, but allows specifying the debug level (`--debug&#39;
-           sets it to 1). Equivalent to setting $$OOPPAAMMDDEEBBUUGG to a positive
-           integer.
+<hr>
 
-       ----ggiitt--vveerrssiioonn
-           Print the git version if it exists and exit.
 
-       ----hheellpp[=_F_M_T] (default=pager)
-           Show this help in format _F_M_T (pager, plain or groff).
+<a name="NAME"></a>
+<h2>NAME</h2>
 
-       ----nnoo--bbaassee--ppaacckkaaggeess
-           Do not install base packages (useful for testing purposes). This is
-           equivalent to setting $$OOPPAAMMNNOOBBAASSEEPPAACCKKAAGGEESS to a non-empty string.
 
-       ----nnoo--sseellff--uuppggrraaddee
-           OPAM will replace itself with a newer binary found at OOPPAAMMRROOOOTT//ooppaamm
-           if present. This disables this behaviour.
 
-       --qq, ----qquuiieett
-           Be quiet when installing a new compiler.
+<p style="margin-left:11%; margin-top: 1em">opam&minus;install
+&minus; Install a list of packages.</p>
 
-       ----rroooott=_R_O_O_T (absent=~/.opam)
-           Use _R_O_O_T as the current root path. This is equivalent to setting
-           $$OOPPAAMMRROOOOTT to _R_O_O_T.
+<a name="SYNOPSIS"></a>
+<h2>SYNOPSIS</h2>
 
-       ----ssaaffee
-           Make sure nothing will be automatically updated or rewritten.
-           Useful for calling from completion scripts, for example. Will fail
-           whenever such an operation is needed ; also avoids waiting for
-           locks, skips interactive questions and overrides the OPAMDEBUG
-           variable.
 
-       ----ssoollvveerr=_C_M_D
-           Specify the name of the external dependency _s_o_l_v_e_r. The default
-           value is aspcud
+<p style="margin-left:11%; margin-top: 1em"><b>opam
+install</b> [<i>OPTION</i>]... <i>PACKAGES</i>...</p>
 
-       ----ssttrriicctt
-           Fail whenever an error is found in a package definition or a
-           configuration file. The default is to continue silently if
-           possible.
+<a name="DESCRIPTION"></a>
+<h2>DESCRIPTION</h2>
 
-       ----sswwiittcchh=_S_W_I_T_C_H
-           Use _S_W_I_T_C_H as the current compiler switch. This is equivalent to
-           setting $$OOPPAAMMSSWWIITTCCHH to _S_W_I_T_C_H.
 
-       ----uussee--iinntteerrnnaall--ssoollvveerr, ----nnoo--aassppccuudd
-           Force use of internal heuristics, even if an external solver is
-           available.
+<p style="margin-left:11%; margin-top: 1em">This command
+installs one or more packages to the currently selected
+compiler. To install packages for another compiler, you need
+to switch compilers using <b>opam switch</b>. You can remove
+installed packages with <b>opam remove</b>, and list
+installed packages with <b>opam list &minus;i</b>. See
+<b>opam pin</b> as well to understand how to manage package
+versions.</p>
 
-       --vv, ----vveerrbboossee
-           Be more verbose. Show output of all sub-commands. This is
-           equivalent to setting $$OOPPAAMMVVEERRBBOOSSEE to &quot;true&quot;.
+<p style="margin-left:11%; margin-top: 1em">This command
+makes OPAM use the dependency solver to compute the
+transitive closure of dependencies to be installed, and will
+also handle conflicts. If the dependency solver returns more
+than one solution, OPAM will arbitrarily select the first
+one. If dependencies are to be installed, OPAM will confirm
+if the installation should proceed.</p>
 
-       ----vveerrssiioonn
-           Show version information.
+<a name="ARGUMENTS"></a>
+<h2>ARGUMENTS</h2>
 
-       --yy, ----yyeess
-           Disable interactive mode and answer yes to all questions that would
-           otherwise be asked to the user. This is equivalent to setting
-           $$OOPPAAMMYYEESS to &quot;true&quot;.
 
-EENNVVIIRROONNMMEENNTT VVAARRIIAABBLLEESS
-       OPAM makes use of the environment variables listed here. Boolean
-       variables should be set to &quot;0&quot;, &quot;no&quot; of &quot;false&quot; to disable, &quot;1&quot;, &quot;yes&quot;
-       or &quot;true&quot; to enable.
 
-       _O_P_A_M_C_O_L_O_R, when set to _a_l_w_a_y_s or _n_e_v_e_r, sets a default value for the
-       --color option.
+<p style="margin-left:11%; margin-top: 1em"><i>PACKAGES</i></p>
 
-       _O_P_A_M_C_R_I_T_E_R_I_A specifies user _p_r_e_f_e_r_e_n_c_e_s for dependency solving.The
-       default value is
-       -count(removed),-notuptodate(request),-count(down),-notuptodate(changed),-count(changed),-notuptodate(solution).
-       See also option --criteria
+<p style="margin-left:17%;">List of package names, with an
+optional version or constraint, e.g &lsquo;pkg&rsquo;,
+&lsquo;pkg.1.0&rsquo; or &lsquo;pkg&gt;=0.5&rsquo;.</p>
 
-       _O_P_A_M_C_U_R_L can be used to define an alternative for the &#39;curl&#39;
-       command-line utility to download files.
+<a name="OPTIONS"></a>
+<h2>OPTIONS</h2>
 
-       _O_P_A_M_D_E_B_U_G see options `--debug&#39; and `--debug-level&#39;.
 
-       _O_P_A_M_E_X_T_E_R_N_A_L_S_O_L_V_E_R see option `--solver&#39;.
 
-       _O_P_A_M_J_O_B_S sets the maximum number of parallel workers to run.
+<p style="margin-left:11%; margin-top: 1em"><b>&minus;b</b>,
+<b>&minus;&minus;keep&minus;build&minus;dir</b></p>
 
-       _O_P_A_M_N_O_A_S_P_C_U_D see option `--no-aspcud&#39;.
+<p style="margin-left:17%;">Keep the build directory. This
+is equivalent to setting <b>$OPAMKEEPBUILDDIR</b> to a
+non&minus;empty string.</p>
 
-       _O_P_A_M_N_O_S_E_L_F_U_P_G_R_A_D_E see option `--no-self-upgrade&#39;.
+<p style="margin-left:11%;"><b>&minus;d</b>,
+<b>&minus;&minus;build&minus;doc</b></p>
 
-       _O_P_A_M_R_O_O_T see option `--root&#39;. This is automatically set by `opam config
-       env --root=DIR&#39; when DIR is non-default.
+<p style="margin-left:17%;">Build the package
+documentation. This is equivalent to setting
+<b>$OPAMBUILDDOC</b> to a non&minus;empty string.</p>
 
-       _O_P_A_M_S_O_L_V_E_R_T_I_M_E_O_U_T change the time allowance of the internal solver.
 
-       _O_P_A_M_S_W_I_T_C_H see option `--switch&#39;. Automatically set by `opam config env
-       --switch=SWITCH&#39;.
+<p style="margin-left:11%;"><b>&minus;&minus;deps&minus;only</b></p>
 
-       _O_P_A_M_U_P_G_R_A_D_E_C_R_I_T_E_R_I_A specifies user _p_r_e_f_e_r_e_n_c_e_s for dependency solving
-       when performing an upgrade. Overrides _O_P_A_M_C_R_I_T_E_R_I_A in upgrades if both
-       are set.The default value is
-       -count(down),-count(removed),-notuptodate(solution),-count(new). See
-       also option --criteria
+<p style="margin-left:17%;">Install all its dependencies,
+but don&rsquo;t actually install the package.</p>
 
-       _O_P_A_M_U_T_F_8_M_S_G_S use nice UTF8 characters in OPAM messages.
 
-       _O_P_A_M_V_E_R_B_O_S_E see option `--verbose&#39;.
+<p style="margin-left:11%;"><b>&minus;&minus;dry&minus;run</b></p>
 
-       _O_P_A_M_V_A_R___v_a_r overrides the contents of the variable _v_a_r when
-       substituting `%{var}%` strings in `opam` files.
+<p style="margin-left:17%;">Simulate the command, but
+don&rsquo;t actually perform any changes.</p>
 
-       _O_P_A_M_V_A_R___p_a_c_k_a_g_e___v_a_r overrides the contents of the variable _p_a_c_k_a_g_e_:_v_a_r
-       when substituting `%{package:var}%` strings in `opam` files.
+<p style="margin-left:11%;"><b>&minus;e</b> <i>TAGS</i>,
+<b>&minus;&minus;external</b>=<i>TAGS</i></p>
 
-       _O_P_A_M_U_S_E_I_N_T_E_R_N_A_L_S_O_L_V_E_R see option `--use-internal-solver&#39;.
+<p style="margin-left:17%;">Display the external packages
+associated to the given tags.</p>
 
-       _O_P_A_M_Y_E_S see option `--yes&#39;.
+<p style="margin-left:11%;"><b>&minus;&minus;fake</b></p>
 
-FFUURRTTHHEERR DDOOCCUUMMEENNTTAATTIIOONN
-       See https://opam.ocaml.org.
+<p style="margin-left:17%;">This option registers the
+actions into the OPAM database, without actually performing
+them. WARNING: This option is dangerous and likely to break
+your OPAM environment. You probably want
+&lsquo;&minus;&minus;dry&minus;run&rsquo;. You&rsquo;ve been
+warned.</p>
 
-AAUUTTHHOORRSS
-       Thomas Gazagnaire &lt;thomas@gazagnaire.org&gt;
-       Anil Madhavapeddy &lt;anil@recoil.org&gt;
-       Fabrice Le Fessant &lt;Fabrice.Le_fessant@inria.fr&gt;
-       Frederic Tuong &lt;tuong@users.gforge.inria.fr&gt;
-       Louis Gesbert &lt;louis.gesbert@ocamlpro.com&gt;
-       Vincent Bernardoff &lt;vb@luminar.eu.org&gt;
-       Guillem Rieu &lt;guillem.rieu@ocamlpro.com&gt;
-       Roberto Di Cosmo &lt;roberto@dicosmo.org&gt;
+<p style="margin-left:11%;"><b>&minus;j</b> <i>JOBS</i>,
+<b>&minus;&minus;jobs</b>=<i>JOBS</i></p>
 
-BBUUGGSS
-       Check bug reports at https://github.com/ocaml/opam/issues.
+<p style="margin-left:17%;">Set the maximal number of
+concurrent jobs to use. You can also set it using the
+<b>$OPAMJOBS</b> environment variable.</p>
 
 
+<p style="margin-left:11%;"><b>&minus;&minus;json</b>=<i>FILENAME</i></p>
 
-Opam 1.2.0                                                     OPAM-INSTALL(1)</code></pre></div></div></div></body><html>
+<p style="margin-left:17%;">Save the result output of an
+OPAM run in a computer&minus;readable file</p>
+
+<p style="margin-left:11%;"><b>&minus;m</b> <i>MAKE</i>,
+<b>&minus;&minus;make</b>=<i>MAKE</i></p>
+
+<p style="margin-left:17%;">Use <i>MAKE</i> as the default
+&rsquo;make&rsquo; command.</p>
+
+
+<p style="margin-left:11%;"><b>&minus;&minus;no&minus;checksums</b></p>
+
+<p style="margin-left:17%;">Do not verify the checksum of
+downloaded archives.This is equivalent to setting
+<b>$OPAMNOCHECKSUMS</b> to a non&minus;empty string.</p>
+
+
+<p style="margin-left:11%;"><b>&minus;&minus;require&minus;checksums</b></p>
+
+<p style="margin-left:17%;">Reject the installation of
+packages that don&rsquo;t provide a checksum for the
+upstream archives. This is equivalent to setting
+<b>$OPAMREQUIRECHECKSUMS</b> to a non&minus;empty
+string.</p>
+
+
+<p style="margin-left:11%;"><b>&minus;&minus;set&minus;root</b></p>
+
+<p style="margin-left:17%;">Mark given packages as
+installed roots. This is the default for newly
+manually&minus;installed packages.</p>
+
+
+<p style="margin-left:11%;"><b>&minus;&minus;show&minus;actions</b></p>
+
+<p style="margin-left:17%;">Call the solver and display the
+actions. Don&rsquo;t perform any changes.</p>
+
+<p style="margin-left:11%;"><b>&minus;t</b>,
+<b>&minus;&minus;build&minus;test</b></p>
+
+<p style="margin-left:17%;">Build and <b>run</b> the
+package unit&minus;tests. This is equivalent to setting
+<b>$OPAMBUILDTEST</b> to a non&minus;empty string.</p>
+
+
+<p style="margin-left:11%;"><b>&minus;&minus;unset&minus;root</b></p>
+
+<p style="margin-left:17%;">Mark given packages as
+&quot;installed automatically&quot;.</p>
+
+<a name="COMMON OPTIONS"></a>
+<h2>COMMON OPTIONS</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em">These options
+are common to all commands. <b><br>
+&minus;&minus;color</b>=<i>WHEN</i> (absent=auto)</p>
+
+<p style="margin-left:17%;">Colorize the output.
+<i>WHEN</i> must be &lsquo;always&rsquo;,
+&lsquo;never&rsquo; or &lsquo;auto&rsquo;.</p>
+
+
+<p style="margin-left:11%;"><b>&minus;&minus;compat&minus;mode&minus;1.0</b></p>
+
+<p style="margin-left:17%;">Compatibility mode with OPAM
+1.0</p>
+
+
+<p style="margin-left:11%;"><b>&minus;&minus;criteria</b>=<i>CRITERIA</i></p>
+
+<p style="margin-left:17%;">Specify user <i>preferences</i>
+for dependency solving for this run. Overrides both
+<b>$OPAMCRITERIA</b> and <b>$OPAMUPGRADECRITERIA</b>. For
+details on the supported language, and the external solvers
+available, see
+<i>http://opam.ocaml.org/doc/Specifying_Solver_Preferences.html</i>.
+A general guide to using solver preferences can be found at
+<i>http://www.dicosmo.org/Articles/usercriteria.pdf</i>. The
+default value is
+&minus;count(down),&minus;count(removed),&minus;notuptodate(solution),&minus;count(new)
+for upgrades, and
+&minus;count(removed),&minus;notuptodate(request),&minus;count(down),&minus;count(changed)
+otherwise.</p>
+
+
+<p style="margin-left:11%;"><b>&minus;&minus;cudf</b>=<i>FILENAME</i></p>
+
+<p style="margin-left:17%;">Debug option: Save the CUDF
+requests sent to the solver to
+<i>FILENAME</i>&minus;&lt;n&gt;.cudf.</p>
+
+<p style="margin-left:11%;"><b>&minus;&minus;debug</b></p>
+
+<p style="margin-left:17%;">Print debug message to stderr.
+This is equivalent to setting <b>$OPAMDEBUG</b> to a
+non&minus;empty value.</p>
+
+
+<p style="margin-left:11%;"><b>&minus;&minus;debug&minus;level</b>=<i>LEVEL</i></p>
+
+<p style="margin-left:17%;">Like
+&lsquo;&minus;&minus;debug&rsquo;, but allows specifying the
+debug level (&lsquo;&minus;&minus;debug&rsquo; sets it to
+1.</p>
+
+
+<p style="margin-left:11%;"><b>&minus;&minus;git&minus;version</b></p>
+
+<p style="margin-left:17%;">Print the git version if it
+exists and exit.</p>
+
+
+<p style="margin-left:11%;"><b>&minus;&minus;help</b>[=<i>FMT</i>]
+(default=pager)</p>
+
+<p style="margin-left:17%;">Show this help in format
+<i>FMT</i> (pager, plain or groff).</p>
+
+
+<p style="margin-left:11%;"><b>&minus;&minus;no&minus;base&minus;packages</b></p>
+
+<p style="margin-left:17%;">Do not install base packages
+(useful for testing purposes). This is equivalent to setting
+<b>$OPAMNOBASEPACKAGES</b> to a non&minus;empty string.</p>
+
+
+<p style="margin-left:11%;"><b>&minus;&minus;no&minus;self&minus;upgrade</b></p>
+
+<p style="margin-left:17%;">OPAM will replace itself with a
+newer binary found at <b>OPAMROOT/opam</b> if present. This
+disables this behaviour.</p>
+
+<p style="margin-left:11%;"><b>&minus;q</b>,
+<b>&minus;&minus;quiet</b></p>
+
+<p style="margin-left:17%;">Be quiet when installing a new
+compiler.</p>
+
+<p style="margin-left:11%;"><b>&minus;r</b> <i>ROOT</i>,
+<b>&minus;&minus;root</b>=<i>ROOT</i> (absent=~/.opam)</p>
+
+<p style="margin-left:17%;">Use <i>ROOT</i> as the current
+root path. This is equivalent to setting <b>$OPAMROOT</b> to
+<i>ROOT</i>.</p>
+
+
+<p style="margin-left:11%;"><b>&minus;&minus;solver</b>=<i>CMD</i></p>
+
+<p style="margin-left:17%;">Specify the name of the
+external dependency <i>solver</i>. The default value is
+aspcud</p>
+
+
+<p style="margin-left:11%;"><b>&minus;&minus;strict</b></p>
+
+<p style="margin-left:17%;">Fail whenever an error is found
+in a package definition or a configuration file. The default
+is to continue silently if possible.</p>
+
+
+<p style="margin-left:11%;"><b>&minus;&minus;switch</b>=<i>SWITCH</i></p>
+
+<p style="margin-left:17%;">Use <i>SWITCH</i> as the
+current compiler switch. This is equivalent to setting
+<b>$OPAMSWITCH</b> to <i>SWITCH</i>.</p>
+
+
+<p style="margin-left:11%;"><b>&minus;&minus;use&minus;internal&minus;solver</b>,
+<b>&minus;&minus;no&minus;aspcud</b></p>
+
+<p style="margin-left:17%;">Force use of internal
+heuristics, even if an external solver is available.</p>
+
+<p style="margin-left:11%;"><b>&minus;v</b>,
+<b>&minus;&minus;verbose</b></p>
+
+<p style="margin-left:17%;">Be more verbose. Show output of
+all sub&minus;commands. This is equivalent to setting
+<b>$OPAMVERBOSE</b> to a non&minus;empty value.</p>
+
+
+<p style="margin-left:11%;"><b>&minus;&minus;version</b></p>
+
+<p style="margin-left:17%;">Show version information.</p>
+
+<p style="margin-left:11%;"><b>&minus;y</b>,
+<b>&minus;&minus;yes</b></p>
+
+<p style="margin-left:17%;">Disable interactive mode and
+answer yes to all questions that would otherwise be asked to
+the user. This is equivalent to setting <b>$OPAMYES</b> to a
+non&minus;empty string.</p>
+
+<a name="ENVIRONMENT VARIABLES"></a>
+<h2>ENVIRONMENT VARIABLES</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em">OPAM makes use
+of the environment variables listed here. Boolean variables
+are considered true when set to a non&minus;empty
+string.</p>
+
+
+<p style="margin-left:11%; margin-top: 1em"><i>OPAMCOLOR</i>,
+when set to <i>always</i> or <i>never</i>, sets a default
+value for the &minus;&minus;color option.</p>
+
+
+<p style="margin-left:11%; margin-top: 1em"><i>OPAMCRITERIA</i>
+specifies user <i>preferences</i> for dependency solving.The
+default value is
+&minus;count(removed),&minus;notuptodate(request),&minus;count(down),&minus;count(changed).
+See also option &minus;&minus;criteria</p>
+
+
+<p style="margin-left:11%; margin-top: 1em"><i>OPAMCURL</i>
+can be used to define an alternative for the
+&rsquo;curl&rsquo; command&minus;line utility to download
+files.</p>
+
+
+<p style="margin-left:11%; margin-top: 1em"><i>OPAMDEBUG</i>
+see option &lsquo;&minus;&minus;debug&rsquo;.</p>
+
+
+<p style="margin-left:11%; margin-top: 1em"><i>OPAMEXTERNALSOLVER</i>
+see option &lsquo;&minus;&minus;solver&rsquo;.</p>
+
+
+<p style="margin-left:11%; margin-top: 1em"><i>OPAMJOBS</i>
+sets the maximum number of parallel workers to run.</p>
+
+
+<p style="margin-left:11%; margin-top: 1em"><i>OPAMNOASPCUD</i>
+see option &lsquo;&minus;&minus;no&minus;aspcud&rsquo;.</p>
+
+
+<p style="margin-left:11%; margin-top: 1em"><i>OPAMNOSELFUPGRADE</i>
+see option
+&lsquo;&minus;&minus;no&minus;self&minus;upgrade&rsquo;.</p>
+
+
+<p style="margin-left:11%; margin-top: 1em"><i>OPAMROOT</i>
+see option &lsquo;&minus;&minus;root&rsquo;. This is
+automatically set by &lsquo;opam config env
+&minus;&minus;root=DIR&rsquo; when DIR is
+non&minus;default.</p>
+
+
+<p style="margin-left:11%; margin-top: 1em"><i>OPAMSOLVERTIMEOUT</i>
+change the time allowance of the internal solver.</p>
+
+
+<p style="margin-left:11%; margin-top: 1em"><i>OPAMSWITCH</i>
+see option &lsquo;&minus;&minus;switch&rsquo;. Automatically
+set by &lsquo;opam config env
+&minus;&minus;switch=SWITCH&rsquo;.</p>
+
+
+<p style="margin-left:11%; margin-top: 1em"><i>OPAMUPGRADECRITERIA</i>
+specifies user <i>preferences</i> for dependency solving
+when performing an upgrade. Overrides <i>OPAMCRITERIA</i> in
+upgrades if both are set.The default value is
+&minus;count(down),&minus;count(removed),&minus;notuptodate(solution),&minus;count(new).
+See also option &minus;&minus;criteria</p>
+
+
+<p style="margin-left:11%; margin-top: 1em"><i>OPAMUTF8MSGS</i>
+use nice UTF8 characters in OPAM messages.</p>
+
+
+<p style="margin-left:11%; margin-top: 1em"><i>OPAMVERBOSE</i>
+see option &lsquo;&minus;&minus;verbose&rsquo;.</p>
+
+
+<p style="margin-left:11%; margin-top: 1em"><i>OPAMVAR_var</i>
+overrides the contents of the variable <i>var</i> when
+substituting &lsquo;%{var}%&lsquo; strings in
+&lsquo;opam&lsquo; files.</p>
+
+
+<p style="margin-left:11%; margin-top: 1em"><i>OPAMVAR_package_var</i>
+overrides the contents of the variable <i>package:var</i>
+when substituting &lsquo;%{package:var}%&lsquo; strings in
+&lsquo;opam&lsquo; files.</p>
+
+
+<p style="margin-left:11%; margin-top: 1em"><i>OPAMUSEINTERNALSOLVER</i>
+see option
+&lsquo;&minus;&minus;use&minus;internal&minus;solver&rsquo;.</p>
+
+<p style="margin-left:11%; margin-top: 1em"><i>OPAMYES</i>
+see option &lsquo;&minus;&minus;yes&rsquo;.</p>
+
+<a name="FURTHER DOCUMENTATION"></a>
+<h2>FURTHER DOCUMENTATION</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em">See
+https://opam.ocaml.org.</p>
+
+<a name="AUTHORS"></a>
+<h2>AUTHORS</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em">Thomas
+Gazagnaire &lt;thomas@gazagnaire.org&gt; <br>
+Anil Madhavapeddy &lt;anil@recoil.org&gt; <br>
+Fabrice Le Fessant &lt;Fabrice.Le_fessant@inria.fr&gt; <br>
+Frederic Tuong &lt;tuong@users.gforge.inria.fr&gt; <br>
+Louis Gesbert &lt;louis.gesbert@ocamlpro.com&gt; <br>
+Vincent Bernardoff &lt;vb@luminar.eu.org&gt; <br>
+Guillem Rieu &lt;guillem.rieu@ocamlpro.com&gt; <br>
+Roberto Di Cosmo &lt;roberto@dicosmo.org&gt;</p>
+
+<a name="BUGS"></a>
+<h2>BUGS</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em">Check bug
+reports at https://github.com/ocaml/opam/issues.</p>
+<hr>
+</body>
+</html>
