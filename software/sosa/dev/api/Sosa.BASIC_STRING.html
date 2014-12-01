@@ -119,6 +119,44 @@ Get the sub-string of size <code class="code">length</code> at position <code cl
 Do like <code class="code">sub</code> but throw an exception instead of returning <code class="code"><span class="constructor">None</span></code><br>
 </div>
 
+<pre><span id="VALslice"><span class="keyword">val</span> slice</span> : <code class="type">?start:int -><br>       ?finish:int -> <a href="Sosa.BASIC_STRING.html#TYPEt">t</a> -> <a href="Sosa.BASIC_STRING.html#TYPEt">t</a> option</code></pre><div class="info ">
+Create a sub-string from the <code class="code">start</code> (default 0, within [0,length\))
+      position to before the <code class="code">finish</code> (default length, within [0,length])
+      if all of the indices are in bounds.<br>
+</div>
+
+<pre><span id="VALslice_exn"><span class="keyword">val</span> slice_exn</span> : <code class="type">?start:int -> ?finish:int -> <a href="Sosa.BASIC_STRING.html#TYPEt">t</a> -> <a href="Sosa.BASIC_STRING.html#TYPEt">t</a></code></pre><div class="info ">
+Like <code class="code">slice</code> but throw an exception instead of returning <code class="code"><span class="constructor">None</span></code><br>
+</div>
+
+<pre><span id="VALis_prefix"><span class="keyword">val</span> is_prefix</span> : <code class="type"><a href="Sosa.BASIC_STRING.html#TYPEt">t</a> -> prefix:<a href="Sosa.BASIC_STRING.html#TYPEt">t</a> -> bool</code></pre><div class="info ">
+Does <code class="code">t</code> start with <code class="code">prefix</code> ?<br>
+</div>
+
+<pre><span id="VALis_suffix"><span class="keyword">val</span> is_suffix</span> : <code class="type"><a href="Sosa.BASIC_STRING.html#TYPEt">t</a> -> suffix:<a href="Sosa.BASIC_STRING.html#TYPEt">t</a> -> bool</code></pre><div class="info ">
+Does <code class="code">t</code> end with <code class="code">suffix</code> ?<br>
+</div>
+
+<pre><span id="VALchop_prefix_exn"><span class="keyword">val</span> chop_prefix_exn</span> : <code class="type"><a href="Sosa.BASIC_STRING.html#TYPEt">t</a> -> prefix:<a href="Sosa.BASIC_STRING.html#TYPEt">t</a> -> <a href="Sosa.BASIC_STRING.html#TYPEt">t</a></code></pre><div class="info ">
+Return a copy of <code class="code">t</code> with <code class="code">prefix</code> removed from the beginning.
+      Throws Invalid_argument if <code class="code">t</code> does not start with <code class="code">prefix</code>.<br>
+</div>
+
+<pre><span id="VALchop_prefix"><span class="keyword">val</span> chop_prefix</span> : <code class="type"><a href="Sosa.BASIC_STRING.html#TYPEt">t</a> -><br>       prefix:<a href="Sosa.BASIC_STRING.html#TYPEt">t</a> -> <a href="Sosa.BASIC_STRING.html#TYPEt">t</a> option</code></pre><div class="info ">
+Like <code class="code">chop_prefix_exn</code> but return <code class="code"><span class="constructor">None</span></code> instead of throwing
+      an exception.<br>
+</div>
+
+<pre><span id="VALchop_suffix_exn"><span class="keyword">val</span> chop_suffix_exn</span> : <code class="type"><a href="Sosa.BASIC_STRING.html#TYPEt">t</a> -> suffix:<a href="Sosa.BASIC_STRING.html#TYPEt">t</a> -> <a href="Sosa.BASIC_STRING.html#TYPEt">t</a></code></pre><div class="info ">
+Return a copy of <code class="code">t</code> with <code class="code">suffix</code> removed from the end.
+      Throws Invalid_argument if <code class="code">t</code> does not end with <code class="code">suffix</code>.<br>
+</div>
+
+<pre><span id="VALchop_suffix"><span class="keyword">val</span> chop_suffix</span> : <code class="type"><a href="Sosa.BASIC_STRING.html#TYPEt">t</a> -><br>       suffix:<a href="Sosa.BASIC_STRING.html#TYPEt">t</a> -> <a href="Sosa.BASIC_STRING.html#TYPEt">t</a> option</code></pre><div class="info ">
+Like <code class="code">chop_suffix_exn</code> but return <code class="code"><span class="constructor">None</span></code> instead of throwing
+      an exception.<br>
+</div>
+
 <pre><span id="VALcompare_substring"><span class="keyword">val</span> compare_substring</span> : <code class="type"><a href="Sosa.BASIC_STRING.html#TYPEt">t</a> * int * int -> <a href="Sosa.BASIC_STRING.html#TYPEt">t</a> * int * int -> int</code></pre><div class="info ">
 Comparison function for substrings: use as <code class="code">compare_substring
       (s1, index1, length1) (s2, index2, length2)</code>.
@@ -156,6 +194,10 @@ Do like <a href="Sosa.BASIC_STRING.html#VALcompare_substring"><code class="code"
 Apply <code class="code">f</code> on every character successively.<br>
 </div>
 
+<pre><span id="VALiteri"><span class="keyword">val</span> iteri</span> : <code class="type"><a href="Sosa.BASIC_STRING.html#TYPEt">t</a> -> f:(int -> <a href="Sosa.BASIC_STRING.html#TYPEcharacter">character</a> -> unit) -> unit</code></pre><div class="info ">
+Apply <code class="code">f</code> on every character and its index.<br>
+</div>
+
 <pre><span id="VALiter_reverse"><span class="keyword">val</span> iter_reverse</span> : <code class="type"><a href="Sosa.BASIC_STRING.html#TYPEt">t</a> -> f:(<a href="Sosa.BASIC_STRING.html#TYPEcharacter">character</a> -> unit) -> unit</code></pre><div class="info ">
 Apply <code class="code">f</code> on every character successively in reverse order.<br>
 </div>
@@ -163,6 +205,10 @@ Apply <code class="code">f</code> on every character successively in reverse ord
 <pre><span id="VALmap"><span class="keyword">val</span> map</span> : <code class="type"><a href="Sosa.BASIC_STRING.html#TYPEt">t</a> -><br>       f:(<a href="Sosa.BASIC_STRING.html#TYPEcharacter">character</a> -> <a href="Sosa.BASIC_STRING.html#TYPEcharacter">character</a>) -><br>       <a href="Sosa.BASIC_STRING.html#TYPEt">t</a></code></pre><div class="info ">
 Make a new string by applying <code class="code">f</code> to all characters of the
       input.<br>
+</div>
+
+<pre><span id="VALmapi"><span class="keyword">val</span> mapi</span> : <code class="type"><a href="Sosa.BASIC_STRING.html#TYPEt">t</a> -><br>       f:(int -> <a href="Sosa.BASIC_STRING.html#TYPEcharacter">character</a> -> <a href="Sosa.BASIC_STRING.html#TYPEcharacter">character</a>) -><br>       <a href="Sosa.BASIC_STRING.html#TYPEt">t</a></code></pre><div class="info ">
+Make a new string by applying <code class="code">f</code> to all characters and their indices.<br>
 </div>
 
 <pre><span id="VALfor_all"><span class="keyword">val</span> for_all</span> : <code class="type"><a href="Sosa.BASIC_STRING.html#TYPEt">t</a> -> f:(<a href="Sosa.BASIC_STRING.html#TYPEcharacter">character</a> -> bool) -> bool</code></pre><div class="info ">
@@ -246,6 +292,13 @@ Find the index of the last character <code class="code">c</code> for which <code
 <pre><span id="VALfilter_map"><span class="keyword">val</span> filter_map</span> : <code class="type">?from:int -><br>       ?length:int -><br>       <a href="Sosa.BASIC_STRING.html#TYPEt">t</a> -><br>       f:(<a href="Sosa.BASIC_STRING.html#TYPEcharacter">character</a> -> <a href="Sosa.BASIC_STRING.html#TYPEcharacter">character</a> option) -><br>       <a href="Sosa.BASIC_STRING.html#TYPEt">t</a></code></pre><div class="info ">
 Create a new string with the characters for which <code class="code">f c</code> returned 
       <code class="code"><span class="constructor">Some</span> c</code>. One can restrict to the sub-string <code class="code">(from, length)</code> (the
+      default is to use the whole string, “out-of-bound” values are restricted
+      to the bounds of the string).<br>
+</div>
+
+<pre><span id="VALfilter"><span class="keyword">val</span> filter</span> : <code class="type">?from:int -><br>       ?length:int -><br>       <a href="Sosa.BASIC_STRING.html#TYPEt">t</a> -><br>       f:(<a href="Sosa.BASIC_STRING.html#TYPEcharacter">character</a> -> bool) -> <a href="Sosa.BASIC_STRING.html#TYPEt">t</a></code></pre><div class="info ">
+Create a new string with the characters for which <code class="code">f c</code> is true.
+      One can restrict to the sub-string <code class="code">(from, length)</code> (the
       default is to use the whole string, “out-of-bound” values are restricted
       to the bounds of the string).<br>
 </div>

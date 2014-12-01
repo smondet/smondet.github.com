@@ -53,9 +53,11 @@
 <pre><span id="VALget_exn"><span class="keyword">val</span> <a href="code_VALSosa.List_of.get_exn.html">get_exn</a></span> : <code class="type">'a list -> index:int -> 'a</code></pre>
 <pre><span id="VALset_exn"><span class="keyword">val</span> <a href="code_VALSosa.List_of.set_exn.html">set_exn</a></span> : <code class="type">'a list -> index:int -> v:'a -> 'a list</code></pre>
 <pre><span id="VALiter"><span class="keyword">val</span> <a href="code_VALSosa.List_of.iter.html">iter</a></span> : <code class="type">'a list -> f:('a -> unit) -> unit</code></pre>
+<pre><span id="VALiteri"><span class="keyword">val</span> <a href="code_VALSosa.List_of.iteri.html">iteri</a></span> : <code class="type">'a list -> f:(int -> 'a -> unit) -> unit</code></pre>
 <pre><span id="VALiter_reverse"><span class="keyword">val</span> <a href="code_VALSosa.List_of.iter_reverse.html">iter_reverse</a></span> : <code class="type">'a list -> f:('a -> unit) -> unit</code></pre>
 <pre><span id="VALfold"><span class="keyword">val</span> <a href="code_VALSosa.List_of.fold.html">fold</a></span> : <code class="type">'a list -> init:'b -> f:('b -> 'a -> 'b) -> 'b</code></pre>
 <pre><span id="VALmap"><span class="keyword">val</span> <a href="code_VALSosa.List_of.map.html">map</a></span> : <code class="type">'a list -> f:('a -> 'b) -> 'b list</code></pre>
+<pre><span id="VALmapi"><span class="keyword">val</span> <a href="code_VALSosa.List_of.mapi.html">mapi</a></span> : <code class="type">'a list -> f:(int -> 'a -> 'b) -> 'b list</code></pre>
 <pre><span id="VALfor_all"><span class="keyword">val</span> <a href="code_VALSosa.List_of.for_all.html">for_all</a></span> : <code class="type">'a list -> f:('a -> bool) -> bool</code></pre>
 <pre><span id="VALexists"><span class="keyword">val</span> <a href="code_VALSosa.List_of.exists.html">exists</a></span> : <code class="type">'a list -> f:('a -> bool) -> bool</code></pre>
 <pre><span id="VALcompare"><span class="keyword">val</span> <a href="code_VALSosa.List_of.compare.html">compare</a></span> : <code class="type">Char.t list -> Char.t list -> int</code></pre>
@@ -67,6 +69,14 @@
 <pre><span id="VALlength"><span class="keyword">val</span> <a href="code_VALSosa.List_of.length.html">length</a></span> : <code class="type">'a list -> int</code></pre>
 <pre><span id="VALsub"><span class="keyword">val</span> <a href="code_VALSosa.List_of.sub.html">sub</a></span> : <code class="type">'a list -> index:int -> length:int -> 'a list option</code></pre>
 <pre><span id="VALsub_exn"><span class="keyword">val</span> <a href="code_VALSosa.List_of.sub_exn.html">sub_exn</a></span> : <code class="type">'a list -> index:int -> length:int -> 'a list</code></pre>
+<pre><span id="VALslice_exn"><span class="keyword">val</span> <a href="code_VALSosa.List_of.slice_exn.html">slice_exn</a></span> : <code class="type">?start:int -><br>       ?finish:int -> <a href="Sosa.List_of.html#TYPEcharacter">character</a> list -> <a href="Sosa.List_of.html#TYPEcharacter">character</a> list</code></pre>
+<pre><span id="VALslice"><span class="keyword">val</span> <a href="code_VALSosa.List_of.slice.html">slice</a></span> : <code class="type">?start:int -><br>       ?finish:int -><br>       <a href="Sosa.List_of.html#TYPEcharacter">character</a> list -> <a href="Sosa.List_of.html#TYPEcharacter">character</a> list option</code></pre>
+<pre><span id="VALis_prefix"><span class="keyword">val</span> <a href="code_VALSosa.List_of.is_prefix.html">is_prefix</a></span> : <code class="type">'a list -> prefix:'a list -> bool</code></pre>
+<pre><span id="VALis_suffix"><span class="keyword">val</span> <a href="code_VALSosa.List_of.is_suffix.html">is_suffix</a></span> : <code class="type">'a list -> suffix:'a list -> bool</code></pre>
+<pre><span id="VALchop_prefix_exn"><span class="keyword">val</span> <a href="code_VALSosa.List_of.chop_prefix_exn.html">chop_prefix_exn</a></span> : <code class="type">'a list -> prefix:'a list -> 'a list</code></pre>
+<pre><span id="VALchop_prefix"><span class="keyword">val</span> <a href="code_VALSosa.List_of.chop_prefix.html">chop_prefix</a></span> : <code class="type">'a list -> prefix:'a list -> 'a list option</code></pre>
+<pre><span id="VALchop_suffix_exn"><span class="keyword">val</span> <a href="code_VALSosa.List_of.chop_suffix_exn.html">chop_suffix_exn</a></span> : <code class="type">'a list -> suffix:'a list -> 'a list</code></pre>
+<pre><span id="VALchop_suffix"><span class="keyword">val</span> <a href="code_VALSosa.List_of.chop_suffix.html">chop_suffix</a></span> : <code class="type">'a list -> suffix:'a list -> 'a list option</code></pre>
 <pre><span id="VALindex_of_character"><span class="keyword">val</span> <a href="code_VALSosa.List_of.index_of_character.html">index_of_character</a></span> : <code class="type">'a list -> ?from:int -> 'a -> int option</code></pre>
 <pre><span id="VALindex_of_character_reverse"><span class="keyword">val</span> <a href="code_VALSosa.List_of.index_of_character_reverse.html">index_of_character_reverse</a></span> : <code class="type">'a list -> ?from:int -> 'a -> int option</code></pre>
 <pre><span id="VALcompare_substring"><span class="keyword">val</span> <a href="code_VALSosa.List_of.compare_substring.html">compare_substring</a></span> : <code class="type">Char.t list * int * int -> Char.t list * int * int -> int</code></pre>
@@ -77,6 +87,7 @@
 <pre><span id="VALfind"><span class="keyword">val</span> <a href="code_VALSosa.List_of.find.html">find</a></span> : <code class="type">?from:int -> ?length:int -> 'a list -> f:('a -> bool) -> int option</code></pre>
 <pre><span id="VALfind_reverse"><span class="keyword">val</span> <a href="code_VALSosa.List_of.find_reverse.html">find_reverse</a></span> : <code class="type">?from:int -> ?length:int -> 'a list -> f:('a -> bool) -> int option</code></pre>
 <pre><span id="VALfilter_map"><span class="keyword">val</span> <a href="code_VALSosa.List_of.filter_map.html">filter_map</a></span> : <code class="type">?from:int -> ?length:int -> 'a list -> f:('a -> 'b option) -> 'b list</code></pre>
+<pre><span id="VALfilter"><span class="keyword">val</span> <a href="code_VALSosa.List_of.filter.html">filter</a></span> : <code class="type">?from:int -> ?length:int -> 'a list -> f:('a -> bool) -> 'a list</code></pre>
 <pre><span class="keyword">include</span> struct ... end</pre>
 
 <pre><span class="keyword">include</span> struct ... end</pre>
