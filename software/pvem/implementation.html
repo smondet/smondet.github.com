@@ -7,19 +7,24 @@
 
 <h2 id="WhyPolymorphicVariants">Why Polymorphic Variants</h2>
 
-<p>Using</p><pre><span class="kw">type</span><span class="text"> ('</span><span class="id">a</span><span class="text">, '</span><span class="id">b</span><span class="text">) </span><span class="id">t</span><span class="text"> =
+<p>Using</p>
+<pre><span class="kw">type</span><span class="text"> ('</span><span class="id">a</span><span class="text">, '</span><span class="id">b</span><span class="text">) </span><span class="id">t</span><span class="text"> =
   | </span><span class="kw2">Ok</span><span class="text"> </span><span class="kw">of</span><span class="text"> '</span><span class="id">a</span><span class="text">
   | </span><span class="kw2">Error</span><span class="text"> </span><span class="kw">of</span><span class="text"> '</span><span class="id">b</span></pre>
 
-<p>gives two annoying alternatives:</p><ul><li>be incompatible with <code>Core_kernel</code>&#39;s <code>Result.t</code>, or</li><li>depend on <code>Core_kernel</code>.</li></ul>
+<p>gives two annoying alternatives:</p>
+<ul><li>be incompatible with <code>Core_kernel</code>&#39;s <code>Result.t</code>, or</li><li>depend on <code>Core_kernel</code>.</li></ul>
 
-<p>Type equality constraints do not work <em>twice</em>. I.e. one cannot write:</p><pre><span class="kw">type</span><span class="text"> ('</span><span class="id">a</span><span class="text">, '</span><span class="id">b</span><span class="text">) </span><span class="id">result_core</span><span class="text"> = ('</span><span class="id">a</span><span class="text">, '</span><span class="id">b</span><span class="text">) </span><span class="kw2">Result</span><span class="text">.</span><span class="id">t</span><span class="text">  = </span><span class="kw2">Ok</span><span class="text"> </span><span class="kw">of</span><span class="text"> '</span><span class="id">a</span><span class="text"> | </span><span class="kw2">Error</span><span class="text"> </span><span class="kw">of</span><span class="text"> '</span><span class="id">b</span><span class="text">
+<p>Type equality constraints do not work <em>twice</em>. I.e. one cannot write:</p>
+<pre><span class="kw">type</span><span class="text"> ('</span><span class="id">a</span><span class="text">, '</span><span class="id">b</span><span class="text">) </span><span class="id">result_core</span><span class="text"> = ('</span><span class="id">a</span><span class="text">, '</span><span class="id">b</span><span class="text">) </span><span class="kw2">Result</span><span class="text">.</span><span class="id">t</span><span class="text">  = </span><span class="kw2">Ok</span><span class="text"> </span><span class="kw">of</span><span class="text"> '</span><span class="id">a</span><span class="text"> | </span><span class="kw2">Error</span><span class="text"> </span><span class="kw">of</span><span class="text"> '</span><span class="id">b</span><span class="text">
 </span><span class="kw">type</span><span class="text"> ('</span><span class="id">a</span><span class="text">, '</span><span class="id">b</span><span class="text">) </span><span class="id">result_err</span><span class="text"> = ('</span><span class="id">a</span><span class="text">, '</span><span class="id">b</span><span class="text">) </span><span class="kw2">Err</span><span class="text">.</span><span class="id">t</span><span class="text">  = </span><span class="kw2">Ok</span><span class="text"> </span><span class="kw">of</span><span class="text"> '</span><span class="id">a</span><span class="text"> | </span><span class="kw2">Error</span><span class="text"> </span><span class="kw">of</span><span class="text"> '</span><span class="id">b</span><span class="text">
 </span><span class="kw">type</span><span class="text"> ('</span><span class="id">a</span><span class="text">, '</span><span class="id">b</span><span class="text">) </span><span class="id">result</span><span class="text"> = ('</span><span class="id">a</span><span class="text">, '</span><span class="id">b</span><span class="text">) </span><span class="id">result_err</span><span class="text">  = ('</span><span class="id">a</span><span class="text">, '</span><span class="id">b</span><span class="text">) </span><span class="id">result_core</span></pre>
 
-<p>Polymorphic Variants are safe while not enforcing library dependencies.</p><h2 id="Alternatives">Alternatives</h2>
+<p>Polymorphic Variants are safe while not enforcing library dependencies.</p>
+<h2 id="Alternatives">Alternatives</h2>
 
 <p>The following libraries use “regular/ordinary” variants and hence are
-all incompatible from each other:</p><ul><li>Core&#39;s
+all incompatible from each other:</p>
+<ul><li>Core&#39;s
 <a href='https://ocaml.janestreet.com/ocaml-core/latest/doc/core_kernel/Result.html'><code>Core.Std.Result</code></a></li><li>Batteries&#39;
 <a href='http://ocaml-batteries-team.github.io/batteries-included/hdoc/BatResult.html'><code>BatResult</code></a></li><li><a href='https://bitbucket.org/deplai_j/ocaml-monad-exn'>ocaml-monad-exn</a></li></ul></div></div></div></body><html>

@@ -1,0 +1,46 @@
+ <!DOCTYPE html> <html> <head><link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootswatch/3.2.0/readable/bootstrap.min.css" type="text/css">
+<link rel="stylesheet" href="https://cdn.rawgit.com/hammerlab/ketrew/2d1c430cca52caa71e363a765ff8775a6ae14ba9/src/doc/code_style.css" type="text/css"><meta charset="utf-8"><title>Trakeva: Home</title></head><body><div class="container"><h1>Trakeva: Home</h1><div class="row">
+<div class="col-md-3">
+<h2>Contents</h2><ul><li><a href='#Build'>Build</a>
+</li><li><a href='#NotesTips'>Notes/Tips</a>
+<ul><li><a href='#Sqlite3OnMacOSX'>Sqlite3 On MacOSX</a>
+</li></ul>
+</li></ul><h2>Menu</h2><ul><li><a href='index.html'>Home</a></li><li><a href='./api/index.html'>API Documentation</a></li><li>Repository <a href='https://github.com/smondet/trakeva'>at Github</a></li><li>Up: <a href='../index.html'>Software Projects</a></li></ul></div><div class="col-md-9"><h1 id="Trakeva">Trakeva</h1>
+
+<p>Transactions, Keys, and Values: an attempt at a generic interface for
+transactional key-value stores with different backends.</p>
+<p>The interfaces are defined in <a href='api/Trakeva_interface.html' title='Trakeva_interface'><code>Trakeva_interface</code></a>, we have, for now, two
+implementations of the module type <a href='api/Trakeva_interface.KEY_VALUE_STORE.html' title='Trakeva_interface.KEY_VALUE_STORE'><code>Trakeva_interface.KEY_VALUE_STORE</code></a>:</p>
+<ul><li><a href='api/Trakeva_git_commands.html' title='Trakeva_git_commands'><code>Trakeva_git_commands</code></a> was extracted from
+<a href='http://seb.mondet.org/software/ketrew/index.html'>Ketrew</a>, it uses the <code>git</code>
+executable to provide the functionality.</li><li><a href='api/Trakeva_sqlite.html' title='Trakeva_sqlite'><code>Trakeva_sqlite</code></a> (in the separate library <code>trakeva_sqlite</code>) uses 
+<a href='http://mmottl.github.io/sqlite3-ocaml/'>Sqlite3-ocaml</a>.</li></ul>
+
+<h2 id="Build">Build</h2>
+
+<p>To install the libraries use opam:</p>
+<pre><code>opam remote add smondet git@github.com:smondet/dev-opam-repo
+opam update
+opam install trakeva
+</code></pre><p>Only if the library <code>sqlite3</code> is installed the library <code>trakeva_sqlite</code> will be
+picked-up for installing too.</p>
+<p>As a developer, just run:</p>
+<pre><code>make configure
+make</code></pre><p>(this will enable all backends and the tests).  The tests/benchmarks also depend
+on <a href='http://seb.mondet.org/software/sosa/index.html'>Sosa</a> (<code>opam install sosa</code>).</p>
+<p>To run the unit tests:</p>
+<pre><code>./trakeva_tests</code></pre><p>To run the benchmarks:</p>
+<pre><code>./trakeva_tests bench collection=100 kb=5     # quick bench
+./trakeva_tests bench collection=1000 kb=20   # about a minute long</code></pre><p>To build the documentation:</p>
+<pre><code>make doc</code></pre><p>and checkout <code>_doc/index.html</code>.</p>
+<h2 id="NotesTips">Notes/Tips</h2>
+
+<h3 id="Sqlite3OnMacOSX">Sqlite3 On MacOSX</h3>
+
+<p>See the issues <a href='https://github.com/ocaml/opam-repository/issues/50'>#50</a>, on the
+opam-repository and 
+<a href='https://github.com/Homebrew/homebrew/issues/21129'>#21129</a> on Homebrew.  So
+please use:</p>
+<pre><code>brew install pkg-config sqlite
+export PKG_CONFIG_PATH=/usr/local//Cellar/sqlite/3.8.0.2/lib/pkgconfig
+opam install sqlite3</code></pre></div></div></div></body><html>

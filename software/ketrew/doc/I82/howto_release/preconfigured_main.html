@@ -1,0 +1,70 @@
+ <!DOCTYPE html> <html> <head><link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootswatch/3.2.0/readable/bootstrap.min.css" type="text/css">
+<link rel="stylesheet" href="https://cdn.rawgit.com/hammerlab/ketrew/2d1c430cca52caa71e363a765ff8775a6ae14ba9/src/doc/code_style.css" type="text/css"><meta charset="utf-8"><title>Ketrew: Preconfigured Main Example</title></head><body><div class="container"><h1>Ketrew: Preconfigured Main Example</h1><div class="row">
+<div class="col-md-3">
+<h2>Contents</h2><ul><li><a href='#CreateTheConfiguration'>Create The Configuration</a>
+</li><li><a href='#ACmdlinerCommandToAdd'>A Cmdliner Command To Add</a>
+</li><li><a href='#StartTheApplication'>Start The Application</a>
+</li></ul><h2>Menu</h2><ul><li><a href='index.html'>Home</a></li><li><a href='Alternative_CLI_Application.html'>Alternative CLI Application</a></li><li><a href='Developer_Documentation.html'>Developer Documentation</a></li><li><a href='Glossary.html'>Glossary</a></li><li><a href='Long-Running_Plugins.html'>Long-Running Plugins</a></li><li><a href='Server_Commands.html'>Server Commands</a></li><li><a href='The_Configuration_File.html'>The Configuration File</a></li><li><a href='The_HTTP_API.html'>The HTTP API</a></li><li><a href='Workflow_Examples.html'>Workflow Examples</a></li><li><a href='dummy_plugin.html'>Plugin Example</a></li><li><a href='dummy_plugin_user.html'>Plugin-Usage Example</a></li><li><a href='integration.html'>Integration Test</a></li><li><a href='main.html'>Main Test</a></li><li><a href='preconfigured_main.html'>Preconfigured Main Example</a></li><li><a href='./api/index.html'>API Documentation</a></li><li><a href='../index.html'><code>master</code></a> branch</li><li>Repository <a href='https://github.com/hammerlab/ketrew'>at Github</a></li><li>Up: <a href='../../index.html'>Software Projects</a></li></ul></div><div class="col-md-9">
+
+
+<h1 id="PreconfiguredMainKetrewCLIApp">Preconfigured Main Ketrew CLI App</h1>
+
+<h2 id="CreateTheConfiguration">Create The Configuration</h2>
+
+<p>Overriding the configuration from a main file:</p>
+
+<pre><span class="text">
+</span><span class="kw">let</span><span class="text"> </span><span class="id">override_configuration</span><span class="text"> =
+  </span><span class="kw">let</span><span class="text"> </span><span class="kw">open</span><span class="text"> </span><span class="kw2">Ketrew_configuration</span><span class="text"> </span><span class="kw">in</span><span class="text">
+  </span><span class="kw">let</span><span class="text"> </span><span class="id">engine</span><span class="text"> =
+    </span><span class="id">engine</span><span class="text"> </span><span class="kw4">~database_parameters</span><span class="text">:</span><span class="string">&quot;/tmp/somepath&quot;</span><span class="text"> ()
+  </span><span class="kw">in</span><span class="text">
+  </span><span class="kw">let</span><span class="text"> </span><span class="id">server</span><span class="text"> =
+    </span><span class="id">server</span><span class="text"> </span><span class="kw4">~authorized_tokens_path</span><span class="text">:</span><span class="string">&quot;/tmp/tokens&quot;</span><span class="text">
+      </span><span class="kw4">~return_error_messages</span><span class="text">:</span><span class="constant">false</span><span class="text">
+      ?</span><span class="id">command_pipe</span><span class="text">:</span><span class="kw2">None</span><span class="text">
+      </span><span class="kw4">~engine</span><span class="text">
+      (`</span><span class="kw2">Tls</span><span class="text"> (</span><span class="string">&quot;somecert.pem&quot;</span><span class="text">, </span><span class="string">&quot;somekey.pem&quot;</span><span class="text">, </span><span class="numeric">4242</span><span class="text">))
+  </span><span class="kw">in</span><span class="text">
+  </span><span class="id">create</span><span class="text"> </span><span class="id">server</span><span class="text">
+    </span><span class="kw4">~debug_level</span><span class="text">:</span><span class="numeric">42</span><span class="text">
+    </span><span class="kw4">~plugins</span><span class="text">:[`</span><span class="kw2">OCamlfind</span><span class="text"> </span><span class="string">&quot;lwt.react&quot;</span><span class="text">; `</span><span class="kw2">OCamlfind</span><span class="text"> </span><span class="string">&quot;lwt.unix&quot;</span><span class="text"> ]
+
+</span></pre>
+
+
+<h2 id="ACmdlinerCommandToAdd">A Cmdliner Command To Add</h2>
+
+<p>This just shows how to add one or more sub-commands to the command-line
+interface:</p>
+
+<pre><span class="text">
+</span><span class="kw">let</span><span class="text"> </span><span class="id">additional_cmdliner_command</span><span class="text"> =
+  </span><span class="kw">let</span><span class="text"> </span><span class="kw">open</span><span class="text"> </span><span class="kw2">Ketrew_pervasives</span><span class="text"> </span><span class="kw">in</span><span class="text">
+  </span><span class="kw">let</span><span class="text"> </span><span class="kw">open</span><span class="text"> </span><span class="kw2">Cmdliner</span><span class="text"> </span><span class="kw">in</span><span class="text">
+  </span><span class="kw">let</span><span class="text"> </span><span class="kw">open</span><span class="text"> </span><span class="kw2">Term</span><span class="text"> </span><span class="kw">in</span><span class="text">
+  </span><span class="kw">let</span><span class="text"> </span><span class="id">term</span><span class="text"> =
+    </span><span class="id">pure</span><span class="text"> (</span><span class="kw">fun</span><span class="text"> </span><span class="id">stuff_to_say</span><span class="text"> -&gt;
+        </span><span class="kw2">Log</span><span class="text">.(</span><span class="id">s</span><span class="text"> </span><span class="string">&quot;From custom-main: &quot;</span><span class="text"> % </span><span class="kw2">OCaml</span><span class="text">.</span><span class="kw3">list</span><span class="text"> </span><span class="id">quote</span><span class="text"> </span><span class="id">stuff_to_say</span><span class="text"> @ </span><span class="id">normal</span><span class="text">);
+        </span><span class="id">return</span><span class="text"> ())
+    $ </span><span class="kw2">Arg</span><span class="text">.(</span><span class="id">non_empty</span><span class="text"> @@ </span><span class="id">pos_all</span><span class="text"> </span><span class="kw3">string</span><span class="text"> [] @@
+           </span><span class="id">info</span><span class="text"> [] </span><span class="kw4">~docv</span><span class="text">:</span><span class="string">&quot;STUFF-TO-SAY&quot;</span><span class="text"> 
+             </span><span class="kw4">~doc</span><span class="text">:</span><span class="string">&quot;Tell Ketrew to say $(docv)&quot;</span><span class="text">) 
+  </span><span class="kw">in</span><span class="text">
+  (</span><span class="id">term</span><span class="text">, </span><span class="id">info</span><span class="text"> </span><span class="string">&quot;say-stuff&quot;</span><span class="text"> </span><span class="kw4">~doc</span><span class="text">:</span><span class="string">&quot;Say stuff&quot;</span><span class="text">)
+
+
+</span></pre>
+
+
+<h2 id="StartTheApplication">Start The Application</h2>
+
+<p>Calling <a href='api/Ketrew.Command_line.html#VALrun_main' title='Ketrew.Command_line.run_main'><code>Ketrew.Command_line.run_main</code></a>
+just like <code>src/app/main.ml</code> but preconfigured:</p>
+
+<pre><span class="text">
+</span><span class="kw">let</span><span class="text"> `</span><span class="kw2">Never_returns</span><span class="text"> =
+  </span><span class="kw2">Ketrew</span><span class="text">.</span><span class="kw2">Command_line</span><span class="text">.</span><span class="id">run_main</span><span class="text">
+    </span><span class="kw4">~additional_commands</span><span class="text">:[</span><span class="id">additional_cmdliner_command</span><span class="text">]
+    </span><span class="kw4">~override_configuration</span><span class="text"> ()
+</span></pre></div></div></div></body><html>

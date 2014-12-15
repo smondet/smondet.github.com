@@ -157,6 +157,22 @@ Like <code class="code">chop_suffix_exn</code> but return <code class="code"><sp
       an exception.<br>
 </div>
 
+<pre><span id="VALsplit_at"><span class="keyword">val</span> split_at</span> : <code class="type"><a href="Sosa.BASIC_STRING.html#TYPEt">t</a> -> int -> <a href="Sosa.BASIC_STRING.html#TYPEt">t</a> * <a href="Sosa.BASIC_STRING.html#TYPEt">t</a></code></pre><div class="info ">
+Return a tuple where the first string is a prefix of the specified length
+      and the second is the rest. If index is <code class="code">=&lt; 0</code> then the first element is
+      empty and the string is returned in the second element, similarly if the
+      index is <code class="code">&gt;= length t</code> then the first element is <code class="code">t</code> and the second is
+      <code class="code">empty</code>.<br>
+</div>
+
+<pre><span id="VALtake"><span class="keyword">val</span> take</span> : <code class="type"><a href="Sosa.BASIC_STRING.html#TYPEt">t</a> -> int -> <a href="Sosa.BASIC_STRING.html#TYPEt">t</a></code></pre><div class="info ">
+Just the first part of split_at<br>
+</div>
+
+<pre><span id="VALdrop"><span class="keyword">val</span> drop</span> : <code class="type"><a href="Sosa.BASIC_STRING.html#TYPEt">t</a> -> int -> <a href="Sosa.BASIC_STRING.html#TYPEt">t</a></code></pre><div class="info ">
+Just the second part of split_at<br>
+</div>
+
 <pre><span id="VALcompare_substring"><span class="keyword">val</span> compare_substring</span> : <code class="type"><a href="Sosa.BASIC_STRING.html#TYPEt">t</a> * int * int -> <a href="Sosa.BASIC_STRING.html#TYPEt">t</a> * int * int -> int</code></pre><div class="info ">
 Comparison function for substrings: use as <code class="code">compare_substring
       (s1, index1, length1) (s2, index2, length2)</code>.

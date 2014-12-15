@@ -1,0 +1,24 @@
+<html><head>
+<link rel="stylesheet" href="style.css" type="text/css">
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<link rel="Start" href="index.html">
+<link title="Index of types" rel=Appendix href="index_types.html">
+<link title="Index of exceptions" rel=Appendix href="index_exceptions.html">
+<link title="Index of values" rel=Appendix href="index_values.html">
+<link title="Index of modules" rel=Appendix href="index_modules.html">
+<link title="Index of module types" rel=Appendix href="index_module_types.html">
+<link title="Main" rel="Chapter" href="Main.html">
+<link title="Trakeva_git_commands" rel="Chapter" href="Trakeva_git_commands.html">
+<link title="Trakeva_interface" rel="Chapter" href="Trakeva_interface.html">
+<link title="Trakeva_sqlite" rel="Chapter" href="Trakeva_sqlite.html"><title>Trakeva API : Trakeva_interface.Action.to_string</title>
+</head>
+<body>
+<code class="code"><span class="keyword">let</span>&nbsp;<span class="keyword">rec</span>&nbsp;to_string&nbsp;(t:&nbsp;t)&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">match</span>&nbsp;t&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Set</span>&nbsp;(k,&nbsp;v)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;sprintf&nbsp;<span class="string">"(set&nbsp;%s&nbsp;%S)"</span>&nbsp;(<span class="constructor">Key_in_collection</span>.to_string&nbsp;k)&nbsp;v<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Unset</span>&nbsp;k&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;sprintf&nbsp;<span class="string">"(unset&nbsp;%s)"</span>&nbsp;(<span class="constructor">Key_in_collection</span>.to_string&nbsp;k)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Sequence</span>&nbsp;l&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;sprintf&nbsp;<span class="string">"(sequence&nbsp;%s)"</span>&nbsp;(<span class="constructor">List</span>.map&nbsp;l&nbsp;~f:to_string<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&gt;&nbsp;<span class="constructor">StringLabels</span>.concat&nbsp;~sep:<span class="string">"&nbsp;"</span>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Check</span>&nbsp;(k,&nbsp;v)&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sprintf&nbsp;<span class="string">"(check&nbsp;%s&nbsp;%s)"</span>&nbsp;(<span class="constructor">Key_in_collection</span>.to_string&nbsp;k)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">Option</span>.value_map&nbsp;~default:<span class="string">"None"</span>&nbsp;v&nbsp;~f:(sprintf&nbsp;<span class="string">"(Some&nbsp;%S)"</span>))</code></body></html>

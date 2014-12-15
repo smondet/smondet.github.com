@@ -1,0 +1,155 @@
+<html><head>
+<link rel="stylesheet" href="style.css" type="text/css">
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<link rel="Start" href="index.html">
+<link title="Index of types" rel=Appendix href="index_types.html">
+<link title="Index of exceptions" rel=Appendix href="index_exceptions.html">
+<link title="Index of values" rel=Appendix href="index_values.html">
+<link title="Index of modules" rel=Appendix href="index_modules.html">
+<link title="Index of module types" rel=Appendix href="index_module_types.html">
+<link title="Main" rel="Chapter" href="Main.html">
+<link title="Trakeva_git_commands" rel="Chapter" href="Trakeva_git_commands.html">
+<link title="Trakeva_interface" rel="Chapter" href="Trakeva_interface.html">
+<link title="Trakeva_sqlite" rel="Chapter" href="Trakeva_sqlite.html"><title>Trakeva API : Trakeva_interface</title>
+</head>
+<body>
+<code class="code"></code><table><tr><td></td><td><span class="comment">(**************************************************************************)</span></td></tr></table><code class="code"><br>
+<span class="comment">(*&nbsp;&nbsp;Copyright&nbsp;2014,&nbsp;Sebastien&nbsp;Mondet&nbsp;&lt;seb@mondet.org&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*)</span><br>
+<span class="comment">(*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*)</span><br>
+<span class="comment">(*&nbsp;&nbsp;Licensed&nbsp;under&nbsp;the&nbsp;Apache&nbsp;License,&nbsp;Version&nbsp;2.0&nbsp;(the&nbsp;"License");&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*)</span><br>
+<span class="comment">(*&nbsp;&nbsp;you&nbsp;may&nbsp;not&nbsp;use&nbsp;this&nbsp;file&nbsp;except&nbsp;in&nbsp;compliance&nbsp;with&nbsp;the&nbsp;License.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*)</span><br>
+<span class="comment">(*&nbsp;&nbsp;You&nbsp;may&nbsp;obtain&nbsp;a&nbsp;copy&nbsp;of&nbsp;the&nbsp;License&nbsp;at&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*)</span><br>
+<span class="comment">(*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*)</span><br>
+<span class="comment">(*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;http://www.apache.org/licenses/LICENSE-2.0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*)</span><br>
+<span class="comment">(*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*)</span><br>
+<span class="comment">(*&nbsp;&nbsp;Unless&nbsp;required&nbsp;by&nbsp;applicable&nbsp;law&nbsp;or&nbsp;agreed&nbsp;to&nbsp;in&nbsp;writing,&nbsp;software&nbsp;&nbsp;&nbsp;*)</span><br>
+<span class="comment">(*&nbsp;&nbsp;distributed&nbsp;under&nbsp;the&nbsp;License&nbsp;is&nbsp;distributed&nbsp;on&nbsp;an&nbsp;"AS&nbsp;IS"&nbsp;BASIS,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*)</span><br>
+<span class="comment">(*&nbsp;&nbsp;WITHOUT&nbsp;WARRANTIES&nbsp;OR&nbsp;CONDITIONS&nbsp;OF&nbsp;ANY&nbsp;KIND,&nbsp;either&nbsp;express&nbsp;or&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*)</span><br>
+<span class="comment">(*&nbsp;&nbsp;implied.&nbsp;&nbsp;See&nbsp;the&nbsp;License&nbsp;for&nbsp;the&nbsp;specific&nbsp;language&nbsp;governing&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*)</span><br>
+<span class="comment">(*&nbsp;&nbsp;permissions&nbsp;and&nbsp;limitations&nbsp;under&nbsp;the&nbsp;License.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*)</span><br>
+</code><table><tr><td></td><td><span class="comment">(**************************************************************************)</span></td></tr></table><code class="code"><br>
+<br>
+</code><table><tr><td></td><td><span class="comment">(** A key-value database API with basic transactions. *)</span></td></tr></table><code class="code"><br>
+<br>
+<span class="keyword">open</span>&nbsp;<span class="constructor">Pvem_lwt_unix</span><br>
+<span class="keyword">open</span>&nbsp;<span class="constructor">Nonstd</span><br>
+<br>
+<span class="keyword">module</span>&nbsp;<span class="constructor">Key_in_collection</span>&nbsp;=&nbsp;<span class="keyword">struct</span><br>
+&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;t&nbsp;=&nbsp;{key:&nbsp;string&nbsp;;&nbsp;collection:&nbsp;string&nbsp;option}<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;create&nbsp;?collection&nbsp;key&nbsp;=&nbsp;{key;&nbsp;collection}<br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;to_string&nbsp;{key;&nbsp;collection}&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;sprintf&nbsp;<span class="string">"{%s/%s}"</span>&nbsp;<span class="constructor">Option</span>.(value&nbsp;collection&nbsp;~default:<span class="string">""</span>)&nbsp;key<br>
+<br>
+<span class="keyword">end</span><br>
+<br>
+<span class="keyword">module</span>&nbsp;<span class="constructor">Action</span>&nbsp;:&nbsp;<span class="keyword">sig</span><br>
+<br>
+&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;t&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Set</span>&nbsp;<span class="keyword">of</span>&nbsp;<span class="constructor">Key_in_collection</span>.t&nbsp;*&nbsp;string<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Unset</span>&nbsp;<span class="keyword">of</span>&nbsp;<span class="constructor">Key_in_collection</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Sequence</span>&nbsp;<span class="keyword">of</span>&nbsp;t&nbsp;list<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Check</span>&nbsp;<span class="keyword">of</span>&nbsp;<span class="constructor">Key_in_collection</span>.t&nbsp;*&nbsp;string&nbsp;option<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</code><table><tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td><td><span class="comment">(** An action is a transaction that (attempts) to modify the database. *)</span></td></tr></table><code class="code"><br>
+<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;set&nbsp;:&nbsp;?collection:string&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;key:string&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;string&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;t<br>
+&nbsp;&nbsp;</code><table><tr><td>&nbsp;&nbsp;</td><td><span class="comment">(** Create a “set” action: <code class="code">set ~key v</code> will add or set the value <code class="code">v</code> for the
+      key <code class="code">key</code>, optionally in the collection <code class="code">collection</code>. *)</span></td></tr></table><code class="code"><br>
+<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;seq&nbsp;:&nbsp;t&nbsp;list&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;t<br>
+&nbsp;&nbsp;</code><table><tr><td>&nbsp;&nbsp;</td><td><span class="comment">(** Put a sequence of actions into a transaction. *)</span></td></tr></table><code class="code"><br>
+<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;contains&nbsp;:&nbsp;?collection:string&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;key:string&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;string&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;t<br>
+&nbsp;&nbsp;</code><table><tr><td>&nbsp;&nbsp;</td><td><span class="comment">(** An action that checks that the <code class="code">key</code> is set in the DB and has the given
+      value. *)</span></td></tr></table><code class="code"><br>
+<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;is_not_set&nbsp;:&nbsp;?collection:string&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;string&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;t<br>
+&nbsp;&nbsp;</code><table><tr><td>&nbsp;&nbsp;</td><td><span class="comment">(** An action that checks that the <code class="code">key</code> is not set in the DB. *)</span></td></tr></table><code class="code"><br>
+<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;unset:&nbsp;?collection:string&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;string&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;t<br>
+&nbsp;&nbsp;</code><table><tr><td>&nbsp;&nbsp;</td><td><span class="comment">(** An actions that removes a value from the DB. *)</span></td></tr></table><code class="code"><br>
+<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;to_string:&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;string<br>
+&nbsp;&nbsp;</code><table><tr><td>&nbsp;&nbsp;</td><td><span class="comment">(** Convert the action to a display friendly string *)</span></td></tr></table><code class="code"><br>
+<span class="keyword">end</span>&nbsp;=&nbsp;<span class="keyword">struct</span><br>
+<br>
+&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;t&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Set</span>&nbsp;<span class="keyword">of</span>&nbsp;<span class="constructor">Key_in_collection</span>.t&nbsp;*&nbsp;string<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Unset</span>&nbsp;<span class="keyword">of</span>&nbsp;<span class="constructor">Key_in_collection</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Sequence</span>&nbsp;<span class="keyword">of</span>&nbsp;t&nbsp;list<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Check</span>&nbsp;<span class="keyword">of</span>&nbsp;<span class="constructor">Key_in_collection</span>.t&nbsp;*&nbsp;string&nbsp;option<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;_key&nbsp;?collection&nbsp;key&nbsp;=&nbsp;{<span class="constructor">Key_in_collection</span>.&nbsp;key;&nbsp;collection}<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;set&nbsp;?collection&nbsp;~key&nbsp;value&nbsp;=&nbsp;<span class="constructor">Set</span>&nbsp;(_key&nbsp;?collection&nbsp;key,&nbsp;value)<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;seq&nbsp;l&nbsp;=&nbsp;<span class="constructor">Sequence</span>&nbsp;l<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;contains&nbsp;?collection&nbsp;~key&nbsp;v&nbsp;=&nbsp;<span class="constructor">Check</span>&nbsp;(_key&nbsp;?collection&nbsp;key,&nbsp;<span class="constructor">Some</span>&nbsp;v)&nbsp;<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;is_not_set&nbsp;?collection&nbsp;key&nbsp;=&nbsp;<span class="constructor">Check</span>&nbsp;(_key&nbsp;?collection&nbsp;key,&nbsp;<span class="constructor">None</span>)<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;unset&nbsp;?collection&nbsp;key&nbsp;=&nbsp;<span class="constructor">Unset</span>&nbsp;(_key&nbsp;?collection&nbsp;key)<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;<span class="keyword">rec</span>&nbsp;to_string&nbsp;(t:&nbsp;t)&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">match</span>&nbsp;t&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Set</span>&nbsp;(k,&nbsp;v)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;sprintf&nbsp;<span class="string">"(set&nbsp;%s&nbsp;%S)"</span>&nbsp;(<span class="constructor">Key_in_collection</span>.to_string&nbsp;k)&nbsp;v<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Unset</span>&nbsp;k&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;sprintf&nbsp;<span class="string">"(unset&nbsp;%s)"</span>&nbsp;(<span class="constructor">Key_in_collection</span>.to_string&nbsp;k)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Sequence</span>&nbsp;l&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;sprintf&nbsp;<span class="string">"(sequence&nbsp;%s)"</span>&nbsp;(<span class="constructor">List</span>.map&nbsp;l&nbsp;~f:to_string<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&gt;&nbsp;<span class="constructor">StringLabels</span>.concat&nbsp;~sep:<span class="string">"&nbsp;"</span>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Check</span>&nbsp;(k,&nbsp;v)&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sprintf&nbsp;<span class="string">"(check&nbsp;%s&nbsp;%s)"</span>&nbsp;(<span class="constructor">Key_in_collection</span>.to_string&nbsp;k)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">Option</span>.value_map&nbsp;~default:<span class="string">"None"</span>&nbsp;v&nbsp;~f:(sprintf&nbsp;<span class="string">"(Some&nbsp;%S)"</span>))<br>
+<br>
+<span class="keyword">end</span><br>
+<br>
+<span class="keyword">module</span>&nbsp;<span class="constructor">Error</span>&nbsp;:&nbsp;<span class="keyword">sig</span><br>
+&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;t&nbsp;=&nbsp;[<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Act</span>&nbsp;<span class="keyword">of</span>&nbsp;<span class="constructor">Action</span>.t&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Get</span>&nbsp;<span class="keyword">of</span>&nbsp;<span class="constructor">Key_in_collection</span>.t&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Get_all</span>&nbsp;<span class="keyword">of</span>&nbsp;string<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Load</span>&nbsp;<span class="keyword">of</span>&nbsp;string&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Close</span><br>
+&nbsp;&nbsp;]&nbsp;*&nbsp;string<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</code><table><tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td><td><span class="comment">(** Merge of the possible errors. *)</span></td></tr></table><code class="code"><br>
+<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;to_string:&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;string<br>
+<span class="keyword">end</span>&nbsp;=&nbsp;<span class="keyword">struct</span><br>
+&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;t&nbsp;=&nbsp;[<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Act</span>&nbsp;<span class="keyword">of</span>&nbsp;<span class="constructor">Action</span>.t&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Get</span>&nbsp;<span class="keyword">of</span>&nbsp;<span class="constructor">Key_in_collection</span>.t&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Get_all</span>&nbsp;<span class="keyword">of</span>&nbsp;string<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Load</span>&nbsp;<span class="keyword">of</span>&nbsp;string&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Close</span><br>
+&nbsp;&nbsp;]&nbsp;*&nbsp;string<br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;to_string&nbsp;(t&nbsp;:&nbsp;t)&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">match</span>&nbsp;t&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;(<span class="keywordsign">`</span><span class="constructor">Act</span>&nbsp;k,&nbsp;e)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;sprintf&nbsp;<span class="string">"[Executing&nbsp;%s,&nbsp;Error:&nbsp;%s]"</span>&nbsp;(<span class="constructor">Action</span>.to_string&nbsp;k)&nbsp;e<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;(<span class="keywordsign">`</span><span class="constructor">Close</span>,&nbsp;e)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;sprintf&nbsp;<span class="string">"[Closing,&nbsp;%s]"</span>&nbsp;e<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;(<span class="keywordsign">`</span><span class="constructor">Get</span>&nbsp;k,&nbsp;e)&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sprintf&nbsp;<span class="string">"[Getting&nbsp;%s,&nbsp;Error:&nbsp;%s]"</span>&nbsp;(<span class="constructor">Key_in_collection</span>.to_string&nbsp;k)&nbsp;e<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;(<span class="keywordsign">`</span><span class="constructor">Get_all</span>&nbsp;c,&nbsp;e)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;sprintf&nbsp;<span class="string">"[Getting-all-in&nbsp;%s,&nbsp;Error:&nbsp;%s]"</span>&nbsp;c&nbsp;e<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;(<span class="keywordsign">`</span><span class="constructor">Load</span>&nbsp;u,&nbsp;e)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;sprintf&nbsp;<span class="string">"[Loading&nbsp;%S,&nbsp;Error:&nbsp;%s]"</span>&nbsp;u&nbsp;e<br>
+<span class="keyword">end</span><br>
+<br>
+<span class="keyword">module</span>&nbsp;<span class="keyword">type</span>&nbsp;<span class="constructor">KEY_VALUE_STORE</span>&nbsp;=&nbsp;<span class="keyword">sig</span><br>
+&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;t<br>
+&nbsp;&nbsp;</code><table><tr><td>&nbsp;&nbsp;</td><td><span class="comment">(** The handle to the database. *)</span></td></tr></table><code class="code"><br>
+<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;load&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;string&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;(t,&nbsp;[&gt;&nbsp;<span class="keywordsign">`</span><span class="constructor">Database</span>&nbsp;<span class="keyword">of</span>&nbsp;[&gt;&nbsp;<span class="keywordsign">`</span><span class="constructor">Load</span>&nbsp;<span class="keyword">of</span>&nbsp;string&nbsp;]&nbsp;*&nbsp;string&nbsp;])&nbsp;<span class="constructor">Deferred_result</span>.t<br>
+&nbsp;&nbsp;</code><table><tr><td>&nbsp;&nbsp;</td><td><span class="comment">(** Load a handle from the given database parameters. *)</span></td></tr></table><code class="code"><br>
+<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;close:&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;(unit,&nbsp;[&gt;&nbsp;<span class="keywordsign">`</span><span class="constructor">Database</span>&nbsp;<span class="keyword">of</span>&nbsp;[&gt;&nbsp;<span class="keywordsign">`</span><span class="constructor">Close</span>&nbsp;]&nbsp;*&nbsp;string&nbsp;])&nbsp;<span class="constructor">Deferred_result</span>.t<br>
+&nbsp;&nbsp;</code><table><tr><td>&nbsp;&nbsp;</td><td><span class="comment">(** Close the DB. *)</span></td></tr></table><code class="code"><br>
+<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;get&nbsp;:&nbsp;?collection:string&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;key:string&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;(string&nbsp;option,&nbsp;[&gt;&nbsp;<span class="keywordsign">`</span><span class="constructor">Database</span>&nbsp;<span class="keyword">of</span>&nbsp;[&gt;&nbsp;<span class="keywordsign">`</span><span class="constructor">Get</span>&nbsp;<span class="keyword">of</span>&nbsp;<span class="constructor">Key_in_collection</span>.t&nbsp;]&nbsp;*&nbsp;string&nbsp;])<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Deferred_result</span>.t<br>
+&nbsp;&nbsp;</code><table><tr><td>&nbsp;&nbsp;</td><td><span class="comment">(** Get a value in the DB. *)</span></td></tr></table><code class="code"><br>
+<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;get_all:&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;collection:string&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;(string&nbsp;list,&nbsp;[&gt;&nbsp;<span class="keywordsign">`</span><span class="constructor">Database</span>&nbsp;<span class="keyword">of</span>&nbsp;[&gt;&nbsp;<span class="keywordsign">`</span><span class="constructor">Get_all</span>&nbsp;<span class="keyword">of</span>&nbsp;string&nbsp;]&nbsp;*&nbsp;string&nbsp;])<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Deferred_result</span>.t<br>
+&nbsp;&nbsp;</code><table><tr><td>&nbsp;&nbsp;</td><td><span class="comment">(** Get all the values in a given collection. *)</span></td></tr></table><code class="code"><br>
+<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;act&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;action:<span class="constructor">Action</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;([&nbsp;<span class="keywordsign">`</span><span class="constructor">Done</span>&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Not_done</span>&nbsp;],<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[&gt;&nbsp;<span class="keywordsign">`</span><span class="constructor">Database</span>&nbsp;<span class="keyword">of</span>&nbsp;[&gt;&nbsp;<span class="keywordsign">`</span><span class="constructor">Act</span>&nbsp;<span class="keyword">of</span>&nbsp;<span class="constructor">Action</span>.t&nbsp;]&nbsp;*&nbsp;string&nbsp;])&nbsp;<span class="constructor">Deferred_result</span>.t<br>
+&nbsp;&nbsp;</code><table><tr><td>&nbsp;&nbsp;</td><td><span class="comment">(** Process a transaction, which can be <code class="code"><span class="keywordsign">`</span><span class="constructor">Done</span></code> is successful or <code class="code"><span class="keywordsign">`</span><span class="constructor">Not_done</span></code>
+      if one of the checks in the <code class="code"><span class="constructor">Action</span>.t</code> failed. *)</span></td></tr></table><code class="code"><br>
+<br>
+<span class="keyword">end</span><br>
+</code></body></html>

@@ -268,12 +268,21 @@
       let index_of_character = index_of_character
     end)
 
+
   include Make_prefix_suffix_array (struct
-    type t = string
-    type character = char
-    let length = length
-    let get = (fun s i -> s.[i])
-    let sub_exn = sub_exn
+      type t = string
+      type character = char
+      let length = length
+      let get = (fun s i -> s.[i])
+      let sub_exn = sub_exn
+    end)
+
+  include Make_split_at_index_functions(struct
+      type t = string
+      type character = char
+      let empty = empty
+      let length = length
+      let sub_exn = sub_exn
     end)
 
   module Make_output (Model: OUTPUT_MODEL) = Model

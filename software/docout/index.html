@@ -7,10 +7,13 @@
 
 <p>This library is a functor which creates a <code>Logging</code> module, i.e. a <code>printf</code> replacement
 based on the <a href='https://github.com/clarus/smart-print'><code>smart-print</code></a> library (its only
-dependency).</p><p>The module <a href='api/Docout.Make_logger.html' title='Docout.Make_logger'><code>Docout.Make_logger</code></a> takes a <a href='api/Docout.LOGGER_CONFIGURATION.html' title='LOGGER_CONFIGURATION'><code>LOGGER_CONFIGURATION</code></a> and
-produces a <a href='api/Docout.LOGGER.html' title='LOGGER'><code>LOGGER</code></a> (which includes the <code>SmartPrint</code> module as well).</p><h2 id="Example">Example</h2>
+dependency).</p>
+<p>The module <a href='api/Docout.Make_logger.html' title='Docout.Make_logger'><code>Docout.Make_logger</code></a> takes a <a href='api/Docout.LOGGER_CONFIGURATION.html' title='LOGGER_CONFIGURATION'><code>LOGGER_CONFIGURATION</code></a> and
+produces a <a href='api/Docout.LOGGER.html' title='LOGGER'><code>LOGGER</code></a> (which includes the <code>SmartPrint</code> module as well).</p>
+<h2 id="Example">Example</h2>
 
-<p>Let&#39;s apply the functor to a basic, <code>stderr</code> output logger-configuration:</p><pre><span class="kw">let</span><span class="text"> </span><span class="id">global_debug_level</span><span class="text"> = </span><span class="kw1">ref</span><span class="text"> </span><span class="numeric">2</span><span class="text">
+<p>Let&#39;s apply the functor to a basic, <code>stderr</code> output logger-configuration:</p>
+<pre><span class="kw">let</span><span class="text"> </span><span class="id">global_debug_level</span><span class="text"> = </span><span class="kw1">ref</span><span class="text"> </span><span class="numeric">2</span><span class="text">
 </span><span class="kw">let</span><span class="text"> </span><span class="id">global_with_color</span><span class="text"> = </span><span class="kw1">ref</span><span class="text"> </span><span class="constant">true</span><span class="text">
 </span><span class="kw">module</span><span class="text"> </span><span class="kw2">Log</span><span class="text"> = 
   </span><span class="kw2">Docout</span><span class="text">.</span><span class="kw2">Make_logger</span><span class="text"> (</span><span class="kw1">struct</span><span class="text">
@@ -24,19 +27,23 @@ produces a <a href='api/Docout.LOGGER.html' title='LOGGER'><code>LOGGER</code></
     </span><span class="kw">let</span><span class="text"> </span><span class="id">name</span><span class="text"> = </span><span class="string">&quot;docout-test&quot;</span><span class="text">
   </span><span class="kw1">end</span><span class="text">)</span></pre>
 
-<p>Then, one can build documents and display them:</p><pre><span class="kw2">Log</span><span class="text">.(</span><span class="id">s</span><span class="text"> </span><span class="string">&quot;Some string &quot;</span><span class="text"> % </span><span class="id">i</span><span class="text"> </span><span class="numeric">42</span><span class="text"> % </span><span class="id">sf</span><span class="text"> </span><span class="string">&quot;, %S&quot;</span><span class="text"> </span><span class="string">&quot;quoted&quot;</span><span class="text">
+<p>Then, one can build documents and display them:</p>
+<pre><span class="kw2">Log</span><span class="text">.(</span><span class="id">s</span><span class="text"> </span><span class="string">&quot;Some string &quot;</span><span class="text"> % </span><span class="id">i</span><span class="text"> </span><span class="numeric">42</span><span class="text"> % </span><span class="id">sf</span><span class="text"> </span><span class="string">&quot;, %S&quot;</span><span class="text"> </span><span class="string">&quot;quoted&quot;</span><span class="text">
      % </span><span class="id">sp</span><span class="text"> % </span><span class="id">brakets</span><span class="text"> (</span><span class="kw2">OCaml</span><span class="text">.</span><span class="kw3">list</span><span class="text"> </span><span class="id">f</span><span class="text"> [</span><span class="numeric">3.14</span><span class="text">; </span><span class="numeric">4.2</span><span class="text">])
      @ </span><span class="id">very_verbose</span><span class="text">);</span></pre>
 
 <h2 id="EDSLCombinators">EDSL Combinators</h2>
 
 <p>On top of all of <a href='https://github.com/clarus/smart-print'><code>SmartPrint</code></a> values;
-<a href='api/Docout.LOGGER.html' title='LOGGER'><code>LOGGER</code></a> offers:</p><ul><li><code>%</code>: pure concatenation,</li><li><code>s</code>: wrapped string (i.e. Natural language text); the leading and closing
+<a href='api/Docout.LOGGER.html' title='LOGGER'><code>LOGGER</code></a> offers:</p>
+<ul><li><code>%</code>: pure concatenation,</li><li><code>s</code>: wrapped string (i.e. Natural language text); the leading and closing
  spaces are preserved,</li><li><code>sp</code>: a breakable space,</li><li><code>sf</code>: like <code>s</code> for formats (equivalent to <code>(s (sprintf &quot;…&quot;))</code>,</li><li><code>i</code>, <code>f</code>: ints; floats,</li><li><code>n</code>: forced new line,</li><li><code>verbatim</code>: non-reformatted strings,</li><li><code>exn</code>: OCaml exceptions,</li><li><code>option</code>: OCaml option combinator,</li><li><code>escape</code>: escape a string (for OCaml lexical conventions),</li><li>ANSI colors: <code>color</code>, <code>bold_red</code>, <code>bold_yellow</code>, <code>bold_green</code>, and <code>greyish</code>.</li></ul>
 
 <p>The documents created with the EDSL are conditionally passed to
 <code>LOGGER_CONFIGURATION.print_string</code> with the <code>@</code> operator and a <em>“level”</em>:
-<code>normal</code>, <code>error</code>, <code>warning</code>, <code>verbose</code>, or <code>very_verbose</code>.</p><p>We also provide some <em>nicer</em> conversion functions for <code>SmartPrint.t</code>:</p><pre><span class="text">  </span><span class="kw">val</span><span class="text"> </span><span class="id">to_string</span><span class="text"> : </span><span class="id">line_width</span><span class="text">:</span><span class="kw3">int</span><span class="text"> -&gt; </span><span class="id">indent</span><span class="text">:</span><span class="kw3">int</span><span class="text"> -&gt; </span><span class="kw2">SmartPrint</span><span class="text">.</span><span class="id">t</span><span class="text"> -&gt; </span><span class="kw3">string</span><span class="text">
+<code>normal</code>, <code>error</code>, <code>warning</code>, <code>verbose</code>, or <code>very_verbose</code>.</p>
+<p>We also provide some <em>nicer</em> conversion functions for <code>SmartPrint.t</code>:</p>
+<pre><span class="text">  </span><span class="kw">val</span><span class="text"> </span><span class="id">to_string</span><span class="text"> : </span><span class="id">line_width</span><span class="text">:</span><span class="kw3">int</span><span class="text"> -&gt; </span><span class="id">indent</span><span class="text">:</span><span class="kw3">int</span><span class="text"> -&gt; </span><span class="kw2">SmartPrint</span><span class="text">.</span><span class="id">t</span><span class="text"> -&gt; </span><span class="kw3">string</span><span class="text">
   </span><span class="kw">val</span><span class="text"> </span><span class="id">to_list</span><span class="text"> :
     </span><span class="id">line_width</span><span class="text">:</span><span class="kw3">int</span><span class="text"> -&gt;
     </span><span class="id">indent</span><span class="text">:</span><span class="kw3">int</span><span class="text"> -&gt;

@@ -15,6 +15,7 @@
 <h1 id="ImplementationofOredoc">Implementation of Oredoc</h1>
 
 <p>Usual “OCaml-configuration” header:</p>
+
 <pre><span class="text">
 </span><span class="kw">open</span><span class="text"> </span><span class="kw2">Nonstd</span><span class="text">
 </span><span class="kw">module</span><span class="text"> </span><span class="kw2">Legacy_string</span><span class="text"> = </span><span class="kw2">String</span><span class="text">
@@ -29,6 +30,7 @@
 
 <p>The module <code>Meta_result</code> provides a funny monad that allows one to keep track
 of things to do “later” during a computation.</p>
+
 <pre><span class="text">
 </span><span class="kw">module</span><span class="text"> </span><span class="kw2">Meta_result</span><span class="text"> = </span><span class="kw1">struct</span><span class="text">
 
@@ -52,6 +54,7 @@ of things to do “later” during a computation.</p>
 
 <p>This is used for both 1) deciding which treatment to apply to files and 2)
 transforming relative links between them (in Markdown).</p>
+
 <pre><span class="text">
 </span><span class="kw">module</span><span class="text"> </span><span class="kw2">File_kind</span><span class="text"> = </span><span class="kw1">struct</span><span class="text">
 
@@ -80,7 +83,8 @@ transforming relative links between them (in Markdown).</p>
 <h2 id="MarkdownToHTML">Markdown To HTML</h2>
 
 <p>Our wrapper around <a href='https://github.com/ocaml/omd'>Omd</a>, which adds a few
-features/extensions:</p><ul><li>There is a special syntax to <span style="color: red; background-color: yellow; font-weight: bold">overhighlight</span> stuff.</li><li>Local links are transformed to be consistent between a repository view
+features/extensions:</p>
+<ul><li>There is a special syntax to <span style="color: red; background-color: yellow; font-weight: bold">overhighlight</span> stuff.</li><li>Local links are transformed to be consistent between a repository view
 (Github, Bitbucket) and the generated website.</li><li><a href='some_command___help.html' title='some-command --help'><code>some-command --help</code></a> will be transformed into a link too.</li></ul>
 <pre><span class="text">
 </span><span class="kw">module</span><span class="text"> </span><span class="kw2">Markdown</span><span class="text"> = </span><span class="kw1">struct</span><span class="text">
@@ -249,6 +253,7 @@ features/extensions:</p><ul><li>There is a special syntax to <span style="color:
 <h2 id="ConvertingOCamltoHTML">Converting OCaml to HTML</h2>
 
 <p>OCaml code with special Markdown comments will be transformed into HTML.</p>
+
 <pre><span class="text">
 </span><span class="kw">module</span><span class="text"> </span><span class="kw2">Ocaml</span><span class="text"> = </span><span class="kw1">struct</span><span class="text">
 

@@ -1,0 +1,62 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<link rel="stylesheet" href="style.css" type="text/css">
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<link rel="Start" href="index.html">
+<link rel="Up" href="Trakeva_git_commands.html">
+<link title="Index of types" rel=Appendix href="index_types.html">
+<link title="Index of exceptions" rel=Appendix href="index_exceptions.html">
+<link title="Index of values" rel=Appendix href="index_values.html">
+<link title="Index of modules" rel=Appendix href="index_modules.html">
+<link title="Index of module types" rel=Appendix href="index_module_types.html">
+<link title="Main" rel="Chapter" href="Main.html">
+<link title="Trakeva_git_commands" rel="Chapter" href="Trakeva_git_commands.html">
+<link title="Trakeva_interface" rel="Chapter" href="Trakeva_interface.html">
+<link title="Trakeva_sqlite" rel="Chapter" href="Trakeva_sqlite.html"><title>Trakeva API : Trakeva_git_commands.Debug</title>
+</head>
+<body>
+<div class="navbar">&nbsp;<a class="up" href="Trakeva_git_commands.html" title="Trakeva_git_commands">Up</a>
+&nbsp;</div>
+<h1>Module <a href="type_Trakeva_git_commands.Debug.html">Trakeva_git_commands.Debug</a> (<a href="code_Trakeva_git_commands.Debug.html">.ml</a>)</h1>
+
+<pre><span class="keyword">module</span> Debug: <code class="code"><span class="keyword">sig</span></code> <a href="Trakeva_git_commands.Debug.html">..</a> <code class="code"><span class="keyword">end</span></code></pre><div class="info module top">
+This module should be used only by the tests; with <a href="Trakeva_git_commands.Debug.html#VALglobal_debug"><code class="code"><span class="constructor">Trakeva_git_commands</span>.<span class="constructor">Debug</span>.global_debug</code></a>
+    one can inject a <i>harder</i> failure (exception thrown)
+    at a precise given point (see <a href="Trakeva_git_commands.Debug.html#TYPEt"><code class="code"><span class="constructor">Trakeva_git_commands</span>.<span class="constructor">Debug</span>.t</code></a>).<br>
+</div>
+<hr width="100%">
+
+<pre><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = </code></pre><table class="typetable">
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTt.No"><span class="constructor">No</span></span></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTt.After_write"><span class="constructor">After_write</span></span> <span class="keyword">of</span> <code class="type">string</code></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTt.After_git_add"><span class="constructor">After_git_add</span></span> <span class="keyword">of</span> <code class="type">string</code></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTt.After_git_rm"><span class="constructor">After_git_rm</span></span> <span class="keyword">of</span> <code class="type">string</code></code></td>
+
+</tr></table>
+
+
+
+<pre><span id="VALglobal_debug"><span class="keyword">val</span> <a href="code_VALTrakeva_git_commands.Debug.global_debug.html">global_debug</a></span> : <code class="type"><a href="Trakeva_git_commands.Debug.html#TYPEt">t</a> Pervasives.ref</code></pre></body></html>

@@ -1,0 +1,35 @@
+ <!DOCTYPE html> <html> <head><link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootswatch/3.2.0/readable/bootstrap.min.css" type="text/css">
+<link rel="stylesheet" href="https://cdn.rawgit.com/hammerlab/ketrew/2d1c430cca52caa71e363a765ff8775a6ae14ba9/src/doc/code_style.css" type="text/css"><meta charset="utf-8"><title>Ketrew: Glossary</title></head><body><div class="container"><h1>Ketrew: Glossary</h1><div class="row">
+<div class="col-md-3">
+<h2>Contents</h2><ul><li><a href='#EDSLConcepts'>EDSL Concepts</a>
+</li><li><a href='#Ketrew39sEngine'>Ketrew&#39;s Engine</a>
+</li></ul><h2>Menu</h2><ul><li><a href='index.html'>Home</a></li><li><a href='Alternative_CLI_Application.html'>Alternative CLI Application</a></li><li><a href='Developer_Documentation.html'>Developer Documentation</a></li><li><a href='Glossary.html'>Glossary</a></li><li><a href='Long-Running_Plugins.html'>Long-Running Plugins</a></li><li><a href='Server_Commands.html'>Server Commands</a></li><li><a href='The_Configuration_File.html'>The Configuration File</a></li><li><a href='The_HTTP_API.html'>The HTTP API</a></li><li><a href='Workflow_Examples.html'>Workflow Examples</a></li><li><a href='dummy_plugin.html'>Plugin Example</a></li><li><a href='dummy_plugin_user.html'>Plugin-Usage Example</a></li><li><a href='integration.html'>Integration Test</a></li><li><a href='main.html'>Main Test</a></li><li><a href='preconfigured_main.html'>Preconfigured Main Example</a></li><li><a href='./api/index.html'>API Documentation</a></li><li><a href='../index.html'><code>master</code></a> branch</li><li>Repository <a href='https://github.com/hammerlab/ketrew'>at Github</a></li><li>Up: <a href='../../index.html'>Software Projects</a></li></ul></div><div class="col-md-9"><h1 id="Glossary">Glossary</h1>
+
+<p>Here are some common terms used in this documentation.</p>
+<h2 id="EDSLConcepts">EDSL Concepts</h2>
+
+<p>A <strong>target</strong> (<a href='api/Ketrew_edsl.html#VALtarget' title='Ketrew_edsl.target'><code>Ketrew_edsl.target</code></a>) is the basic building block of a
+workflow, a target has many components:</p>
+<ul><li>A <strong>build-process</strong> wraps a way for a target of running a program, usually on
+a given host; for example the function <a href='api/Ketrew_edsl.html#VALpbs' title='Ketrew_edsl.pbs'><code>Ketrew_edsl.pbs</code></a> returns a
+datastructure representing the action of running a program on a host with the
+PBS batch scheduler.<ul><li>A <strong>host</strong> (<a href='api/Ketrew_edsl.Host.html#TYPEt' title='Ketrew_edsl.Host.t'><code>Ketrew_edsl.Host.t</code></a>) is a place where one can run things.
+ Usually a host is an SSH host with a “playground”, and a few other options.</li><li>A <strong>playground</strong> is a directory on a host where the Ketrew engine and its
+ plugins can (and will) write log files, temporary scripts, etc.</li><li>A <strong>program</strong> (<a href='api/Ketrew_edsl.Program.html#TYPEt' title='Ketrew_edsl.Program.t'><code>Ketrew_edsl.Program.t</code></a>) is a datastructure representing
+ shell scripts on steroids, Ketrew provides high-level combinators to build
+ programs.</li></ul></li><li>A <strong>condition</strong> (<a href='api/Ketrew_edsl.Condition.html#TYPEt' title='Ketrew_edsl.Condition.t'><code>Ketrew_edsl.Condition.t</code></a>) defines how to tell if a target
+should be run or not (the argument <code>?done_when</code> of <a href='api/Ketrew_edsl.html#VALtarget' title='Ketrew_edsl.target'><code>Ketrew_edsl.target</code></a>).</li><li>Links to other targets:<ul><li><strong>dependencies</strong> are targets that need to be ensured or
+ run before a target can start,</li><li><strong>fallbacks</strong> targets that will be activated if the target fails, and</li><li><strong>success-triggers</strong> targets that will be activated only <em>after</em> a target
+ succeeds.</li></ul></li></ul>
+
+<h2 id="Ketrew39sEngine">Ketrew&#39;s Engine</h2>
+
+<p>Ketrew&#39;s <strong>engine</strong> is the process in charge of orchestrating and monitoring
+the run of the workflows.</p>
+<ul><li>In <strong>standalone</strong> mode, the command line application has to run the
+engine manually.</li><li>In <strong>client-server</strong> mode, the engine is run by the server; the client
+applications just “submit” workflows.</li></ul>
+
+<p>The engine runs long-running processes through <strong>plugins</strong>
+(see <a href='./Long-Running_Plugins.html'>documentation</a>).</p>
+</div></div></div></body><html>

@@ -119,6 +119,7 @@
 converted to every other representation. We call them DNA and use only <a href='api/Sosa.A.html' title='A'><code>A</code></a>,
 <a href='api/Sosa.C.html' title='C'><code>C</code></a>, <a href='api/Sosa.G.html' title='G'><code>G</code></a>, <a href='api/Sosa.T.html' title='T'><code>T</code></a> for future implementations which will be using only 2 or 4
 bits per character.</p>
+
 <pre><span class="text">
 </span><span class="kw">let</span><span class="text"> </span><span class="id">dna_test_subjects</span><span class="text"> =
   </span><span class="kw">let</span><span class="text"> </span><span class="id">random_read</span><span class="text"> </span><span class="numeric">_</span><span class="text"> =
@@ -138,6 +139,7 @@ bits per character.</p>
 
 <p>If asked on the command line, each test will run some benchmarks on the
 implementation.</p>
+
 <pre><span class="text">
 </span><span class="kw">module</span><span class="text"> </span><span class="kw2">Benchmark</span><span class="text"> = </span><span class="kw1">struct</span><span class="text">
 
@@ -214,6 +216,7 @@ implementation.</p>
 
 <p>The function <code>do_basic_test</code> below takes a whole OCaml module implementation as
 argument; <a href='api/Sosa.TEST_STRING.html' title='TEST_STRING'><code>TEST_STRING</code></a> is the expected signature:</p>
+
 <pre><span class="text">
 
 </span><span class="kw">module</span><span class="text"> </span><span class="kw">type</span><span class="text"> </span><span class="kw2">TEST_STRING</span><span class="text"> = </span><span class="kw1">sig</span><span class="text">

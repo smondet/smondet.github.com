@@ -324,6 +324,7 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;index_of_character&nbsp;=&nbsp;index_of_character<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span>)<br>
 <br>
+<br>
 &nbsp;&nbsp;<span class="keyword">include</span>&nbsp;<span class="constructor">Make_prefix_suffix_array</span>&nbsp;(<span class="keyword">struct</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;t&nbsp;=&nbsp;<span class="constructor">S</span>.t<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;character&nbsp;=&nbsp;<span class="constructor">S</span>.character<br>
@@ -331,6 +332,17 @@
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;get&nbsp;=&nbsp;<span class="constructor">S</span>.get<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;sub_exn&nbsp;=&nbsp;sub_exn<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span>)<br>
+<br>
+<br>
+&nbsp;&nbsp;<span class="keyword">include</span>&nbsp;<span class="constructor">Make_split_at_index_functions</span>(<span class="keyword">struct</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;t&nbsp;=&nbsp;<span class="constructor">S</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;character&nbsp;=&nbsp;<span class="constructor">S</span>.character<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;empty&nbsp;=&nbsp;empty<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;length&nbsp;=&nbsp;length<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;sub_exn&nbsp;t&nbsp;~index&nbsp;~length&nbsp;=&nbsp;sub_exn&nbsp;t&nbsp;index&nbsp;length<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span>)<br>
+<br>
+<br>
 <br>
 &nbsp;&nbsp;<span class="keyword">module</span>&nbsp;<span class="constructor">Make_output</span>&nbsp;(<span class="constructor">Model</span>:&nbsp;<span class="constructor">OUTPUT_MODEL</span>)&nbsp;=&nbsp;<span class="keyword">struct</span><br>
 <br>

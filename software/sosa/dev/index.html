@@ -13,10 +13,13 @@
 </li></ul><h2>Menu</h2><ul><li><a href='index.html'>Home</a></li><li><a href='sosa.html'>Literate Implementation</a></li><li><a href='sosa_test.html'>Tests &amp; Benchmarks (<code>sosa_test.ml</code>)</a></li><li><a href='./api/index.html'>API Documentation</a></li><li><a href='../index.html'><code>master</code></a> branch</li><li>Repository <a href='https://github.com/smondet/sosa'>at Github</a></li><li>Up: <a href='../../index.html'>Software Projects</a></li></ul></div><div class="col-md-9"><h1 id="SaneOCamlStringAPI">Sane OCaml String API</h1>
 
 <p>This library is a set of APIs defined with module types, and a set of
-modules and functors implementing one or more of those interfaces.</p><p>The APIs define what a <em>character</em> and a <em>string of characters</em> should
-be.</p><h2 id="ModuleTypesAPIs">Module Types (APIs)</h2>
+modules and functors implementing one or more of those interfaces.</p>
+<p>The APIs define what a <em>character</em> and a <em>string of characters</em> should
+be.</p>
+<h2 id="ModuleTypesAPIs">Module Types (APIs)</h2>
 
-<p>We have:</p><ul><li><a href='api/Sosa.BASIC_CHARACTER.html' title='BASIC_CHARACTER'><code>BASIC_CHARACTER</code></a>: characters of any length.</li><li><a href='api/Sosa.NATIVE_CONVERSIONS.html' title='NATIVE_CONVERSIONS'><code>NATIVE_CONVERSIONS</code></a>: functions to transform from/to native OCaml
+<p>We have:</p>
+<ul><li><a href='api/Sosa.BASIC_CHARACTER.html' title='BASIC_CHARACTER'><code>BASIC_CHARACTER</code></a>: characters of any length.</li><li><a href='api/Sosa.NATIVE_CONVERSIONS.html' title='NATIVE_CONVERSIONS'><code>NATIVE_CONVERSIONS</code></a>: functions to transform from/to native OCaml
  strings.</li><li><a href='api/Sosa.BASIC_STRING.html' title='BASIC_STRING'><code>BASIC_STRING</code></a>: immutable strings of (potentially abstract)
  characters:<ul><li>includes <a href='api/Sosa.NATIVE_CONVERSIONS.html' title='NATIVE_CONVERSIONS'><code>NATIVE_CONVERSIONS</code></a>,</li><li>contains a functor to provide a thread agnostic <code>output</code> function:
  <a href='api/Sosa.BASIC_STRING.Make_output.html' title='Make_output'><code>Make_output</code></a>: <a href='api/Sosa.OUTPUT_MODEL.html' title='OUTPUT_MODEL'><code>OUTPUT_MODEL</code></a> → <code>sig val output: ... end</code>.</li></ul></li><li><a href='api/Sosa.UNSAFELY_MUTABLE.html' title='UNSAFELY_MUTABLE'><code>UNSAFELY_MUTABLE</code></a>: mutability of some string implementations
@@ -29,28 +32,36 @@ be.</p><h2 id="ModuleTypesAPIs">Module Types (APIs)</h2>
 <h3 id="NativeOCamlCharacters">Native OCaml Characters</h3>
 
 <p>The <code>Native_character</code> module implements <a href='api/Sosa.BASIC_CHARACTER.html' title='BASIC_CHARACTER'><code>BASIC_CHARACTER</code></a> with
-OCaml&#39;s <code>char</code> type.</p><h3 id="NativeOCamlStrings">Native OCaml Strings</h3>
+OCaml&#39;s <code>char</code> type.</p>
+<h3 id="NativeOCamlStrings">Native OCaml Strings</h3>
 
 <p>The <code>Native_string</code> module implements <a href='api/Sosa.BASIC_STRING.html' title='BASIC_STRING'><code>BASIC_STRING</code></a> and
 <a href='api/Sosa.UNSAFELY_MUTABLE.html' title='UNSAFELY_MUTABLE'><code>UNSAFELY_MUTABLE</code></a> with OCaml&#39;s <code>string</code> type (and hence
-<code>Native_character</code>).</p><h3 id="ListsOfArbitraryCharacters">Lists Of Arbitrary Characters</h3>
+<code>Native_character</code>).</p>
+<h3 id="ListsOfArbitraryCharacters">Lists Of Arbitrary Characters</h3>
 
 <p><code>List_of</code> is a functor: <a href='api/Sosa.BASIC_CHARACTER.html' title='BASIC_CHARACTER'><code>BASIC_CHARACTER</code></a> → <a href='api/Sosa.BASIC_STRING.html' title='BASIC_STRING'><code>BASIC_STRING</code></a>, i.e., it creates a
-string datastructure made of a list of characters.</p><h3 id="BuildFromBasicMutableDatastructures">Build From Basic Mutable Data-structures</h3>
+string datastructure made of a list of characters.</p>
+<h3 id="BuildFromBasicMutableDatastructures">Build From Basic Mutable Data-structures</h3>
 
 <p>The functor <code>Of_mutable</code> uses an implementation of
-<a href='api/Sosa.MINIMALISTIC_MUTABLE_STRING.html' title='MINIMALISTIC_MUTABLE_STRING'><code>MINIMALISTIC_MUTABLE_STRING</code></a> to build a <a href='api/Sosa.BASIC_STRING.html' title='BASIC_STRING'><code>BASIC_STRING</code></a>.</p><h3 id="IntegerUTF8Characters">Integer UTF-8 Characters</h3>
+<a href='api/Sosa.MINIMALISTIC_MUTABLE_STRING.html' title='MINIMALISTIC_MUTABLE_STRING'><code>MINIMALISTIC_MUTABLE_STRING</code></a> to build a <a href='api/Sosa.BASIC_STRING.html' title='BASIC_STRING'><code>BASIC_STRING</code></a>.</p>
+<h3 id="IntegerUTF8Characters">Integer UTF-8 Characters</h3>
 
 <p>The <code>Int_utf8_character</code> module implements <a href='api/Sosa.BASIC_CHARACTER.html' title='BASIC_CHARACTER'><code>BASIC_CHARACTER</code></a> with
 OCaml integers (<code>int</code>) representing Utf8 characters (we force the
 handling of not more than 31 bits, even if <a href='http://tools.ietf.org/html/rfc3629'>RFC 3629</a>
 restricts them to end at U+10FFFF, c.f. also
 <a href='http://en.wikipedia.org/wiki/UTF-8'>wikipedia</a>). Note that the function <code>is_whitespace</code> considers
-only ASCII whitespace (useful while writing parsers for example).</p><h2 id="ExamplesTestsandBenchmarks">Examples, Tests, and Benchmarks</h2>
+only ASCII whitespace (useful while writing parsers for example).</p>
+<h2 id="ExamplesTestsandBenchmarks">Examples, Tests, and Benchmarks</h2>
 
 <p>See the file <a href='sosa_test.html'><code>sosa_test.ml</code></a> for usage examples, the
-library is tested with:</p><ul><li>native strings and characters,</li><li>lists of native characters (<code>List_of(Native_character)</code>),</li><li>lists of integers representing UTF-8 characters (<code>List_of(utf8-int array)</code>),</li><li>arrays of integers representing UTF-8 characters (<code>Of_mutable(utf8-int array)</code>),</li><li>bigarrays of 8-bit integers (<code>Of_mutable(int8 Bigarray1.t)</code>).</li></ul>
+library is tested with:</p>
+<ul><li>native strings and characters,</li><li>lists of native characters (<code>List_of(Native_character)</code>),</li><li>lists of integers representing UTF-8 characters (<code>List_of(utf8-int array)</code>),</li><li>arrays of integers representing UTF-8 characters (<code>Of_mutable(utf8-int array)</code>),</li><li>bigarrays of 8-bit integers (<code>Of_mutable(int8 Bigarray1.t)</code>).</li></ul>
 
 <p>The tests are a self-compiling <em>“Shell-then-OCaml-script”</em> which
 depends on the <a href='https://bitbucket.org/smondet/nonstd'>Nonstd</a>, and the OCaml
-<code>Bigarray</code> libraries:</p><pre><code>./test/sosa_test.ml</code></pre><p>and you may add the basic benchmarks to the process with:</p><pre><code>./test/sosa_test.ml bench</code></pre></div></div></div></body><html>
+<code>Bigarray</code> libraries:</p>
+<pre><code>./test/sosa_test.ml</code></pre><p>and you may add the basic benchmarks to the process with:</p>
+<pre><code>./test/sosa_test.ml bench</code></pre></div></div></div></body><html>

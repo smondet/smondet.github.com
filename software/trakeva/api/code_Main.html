@@ -1,0 +1,389 @@
+<html><head>
+<link rel="stylesheet" href="style.css" type="text/css">
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<link rel="Start" href="index.html">
+<link title="Index of types" rel=Appendix href="index_types.html">
+<link title="Index of exceptions" rel=Appendix href="index_exceptions.html">
+<link title="Index of values" rel=Appendix href="index_values.html">
+<link title="Index of modules" rel=Appendix href="index_modules.html">
+<link title="Index of module types" rel=Appendix href="index_module_types.html">
+<link title="Main" rel="Chapter" href="Main.html">
+<link title="Trakeva_git_commands" rel="Chapter" href="Trakeva_git_commands.html">
+<link title="Trakeva_interface" rel="Chapter" href="Trakeva_interface.html">
+<link title="Trakeva_sqlite" rel="Chapter" href="Trakeva_sqlite.html"><title>Trakeva API : Main</title>
+</head>
+<body>
+<code class="code"></code><table><tr><td></td><td><span class="comment">(**************************************************************************)</span></td></tr></table><code class="code"><br>
+<span class="comment">(*&nbsp;&nbsp;Copyright&nbsp;2014,&nbsp;Sebastien&nbsp;Mondet&nbsp;&lt;seb@mondet.org&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*)</span><br>
+<span class="comment">(*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*)</span><br>
+<span class="comment">(*&nbsp;&nbsp;Licensed&nbsp;under&nbsp;the&nbsp;Apache&nbsp;License,&nbsp;Version&nbsp;2.0&nbsp;(the&nbsp;"License");&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*)</span><br>
+<span class="comment">(*&nbsp;&nbsp;you&nbsp;may&nbsp;not&nbsp;use&nbsp;this&nbsp;file&nbsp;except&nbsp;in&nbsp;compliance&nbsp;with&nbsp;the&nbsp;License.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*)</span><br>
+<span class="comment">(*&nbsp;&nbsp;You&nbsp;may&nbsp;obtain&nbsp;a&nbsp;copy&nbsp;of&nbsp;the&nbsp;License&nbsp;at&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*)</span><br>
+<span class="comment">(*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*)</span><br>
+<span class="comment">(*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;http://www.apache.org/licenses/LICENSE-2.0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*)</span><br>
+<span class="comment">(*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*)</span><br>
+<span class="comment">(*&nbsp;&nbsp;Unless&nbsp;required&nbsp;by&nbsp;applicable&nbsp;law&nbsp;or&nbsp;agreed&nbsp;to&nbsp;in&nbsp;writing,&nbsp;software&nbsp;&nbsp;&nbsp;*)</span><br>
+<span class="comment">(*&nbsp;&nbsp;distributed&nbsp;under&nbsp;the&nbsp;License&nbsp;is&nbsp;distributed&nbsp;on&nbsp;an&nbsp;"AS&nbsp;IS"&nbsp;BASIS,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*)</span><br>
+<span class="comment">(*&nbsp;&nbsp;WITHOUT&nbsp;WARRANTIES&nbsp;OR&nbsp;CONDITIONS&nbsp;OF&nbsp;ANY&nbsp;KIND,&nbsp;either&nbsp;express&nbsp;or&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*)</span><br>
+<span class="comment">(*&nbsp;&nbsp;implied.&nbsp;&nbsp;See&nbsp;the&nbsp;License&nbsp;for&nbsp;the&nbsp;specific&nbsp;language&nbsp;governing&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*)</span><br>
+<span class="comment">(*&nbsp;&nbsp;permissions&nbsp;and&nbsp;limitations&nbsp;under&nbsp;the&nbsp;License.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*)</span><br>
+</code><table><tr><td></td><td><span class="comment">(**************************************************************************)</span></td></tr></table><code class="code"><br>
+<br>
+<span class="keyword">open</span>&nbsp;<span class="constructor">Nonstd</span><br>
+<span class="keyword">open</span>&nbsp;<span class="constructor">Pvem_lwt_unix</span><br>
+<span class="keyword">open</span>&nbsp;<span class="constructor">Pvem_lwt_unix</span>.<span class="constructor">Deferred_result</span><br>
+<span class="keyword">module</span>&nbsp;<span class="constructor">String</span>&nbsp;=&nbsp;<span class="constructor">Sosa</span>.<span class="constructor">Native_string</span>&nbsp;<br>
+<span class="keyword">let</span>&nbsp;(//)&nbsp;=&nbsp;<span class="constructor">Filename</span>.concat<br>
+<br>
+<span class="keyword">let</span>&nbsp;say&nbsp;fmt&nbsp;=&nbsp;ksprintf&nbsp;(printf&nbsp;<span class="string">"%s\n%!"</span>)&nbsp;fmt<br>
+<br>
+<span class="keyword">module</span>&nbsp;<span class="constructor">Test</span>&nbsp;=&nbsp;<span class="keyword">struct</span><br>
+&nbsp;&nbsp;<span class="keyword">exception</span>&nbsp;<span class="constructor">Tests_failed</span><br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;max_failures&nbsp;=&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">try</span>&nbsp;<span class="constructor">Sys</span>.getenv&nbsp;<span class="string">"MAX_FAILURES"</span>&nbsp;|&gt;&nbsp;int_of_string&nbsp;<span class="keyword">with</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;2_000_000<br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;failed_tests&nbsp;=&nbsp;ref&nbsp;[]<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;fail&nbsp;s&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;failed_tests&nbsp;:=&nbsp;s&nbsp;::&nbsp;!failed_tests;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span>&nbsp;<span class="constructor">List</span>.length&nbsp;!failed_tests&nbsp;&gt;&nbsp;max_failures&nbsp;<span class="keyword">then</span>&nbsp;(<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">List</span>.iter&nbsp;!failed_tests&nbsp;~f:(<span class="keyword">fun</span>&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;eprintf&nbsp;<span class="string">"Failed&nbsp;test:&nbsp;%S\n%!"</span>&nbsp;t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;raise&nbsp;<span class="constructor">Tests_failed</span>&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;)&nbsp;<span class="keyword">else</span>&nbsp;()<br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;new_tmp_dir&nbsp;()&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;db_file&nbsp;=&nbsp;<span class="constructor">Filename</span>.temp_file&nbsp;&nbsp;<span class="string">"trakeva_tmp_test"</span>&nbsp;<span class="string">".d"</span>&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Sys</span>.command&nbsp;(sprintf&nbsp;<span class="string">"rm&nbsp;-rf&nbsp;%s"</span>&nbsp;db_file)&nbsp;|&gt;&nbsp;ignore;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Sys</span>.command&nbsp;(sprintf&nbsp;<span class="string">"mkdir&nbsp;-p&nbsp;%s"</span>&nbsp;db_file)&nbsp;|&gt;&nbsp;ignore;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;db_file<br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;run_monad&nbsp;name&nbsp;f&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Lwt_main</span>.run&nbsp;(f&nbsp;())<br>
+&nbsp;&nbsp;&nbsp;&nbsp;|&gt;&nbsp;<span class="keyword">function</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Ok</span>&nbsp;()&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Error</span>&nbsp;(<span class="keywordsign">`</span><span class="constructor">Database</span>&nbsp;e)&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ksprintf&nbsp;fail&nbsp;<span class="string">"%S&nbsp;ends&nbsp;with&nbsp;error:&nbsp;%s"</span>&nbsp;name<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">Trakeva_interface</span>.<span class="constructor">Error</span>.to_string&nbsp;e)<br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;check&nbsp;names&nbsp;c&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span>&nbsp;c&nbsp;<span class="keyword">then</span>&nbsp;()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">else</span>&nbsp;ksprintf&nbsp;fail&nbsp;<span class="string">"test.assert&nbsp;failed:&nbsp;%s"</span>&nbsp;(<span class="constructor">String</span>.concat&nbsp;~sep:<span class="string">"&nbsp;→&nbsp;"</span>&nbsp;names)<br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;now&nbsp;()&nbsp;=&nbsp;<span class="constructor">Unix</span>.gettimeofday&nbsp;()<br>
+<span class="keyword">end</span><br>
+<br>
+&nbsp;&nbsp;<br>
+<span class="keyword">module</span>&nbsp;<span class="keyword">type</span>&nbsp;<span class="constructor">TEST_DATABASE</span>&nbsp;=&nbsp;<span class="keyword">sig</span><br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;test_name:&nbsp;string<br>
+&nbsp;&nbsp;<span class="keyword">module</span>&nbsp;<span class="constructor">DB</span>:&nbsp;<span class="constructor">Trakeva_interface</span>.<span class="constructor">KEY_VALUE_STORE</span><br>
+<span class="keyword">end</span><br>
+<br>
+<span class="keyword">let</span>&nbsp;open_close_test&nbsp;(<span class="keyword">module</span>&nbsp;<span class="constructor">Test_db</span>&nbsp;:&nbsp;<span class="constructor">TEST_DATABASE</span>)&nbsp;uri_string&nbsp;()&nbsp;=<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;<span class="keyword">open</span>&nbsp;<span class="constructor">Test_db</span>&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;<span class="constructor">DB</span>.load&nbsp;uri_string<br>
+&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;db&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;<span class="constructor">DB</span>.close&nbsp;db<br>
+<br>
+<span class="keyword">let</span>&nbsp;basic_test&nbsp;(<span class="keyword">module</span>&nbsp;<span class="constructor">Test_db</span>&nbsp;:&nbsp;<span class="constructor">TEST_DATABASE</span>)&nbsp;uri_string&nbsp;()&nbsp;=<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;<span class="keyword">open</span>&nbsp;<span class="constructor">Test_db</span>&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;<span class="keyword">open</span>&nbsp;<span class="constructor">Trakeva_interface</span>.<span class="constructor">Action</span>&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;local_assert&nbsp;name&nbsp;c&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Test</span>.check&nbsp;(name&nbsp;::&nbsp;test_name&nbsp;::&nbsp;uri_string&nbsp;::&nbsp;[])&nbsp;c&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;<span class="constructor">DB</span>.load&nbsp;uri_string<br>
+&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;db&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;test_get&nbsp;?(handle=db)&nbsp;?collection&nbsp;k&nbsp;f&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">DB</span>.get&nbsp;handle&nbsp;?collection&nbsp;~key:k<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;opt&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;local_assert&nbsp;(sprintf&nbsp;<span class="string">"get&nbsp;%s/%s"</span>&nbsp;(<span class="constructor">Option</span>.value&nbsp;collection&nbsp;~default:<span class="string">""</span>)&nbsp;k)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(f&nbsp;opt);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;()&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;is_none&nbsp;=&nbsp;((=)&nbsp;<span class="constructor">None</span>)&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;test_get&nbsp;<span class="string">"k"</span>&nbsp;is_none&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;()&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;test_get&nbsp;~collection:<span class="string">"c"</span>&nbsp;<span class="string">"k"</span>&nbsp;is_none&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;()&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;<span class="constructor">DB</span>.get_all&nbsp;db&nbsp;~collection:<span class="string">"c"</span><br>
+&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;list&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;local_assert&nbsp;<span class="string">"all&nbsp;c"</span>&nbsp;(list&nbsp;=&nbsp;[]);<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;test_actions&nbsp;res&nbsp;actions&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;action&nbsp;=&nbsp;seq&nbsp;actions&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">DB</span>.act&nbsp;db&nbsp;~action<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">function</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;r&nbsp;<span class="keyword">when</span>&nbsp;r&nbsp;=&nbsp;res&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;return&nbsp;()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Done</span>&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ksprintf&nbsp;<span class="constructor">Test</span>.fail&nbsp;<span class="string">"Action&nbsp;%s&nbsp;should&nbsp;be&nbsp;Not_done"</span>&nbsp;(to_string&nbsp;action);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Not_done</span>&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ksprintf&nbsp;<span class="constructor">Test</span>.fail&nbsp;<span class="string">"Action&nbsp;%s&nbsp;should&nbsp;be&nbsp;Done"</span>&nbsp;(to_string&nbsp;action);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;()<br>
+&nbsp;&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;test_actions&nbsp;<span class="keywordsign">`</span><span class="constructor">Done</span>&nbsp;[set&nbsp;~key:<span class="string">"k"</span>&nbsp;<span class="string">"v"</span>]&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;()&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;test_get&nbsp;&nbsp;<span class="string">"k"</span>&nbsp;((=)&nbsp;(<span class="constructor">Some</span>&nbsp;<span class="string">"v"</span>))&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;()&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;test_actions&nbsp;<span class="keywordsign">`</span><span class="constructor">Done</span>&nbsp;[<br>
+&nbsp;&nbsp;&nbsp;&nbsp;contains&nbsp;~key:<span class="string">"k"</span>&nbsp;<span class="string">"v"</span>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;unset&nbsp;<span class="string">"k"</span>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;set&nbsp;~key:<span class="string">"k1"</span>&nbsp;~collection:<span class="string">"c"</span>&nbsp;<span class="string">"V"</span>;<br>
+&nbsp;&nbsp;]&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;()&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;test_actions&nbsp;<span class="keywordsign">`</span><span class="constructor">Not_done</span>&nbsp;[<br>
+&nbsp;&nbsp;&nbsp;&nbsp;contains&nbsp;~key:<span class="string">"k"</span>&nbsp;<span class="string">"v"</span>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;set&nbsp;~key:<span class="string">"k1"</span>&nbsp;~collection:<span class="string">"c"</span>&nbsp;<span class="string">"V"</span>;<br>
+&nbsp;&nbsp;]&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;()&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;test_actions&nbsp;<span class="keywordsign">`</span><span class="constructor">Done</span>&nbsp;[<br>
+&nbsp;&nbsp;&nbsp;&nbsp;is_not_set&nbsp;<span class="string">"k"</span>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;set&nbsp;~key:<span class="string">"k2"</span>&nbsp;~collection:<span class="string">"c"</span>&nbsp;<span class="string">"V2"</span>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;set&nbsp;~key:<span class="string">"k3"</span>&nbsp;~collection:<span class="string">"c"</span>&nbsp;<span class="string">"V3"</span>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;set&nbsp;~key:<span class="string">"k4"</span>&nbsp;~collection:<span class="string">"c"</span>&nbsp;<span class="string">"V4"</span>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;set&nbsp;~key:<span class="string">"k5"</span>&nbsp;~collection:<span class="string">"c"</span>&nbsp;<span class="string">"V5"</span>;<br>
+&nbsp;&nbsp;]&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;()&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;<span class="constructor">DB</span>.get_all&nbsp;db&nbsp;~collection:<span class="string">"c"</span><br>
+&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;list&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;local_assert&nbsp;<span class="string">"full&nbsp;collection&nbsp;'c'"</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">List</span>.sort&nbsp;~cmp:<span class="constructor">String</span>.compare&nbsp;list&nbsp;=&nbsp;[<span class="string">"V"</span>;&nbsp;<span class="string">"V2"</span>;&nbsp;<span class="string">"V3"</span>;&nbsp;<span class="string">"V4"</span>;&nbsp;<span class="string">"V5"</span>]);<br>
+&nbsp;&nbsp;<span class="constructor">DB</span>.close&nbsp;db<br>
+<br>
+<span class="keyword">let</span>&nbsp;benchmark_01&nbsp;(<span class="keyword">module</span>&nbsp;<span class="constructor">Test_db</span>&nbsp;:&nbsp;<span class="constructor">TEST_DATABASE</span>)&nbsp;uri_string<br>
+&nbsp;&nbsp;&nbsp;&nbsp;?(collection&nbsp;=&nbsp;200)&nbsp;?(big_string_kb&nbsp;=&nbsp;10)&nbsp;()&nbsp;=<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;<span class="keyword">open</span>&nbsp;<span class="constructor">Test_db</span>&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;<span class="keyword">open</span>&nbsp;<span class="constructor">Trakeva_interface</span>.<span class="constructor">Action</span>&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;benches&nbsp;=&nbsp;ref&nbsp;[]&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;add_bench&nbsp;s&nbsp;t&nbsp;=&nbsp;benches&nbsp;:=&nbsp;(s,&nbsp;t)&nbsp;::&nbsp;!benches&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;<span class="constructor">DB</span>.load&nbsp;uri_string<br>
+&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;db&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;bench_function&nbsp;s&nbsp;f&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;b&nbsp;=&nbsp;<span class="constructor">Test</span>.now&nbsp;()&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;f&nbsp;()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;x&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;e&nbsp;=&nbsp;<span class="constructor">Test</span>.now&nbsp;()&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;add_bench&nbsp;s&nbsp;(e&nbsp;-.&nbsp;b);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;x<br>
+&nbsp;&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;bench_action&nbsp;~action&nbsp;s&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;bench_function&nbsp;s&nbsp;(<span class="keyword">fun</span>&nbsp;()&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">DB</span>.act&nbsp;db&nbsp;~action:(seq&nbsp;action))&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;action&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">List</span>.init&nbsp;collection&nbsp;(<span class="keyword">fun</span>&nbsp;i&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;set&nbsp;~key:(sprintf&nbsp;<span class="string">"k%d"</span>&nbsp;i)&nbsp;~collection:<span class="string">"c"</span>&nbsp;<span class="string">"small"</span>)<br>
+&nbsp;&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;bench_action&nbsp;~action&nbsp;(sprintf&nbsp;<span class="string">"%d&nbsp;small&nbsp;strings"</span>&nbsp;collection)<br>
+&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;bench_action&nbsp;(sprintf&nbsp;<span class="string">"%d&nbsp;%d KB&nbsp;strings"</span>&nbsp;collection&nbsp;big_string_kb)&nbsp;~action:(<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">List</span>.init&nbsp;collection&nbsp;(<span class="keyword">fun</span>&nbsp;i&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;value&nbsp;=&nbsp;<span class="constructor">String</span>.make&nbsp;(big_string_kb&nbsp;*&nbsp;1_000)&nbsp;<span class="string">'B'</span>&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;set&nbsp;~key:(sprintf&nbsp;<span class="string">"k%d"</span>&nbsp;i)&nbsp;~collection:<span class="string">"cc"</span>&nbsp;value))<br>
+&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;bench_function&nbsp;<span class="string">"Get&nbsp;all&nbsp;collection&nbsp;'cc'"</span>&nbsp;(<span class="keyword">fun</span>&nbsp;()&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">DB</span>.get_all&nbsp;db&nbsp;<span class="string">"cc"</span>)<br>
+&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;cc&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;l&nbsp;=&nbsp;<span class="constructor">List</span>.length&nbsp;cc&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;<span class="constructor">Test</span>.check&nbsp;[<span class="string">"bench01"</span>;&nbsp;<span class="string">"length&nbsp;cc"</span>;&nbsp;<span class="constructor">Int</span>.to_string&nbsp;l]&nbsp;(l&nbsp;=&nbsp;collection);<br>
+&nbsp;&nbsp;bench_function&nbsp;<span class="string">"Get&nbsp;all&nbsp;'cc'&nbsp;one&nbsp;by&nbsp;one"</span>&nbsp;(<span class="keyword">fun</span>&nbsp;()&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;<span class="keyword">rec</span>&nbsp;loop&nbsp;n&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span>&nbsp;n&nbsp;=&nbsp;0<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">then</span>&nbsp;return&nbsp;()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">else</span>&nbsp;(<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;key&nbsp;=&nbsp;sprintf&nbsp;<span class="string">"k%d"</span>&nbsp;(n&nbsp;-&nbsp;1)&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">DB</span>.get&nbsp;~collection:<span class="string">"cc"</span>&nbsp;&nbsp;db&nbsp;~key<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;v&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Test</span>.check&nbsp;[<span class="string">"bench01"</span>;&nbsp;key;&nbsp;<span class="string">"not&nbsp;none"</span>;&nbsp;]&nbsp;(v&nbsp;&lt;&gt;&nbsp;<span class="constructor">None</span>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;loop&nbsp;(n&nbsp;-&nbsp;1)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;loop&nbsp;collection)<br>
+&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;<span class="constructor">DB</span>.close&nbsp;db<br>
+&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;()&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;return&nbsp;(test_name,&nbsp;<span class="constructor">List</span>.rev&nbsp;!benches)<br>
+<br>
+&nbsp;&nbsp;<br>
+<span class="keyword">let</span>&nbsp;git_db_test&nbsp;()&nbsp;=<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;<span class="keyword">module</span>&nbsp;<span class="constructor">DB</span>&nbsp;=&nbsp;<span class="constructor">Trakeva_git_commands</span>&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;<span class="keyword">open</span>&nbsp;<span class="constructor">Trakeva_interface</span>.<span class="constructor">Action</span>&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;db_file&nbsp;&nbsp;=&nbsp;<span class="constructor">Test</span>.new_tmp_dir&nbsp;()&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;<span class="constructor">DB</span>.load&nbsp;db_file<br>
+&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;db&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;<span class="constructor">DB</span>.get&nbsp;db&nbsp;~key:<span class="string">"k"</span><br>
+&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;res&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;<span class="keyword">begin</span>&nbsp;<span class="keyword">match</span>&nbsp;res&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">None</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;return&nbsp;()<br>
+&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Some</span>&nbsp;v&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Test</span>.fail&nbsp;(sprintf&nbsp;<span class="string">"key&nbsp;k&nbsp;got&nbsp;%S"</span>&nbsp;v);&nbsp;return&nbsp;()<br>
+&nbsp;&nbsp;<span class="keyword">end</span><br>
+&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;()&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;<span class="keyword">begin</span>&nbsp;<span class="constructor">DB</span>.act&nbsp;db&nbsp;<span class="constructor">DB</span>.(seq&nbsp;[&nbsp;is_not_set&nbsp;<span class="string">"k"</span>;&nbsp;set&nbsp;~key:<span class="string">"k"</span>&nbsp;<span class="string">"V"</span>&nbsp;])<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">function</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Done</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;return&nbsp;()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Not_done</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Test</span>.fail&nbsp;<span class="string">"seq&nbsp;1&nbsp;not&nbsp;done"</span>;&nbsp;return&nbsp;()<br>
+&nbsp;&nbsp;<span class="keyword">end</span><br>
+&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;()&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;check_k&nbsp;current_db&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">begin</span>&nbsp;<span class="constructor">DB</span>.get&nbsp;current_db&nbsp;~key:<span class="string">"k"</span>&nbsp;&gt;&gt;=&nbsp;<span class="keyword">function</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Some</span>&nbsp;v&nbsp;<span class="keyword">when</span>&nbsp;v&nbsp;=&nbsp;<span class="string">"V"</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;return&nbsp;()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">None</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Test</span>.fail&nbsp;(sprintf&nbsp;<span class="string">"get&nbsp;k&nbsp;got&nbsp;None"</span>);&nbsp;return&nbsp;()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Some</span>&nbsp;v&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Test</span>.fail&nbsp;(sprintf&nbsp;<span class="string">"get&nbsp;k&nbsp;got&nbsp;%S"</span>&nbsp;v);&nbsp;return&nbsp;()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
+&nbsp;&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;check_k&nbsp;db&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;()&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;<span class="constructor">DB</span>.close&nbsp;db&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;()&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;<span class="constructor">DB</span>.load&nbsp;db_file<br>
+&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;db2&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;check_k&nbsp;db2&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;()&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;<span class="keyword">begin</span>&nbsp;<span class="constructor">DB</span>.act&nbsp;db2&nbsp;<span class="constructor">DB</span>.(seq&nbsp;[contains&nbsp;~key:<span class="string">"k"</span>&nbsp;<span class="string">"V"</span>])<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">function</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Done</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;return&nbsp;()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Not_done</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Test</span>.fail&nbsp;<span class="string">"seq&nbsp;2&nbsp;not&nbsp;done"</span>;&nbsp;return&nbsp;()<br>
+&nbsp;&nbsp;<span class="keyword">end</span><br>
+&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;()&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;<span class="comment">(*&nbsp;Transation&nbsp;that&nbsp;fails:&nbsp;*)</span><br>
+&nbsp;&nbsp;<span class="keyword">begin</span>&nbsp;<span class="constructor">DB</span>.act&nbsp;db2&nbsp;<span class="constructor">DB</span>.(seq&nbsp;[<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;set&nbsp;~key:<span class="string">"k2"</span>&nbsp;<span class="string">"vvv"</span>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;set&nbsp;~collection:<span class="string">"c3"</span>&nbsp;~key:<span class="string">"k3"</span>&nbsp;<span class="string">"vvv"</span>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;set&nbsp;~key:<span class="string">"k2"</span>&nbsp;<span class="string">"uuu"</span>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;contains&nbsp;~key:<span class="string">"k"</span>&nbsp;<span class="string">"u"</span>])<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">function</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Not_done</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;return&nbsp;()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Done</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Test</span>.fail&nbsp;<span class="string">"seq&nbsp;3&nbsp;done"</span>;&nbsp;return&nbsp;()<br>
+&nbsp;&nbsp;<span class="keyword">end</span><br>
+&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;()&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;<span class="comment">(*&nbsp;Transation&nbsp;that&nbsp;succeeds:&nbsp;*)</span><br>
+&nbsp;&nbsp;<span class="keyword">begin</span>&nbsp;<span class="constructor">DB</span>.act&nbsp;db2&nbsp;<span class="constructor">DB</span>.(seq&nbsp;[<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;is_not_set&nbsp;<span class="string">"k2"</span>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;set&nbsp;~key:<span class="string">"k2"</span>&nbsp;<span class="string">"vvv"</span>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;contains&nbsp;~key:<span class="string">"k2"</span>&nbsp;<span class="string">"vvv"</span>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;set&nbsp;~key:<span class="string">"k2"</span>&nbsp;<span class="string">"uuu"</span>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;contains&nbsp;~key:<span class="string">"k"</span>&nbsp;<span class="string">"V"</span>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;contains&nbsp;~key:<span class="string">"k2"</span>&nbsp;<span class="string">"uuu"</span>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unset&nbsp;<span class="string">"k2"</span>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;is_not_set&nbsp;<span class="string">"k2"</span>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;])<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">function</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Done</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;return&nbsp;()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Not_done</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Test</span>.fail&nbsp;<span class="string">"seq&nbsp;4&nbsp;not&nbsp;done"</span>;&nbsp;return&nbsp;()<br>
+&nbsp;&nbsp;<span class="keyword">end</span><br>
+&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;()&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;<span class="comment">(*&nbsp;Transations&nbsp;that&nbsp;fail&nbsp;hard:&nbsp;*)</span><br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;test_with_debug_artificial_failure&nbsp;name&nbsp;f&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">DB</span>.<span class="constructor">Debug</span>.(global_debug&nbsp;:=&nbsp;f&nbsp;<span class="string">"k2"</span>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">begin</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Lwt</span>.catch&nbsp;(<span class="keyword">fun</span>&nbsp;()&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">DB</span>.act&nbsp;db2&nbsp;<span class="constructor">DB</span>.(seq&nbsp;[<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;set&nbsp;~key:<span class="string">"k2"</span>&nbsp;<span class="string">"rrr"</span>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;set&nbsp;~key:<span class="string">"k2"</span>&nbsp;<span class="string">"uuu"</span>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unset&nbsp;<span class="string">"k2"</span>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;])<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&lt;&nbsp;<span class="keyword">function</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Test</span>.fail&nbsp;(sprintf&nbsp;<span class="string">"seq&nbsp;%s&nbsp;not&nbsp;exn"</span>&nbsp;name);&nbsp;return&nbsp;())<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="keyword">fun</span>&nbsp;e&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;return&nbsp;())<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;()&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">DB</span>.<span class="constructor">Debug</span>.(global_debug&nbsp;:=&nbsp;<span class="constructor">No</span>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">(*&nbsp;We&nbsp;should&nbsp;be&nbsp;like&nbsp;end&nbsp;of&nbsp;seq&nbsp;6&nbsp;*)</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">begin</span>&nbsp;<span class="constructor">DB</span>.act&nbsp;db2&nbsp;<span class="constructor">DB</span>.(seq&nbsp;[<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;is_not_set&nbsp;<span class="string">"k2"</span>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;set&nbsp;~collection:<span class="string">"c3"</span>&nbsp;~key:<span class="string">"k3"</span>&nbsp;<span class="string">"uuu"</span>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unset&nbsp;~collection:<span class="string">"c3"</span>&nbsp;<span class="string">"k3"</span>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unset&nbsp;~collection:<span class="string">"c3"</span>&nbsp;<span class="string">"k3"</span>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;])<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">function</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Done</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;return&nbsp;()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Not_done</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Test</span>.fail&nbsp;(sprintf&nbsp;<span class="string">"seq&nbsp;%s+1&nbsp;not&nbsp;done"</span>&nbsp;name);&nbsp;return&nbsp;()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
+&nbsp;&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;test_with_debug_artificial_failure&nbsp;<span class="string">"After_write"</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;(<span class="keyword">fun</span>&nbsp;k&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">DB</span>.<span class="constructor">Debug</span>.<span class="constructor">After_write</span>&nbsp;k)<br>
+&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;()&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;test_with_debug_artificial_failure&nbsp;<span class="string">"After_git_add"</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;(<span class="keyword">fun</span>&nbsp;k&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">DB</span>.<span class="constructor">Debug</span>.<span class="constructor">After_git_add</span>&nbsp;k)<br>
+&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;()&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;test_with_debug_artificial_failure&nbsp;<span class="string">"After_git_rm"</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;(<span class="keyword">fun</span>&nbsp;k&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">DB</span>.<span class="constructor">Debug</span>.<span class="constructor">After_git_rm</span>&nbsp;k)<br>
+&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;()&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;check_collection&nbsp;collection&nbsp;result&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;check&nbsp;r&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;sort&nbsp;=&nbsp;<span class="constructor">List</span>.sort&nbsp;~cmp:<span class="constructor">String</span>.compare&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sort&nbsp;r&nbsp;=&nbsp;sort&nbsp;result&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">DB</span>.get_all&nbsp;db2&nbsp;~collection<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">function</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;r&nbsp;<span class="keyword">when</span>&nbsp;check&nbsp;r&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;return&nbsp;()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;other&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Test</span>.fail&nbsp;(sprintf&nbsp;<span class="string">"Collection&nbsp;test:&nbsp;in&nbsp;%S&nbsp;&nbsp;\nexpecting&nbsp;[%s]&nbsp;&nbsp;\ngot&nbsp;[%s]"</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;collection&nbsp;(<span class="constructor">String</span>.concat&nbsp;~sep:<span class="string">",&nbsp;"</span>&nbsp;result)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">String</span>.concat&nbsp;~sep:<span class="string">",&nbsp;"</span>&nbsp;other));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;()<br>
+&nbsp;&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;check_collection&nbsp;<span class="string">""</span>&nbsp;[]&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;()&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;check_collection&nbsp;<span class="string">"aslkdj"</span>&nbsp;[]&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;()&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;check_collection&nbsp;<span class="string">"c3"</span>&nbsp;[]&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;()&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;collection&nbsp;=&nbsp;<span class="string">"c3"</span>&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;<span class="constructor">DB</span>.act&nbsp;db2&nbsp;<span class="constructor">DB</span>.(seq&nbsp;[set&nbsp;~collection&nbsp;~key:<span class="string">"k1"</span>&nbsp;<span class="string">"v1"</span>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;set&nbsp;~collection&nbsp;~key:<span class="string">"k2"</span>&nbsp;<span class="string">"v2"</span>])<br>
+&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;check_collection&nbsp;collection&nbsp;[<span class="string">"v1"</span>;&nbsp;<span class="string">"v2"</span>]&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;()&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;collection&nbsp;=&nbsp;<span class="string">"c4"</span>&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;<span class="constructor">DB</span>.act&nbsp;db2&nbsp;<span class="constructor">DB</span>.(seq&nbsp;[set&nbsp;~collection&nbsp;~key:<span class="string">"k1"</span>&nbsp;<span class="string">"v1"</span>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;set&nbsp;~collection&nbsp;~key:<span class="string">"k2"</span>&nbsp;<span class="string">"v2"</span>])<br>
+&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;check_collection&nbsp;collection&nbsp;[<span class="string">"v1"</span>;&nbsp;<span class="string">"v2"</span>]&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;()&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;<span class="comment">(*&nbsp;check_collection&nbsp;"c3"&nbsp;["sld"]&nbsp;&gt;&gt;=&nbsp;fun&nbsp;()&nbsp;-&gt;&nbsp;*)</span><br>
+&nbsp;&nbsp;return&nbsp;()<br>
+<br>
+<span class="keyword">module</span>&nbsp;<span class="constructor">Test_git_commands</span>&nbsp;=&nbsp;<span class="keyword">struct</span><br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;test_name&nbsp;=&nbsp;<span class="string">"Test_git_commands"</span><br>
+&nbsp;&nbsp;<span class="keyword">module</span>&nbsp;<span class="constructor">DB</span>&nbsp;=&nbsp;<span class="constructor">Trakeva_git_commands</span><br>
+<span class="keyword">end</span><br>
+<span class="keyword">module</span>&nbsp;<span class="constructor">Test_sqlite</span>&nbsp;=&nbsp;<span class="keyword">struct</span><br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;test_name&nbsp;=&nbsp;<span class="string">"Test_sqlite"</span>&nbsp;<br>
+&nbsp;&nbsp;<span class="keyword">module</span>&nbsp;<span class="constructor">DB</span>&nbsp;=&nbsp;<span class="constructor">Trakeva_sqlite</span><br>
+<span class="keyword">end</span><br>
+<br>
+<span class="keyword">let</span>&nbsp;has_arg&nbsp;arlg&nbsp;possible&nbsp;=<br>
+&nbsp;&nbsp;<span class="constructor">List</span>.exists&nbsp;arlg&nbsp;~f:(<span class="constructor">List</span>.mem&nbsp;~set:possible)<br>
+<br>
+<span class="keyword">let</span>&nbsp;find_arg&nbsp;argl&nbsp;~name&nbsp;~convert&nbsp;=<br>
+&nbsp;&nbsp;<span class="constructor">List</span>.find_map&nbsp;argl&nbsp;(<span class="keyword">fun</span>&nbsp;arg&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">match</span>&nbsp;<span class="constructor">String</span>.split&nbsp;~on:(<span class="keywordsign">`</span><span class="constructor">Character</span>&nbsp;<span class="string">'='</span>)&nbsp;arg&nbsp;|&gt;&nbsp;<span class="constructor">List</span>.map&nbsp;~f:<span class="constructor">String</span>.strip&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;n&nbsp;::&nbsp;c&nbsp;::&nbsp;[]&nbsp;<span class="keyword">when</span>&nbsp;n&nbsp;=&nbsp;name&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;convert&nbsp;c<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">None</span>)<br>
+<br>
+<span class="keyword">let</span>&nbsp;()&nbsp;=<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;argl&nbsp;=&nbsp;<span class="constructor">Sys</span>.argv&nbsp;|&gt;&nbsp;<span class="constructor">Array</span>.to_list&nbsp;|&gt;&nbsp;<span class="constructor">List</span>.tl_exn&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;<span class="constructor">Test</span>.run_monad&nbsp;<span class="string">"git-db"</span>&nbsp;git_db_test;<br>
+<br>
+&nbsp;&nbsp;<span class="constructor">Test</span>.run_monad&nbsp;<span class="string">"basic&nbsp;with&nbsp;git"</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;(basic_test&nbsp;(<span class="keyword">module</span>&nbsp;<span class="constructor">Test_git_commands</span>)&nbsp;(<span class="constructor">Test</span>.new_tmp_dir&nbsp;()));<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;sqlite_path&nbsp;=&nbsp;<span class="string">"/tmp/trakeva-sqlite-test"</span>&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;ksprintf&nbsp;<span class="constructor">Sys</span>.command&nbsp;<span class="string">"rm&nbsp;-fr&nbsp;%s"</span>&nbsp;sqlite_path&nbsp;|&gt;&nbsp;ignore;<br>
+&nbsp;&nbsp;<span class="constructor">Test</span>.run_monad&nbsp;<span class="string">"basic/sqlite"</span>&nbsp;(basic_test&nbsp;(<span class="keyword">module</span>&nbsp;<span class="constructor">Test_sqlite</span>)&nbsp;sqlite_path);<br>
+<br>
+&nbsp;&nbsp;<span class="keyword">if</span>&nbsp;has_arg&nbsp;argl&nbsp;[<span class="string">"bench"</span>;&nbsp;<span class="string">"benchmarks"</span>]&nbsp;<span class="keyword">then</span>&nbsp;(<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ksprintf&nbsp;<span class="constructor">Sys</span>.command&nbsp;<span class="string">"rm&nbsp;-fr&nbsp;%s"</span>&nbsp;sqlite_path&nbsp;|&gt;&nbsp;ignore;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;collection&nbsp;=&nbsp;find_arg&nbsp;argl&nbsp;~name:<span class="string">"collection"</span>&nbsp;~convert:<span class="constructor">Int</span>.of_string&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;big_string_kb&nbsp;=&nbsp;find_arg&nbsp;argl&nbsp;~name:<span class="string">"kb"</span>&nbsp;~convert:<span class="constructor">Int</span>.of_string&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Test</span>.run_monad&nbsp;<span class="string">"bench01"</span>&nbsp;(<span class="keyword">fun</span>&nbsp;()&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;benchmark_01&nbsp;?collection&nbsp;?big_string_kb<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="keyword">module</span>&nbsp;<span class="constructor">Test_git_commands</span>)&nbsp;(<span class="constructor">Test</span>.new_tmp_dir&nbsp;())&nbsp;()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;(_,&nbsp;git_bench01)&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;benchmark_01&nbsp;?collection&nbsp;?big_string_kb<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="keyword">module</span>&nbsp;<span class="constructor">Test_sqlite</span>)&nbsp;sqlite_path&nbsp;()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;(_,&nbsp;sqlite_bench01)&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;say&nbsp;<span class="string">"Bench01"</span>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">List</span>.iter&nbsp;git_bench01&nbsp;~f:(<span class="keyword">fun</span>&nbsp;(n,&nbsp;f)&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;say&nbsp;<span class="string">"git\t%s\t%F s"</span>&nbsp;n&nbsp;f<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">List</span>.iter&nbsp;sqlite_bench01&nbsp;~f:(<span class="keyword">fun</span>&nbsp;(n,&nbsp;f)&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;say&nbsp;<span class="string">"sqlite\t%s\t%F s"</span>&nbsp;n&nbsp;f<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;);<br>
+&nbsp;&nbsp;);<br>
+&nbsp;&nbsp;<span class="keyword">begin</span>&nbsp;<span class="keyword">match</span>&nbsp;!<span class="constructor">Test</span>.failed_tests&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;[]&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;say&nbsp;<span class="string">"No&nbsp;tests&nbsp;failed&nbsp;\\o/&nbsp;(arg-list:&nbsp;[%s])"</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">String</span>.concat&nbsp;~sep:<span class="string">"."</span>&nbsp;(<span class="constructor">List</span>.map&nbsp;argl&nbsp;~f:(sprintf&nbsp;<span class="string">"%S"</span>)));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;exit&nbsp;0<br>
+&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;some&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;say&nbsp;<span class="string">"Some&nbsp;tests&nbsp;failed&nbsp;(arg-list:&nbsp;[%s]):"</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">String</span>.concat&nbsp;~sep:<span class="string">"."</span>&nbsp;(<span class="constructor">List</span>.map&nbsp;argl&nbsp;~f:(sprintf&nbsp;<span class="string">"%S"</span>)));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">List</span>.iter&nbsp;some&nbsp;~f:(<span class="keyword">fun</span>&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;say&nbsp;<span class="string">"%s"</span>&nbsp;t;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;say&nbsp;<span class="string">"%s"</span>&nbsp;(<span class="constructor">String</span>.make&nbsp;80&nbsp;<span class="string">'-'</span>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;exit&nbsp;3<br>
+&nbsp;&nbsp;<span class="keyword">end</span><br>
+</code></body></html>

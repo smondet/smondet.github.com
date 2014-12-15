@@ -7,16 +7,20 @@
 
 <p>This library provides an exception-less interface to <em>unix-ish</em>
 operating systems. As usual, this means all flavors of POSIX-compliant
-systems, like Linux, *BSD, Mac OSX, and partially MS Windows.</p><h2 id="Modules">Modules</h2>
+systems, like Linux, *BSD, Mac OSX, and partially MS Windows.</p>
+<h2 id="Modules">Modules</h2>
 
-<p>The module <a href='api/Pvem_lwt_unix.html' title='Pvem_lwt_unix'><code>Pvem_lwt_unix</code></a> contains the following sub-modules:</p><ul><li><strong>Deferred_result</strong> which is <code>Pvem.With_deferred(Lwt)</code>, i.e., basic
+<p>The module <a href='api/Pvem_lwt_unix.html' title='Pvem_lwt_unix'><code>Pvem_lwt_unix</code></a> contains the following sub-modules:</p>
+<ul><li><strong>Deferred_result</strong> which is <code>Pvem.With_deferred(Lwt)</code>, i.e., basic
  functions for manipulating <code>(&#39;ok, &#39;error) Pvem.Result.t Lwt.t</code>,</li><li><strong>IO</strong> which implements the <a href='api/Pvem_lwt_unix.IO.html' title='IO'><code>IO</code></a> module type,</li><li><strong>System</strong> implements the <a href='api/Pvem_lwt_unix.SYSTEM.html' title='SYSTEM'><code>SYSTEM</code></a> module type,</li><li><strong>Deferred_list</strong> implement the <a href='api/Pvem_lwt_unix.DEFERRED_LIST.html' title='DEFERRED_LIST'><code>DEFERRED_LIST</code></a> module type;
 sequential and concurrent loops using the <code>List.t</code> type.</li><li><strong>Light</strong> implements the <a href='api/Pvem_lwt_unix.LIGHT.html' title='LIGHT'><code>LIGHT</code></a> signature, a very simple traffic light for
 concurrent programs (experimental work in progress).</li></ul>
 
 <h2 id="Tests">Tests</h2>
 
-<p>You may run the tests, this way:</p><pre><code> ./test/io_test.ml
+<p>You may run the tests, this way:</p>
+<pre><code> ./test/io_test.ml
  ./test/system_test.ml</code></pre><p>Note that <code>system_test.ml</code> expects to be run as non-root (because it
 uses the fact that some paths are not writable to check access-rights
-errors).</p></div></div></div></body><html>
+errors).</p>
+</div></div></div></body><html>

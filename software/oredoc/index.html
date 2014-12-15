@@ -8,14 +8,18 @@
 </li><li><a href='#License'>License</a>
 </li></ul><h2>Menu</h2><ul><li><a href='index.html'>Home</a></li><li><a href='oredoc.html'>Literate Implementation</a></li><li><a href='./api/index.html'>API Documentation</a></li><li>Repository <a href='https://github.com/smondet/oredoc'>at Github</a></li><li>Up: <a href='../index.html'>Software Projects</a></li></ul></div><div class="col-md-9"><h1 id="Oredoc">Oredoc</h1>
 
-<p>Build documentation websites for some OCaml projects.</p><p>The <code>oredoc</code> command builds a website out of a project&#39;s repository, see
+<p>Build documentation websites for some OCaml projects.</p>
+<p>The <code>oredoc</code> command builds a website out of a project&#39;s repository, see
 <a href='oredoc___help.html' title='oredoc --help'><code>oredoc --help</code></a>. The command line is parametrised only with environment
-variables.</p><h2 id="Install">Install</h2>
+variables.</p>
+<h2 id="Install">Install</h2>
 
-<p>If you have <code>opam</code> up and running:</p><pre><code>opam remote add smondet git@github.com:smondet/dev-opam-repo
+<p>If you have <code>opam</code> up and running:</p>
+<pre><code>opam remote add smondet git@github.com:smondet/dev-opam-repo
 opam install oredoc</code></pre><h2 id="Example">Example</h2>
 
-<p>For example with Oredoc&#39;s website itself:</p><pre><code>INPUT=oredoc.ml \
+<p>For example with Oredoc&#39;s website itself:</p>
+<pre><code>INPUT=oredoc.ml \
   INDEX=README.md \
   TITLE_PREFIX=&quot;Oredoc: &quot; \
   OUTPUT_DIR=_doc \
@@ -23,7 +27,8 @@ opam install oredoc</code></pre><h2 id="Example">Example</h2>
   API=_apidoc \
   CATCH_MODULE_PATHS=^Oredoc:,^Markdown:Oredoc. \
   TITLE_SUBSTITUTIONS=&quot;oredoc.ml:Literate Implementation&quot; \
-  oredoc </code></pre><p>We can see:</p><ul><li>Oredoc also transforms ML files: like <a href='oredoc.html'><code>oredoc.ml</code></a>.</li><li>The output of <a href='some_command___help.html' title='some_command --help'><code>some_command --help</code></a> is grabbed and displayed also. </li><li>If the command accepts <code>--help=groff</code> (like with
+  oredoc </code></pre><p>We can see:</p>
+<ul><li>Oredoc also transforms ML files: like <a href='oredoc.html'><code>oredoc.ml</code></a>.</li><li>The output of <a href='some_command___help.html' title='some_command --help'><code>some_command --help</code></a> is grabbed and displayed also. </li><li>If the command accepts <code>--help=groff</code> (like with
 <a href='http://erratique.ch/software/cmdliner'>Cmdliner</a>), and <code>groff</code> is present,
 then the Man page will be converted to HTML, 
 e.g. <a href='opam___help.html' title='opam --help'><code>opam --help</code></a>, or <a href='opam_install___help.html' title='opam install --help'><code>opam install --help</code></a>.</li><li>Links to MLI files, like (the not-even existent)
@@ -37,7 +42,8 @@ Prefixes can be passed to the argument and added later: c.f. <a href='api/Oredoc
 
 <h2 id="Configuration">Configuration</h2>
 
-<p>The meaning of the environment variables are:</p><ul><li><code>INPUT=.,src/doc</code>: comma-separated list of files or directories (used to look
+<p>The meaning of the environment variables are:</p>
+<ul><li><code>INPUT=.,src/doc</code>: comma-separated list of files or directories (used to look
 for files).</li><li><code>INDEX=README.md</code>: markdown file used to generate the <code>index.html</code>.</li><li><code>TITLE_PREFIX=&quot;Oredoc: &quot;</code>: prefix pages&#39; titles with this.</li><li><code>COMMAND_SUBSTITUTIONS=oredoc:_build/oredoc.native,some_command:gcc</code>:
 when calling <a href='__help.html' title='--help'><code>--help</code></a> (or <code>--help=groff</code>) replace the prefix <code>some_command</code>
 with <code>gcc</code> (comma-separated list of colon-separated substitutions).</li><li><code>TITLE_SUBSTITUTIONS=&quot;oredoc.ml:Literate Implementation&quot;</code>: by default titles
@@ -54,6 +60,8 @@ documentation:
 <a href='ordeoc___wc__l__etc_passwd____tmp_bouh____help.html' title='ordeoc $(wc -l /etc/passwd &gt; /tmp/bouh) --help'><code>ordeoc $(wc -l /etc/passwd &gt; /tmp/bouh) --help</code></a>
 ⇒
 Do not run <code>oredoc</code> on files for which you would not run <code>bash</code> or <code>make</code>,
-you&#39;ve been warned.</p><h2 id="License">License</h2>
+you&#39;ve been warned.</p>
+<h2 id="License">License</h2>
 
-<p>This is <a href='http://en.wikipedia.org/wiki/ISC_license'>ISC</a> licensed.</p></div></div></div></body><html>
+<p>This is <a href='http://en.wikipedia.org/wiki/ISC_license'>ISC</a> licensed.</p>
+</div></div></div></body><html>

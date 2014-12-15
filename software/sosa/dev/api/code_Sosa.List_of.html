@@ -131,6 +131,7 @@
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">try</span>&nbsp;<span class="constructor">Some</span>&nbsp;(slice_exn&nbsp;?start&nbsp;?finish&nbsp;t)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">with</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">None</span><br>
 <br>
+<br>
 &nbsp;&nbsp;<span class="keyword">let</span>&nbsp;<span class="keyword">rec</span>&nbsp;comp_loop&nbsp;p&nbsp;lst_pair&nbsp;=<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span>&nbsp;p<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">then</span>&nbsp;<span class="keyword">match</span>&nbsp;lst_pair&nbsp;<span class="keyword">with</span><br>
@@ -162,6 +163,29 @@
 &nbsp;&nbsp;<span class="keyword">let</span>&nbsp;chop_suffix&nbsp;t&nbsp;~suffix&nbsp;=<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">try</span>&nbsp;<span class="constructor">Some</span>&nbsp;(chop_suffix_exn&nbsp;t&nbsp;suffix)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">with</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">None</span><br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;unrevSplit&nbsp;t&nbsp;n&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span>&nbsp;n&nbsp;&lt;&nbsp;0<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">then</span>&nbsp;[],t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">else</span>&nbsp;<span class="keyword">let</span>&nbsp;<span class="keyword">rec</span>&nbsp;offset&nbsp;i&nbsp;((l,r)&nbsp;<span class="keyword">as</span>&nbsp;p)&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span>&nbsp;i&nbsp;=&nbsp;n<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">then</span>&nbsp;p<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">else</span>&nbsp;<span class="keyword">match</span>&nbsp;r&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;[]&nbsp;&nbsp;&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;p<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;h::t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;offset&nbsp;(i&nbsp;+&nbsp;1)&nbsp;(h::l,t)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;offset&nbsp;0&nbsp;([],t)<br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;split_at&nbsp;t&nbsp;n&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;l,r&nbsp;=&nbsp;unrevSplit&nbsp;t&nbsp;n&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">List</span>.rev&nbsp;l,&nbsp;r<br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;take&nbsp;t&nbsp;n&nbsp;=&nbsp;fst&nbsp;(split_at&nbsp;t&nbsp;n)<br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;drop&nbsp;t&nbsp;n&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;l,r&nbsp;=&nbsp;unrevSplit&nbsp;t&nbsp;n&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;r<br>
+<br>
 <br>
 &nbsp;&nbsp;<span class="keyword">let</span>&nbsp;index_of_character&nbsp;t&nbsp;?(from=0)&nbsp;c&nbsp;=<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;index&nbsp;=&nbsp;ref&nbsp;0&nbsp;<span class="keyword">in</span><br>

@@ -13,14 +13,16 @@
 </li><li><a href='#BuildKetrewOnaVagrantVM'>Build Ketrew On a Vagrant VM</a>
 </li></ul>
 </li><li><a href='#MainOftheModule'>“Main” Of the Module</a>
-</li></ul><h2>Menu</h2><ul><li><a href='index.html'>Home</a></li><li><a href='Alternative_CLI_Application.html'>Alternative CLI Application</a></li><li><a href='Developer_Documentation.html'>Developer Documentation</a></li><li><a href='Glossary.html'>Glossary</a></li><li><a href='Long-Running_Plugins.html'>Long-Running Plugins</a></li><li><a href='Server_Commands.html'>Server Commands</a></li><li><a href='The_Configuration_File.html'>The Configuration File</a></li><li><a href='The_HTTP_API.html'>The HTTP API</a></li><li><a href='Workflow_Examples.html'>Workflow Examples</a></li><li><a href='dummy_plugin.html'>Plugin Example</a></li><li><a href='dummy_plugin_user.html'>Plugin-Usage Example</a></li><li><a href='integration.html'>Integration Test</a></li><li><a href='main.html'>Main Test</a></li><li><a href='preconfigured_main.html'>Preconfigured Main Example</a></li><li><a href='./api/index.html'>API Documentation</a></li><li>Branch/Tag: <a href='./improve_docs/index.html'><code>improve_docs</code></a></li><li>Repository <a href='https://github.com/hammerlab/ketrew'>at Github</a></li><li>Up: <a href='../index.html'>Software Projects</a></li></ul></div><div class="col-md-9">
+</li></ul><h2>Menu</h2><ul><li><a href='index.html'>Home</a></li><li><a href='Alternative_CLI_Application.html'>Alternative CLI Application</a></li><li><a href='Developer_Documentation.html'>Developer Documentation</a></li><li><a href='Glossary.html'>Glossary</a></li><li><a href='Long-Running_Plugins.html'>Long-Running Plugins</a></li><li><a href='Server_Commands.html'>Server Commands</a></li><li><a href='The_Configuration_File.html'>The Configuration File</a></li><li><a href='The_HTTP_API.html'>The HTTP API</a></li><li><a href='Workflow_Examples.html'>Workflow Examples</a></li><li><a href='dummy_plugin.html'>Plugin Example</a></li><li><a href='dummy_plugin_user.html'>Plugin-Usage Example</a></li><li><a href='integration.html'>Integration Test</a></li><li><a href='main.html'>Main Test</a></li><li><a href='preconfigured_main.html'>Preconfigured Main Example</a></li><li><a href='./api/index.html'>API Documentation</a></li><li>Branch/Tag: <a href='./doc/I82/howto_release/index.html'><code>doc/I82/howto_release</code></a></li><li>Repository <a href='https://github.com/hammerlab/ketrew'>at Github</a></li><li>Up: <a href='../index.html'>Software Projects</a></li></ul></div><div class="col-md-9">
 
 
 <h2 id="WorkflowExamples">Workflow Examples</h2>
 
 <p>This “test” provides a few functions that create increasingly complex workflows.
 It gets compiled to a command line application that submits the workflows to
-the Ketrew engine.</p><p>First, the mandatory license:</p><pre><code>Copyright 2014, Sebastien Mondet &lt;seb@mondet.org&gt;
+the Ketrew engine.</p>
+<p>First, the mandatory license:</p>
+<pre><code>Copyright 2014, Sebastien Mondet &lt;seb@mondet.org&gt;
 
 Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
 you may not use this file except in compliance with the License.
@@ -33,6 +35,7 @@ distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
 implied.  See the License for the specific language governing
 permissions and limitations under the License.</code></pre><p>And some preliminary OCaml settings:</p>
+
 <pre><span class="text">
 </span><span class="kw">open</span><span class="text"> </span><span class="kw2">Printf</span><span class="text">
 </span><span class="kw">module</span><span class="text"> </span><span class="kw2">List</span><span class="text"> = </span><span class="kw2">ListLabels</span><span class="text">
@@ -47,6 +50,7 @@ permissions and limitations under the License.</code></pre><p>And some prelimina
 <p>This function is a more “parametrized” version of the example in the
 <code>README.md</code> file (<code>host</code> and <code>queue</code> come from the command line).
 It actually calls <code>run</code> directly itself.</p>
+
 <pre><span class="text">
 </span><span class="kw">let</span><span class="text"> </span><span class="id">run_command_with_lsf</span><span class="text"> </span><span class="kw4">~host</span><span class="text"> </span><span class="kw4">~queue</span><span class="text"> </span><span class="id">cmd</span><span class="text"> =
   </span><span class="kw">let</span><span class="text"> </span><span class="kw">open</span><span class="text"> </span><span class="kw2">Ketrew</span><span class="text">.</span><span class="kw2">EDSL</span><span class="text"> </span><span class="kw">in</span><span class="text">
@@ -64,6 +68,7 @@ It actually calls <code>run</code> directly itself.</p>
 
 <p>This function is like <code>run_command_with_lsf</code> but uses
 <code>daemonize</code> with the “nohup-setsid hack” instead of the batch scheduler.</p>
+
 <pre><span class="text">
 </span><span class="kw">let</span><span class="text"> </span><span class="id">run_command_with_nohup</span><span class="text"> </span><span class="kw4">~host</span><span class="text"> </span><span class="id">cmd</span><span class="text"> =
   </span><span class="kw">let</span><span class="text"> </span><span class="kw">open</span><span class="text"> </span><span class="kw2">Ketrew</span><span class="text">.</span><span class="kw2">EDSL</span><span class="text"> </span><span class="kw">in</span><span class="text">
@@ -75,10 +80,12 @@ It actually calls <code>run</code> directly itself.</p>
 </span></pre>
 
 
-<p>This kind of “daemonized” job should work on any decent Unix system.</p><h3 id="DaemonizeWithThePythonHack">Daemonize With “The Python Hack”</h3>
+<p>This kind of “daemonized” job should work on any decent Unix system.</p>
+<h3 id="DaemonizeWithThePythonHack">Daemonize With “The Python Hack”</h3>
 
 <p>This function is like <code>run_command_with_nohup</code> but uses
 the “python daemon hack” instead.</p>
+
 <pre><span class="text">
 </span><span class="kw">let</span><span class="text"> </span><span class="id">run_command_with_python_hack</span><span class="text"> </span><span class="kw4">~host</span><span class="text"> </span><span class="id">cmd</span><span class="text"> =
   </span><span class="kw">let</span><span class="text"> </span><span class="kw">open</span><span class="text"> </span><span class="kw2">Ketrew</span><span class="text">.</span><span class="kw2">EDSL</span><span class="text"> </span><span class="kw">in</span><span class="text">
@@ -91,9 +98,11 @@ the “python daemon hack” instead.</p>
 
 
 <p>The <code>`Python_daemon</code> way of daemonizing was hacked together because
-MacOSX does not support the <code>nohup</code> and <code>setsid</code> commands any more.</p><h3 id="AFirstDependencyChain">A First Dependency Chain</h3>
+MacOSX does not support the <code>nohup</code> and <code>setsid</code> commands any more.</p>
+<h3 id="AFirstDependencyChain">A First Dependency Chain</h3>
 
-<p>This function runs a workflow with no less than 2 nodes!</p><ul><li><code>target2</code> depends on <code>target1</code>.</li><li>We call <code>run</code> on <code>target2</code> (the last target, i.e. the root of the dependency
+<p>This function runs a workflow with no less than 2 nodes!</p>
+<ul><li><code>target2</code> depends on <code>target1</code>.</li><li>We call <code>run</code> on <code>target2</code> (the last target, i.e. the root of the dependency
  arborescence).</li><li><code>target1</code> will run and if it succeeds <code>target2</code> will run.</li></ul>
 <pre><span class="text">
 </span><span class="kw">let</span><span class="text"> </span><span class="id">run_2_commands_with_python_hack</span><span class="text"> </span><span class="kw4">~host</span><span class="text"> </span><span class="id">cmd1</span><span class="text"> </span><span class="id">cmd2</span><span class="text"> =
@@ -110,11 +119,14 @@ MacOSX does not support the <code>nohup</code> and <code>setsid</code> commands 
   </span><span class="kw">in</span><span class="text">
   </span><span class="id">run</span><span class="text"> </span><span class="id">target2</span><span class="text">
 </span></pre>
-<p>For example:</p><pre><code>&lt;test-exec&gt; two-py /tmp &quot;du -sh $HOME&quot; &quot;du -sh $HOME/tmp/&quot;</code></pre><p>will run <code>du -sh</code> in <code>$HOME</code> and then in <code>$HOME/tmp</code> in the host <code>&quot;/tmp&quot;</code>
-(which is <code>localhost</code> with <code>/tmp</code> as playground).</p><h3 id="WithaCondition">With a Condition</h3>
+<p>For example:</p>
+<pre><code>&lt;test-exec&gt; two-py /tmp &quot;du -sh $HOME&quot; &quot;du -sh $HOME/tmp/&quot;</code></pre><p>will run <code>du -sh</code> in <code>$HOME</code> and then in <code>$HOME/tmp</code> in the host <code>&quot;/tmp&quot;</code>
+(which is <code>localhost</code> with <code>/tmp</code> as playground).</p>
+<h3 id="WithaCondition">With a Condition</h3>
 
 <p>This function creates a 2-nodes workflow that fails because of the condition
-if the first target is not ensured by the build-process it runs.</p><ul><li>the function <code>make_target</code> is partial application of <code>EDSL.target</code> with an
+if the first target is not ensured by the build-process it runs.</p>
+<ul><li>the function <code>make_target</code> is partial application of <code>EDSL.target</code> with an
  additional argument <code>~cmd</code>.</li><li><code>target_with_condition</code> is a target that is supposed to ensure that
 <code>impossible_file</code> exists (which <code>ls /tmp</code> won&#39;t do).<ul><li><code>impossible_file</code> is a datastructure representing a file on a given host.</li><li>The condition is specified with the <code>~done_when</code> argument.</li></ul></li><li><code>target2</code> is just a target that depends on <code>target_with_condition</code>.</li></ul>
 <pre><span class="text">
@@ -139,7 +151,8 @@ if the first target is not ensured by the build-process it runs.</p><ul><li>the 
 </span></pre>
 
 
-<p>The Explorer™ will show the failed targets:</p><pre><code>* [1]: Won&#39;t-run because of failed dependency
+<p>The Explorer™ will show the failed targets:</p>
+<pre><code>* [1]: Won&#39;t-run because of failed dependency
 ketrew_2014-09-23-21h55m01s460ms-UTC_994326685
 Failed: Dependencies died:
 ketrew_2014-09-23-21h55m01s460ms-UTC_089809344 died
@@ -150,12 +163,15 @@ Failed: Process Failure: the target did not ensure (Volume
 &quot;some-inexistent-file&quot;)} exists)</code></pre><h3 id="WebsiteBuildingWorkfow">Website Building Workfow</h3>
 
 <p>A function that creates a workflow that builds the website for given list of
-Git-branches.</p><p>It used to be simple but got pretty complex with time as it
+Git-branches.</p>
+<p>It used to be simple but got pretty complex with time as it
 was really used to build Ketrew&#39;s
-<a href='http://seb.mondet.org/software/ketrew/'>website</a>:</p><ul><li>take a list of branch names (<code>[]</code> meaning “default branch”)</li><li>clone the repository in a temporary locations</li><li><em>for each branch:</em> checkout the branch, and build the documentation</li><li>checkout the <code>gh-pages</code> branch</li><li>put <code>_doc/</code> at the top-level</li><li>commit and push back to the **current repository</li></ul>
+<a href='http://seb.mondet.org/software/ketrew/'>website</a>:</p>
+<ul><li>take a list of branch names (<code>[]</code> meaning “default branch”)</li><li>clone the repository in a temporary locations</li><li><em>for each branch:</em> checkout the branch, and build the documentation</li><li>checkout the <code>gh-pages</code> branch</li><li>put <code>_doc/</code> at the top-level</li><li>commit and push back to the **current repository</li></ul>
 
 <p>The workflow can also fail in many ways (e.g. Git commit forbidden because of
 nothing is new) which show ketrew&#39;s handling of errors in dependencies.</p>
+
 <pre><span class="text">
 </span><span class="kw">let</span><span class="text"> </span><span class="id">deploy_website</span><span class="text"> </span><span class="id">branches</span><span class="text"> =
   </span><span class="kw">let</span><span class="text"> </span><span class="kw">open</span><span class="text"> </span><span class="kw2">Ketrew</span><span class="text">.</span><span class="kw2">EDSL</span><span class="text"> </span><span class="kw">in</span><span class="text">
@@ -257,8 +273,11 @@ nothing is new) which show ketrew&#39;s handling of errors in dependencies.</p>
 
 <h3 id="ExampleBackupWorkflow">Example “Backup” Workflow</h3>
 
-<p>This an example of a “backup” workflow.</p><p>Take a directory, make a tar.gz, save its MD5 sum, and if <code>gpg</code> is <code>true</code>,
-call <code>gpg -c</code> and delete the tar.gz.</p><p>The passphrase for GPG must be in a file <code>~/.backup_passphrase</code> as</p><pre class='shell'><code class='shell'>export BACKUP_PASSPHRASE=&quot;some passsphraaase&quot;</code></pre>
+<p>This an example of a “backup” workflow.</p>
+<p>Take a directory, make a tar.gz, save its MD5 sum, and if <code>gpg</code> is <code>true</code>,
+call <code>gpg -c</code> and delete the tar.gz.</p>
+<p>The passphrase for GPG must be in a file <code>~/.backup_passphrase</code> as</p>
+<pre class='shell'><code class='shell'>export BACKUP_PASSPHRASE=&quot;some passsphraaase&quot;</code></pre>
 <pre><span class="text">
 </span><span class="kw">let</span><span class="text"> </span><span class="id">make_targz_on_host</span><span class="text"> ?(</span><span class="id">gpg</span><span class="text">=</span><span class="constant">true</span><span class="text">) ?</span><span class="id">dest_prefix</span><span class="text"> </span><span class="kw4">~host</span><span class="text"> </span><span class="kw4">~dir</span><span class="text"> () =
   </span><span class="kw">let</span><span class="text"> </span><span class="kw">open</span><span class="text"> </span><span class="kw2">Ketrew</span><span class="text">.</span><span class="kw2">EDSL</span><span class="text"> </span><span class="kw">in</span><span class="text">
@@ -319,7 +338,8 @@ call <code>gpg -c</code> and delete the tar.gz.</p><p>The passphrase for GPG mus
 <h3 id="BuildKetrewOnaVagrantVM">Build Ketrew On a Vagrant VM</h3>
 
 <p>This function builds completely different workflows depedending on the input
-command:</p><ul><li><code>prepare</code> → prepare a vagrant VM, ready to SSH to</li><li><code>go</code> → build Ketrew on the on vagrant VM</li><li><code>clean</code> → shutdown and delete the VM</li></ul>
+command:</p>
+<ul><li><code>prepare</code> → prepare a vagrant VM, ready to SSH to</li><li><code>go</code> → build Ketrew on the on vagrant VM</li><li><code>clean</code> → shutdown and delete the VM</li></ul>
 <pre><span class="text">
 </span><span class="kw">let</span><span class="text"> </span><span class="id">run_ketrew_on_vagrant</span><span class="text"> </span><span class="id">what_to_do</span><span class="text"> =
   </span><span class="kw">let</span><span class="text"> </span><span class="kw">open</span><span class="text"> </span><span class="kw2">Ketrew</span><span class="text">.</span><span class="kw2">EDSL</span><span class="text"> </span><span class="kw">in</span><span class="text">
@@ -431,8 +451,10 @@ command:</p><ul><li><code>prepare</code> → prepare a vagrant VM, ready to SSH 
 
 <h2 id="MainOftheModule">“Main” Of the Module</h2>
 
-<p>Command line parsing for this multi-workflow script.</p><p>Here it is kept very basic but one may use usual OCaml tools
+<p>Command line parsing for this multi-workflow script.</p>
+<p>Here it is kept very basic but one may use usual OCaml tools
 (<code>Arg</code> module, or <code>Cmdliner</code> -- which is already linked-in with Ketrew).</p>
+
 <pre><span class="text">
 </span><span class="kw">let</span><span class="text"> () =
   </span><span class="kw">let</span><span class="text"> </span><span class="id">argl</span><span class="text"> = </span><span class="kw2">Array</span><span class="text">.</span><span class="id">to_list</span><span class="text"> </span><span class="kw2">Sys</span><span class="text">.</span><span class="id">argv</span><span class="text"> </span><span class="kw">in</span><span class="text">

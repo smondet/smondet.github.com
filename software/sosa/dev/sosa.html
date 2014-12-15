@@ -221,6 +221,19 @@
   </span><span class="comment">(** Like [chop_suffix_exn] but return [None] instead of throwing
       an exception. *)</span><span class="text">
 
+  </span><span class="kw">val</span><span class="text"> </span><span class="id">split_at</span><span class="text">: </span><span class="id">t</span><span class="text"> -&gt; </span><span class="kw3">int</span><span class="text"> -&gt; </span><span class="id">t</span><span class="text"> * </span><span class="id">t</span><span class="text">
+  </span><span class="comment">(** Return a tuple where the first string is a prefix of the specified length
+      and the second is the rest. If index is [=&lt; 0] then the first element is
+      empty and the string is returned in the second element, similarly if the
+      index is [&gt;= length t] then the first element is [t] and the second is
+      [empty]. *)</span><span class="text">
+
+  </span><span class="kw">val</span><span class="text"> </span><span class="id">take</span><span class="text">: </span><span class="id">t</span><span class="text"> -&gt; </span><span class="kw3">int</span><span class="text"> -&gt; </span><span class="id">t</span><span class="text">
+  </span><span class="comment">(** Just the first part of split_at *)</span><span class="text">
+
+  </span><span class="kw">val</span><span class="text"> </span><span class="id">drop</span><span class="text">: </span><span class="id">t</span><span class="text"> -&gt; </span><span class="kw3">int</span><span class="text"> -&gt; </span><span class="id">t</span><span class="text">
+  </span><span class="comment">(** Just the second part of split_at *)</span><span class="text">
+
   </span><span class="kw">val</span><span class="text"> </span><span class="id">compare_substring</span><span class="text">: </span><span class="id">t</span><span class="text"> * </span><span class="kw3">int</span><span class="text"> * </span><span class="kw3">int</span><span class="text"> -&gt; </span><span class="id">t</span><span class="text"> * </span><span class="kw3">int</span><span class="text"> * </span><span class="kw3">int</span><span class="text"> -&gt; </span><span class="kw3">int</span><span class="text">
   </span><span class="comment">(** Comparison function for substrings: use as [compare_substring
       (s1, index1, length1) (s2, index2, length2)].
@@ -753,6 +766,7 @@
     | </span><span class="kw2">Not_found</span><span class="text"> -&gt; </span><span class="id">empty</span><span class="text">
 </span><span class="kw1">end</span><span class="text">
 
+
 </span><span class="kw">module</span><span class="text"> </span><span class="kw2">Make_prefix_suffix_array</span><span class="text"> (</span><span class="kw2">A</span><span class="text">:
   </span><span class="kw1">sig</span><span class="text">
     </span><span class="kw">type</span><span class="text"> </span><span class="id">t</span><span class="text">
@@ -796,10 +810,39 @@
     </span><span class="kw1">try</span><span class="text"> </span><span class="kw2">Some</span><span class="text"> (</span><span class="id">chop_suffix_exn</span><span class="text"> </span><span class="id">t</span><span class="text"> </span><span class="id">suffix</span><span class="text">)
     </span><span class="kw1">with</span><span class="text"> </span><span class="numeric">_</span><span class="text"> -&gt; </span><span class="kw2">None</span><span class="text">
 
-
-
-
 </span><span class="kw1">end</span><span class="text">
+
+</span><span class="kw">module</span><span class="text"> </span><span class="kw2">Make_split_at_index_functions</span><span class="text"> (</span><span class="kw2">A</span><span class="text">:
+    </span><span class="kw1">sig</span><span class="text">
+      </span><span class="kw">type</span><span class="text"> </span><span class="id">t</span><span class="text">
+      </span><span class="kw">type</span><span class="text"> </span><span class="id">character</span><span class="text">
+      </span><span class="kw">val</span><span class="text"> </span><span class="id">empty</span><span class="text"> : </span><span class="id">t</span><span class="text">
+      </span><span class="kw">val</span><span class="text"> </span><span class="id">length</span><span class="text"> : </span><span class="id">t</span><span class="text"> -&gt; </span><span class="kw3">int</span><span class="text">
+      </span><span class="kw">val</span><span class="text"> </span><span class="id">sub_exn</span><span class="text"> : </span><span class="id">t</span><span class="text"> -&gt; </span><span class="id">index</span><span class="text">:</span><span class="kw3">int</span><span class="text"> -&gt; </span><span class="id">length</span><span class="text">:</span><span class="kw3">int</span><span class="text"> -&gt; </span><span class="id">t</span><span class="text">
+    </span><span class="kw1">end</span><span class="text">) = </span><span class="kw1">struct</span><span class="text">
+
+  </span><span class="kw">let</span><span class="text"> </span><span class="id">split_at</span><span class="text"> </span><span class="id">t</span><span class="text"> </span><span class="id">n</span><span class="text"> =
+    </span><span class="kw">let</span><span class="text"> </span><span class="id">l</span><span class="text"> = </span><span class="kw2">A</span><span class="text">.</span><span class="id">length</span><span class="text"> </span><span class="id">t</span><span class="text"> </span><span class="kw">in</span><span class="text">
+    </span><span class="kw1">if</span><span class="text"> </span><span class="id">n</span><span class="text"> &lt; </span><span class="numeric">0</span><span class="text"> </span><span class="kw1">then</span><span class="text"> (</span><span class="kw2">A</span><span class="text">.</span><span class="id">empty</span><span class="text">, </span><span class="id">t</span><span class="text">)
+    </span><span class="kw1">else</span><span class="text"> </span><span class="kw1">if</span><span class="text"> </span><span class="id">n</span><span class="text"> &gt;= </span><span class="id">l</span><span class="text"> </span><span class="kw1">then</span><span class="text"> (</span><span class="id">t</span><span class="text">, </span><span class="kw2">A</span><span class="text">.</span><span class="id">empty</span><span class="text">)
+         </span><span class="kw1">else</span><span class="text"> (</span><span class="kw2">A</span><span class="text">.</span><span class="id">sub_exn</span><span class="text"> </span><span class="id">t</span><span class="text"> </span><span class="kw4">~index</span><span class="text">:</span><span class="numeric">0</span><span class="text"> </span><span class="kw4">~length</span><span class="text">:</span><span class="id">n</span><span class="text">),
+              (</span><span class="kw2">A</span><span class="text">.</span><span class="id">sub_exn</span><span class="text"> </span><span class="id">t</span><span class="text"> </span><span class="kw4">~index</span><span class="text">:</span><span class="id">n</span><span class="text"> </span><span class="kw4">~length</span><span class="text">:(</span><span class="id">l</span><span class="text"> - </span><span class="id">n</span><span class="text">))
+
+  </span><span class="kw">let</span><span class="text"> </span><span class="id">take</span><span class="text"> </span><span class="id">t</span><span class="text"> </span><span class="id">n</span><span class="text"> =
+    </span><span class="kw">let</span><span class="text"> </span><span class="id">l</span><span class="text"> = </span><span class="kw2">A</span><span class="text">.</span><span class="id">length</span><span class="text"> </span><span class="id">t</span><span class="text"> </span><span class="kw">in</span><span class="text">
+    </span><span class="kw1">if</span><span class="text"> </span><span class="id">n</span><span class="text"> &lt; </span><span class="numeric">0</span><span class="text"> </span><span class="kw1">then</span><span class="text"> </span><span class="kw2">A</span><span class="text">.</span><span class="id">empty</span><span class="text">
+    </span><span class="kw1">else</span><span class="text"> </span><span class="kw1">if</span><span class="text"> </span><span class="id">n</span><span class="text"> &gt;= </span><span class="id">l</span><span class="text"> </span><span class="kw1">then</span><span class="text"> </span><span class="id">t</span><span class="text">
+         </span><span class="kw1">else</span><span class="text"> </span><span class="kw2">A</span><span class="text">.</span><span class="id">sub_exn</span><span class="text"> </span><span class="id">t</span><span class="text"> </span><span class="kw4">~index</span><span class="text">:</span><span class="numeric">0</span><span class="text"> </span><span class="kw4">~length</span><span class="text">:</span><span class="id">n</span><span class="text">
+
+  </span><span class="kw">let</span><span class="text"> </span><span class="id">drop</span><span class="text"> </span><span class="id">t</span><span class="text"> </span><span class="id">n</span><span class="text"> =
+    </span><span class="kw">let</span><span class="text"> </span><span class="id">l</span><span class="text"> = </span><span class="kw2">A</span><span class="text">.</span><span class="id">length</span><span class="text"> </span><span class="id">t</span><span class="text"> </span><span class="kw">in</span><span class="text">
+    </span><span class="kw1">if</span><span class="text"> </span><span class="id">n</span><span class="text"> &lt; </span><span class="numeric">0</span><span class="text"> </span><span class="kw1">then</span><span class="text"> </span><span class="id">t</span><span class="text">
+    </span><span class="kw1">else</span><span class="text"> </span><span class="kw1">if</span><span class="text"> </span><span class="id">n</span><span class="text"> &gt;= </span><span class="id">l</span><span class="text"> </span><span class="kw1">then</span><span class="text"> </span><span class="kw2">A</span><span class="text">.</span><span class="id">empty</span><span class="text">
+         </span><span class="kw1">else</span><span class="text"> (</span><span class="kw2">A</span><span class="text">.</span><span class="id">sub_exn</span><span class="text"> </span><span class="id">t</span><span class="text"> </span><span class="kw4">~index</span><span class="text">:</span><span class="id">n</span><span class="text"> </span><span class="kw4">~length</span><span class="text">:(</span><span class="id">l</span><span class="text"> - </span><span class="id">n</span><span class="text">))
+
+
+  </span><span class="kw1">end</span><span class="text">
+
 </span><span class="kw">module</span><span class="text"> </span><span class="kw2">Native_string</span><span class="text"> : </span><span class="kw2">NATIVE_STRING</span><span class="text"> = </span><span class="kw1">struct</span><span class="text">
 
   </span><span class="kw">include</span><span class="text"> </span><span class="kw2">StringLabels</span><span class="text">
@@ -1059,12 +1102,21 @@
       </span><span class="kw">let</span><span class="text"> </span><span class="id">index_of_character</span><span class="text"> = </span><span class="id">index_of_character</span><span class="text">
     </span><span class="kw1">end</span><span class="text">)
 
+
   </span><span class="kw">include</span><span class="text"> </span><span class="kw2">Make_prefix_suffix_array</span><span class="text"> (</span><span class="kw1">struct</span><span class="text">
-    </span><span class="kw">type</span><span class="text"> </span><span class="id">t</span><span class="text"> = </span><span class="kw3">string</span><span class="text">
-    </span><span class="kw">type</span><span class="text"> </span><span class="id">character</span><span class="text"> = </span><span class="kw3">char</span><span class="text">
-    </span><span class="kw">let</span><span class="text"> </span><span class="id">length</span><span class="text"> = </span><span class="id">length</span><span class="text">
-    </span><span class="kw">let</span><span class="text"> </span><span class="id">get</span><span class="text"> = (</span><span class="kw">fun</span><span class="text"> </span><span class="id">s</span><span class="text"> </span><span class="id">i</span><span class="text"> -&gt; </span><span class="id">s</span><span class="text">.[</span><span class="id">i</span><span class="text">])
-    </span><span class="kw">let</span><span class="text"> </span><span class="id">sub_exn</span><span class="text"> = </span><span class="id">sub_exn</span><span class="text">
+      </span><span class="kw">type</span><span class="text"> </span><span class="id">t</span><span class="text"> = </span><span class="kw3">string</span><span class="text">
+      </span><span class="kw">type</span><span class="text"> </span><span class="id">character</span><span class="text"> = </span><span class="kw3">char</span><span class="text">
+      </span><span class="kw">let</span><span class="text"> </span><span class="id">length</span><span class="text"> = </span><span class="id">length</span><span class="text">
+      </span><span class="kw">let</span><span class="text"> </span><span class="id">get</span><span class="text"> = (</span><span class="kw">fun</span><span class="text"> </span><span class="id">s</span><span class="text"> </span><span class="id">i</span><span class="text"> -&gt; </span><span class="id">s</span><span class="text">.[</span><span class="id">i</span><span class="text">])
+      </span><span class="kw">let</span><span class="text"> </span><span class="id">sub_exn</span><span class="text"> = </span><span class="id">sub_exn</span><span class="text">
+    </span><span class="kw1">end</span><span class="text">)
+
+  </span><span class="kw">include</span><span class="text"> </span><span class="kw2">Make_split_at_index_functions</span><span class="text">(</span><span class="kw1">struct</span><span class="text">
+      </span><span class="kw">type</span><span class="text"> </span><span class="id">t</span><span class="text"> = </span><span class="kw3">string</span><span class="text">
+      </span><span class="kw">type</span><span class="text"> </span><span class="id">character</span><span class="text"> = </span><span class="kw3">char</span><span class="text">
+      </span><span class="kw">let</span><span class="text"> </span><span class="id">empty</span><span class="text"> = </span><span class="id">empty</span><span class="text">
+      </span><span class="kw">let</span><span class="text"> </span><span class="id">length</span><span class="text"> = </span><span class="id">length</span><span class="text">
+      </span><span class="kw">let</span><span class="text"> </span><span class="id">sub_exn</span><span class="text"> = </span><span class="id">sub_exn</span><span class="text">
     </span><span class="kw1">end</span><span class="text">)
 
   </span><span class="kw">module</span><span class="text"> </span><span class="kw2">Make_output</span><span class="text"> (</span><span class="kw2">Model</span><span class="text">: </span><span class="kw2">OUTPUT_MODEL</span><span class="text">) = </span><span class="kw2">Model</span><span class="text">
@@ -1273,6 +1325,7 @@
     </span><span class="kw1">try</span><span class="text"> </span><span class="kw2">Some</span><span class="text"> (</span><span class="id">slice_exn</span><span class="text"> ?</span><span class="id">start</span><span class="text"> ?</span><span class="id">finish</span><span class="text"> </span><span class="id">t</span><span class="text">)
     </span><span class="kw1">with</span><span class="text"> </span><span class="numeric">_</span><span class="text"> -&gt; </span><span class="kw2">None</span><span class="text">
 
+
   </span><span class="kw">let</span><span class="text"> </span><span class="kw">rec</span><span class="text"> </span><span class="id">comp_loop</span><span class="text"> </span><span class="id">p</span><span class="text"> </span><span class="id">lst_pair</span><span class="text"> =
     </span><span class="kw1">if</span><span class="text"> </span><span class="id">p</span><span class="text">
     </span><span class="kw1">then</span><span class="text"> </span><span class="kw1">match</span><span class="text"> </span><span class="id">lst_pair</span><span class="text"> </span><span class="kw1">with</span><span class="text">
@@ -1304,6 +1357,29 @@
   </span><span class="kw">let</span><span class="text"> </span><span class="id">chop_suffix</span><span class="text"> </span><span class="id">t</span><span class="text"> </span><span class="kw4">~suffix</span><span class="text"> =
     </span><span class="kw1">try</span><span class="text"> </span><span class="kw2">Some</span><span class="text"> (</span><span class="id">chop_suffix_exn</span><span class="text"> </span><span class="id">t</span><span class="text"> </span><span class="id">suffix</span><span class="text">)
     </span><span class="kw1">with</span><span class="text"> </span><span class="numeric">_</span><span class="text"> -&gt; </span><span class="kw2">None</span><span class="text">
+
+  </span><span class="kw">let</span><span class="text"> </span><span class="id">unrevSplit</span><span class="text"> </span><span class="id">t</span><span class="text"> </span><span class="id">n</span><span class="text"> =
+    </span><span class="kw1">if</span><span class="text"> </span><span class="id">n</span><span class="text"> &lt; </span><span class="numeric">0</span><span class="text">
+    </span><span class="kw1">then</span><span class="text"> [],</span><span class="id">t</span><span class="text">
+    </span><span class="kw1">else</span><span class="text"> </span><span class="kw">let</span><span class="text"> </span><span class="kw">rec</span><span class="text"> </span><span class="id">offset</span><span class="text"> </span><span class="id">i</span><span class="text"> ((</span><span class="id">l</span><span class="text">,</span><span class="id">r</span><span class="text">) </span><span class="kw1">as</span><span class="text"> </span><span class="id">p</span><span class="text">) =
+           </span><span class="kw1">if</span><span class="text"> </span><span class="id">i</span><span class="text"> = </span><span class="id">n</span><span class="text">
+           </span><span class="kw1">then</span><span class="text"> </span><span class="id">p</span><span class="text">
+           </span><span class="kw1">else</span><span class="text"> </span><span class="kw1">match</span><span class="text"> </span><span class="id">r</span><span class="text"> </span><span class="kw1">with</span><span class="text">
+                | []   -&gt; </span><span class="id">p</span><span class="text">
+                | </span><span class="id">h</span><span class="text">::</span><span class="id">t</span><span class="text"> -&gt; </span><span class="id">offset</span><span class="text"> (</span><span class="id">i</span><span class="text"> + </span><span class="numeric">1</span><span class="text">) (</span><span class="id">h</span><span class="text">::</span><span class="id">l</span><span class="text">,</span><span class="id">t</span><span class="text">)
+         </span><span class="kw">in</span><span class="text">
+         </span><span class="id">offset</span><span class="text"> </span><span class="numeric">0</span><span class="text"> ([],</span><span class="id">t</span><span class="text">)
+
+  </span><span class="kw">let</span><span class="text"> </span><span class="id">split_at</span><span class="text"> </span><span class="id">t</span><span class="text"> </span><span class="id">n</span><span class="text"> =
+    </span><span class="kw">let</span><span class="text"> </span><span class="id">l</span><span class="text">,</span><span class="id">r</span><span class="text"> = </span><span class="id">unrevSplit</span><span class="text"> </span><span class="id">t</span><span class="text"> </span><span class="id">n</span><span class="text"> </span><span class="kw">in</span><span class="text">
+    </span><span class="kw2">List</span><span class="text">.</span><span class="id">rev</span><span class="text"> </span><span class="id">l</span><span class="text">, </span><span class="id">r</span><span class="text">
+
+  </span><span class="kw">let</span><span class="text"> </span><span class="id">take</span><span class="text"> </span><span class="id">t</span><span class="text"> </span><span class="id">n</span><span class="text"> = </span><span class="id">fst</span><span class="text"> (</span><span class="id">split_at</span><span class="text"> </span><span class="id">t</span><span class="text"> </span><span class="id">n</span><span class="text">)
+
+  </span><span class="kw">let</span><span class="text"> </span><span class="id">drop</span><span class="text"> </span><span class="id">t</span><span class="text"> </span><span class="id">n</span><span class="text"> =
+    </span><span class="kw">let</span><span class="text"> </span><span class="id">l</span><span class="text">,</span><span class="id">r</span><span class="text"> = </span><span class="id">unrevSplit</span><span class="text"> </span><span class="id">t</span><span class="text"> </span><span class="id">n</span><span class="text"> </span><span class="kw">in</span><span class="text">
+    </span><span class="id">r</span><span class="text">
+
 
   </span><span class="kw">let</span><span class="text"> </span><span class="id">index_of_character</span><span class="text"> </span><span class="id">t</span><span class="text"> ?(</span><span class="id">from</span><span class="text">=</span><span class="numeric">0</span><span class="text">) </span><span class="id">c</span><span class="text"> =
     </span><span class="kw">let</span><span class="text"> </span><span class="id">index</span><span class="text"> = </span><span class="kw1">ref</span><span class="text"> </span><span class="numeric">0</span><span class="text"> </span><span class="kw">in</span><span class="text">
@@ -1895,6 +1971,7 @@
       </span><span class="kw">let</span><span class="text"> </span><span class="id">index_of_character</span><span class="text"> = </span><span class="id">index_of_character</span><span class="text">
     </span><span class="kw1">end</span><span class="text">)
 
+
   </span><span class="kw">include</span><span class="text"> </span><span class="kw2">Make_prefix_suffix_array</span><span class="text"> (</span><span class="kw1">struct</span><span class="text">
     </span><span class="kw">type</span><span class="text"> </span><span class="id">t</span><span class="text"> = </span><span class="kw2">S</span><span class="text">.</span><span class="id">t</span><span class="text">
     </span><span class="kw">type</span><span class="text"> </span><span class="id">character</span><span class="text"> = </span><span class="kw2">S</span><span class="text">.</span><span class="id">character</span><span class="text">
@@ -1902,6 +1979,17 @@
     </span><span class="kw">let</span><span class="text"> </span><span class="id">get</span><span class="text"> = </span><span class="kw2">S</span><span class="text">.</span><span class="id">get</span><span class="text">
     </span><span class="kw">let</span><span class="text"> </span><span class="id">sub_exn</span><span class="text"> = </span><span class="id">sub_exn</span><span class="text">
     </span><span class="kw1">end</span><span class="text">)
+
+
+  </span><span class="kw">include</span><span class="text"> </span><span class="kw2">Make_split_at_index_functions</span><span class="text">(</span><span class="kw1">struct</span><span class="text">
+      </span><span class="kw">type</span><span class="text"> </span><span class="id">t</span><span class="text"> = </span><span class="kw2">S</span><span class="text">.</span><span class="id">t</span><span class="text">
+      </span><span class="kw">type</span><span class="text"> </span><span class="id">character</span><span class="text"> = </span><span class="kw2">S</span><span class="text">.</span><span class="id">character</span><span class="text">
+      </span><span class="kw">let</span><span class="text"> </span><span class="id">empty</span><span class="text"> = </span><span class="id">empty</span><span class="text">
+      </span><span class="kw">let</span><span class="text"> </span><span class="id">length</span><span class="text"> = </span><span class="id">length</span><span class="text">
+      </span><span class="kw">let</span><span class="text"> </span><span class="id">sub_exn</span><span class="text"> </span><span class="id">t</span><span class="text"> </span><span class="kw4">~index</span><span class="text"> </span><span class="kw4">~length</span><span class="text"> = </span><span class="id">sub_exn</span><span class="text"> </span><span class="id">t</span><span class="text"> </span><span class="id">index</span><span class="text"> </span><span class="id">length</span><span class="text">
+    </span><span class="kw1">end</span><span class="text">)
+
+
 
   </span><span class="kw">module</span><span class="text"> </span><span class="kw2">Make_output</span><span class="text"> (</span><span class="kw2">Model</span><span class="text">: </span><span class="kw2">OUTPUT_MODEL</span><span class="text">) = </span><span class="kw1">struct</span><span class="text">
 

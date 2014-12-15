@@ -119,6 +119,7 @@
 converted to every other representation. We call them DNA and use only <a href='api/Sosa.A.html' title='A'><code>A</code></a>,
 <a href='api/Sosa.C.html' title='C'><code>C</code></a>, <a href='api/Sosa.G.html' title='G'><code>G</code></a>, <a href='api/Sosa.T.html' title='T'><code>T</code></a> for future implementations which will be using only 2 or 4
 bits per character.</p>
+
 <pre><span class="text">
 </span><span class="kw">let</span><span class="text"> </span><span class="id">dna_test_subjects</span><span class="text"> =
   </span><span class="kw">let</span><span class="text"> </span><span class="id">random_read</span><span class="text"> </span><span class="numeric">_</span><span class="text"> =
@@ -138,6 +139,7 @@ bits per character.</p>
 
 <p>If asked on the command line, each test will run some benchmarks on the
 implementation.</p>
+
 <pre><span class="text">
 </span><span class="kw">module</span><span class="text"> </span><span class="kw2">Benchmark</span><span class="text"> = </span><span class="kw1">struct</span><span class="text">
 
@@ -214,6 +216,7 @@ implementation.</p>
 
 <p>The function <code>do_basic_test</code> below takes a whole OCaml module implementation as
 argument; <a href='api/Sosa.TEST_STRING.html' title='TEST_STRING'><code>TEST_STRING</code></a> is the expected signature:</p>
+
 <pre><span class="text">
 
 </span><span class="kw">module</span><span class="text"> </span><span class="kw">type</span><span class="text"> </span><span class="kw2">TEST_STRING</span><span class="text"> = </span><span class="kw1">sig</span><span class="text">
@@ -1267,6 +1270,34 @@ argument; <a href='api/Sosa.TEST_STRING.html' title='TEST_STRING'><code>TEST_STR
     </span><span class="id">test</span><span class="text"> [</span><span class="numeric">1</span><span class="text">;</span><span class="numeric">2</span><span class="text">;</span><span class="numeric">3</span><span class="text">]  </span><span class="kw4">~s</span><span class="text">:[</span><span class="numeric">4</span><span class="text">]        </span><span class="kw4">~expect</span><span class="text">:</span><span class="kw2">None</span><span class="text">;
     </span><span class="id">test</span><span class="text"> []       </span><span class="kw4">~s</span><span class="text">:[</span><span class="numeric">1</span><span class="text">]        </span><span class="kw4">~expect</span><span class="text">:</span><span class="kw2">None</span><span class="text">;
     </span><span class="id">test</span><span class="text"> [</span><span class="numeric">1</span><span class="text">;</span><span class="numeric">2</span><span class="text">;</span><span class="numeric">3</span><span class="text">]  </span><span class="kw4">~s</span><span class="text">:[</span><span class="numeric">1</span><span class="text">;</span><span class="numeric">2</span><span class="text">;</span><span class="numeric">3</span><span class="text">;</span><span class="numeric">4</span><span class="text">]  </span><span class="kw4">~expect</span><span class="text">:</span><span class="kw2">None</span><span class="text">;
+  </span><span class="kw1">end</span><span class="text">;
+
+  </span><span class="kw1">begin</span><span class="text"> </span><span class="comment">(* Test split_at, take and drop. *)</span><span class="text">
+    </span><span class="kw">let</span><span class="text"> </span><span class="id">test</span><span class="text"> </span><span class="id">l</span><span class="text"> </span><span class="id">n</span><span class="text"> (</span><span class="id">le</span><span class="text">,</span><span class="id">ri</span><span class="text">) =
+      </span><span class="kw">let</span><span class="text"> </span><span class="id">s</span><span class="text">   = </span><span class="id">ints_to_str</span><span class="text"> </span><span class="id">l</span><span class="text">
+      </span><span class="kw">and</span><span class="text"> </span><span class="id">le</span><span class="text">' = </span><span class="id">ints_to_str</span><span class="text"> </span><span class="id">le</span><span class="text">
+      </span><span class="kw">and</span><span class="text"> </span><span class="id">ri</span><span class="text">' = </span><span class="id">ints_to_str</span><span class="text"> </span><span class="id">ri</span><span class="text"> </span><span class="kw">in</span><span class="text">
+      </span><span class="kw">let</span><span class="text"> (</span><span class="id">rl</span><span class="text">,</span><span class="id">rr</span><span class="text">) </span><span class="kw1">as</span><span class="text"> </span><span class="id">res</span><span class="text"> = </span><span class="kw2">Str</span><span class="text">.</span><span class="id">split_at</span><span class="text"> </span><span class="id">s</span><span class="text"> </span><span class="id">n</span><span class="text">
+      </span><span class="kw">and</span><span class="text"> </span><span class="id">tres</span><span class="text">  = </span><span class="kw2">Str</span><span class="text">.</span><span class="id">take</span><span class="text"> </span><span class="id">s</span><span class="text"> </span><span class="id">n</span><span class="text">
+      </span><span class="kw">and</span><span class="text"> </span><span class="id">dres</span><span class="text">  = </span><span class="kw2">Str</span><span class="text">.</span><span class="id">drop</span><span class="text"> </span><span class="id">s</span><span class="text"> </span><span class="id">n</span><span class="text"> </span><span class="kw">in</span><span class="text">
+      </span><span class="id">test_assertf</span><span class="text"> (</span><span class="id">res</span><span class="text"> = (</span><span class="id">le</span><span class="text">',</span><span class="id">ri</span><span class="text">') &amp;&amp; </span><span class="id">tres</span><span class="text"> = </span><span class="id">le</span><span class="text">' &amp;&amp; </span><span class="id">dres</span><span class="text"> = </span><span class="id">ri</span><span class="text">')
+        </span><span class="string">&quot;split_at: %s %d expects (%s,%s) but got (%s,%s)&quot;</span><span class="text">
+          (</span><span class="id">int_list_to_string</span><span class="text"> </span><span class="id">l</span><span class="text">)
+          </span><span class="id">n</span><span class="text">
+          (</span><span class="id">int_list_to_string</span><span class="text"> </span><span class="id">le</span><span class="text">)
+          (</span><span class="id">int_list_to_string</span><span class="text"> </span><span class="id">ri</span><span class="text">)
+          (</span><span class="kw2">Str</span><span class="text">.</span><span class="id">to_native_string</span><span class="text"> </span><span class="id">rl</span><span class="text">)
+          (</span><span class="kw2">Str</span><span class="text">.</span><span class="id">to_native_string</span><span class="text"> </span><span class="id">rr</span><span class="text">)
+    </span><span class="kw">in</span><span class="text">
+    </span><span class="id">test</span><span class="text"> []      (</span><span class="numeric">-1</span><span class="text">) ([],[]);
+    </span><span class="id">test</span><span class="text"> []      (</span><span class="numeric">0</span><span class="text">)  ([],[]);
+    </span><span class="id">test</span><span class="text"> []      (</span><span class="numeric">1</span><span class="text">)  ([],[]);
+    </span><span class="id">test</span><span class="text"> [</span><span class="numeric">1</span><span class="text">;</span><span class="numeric">2</span><span class="text">;</span><span class="numeric">3</span><span class="text">] (</span><span class="numeric">-1</span><span class="text">) ([],[</span><span class="numeric">1</span><span class="text">;</span><span class="numeric">2</span><span class="text">;</span><span class="numeric">3</span><span class="text">]);
+    </span><span class="id">test</span><span class="text"> [</span><span class="numeric">1</span><span class="text">;</span><span class="numeric">2</span><span class="text">;</span><span class="numeric">3</span><span class="text">] (</span><span class="numeric">0</span><span class="text">)  ([],[</span><span class="numeric">1</span><span class="text">;</span><span class="numeric">2</span><span class="text">;</span><span class="numeric">3</span><span class="text">]);
+    </span><span class="id">test</span><span class="text"> [</span><span class="numeric">1</span><span class="text">;</span><span class="numeric">2</span><span class="text">;</span><span class="numeric">3</span><span class="text">] (</span><span class="numeric">1</span><span class="text">)  ([</span><span class="numeric">1</span><span class="text">],[</span><span class="numeric">2</span><span class="text">;</span><span class="numeric">3</span><span class="text">]);
+    </span><span class="id">test</span><span class="text"> [</span><span class="numeric">1</span><span class="text">;</span><span class="numeric">2</span><span class="text">;</span><span class="numeric">3</span><span class="text">] (</span><span class="numeric">2</span><span class="text">)  ([</span><span class="numeric">1</span><span class="text">;</span><span class="numeric">2</span><span class="text">],[</span><span class="numeric">3</span><span class="text">]);
+    </span><span class="id">test</span><span class="text"> [</span><span class="numeric">1</span><span class="text">;</span><span class="numeric">2</span><span class="text">;</span><span class="numeric">3</span><span class="text">] (</span><span class="numeric">3</span><span class="text">)  ([</span><span class="numeric">1</span><span class="text">;</span><span class="numeric">2</span><span class="text">;</span><span class="numeric">3</span><span class="text">],[]);
+    </span><span class="id">test</span><span class="text"> [</span><span class="numeric">1</span><span class="text">;</span><span class="numeric">2</span><span class="text">;</span><span class="numeric">3</span><span class="text">] (</span><span class="numeric">4</span><span class="text">)  ([</span><span class="numeric">1</span><span class="text">;</span><span class="numeric">2</span><span class="text">;</span><span class="numeric">3</span><span class="text">],[]);
   </span><span class="kw1">end</span><span class="text">;
 
   </span><span class="comment">(* #### BENCHMARKS #### *)</span><span class="text">

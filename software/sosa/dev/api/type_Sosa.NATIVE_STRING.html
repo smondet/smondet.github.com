@@ -43,6 +43,9 @@
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;chop_prefix&nbsp;:&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;prefix:t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;t&nbsp;option<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;chop_suffix_exn&nbsp;:&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;suffix:t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;chop_suffix&nbsp;:&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;suffix:t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;t&nbsp;option<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;split_at&nbsp;:&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;int&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;t&nbsp;*&nbsp;t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;take&nbsp;:&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;int&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;drop&nbsp;:&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;int&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;compare_substring&nbsp;:&nbsp;t&nbsp;*&nbsp;int&nbsp;*&nbsp;int&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;t&nbsp;*&nbsp;int&nbsp;*&nbsp;int&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;int<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;compare_substring_strict&nbsp;:&nbsp;t&nbsp;*&nbsp;int&nbsp;*&nbsp;int&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;t&nbsp;*&nbsp;int&nbsp;*&nbsp;int&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;int&nbsp;option<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;iter&nbsp;:&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;f:(character&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;unit)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;unit<br>

@@ -11,54 +11,91 @@
 </li><li><a href='#Tests'>Tests</a>
 <ul><li><a href='#AutomatedTests'>Automated Tests</a>
 </li><li><a href='#ThecliTest'>The <code>cli</code> Test</a>
+</li><li><a href='#TheintegrationTest'>The <code>integration</code> Test</a>
+</li><li><a href='#DynamicallyLoadedPlugins'>Dynamically Loaded Plugins</a>
 </li><li><a href='#GeneratingaTestEnvironment'>Generating a Test Environment</a>
 </li></ul>
-</li></ul><h2>Menu</h2><ul><li><a href='index.html'>Home</a></li><li><a href='Alternative_CLI_Application.html'>Alternative CLI Application</a></li><li><a href='Developer_Documentation.html'>Developer Documentation</a></li><li><a href='Glossary.html'>Glossary</a></li><li><a href='Long-Running_Plugins.html'>Long-Running Plugins</a></li><li><a href='Server_Commands.html'>Server Commands</a></li><li><a href='The_Configuration_File.html'>The Configuration File</a></li><li><a href='The_HTTP_API.html'>The HTTP API</a></li><li><a href='Workflow_Examples.html'>Workflow Examples</a></li><li><a href='dummy_plugin.html'>Plugin Example</a></li><li><a href='dummy_plugin_user.html'>Plugin-Usage Example</a></li><li><a href='integration.html'>Integration Test</a></li><li><a href='main.html'>Main Test</a></li><li><a href='preconfigured_main.html'>Preconfigured Main Example</a></li><li><a href='./api/index.html'>API Documentation</a></li><li>Branch/Tag: <a href='./improve_docs/index.html'><code>improve_docs</code></a></li><li>Repository <a href='https://github.com/hammerlab/ketrew'>at Github</a></li><li>Up: <a href='../index.html'>Software Projects</a></li></ul></div><div class="col-md-9"><h1 id="DevelopmentDocumentation">Development Documentation</h1>
+</li></ul><h2>Menu</h2><ul><li><a href='index.html'>Home</a></li><li><a href='Alternative_CLI_Application.html'>Alternative CLI Application</a></li><li><a href='Developer_Documentation.html'>Developer Documentation</a></li><li><a href='Glossary.html'>Glossary</a></li><li><a href='Long-Running_Plugins.html'>Long-Running Plugins</a></li><li><a href='Server_Commands.html'>Server Commands</a></li><li><a href='The_Configuration_File.html'>The Configuration File</a></li><li><a href='The_HTTP_API.html'>The HTTP API</a></li><li><a href='Workflow_Examples.html'>Workflow Examples</a></li><li><a href='dummy_plugin.html'>Plugin Example</a></li><li><a href='dummy_plugin_user.html'>Plugin-Usage Example</a></li><li><a href='integration.html'>Integration Test</a></li><li><a href='main.html'>Main Test</a></li><li><a href='preconfigured_main.html'>Preconfigured Main Example</a></li><li><a href='./api/index.html'>API Documentation</a></li><li>Branch/Tag: <a href='./doc/I82/howto_release/index.html'><code>doc/I82/howto_release</code></a></li><li>Repository <a href='https://github.com/hammerlab/ketrew'>at Github</a></li><li>Up: <a href='../index.html'>Software Projects</a></li></ul></div><div class="col-md-9"><h1 id="DevelopmentDocumentation">Development Documentation</h1>
 
 <h2 id="Build">Build</h2>
 
 <h3 id="GettingJustTheDependencies">Getting Just The Dependencies</h3>
 
-<p>Ketrew depends on</p><ul><li><code>nonstd</code>: nano-library providing a portable extract of <code>Core_kernel</code></li><li><code>pvem</code>: error monad</li><li><code>docout</code>: logging with <code>smart-print</code></li><li><code>sosa</code>:  String module/functor</li><li><code>pvem_lwt_unix</code>: <code>Lwt_unix</code> wrapped in a <code>Pvem.t</code> (error monad) with more
+<p>Ketrew depends on</p>
+<ul><li><code>nonstd</code>: nano-library providing a portable extract of <code>Core_kernel</code></li><li><code>pvem</code>: error monad</li><li><code>docout</code>: logging with <code>smart-print</code></li><li><code>sosa</code>:  String module/functor</li><li><code>pvem_lwt_unix</code>: <code>Lwt_unix</code> wrapped in a <code>Pvem.t</code> (error monad) with more
 precise error types.</li><li><code>uri</code>:
 parse <a href='http://www.ietf.org/rfc/rfc3986.txt'>RFC-3986</a>-compliant URIs
 (<code>uri</code> itself depends on <code>camlp4</code>).</li><li><code>cmdliner</code>: command line parsing</li><li><code>yojson</code>: JSON parsing/printing</li><li><code>atd2cconv</code>: definition of serialization formats (used with <code>Yojson</code>).</li><li><code>toml</code>: config-file parsing</li><li><code>cohttp.lwt</code>, <code>ssl</code>, and <code>conduit</code>: HTTP server and client</li><li><code>findlib</code> + <code>dynlink</code>: dynamic loading of plugins </li></ul>
 
-<p>and uses the <code>ocp-build</code> build system.</p><p>At runtime, Ketrew will use a reasonably recent <code>git</code> command, and an <code>ssh</code>
-client (tested only with OpenSSH; but SSH calls are quite configurable).</p><p>The <code>please.sh</code> script can call <code>opam</code> itself:</p><pre><code>./please.sh get-dependencies</code></pre><h3 id="Build_1">Build</h3>
+<p>and uses the <code>ocp-build</code> build system.</p>
+<p>At runtime, Ketrew will use a reasonably recent <code>git</code> command, and an <code>ssh</code>
+client (tested only with OpenSSH; but SSH calls are quite configurable).</p>
+<p>The <code>please.sh</code> script can call <code>opam</code> itself:</p>
+<pre><code>./please.sh get-dependencies</code></pre><h3 id="Build_1">Build</h3>
 
-<p>Then you may setup and build everything:</p><pre><code>./please.sh build</code></pre><p>(for incremental compilation while developing please use: <code>ocp-build &lt;target&gt;</code>
-directly)</p><h3 id="Install">Install</h3>
+<p>Then you may setup and build everything:</p>
+<pre><code>./please.sh build</code></pre><p>(for incremental compilation while developing please use: <code>ocp-build &lt;target&gt;</code>
+directly)</p>
+<h3 id="Install">Install</h3>
 
-<p>For now, <code>ketrew</code> uses a custom install/uninstall procedure:</p><pre><code>./please.sh install &lt;prefix&gt;</code></pre><p>and uninstall with:</p><pre><code>./please.sh uninstall &lt;prefix&gt;</code></pre><p>If you use Opam ≥ <em>1.2.0~beta4</em>, you don&#39;t need a custom opam-repository:</p><pre><code>./please.sh local-opam
+<p>For now, <code>ketrew</code> uses a custom install/uninstall procedure:</p>
+<pre><code>./please.sh install &lt;prefix&gt;</code></pre><p>and uninstall with:</p>
+<pre><code>./please.sh uninstall &lt;prefix&gt;</code></pre><p>If you use Opam ≥ <em>1.2.0~beta4</em>, you don&#39;t need a custom opam-repository:</p>
+<pre><code>./please.sh local-opam
 opam pin add -k path ketrew .</code></pre><h3 id="BuildTheDocumentation">Build The Documentation</h3>
 
-<p>The documentation depends on <a href='https://github.com/smondet/oredoc'>oredoc</a>:</p><pre><code>please.sh doc</code></pre><p>and check-out <code>_doc/&lt;branch&gt;/index.html</code> (unless branch is <code>master</code>, then
-<code>_doc/index.html</code>).</p><h3 id="RunaToplevel">Run a Toplevel</h3>
+<p>The documentation depends on <a href='https://github.com/smondet/oredoc'>oredoc</a>:</p>
+<pre><code>please.sh doc</code></pre><p>and check-out <code>_doc/&lt;branch&gt;/index.html</code> (unless branch is <code>master</code>, then
+<code>_doc/index.html</code>).</p>
+<h3 id="RunaToplevel">Run a Toplevel</h3>
 
-<p>One can start an ocaml-toplevel (<code>ocaml</code> or <code>utop</code>) with Ketrew loaded-in:</p><pre><code>./please.sh top</code></pre><h2 id="Tests">Tests</h2>
+<p>One can start an ocaml-toplevel (<code>ocaml</code> or <code>utop</code>) with Ketrew loaded-in:</p>
+<pre><code>./please.sh top</code></pre><h2 id="Tests">Tests</h2>
 
 <h3 id="AutomatedTests">Automated Tests</h3>
 
-<p>Run the tests like this:</p><pre class='bash'><code class='bash'>    ketrew_test_ssh=&lt;Host&gt; _obuild/ketrew-test/ketrew-test.asm [-no-color] ALL</code></pre>
+<p>Run the tests like this:</p>
+<pre class='bash'><code class='bash'>    ketrew_test_ssh=&lt;Host&gt; _obuild/ketrew-test/ketrew-test.asm [-no-color] ALL</code></pre>
 
-<p>where <code>&lt;Host&gt;</code> is often an entry in your <code>.ssh/config</code> file.</p><p>The test will indeed look for the environment variable <code>ketrew_test_ssh</code>; if
+<p>where <code>&lt;Host&gt;</code> is often an entry in your <code>.ssh/config</code> file.</p>
+<p>The test will indeed look for the environment variable <code>ketrew_test_ssh</code>; if
 not defined it will use <code>&quot;localhost&quot;</code>. But for the test to succeed it should be
 an SSH host for which the user running the test does not need password.
 The test will run some commands on that host and create files and directories
-in its <code>/tmp</code> directory.</p><h3 id="ThecliTest">The <code>cli</code> Test</h3>
+in its <code>/tmp</code> directory.</p>
+<h3 id="ThecliTest">The <code>cli</code> Test</h3>
 
 <p>The workflow <a href='Workflow_Examples.html'>examples</a> in the documentation
-are actually interactive tests.</p><h3 id="GeneratingaTestEnvironment">Generating a Test Environment</h3>
+are actually interactive tests.</p>
+<h3 id="TheintegrationTest">The <code>integration</code> Test</h3>
+
+<p>The <a href='integration.html'>integration</a> test uses Ketrew to build
+<em>Vagrant</em> virtual machines and uses them to test further features: we
+test the PBS and LSF long-running backends by creating “one-node
+clusters”.</p>
+<h3 id="DynamicallyLoadedPlugins">Dynamically Loaded Plugins</h3>
+
+<p>The build-system creates a plugin and a workflow which uses it:</p>
+<ul><li><a href='dummy_plugin.html'><code>src/test/dummy_plugin.ml</code></a>, and</li><li><a href='dummy_plugin_user.html'><code>src/test/dummy_plugin_user.ml</code></a>.</li></ul>
+
+<h3 id="GeneratingaTestEnvironment">Generating a Test Environment</h3>
 
 <p>In order to not impact a potential “global” installation of Ketrew, one can
-use:</p><pre><code>./please.sh test-env</code></pre><pre class='goodresult'><code class='goodresult'>Using package lwt.react add findlin-plugin
-Compiling the Dummy-plugin and its user
+use:</p>
+<pre><code>./please.sh test-env</code></pre><pre class='goodresult'><code class='goodresult'>Creating cert-key pair: _test_env/test-cert.pem, _test_env/test-key.pem
+Creating _test_env/standalone-config-file.toml
+Creating _test_env/server-config-file.toml
+Creating _test_env/client-config-file.toml
+Creating _test_env/test-authorized-tokens
+Creating _test_env/env.env</code></pre>
 
-Creating cert-key pair: _obuild/test-cert.pem, _obuild/test-key.pem
-Creating _obuild/test-config-file.toml
-Creating _obuild/test-authorized-tokens
-Creating _obuild/test.env</code></pre>
-
-<p>then sourcing <code>_obuild/test.env</code> will give a few aliases to run the tests (like
-<code>kdtest</code>, <code>kdclient</code>, etc. see inside the file).</p></div></div></div></body><html>
+<p>The command creates the directory <code>_test_env/</code> with a preconfigured
+test-environment (a self-signed SSL certificate/key pair,
+client/server/standalone configuration files, an “authorization-tokens”
+configuration, … which all work together harmoniously).</p>
+<p>Sourcing <code>_test_env/test.env</code> will give a few aliases to run the tests.
+Aliases which start with <code>ks</code> mean “with a <em>standalone-mode</em> configuration file;”
+those which start with <code>kd</code> are in <em>client-server</em> mode (<code>&#39;d&#39;</code> for “distributed”).</p>
+<ul><li><code>kscli</code>: the standalone <code>ketrew</code> application.</li><li><code>kdserver</code>: the server <code>ketrew</code> application.</li><li><code>kdclient</code>: the client <code>ketrew</code> application.</li><li><code>kstest</code>: the <a href='Workflow_Examples.html'><code>cli</code> test</a> with a “standalone-mode” configuration file.</li><li><code>kdtest</code>: the same <code>cli</code> test but as a client.</li><li><code>ksintegration</code>, and <code>kdintegration</code>: the
+ <a href='integration.html'>integration</a> test in standalone and client modes.</li><li><code>ksplugin_user</code>, and <code>kdplugin_user</code>: the mini-workflow
+ <a href='dummy_plugin_user.html'>using the plugin</a>.</li></ul></div></div></div></body><html>
