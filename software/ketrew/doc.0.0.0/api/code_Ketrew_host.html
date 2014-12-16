@@ -1,0 +1,523 @@
+<html><head>
+<link rel="stylesheet" href="style.css" type="text/css">
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<link rel="Start" href="index.html">
+<link title="Index of types" rel=Appendix href="index_types.html">
+<link title="Index of values" rel=Appendix href="index_values.html">
+<link title="Index of class methods" rel=Appendix href="index_methods.html">
+<link title="Index of class types" rel=Appendix href="index_class_types.html">
+<link title="Index of modules" rel=Appendix href="index_modules.html">
+<link title="Index of module types" rel=Appendix href="index_module_types.html">
+<link title="Ketrew" rel="Chapter" href="Ketrew.html">
+<link title="Ketrew_artifact" rel="Chapter" href="Ketrew_artifact.html">
+<link title="Ketrew_client" rel="Chapter" href="Ketrew_client.html">
+<link title="Ketrew_command_line" rel="Chapter" href="Ketrew_command_line.html">
+<link title="Ketrew_configuration" rel="Chapter" href="Ketrew_configuration.html">
+<link title="Ketrew_daemonize" rel="Chapter" href="Ketrew_daemonize.html">
+<link title="Ketrew_database" rel="Chapter" href="Ketrew_database.html">
+<link title="Ketrew_edsl" rel="Chapter" href="Ketrew_edsl.html">
+<link title="Ketrew_engine" rel="Chapter" href="Ketrew_engine.html">
+<link title="Ketrew_error" rel="Chapter" href="Ketrew_error.html">
+<link title="Ketrew_host" rel="Chapter" href="Ketrew_host.html">
+<link title="Ketrew_long_running" rel="Chapter" href="Ketrew_long_running.html">
+<link title="Ketrew_long_running_utilities" rel="Chapter" href="Ketrew_long_running_utilities.html">
+<link title="Ketrew_lsf" rel="Chapter" href="Ketrew_lsf.html">
+<link title="Ketrew_monitored_script" rel="Chapter" href="Ketrew_monitored_script.html">
+<link title="Ketrew_path" rel="Chapter" href="Ketrew_path.html">
+<link title="Ketrew_pbs" rel="Chapter" href="Ketrew_pbs.html">
+<link title="Ketrew_pervasives" rel="Chapter" href="Ketrew_pervasives.html">
+<link title="Ketrew_plugin" rel="Chapter" href="Ketrew_plugin.html">
+<link title="Ketrew_program" rel="Chapter" href="Ketrew_program.html">
+<link title="Ketrew_protocol" rel="Chapter" href="Ketrew_protocol.html">
+<link title="Ketrew_server" rel="Chapter" href="Ketrew_server.html">
+<link title="Ketrew_target" rel="Chapter" href="Ketrew_target.html">
+<link title="Ketrew_unix_process" rel="Chapter" href="Ketrew_unix_process.html"><title>Ketrew API : Ketrew_host</title>
+</head>
+<body>
+<code class="code"></code><table><tr><td></td><td><span class="comment">(**************************************************************************)</span></td></tr></table><code class="code"><br>
+<span class="comment">(*&nbsp;&nbsp;Copyright&nbsp;2014,&nbsp;Sebastien&nbsp;Mondet&nbsp;&lt;seb@mondet.org&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*)</span><br>
+<span class="comment">(*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*)</span><br>
+<span class="comment">(*&nbsp;&nbsp;Licensed&nbsp;under&nbsp;the&nbsp;Apache&nbsp;License,&nbsp;Version&nbsp;2.0&nbsp;(the&nbsp;"License");&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*)</span><br>
+<span class="comment">(*&nbsp;&nbsp;you&nbsp;may&nbsp;not&nbsp;use&nbsp;this&nbsp;file&nbsp;except&nbsp;in&nbsp;compliance&nbsp;with&nbsp;the&nbsp;License.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*)</span><br>
+<span class="comment">(*&nbsp;&nbsp;You&nbsp;may&nbsp;obtain&nbsp;a&nbsp;copy&nbsp;of&nbsp;the&nbsp;License&nbsp;at&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*)</span><br>
+<span class="comment">(*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*)</span><br>
+<span class="comment">(*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;http://www.apache.org/licenses/LICENSE-2.0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*)</span><br>
+<span class="comment">(*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*)</span><br>
+<span class="comment">(*&nbsp;&nbsp;Unless&nbsp;required&nbsp;by&nbsp;applicable&nbsp;law&nbsp;or&nbsp;agreed&nbsp;to&nbsp;in&nbsp;writing,&nbsp;software&nbsp;&nbsp;&nbsp;*)</span><br>
+<span class="comment">(*&nbsp;&nbsp;distributed&nbsp;under&nbsp;the&nbsp;License&nbsp;is&nbsp;distributed&nbsp;on&nbsp;an&nbsp;"AS&nbsp;IS"&nbsp;BASIS,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*)</span><br>
+<span class="comment">(*&nbsp;&nbsp;WITHOUT&nbsp;WARRANTIES&nbsp;OR&nbsp;CONDITIONS&nbsp;OF&nbsp;ANY&nbsp;KIND,&nbsp;either&nbsp;express&nbsp;or&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*)</span><br>
+<span class="comment">(*&nbsp;&nbsp;implied.&nbsp;&nbsp;See&nbsp;the&nbsp;License&nbsp;for&nbsp;the&nbsp;specific&nbsp;language&nbsp;governing&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*)</span><br>
+<span class="comment">(*&nbsp;&nbsp;permissions&nbsp;and&nbsp;limitations&nbsp;under&nbsp;the&nbsp;License.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*)</span><br>
+</code><table><tr><td></td><td><span class="comment">(**************************************************************************)</span></td></tr></table><code class="code"><br>
+<br>
+<span class="keyword">open</span>&nbsp;<span class="constructor">Ketrew_pervasives</span><br>
+<span class="keyword">module</span>&nbsp;<span class="constructor">Path</span>&nbsp;=&nbsp;<span class="constructor">Ketrew_path</span><br>
+<br>
+<span class="keyword">module</span>&nbsp;<span class="constructor">Ssh</span>&nbsp;=&nbsp;<span class="keyword">struct</span><br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;_configuration_ssh_batch_option&nbsp;=&nbsp;ref&nbsp;<span class="string">""</span><br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;configure_ssh_batch_option&nbsp;spec&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;op&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">match</span>&nbsp;spec&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Openssh</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="string">"-oBatchMode=yes"</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Dropbear</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="string">"-s"</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Custom</span>&nbsp;s&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;s<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;_configuration_ssh_batch_option&nbsp;:=&nbsp;op<br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;()&nbsp;=&nbsp;configure_ssh_batch_option&nbsp;<span class="keywordsign">`</span><span class="constructor">Openssh</span><br>
+<br>
+&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;t&nbsp;=&nbsp;<span class="constructor">Ketrew_gen_base_v0</span>.<span class="constructor">Ssh_host</span>.t&nbsp;=&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;address:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;port:&nbsp;int&nbsp;option;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;user:&nbsp;string&nbsp;option;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;add_ssh_options:&nbsp;string&nbsp;list;<br>
+&nbsp;&nbsp;}<br>
+<br>
+&nbsp;&nbsp;</code><table><tr><td>&nbsp;&nbsp;</td><td><span class="comment">(** Generate a proper SSH command for the given host. *)</span></td></tr></table><code class="code"><br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;do_ssh&nbsp;ssh&nbsp;command&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;[<span class="string">"ssh"</span>;&nbsp;!_configuration_ssh_batch_option]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;@&nbsp;ssh.add_ssh_options<br>
+&nbsp;&nbsp;&nbsp;&nbsp;@&nbsp;(<span class="keyword">match</span>&nbsp;ssh.port&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Some</span>&nbsp;p&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;[<span class="string">"-p"</span>;&nbsp;<span class="constructor">Int</span>.to_string&nbsp;p]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">None</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;[])<br>
+&nbsp;&nbsp;&nbsp;&nbsp;@&nbsp;(<span class="keyword">match</span>&nbsp;ssh.user&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">None</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;[ssh.address]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Some</span>&nbsp;u&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;[fmt&nbsp;<span class="string">"%s@%s"</span>&nbsp;u&nbsp;ssh.address])<br>
+&nbsp;&nbsp;&nbsp;&nbsp;@&nbsp;[command]<br>
+<br>
+&nbsp;&nbsp;</code><table><tr><td>&nbsp;&nbsp;</td><td><span class="comment">(** Strong version of an SSH call, trying to be like <code class="code"><span class="constructor">Unix</span>.exec</code>. 
+      It “stores” the value of <code class="code"><span class="string">"$?"</span></code> in the stderr channel
+      enclosing the error log of the actual command between (hopefully) unique
+      strings.
+<p>
+
+      It calls the command (list of strings, <code class="code">argv</code>-like) with <code class="code">exec</code>
+      inside a sub-shell, and escapes all the arguments with <code class="code"><span class="constructor">Filename</span>.quote</code>.
+<p>
+
+      Then it forces the “script” to return <code class="code"><span class="string">'0'</span></code>, if the overall execution of
+      the whole SSH command does not return <code class="code"><span class="string">'0'</span></code>, we know that the problem
+      is with the SSH call, not the command.
+  *)</span></td></tr></table><code class="code"><br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;generic_ssh_exec&nbsp;ssh&nbsp;command&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;unique_tag&nbsp;=&nbsp;<span class="constructor">Unique_id</span>.create&nbsp;()&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;spicied_command&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fmt&nbsp;<span class="string">"echo&nbsp;-n&nbsp;%s&nbsp;&gt;&amp;2&nbsp;;&nbsp;(exec&nbsp;%s)&nbsp;;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;-n&nbsp;%s$?&nbsp;&gt;&amp;2&nbsp;;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exit&nbsp;0"</span>&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unique_tag<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">List</span>.map&nbsp;command&nbsp;~f:(<span class="constructor">Filename</span>.quote)&nbsp;|&gt;&nbsp;<span class="constructor">String</span>.concat&nbsp;~sep:<span class="string">"&nbsp;"</span>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unique_tag<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;ssh_exec&nbsp;=&nbsp;do_ssh&nbsp;ssh&nbsp;spicied_command&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;parse_error_log&nbsp;out&nbsp;err&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;fail_parsing&nbsp;msg&nbsp;=&nbsp;fail&nbsp;(<span class="keywordsign">`</span><span class="constructor">Ssh_failure</span>&nbsp;(<span class="keywordsign">`</span><span class="constructor">Wrong_log</span>&nbsp;msg,&nbsp;err))&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;pieces&nbsp;=&nbsp;<span class="constructor">String</span>.split&nbsp;~on:(<span class="keywordsign">`</span><span class="constructor">String</span>&nbsp;unique_tag)&nbsp;err&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">match</span>&nbsp;pieces&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="string">""</span>&nbsp;::&nbsp;actual_stderr&nbsp;::&nbsp;return_value&nbsp;::&nbsp;[]&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">begin</span>&nbsp;<span class="keyword">match</span>&nbsp;<span class="constructor">Int</span>.of_string&nbsp;(<span class="constructor">String</span>.strip&nbsp;return_value)&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Some</span>&nbsp;r&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;return&nbsp;(out,&nbsp;actual_stderr,&nbsp;r)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">None</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;fail_parsing&nbsp;<span class="string">"Return&nbsp;value&nbsp;not&nbsp;an&nbsp;integer"</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;somehting_else&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;fail_parsing&nbsp;<span class="string">"Cannot&nbsp;parse&nbsp;error&nbsp;log"</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">begin</span>&nbsp;<span class="constructor">Ketrew_unix_process</span>.exec&nbsp;ssh_exec<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&lt;&nbsp;<span class="keyword">function</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Ok</span>&nbsp;(out,&nbsp;err,&nbsp;<span class="keywordsign">`</span><span class="constructor">Exited</span>&nbsp;0)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;parse_error_log&nbsp;out&nbsp;err<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Ok</span>&nbsp;(out,&nbsp;err,&nbsp;other)&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fail&nbsp;(<span class="keywordsign">`</span><span class="constructor">Ssh_failure</span>&nbsp;(<span class="keywordsign">`</span><span class="constructor">Wrong_status</span>&nbsp;other,&nbsp;err))<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Error</span>&nbsp;(<span class="keywordsign">`</span><span class="constructor">Process</span>&nbsp;_&nbsp;<span class="keyword">as</span>&nbsp;process_error)&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;msg&nbsp;=&nbsp;<span class="constructor">Ketrew_unix_process</span>.error_to_string&nbsp;process_error&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Log</span>.(s&nbsp;<span class="string">"Ssh-cmd&nbsp;"</span>&nbsp;%&nbsp;<span class="constructor">OCaml</span>.list&nbsp;(sf&nbsp;<span class="string">"%S"</span>)&nbsp;ssh_exec&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%&nbsp;s&nbsp;<span class="string">"&nbsp;failed:&nbsp;"</span>&nbsp;%s&nbsp;msg&nbsp;@&nbsp;verbose);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fail&nbsp;(<span class="keywordsign">`</span><span class="constructor">Unix_exec</span>&nbsp;msg)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
+<br>
+&nbsp;&nbsp;</code><table><tr><td>&nbsp;&nbsp;</td><td><span class="comment">(** Generate an SCP command for the given host with the destination
+      directory or file path. *)</span></td></tr></table><code class="code"><br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;scp_push&nbsp;ssh&nbsp;~src&nbsp;~dest&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;[<span class="string">"scp"</span>;&nbsp;!_configuration_ssh_batch_option]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;@&nbsp;ssh.add_ssh_options<br>
+&nbsp;&nbsp;&nbsp;&nbsp;@&nbsp;(<span class="keyword">match</span>&nbsp;ssh.port&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Some</span>&nbsp;p&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;[<span class="string">"-P"</span>;&nbsp;<span class="string">"port"</span>]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">None</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;[])<br>
+&nbsp;&nbsp;&nbsp;&nbsp;@&nbsp;src<br>
+&nbsp;&nbsp;&nbsp;&nbsp;@&nbsp;(<span class="keyword">match</span>&nbsp;ssh.user&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">None</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;[fmt&nbsp;<span class="string">"%s:%s"</span>&nbsp;ssh.address&nbsp;dest]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Some</span>&nbsp;u&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;[fmt&nbsp;<span class="string">"%s@%s:%s"</span>&nbsp;u&nbsp;ssh.address&nbsp;dest])<br>
+<br>
+&nbsp;&nbsp;</code><table><tr><td>&nbsp;&nbsp;</td><td><span class="comment">(** Generate an SCP command for the given host as source. *)</span></td></tr></table><code class="code"><br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;scp_pull&nbsp;&nbsp;ssh&nbsp;~src&nbsp;~dest&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;[<span class="string">"scp"</span>;&nbsp;!_configuration_ssh_batch_option]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;@&nbsp;ssh.add_ssh_options<br>
+&nbsp;&nbsp;&nbsp;&nbsp;@&nbsp;(<span class="keyword">match</span>&nbsp;ssh.port&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Some</span>&nbsp;p&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;[<span class="string">"-P"</span>;&nbsp;<span class="string">"port"</span>]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">None</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;[])<br>
+&nbsp;&nbsp;&nbsp;&nbsp;@&nbsp;(<span class="constructor">List</span>.map&nbsp;src&nbsp;~f:(<span class="keyword">fun</span>&nbsp;src_item&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">match</span>&nbsp;ssh.user&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">None</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;fmt&nbsp;<span class="string">"%s:%s"</span>&nbsp;ssh.address&nbsp;src_item<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Some</span>&nbsp;u&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;fmt&nbsp;<span class="string">"%s@%s:%s"</span>&nbsp;u&nbsp;ssh.address&nbsp;src_item))<br>
+&nbsp;&nbsp;&nbsp;&nbsp;@&nbsp;[dest]<br>
+<br>
+<span class="keyword">end</span><br>
+<span class="keyword">type</span>&nbsp;connection&nbsp;=&nbsp;<span class="constructor">Ketrew_gen_base_v0</span>.<span class="constructor">Connection</span>.t&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+<span class="keyword">type</span>&nbsp;default_shell&nbsp;=&nbsp;<span class="constructor">Ketrew_gen_base_v0</span>.<span class="constructor">Default_shell</span>.t<br>
+<br>
+<span class="keyword">type</span>&nbsp;t&nbsp;=&nbsp;<span class="constructor">Ketrew_gen_base_v0</span>.<span class="constructor">Host</span>.t&nbsp;=&nbsp;{<br>
+&nbsp;&nbsp;name:&nbsp;string;<br>
+&nbsp;&nbsp;connection:&nbsp;connection;<br>
+&nbsp;&nbsp;playground:&nbsp;<span class="constructor">Path</span>.t&nbsp;option;<br>
+&nbsp;&nbsp;default_shell:&nbsp;default_shell;<br>
+&nbsp;&nbsp;execution_timeout:&nbsp;<span class="constructor">Time</span>.t&nbsp;option;<br>
+}<br>
+<br>
+<span class="keyword">let</span>&nbsp;default_shell&nbsp;?binary&nbsp;?(options=[])&nbsp;?(command_option=<span class="string">"-c"</span>)&nbsp;command_name&nbsp;=<br>
+&nbsp;&nbsp;{<span class="constructor">Ketrew_gen_base_v0</span>.<span class="constructor">Default_shell</span>.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;binary;&nbsp;command_name;&nbsp;options;&nbsp;command_option}<br>
+<br>
+<span class="keyword">let</span>&nbsp;shell_sh_minus_c&nbsp;=&nbsp;default_shell&nbsp;<span class="string">"sh"</span><br>
+<br>
+<span class="keyword">let</span>&nbsp;create&nbsp;~connection&nbsp;?execution_timeout&nbsp;?(default_shell=shell_sh_minus_c)&nbsp;?playground&nbsp;name&nbsp;=<br>
+&nbsp;&nbsp;{name;&nbsp;connection;&nbsp;playground;&nbsp;default_shell;&nbsp;execution_timeout}<br>
+<br>
+<span class="keyword">let</span>&nbsp;localhost&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;?execution_timeout&nbsp;?default_shell&nbsp;?playground&nbsp;?(name=<span class="string">"localhost"</span>)&nbsp;()&nbsp;=&nbsp;<br>
+&nbsp;&nbsp;create&nbsp;~connection:<span class="keywordsign">`</span><span class="constructor">Localhost</span>&nbsp;?default_shell&nbsp;?playground&nbsp;name<br>
+<br>
+<span class="keyword">let</span>&nbsp;tmp_on_localhost&nbsp;=&nbsp;<br>
+&nbsp;&nbsp;localhost&nbsp;~playground:(<span class="constructor">Path</span>.absolute_directory_exn&nbsp;<span class="string">"/tmp"</span>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;~name:<span class="string">"file://tmp"</span>&nbsp;()<br>
+<br>
+<span class="keyword">let</span>&nbsp;ssh&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;?execution_timeout&nbsp;?(add_ssh_options=[])&nbsp;?default_shell&nbsp;?playground<br>
+&nbsp;&nbsp;&nbsp;&nbsp;?port&nbsp;?user&nbsp;?name&nbsp;address&nbsp;=<br>
+&nbsp;&nbsp;create&nbsp;?playground&nbsp;?default_shell&nbsp;<span class="constructor">Option</span>.(value&nbsp;name&nbsp;~default:address)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;~connection:(<span class="keywordsign">`</span><span class="constructor">Ssh</span>&nbsp;{<span class="constructor">Ssh</span>.&nbsp;address;&nbsp;port;&nbsp;user;&nbsp;add_ssh_options})<br>
+<br>
+<span class="keyword">let</span>&nbsp;of_uri&nbsp;uri&nbsp;=<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;connection&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Option</span>.value_map&nbsp;~default:<span class="keywordsign">`</span><span class="constructor">Localhost</span>&nbsp;(<span class="constructor">Uri</span>.host&nbsp;uri)&nbsp;~f:(<span class="keyword">fun</span>&nbsp;address&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;add_ssh_options&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Option</span>.value&nbsp;~default:[]&nbsp;(<span class="constructor">Uri</span>.get_query_param'&nbsp;uri&nbsp;<span class="string">"ssh-option"</span>)&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;user&nbsp;=&nbsp;<span class="constructor">Uri</span>.userinfo&nbsp;uri&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">`</span><span class="constructor">Ssh</span>&nbsp;{<span class="constructor">Ssh</span>.address;&nbsp;port&nbsp;=&nbsp;<span class="constructor">Uri</span>.port&nbsp;uri;&nbsp;user;&nbsp;add_ssh_options})<br>
+&nbsp;&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;playground&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">match</span>&nbsp;<span class="constructor">Uri</span>.path&nbsp;uri&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="string">""</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">None</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;rel&nbsp;<span class="keyword">when</span>&nbsp;<span class="constructor">Filename</span>.is_relative&nbsp;rel&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;cwd&nbsp;=&nbsp;<span class="constructor">Sys</span>.getcwd&nbsp;()&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Some</span>&nbsp;(<span class="constructor">Path</span>.absolute_directory_exn&nbsp;(<span class="constructor">Filename</span>.concat&nbsp;cwd&nbsp;rel))<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;p&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Some</span>&nbsp;(<span class="constructor">Path</span>.absolute_directory_exn&nbsp;p)<br>
+&nbsp;&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;default_shell&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Uri</span>.get_query_param&nbsp;uri&nbsp;<span class="string">"shell"</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;|&gt;&nbsp;<span class="constructor">Option</span>.bind&nbsp;~f:(<span class="keyword">fun</span>&nbsp;s&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">match</span>&nbsp;<span class="constructor">String</span>.split&nbsp;~on:(<span class="keywordsign">`</span><span class="constructor">Character</span>&nbsp;<span class="string">','</span>)&nbsp;s&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;[]&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">None</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;one&nbsp;::&nbsp;[]&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Some</span>&nbsp;(default_shell&nbsp;one)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;one&nbsp;::&nbsp;two&nbsp;::&nbsp;[]&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Some</span>&nbsp;(default_shell&nbsp;~command_option:two&nbsp;one)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;one&nbsp;::&nbsp;more&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;command_option&nbsp;=&nbsp;<span class="constructor">List</span>.last&nbsp;more&nbsp;|&gt;&nbsp;<span class="constructor">Option</span>.value_exn&nbsp;~msg:<span class="string">"bug"</span>&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;options&nbsp;=&nbsp;<span class="constructor">List</span>.split_n&nbsp;more&nbsp;(<span class="constructor">List</span>.length&nbsp;more&nbsp;-&nbsp;1)&nbsp;|&gt;&nbsp;fst&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Some</span>&nbsp;(default_shell&nbsp;~command_option&nbsp;one&nbsp;~options)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)<br>
+&nbsp;&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;execution_timeout&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Uri</span>.get_query_param&nbsp;uri&nbsp;<span class="string">"timeout"</span>&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;|&gt;&nbsp;<span class="constructor">Option</span>.bind&nbsp;~f:<span class="constructor">Float</span>.of_string&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;create&nbsp;?playground&nbsp;~connection&nbsp;?default_shell&nbsp;?execution_timeout<br>
+&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">Uri</span>.to_string&nbsp;uri)<br>
+<br>
+<span class="keyword">let</span>&nbsp;to_uri&nbsp;t&nbsp;=<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;scheme,&nbsp;host,&nbsp;port,&nbsp;userinfo&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">match</span>&nbsp;t.connection&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Ssh</span>&nbsp;{<span class="constructor">Ssh</span>.address;&nbsp;port;&nbsp;user;}&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Some</span>&nbsp;<span class="string">"ssh"</span>,&nbsp;<span class="constructor">Some</span>&nbsp;address,&nbsp;port,&nbsp;user<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Localhost</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">None</span>,&nbsp;<span class="constructor">None</span>,&nbsp;<span class="constructor">None</span>,&nbsp;<span class="constructor">None</span><br>
+&nbsp;&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;query&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;{<span class="constructor">Ketrew_gen_base_v0</span>.<span class="constructor">Default_shell</span>.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;binary;&nbsp;command_name;&nbsp;options;&nbsp;command_option}&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;t.default_shell&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;shell_spec&nbsp;=&nbsp;[command_name]&nbsp;@&nbsp;options&nbsp;@&nbsp;[command_option]&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;[<span class="string">"shell"</span>,&nbsp;[<span class="constructor">String</span>.concat&nbsp;~sep:<span class="string">","</span>&nbsp;shell_spec]]<br>
+&nbsp;&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;<span class="constructor">Uri</span>.make&nbsp;?scheme&nbsp;?userinfo&nbsp;?host&nbsp;?port&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;?path:(<span class="constructor">Option</span>.map&nbsp;~f:<span class="constructor">Path</span>.to_string&nbsp;t.playground)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;~query&nbsp;()<br>
+<br>
+<span class="keyword">let</span>&nbsp;of_string&nbsp;s&nbsp;=<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;uri&nbsp;=&nbsp;<span class="constructor">Uri</span>.of_string&nbsp;s&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;of_uri&nbsp;uri<br>
+<br>
+<span class="keyword">let</span>&nbsp;log&nbsp;t&nbsp;=&nbsp;<br>
+&nbsp;&nbsp;<span class="constructor">Log</span>.(brakets&nbsp;(&nbsp;s&nbsp;<span class="string">"Host&nbsp;"</span>&nbsp;%&nbsp;s&nbsp;(<span class="constructor">Uri</span>.to_string&nbsp;(to_uri&nbsp;t))))<br>
+<br>
+<span class="keyword">let</span>&nbsp;to_string_hum&nbsp;t&nbsp;=&nbsp;<span class="constructor">Log</span>.to_long_string&nbsp;(log&nbsp;t)<br>
+<br>
+<span class="keyword">module</span>&nbsp;<span class="constructor">Error</span>&nbsp;=&nbsp;<span class="keyword">struct</span><br>
+<br>
+&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;<span class="keywordsign">'</span>a&nbsp;execution&nbsp;=&nbsp;<span class="keywordsign">'</span>a&nbsp;<span class="keyword">constraint</span>&nbsp;<span class="keywordsign">'</span>a&nbsp;=<br>
+&nbsp;&nbsp;[&gt;&nbsp;<span class="keywordsign">`</span><span class="constructor">Unix_exec</span>&nbsp;<span class="keyword">of</span>&nbsp;string<br>
+&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Execution</span>&nbsp;<span class="keyword">of</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;host&nbsp;:&nbsp;string;&nbsp;stdout:&nbsp;string&nbsp;option;&nbsp;stderr:&nbsp;string&nbsp;option;&nbsp;message:&nbsp;string&gt;<br>
+&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">System</span>&nbsp;<span class="keyword">of</span>&nbsp;[&gt;&nbsp;<span class="keywordsign">`</span><span class="constructor">Sleep</span>&nbsp;<span class="keyword">of</span>&nbsp;float&nbsp;]&nbsp;*&nbsp;[&gt;&nbsp;<span class="keywordsign">`</span><span class="constructor">Exn</span>&nbsp;<span class="keyword">of</span>&nbsp;exn&nbsp;]<br>
+&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Timeout</span>&nbsp;<span class="keyword">of</span>&nbsp;float<br>
+&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Ssh_failure</span>&nbsp;<span class="keyword">of</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[&gt;&nbsp;<span class="keywordsign">`</span><span class="constructor">Wrong_log</span>&nbsp;<span class="keyword">of</span>&nbsp;string<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Wrong_status</span>&nbsp;<span class="keyword">of</span>&nbsp;<span class="constructor">Ketrew_unix_process</span>.<span class="constructor">Exit_code</span>.t&nbsp;]&nbsp;*&nbsp;string&nbsp;]<br>
+<br>
+&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;<span class="keywordsign">'</span>a&nbsp;non_zero_execution&nbsp;=&nbsp;<span class="keywordsign">'</span>a&nbsp;<span class="keyword">constraint</span>&nbsp;<span class="keywordsign">'</span>a&nbsp;=&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;[&gt;&nbsp;<span class="keywordsign">`</span><span class="constructor">Non_zero</span>&nbsp;<span class="keyword">of</span>&nbsp;(string&nbsp;*&nbsp;int)&nbsp;]&nbsp;execution<br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;classify&nbsp;(e&nbsp;:&nbsp;_&nbsp;non_zero_execution)&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">match</span>&nbsp;e&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">System</span>&nbsp;_&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Timeout</span>&nbsp;_<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Unix_exec</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Unix</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Execution</span>&nbsp;_&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Non_zero</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Execution</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Ssh_failure</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Ssh</span><br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;log&nbsp;e&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;kv&nbsp;k&nbsp;v&nbsp;=&nbsp;<span class="constructor">Log</span>.(brakets&nbsp;(s&nbsp;k&nbsp;%&nbsp;s&nbsp;<span class="string">"&nbsp;→&nbsp;"</span>&nbsp;%&nbsp;v))&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">match</span>&nbsp;e&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Unix_exec</span>&nbsp;failure&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Log</span>.(s&nbsp;<span class="string">"Unix-exec-error:&nbsp;"</span>&nbsp;%&nbsp;s&nbsp;failure)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Non_zero</span>&nbsp;(cmd,&nbsp;ex)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Log</span>.(s&nbsp;<span class="string">"Cmd&nbsp;"</span>&nbsp;%&nbsp;sf&nbsp;<span class="string">"%S"</span>&nbsp;cmd&nbsp;%&nbsp;s&nbsp;<span class="string">"&nbsp;returned&nbsp;"</span>&nbsp;%&nbsp;i&nbsp;ex)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">System</span>&nbsp;(<span class="keywordsign">`</span><span class="constructor">Sleep</span>&nbsp;time,&nbsp;<span class="keywordsign">`</span><span class="constructor">Exn</span>&nbsp;e)&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Log</span>.(s&nbsp;<span class="string">"System&nbsp;error:&nbsp;sleep&nbsp;"</span>&nbsp;%&nbsp;f&nbsp;time&nbsp;%&nbsp;s&nbsp;<span class="string">"&nbsp;failed:&nbsp;"</span>&nbsp;%&nbsp;exn&nbsp;e)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Timeout</span>&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Log</span>.(s&nbsp;<span class="string">"Timed-out&nbsp;"</span>&nbsp;%&nbsp;parens&nbsp;(f&nbsp;t&nbsp;%&nbsp;s&nbsp;<span class="string">"&nbsp;sec"</span>))<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Execution</span>&nbsp;exec&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Log</span>.(<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;s&nbsp;<span class="string">"Process&nbsp;execution&nbsp;failed:&nbsp;"</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%&nbsp;kv&nbsp;<span class="string">"Host"</span>&nbsp;(s&nbsp;exec<span class="keywordsign">#</span>host)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%&nbsp;kv&nbsp;<span class="string">"Message"</span>&nbsp;(s&nbsp;exec<span class="keywordsign">#</span>message)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%&nbsp;kv&nbsp;<span class="string">"Stdout"</span>&nbsp;(option&nbsp;s&nbsp;exec<span class="keywordsign">#</span>stdout)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%&nbsp;kv&nbsp;<span class="string">"Stderr"</span>&nbsp;(option&nbsp;s&nbsp;exec<span class="keywordsign">#</span>stderr))<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Ssh_failure</span>&nbsp;(<span class="keywordsign">`</span><span class="constructor">Wrong_log</span>&nbsp;log,&nbsp;msg)&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Log</span>.(s&nbsp;<span class="string">"SSH&nbsp;failed&nbsp;parsing&nbsp;log:"</span>&nbsp;%&nbsp;s&nbsp;msg&nbsp;%&nbsp;kv&nbsp;<span class="string">"Log"</span>&nbsp;(sf&nbsp;<span class="string">"%S"</span>&nbsp;log))<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Ssh_failure</span>&nbsp;(<span class="keywordsign">`</span><span class="constructor">Wrong_status</span>&nbsp;exit_code,&nbsp;msg)&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Log</span>.(s&nbsp;<span class="string">"SSH&nbsp;failed:"</span>&nbsp;%&nbsp;s&nbsp;msg&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%&nbsp;kv&nbsp;<span class="string">"Exit&nbsp;code"</span>&nbsp;(<span class="constructor">Ketrew_unix_process</span>.<span class="constructor">Exit_code</span>.to_log&nbsp;exit_code))<br>
+<span class="keyword">end</span><br>
+<br>
+<span class="keyword">let</span>&nbsp;fail_host&nbsp;e&nbsp;=&nbsp;fail&nbsp;(<span class="keywordsign">`</span><span class="constructor">Host</span>&nbsp;e)<br>
+<br>
+<span class="keyword">let</span>&nbsp;fail_exec&nbsp;t&nbsp;?out&nbsp;?err&nbsp;msg:&nbsp;<br>
+&nbsp;&nbsp;(_,&nbsp;[&gt;&nbsp;<span class="keywordsign">`</span><span class="constructor">Host</span>&nbsp;<span class="keyword">of</span>&nbsp;_&nbsp;<span class="constructor">Error</span>.execution&nbsp;])&nbsp;<span class="constructor">Deferred_result</span>.t&nbsp;=<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;v&nbsp;=&nbsp;<span class="keyword">object</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">method</span>&nbsp;host&nbsp;=&nbsp;to_string_hum&nbsp;t&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">method</span>&nbsp;stdout&nbsp;=&nbsp;out<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">method</span>&nbsp;stderr&nbsp;=&nbsp;err<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">method</span>&nbsp;message&nbsp;&nbsp;=&nbsp;msg<br>
+&nbsp;&nbsp;<span class="keyword">end</span>&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;fail_host&nbsp;(<span class="keywordsign">`</span><span class="constructor">Execution</span>&nbsp;v)<br>
+<br>
+<span class="keyword">type</span>&nbsp;timeout&nbsp;=&nbsp;[&nbsp;<br>
+&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Host_default</span><br>
+&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">None</span><br>
+&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Seconds</span>&nbsp;<span class="keyword">of</span>&nbsp;float<br>
+&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">At_most_seconds</span>&nbsp;<span class="keyword">of</span>&nbsp;float<br>
+]<br>
+<br>
+<span class="keyword">let</span>&nbsp;default_timeout_upper_bound&nbsp;=&nbsp;ref&nbsp;60.<br>
+<br>
+<span class="keyword">let</span>&nbsp;run_with_timeout&nbsp;?timeout&nbsp;t&nbsp;~run&nbsp;=<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;actual_timeout&nbsp;=&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;pick_minimum&nbsp;f&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">match</span>&nbsp;t.execution_timeout&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Some</span>&nbsp;fe&nbsp;<span class="keyword">when</span>&nbsp;fe&nbsp;&lt;&nbsp;f&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Some</span>&nbsp;fe<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Some</span>&nbsp;f<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">match</span>&nbsp;timeout&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Some</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">None</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">None</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">None</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;pick_minimum&nbsp;!default_timeout_upper_bound<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Some</span>&nbsp;(<span class="keywordsign">`</span><span class="constructor">At_most_seconds</span>&nbsp;f)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;pick_minimum&nbsp;f<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Some</span>&nbsp;(<span class="keywordsign">`</span><span class="constructor">Host_default</span>)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;t.execution_timeout<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Some</span>&nbsp;(<span class="keywordsign">`</span><span class="constructor">Seconds</span>&nbsp;t)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Some</span>&nbsp;t&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;log&nbsp;=&nbsp;<span class="constructor">Log</span>.(parens&nbsp;(s&nbsp;<span class="string">"timeout:&nbsp;"</span>&nbsp;%&nbsp;<span class="constructor">OCaml</span>.option&nbsp;f&nbsp;actual_timeout))&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;<span class="keyword">match</span>&nbsp;actual_timeout&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">None</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;run&nbsp;~log&nbsp;()<br>
+&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Some</span>&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Deferred_list</span>.pick_and_cancel&nbsp;[<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">begin</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">System</span>.sleep&nbsp;t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;()&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fail&nbsp;(<span class="keywordsign">`</span><span class="constructor">Timeout</span>&nbsp;t)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;run&nbsp;~log&nbsp;();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">(*&nbsp;Pvem_lwt_unix.System.with_timeout&nbsp;t&nbsp;~f:(run&nbsp;~log)&nbsp;*)</span><br>
+<br>
+<span class="keyword">let</span>&nbsp;execute&nbsp;?timeout&nbsp;t&nbsp;argl&nbsp;=<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;final_log&nbsp;=&nbsp;ref&nbsp;<span class="constructor">Log</span>.empty&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;ret&nbsp;out&nbsp;err&nbsp;exited&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;kv&nbsp;k&nbsp;v&nbsp;=&nbsp;<span class="constructor">Log</span>.(brakets&nbsp;(s&nbsp;k&nbsp;%&nbsp;s&nbsp;<span class="string">"&nbsp;→&nbsp;"</span>&nbsp;%&nbsp;v)&nbsp;|&gt;&nbsp;indent)&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;final_log&nbsp;:=&nbsp;<span class="constructor">Log</span>.(<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;!final_log&nbsp;%n&nbsp;%&nbsp;s&nbsp;<span class="string">"Success:&nbsp;"</span>&nbsp;%&nbsp;kv&nbsp;<span class="string">"status"</span>&nbsp;(sf&nbsp;<span class="string">"exit:%d"</span>&nbsp;exited)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%&nbsp;kv&nbsp;<span class="string">"stdout"</span>&nbsp;(sf&nbsp;<span class="string">"%S"</span>&nbsp;out)&nbsp;%&nbsp;kv&nbsp;<span class="string">"stderr"</span>&nbsp;(sf&nbsp;<span class="string">"%S"</span>&nbsp;err));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;(<span class="keyword">object</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">method</span>&nbsp;stdout&nbsp;=&nbsp;out&nbsp;<span class="keyword">method</span>&nbsp;stderr&nbsp;=&nbsp;err&nbsp;<span class="keyword">method</span>&nbsp;exited&nbsp;=&nbsp;exited<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span>)<br>
+&nbsp;&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;run&nbsp;~log&nbsp;()&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;final_log&nbsp;:=&nbsp;<span class="constructor">Log</span>.(&nbsp;!final_log&nbsp;%&nbsp;s&nbsp;<span class="string">"Host.execute&nbsp;"</span>&nbsp;%&nbsp;s&nbsp;(to_string_hum&nbsp;t)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%&nbsp;<span class="constructor">OCaml</span>.list&nbsp;s&nbsp;argl&nbsp;%&nbsp;sp&nbsp;%&nbsp;log);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">match</span>&nbsp;t.connection&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Localhost</span>&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">begin</span>&nbsp;<span class="constructor">Ketrew_unix_process</span>.exec&nbsp;argl<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&lt;&nbsp;<span class="keyword">function</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Ok</span>&nbsp;(out,&nbsp;err,&nbsp;<span class="keywordsign">`</span><span class="constructor">Exited</span>&nbsp;n)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;ret&nbsp;out&nbsp;err&nbsp;n<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Ok</span>&nbsp;(out,&nbsp;err,&nbsp;other)&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fail_exec&nbsp;t&nbsp;~out&nbsp;~err&nbsp;(<span class="constructor">System</span>.<span class="constructor">Shell</span>.status_to_string&nbsp;other)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Error</span>&nbsp;(<span class="keywordsign">`</span><span class="constructor">Process</span>&nbsp;_&nbsp;<span class="keyword">as</span>&nbsp;process_error)&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;msg&nbsp;=&nbsp;<span class="constructor">Ketrew_unix_process</span>.error_to_string&nbsp;process_error&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Log</span>.(s&nbsp;<span class="string">"Ssh-cmd&nbsp;"</span>&nbsp;%&nbsp;<span class="constructor">OCaml</span>.list&nbsp;(sf&nbsp;<span class="string">"%S"</span>)&nbsp;argl&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%&nbsp;s&nbsp;<span class="string">"&nbsp;failed:&nbsp;"</span>&nbsp;%s&nbsp;msg&nbsp;@&nbsp;verbose);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fail_exec&nbsp;t&nbsp;msg<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Ssh</span>&nbsp;ssh&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">begin</span>&nbsp;<span class="constructor">Ssh</span>.generic_ssh_exec&nbsp;ssh&nbsp;argl<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&lt;&nbsp;<span class="keyword">function</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Ok</span>&nbsp;(out,&nbsp;err,&nbsp;exited)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;ret&nbsp;out&nbsp;err&nbsp;exited<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Error</span>&nbsp;e&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;fail&nbsp;(<span class="keywordsign">`</span><span class="constructor">Host</span>&nbsp;e)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
+&nbsp;&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;<span class="keyword">begin</span>&nbsp;run_with_timeout&nbsp;?timeout&nbsp;t&nbsp;~run<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&lt;&nbsp;<span class="keyword">fun</span>&nbsp;result&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Log</span>.(!final_log&nbsp;@&nbsp;verbose);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">match</span>&nbsp;result&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Ok</span>&nbsp;o&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;return&nbsp;o<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Error</span>&nbsp;(<span class="keywordsign">`</span><span class="constructor">Host</span>&nbsp;e)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;fail&nbsp;(<span class="keywordsign">`</span><span class="constructor">Host</span>&nbsp;e)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Error</span>&nbsp;(<span class="keywordsign">`</span><span class="constructor">System</span>&nbsp;_&nbsp;<span class="keyword">as</span>&nbsp;e)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Error</span>&nbsp;(<span class="keywordsign">`</span><span class="constructor">Timeout</span>&nbsp;_&nbsp;<span class="keyword">as</span>&nbsp;e)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;fail&nbsp;(<span class="keywordsign">`</span><span class="constructor">Host</span>&nbsp;e)<br>
+&nbsp;&nbsp;<span class="keyword">end</span><br>
+<br>
+<span class="keyword">type</span>&nbsp;shell&nbsp;=&nbsp;string&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;string&nbsp;list<br>
+<br>
+<span class="keyword">let</span>&nbsp;shell_sh&nbsp;~sh&nbsp;cmd&nbsp;=&nbsp;[sh;&nbsp;<span class="string">"-c"</span>;&nbsp;cmd]<br>
+<br>
+<span class="keyword">let</span>&nbsp;shell_of_default_shell&nbsp;t&nbsp;cmd&nbsp;=&nbsp;<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;<span class="keyword">open</span>&nbsp;<span class="constructor">Ketrew_gen_base_v0</span>.<span class="constructor">Default_shell</span>&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;<span class="keyword">open</span>&nbsp;<span class="constructor">Ketrew_gen_base_v0</span>.<span class="constructor">Host</span>&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;t.default_shell.command_name&nbsp;::&nbsp;<br>
+&nbsp;&nbsp;t.default_shell.options<br>
+&nbsp;&nbsp;@&nbsp;[t.default_shell.command_option;&nbsp;cmd]<br>
+<br>
+<span class="keyword">let</span>&nbsp;override_shell&nbsp;?with_shell&nbsp;t&nbsp;=<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;shell&nbsp;=&nbsp;<span class="constructor">Option</span>.value&nbsp;~default:(shell_of_default_shell&nbsp;t)&nbsp;with_shell&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;shell<br>
+<br>
+<span class="keyword">let</span>&nbsp;get_shell_command_output&nbsp;?timeout&nbsp;?with_shell&nbsp;t&nbsp;cmd&nbsp;=<br>
+&nbsp;&nbsp;execute&nbsp;?timeout&nbsp;t&nbsp;(override_shell&nbsp;?with_shell&nbsp;t&nbsp;cmd)<br>
+&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;execution&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;<span class="keyword">match</span>&nbsp;execution<span class="keywordsign">#</span>exited&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;0&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;return&nbsp;(execution<span class="keywordsign">#</span>stdout,&nbsp;execution<span class="keywordsign">#</span>stderr)<br>
+&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;n&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;fail_host&nbsp;(<span class="keywordsign">`</span><span class="constructor">Non_zero</span>&nbsp;(cmd,&nbsp;n))<br>
+<br>
+<span class="keyword">let</span>&nbsp;get_shell_command_return_value&nbsp;?timeout&nbsp;?with_shell&nbsp;t&nbsp;cmd&nbsp;=<br>
+&nbsp;&nbsp;execute&nbsp;?timeout&nbsp;t&nbsp;(override_shell&nbsp;?with_shell&nbsp;t&nbsp;cmd)<br>
+&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;execution&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;return&nbsp;execution<span class="keywordsign">#</span>exited<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<br>
+<span class="keyword">let</span>&nbsp;run_shell_command&nbsp;?timeout&nbsp;?with_shell&nbsp;t&nbsp;cmd&nbsp;=<br>
+&nbsp;&nbsp;get_shell_command_output&nbsp;?timeout&nbsp;?with_shell&nbsp;t&nbsp;cmd<br>
+&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;(_,&nbsp;_)&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;return&nbsp;()<br>
+<br>
+<br>
+<span class="keyword">let</span>&nbsp;do_files_exist&nbsp;?timeout&nbsp;?with_shell&nbsp;t&nbsp;paths&nbsp;=<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;cmd&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">List</span>.map&nbsp;paths&nbsp;~f:<span class="constructor">Path</span>.exists_shell_condition&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;|&gt;&nbsp;<span class="constructor">String</span>.concat&nbsp;~sep:<span class="string">"&nbsp;&amp;&amp;&nbsp;"</span>&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;get_shell_command_return_value&nbsp;?timeout&nbsp;?with_shell&nbsp;t&nbsp;cmd<br>
+&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;ret&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;return&nbsp;(ret&nbsp;=&nbsp;0)<br>
+<br>
+<span class="keyword">let</span>&nbsp;get_fresh_playground&nbsp;t&nbsp;=&nbsp;<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;fresh&nbsp;=&nbsp;<span class="constructor">Unique_id</span>.create&nbsp;()&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;<span class="constructor">Option</span>.map&nbsp;&nbsp;t.playground&nbsp;(<span class="keyword">fun</span>&nbsp;pg&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Path</span>.(concat&nbsp;pg&nbsp;(relative_directory_exn&nbsp;fresh)))<br>
+<br>
+<span class="keyword">let</span>&nbsp;ensure_directory&nbsp;?timeout&nbsp;?with_shell&nbsp;t&nbsp;~path&nbsp;=<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;cmd&nbsp;=&nbsp;fmt&nbsp;<span class="string">"mkdir&nbsp;-p&nbsp;%s"</span>&nbsp;<span class="constructor">Path</span>.(to_string_quoted&nbsp;path)&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;run_shell_command&nbsp;?timeout&nbsp;?with_shell&nbsp;t&nbsp;cmd<br>
+<br>
+<span class="keyword">let</span>&nbsp;put_file&nbsp;?timeout&nbsp;t&nbsp;~path&nbsp;~content&nbsp;=<br>
+&nbsp;&nbsp;<span class="keyword">match</span>&nbsp;t.connection&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Localhost</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">IO</span>.write_file&nbsp;~content&nbsp;<span class="constructor">Path</span>.(to_string&nbsp;path)<br>
+&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Ssh</span>&nbsp;ssh&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;temp&nbsp;=&nbsp;<span class="constructor">Filename</span>.temp_file&nbsp;<span class="string">"ketrew"</span>&nbsp;<span class="string">"ssh_put_file"</span>&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;run&nbsp;~log&nbsp;()&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">IO</span>.write_file&nbsp;~content&nbsp;temp<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;()&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;scp_cmd&nbsp;=&nbsp;<span class="constructor">Ssh</span>.(scp_push&nbsp;ssh&nbsp;~src:[temp]&nbsp;~dest:(<span class="constructor">Path</span>.to_string&nbsp;path))&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">begin</span>&nbsp;<span class="constructor">Ketrew_unix_process</span>.succeed&nbsp;scp_cmd<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&lt;&nbsp;<span class="keyword">function</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Ok</span>&nbsp;(out,&nbsp;err)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;return&nbsp;()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Error</span>&nbsp;(<span class="keywordsign">`</span><span class="constructor">Process</span>&nbsp;_&nbsp;<span class="keyword">as</span>&nbsp;process_error)&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;msg&nbsp;=&nbsp;<span class="constructor">Ketrew_unix_process</span>.error_to_string&nbsp;process_error&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Log</span>.(s&nbsp;<span class="string">"Scp-cmd&nbsp;"</span>&nbsp;%&nbsp;<span class="constructor">OCaml</span>.list&nbsp;(sf&nbsp;<span class="string">"%S"</span>)&nbsp;scp_cmd&nbsp;&nbsp;%&nbsp;sp&nbsp;%&nbsp;log<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%&nbsp;s&nbsp;<span class="string">"&nbsp;failed:&nbsp;"</span>&nbsp;%s&nbsp;msg&nbsp;@&nbsp;verbose);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fail_exec&nbsp;t&nbsp;msg<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">begin</span>&nbsp;run_with_timeout&nbsp;?timeout&nbsp;t&nbsp;~run<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&lt;&nbsp;<span class="keyword">function</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Ok</span>&nbsp;o&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;return&nbsp;o<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Error</span>&nbsp;(<span class="keywordsign">`</span><span class="constructor">IO</span>&nbsp;_&nbsp;<span class="keyword">as</span>&nbsp;e)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;fail&nbsp;e<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Error</span>&nbsp;(<span class="keywordsign">`</span><span class="constructor">Host</span>&nbsp;e)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;fail&nbsp;(<span class="keywordsign">`</span><span class="constructor">Host</span>&nbsp;e)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Error</span>&nbsp;(<span class="keywordsign">`</span><span class="constructor">System</span>&nbsp;_&nbsp;<span class="keyword">as</span>&nbsp;e)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Error</span>&nbsp;(<span class="keywordsign">`</span><span class="constructor">Timeout</span>&nbsp;_&nbsp;<span class="keyword">as</span>&nbsp;e)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;fail&nbsp;(<span class="keywordsign">`</span><span class="constructor">Host</span>&nbsp;e)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
+<br>
+<span class="keyword">let</span>&nbsp;get_file&nbsp;?timeout&nbsp;t&nbsp;~path&nbsp;=<br>
+&nbsp;&nbsp;<span class="keyword">match</span>&nbsp;t.connection&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Localhost</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">begin</span>&nbsp;<span class="constructor">IO</span>.read_file&nbsp;<span class="constructor">Path</span>.(to_string&nbsp;path)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&lt;&nbsp;<span class="keyword">function</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Ok</span>&nbsp;c&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;return&nbsp;c<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Error</span>&nbsp;(<span class="keywordsign">`</span><span class="constructor">IO</span>&nbsp;(<span class="keywordsign">`</span><span class="constructor">Read_file_exn</span>&nbsp;(path,&nbsp;ex)))&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Log</span>.(s&nbsp;<span class="string">"I/O,&nbsp;writing&nbsp;"</span>&nbsp;%&nbsp;s&nbsp;path&nbsp;%&nbsp;s&nbsp;<span class="string">"&nbsp;→&nbsp;"</span>&nbsp;%&nbsp;exn&nbsp;ex&nbsp;@&nbsp;verbose);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fail&nbsp;(<span class="keywordsign">`</span><span class="constructor">Cannot_read_file</span>&nbsp;(<span class="string">"localhost"</span>,&nbsp;path))<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
+&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Ssh</span>&nbsp;ssh&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;temp&nbsp;=&nbsp;<span class="constructor">Filename</span>.temp_file&nbsp;<span class="string">"ketrew"</span>&nbsp;<span class="string">"ssh_get_file"</span>&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;scp_cmd&nbsp;=&nbsp;<span class="constructor">Ssh</span>.(scp_pull&nbsp;ssh&nbsp;~dest:temp&nbsp;~src:[<span class="constructor">Path</span>.to_string&nbsp;path])&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">begin</span>&nbsp;run_with_timeout&nbsp;?timeout&nbsp;t&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;~run:(<span class="keyword">fun</span>&nbsp;~log&nbsp;()&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Ketrew_unix_process</span>.succeed&nbsp;scp_cmd<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">IO</span>.read_file&nbsp;temp)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&lt;&nbsp;<span class="keyword">function</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Ok</span>&nbsp;c&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;return&nbsp;c<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Error</span>&nbsp;(<span class="keywordsign">`</span><span class="constructor">IO</span>&nbsp;(<span class="keywordsign">`</span><span class="constructor">Read_file_exn</span>&nbsp;(path,&nbsp;ex)))&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Log</span>.(s&nbsp;<span class="string">"I/O,&nbsp;writing&nbsp;"</span>&nbsp;%&nbsp;s&nbsp;path&nbsp;%&nbsp;s&nbsp;<span class="string">"&nbsp;→&nbsp;"</span>&nbsp;%&nbsp;exn&nbsp;ex&nbsp;@&nbsp;verbose);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fail&nbsp;(<span class="keywordsign">`</span><span class="constructor">Cannot_read_file</span>&nbsp;(<span class="string">"localhost"</span>,&nbsp;path))<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Error</span>&nbsp;(<span class="keywordsign">`</span><span class="constructor">System</span>&nbsp;(<span class="keywordsign">`</span><span class="constructor">Sleep</span>&nbsp;time,&nbsp;<span class="keywordsign">`</span><span class="constructor">Exn</span>&nbsp;e))&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Log</span>.(s&nbsp;<span class="string">"Scp-cmd&nbsp;"</span>&nbsp;%&nbsp;<span class="constructor">OCaml</span>.list&nbsp;(sf&nbsp;<span class="string">"%S"</span>)&nbsp;scp_cmd&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%&nbsp;s&nbsp;<span class="string">"&nbsp;failed:&nbsp;System.sleep&nbsp;"</span>&nbsp;%&nbsp;f&nbsp;time&nbsp;%&nbsp;s&nbsp;<span class="string">"&nbsp;error:&nbsp;"</span>&nbsp;%&nbsp;exn&nbsp;e&nbsp;@&nbsp;error);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fail&nbsp;(<span class="keywordsign">`</span><span class="constructor">Cannot_read_file</span>&nbsp;(ssh.<span class="constructor">Ssh</span>.address,&nbsp;<span class="constructor">Path</span>.(to_string&nbsp;path)))<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Error</span>&nbsp;(<span class="keywordsign">`</span><span class="constructor">Process</span>&nbsp;_&nbsp;<span class="keyword">as</span>&nbsp;process_error)&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;msg&nbsp;=&nbsp;<span class="constructor">Ketrew_unix_process</span>.error_to_string&nbsp;process_error&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Log</span>.(s&nbsp;<span class="string">"Scp-cmd&nbsp;"</span>&nbsp;%&nbsp;<span class="constructor">OCaml</span>.list&nbsp;(sf&nbsp;<span class="string">"%S"</span>)&nbsp;scp_cmd&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%&nbsp;s&nbsp;<span class="string">"&nbsp;failed:&nbsp;"</span>&nbsp;%s&nbsp;msg&nbsp;@&nbsp;verbose);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fail&nbsp;(<span class="keywordsign">`</span><span class="constructor">Cannot_read_file</span>&nbsp;(ssh.<span class="constructor">Ssh</span>.address,&nbsp;<span class="constructor">Path</span>.(to_string&nbsp;path)))<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Error</span>&nbsp;(<span class="keywordsign">`</span><span class="constructor">Timeout</span>&nbsp;_&nbsp;<span class="keyword">as</span>&nbsp;t)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;fail&nbsp;t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
+<br>
+<br>
+<span class="keyword">let</span>&nbsp;grab_file_or_log&nbsp;?timeout&nbsp;host&nbsp;path&nbsp;=<br>
+&nbsp;&nbsp;<span class="keyword">begin</span>&nbsp;get_file&nbsp;?timeout&nbsp;host&nbsp;~path<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&lt;&nbsp;<span class="keyword">function</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Ok</span>&nbsp;c&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;return&nbsp;c<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Error</span>&nbsp;(<span class="keywordsign">`</span><span class="constructor">Cannot_read_file</span>&nbsp;_)&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fail&nbsp;<span class="constructor">Log</span>.(s&nbsp;<span class="string">"cannot&nbsp;read&nbsp;file"</span>&nbsp;%&nbsp;s&nbsp;(<span class="constructor">Path</span>.to_string&nbsp;path))<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Error</span>&nbsp;(<span class="keywordsign">`</span><span class="constructor">IO</span>&nbsp;_&nbsp;<span class="keyword">as</span>&nbsp;e)&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fail&nbsp;<span class="constructor">Log</span>.(s&nbsp;<span class="string">"I/O&nbsp;error:&nbsp;"</span>&nbsp;%&nbsp;s&nbsp;(<span class="constructor">IO</span>.error_to_string&nbsp;e))<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Error</span>&nbsp;(<span class="keywordsign">`</span><span class="constructor">Timeout</span>&nbsp;time)&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fail&nbsp;<span class="constructor">Log</span>.(s&nbsp;<span class="string">"Timeout:&nbsp;"</span>&nbsp;%&nbsp;f&nbsp;time)<br>
+&nbsp;&nbsp;<span class="keyword">end</span><br>
+<br>
+</code></body></html>

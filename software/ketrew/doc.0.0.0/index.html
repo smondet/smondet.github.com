@@ -1,0 +1,181 @@
+ <!DOCTYPE html> <html> <head><link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootswatch/3.2.0/readable/bootstrap.min.css" type="text/css">
+<link rel="stylesheet" href="https://cdn.rawgit.com/hammerlab/ketrew/2d1c430cca52caa71e363a765ff8775a6ae14ba9/src/doc/code_style.css" type="text/css"><meta charset="utf-8"><title>Ketrew: Home</title></head><body><div class="container"><h1>Ketrew: Home</h1><div class="row">
+<div class="col-md-3">
+<h2>Contents</h2><ul><li><a href='#BuildampInstall'>Build &amp; Install</a>
+<ul><li><a href='#FromOpam'>From Opam</a>
+</li><li><a href='#WithoutOpam'>Without Opam</a>
+</li></ul>
+</li><li><a href='#TheEDSLDefiningWorkflows'>The EDSL: Defining Workflows</a>
+<ul><li><a href='#Overview'>Overview</a>
+</li><li><a href='#Example'>Example</a>
+</li></ul>
+</li><li><a href='#TheEngineRunningStuff'>The Engine: Running Stuff</a>
+<ul><li><a href='#ForTheImpatient'>For The Impatient</a>
+</li><li><a href='#Initialization'>Initialization</a>
+</li><li><a href='#StandaloneKetrew'>Standalone Ketrew</a>
+</li><li><a href='#ClientServerMode'>Client-Server Mode</a>
+</li></ul>
+</li><li><a href='#WheretoGoNext'>Where to Go Next</a>
+</li><li><a href='#License'>License</a>
+</li></ul><h2>Menu</h2><ul><li><a href='index.html'>Home</a></li><li><a href='Alternative_CLI_Application.html'>Alternative CLI Application</a></li><li><a href='Developer_Documentation.html'>Developer Documentation</a></li><li><a href='Glossary.html'>Glossary</a></li><li><a href='Long-Running_Plugins.html'>Long-Running Plugins</a></li><li><a href='Server_Commands.html'>Server Commands</a></li><li><a href='The_Configuration_File.html'>The Configuration File</a></li><li><a href='The_HTTP_API.html'>The HTTP API</a></li><li><a href='Workflow_Examples.html'>Workflow Examples</a></li><li><a href='dummy_plugin.html'>Plugin Example</a></li><li><a href='dummy_plugin_user.html'>Plugin-Usage Example</a></li><li><a href='integration.html'>Integration Test</a></li><li><a href='main.html'>Main Test</a></li><li><a href='preconfigured_main.html'>Preconfigured Main Example</a></li><li><a href='./api/index.html'>API Documentation</a></li><li>Documentation for the <a href='../index.html'><code>master</code></a> branch</li><li>Repository <a href='https://github.com/hammerlab/ketrew'>at Github</a></li><li>Up: <a href='../../index.html'>Software Projects</a></li></ul></div><div class="col-md-9"><h1 id="KetrewKeepTrackofExperimentalWorkflows">Ketrew: Keep Track of Experimental Workflows</h1>
+
+<p><a href='https://travis-ci.org/hammerlab/ketrew'><img src='https://travis-ci.org/hammerlab/ketrew.svg?branch=master' alt='Build Status' /></a></p>
+<p><strong>Ketrew</strong> is:</p>
+<ul><li>an OCaml library providing an EDSL API to define complex and convoluted
+workflows (interdependent steps/programs using a lot of data, with many
+parameter variations, running on different <em>hosts</em> with various schedulers).</li><li>an engine taking care of orchestrating the run of those workflows,
+and keeping track everything that succeeds, fails, or gets lost.
+Ketrew can be a standalone application, or use a client-server architecture.</li></ul>
+
+<p>This is Ketrew <code>0.0.0</code>, our first release.</p>
+<h2 id="BuildampInstall">Build &amp; Install</h2>
+
+<p>For now Ketrew requires OCaml <strong>4.01.0</strong> (because it uses <code>ocp-build</code>) and
+should be able to build &amp; work on any Unix platform.</p>
+<h3 id="FromOpam">From Opam</h3>
+
+<p>If you have <code>opam</code> up and running:</p>
+<pre><code>opam install ketrew</code></pre><p>Then you need at runtime <code>ssh</code> and <code>git</code> in the <code>$PATH</code>.</p>
+<p>This gets you the <code>ketrew</code> executable and the <code>ketrew</code> library.</p>
+<h3 id="WithoutOpam">Without Opam</h3>
+
+<p>See the <a href='./Developer_Documentation.html'>development documentation</a> to find
+out how to build Ketrew (and its dependencies) from the sources.</p>
+<h2 id="TheEDSLDefiningWorkflows">The EDSL: Defining Workflows</h2>
+
+<h3 id="Overview">Overview</h3>
+
+<p>The EDSL is an OCaml library where all the functions are used to build a
+workflow data-structure <em>except</em> one: <a href='api/Ketrew.EDSL.html#VALrun' title='Ketrew.EDSL.run'><code>Ketrew.EDSL.run</code></a> which is used to submit
+workflows to the engine.</p>
+<p>A workflow is a Graph of “<strong>targets</strong>”.</p>
+<p>There are 3 kinds of links between targets:</p>
+<ul><li><em>dependencies:</em> targets that need to be ensured or
+run before a target can start,</li><li><em>fallbacks:</em> targets that will be activated
+if the target fails, and</li><li><em>success-triggers:</em> targets that will be activated only <em>after</em> a target
+succeeds.</li></ul>
+
+<p>Any OCaml program can use the EDSL (script, compiled, or even inside the
+toplevel), see the <a href='api/Ketrew_edsl.html'>documentation of the EDSL API</a>.</p>
+<h3 id="Example">Example</h3>
+
+<p>This example is a “single-target” workflow that runs an arbitrary shell command
+on an <a href='http://en.wikipedia.org/wiki/Platform_LSF'>LSF-based</a> cluster:</p>
+<pre><span class="kw1">#</span><span class="id">use</span><span class="text"> </span><span class="string">&quot;topfind&quot;</span><span class="directive">
+#thread</span><span class="directive">
+#require</span><span class="text"> </span><span class="string">&quot;ketrew&quot;</span><span class="text">
+</span><span class="kw">let</span><span class="text"> </span><span class="id">run_command_with_lsf</span><span class="text"> </span><span class="id">cmd</span><span class="text"> =
+  </span><span class="kw">let</span><span class="text"> </span><span class="kw">module</span><span class="text"> </span><span class="kw2">KEDSL</span><span class="text"> = </span><span class="kw2">Ketrew</span><span class="text">.</span><span class="kw2">EDSL</span><span class="text"> </span><span class="kw">in</span><span class="text">
+  </span><span class="kw">let</span><span class="text"> </span><span class="id">host</span><span class="text"> =
+    </span><span class="comment">(* `Host.parse` takes an URI and creates a “Host” datastructue: a place to
+       run stuff.  *)</span><span class="text">
+    </span><span class="kw2">KEDSL</span><span class="text">.</span><span class="kw2">Host</span><span class="text">.</span><span class="id">parse</span><span class="text">
+      </span><span class="string">&quot;ssh://user42@MyLSFCluster/home/user42/ketrew-playground/?shell=bash&quot;</span><span class="text">
+    </span><span class="comment">(* This one is an SSH host, named `MyLSFCluster`.
+       The directory `/home/user42/ketrew-playground/` will be used by Ketrew
+       to monitor the jobs. *)</span><span class="text">
+  </span><span class="kw">in</span><span class="text">
+  </span><span class="kw">let</span><span class="text"> </span><span class="id">program</span><span class="text"> =
+    </span><span class="comment">(* A “program” is a datastructure representing “extended shell scripts”.
+       `Program.sh` creates one out a shell command. *)</span><span class="text">
+    </span><span class="kw2">KEDSL</span><span class="text">.</span><span class="kw2">Program</span><span class="text">.</span><span class="id">sh</span><span class="text"> </span><span class="id">cmd</span><span class="text"> </span><span class="kw">in</span><span class="text">
+  </span><span class="kw">let</span><span class="text"> </span><span class="id">lsf_build_process</span><span class="text"> =
+    </span><span class="comment">(* “build process” is a method for making things:
+       `lsf` creates a datastructure that represents a job running a `program`
+       with the LSF scheduling engine, on the host `host`.  *)</span><span class="text">
+    </span><span class="kw2">KEDSL</span><span class="text">.</span><span class="id">lsf</span><span class="text">
+      </span><span class="kw4">~queue</span><span class="text">:</span><span class="string">&quot;normal-people&quot;</span><span class="text"> </span><span class="kw4">~wall_limit</span><span class="text">:</span><span class="string">&quot;1:30&quot;</span><span class="text">
+      </span><span class="kw4">~processors</span><span class="text">:(`</span><span class="kw2">Min_max</span><span class="text"> (</span><span class="numeric">1</span><span class="text">,</span><span class="numeric">1</span><span class="text">)) </span><span class="kw4">~host</span><span class="text"> </span><span class="id">program</span><span class="text">
+  </span><span class="kw">in</span><span class="text">
+  </span><span class="comment">(* The function `KEDSL.target` creates a node in the workflow graph.
+     This one is very simple, it has a name and a build-process,
+     and since it doesn't have dependencies or fallbacks, it is a
+     “single-node” workflow: *)</span><span class="text">
+  </span><span class="kw2">KEDSL</span><span class="text">.</span><span class="id">target</span><span class="text">
+     </span><span class="string">&quot;run_command_with_lsf&quot;</span><span class="text">
+     </span><span class="kw4">~make</span><span class="text">:</span><span class="id">lsf_build_process</span><span class="text">
+
+</span><span class="kw">let</span><span class="text"> () =
+  </span><span class="kw">let</span><span class="text"> </span><span class="id">workflow</span><span class="text"> =
+     </span><span class="comment">(* Create the  workflow with the first argument of the command line: *)</span><span class="text">
+     </span><span class="id">run_command_with_lsf</span><span class="text"> </span><span class="kw2">Sys</span><span class="text">.</span><span class="id">argv</span><span class="text">.(</span><span class="numeric">1</span><span class="text">) </span><span class="kw">in</span><span class="text">
+  </span><span class="comment">(* Then, `run` is the only function that “does” something, it submits the
+     workflow to the engine: *)</span><span class="text">
+  </span><span class="kw2">Ketrew</span><span class="text">.</span><span class="kw2">EDSL</span><span class="text">.</span><span class="id">run</span><span class="text"> </span><span class="id">workflow</span><span class="text">
+  </span><span class="comment">(* If Ketrew is in Standalone mode, this means writing the workflow in the
+     database (nothing runs yet, you need to run Ketrew's engine yourself).
+     If Ketrew is in Client-Server mode, this means sending the workflow to the
+     server over HTTPS. The server will start running the workflow right away.  *)</span></pre>
+
+<p>If you actually have access to an LSF cluster and want to try this workflow see
+below: <a href='#ForTheImpatient'>“For The Impatient”</a>.</p>
+<p>To learn more about the EDSL, you can also explore <a href='Workflow_Examples.html'>examples of more and more
+complicated workflows</a> (<em>work-in-progress</em>).</p>
+<h2 id="TheEngineRunningStuff">The Engine: Running Stuff</h2>
+
+<h3 id="ForTheImpatient">For The Impatient</h3>
+
+<p>Let&#39;s say the example above is in a file <code>my_first_workflow.ml</code>:</p>
+<p>The first time you use Ketrew, you need to call <code>init</code>:</p>
+<pre><code>ketrew init</code></pre><p>Then you can <em>submit</em> your workflow:</p>
+<pre><code>ocaml my_first_workflow.ml &#39;du -sh $HOME&#39;</code></pre><p>When the function <a href='api/Ketrew.EDSL.html#VALrun' title='Ketrew.EDSL.run'><code>Ketrew.EDSL.run</code></a> is called, the workflow will be <em>submitted</em>
+but not yet running. To run the <em>engine</em> do:</p>
+<pre><code>ketrew run loop</code></pre><p>The engine will run until you type <code>q</code> or until there is nothing left to do.</p>
+<p>Anytime, you can go a check the status and do many things with your
+workflows, for example with:</p>
+<pre><code>ketrew interact</code></pre><p>which is an interactive text-based interface.</p>
+<h3 id="Initialization">Initialization</h3>
+
+<p>Let&#39;s go back to the beginning; to create a configuration file, run:</p>
+<pre><code>ketrew init</code></pre><p>This creates <code>$HOME/.ketrew/configuration.toml</code> (see <a href='ketrew_init___help.html' title='ketrew init --help'><code>ketrew init --help</code></a> to
+choose another path).</p>
+<p>By default this configures Ketrew in <strong>Standalone</strong> mode;
+See the <a href='./The_Configuration_File.html'>documentation</a>
+on the configuration file to tweak it.</p>
+<h3 id="StandaloneKetrew">Standalone Ketrew</h3>
+
+<p>The default for Ketrew is to run in “Standalone” mode.
+From the command-line client, one can both query and run the engine.  See
+first: <a href='ketrew___help.html' title='ketrew --help'><code>ketrew --help</code></a>; then:</p>
+<ul><li>To display the current status: <a href='ketrew_status___help.html' title='ketrew status --help'><code>ketrew status --help</code></a>.</li><li>To run as many steps as possible until a “fix-point” is reached:
+<code>ketrew run fix</code> (see <a href='ketrew_run_engine___help.html' title='ketrew run-engine --help'><code>ketrew run-engine --help</code></a>).</li><li>To kill running jobs use <code>ketrew kill</code> + the target Identifier,<br />
+or do an interactive murder: <code>ketrew kill --interactive</code>
+(see <a href='ketrew_kill___help.html' title='ketrew kill --help'><code>ketrew kill --help</code></a>).</li><li>Once targets are dead, one can “archive” them, i.e. put them in a
+less-visible list: <a href='ketrew_archive___help.html' title='ketrew archive --help'><code>ketrew archive --help</code></a>.</li></ul>
+
+<p>See also <a href='ketrew_interact___help.html' title='ketrew interact --help'><code>ketrew interact --help</code></a> or <a href='ketrew_explore___help.html' title='ketrew explore --help'><code>ketrew explore --help</code></a> for fun
+<em>one-key-based</em> navigation.</p>
+<p>Ketrew can try to be clever about killing an archiving;
+see <a href='ketrew_autoclean___help.html' title='ketrew autoclean --help'><code>ketrew autoclean --help</code></a>.</p>
+<h3 id="ClientServerMode">Client-Server Mode</h3>
+
+<p>In this mode, the Ketrew engine runs a proper server which is
+accessed over an HTTP API.</p>
+<p>See the commands <a href='ketrew_start_server___help.html' title='ketrew start-server --help'><code>ketrew start-server --help</code></a>
+and <a href='ketrew_stop_server___help.html' title='ketrew stop-server --help'><code>ketrew stop-server --help</code></a>.</p>
+<p>The client works in the same way as in “Standalone” mode.</p>
+<h2 id="WheretoGoNext">Where to Go Next</h2>
+
+<p>From here:</p>
+<ul><li>To write workflows for Ketrew,
+see <a href='Workflow_Examples.html'><code>src/test/Workflow_Examples.ml</code></a> for
+examples and the <a href='api/Ketrew_edsl.html'>documentation of the EDSL API</a>.</li><li>To configure Ketrew use the configuration file
+<a href='./The_Configuration_File.html'>documentation</a>.</li><li>You may want to “extend” Ketrew with new ways of running “long-running&quot;
+computations:  see the documentation on
+<a href='./Long-Running_Plugins.html'>plugins</a>,
+and the examples in the library:
+like <a href='api/Ketrew_lsf.html'><a href='api/Ketrew_lsf.html' title='Ketrew_lsf'><code>Ketrew_lsf</code></a></a> or in the tests:
+<a href='dummy_plugin.html'><code>src/test/dummy_plugin.ml</code></a>.</li><li>You may want to extend Ketrew, or preconfigure it, <em>without</em> configuration
+files or dynamically loaded libraries: just
+<a href='./Alternative_CLI_Application.html'>create</a> your own comand-line app.</li><li>If you are using Ketrew in server mode, you may want to know about the
+<a href='./Server_Commands.html'>commands</a> that the server can understand as it
+listens on a Unix-pipe.</li><li>You may want to call out directly to the <a href='./The_HTTP_API.html'>HTTP API</a>
+(i.e. without <code>ketrew</code> as a client).</li><li>If you want to help or simply to understand Ketrew
+see the <a href='./Developer_Documentation.html'>development</a>
+documentation, and have a look at the modules
+like <a href='api/Ketrew_engine.html'><a href='api/Ketrew_engine.html' title='Ketrew_engine'><code>Ketrew_engine</code></a></a>.</li></ul>
+
+<h2 id="License">License</h2>
+
+<p>It&#39;s <a href='http://www.apache.org/licenses/LICENSE-2.0'>Apache 2.0</a>.</p>
+</div></div></div></body><html>
