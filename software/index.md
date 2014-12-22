@@ -3,7 +3,7 @@
 ## Current
 
 - [Nonstd](./nonstd/index.html): Nano-library providing very few Core-like modules (like `List`, `Option`) (see on [Bitbucket](https://bitbucket.org/smondet/nonstd)).
-- [Sosa](./sosa/index.html): The “Sane OCaml String API” library is a set of APIs (module types) that define what a string of characters should be, and a set of modules and functors that implement them (see on [Github](https://github.com/smondet/sosa), and also the documentation for [version 0.0.1](sosa/doc.0.0.1/index.html) and for [the `dev` branch](sosa/dev/index.html)).
+- [Sosa](./sosa/index.html): The “Sane OCaml String API” library is a set of APIs (module types) that define what a string of characters should be, and a set of modules and functors that implement them (see on [Github](https://github.com/smondet/sosa), and also the documentation for [version 0.0.1](sosa/doc.0.0.1/index.html)).
 - [Docout](./docout/index.html): The functor `Docout.Make_logger` creates a nice embedded DSL on top of the [smart-print](https://github.com/clarus/smart-print) library (see on [Bitbucket](https://bitbucket.org/smondet/docout)).
 - [Pvem](./pvem/index.html): The "Polymorphic Variants-based Error Monad", `Pvem` (pronounce /pi:vɛm/), is a module providing simple handling of an error monad type based on polymorphic variants (see on [Bitbucket](https://bitbucket.org/smondet/pvem)).
 - [Atd2cconv](./atd2cconv/index.html): The `atd2cconv` application compiles [ATD](https://github.com/mjambon/atd/blob/master/atd_ast.mli) descriptions to OCaml code which defines [CConv](https://github.com/c-cube/cconv) sources and sinks (see on [Github](https://github.com/smondet/atd2cconv), and also the documentation for [version 0.0.0](atd2cconv/atd2cconv.0.0.0/index.html)).

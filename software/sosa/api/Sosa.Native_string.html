@@ -4,7 +4,7 @@
 <link rel="stylesheet" href="style.css" type="text/css">
 <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
 <link rel="Start" href="index.html">
-<link rel="previous" href="Sosa.Make_strip_function.html">
+<link rel="previous" href="Sosa.Make_split_at_index_functions.html">
 <link rel="next" href="Sosa.Make_native_conversions.html">
 <link rel="Up" href="Sosa.html">
 <link title="Index of types" rel=Appendix href="index_types.html">
@@ -14,7 +14,7 @@
 <link title="Sosa" rel="Chapter" href="Sosa.html"><title>Sosa.Native_string</title>
 </head>
 <body>
-<div class="navbar"><a class="pre" href="Sosa.Make_strip_function.html" title="Sosa.Make_strip_function">Previous</a>
+<div class="navbar"><a class="pre" href="Sosa.Make_split_at_index_functions.html" title="Sosa.Make_split_at_index_functions">Previous</a>
 &nbsp;<a class="up" href="Sosa.html" title="Sosa">Up</a>
 &nbsp;<a class="post" href="Sosa.Make_native_conversions.html" title="Sosa.Make_native_conversions">Next</a>
 </div>
@@ -53,13 +53,18 @@
 <pre><span id="VALfold"><span class="keyword">val</span> <a href="code_VALSosa.Native_string.fold.html">fold</a></span> : <code class="type">string -> init:'a -> f:('a -> char -> 'a) -> 'a</code></pre>
 <pre><span id="VALsub_exn"><span class="keyword">val</span> <a href="code_VALSosa.Native_string.sub_exn.html">sub_exn</a></span> : <code class="type">string -> index:int -> length:int -> string</code></pre>
 <pre><span id="VALsub"><span class="keyword">val</span> <a href="code_VALSosa.Native_string.sub.html">sub</a></span> : <code class="type">string -> index:int -> length:int -> string option</code></pre>
+<pre><span id="VALslice_exn"><span class="keyword">val</span> <a href="code_VALSosa.Native_string.slice_exn.html">slice_exn</a></span> : <code class="type">?start:int -> ?finish:int -> t -> string</code></pre>
+<pre><span id="VALslice"><span class="keyword">val</span> <a href="code_VALSosa.Native_string.slice.html">slice</a></span> : <code class="type">?start:int -> ?finish:int -> t -> string option</code></pre>
 <pre><span id="VALmutate_exn"><span class="keyword">val</span> <a href="code_VALSosa.Native_string.mutate_exn.html">mutate_exn</a></span> : <code class="type">string -> index:int -> char -> unit</code></pre>
 <pre><span id="VALmutate"><span class="keyword">val</span> <a href="code_VALSosa.Native_string.mutate.html">mutate</a></span> : <code class="type">string -> index:int -> char -> (unit, [> `out_of_bounds ]) <a href="Sosa.html#TYPEresult">Sosa.result</a></code></pre>
 <pre><span id="VALblit_exn"><span class="keyword">val</span> <a href="code_VALSosa.Native_string.blit_exn.html">blit_exn</a></span> : <code class="type">src:string -><br>       src_index:int -> dst:string -> dst_index:int -> length:int -> unit</code></pre>
 <pre><span id="VALblit"><span class="keyword">val</span> <a href="code_VALSosa.Native_string.blit.html">blit</a></span> : <code class="type">src:string -><br>       src_index:int -><br>       dst:string -><br>       dst_index:int -> length:int -> (unit, [> `out_of_bounds ]) <a href="Sosa.html#TYPEresult">Sosa.result</a></code></pre>
 <pre><span id="VALiter"><span class="keyword">val</span> <a href="code_VALSosa.Native_string.iter.html">iter</a></span> : <code class="type">string -> f:(char -> unit) -> unit</code></pre>
+<pre><span id="VALiteri"><span class="keyword">val</span> <a href="code_VALSosa.Native_string.iteri.html">iteri</a></span> : <code class="type">string -> f:(int -> char -> unit) -> unit</code></pre>
 <pre><span id="VALiter_reverse"><span class="keyword">val</span> <a href="code_VALSosa.Native_string.iter_reverse.html">iter_reverse</a></span> : <code class="type">string -> f:(char -> 'a) -> unit</code></pre>
 <pre><span id="VALmap"><span class="keyword">val</span> <a href="code_VALSosa.Native_string.map.html">map</a></span> : <code class="type">string -> f:(char -> char) -> string</code></pre>
+<pre><span id="VALmap2_exn"><span class="keyword">val</span> <a href="code_VALSosa.Native_string.map2_exn.html">map2_exn</a></span> : <code class="type">string -> string -> f:(char -> char -> char) -> string</code></pre>
+<pre><span id="VALmapi"><span class="keyword">val</span> <a href="code_VALSosa.Native_string.mapi.html">mapi</a></span> : <code class="type">string -> f:(int -> char -> char) -> string</code></pre>
 <pre><span id="VALfor_all"><span class="keyword">val</span> <a href="code_VALSosa.Native_string.for_all.html">for_all</a></span> : <code class="type">string -> f:(char -> bool) -> bool</code></pre>
 <pre><span id="VALexists"><span class="keyword">val</span> <a href="code_VALSosa.Native_string.exists.html">exists</a></span> : <code class="type">string -> f:(char -> bool) -> bool</code></pre>
 <pre><span id="VALindex_of_character"><span class="keyword">val</span> <a href="code_VALSosa.Native_string.index_of_character.html">index_of_character</a></span> : <code class="type">string -> ?from:int -> char -> int option</code></pre>
@@ -68,8 +73,15 @@
 <pre><span id="VALfind"><span class="keyword">val</span> <a href="code_VALSosa.Native_string.find.html">find</a></span> : <code class="type">?from:int -> ?length:int -> string -> f:(char -> bool) -> int option</code></pre>
 <pre><span id="VALfind_reverse"><span class="keyword">val</span> <a href="code_VALSosa.Native_string.find_reverse.html">find_reverse</a></span> : <code class="type">?from:int -> ?length:int -> string -> f:(char -> bool) -> int option</code></pre>
 <pre><span id="VALfilter_map"><span class="keyword">val</span> <a href="code_VALSosa.Native_string.filter_map.html">filter_map</a></span> : <code class="type">?from:int -> ?length:int -> string -> f:(char -> char option) -> string</code></pre>
+<pre><span id="VALfilter"><span class="keyword">val</span> <a href="code_VALSosa.Native_string.filter.html">filter</a></span> : <code class="type">?from:int -> ?length:int -> string -> f:(char -> bool) -> string</code></pre>
 <pre><span class="keyword">include</span> struct ... end</pre>
 
 <pre><span class="keyword">include</span> struct ... end</pre>
 
-<pre><span class="keyword">module</span> <a href="Sosa.Native_string.Make_output.html">Make_output</a>: <div class="sig_block"><code class="code"><span class="keyword">functor</span> (</code><code class="code"><span class="constructor">Model</span></code><code class="code"> : </code><code class="type"><a href="Sosa.OUTPUT_MODEL.html">Sosa.OUTPUT_MODEL</a></code><code class="code">) <span class="keywordsign">-&gt;</span> </code><code class="type">Model</code></div></pre></body></html>
+<pre><span class="keyword">include</span> struct ... end</pre>
+
+<pre><span class="keyword">include</span> struct ... end</pre>
+
+<pre><span class="keyword">module</span> <a href="Sosa.Native_string.Make_output.html">Make_output</a>: <div class="sig_block"><code class="code"><span class="keyword">functor</span> (</code><code class="code"><span class="constructor">Model</span></code><code class="code"> : </code><code class="type"><a href="Sosa.OUTPUT_MODEL.html">Sosa.OUTPUT_MODEL</a></code><code class="code">) <span class="keywordsign">-&gt;</span> </code><code class="type">Model</code></div></pre>
+<pre><span id="VALtake_while_with_index"><span class="keyword">val</span> <a href="code_VALSosa.Native_string.take_while_with_index.html">take_while_with_index</a></span> : <code class="type">string -> f:(int -> char -> bool) -> string</code></pre>
+<pre><span id="VALtake_while"><span class="keyword">val</span> <a href="code_VALSosa.Native_string.take_while.html">take_while</a></span> : <code class="type">string -> f:(char -> bool) -> string</code></pre></body></html>

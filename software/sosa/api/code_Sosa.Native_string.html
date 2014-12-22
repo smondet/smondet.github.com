@@ -107,6 +107,26 @@
       try Some (String.sub t index length)
       with e -> None
 
+  let slice_exn ?(start=0) ?finish t =
+    let length_of_t = String.length t in
+    let bound_check strict m x =
+      let out_of_ub = if strict then x > length_of_t else x >= length_of_t in
+      if x < 0 || (not (is_empty t) && out_of_ub) then
+        ksprintf failwith "slice_exn: invalid %s %d" m x
+      else x
+    in
+    let _      = bound_check false "start" start
+    and finish =
+      match finish with
+      | None   -> length_of_t
+      | Some f -> bound_check true "finish" f
+    in
+    sub_exn t ~index:start ~length:(finish - start)
+
+  let slice ?start ?finish t =
+    try Some (slice_exn ?start ?finish t)
+    with _ -> None
+
   let mutate_exn t ~index c = String.set t index c
 
   let mutate t ~index c =
@@ -120,11 +140,33 @@
     with _ -> fail `out_of_bounds
 
   let iter t ~f = String.iter t ~f
+  let iteri t ~f = String.iteri t ~f
   let iter_reverse t ~f =
     for i = length t -1 downto 0 do
       f (get_exn t i)
     done
   let map t ~f = String.map t ~f
+
+  let map2_exn t1 t2 ~f =
+    let lgth1 = (length t1) in
+    let lgth2 = (length t2) in
+    match lgth1, lgth2 with
+    | 0, 0 -> empty
+    | _, _ when lgth1 <> lgth2 -> failwith "map2_exn"
+    | lgth1, lgth2 ->
+       let res = make lgth1 (String.get t1 0) in
+       for i = 0 to lgth1 - 1 do
+         String.set res i (f (String.get t1 i) (String.get t2 i))
+       done;
+       res
+
+  let mapi t ~f =
+    let buffer = String.create (String.length t) in
+    let ()     = String.iteri t ~f:(fun i c -> String.set buffer i (f i c)) in
+    buffer
+  (* TODO: Change this to 
+    let mapi t ~f = String.mapi t ~f
+    once we switch to 4.02 *)
 
   let for_all t ~f =
     try (iter t (fun x -> if not (f x) then raise Not_found else ()); true)
@@ -216,6 +258,9 @@
       Buffer.contents b
     end
 
+  let filter ?from ?length s ~f =
+      filter_map ?from ?length s ~f:(fun c -> if f c then Some c else None)
+
   include Make_strip_function (struct
       type t = string
       type character = char
@@ -236,6 +281,35 @@
       let index_of_character = index_of_character
     end)
 
+
+  include Make_prefix_suffix_array (struct
+      type t = string
+      type character = char
+      let length = length
+      let get = (fun s i -> s.[i])
+      let sub_exn = sub_exn
+    end)
+
+  include Make_split_at_index_functions(struct
+      type t = string
+      type character = char
+      let empty = empty
+      let length = length
+      let sub_exn = sub_exn
+    end)
+
   module Make_output (Model: OUTPUT_MODEL) = Model
+
+  let take_while_with_index t ~f =
+    let buf = Buffer.create (length t) in
+    let rec loop idx =
+      match get t idx with
+      | Some c when f idx c -> Buffer.add_char buf c; loop (idx + 1)
+      | _ -> ()
+    in
+    loop 0;
+    Buffer.contents buf
+
+  let take_while t ~f = take_while_with_index t ~f:(fun _ c -> f c)
 
 end</code></body></html>

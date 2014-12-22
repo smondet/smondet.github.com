@@ -50,6 +50,27 @@
 &nbsp;&nbsp;&nbsp;&nbsp;index:int&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;length:int&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Sosa</span>.<span class="constructor">BASIC_STRING</span>.t&nbsp;option<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;sub_exn&nbsp;:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Sosa</span>.<span class="constructor">BASIC_STRING</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;index:int&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;length:int&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Sosa</span>.<span class="constructor">BASIC_STRING</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;slice&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;?start:int&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?finish:int&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Sosa</span>.<span class="constructor">BASIC_STRING</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Sosa</span>.<span class="constructor">BASIC_STRING</span>.t&nbsp;option<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;slice_exn&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;?start:int&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;?finish:int&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Sosa</span>.<span class="constructor">BASIC_STRING</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Sosa</span>.<span class="constructor">BASIC_STRING</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;is_prefix&nbsp;:&nbsp;<span class="constructor">Sosa</span>.<span class="constructor">BASIC_STRING</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;prefix:<span class="constructor">Sosa</span>.<span class="constructor">BASIC_STRING</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;bool<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;is_suffix&nbsp;:&nbsp;<span class="constructor">Sosa</span>.<span class="constructor">BASIC_STRING</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;suffix:<span class="constructor">Sosa</span>.<span class="constructor">BASIC_STRING</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;bool<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;chop_prefix_exn&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Sosa</span>.<span class="constructor">BASIC_STRING</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;prefix:<span class="constructor">Sosa</span>.<span class="constructor">BASIC_STRING</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Sosa</span>.<span class="constructor">BASIC_STRING</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;chop_prefix&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Sosa</span>.<span class="constructor">BASIC_STRING</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;prefix:<span class="constructor">Sosa</span>.<span class="constructor">BASIC_STRING</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Sosa</span>.<span class="constructor">BASIC_STRING</span>.t&nbsp;option<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;chop_suffix_exn&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Sosa</span>.<span class="constructor">BASIC_STRING</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;suffix:<span class="constructor">Sosa</span>.<span class="constructor">BASIC_STRING</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Sosa</span>.<span class="constructor">BASIC_STRING</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;chop_suffix&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Sosa</span>.<span class="constructor">BASIC_STRING</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;suffix:<span class="constructor">Sosa</span>.<span class="constructor">BASIC_STRING</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Sosa</span>.<span class="constructor">BASIC_STRING</span>.t&nbsp;option<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;split_at&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Sosa</span>.<span class="constructor">BASIC_STRING</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;int&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Sosa</span>.<span class="constructor">BASIC_STRING</span>.t&nbsp;*&nbsp;<span class="constructor">Sosa</span>.<span class="constructor">BASIC_STRING</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;take&nbsp;:&nbsp;<span class="constructor">Sosa</span>.<span class="constructor">BASIC_STRING</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;int&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Sosa</span>.<span class="constructor">BASIC_STRING</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;drop&nbsp;:&nbsp;<span class="constructor">Sosa</span>.<span class="constructor">BASIC_STRING</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;int&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Sosa</span>.<span class="constructor">BASIC_STRING</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;compare_substring&nbsp;:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Sosa</span>.<span class="constructor">BASIC_STRING</span>.t&nbsp;*&nbsp;int&nbsp;*&nbsp;int&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Sosa</span>.<span class="constructor">BASIC_STRING</span>.t&nbsp;*&nbsp;int&nbsp;*&nbsp;int&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;int<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;compare_substring_strict&nbsp;:<br>
@@ -57,16 +78,35 @@
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Sosa</span>.<span class="constructor">BASIC_STRING</span>.t&nbsp;*&nbsp;int&nbsp;*&nbsp;int&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;int&nbsp;option<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;iter&nbsp;:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Sosa</span>.<span class="constructor">BASIC_STRING</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;f:(<span class="constructor">Sosa</span>.<span class="constructor">BASIC_STRING</span>.character&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;unit)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;unit<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;iteri&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Sosa</span>.<span class="constructor">BASIC_STRING</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;f:(int&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Sosa</span>.<span class="constructor">BASIC_STRING</span>.character&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;unit)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;unit<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;iter_reverse&nbsp;:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Sosa</span>.<span class="constructor">BASIC_STRING</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;f:(<span class="constructor">Sosa</span>.<span class="constructor">BASIC_STRING</span>.character&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;unit)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;unit<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;map&nbsp;:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Sosa</span>.<span class="constructor">BASIC_STRING</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;f:(<span class="constructor">Sosa</span>.<span class="constructor">BASIC_STRING</span>.character&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Sosa</span>.<span class="constructor">BASIC_STRING</span>.character)&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Sosa</span>.<span class="constructor">BASIC_STRING</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;mapi&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Sosa</span>.<span class="constructor">BASIC_STRING</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;f:(int&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Sosa</span>.<span class="constructor">BASIC_STRING</span>.character&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Sosa</span>.<span class="constructor">BASIC_STRING</span>.character)&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Sosa</span>.<span class="constructor">BASIC_STRING</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;map2_exn&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Sosa</span>.<span class="constructor">BASIC_STRING</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Sosa</span>.<span class="constructor">BASIC_STRING</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;f:(<span class="constructor">Sosa</span>.<span class="constructor">BASIC_STRING</span>.character&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Sosa</span>.<span class="constructor">BASIC_STRING</span>.character&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Sosa</span>.<span class="constructor">BASIC_STRING</span>.character)&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Sosa</span>.<span class="constructor">BASIC_STRING</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;for_all&nbsp;:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Sosa</span>.<span class="constructor">BASIC_STRING</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;f:(<span class="constructor">Sosa</span>.<span class="constructor">BASIC_STRING</span>.character&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;bool)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;bool<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;exists&nbsp;:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Sosa</span>.<span class="constructor">BASIC_STRING</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;f:(<span class="constructor">Sosa</span>.<span class="constructor">BASIC_STRING</span>.character&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;bool)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;bool<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;take_while&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Sosa</span>.<span class="constructor">BASIC_STRING</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;f:(<span class="constructor">Sosa</span>.<span class="constructor">BASIC_STRING</span>.character&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;bool)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Sosa</span>.<span class="constructor">BASIC_STRING</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;take_while_with_index&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Sosa</span>.<span class="constructor">BASIC_STRING</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;f:(int&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Sosa</span>.<span class="constructor">BASIC_STRING</span>.character&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;bool)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Sosa</span>.<span class="constructor">BASIC_STRING</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;index_of_character&nbsp;:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Sosa</span>.<span class="constructor">BASIC_STRING</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;?from:int&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Sosa</span>.<span class="constructor">BASIC_STRING</span>.character&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;int&nbsp;option<br>
@@ -99,6 +139,11 @@
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Sosa</span>.<span class="constructor">BASIC_STRING</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;f:(<span class="constructor">Sosa</span>.<span class="constructor">BASIC_STRING</span>.character&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Sosa</span>.<span class="constructor">BASIC_STRING</span>.character&nbsp;option)&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Sosa</span>.<span class="constructor">BASIC_STRING</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;filter&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;?from:int&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?length:int&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Sosa</span>.<span class="constructor">BASIC_STRING</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;f:(<span class="constructor">Sosa</span>.<span class="constructor">BASIC_STRING</span>.character&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;bool)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Sosa</span>.<span class="constructor">BASIC_STRING</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;split&nbsp;:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Sosa</span>.<span class="constructor">BASIC_STRING</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;on:[&nbsp;<span class="keywordsign">`</span><span class="constructor">Character</span>&nbsp;<span class="keyword">of</span>&nbsp;<span class="constructor">Sosa</span>.<span class="constructor">BASIC_STRING</span>.character<br>

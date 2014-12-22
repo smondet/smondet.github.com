@@ -49,6 +49,44 @@ Like <a href="Sosa.UNSAFELY_MUTABLE.html#VALblit"><code class="code"><span class
 <tr><td><a href="Sosa.Native_string.html#VALblit_exn">blit_exn</a> [<a href="Sosa.Native_string.html">Sosa.Native_string</a>]</td>
 <td></td></tr>
 <tr><td align="left"><br>C</td></tr>
+<tr><td><a href="Sosa.BASIC_STRING.html#VALchop_prefix">chop_prefix</a> [<a href="Sosa.BASIC_STRING.html">Sosa.BASIC_STRING</a>]</td>
+<td><div class="info">
+Like <code class="code">chop_prefix_exn</code> but return <code class="code"><span class="constructor">None</span></code> instead of throwing
+      an exception.
+</div>
+</td></tr>
+<tr><td><a href="Sosa.List_of.html#VALchop_prefix">chop_prefix</a> [<a href="Sosa.List_of.html">Sosa.List_of</a>]</td>
+<td></td></tr>
+<tr><td><a href="Sosa.Make_prefix_suffix_array.html#VALchop_prefix">chop_prefix</a> [<a href="Sosa.Make_prefix_suffix_array.html">Sosa.Make_prefix_suffix_array</a>]</td>
+<td></td></tr>
+<tr><td><a href="Sosa.BASIC_STRING.html#VALchop_prefix_exn">chop_prefix_exn</a> [<a href="Sosa.BASIC_STRING.html">Sosa.BASIC_STRING</a>]</td>
+<td><div class="info">
+Return a copy of <code class="code">t</code> with <code class="code">prefix</code> removed from the beginning.
+</div>
+</td></tr>
+<tr><td><a href="Sosa.List_of.html#VALchop_prefix_exn">chop_prefix_exn</a> [<a href="Sosa.List_of.html">Sosa.List_of</a>]</td>
+<td></td></tr>
+<tr><td><a href="Sosa.Make_prefix_suffix_array.html#VALchop_prefix_exn">chop_prefix_exn</a> [<a href="Sosa.Make_prefix_suffix_array.html">Sosa.Make_prefix_suffix_array</a>]</td>
+<td></td></tr>
+<tr><td><a href="Sosa.BASIC_STRING.html#VALchop_suffix">chop_suffix</a> [<a href="Sosa.BASIC_STRING.html">Sosa.BASIC_STRING</a>]</td>
+<td><div class="info">
+Like <code class="code">chop_suffix_exn</code> but return <code class="code"><span class="constructor">None</span></code> instead of throwing
+      an exception.
+</div>
+</td></tr>
+<tr><td><a href="Sosa.List_of.html#VALchop_suffix">chop_suffix</a> [<a href="Sosa.List_of.html">Sosa.List_of</a>]</td>
+<td></td></tr>
+<tr><td><a href="Sosa.Make_prefix_suffix_array.html#VALchop_suffix">chop_suffix</a> [<a href="Sosa.Make_prefix_suffix_array.html">Sosa.Make_prefix_suffix_array</a>]</td>
+<td></td></tr>
+<tr><td><a href="Sosa.BASIC_STRING.html#VALchop_suffix_exn">chop_suffix_exn</a> [<a href="Sosa.BASIC_STRING.html">Sosa.BASIC_STRING</a>]</td>
+<td><div class="info">
+Return a copy of <code class="code">t</code> with <code class="code">suffix</code> removed from the end.
+</div>
+</td></tr>
+<tr><td><a href="Sosa.List_of.html#VALchop_suffix_exn">chop_suffix_exn</a> [<a href="Sosa.List_of.html">Sosa.List_of</a>]</td>
+<td></td></tr>
+<tr><td><a href="Sosa.Make_prefix_suffix_array.html#VALchop_suffix_exn">chop_suffix_exn</a> [<a href="Sosa.Make_prefix_suffix_array.html">Sosa.Make_prefix_suffix_array</a>]</td>
+<td></td></tr>
 <tr><td><a href="Sosa.MINIMALISTIC_MUTABLE_STRING.html#VALcompare">compare</a> [<a href="Sosa.MINIMALISTIC_MUTABLE_STRING.html">Sosa.MINIMALISTIC_MUTABLE_STRING</a>]</td>
 <td></td></tr>
 <tr><td><a href="Sosa.BASIC_STRING.html#VALcompare">compare</a> [<a href="Sosa.BASIC_STRING.html">Sosa.BASIC_STRING</a>]</td>
@@ -109,8 +147,21 @@ The classical <code class="code">concat</code> function.
 <td></td></tr>
 <tr><td><a href="Sosa.Internal_pervasives.Core_list_map.html#VALcount_map">count_map</a> [<a href="Sosa.Internal_pervasives.Core_list_map.html">Sosa.Internal_pervasives.Core_list_map</a>]</td>
 <td></td></tr>
+<tr><td><a href="Sosa.Internal_pervasives.Core_list_map.html#VALcount_map2_exn">count_map2_exn</a> [<a href="Sosa.Internal_pervasives.Core_list_map.html">Sosa.Internal_pervasives.Core_list_map</a>]</td>
+<td></td></tr>
+<tr><td><a href="Sosa.Internal_pervasives.Core_list_map.html#VALcount_mapi">count_mapi</a> [<a href="Sosa.Internal_pervasives.Core_list_map.html">Sosa.Internal_pervasives.Core_list_map</a>]</td>
+<td></td></tr>
 <tr><td align="left"><br>D</td></tr>
 <tr><td><a href="Sosa.Internal_pervasives.html#VALdbg">dbg</a> [<a href="Sosa.Internal_pervasives.html">Sosa.Internal_pervasives</a>]</td>
+<td></td></tr>
+<tr><td><a href="Sosa.BASIC_STRING.html#VALdrop">drop</a> [<a href="Sosa.BASIC_STRING.html">Sosa.BASIC_STRING</a>]</td>
+<td><div class="info">
+Just the second part of split_at
+</div>
+</td></tr>
+<tr><td><a href="Sosa.List_of.html#VALdrop">drop</a> [<a href="Sosa.List_of.html">Sosa.List_of</a>]</td>
+<td></td></tr>
+<tr><td><a href="Sosa.Make_split_at_index_functions.html#VALdrop">drop</a> [<a href="Sosa.Make_split_at_index_functions.html">Sosa.Make_split_at_index_functions</a>]</td>
 <td></td></tr>
 <tr><td align="left"><br>E</td></tr>
 <tr><td><a href="Sosa.MINIMALISTIC_MUTABLE_STRING.html#VALempty">empty</a> [<a href="Sosa.MINIMALISTIC_MUTABLE_STRING.html">Sosa.MINIMALISTIC_MUTABLE_STRING</a>]</td>
@@ -138,6 +189,17 @@ Return <code class="code"><span class="keyword">true</span></code> if-and-only-i
 <td></td></tr>
 <tr><td align="left"><br>F</td></tr>
 <tr><td><a href="Sosa.Internal_pervasives.html#VALfail">fail</a> [<a href="Sosa.Internal_pervasives.html">Sosa.Internal_pervasives</a>]</td>
+<td></td></tr>
+<tr><td><a href="Sosa.BASIC_STRING.html#VALfilter">filter</a> [<a href="Sosa.BASIC_STRING.html">Sosa.BASIC_STRING</a>]</td>
+<td><div class="info">
+Create a new string with the characters for which <code class="code">f c</code> is true.
+</div>
+</td></tr>
+<tr><td><a href="Sosa.Of_mutable.html#VALfilter">filter</a> [<a href="Sosa.Of_mutable.html">Sosa.Of_mutable</a>]</td>
+<td></td></tr>
+<tr><td><a href="Sosa.List_of.html#VALfilter">filter</a> [<a href="Sosa.List_of.html">Sosa.List_of</a>]</td>
+<td></td></tr>
+<tr><td><a href="Sosa.Native_string.html#VALfilter">filter</a> [<a href="Sosa.Native_string.html">Sosa.Native_string</a>]</td>
 <td></td></tr>
 <tr><td><a href="Sosa.BASIC_STRING.html#VALfilter_map">filter_map</a> [<a href="Sosa.BASIC_STRING.html">Sosa.BASIC_STRING</a>]</td>
 <td><div class="info">
@@ -275,7 +337,25 @@ Test whether a string is empty.
 <td></td></tr>
 <tr><td><a href="Sosa.Native_string.html#VALis_empty">is_empty</a> [<a href="Sosa.Native_string.html">Sosa.Native_string</a>]</td>
 <td></td></tr>
+<tr><td><a href="Sosa.BASIC_STRING.html#VALis_prefix">is_prefix</a> [<a href="Sosa.BASIC_STRING.html">Sosa.BASIC_STRING</a>]</td>
+<td><div class="info">
+Does <code class="code">t</code> start with <code class="code">prefix</code> ?
+</div>
+</td></tr>
+<tr><td><a href="Sosa.List_of.html#VALis_prefix">is_prefix</a> [<a href="Sosa.List_of.html">Sosa.List_of</a>]</td>
+<td></td></tr>
+<tr><td><a href="Sosa.Make_prefix_suffix_array.html#VALis_prefix">is_prefix</a> [<a href="Sosa.Make_prefix_suffix_array.html">Sosa.Make_prefix_suffix_array</a>]</td>
+<td></td></tr>
 <tr><td><a href="Sosa.Native_character.html#VALis_print">is_print</a> [<a href="Sosa.Native_character.html">Sosa.Native_character</a>]</td>
+<td></td></tr>
+<tr><td><a href="Sosa.BASIC_STRING.html#VALis_suffix">is_suffix</a> [<a href="Sosa.BASIC_STRING.html">Sosa.BASIC_STRING</a>]</td>
+<td><div class="info">
+Does <code class="code">t</code> end with <code class="code">suffix</code> ?
+</div>
+</td></tr>
+<tr><td><a href="Sosa.List_of.html#VALis_suffix">is_suffix</a> [<a href="Sosa.List_of.html">Sosa.List_of</a>]</td>
+<td></td></tr>
+<tr><td><a href="Sosa.Make_prefix_suffix_array.html#VALis_suffix">is_suffix</a> [<a href="Sosa.Make_prefix_suffix_array.html">Sosa.Make_prefix_suffix_array</a>]</td>
 <td></td></tr>
 <tr><td><a href="Sosa.MINIMALISTIC_MUTABLE_STRING.html#VALis_whitespace">is_whitespace</a> [<a href="Sosa.MINIMALISTIC_MUTABLE_STRING.html">Sosa.MINIMALISTIC_MUTABLE_STRING</a>]</td>
 <td></td></tr>
@@ -309,6 +389,17 @@ Apply <code class="code">f</code> on every character successively in reverse ord
 <tr><td><a href="Sosa.List_of.html#VALiter_reverse">iter_reverse</a> [<a href="Sosa.List_of.html">Sosa.List_of</a>]</td>
 <td></td></tr>
 <tr><td><a href="Sosa.Native_string.html#VALiter_reverse">iter_reverse</a> [<a href="Sosa.Native_string.html">Sosa.Native_string</a>]</td>
+<td></td></tr>
+<tr><td><a href="Sosa.BASIC_STRING.html#VALiteri">iteri</a> [<a href="Sosa.BASIC_STRING.html">Sosa.BASIC_STRING</a>]</td>
+<td><div class="info">
+Apply <code class="code">f</code> on every character and its index.
+</div>
+</td></tr>
+<tr><td><a href="Sosa.Of_mutable.html#VALiteri">iteri</a> [<a href="Sosa.Of_mutable.html">Sosa.Of_mutable</a>]</td>
+<td></td></tr>
+<tr><td><a href="Sosa.List_of.html#VALiteri">iteri</a> [<a href="Sosa.List_of.html">Sosa.List_of</a>]</td>
+<td></td></tr>
+<tr><td><a href="Sosa.Native_string.html#VALiteri">iteri</a> [<a href="Sosa.Native_string.html">Sosa.Native_string</a>]</td>
 <td></td></tr>
 <tr><td align="left"><br>L</td></tr>
 <tr><td><a href="Sosa.MINIMALISTIC_MUTABLE_STRING.html#VALlength">length</a> [<a href="Sosa.MINIMALISTIC_MUTABLE_STRING.html">Sosa.MINIMALISTIC_MUTABLE_STRING</a>]</td>
@@ -350,7 +441,38 @@ Make a new string by applying <code class="code">f</code> to all characters of t
 <td></td></tr>
 <tr><td><a href="Sosa.Internal_pervasives.Core_list_map.html#VALmap">map</a> [<a href="Sosa.Internal_pervasives.Core_list_map.html">Sosa.Internal_pervasives.Core_list_map</a>]</td>
 <td></td></tr>
+<tr><td><a href="Sosa.BASIC_STRING.html#VALmap2_exn">map2_exn</a> [<a href="Sosa.BASIC_STRING.html">Sosa.BASIC_STRING</a>]</td>
+<td><div class="info">
+Make a new string by applying <code class="code">f</code> to all pairs of characters of the
+      inputs.
+</div>
+</td></tr>
+<tr><td><a href="Sosa.Of_mutable.html#VALmap2_exn">map2_exn</a> [<a href="Sosa.Of_mutable.html">Sosa.Of_mutable</a>]</td>
+<td></td></tr>
+<tr><td><a href="Sosa.List_of.html#VALmap2_exn">map2_exn</a> [<a href="Sosa.List_of.html">Sosa.List_of</a>]</td>
+<td></td></tr>
+<tr><td><a href="Sosa.Native_string.html#VALmap2_exn">map2_exn</a> [<a href="Sosa.Native_string.html">Sosa.Native_string</a>]</td>
+<td></td></tr>
+<tr><td><a href="Sosa.Internal_pervasives.Core_list_map.html#VALmap2_exn">map2_exn</a> [<a href="Sosa.Internal_pervasives.Core_list_map.html">Sosa.Internal_pervasives.Core_list_map</a>]</td>
+<td></td></tr>
+<tr><td><a href="Sosa.Internal_pervasives.Core_list_map.html#VALmap2_slow">map2_slow</a> [<a href="Sosa.Internal_pervasives.Core_list_map.html">Sosa.Internal_pervasives.Core_list_map</a>]</td>
+<td></td></tr>
 <tr><td><a href="Sosa.Internal_pervasives.Core_list_map.html#VALmap_slow">map_slow</a> [<a href="Sosa.Internal_pervasives.Core_list_map.html">Sosa.Internal_pervasives.Core_list_map</a>]</td>
+<td></td></tr>
+<tr><td><a href="Sosa.BASIC_STRING.html#VALmapi">mapi</a> [<a href="Sosa.BASIC_STRING.html">Sosa.BASIC_STRING</a>]</td>
+<td><div class="info">
+Make a new string by applying <code class="code">f</code> to all characters and their indices.
+</div>
+</td></tr>
+<tr><td><a href="Sosa.Of_mutable.html#VALmapi">mapi</a> [<a href="Sosa.Of_mutable.html">Sosa.Of_mutable</a>]</td>
+<td></td></tr>
+<tr><td><a href="Sosa.List_of.html#VALmapi">mapi</a> [<a href="Sosa.List_of.html">Sosa.List_of</a>]</td>
+<td></td></tr>
+<tr><td><a href="Sosa.Native_string.html#VALmapi">mapi</a> [<a href="Sosa.Native_string.html">Sosa.Native_string</a>]</td>
+<td></td></tr>
+<tr><td><a href="Sosa.Internal_pervasives.Core_list_map.html#VALmapi">mapi</a> [<a href="Sosa.Internal_pervasives.Core_list_map.html">Sosa.Internal_pervasives.Core_list_map</a>]</td>
+<td></td></tr>
+<tr><td><a href="Sosa.Internal_pervasives.Core_list_map.html#VALmapi_slow">mapi_slow</a> [<a href="Sosa.Internal_pervasives.Core_list_map.html">Sosa.Internal_pervasives.Core_list_map</a>]</td>
 <td></td></tr>
 <tr><td><a href="Sosa.UNSAFELY_MUTABLE.html#VALmutate">mutate</a> [<a href="Sosa.UNSAFELY_MUTABLE.html">Sosa.UNSAFELY_MUTABLE</a>]</td>
 <td><div class="info">
@@ -505,12 +627,46 @@ Get the size of the character, the exact semantics are
 <td></td></tr>
 <tr><td><a href="Sosa.Native_character.html#VALsize">size</a> [<a href="Sosa.Native_character.html">Sosa.Native_character</a>]</td>
 <td></td></tr>
+<tr><td><a href="Sosa.BASIC_STRING.html#VALslice">slice</a> [<a href="Sosa.BASIC_STRING.html">Sosa.BASIC_STRING</a>]</td>
+<td><div class="info">
+Create a sub-string from the <code class="code">start</code> (default 0, within [0,length\))
+      position to before the <code class="code">finish</code> (default length, within [0,length])
+      if all of the indices are in bounds.
+</div>
+</td></tr>
+<tr><td><a href="Sosa.Of_mutable.html#VALslice">slice</a> [<a href="Sosa.Of_mutable.html">Sosa.Of_mutable</a>]</td>
+<td></td></tr>
+<tr><td><a href="Sosa.List_of.html#VALslice">slice</a> [<a href="Sosa.List_of.html">Sosa.List_of</a>]</td>
+<td></td></tr>
+<tr><td><a href="Sosa.Native_string.html#VALslice">slice</a> [<a href="Sosa.Native_string.html">Sosa.Native_string</a>]</td>
+<td></td></tr>
+<tr><td><a href="Sosa.BASIC_STRING.html#VALslice_exn">slice_exn</a> [<a href="Sosa.BASIC_STRING.html">Sosa.BASIC_STRING</a>]</td>
+<td><div class="info">
+Like <code class="code">slice</code> but throw an exception instead of returning <code class="code"><span class="constructor">None</span></code>
+</div>
+</td></tr>
+<tr><td><a href="Sosa.Of_mutable.html#VALslice_exn">slice_exn</a> [<a href="Sosa.Of_mutable.html">Sosa.Of_mutable</a>]</td>
+<td></td></tr>
+<tr><td><a href="Sosa.List_of.html#VALslice_exn">slice_exn</a> [<a href="Sosa.List_of.html">Sosa.List_of</a>]</td>
+<td></td></tr>
+<tr><td><a href="Sosa.Native_string.html#VALslice_exn">slice_exn</a> [<a href="Sosa.Native_string.html">Sosa.Native_string</a>]</td>
+<td></td></tr>
 <tr><td><a href="Sosa.BASIC_STRING.html#VALsplit">split</a> [<a href="Sosa.BASIC_STRING.html">Sosa.BASIC_STRING</a>]</td>
 <td><div class="info">
 Split the string using <code class="code">on</code> as separator.
 </div>
 </td></tr>
 <tr><td><a href="Sosa.Make_split_function.html#VALsplit">split</a> [<a href="Sosa.Make_split_function.html">Sosa.Make_split_function</a>]</td>
+<td></td></tr>
+<tr><td><a href="Sosa.BASIC_STRING.html#VALsplit_at">split_at</a> [<a href="Sosa.BASIC_STRING.html">Sosa.BASIC_STRING</a>]</td>
+<td><div class="info">
+Return a tuple where the first string is a prefix of the specified length
+      and the second is the rest.
+</div>
+</td></tr>
+<tr><td><a href="Sosa.List_of.html#VALsplit_at">split_at</a> [<a href="Sosa.List_of.html">Sosa.List_of</a>]</td>
+<td></td></tr>
+<tr><td><a href="Sosa.Make_split_at_index_functions.html#VALsplit_at">split_at</a> [<a href="Sosa.Make_split_at_index_functions.html">Sosa.Make_split_at_index_functions</a>]</td>
 <td></td></tr>
 <tr><td><a href="Sosa.BASIC_STRING.html#VALstrip">strip</a> [<a href="Sosa.BASIC_STRING.html">Sosa.BASIC_STRING</a>]</td>
 <td><div class="info">
@@ -544,7 +700,40 @@ Do like <code class="code">sub</code> but throw an exception instead of returnin
 <td></td></tr>
 <tr><td><a href="Sosa.Native_string.html#VALsub_exn">sub_exn</a> [<a href="Sosa.Native_string.html">Sosa.Native_string</a>]</td>
 <td></td></tr>
+<tr><td><a href="Sosa.Make_prefix_suffix_array.html#VALsub_same_tl">sub_same_tl</a> [<a href="Sosa.Make_prefix_suffix_array.html">Sosa.Make_prefix_suffix_array</a>]</td>
+<td></td></tr>
 <tr><td align="left"><br>T</td></tr>
+<tr><td><a href="Sosa.BASIC_STRING.html#VALtake">take</a> [<a href="Sosa.BASIC_STRING.html">Sosa.BASIC_STRING</a>]</td>
+<td><div class="info">
+Just the first part of split_at
+</div>
+</td></tr>
+<tr><td><a href="Sosa.List_of.html#VALtake">take</a> [<a href="Sosa.List_of.html">Sosa.List_of</a>]</td>
+<td></td></tr>
+<tr><td><a href="Sosa.Make_split_at_index_functions.html#VALtake">take</a> [<a href="Sosa.Make_split_at_index_functions.html">Sosa.Make_split_at_index_functions</a>]</td>
+<td></td></tr>
+<tr><td><a href="Sosa.BASIC_STRING.html#VALtake_while">take_while</a> [<a href="Sosa.BASIC_STRING.html">Sosa.BASIC_STRING</a>]</td>
+<td><div class="info">
+Take a prefix of the string until <code class="code">f</code> returns <code class="code"><span class="keyword">false</span></code>.
+</div>
+</td></tr>
+<tr><td><a href="Sosa.Of_mutable.html#VALtake_while">take_while</a> [<a href="Sosa.Of_mutable.html">Sosa.Of_mutable</a>]</td>
+<td></td></tr>
+<tr><td><a href="Sosa.List_of.html#VALtake_while">take_while</a> [<a href="Sosa.List_of.html">Sosa.List_of</a>]</td>
+<td></td></tr>
+<tr><td><a href="Sosa.Native_string.html#VALtake_while">take_while</a> [<a href="Sosa.Native_string.html">Sosa.Native_string</a>]</td>
+<td></td></tr>
+<tr><td><a href="Sosa.BASIC_STRING.html#VALtake_while_with_index">take_while_with_index</a> [<a href="Sosa.BASIC_STRING.html">Sosa.BASIC_STRING</a>]</td>
+<td><div class="info">
+Like <a href="Sosa.BASIC_STRING.html#VALtake_while"><code class="code"><span class="constructor">Sosa</span>.<span class="constructor">BASIC_STRING</span>.take_while</code></a> but the function also takes the current index.
+</div>
+</td></tr>
+<tr><td><a href="Sosa.Of_mutable.html#VALtake_while_with_index">take_while_with_index</a> [<a href="Sosa.Of_mutable.html">Sosa.Of_mutable</a>]</td>
+<td></td></tr>
+<tr><td><a href="Sosa.List_of.html#VALtake_while_with_index">take_while_with_index</a> [<a href="Sosa.List_of.html">Sosa.List_of</a>]</td>
+<td></td></tr>
+<tr><td><a href="Sosa.Native_string.html#VALtake_while_with_index">take_while_with_index</a> [<a href="Sosa.Native_string.html">Sosa.Native_string</a>]</td>
+<td></td></tr>
 <tr><td><a href="Sosa.BASIC_STRING.html#VALto_character_list">to_character_list</a> [<a href="Sosa.BASIC_STRING.html">Sosa.BASIC_STRING</a>]</td>
 <td><div class="info">
 Explode a string into a list of characters.

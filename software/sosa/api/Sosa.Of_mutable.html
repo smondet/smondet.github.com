@@ -46,13 +46,18 @@
 <pre><span id="VALto_character_list"><span class="keyword">val</span> <a href="code_VALSosa.Of_mutable.to_character_list.html">to_character_list</a></span> : <code class="type">S.t -> S.character list</code></pre>
 <pre><span id="VALconcat"><span class="keyword">val</span> <a href="code_VALSosa.Of_mutable.concat.html">concat</a></span> : <code class="type">?sep:t -> t list -> t</code></pre>
 <pre><span id="VALiter"><span class="keyword">val</span> <a href="code_VALSosa.Of_mutable.iter.html">iter</a></span> : <code class="type">t -> f:(S.character -> 'a) -> unit</code></pre>
+<pre><span id="VALiteri"><span class="keyword">val</span> <a href="code_VALSosa.Of_mutable.iteri.html">iteri</a></span> : <code class="type">t -> f:(int -> S.character -> 'a) -> unit</code></pre>
 <pre><span id="VALiter_reverse"><span class="keyword">val</span> <a href="code_VALSosa.Of_mutable.iter_reverse.html">iter_reverse</a></span> : <code class="type">t -> f:(S.character -> 'a) -> unit</code></pre>
 <pre><span id="VALfold"><span class="keyword">val</span> <a href="code_VALSosa.Of_mutable.fold.html">fold</a></span> : <code class="type">t -> init:'a -> f:('a -> S.character -> 'a) -> 'a</code></pre>
 <pre><span id="VALmap"><span class="keyword">val</span> <a href="code_VALSosa.Of_mutable.map.html">map</a></span> : <code class="type">t -> f:(S.character -> S.character) -> t</code></pre>
+<pre><span id="VALmapi"><span class="keyword">val</span> <a href="code_VALSosa.Of_mutable.mapi.html">mapi</a></span> : <code class="type">t -> f:(int -> S.character -> S.character) -> t</code></pre>
+<pre><span id="VALmap2_exn"><span class="keyword">val</span> <a href="code_VALSosa.Of_mutable.map2_exn.html">map2_exn</a></span> : <code class="type">t -> t -> f:(S.character -> S.character -> S.character) -> t</code></pre>
 <pre><span id="VALfor_all"><span class="keyword">val</span> <a href="code_VALSosa.Of_mutable.for_all.html">for_all</a></span> : <code class="type">t -> f:(S.character -> bool) -> bool</code></pre>
 <pre><span id="VALexists"><span class="keyword">val</span> <a href="code_VALSosa.Of_mutable.exists.html">exists</a></span> : <code class="type">t -> f:(S.character -> bool) -> bool</code></pre>
 <pre><span id="VALsub"><span class="keyword">val</span> <a href="code_VALSosa.Of_mutable.sub.html">sub</a></span> : <code class="type">S.t -> index:int -> length:int -> t option</code></pre>
 <pre><span id="VALsub_exn"><span class="keyword">val</span> <a href="code_VALSosa.Of_mutable.sub_exn.html">sub_exn</a></span> : <code class="type">S.t -> index:int -> length:int -> t</code></pre>
+<pre><span id="VALslice_exn"><span class="keyword">val</span> <a href="code_VALSosa.Of_mutable.slice_exn.html">slice_exn</a></span> : <code class="type">?start:int -> ?finish:int -> S.t -> t</code></pre>
+<pre><span id="VALslice"><span class="keyword">val</span> <a href="code_VALSosa.Of_mutable.slice.html">slice</a></span> : <code class="type">?start:int -> ?finish:int -> S.t -> t option</code></pre>
 <pre><span id="VALto_string_hum"><span class="keyword">val</span> <a href="code_VALSosa.Of_mutable.to_string_hum.html">to_string_hum</a></span> : <code class="type">t -> string</code></pre>
 <pre><span id="VALindex_of_character"><span class="keyword">val</span> <a href="code_VALSosa.Of_mutable.index_of_character.html">index_of_character</a></span> : <code class="type">t -> ?from:int -> S.character -> int option</code></pre>
 <pre><span id="VALindex_of_character_reverse"><span class="keyword">val</span> <a href="code_VALSosa.Of_mutable.index_of_character_reverse.html">index_of_character_reverse</a></span> : <code class="type">t -> ?from:int -> S.character -> int option</code></pre>
@@ -64,8 +69,15 @@
 <pre><span id="VALfind"><span class="keyword">val</span> <a href="code_VALSosa.Of_mutable.find.html">find</a></span> : <code class="type">?from:int -> ?length:int -> S.t -> f:(S.character -> bool) -> int option</code></pre>
 <pre><span id="VALfind_reverse"><span class="keyword">val</span> <a href="code_VALSosa.Of_mutable.find_reverse.html">find_reverse</a></span> : <code class="type">?from:int -> ?length:int -> S.t -> f:(S.character -> bool) -> int option</code></pre>
 <pre><span id="VALfilter_map"><span class="keyword">val</span> <a href="code_VALSosa.Of_mutable.filter_map.html">filter_map</a></span> : <code class="type">?from:int -> ?length:int -> S.t -> f:(S.character -> character option) -> t</code></pre>
+<pre><span id="VALfilter"><span class="keyword">val</span> <a href="code_VALSosa.Of_mutable.filter.html">filter</a></span> : <code class="type">?from:int -> ?length:int -> S.t -> f:(character -> bool) -> t</code></pre>
 <pre><span class="keyword">include</span> struct ... end</pre>
 
 <pre><span class="keyword">include</span> struct ... end</pre>
 
-<pre><span class="keyword">module</span> <a href="Sosa.Of_mutable.Make_output.html">Make_output</a>: <div class="sig_block"><code class="code"><span class="keyword">functor</span> (</code><code class="code"><span class="constructor">Model</span></code><code class="code"> : </code><code class="type"><a href="Sosa.OUTPUT_MODEL.html">Sosa.OUTPUT_MODEL</a></code><code class="code">) <span class="keywordsign">-&gt;</span> </code><code class="code"><span class="keyword">sig</span></code> <a href="Sosa.Of_mutable.Make_output.html">..</a> <code class="code"><span class="keyword">end</span></code></div></pre></body></html>
+<pre><span class="keyword">include</span> struct ... end</pre>
+
+<pre><span class="keyword">include</span> struct ... end</pre>
+
+<pre><span class="keyword">module</span> <a href="Sosa.Of_mutable.Make_output.html">Make_output</a>: <div class="sig_block"><code class="code"><span class="keyword">functor</span> (</code><code class="code"><span class="constructor">Model</span></code><code class="code"> : </code><code class="type"><a href="Sosa.OUTPUT_MODEL.html">Sosa.OUTPUT_MODEL</a></code><code class="code">) <span class="keywordsign">-&gt;</span> </code><code class="code"><span class="keyword">sig</span></code> <a href="Sosa.Of_mutable.Make_output.html">..</a> <code class="code"><span class="keyword">end</span></code></div></pre>
+<pre><span id="VALtake_while_with_index"><span class="keyword">val</span> <a href="code_VALSosa.Of_mutable.take_while_with_index.html">take_while_with_index</a></span> : <code class="type">t -> f:(int -> character -> bool) -> t</code></pre>
+<pre><span id="VALtake_while"><span class="keyword">val</span> <a href="code_VALSosa.Of_mutable.take_while.html">take_while</a></span> : <code class="type">t -> f:(character -> bool) -> t</code></pre></body></html>
