@@ -15,7 +15,7 @@
 <h1>Module <a href="type_Atd2cconv.html">Atd2cconv</a></h1>
 
 <pre><span class="keyword">module</span> Atd2cconv: <code class="code"><span class="keyword">sig</span></code> <a href="Atd2cconv.html">..</a> <code class="code"><span class="keyword">end</span></code></pre><div class="info module top">
-Transform a single ATD type deinition to an OCaml module: <pre class="codepre"><code class="code">      module Type_name = struct
+Transform a single ATD type definition to an OCaml module: <pre class="codepre"><code class="code">      module Type_name = struct
         type (…, …) t = …
         let source = CConv.Source.(…)
         let sink = CConv.Sink.(…)
@@ -24,7 +24,7 @@ Transform a single ATD type deinition to an OCaml module: <pre class="codepre"><
 <hr width="100%">
 
 <pre><span id="VALtransform_module_item"><span class="keyword">val</span> transform_module_item</span> : <code class="type">Atd_ast.module_item -><br>       [ `Error of [> `Not_implemented of string ] | `Ok of SmartPrint.t ]</code></pre><div class="info ">
-Transform a single ATD type deinition to an OCaml module: <pre class="codepre"><code class="code">      module Type_name = struct
+Transform a single ATD type definition to an OCaml module: <pre class="codepre"><code class="code">      module Type_name = struct
         type (…, …) t = …
         let source = CConv.Source.(…)
         let sink = CConv.Sink.(…)
