@@ -1,0 +1,483 @@
+<!doctype html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+
+    <title>Ketrew @ Compose 2015</title>
+
+    <meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+    <meta name="author" content="Hakim El Hattab">
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <link rel="stylesheet" href="css/reveal.css">
+    <link rel="stylesheet" href="css/theme/serif.css" id="theme">
+
+    <!-- For syntax highlighting -->
+    <!-- <link rel="stylesheet" href="lib/css/zenburn.css"> -->
+
+    <!-- If the query includes 'print-pdf', include the PDF print sheet -->
+    <script>
+      if( window.location.search.match( /print-pdf/gi ) ) {
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = 'css/print/pdf.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
+      }
+    </script>
+
+    <!--[if lt IE 9]>
+    <script src="lib/js/html5shiv.js"></script>
+    <![endif]-->
+<style>
+    body {
+        background: url( 'bg2.png' );
+        background-repeat:no-repeat;
+        
+        background-size: 100% 100%;
+        text-align: left;
+    }
+    .reveal h3 {
+       
+        
+        color: rgb(32, 189, 240);
+    }
+    .reveal p, .reveal ul {
+       
+        
+       
+    }
+    .reveal .slides {
+        text-align: left;
+        font-size: 85%;
+    }
+    .first_page {
+        background: url( 'bg.png' );
+        background-repeat:no-repeat;
+        background-size: 100% 100%;
+    }
+
+    .id { color: #333333 ; font-style: italic }
+.kw { color: #990000 ; font-weight: bold ;}
+.kw1 { color: #900 ; font-weight: bold ;}
+.kw2 { color: #009 ; font-weight: bold ;}
+.kw3 { color: #274388 ; font-weight: bold ;}
+.kw4 { color: brown ; font-weight: bold ;}
+.comment { color: green ; font-style: italic ; }
+.string { color: #999900; font-weight: bold ; }
+.text { }
+.numeric { color: #123345 ; }
+.directive { font-style: italic ; color : #0000aa } ;
+.escape { color: #409290 ; }
+.symbol { color: orange ; font-weight: bold ; }
+.symbol1 { color: #993300 ; font-weight: bold ; }
+.constant { color: #999900; }
+pre { font-family: courier }
+pre.goodresult { background-color: #E0F0B2; margin-left: 3em; margin-right: 3em;  }
+pre.badresult { background-color: #FF8080; margin-left: 3em; margin-right: 3em; }
+
+a code { text-decoration: underline; }
+
+</style>
+  </head>
+
+  <body>
+    
+<div class="reveal"><div class="slides">
+<section data-background="bg.png" data-background-size="100% 100%" data-transition="zoom">
+              <div  style="text-align: left; left: 3em; color: #eee">
+                  <h2 style="color: #eee" >Ketrew</h2></div>
+
+<h2 id="AWorkflowEnginebrForBigampMessyPipelines">A Workflow Engine <br />For Big &amp; Messy Pipelines</h2>
+
+<p><a href='http://seb.mondet.org'>Sebastien Mondet</a>,<br />
+<a href='http://composeconference.org/'>Compose Conference</a>,<br />
+Jan 31, 2015.</p>
+</section><section><h3>Mount Sinai</h3>
+
+<img class="stretch" src="img/proj_mountsinai.jpg" alt="Projection" /></section><section><h3>Mount Sinai</h3>
+
+<img class="stretch" src="img/sinai_map.png" alt="Map" /><ul><li>Among <code>37_000</code> employees …</li><li>We are a 10 person lab in the School of Medicine.</li></ul>
+
+</section><section><h3>Hammer Lab</h3>
+
+<p>Within the 
+<strong>Icahn Institute for Genomics and Multiscale Biology</strong></p>
+<p>Mission: <strong>Better software for biomedicine</strong></p>
+<ul><li>Infrastructure:<ul><li>Maintain a Hadoop Cluster</li></ul></li><li>Tools:<ul><li>Craft high-quality FOSS for common workloads in biomedicine</li></ul></li><li>Science:<ul><li>Use the tools – Do science</li><li>Develop novel therapeutics or diagnostics</li><li>Improve outcomes and reduce costs</li></ul></li></ul>
+
+</section><section><h3>Bioinformatics Workflows</h3>
+
+<p>Example: <em>somatic variant calling</em></p>
+<ul><li class="fragment roll-in">Sequence DNA for a <em>tumor</em> and a <em>normal</em> sample</li>
+<li class="fragment roll-in">Find differences: “variants”</li>
+<li class="fragment roll-in">Example application: Cancer Immunotherapy<br /><ul><li class="fragment roll-in">Somatic variants → Mutated proteins → distinctive antigens</li>
+<li class="fragment roll-in">⇒ Use the mutated regions of cancer proteins to make a peptide vaccine<br />
+ i.e. <em>guide</em> the immune system in the right direction.</li></ul></li></ul>
+
+</section><section><h3>A Variant</h3>
+
+<img class="stretch" src="img/variant_in_pileup.png" alt="Variant on Pileup" /></section><section><h3>Immune System</h3>
+
+<img class="stretch" src="img/Antibody-dependent_cell-mediated_cytotoxicity.png" alt="T-Cells And Stuff" /></section><section><h3>Bioinformatics Workflows</h3>
+
+<p>Example: Broad Institute&#39;s recommendations:</p>
+<img class="stretch" src="img/gatk_pipeline.png" alt="GATK-pipeline" /></section><section><h3>Bioinformatics Vs Software Engineering</h3>
+
+<p>A gentle introduction to the world of bioinfomatics software:<br />
+First encounter with the most used sequence aligner.</p>
+<pre class="terminal"><code class="fragment"><span class="command"> $ bwa -h</span><span class="fragment">
+[main] unrecognized command &#39;-h&#39;
+</span></code><code class="fragment"><span class="command"> $ bwa --help</span><span class="fragment">
+[main] unrecognized command &#39;--help&#39;
+</span></code><code class="fragment"><span class="command"> $ bwa -help</span><span class="fragment">
+[main] unrecognized command &#39;-help&#39;
+</span></code><code class="fragment"><span class="command"> $ bwa help</span><span class="fragment">
+[main] unrecognized command &#39;help&#39;
+</span></code><code class="fragment"><span class="command"> $ bwa WTF!</span><span class="fragment">
+[main] unrecognized command &#39;WTF!&#39;
+</span></code><code class="fragment"><span class="command"> $ bwa</span><span class="fragment">
+ 
+Program: bwa (alignment via Burrows-Wheeler transformation)
+Version: 0.7.10-r789
+Contact: Heng Li &lt;lh3@sanger.ac.uk&gt;
+
+Usage:   bwa &lt;command&gt; [options]
+
+Command: index         index sequences in the FASTA format
+         mem           BWA-MEM algorithm
+         fastmap       identify super-maximal exact matches
+...</span></code></pre>
+
+</section><section><h3>Bioinformatics Vs Software Engineering</h3>
+
+<p>Don&#39;t assume anything:</p>
+<pre class="terminal"><code class="fragment"><span class="command"> $ samtools index some-non-existing-file.bam</span><span class="fragment">
+[E::hts_open] fail to open file &#39;some-non-existing-file.bam&#39;
+</span></code><code class="fragment"><span class="command"> $ echo $?</span><span class="fragment">
+0</span></code></pre>
+
+</section><section><h3>Bioinformatics Vs Software Engineering</h3>
+
+<p>GATK partying like it&#39;s Windows 3.1:</p>
+<pre class="terminal"><code>##### ERROR MESSAGE: Couldn't read file
+      some_bam.target-intervals
+      because The interval file
+      some_bam.target-intervals
+      does not have one of the supported extensions (.bed, .list, .picard,
+      .interval_list, or .intervals). Please rename your file with the
+      appropriate extension. If
+      some_bam.target-intervals
+      is NOT supposed to be a file, please move or rename the file at location
+      some_bam.target-intervals</code></pre>
+
+<p>This variant caller did <em>something</em>:</p>
+<pre class="terminal"><code class="normal"><span class="command"> $ ./somaticsniper -h</span><span class="normal">
+./somaticsniper: invalid option -- &#39;h&#39;
+Unrecognizd option &#39;-?&#39;.</span></code></pre>
+
+<ul><li>and don&#39;t get me started on Casava and its HTML “report” …</li><li>or The Broad Institute&#39;s licensing …</li></ul>
+
+</section><section><h3>Workflow Engines</h3>
+
+<p>Need to run 100s of tools, make parameters vary, over 1000s of samples, and</p>
+<ul><li class="fragment roll-in">add new tools</li>
+<li class="fragment roll-in">adapt to new versions</li>
+<li class="fragment roll-in">install software</li>
+<li class="fragment roll-in">assume anything can randomly fail for obscure reasons</li>
+<li class="fragment roll-in">optimize infrastructure usage</li>
+<li class="fragment roll-in">deal with other adverse conditions (firewalls, VPNs, etc.)</li>
+<li class="fragment roll-in">make reproducible research <em>easier</em></li></ul>
+
+</section><section><h3>Workflow Engines</h3>
+
+<p>A lot of them.</p>
+<ul><li>often specific to a platform (e.g. Hadoop)</li><li>not flexible</li><li>lots of assumptions (networks, file-systems, can <code>make</code>, etc.)</li><li>custom DSLs (<em>yet another half-baked Turing-complete language</em>)</li><li>no fault tolerance</li><li>buggy</li></ul>
+
+</section><section><h3>Ketrew</h3>
+
+<p>So, yes, a new one, with these goals:</p>
+<ul><li><strong>Embedded</strong> DSL → highly <em>hackable</em> workflows</li><li>Multiple backends → extensible</li><li>Correct &amp; fault-tolerant</li><li>Standalone <em>or</em> client-server → work around sys-admins</li></ul>
+
+<p>with a sane implementation language: OCaml.</p>
+</section><section><h3>Why OCaml?</h3>
+
+<p>Software kills people.<br />
+We are pathetically 40 years behind on the safety/security front.</p>
+<img class="stretch" src="img/therac25.png" alt="Therac25" /><!-- from 
+http://web.archive.org/web/20071212183729/http://neptune.netcomp.monash.edu.au/cpe9001/assets/readings/www_uguelph_ca_~tgallagh_~tgallagh.html
+-->
+
+</section><section><h3>Why OCaml?</h3>
+
+<p>OCaml is:</p>
+<ul><li>mature and evolving<br />
+ → code from the 90&#39;s + GADTs + subtyping + modules</li><li>rich and strict type system<br />
+ → express safety/security lightweight theorems</li><li>focus on readability<br />
+ → ask Yaron / Jane St</li><li>fast, portable, hackable</li><li><em>future-friendly</em>: start replacing some modules with Coq-extracted code</li></ul>
+
+</section><section><h3>Ketrew</h3>
+
+<p>“Keep Track of Experimental Workflows”<br />
+<a href='https://github.com/hammerlab/ketrew'><code>github.com/hammerlab/ketrew</code></a></p>
+<ul><li>EDSL/library to write programs that build workflows/pipelines</li><li>A separate application, The “Engine”, orchestrates those workflows</li></ul>
+
+</section><section><h3>Features</h3>
+
+<p>In <code>0.0.0</code>:</p>
+<ul><li>EDSL trying to be usable by OCaml beginners</li><li>Client-server (HTTPS + JSON) and standalone modes</li><li>Implementation of the engine (naive/slow but hackable/testable)</li><li>A command-line client</li><li>LSF, PBS, <code>nohup</code>/<code>setsid</code>, or “Python” backends<br />
+ + plugin infrastructure to add backends</li></ul>
+
+<p>Coming next:</p>
+<ul><li>Faster + cleaner engine</li><li>(G)UI, a bit surprised by our own usage<br />
+ (3000+ targets for 1 workflow)</li></ul>
+
+</section><section><h3>Using It</h3>
+
+<p>Tested with bioinformatics pipelines, but also running backups, building
+documentation …</p>
+<pre><span class="kw">let</span><span class="text"> </span><span class="id">run_command_with_lsf</span><span class="text"> </span><span class="kw4">~queue</span><span class="text"> </span><span class="id">cmd</span><span class="text"> =
+  </span><span class="kw">let</span><span class="text"> </span><span class="kw">open</span><span class="text"> </span><span class="kw2">Ketrew</span><span class="text">.</span><span class="kw2">EDSL</span><span class="text"> </span><span class="kw">in</span><span class="text">
+  </span><span class="kw">let</span><span class="text"> </span><span class="id">host</span><span class="text"> = 
+    </span><span class="kw2">Host</span><span class="text">.</span><span class="id">parse</span><span class="text"> </span><span class="string">&quot;ssh://MyLSFCluster/pathto/ketrew-playground/?shell=bash&quot;</span><span class="id">_uri</span><span class="text"> </span><span class="kw">in</span><span class="text">
+  </span><span class="id">target</span><span class="text"> </span><span class="string">&quot;run_command_with_lsf&quot;</span><span class="text">
+    </span><span class="kw4">~make</span><span class="text">:(</span><span class="id">lsf</span><span class="text"> (</span><span class="kw2">Program</span><span class="text">.</span><span class="id">sh</span><span class="text"> </span><span class="id">cmd</span><span class="text">)
+             </span><span class="kw4">~queue</span><span class="text"> </span><span class="kw4">~wall_limit</span><span class="text">:</span><span class="string">&quot;1:30&quot;</span><span class="text"> </span><span class="kw4">~processors</span><span class="text">:(`</span><span class="kw2">Min_max</span><span class="text"> (</span><span class="numeric">1</span><span class="text">,</span><span class="numeric">1</span><span class="text">)) </span><span class="kw4">~host</span><span class="text">)</span></pre>
+
+<pre><span class="kw">let</span><span class="text"> </span><span class="id">fail_because_of_condition</span><span class="text"> </span><span class="kw4">~host</span><span class="text"> =
+  </span><span class="kw">let</span><span class="text"> </span><span class="kw">open</span><span class="text"> </span><span class="kw2">Ketrew</span><span class="text">.</span><span class="kw2">EDSL</span><span class="text"> </span><span class="kw">in</span><span class="text">
+  </span><span class="kw">let</span><span class="text"> </span><span class="id">make_target</span><span class="text"> </span><span class="kw4">~cmd</span><span class="text"> =
+    </span><span class="id">target</span><span class="text"> </span><span class="kw4">~make</span><span class="text">:(</span><span class="id">daemonize</span><span class="text"> </span><span class="kw4">~using</span><span class="text">:`</span><span class="kw2">Python_daemon</span><span class="text"> </span><span class="kw2">Program</span><span class="text">.(</span><span class="id">sh</span><span class="text"> </span><span class="id">cmd</span><span class="text">) </span><span class="kw4">~host</span><span class="text">)
+  </span><span class="kw">in</span><span class="text">
+  </span><span class="kw">let</span><span class="text"> </span><span class="id">target_with_condition</span><span class="text"> =
+    </span><span class="kw">let</span><span class="text"> </span><span class="id">impossible_file</span><span class="text"> = </span><span class="id">file</span><span class="text"> </span><span class="kw4">~host</span><span class="text"> </span><span class="string">&quot;/some-inexistent-file&quot;</span><span class="text"> </span><span class="kw">in</span><span class="text"> 
+    </span><span class="id">make_target</span><span class="text"> </span><span class="string">&quot;Failing-target&quot;</span><span class="text">
+      </span><span class="kw4">~cmd</span><span class="text">:</span><span class="string">&quot;ls /tmp&quot;</span><span class="text">
+      </span><span class="kw4">~done_when</span><span class="text">:</span><span class="id">impossible_file</span><span class="kw1">#</span><span class="id">exists</span><span class="text">
+  </span><span class="kw">in</span><span class="text">
+  </span><span class="id">make_target</span><span class="text"> </span><span class="string">&quot;Won't-run because of failed dependency&quot;</span><span class="text">
+    </span><span class="kw4">~cmd</span><span class="text">:</span><span class="string">&quot;ls /tmp&quot;</span><span class="text">
+    </span><span class="kw4">~dependencies</span><span class="text">:[ </span><span class="id">target_with_condition</span><span class="text"> ]</span></pre>
+
+</section><section><h3>Some Cool Stuff</h3>
+
+<p>State machine encoded with sub-typing</p>
+<img class="stretch" src="img/target_graph.jpg" alt="Automaton" /></section><section><h3>Structural Sub-Typing of States</h3>
+
+<!--
+Actually generated from ATD definitions
+([smondet/atd2cconv](https://github.com/smondet/atd2cconv)).
+-->
+
+<pre><span class="kw">module</span><span class="text"> </span><span class="kw2">Starting</span><span class="text"> : </span><span class="kw1">sig</span><span class="text">
+  </span><span class="kw">type</span><span class="text"> </span><span class="id">t</span><span class="text"> = [
+    | `</span><span class="kw2">Starting</span><span class="text"> </span><span class="kw">of</span><span class="text"> </span><span class="kw2">Building</span><span class="text">.</span><span class="id">t</span><span class="text"> </span><span class="kw2">History</span><span class="text">.</span><span class="id">t</span><span class="text">
+    | `</span><span class="kw2">Tried_to_start</span><span class="text"> </span><span class="kw">of</span><span class="text"> (</span><span class="id">t</span><span class="text"> </span><span class="kw2">History</span><span class="text">.</span><span class="id">t</span><span class="text"> * </span><span class="kw2">Run_bookkeeping</span><span class="text">.</span><span class="id">t</span><span class="text">)
+  ]
+  ...
+</span><span class="kw">module</span><span class="text"> </span><span class="kw2">Running</span><span class="text"> : </span><span class="kw1">sig</span><span class="text">
+  </span><span class="kw">type</span><span class="text"> </span><span class="id">t</span><span class="text"> = [
+    | `</span><span class="kw2">Started_running</span><span class="text"> </span><span class="kw">of</span><span class="text"> (</span><span class="kw2">Starting</span><span class="text">.</span><span class="id">t</span><span class="text"> </span><span class="kw2">History</span><span class="text">.</span><span class="id">t</span><span class="text"> * </span><span class="kw2">Run_bookkeeping</span><span class="text">.</span><span class="id">t</span><span class="text">)
+    | `</span><span class="kw2">Still_running</span><span class="text"> </span><span class="kw">of</span><span class="text"> (</span><span class="id">t</span><span class="text"> </span><span class="kw2">History</span><span class="text">.</span><span class="id">t</span><span class="text"> * </span><span class="kw2">Run_bookkeeping</span><span class="text">.</span><span class="id">t</span><span class="text">)
+  ]
+  ...
+</span><span class="kw">module</span><span class="text"> </span><span class="kw2">Killable_state</span><span class="text"> : </span><span class="kw1">sig</span><span class="text">
+  </span><span class="kw">type</span><span class="text"> </span><span class="id">t</span><span class="text"> = [
+    | `</span><span class="kw2">Passive</span><span class="text"> </span><span class="kw">of</span><span class="text"> </span><span class="kw2">Log</span><span class="text">.</span><span class="id">t</span><span class="text">
+    | `</span><span class="kw2">Active</span><span class="text"> </span><span class="kw">of</span><span class="text"> (</span><span class="kw2">Passive</span><span class="text">.</span><span class="id">t</span><span class="text"> </span><span class="kw2">History</span><span class="text">.</span><span class="id">t</span><span class="text"> * ...)
+    | `</span><span class="kw2">Building</span><span class="text"> </span><span class="kw">of</span><span class="text"> </span><span class="kw2">Active</span><span class="text">.</span><span class="id">t</span><span class="text"> </span><span class="kw2">History</span><span class="text">.</span><span class="id">t</span><span class="text">
+    | `</span><span class="kw2">Still_building</span><span class="text"> </span><span class="kw">of</span><span class="text"> </span><span class="kw2">Building</span><span class="text">.</span><span class="id">t</span><span class="text"> </span><span class="kw2">History</span><span class="text">.</span><span class="id">t</span><span class="text">
+    | `</span><span class="kw2">Starting</span><span class="text"> </span><span class="kw">of</span><span class="text"> (</span><span class="kw2">Building</span><span class="text">.</span><span class="id">t</span><span class="text">) </span><span class="kw2">History</span><span class="text">.</span><span class="id">t</span><span class="text">
+    ...
+  ]
+...</span></pre>
+
+<p><strong>⇒</strong> Pure/total/exceptionless</p>
+<pre><span class="kw">val</span><span class="text"> </span><span class="id">transition</span><span class="text">: </span><span class="id">state</span><span class="text"> -&gt; (</span><span class="id">do_some_io</span><span class="text"> * </span><span class="id">some_io_result</span><span class="text"> </span><span class="id">update_state</span><span class="text">) </span></pre>
+
+</section><section><h3>GADTs, Hammers, and Nails</h3>
+
+<p>We have open-sourced
+<a href='https://github.com/hammerlab/biokepi'><code>hammerlab/biokepi</code></a>.</p>
+<pre><span class="kw">type</span><span class="text"> </span><span class="numeric">_</span><span class="text"> </span><span class="id">t</span><span class="text"> =
+  | </span><span class="kw2">Fastq_gz</span><span class="text">: </span><span class="kw2">File</span><span class="text">.</span><span class="id">t</span><span class="text"> -&gt; </span><span class="id">fastq_gz</span><span class="text">  </span><span class="id">t</span><span class="text">
+  | </span><span class="kw2">Fastq</span><span class="text">: </span><span class="kw2">File</span><span class="text">.</span><span class="id">t</span><span class="text"> -&gt; </span><span class="id">fastq</span><span class="text">  </span><span class="id">t</span><span class="text">
+  | </span><span class="kw2">Paired_end_sample</span><span class="text">: </span><span class="kw3">string</span><span class="text"> * </span><span class="id">fastq</span><span class="text">  </span><span class="id">t</span><span class="text"> * </span><span class="id">fastq</span><span class="text">  </span><span class="id">t</span><span class="text"> -&gt; </span><span class="id">fastq_sample</span><span class="text">  </span><span class="id">t</span><span class="text">
+  | </span><span class="kw2">Single_end_sample</span><span class="text">: </span><span class="kw3">string</span><span class="text"> * </span><span class="id">fastq</span><span class="text">  </span><span class="id">t</span><span class="text"> -&gt; </span><span class="id">fastq_sample</span><span class="text">  </span><span class="id">t</span><span class="text">
+  | </span><span class="kw2">Gunzip_concat</span><span class="text">: </span><span class="id">fastq_gz</span><span class="text">  </span><span class="id">t</span><span class="text"> </span><span class="kw3">list</span><span class="text"> -&gt; </span><span class="id">fastq</span><span class="text">  </span><span class="id">t</span><span class="text">
+  | </span><span class="kw2">Concat_text</span><span class="text">: </span><span class="id">fastq</span><span class="text">  </span><span class="id">t</span><span class="text"> </span><span class="kw3">list</span><span class="text"> -&gt; </span><span class="id">fastq</span><span class="text">  </span><span class="id">t</span><span class="text">
+  | </span><span class="kw2">Bwa</span><span class="text">: </span><span class="id">bwa_params</span><span class="text"> * </span><span class="id">fastq_sample</span><span class="text">  </span><span class="id">t</span><span class="text"> -&gt; </span><span class="id">bam</span><span class="text">  </span><span class="id">t</span><span class="text">
+  | </span><span class="kw2">Gatk_indel_realigner</span><span class="text">: </span><span class="id">bam</span><span class="text"> </span><span class="id">t</span><span class="text"> -&gt; </span><span class="id">bam</span><span class="text"> </span><span class="id">t</span><span class="text">
+  | </span><span class="kw2">Picard_mark_duplicates</span><span class="text">: </span><span class="id">bam</span><span class="text"> </span><span class="id">t</span><span class="text"> -&gt; </span><span class="id">bam</span><span class="text"> </span><span class="id">t</span><span class="text">
+  | </span><span class="kw2">Gatk_bqsr</span><span class="text">: </span><span class="id">bam</span><span class="text"> </span><span class="id">t</span><span class="text"> -&gt; </span><span class="id">bam</span><span class="text"> </span><span class="id">t</span><span class="text">
+  | </span><span class="kw2">Bam_pair</span><span class="text">: </span><span class="id">bam</span><span class="text">  </span><span class="id">t</span><span class="text"> * </span><span class="id">bam</span><span class="text">  </span><span class="id">t</span><span class="text"> -&gt; </span><span class="id">bam_pair</span><span class="text">  </span><span class="id">t</span><span class="text">
+  | </span><span class="kw2">Mutect</span><span class="text">: </span><span class="id">bam_pair</span><span class="text">  </span><span class="id">t</span><span class="text"> -&gt; </span><span class="id">vcf</span><span class="text">  </span><span class="id">t</span><span class="text">
+  | </span><span class="kw2">Somaticsniper</span><span class="text">: [ `</span><span class="kw2">S</span><span class="text"> </span><span class="kw">of</span><span class="text"> </span><span class="kw3">float</span><span class="text"> ] * [ `</span><span class="kw2">T</span><span class="text"> </span><span class="kw">of</span><span class="text"> </span><span class="kw3">float</span><span class="text"> ] * </span><span class="id">bam_pair</span><span class="text">  </span><span class="id">t</span><span class="text"> -&gt; </span><span class="id">vcf</span><span class="text">  </span><span class="id">t</span><span class="text">
+  | </span><span class="kw2">Varscan</span><span class="text">: [`</span><span class="kw2">Adjust_mapq</span><span class="text"> </span><span class="kw">of</span><span class="text"> </span><span class="kw3">int</span><span class="text"> </span><span class="id">option</span><span class="text">] * </span><span class="id">bam_pair</span><span class="text"> </span><span class="id">t</span><span class="text"> -&gt; </span><span class="id">vcf</span><span class="text"> </span><span class="id">t</span></pre>
+
+<p><strong>Typed</strong> bioinformatics pipelines!</p>
+</section><section><h3>Compiling Pipelines</h3>
+
+<pre><span class="kw">let</span><span class="text"> </span><span class="id">pipeline_example</span><span class="text"> </span><span class="kw4">~normal_fastqs</span><span class="text"> </span><span class="kw4">~tumor_fastqs</span><span class="text"> </span><span class="kw4">~dataset</span><span class="text"> =
+  </span><span class="kw">let</span><span class="text"> </span><span class="kw">open</span><span class="text"> </span><span class="kw2">Biokepi_pipeline</span><span class="text">.</span><span class="kw2">Construct</span><span class="text"> </span><span class="kw">in</span><span class="text">
+  </span><span class="kw">let</span><span class="text"> </span><span class="id">normal</span><span class="text"> = </span><span class="id">input_fastq</span><span class="text"> </span><span class="kw4">~dataset</span><span class="text"> </span><span class="id">normal_fastqs</span><span class="text"> </span><span class="kw">in</span><span class="text">
+  </span><span class="kw">let</span><span class="text"> </span><span class="id">tumor</span><span class="text"> = </span><span class="id">input_fastq</span><span class="text"> </span><span class="kw4">~dataset</span><span class="text"> </span><span class="id">tumor_fastqs</span><span class="text"> </span><span class="kw">in</span><span class="text">
+  </span><span class="kw">let</span><span class="text"> </span><span class="id">bam_pair</span><span class="text"> ?</span><span class="id">gap_open_penalty</span><span class="text"> ?</span><span class="id">gap_extension_penalty</span><span class="text"> () =
+    </span><span class="kw">let</span><span class="text"> </span><span class="id">normal</span><span class="text"> =
+      </span><span class="id">bwa</span><span class="text"> ?</span><span class="id">gap_open_penalty</span><span class="text"> ?</span><span class="id">gap_extension_penalty</span><span class="text"> </span><span class="id">normal</span><span class="text"> |&gt; </span><span class="id">gatk_indel_realigner</span><span class="text"> </span><span class="kw">in</span><span class="text">
+    </span><span class="kw">let</span><span class="text"> </span><span class="id">tumor</span><span class="text"> =
+      </span><span class="id">bwa</span><span class="text"> ?</span><span class="id">gap_open_penalty</span><span class="text"> ?</span><span class="id">gap_extension_penalty</span><span class="text"> </span><span class="id">tumor</span><span class="text"> |&gt; </span><span class="id">gatk_indel_realigner</span><span class="text"> </span><span class="kw">in</span><span class="text">
+    </span><span class="id">pair</span><span class="text"> </span><span class="kw4">~normal</span><span class="text"> </span><span class="kw4">~tumor</span><span class="text"> </span><span class="kw">in</span><span class="text">
+  </span><span class="kw">let</span><span class="text"> </span><span class="id">bam_pairs</span><span class="text"> = [
+    </span><span class="id">bam_pair</span><span class="text"> ();
+    </span><span class="id">bam_pair</span><span class="text"> </span><span class="kw4">~gap_open_penalty</span><span class="text">:</span><span class="numeric">10</span><span class="text"> </span><span class="kw4">~gap_extension_penalty</span><span class="text">:</span><span class="numeric">7</span><span class="text"> ();
+  ] </span><span class="kw">in</span><span class="text">
+  </span><span class="kw">let</span><span class="text"> </span><span class="id">vcfs</span><span class="text"> =
+    </span><span class="kw2">List</span><span class="text">.</span><span class="id">concat_map</span><span class="text"> </span><span class="id">bam_pairs</span><span class="text"> </span><span class="kw4">~f</span><span class="text">:(</span><span class="kw">fun</span><span class="text"> </span><span class="id">bam_pair</span><span class="text"> -&gt; [
+          </span><span class="id">mutect</span><span class="text"> </span><span class="id">bam_pair</span><span class="text">;
+          </span><span class="id">somaticsniper</span><span class="text"> </span><span class="id">bam_pair</span><span class="text">;
+          </span><span class="id">somaticsniper</span><span class="text"> </span><span class="kw4">~prior_probability</span><span class="text">:</span><span class="numeric">0.001</span><span class="text"> </span><span class="kw4">~theta</span><span class="text">:</span><span class="numeric">0.95</span><span class="text"> </span><span class="id">bam_pair</span><span class="text">;
+          </span><span class="id">varscan</span><span class="text"> </span><span class="id">bam_pair</span><span class="text">;]) </span><span class="kw">in</span><span class="text">
+  </span><span class="id">vcfs</span></pre>
+
+<p><em>Compiled</em> to more than 3000 Ketrew targets, JSON-pipeline, …</p>
+</section><section><h3>Running Pipelnies</h3>
+
+<p>Runs for days, then posts to
+<a href='https://github.com/hammerlab/cycledash'><code>hammerlab/cycledash</code></a></p>
+<img class="stretch" src="img/introducing-cycledash-0.0.0-example-page.png" alt="Cycledash" /></section><section><h3>The End</h3>
+
+<p>Thanks! Questions?</p>
+<ul><li>Happy to hear about Ketrew being useful in any other setting!</li><li>Contribute/complain: <a href='https://github.com/hammerlab/ketrew/issues'>https://github.com/hammerlab/ketrew/issues</a></li></ul>
+
+<p>Will tweet link to the slides: <code>@smondet</code>.</p>
+<p>Next <a href='http://lucrativejacket.com/gigs/'>Lucrative Jacket</a> gig: March 18th, 8pm,
+at the <em>Trash Bar</em> in Brooklyn.</p>
+</section><section><h3>Error Monad With Polymorphic Variants</h3>
+
+<pre><span class="id">utop</span><span class="text">&gt; </span><span class="kw2">IO</span><span class="text">.</span><span class="id">read_file</span><span class="text">;;
+- : </span><span class="kw3">string</span><span class="text"> -&gt;
+    (</span><span class="kw3">string</span><span class="text">, [&gt; `</span><span class="kw2">IO</span><span class="text"> </span><span class="kw">of</span><span class="text"> [&gt; `</span><span class="kw2">Read_file_exn</span><span class="text"> </span><span class="kw">of</span><span class="text"> </span><span class="kw3">string</span><span class="text"> * </span><span class="id">exn</span><span class="text"> ] ]) </span><span class="kw2">Deferred_result</span><span class="text">.</span><span class="id">t</span><span class="text">
+
+</span><span class="id">utop</span><span class="text">&gt; </span><span class="kw2">IO</span><span class="text">.</span><span class="id">write_file</span><span class="text">;;
+- : </span><span class="kw3">string</span><span class="text"> -&gt;
+    </span><span class="id">content</span><span class="text">:</span><span class="kw3">string</span><span class="text"> -&gt;
+    (</span><span class="kw3">unit</span><span class="text">, [&gt; `</span><span class="kw2">IO</span><span class="text"> </span><span class="kw">of</span><span class="text"> [&gt; `</span><span class="kw2">Write_file_exn</span><span class="text"> </span><span class="kw">of</span><span class="text"> </span><span class="kw3">string</span><span class="text"> * </span><span class="id">exn</span><span class="text"> ] ]) </span><span class="kw2">Deferred_result</span><span class="text">.</span><span class="id">t</span><span class="text">
+
+</span><span class="id">utop</span><span class="text">&gt; </span><span class="kw2">System</span><span class="text">.</span><span class="id">with_timeout</span><span class="text">;;
+- : </span><span class="kw3">float</span><span class="text"> -&gt;
+    </span><span class="id">f</span><span class="text">:(</span><span class="kw3">unit</span><span class="text"> -&gt;
+       ('</span><span class="id">a</span><span class="text">,
+        [&gt; `</span><span class="kw2">System</span><span class="text"> </span><span class="kw">of</span><span class="text"> [&gt; `</span><span class="kw2">With_timeout</span><span class="text"> </span><span class="kw">of</span><span class="text"> </span><span class="kw3">float</span><span class="text"> ] * [&gt; `</span><span class="kw2">Exn</span><span class="text"> </span><span class="kw">of</span><span class="text"> </span><span class="id">exn</span><span class="text"> ]
+         | `</span><span class="kw2">Timeout</span><span class="text"> </span><span class="kw">of</span><span class="text"> </span><span class="kw3">float</span><span class="text"> ]
+        </span><span class="kw1">as</span><span class="text"> '</span><span class="id">error</span><span class="text">) </span><span class="kw2">Deferred_result</span><span class="text">.</span><span class="id">t</span><span class="text">) -&gt;
+    ('</span><span class="id">a</span><span class="text">, '</span><span class="id">error</span><span class="text">) </span><span class="kw2">Deferred_result</span><span class="text">.</span><span class="id">t</span></pre>
+
+</section><section><h3>Polymorphic Variants Are Awesome</h3>
+
+<pre><span class="id">utop</span><span class="text">&gt; </span><span class="kw">let</span><span class="text"> </span><span class="id">dumb_copy_with_timeout</span><span class="text"> </span><span class="kw4">~seconds</span><span class="text"> </span><span class="kw4">~src</span><span class="text"> </span><span class="kw4">~dest</span><span class="text"> =
+        </span><span class="kw2">System</span><span class="text">.</span><span class="id">with_timeout</span><span class="text"> </span><span class="id">seconds</span><span class="text"> </span><span class="kw4">~f</span><span class="text">:(</span><span class="kw">fun</span><span class="text"> () -&gt;
+            </span><span class="kw2">IO</span><span class="text">.</span><span class="id">read_file</span><span class="text"> </span><span class="id">src</span><span class="text">
+            &gt;&gt;= </span><span class="kw">fun</span><span class="text"> </span><span class="id">content</span><span class="text"> -&gt;
+            </span><span class="kw2">IO</span><span class="text">.</span><span class="id">write_file</span><span class="text"> </span><span class="id">dest</span><span class="text"> </span><span class="kw4">~content</span><span class="text">
+          );;
+</span><span class="kw">val</span><span class="text"> </span><span class="id">dumb_copy_with_timeout</span><span class="text"> :
+  </span><span class="id">seconds</span><span class="text">:</span><span class="kw3">float</span><span class="text"> -&gt;
+  </span><span class="id">src</span><span class="text">:</span><span class="kw3">string</span><span class="text"> -&gt;
+  </span><span class="id">dest</span><span class="text">:</span><span class="kw3">string</span><span class="text"> -&gt;
+  (</span><span class="kw3">unit</span><span class="text">,
+   [&gt; `</span><span class="kw2">IO</span><span class="text"> </span><span class="kw">of</span><span class="text">
+        [&gt; `</span><span class="kw2">Read_file_exn</span><span class="text"> </span><span class="kw">of</span><span class="text"> </span><span class="kw3">string</span><span class="text"> * </span><span class="id">exn</span><span class="text"> | `</span><span class="kw2">Write_file_exn</span><span class="text"> </span><span class="kw">of</span><span class="text"> </span><span class="kw3">string</span><span class="text"> * </span><span class="id">exn</span><span class="text"> ]
+    | `</span><span class="kw2">System</span><span class="text"> </span><span class="kw">of</span><span class="text"> [&gt; `</span><span class="kw2">With_timeout</span><span class="text"> </span><span class="kw">of</span><span class="text"> </span><span class="kw3">float</span><span class="text"> ] * [&gt; `</span><span class="kw2">Exn</span><span class="text"> </span><span class="kw">of</span><span class="text"> </span><span class="id">exn</span><span class="text"> ]
+    | `</span><span class="kw2">Timeout</span><span class="text"> </span><span class="kw">of</span><span class="text"> </span><span class="kw3">float</span><span class="text"> ])</span></pre>
+
+</section><section><h3>Some OCaml Lessons Learned</h3>
+
+<p>Pain:</p>
+<ul><li>Oasis, OCamlbuild</li><li>Camlp4</li><li>Huge Jane-Street-style libraries</li></ul>
+
+<p>Pleasure:</p>
+<ul><li>Pure OCaml, Functors, GADTs</li><li>Ocsigen (minimizing the Camlp4 part)</li><li>Lwt <em>with</em> Error Monad based on Polymorphic Variants</li><li>Bünzli-style small libraries</li><li>Code Generators (ATDgen)</li><li>Opam</li></ul>
+
+</section><section><h3>Why Not F#</h3>
+
+<p>Big Windows-oriented runtime but most importantly: <code>null</code> pointers</p>
+<p>PS: funny that F# is at Compose but not Scala …</p>
+</section><section><h3>Why Not Haskell</h3>
+
+<p>Haskell:</p>
+<ul><li>lazy by default → difficult to reason about performance/execution</li><li>purity does not bring much to safety<br />
+ people use <code>unsafePerformIO</code> anyways + less “hackable”</li><li>type-classes <em>in practice</em>:<br />
+ used 95% of the time to make the code as unreadable as possible
+<!-- (weird -->
+<!--   infix operators, equivalents of Scala's implicits, see the Lens library, -->
+<!--   it looks uglier than perl) --></li><li>more unreadability: need to know every possible GHC extension<br />
+ (there is even dynamic typing in there!?)</li><li>indentation-based grammar makes code hard to read (blocs &gt; 7 lines)</li><li>does not have (AFAIK) any good subtyping mechanism</li></ul>
+
+</section><section><h3>Want More GATK?</h3>
+
+<p>It uploads reports to AWS without your consent.</p>
+<pre class="terminal"><code>-et,--phone_home <phone_home>     Run reporting mode (NO_ET|AWS| STDOUT)
+-K,--gatk_key <gatk_key>          GATK key file required to run with -et NO_ET</code></pre>
+
+</section><section><h3>Thanks</h3>
+
+<p>Done with
+<a href='https://github.com/ocaml/omd'>Omd</a> and
+<a href='https://github.com/ocaml/MPP-language-blender'>MPP</a> 
+generating an
+HTML + <a href='https://github.com/hakimel/reveal.js'>Reveal.js</a>
+presentation.</p>
+</section><section><h3>Meta</h3>
+
+<ul><li>Compiled on <code>Sat, 31 Jan 2015 11:22:12 -0500</code></li><li>Git: <code>451763c-dirty</code></li></ul></section></div></div>
+    <script src="lib/js/head.min.js"></script>
+    <script src="js/reveal.min.js"></script>
+
+    <script>
+
+      // Full list of configuration options available here:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        controls: true,
+        progress: true,
+        history: true,
+        //center: true,
+        center: false,
+
+        slideNumber: true,
+        //width: 1000,
+        //height: 750,
+        //margin: 0.1,
+        // Bounds for smallest/largest possible scale to apply to content
+        //minScale: 0.2,
+        //maxScale: 1.0,
+
+
+        theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+        transition: Reveal.getQueryHash().transition || 'none', // default/cube/page/concave/zoom/linear/fade/none
+
+        // Parallax scrolling
+        // parallaxBackgroundImage: 'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg',
+        // parallaxBackgroundSize: '2100px 900px',
+
+        // Optional libraries used to extend on reveal.js
+        dependencies: [
+          { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+//          { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+//          { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+//          { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+          { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+          { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+        ]
+      });
+
+    </script>
+
+  </body>
+</html>
