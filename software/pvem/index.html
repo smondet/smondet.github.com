@@ -44,16 +44,16 @@ on both the “Ok” and “Error” cases; then return inside the monad like wi
 
 </span><span class="kw">let</span><span class="text"> </span><span class="id">f_uses_bind_and_return</span><span class="text">: </span><span class="kw3">int</span><span class="text"> -&gt; (</span><span class="kw3">float</span><span class="text">, </span><span class="kw3">string</span><span class="text">) </span><span class="kw2">Result</span><span class="text">.</span><span class="id">t</span><span class="text"> = </span><span class="kw">fun</span><span class="text"> </span><span class="id">x</span><span class="text"> -&gt;
   </span><span class="id">fail_on_42</span><span class="text"> </span><span class="id">x</span><span class="text">
-  &gt;&gt;= </span><span class="kw">fun</span><span class="text"> </span><span class="id">not_42</span><span class="text"> -&gt;
+  </span><span class="kw10">&gt;&gt;=</span><span class="text"> </span><span class="kw">fun</span><span class="text"> </span><span class="id">not_42</span><span class="text"> -&gt;
   </span><span class="id">return</span><span class="text"> (</span><span class="numeric">2</span><span class="text">. *. </span><span class="kw3">float</span><span class="text"> </span><span class="id">not_42</span><span class="text">)
 
 </span><span class="kw">let</span><span class="text"> </span><span class="id">f_uses_map</span><span class="text">: </span><span class="kw3">int</span><span class="text"> -&gt; (</span><span class="kw3">int</span><span class="text"> * </span><span class="kw3">int</span><span class="text">, </span><span class="kw3">string</span><span class="text">) </span><span class="kw2">Result</span><span class="text">.</span><span class="id">t</span><span class="text"> = </span><span class="kw">fun</span><span class="text"> </span><span class="id">x</span><span class="text"> -&gt;
   </span><span class="id">fail_on_42</span><span class="text"> </span><span class="id">x</span><span class="text">
-  &gt;&gt;| (</span><span class="kw">fun</span><span class="text"> </span><span class="id">x</span><span class="text"> -&gt; (</span><span class="id">x</span><span class="text">, </span><span class="id">x</span><span class="text">))
+  </span><span class="kw10">&gt;&gt;</span><span class="text">| (</span><span class="kw">fun</span><span class="text"> </span><span class="id">x</span><span class="text"> -&gt; (</span><span class="id">x</span><span class="text">, </span><span class="id">x</span><span class="text">))
 
 </span><span class="kw">let</span><span class="text"> </span><span class="id">f_uses_destruct</span><span class="text">: </span><span class="kw3">int</span><span class="text"> -&gt; (</span><span class="kw3">float</span><span class="text">, </span><span class="kw3">string</span><span class="text"> * </span><span class="kw3">string</span><span class="text">) </span><span class="kw2">Result</span><span class="text">.</span><span class="id">t</span><span class="text"> = </span><span class="kw">fun</span><span class="text"> </span><span class="id">x</span><span class="text"> -&gt;
   </span><span class="id">fail_on_42</span><span class="text"> </span><span class="id">x</span><span class="text">
-  &gt;&gt;&lt; </span><span class="kw">function</span><span class="text">
+  </span><span class="kw10">&gt;&gt;</span><span class="text">&lt; </span><span class="kw">function</span><span class="text">
   | `</span><span class="kw2">Ok</span><span class="text"> </span><span class="id">o</span><span class="text"> -&gt; </span><span class="id">return</span><span class="text"> (</span><span class="kw3">float</span><span class="text"> </span><span class="id">o</span><span class="text">)
   | `</span><span class="kw2">Error</span><span class="text"> </span><span class="id">s</span><span class="text"> -&gt; </span><span class="id">fail</span><span class="text"> (</span><span class="string">&quot;did not convert to float&quot;</span><span class="text">, </span><span class="id">s</span><span class="text">)</span></pre>
 
@@ -69,7 +69,7 @@ on both the “Ok” and “Error” cases; then return inside the monad like wi
     </span><span class="kw">include</span><span class="text"> </span><span class="kw2">Deferred</span><span class="text">
     </span><span class="kw">let</span><span class="text"> </span><span class="id">catch</span><span class="text"> </span><span class="id">tri</span><span class="text"> </span><span class="id">wiz</span><span class="text"> =
       </span><span class="kw2">Async</span><span class="text">.</span><span class="kw2">Std</span><span class="text">.</span><span class="id">try_with</span><span class="text"> </span><span class="id">tri</span><span class="text">
-      &gt;&gt;= </span><span class="kw">function</span><span class="text">
+      </span><span class="kw10">&gt;&gt;=</span><span class="text"> </span><span class="kw">function</span><span class="text">
       | </span><span class="kw2">Ok</span><span class="text"> </span><span class="id">o</span><span class="text"> -&gt; </span><span class="id">return</span><span class="text"> </span><span class="id">o</span><span class="text">
       | </span><span class="kw2">Error</span><span class="text"> </span><span class="id">e</span><span class="text"> -&gt; </span><span class="id">wiz</span><span class="text"> </span><span class="id">e</span><span class="text">
   </span><span class="kw1">end</span><span class="text">)</span></pre>

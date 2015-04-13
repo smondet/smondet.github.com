@@ -369,7 +369,7 @@
     </span><span class="kw1">match</span><span class="text"> </span><span class="id">x</span><span class="text"> </span><span class="kw1">with</span><span class="text">
     | `</span><span class="kw2">Ok</span><span class="text"> </span><span class="id">o</span><span class="text"> -&gt; </span><span class="id">f</span><span class="text"> </span><span class="id">o</span><span class="text">
     | `</span><span class="kw2">Error</span><span class="text"> </span><span class="id">e</span><span class="text"> -&gt; </span><span class="id">fail</span><span class="text"> </span><span class="id">e</span><span class="text">
-  </span><span class="kw">let</span><span class="text"> (&gt;&gt;=) = </span><span class="id">bind</span><span class="text">
+  </span><span class="kw">let</span><span class="text"> (</span><span class="kw10">&gt;&gt;=</span><span class="text">) = </span><span class="id">bind</span><span class="text">
   </span><span class="kw">let</span><span class="text"> </span><span class="id">dbg</span><span class="text"> </span><span class="id">fmt</span><span class="text"> = </span><span class="id">printf</span><span class="text"> (</span><span class="string">&quot;DBG: &quot;</span><span class="text"> ^^ </span><span class="id">fmt</span><span class="text"> ^^ </span><span class="string">&quot;\n%!&quot;</span><span class="text">)
 
   </span><span class="comment">(* The function `List.map` adapted from `Core_kernel`'s way of
@@ -912,7 +912,7 @@
         (</span><span class="kw1">if</span><span class="text"> </span><span class="id">offset</span><span class="text"> + </span><span class="id">length</span><span class="text"> &gt; </span><span class="kw2">String</span><span class="text">.</span><span class="id">length</span><span class="text"> </span><span class="id">s</span><span class="text">
          </span><span class="kw1">then</span><span class="text"> </span><span class="id">fail</span><span class="text"> `</span><span class="id">out_of_bounds</span><span class="text">
          </span><span class="kw1">else</span><span class="text"> </span><span class="id">return</span><span class="text"> ())
-        &gt;&gt;= </span><span class="kw">fun</span><span class="text"> () -&gt;
+        </span><span class="kw10">&gt;&gt;=</span><span class="text"> </span><span class="kw">fun</span><span class="text"> () -&gt;
         </span><span class="kw">let</span><span class="text"> </span><span class="kw">module</span><span class="text"> </span><span class="kw2">With_exn</span><span class="text"> = </span><span class="kw1">struct</span><span class="text">
           </span><span class="kw">exception</span><span class="text"> </span><span class="kw2">WChar</span><span class="text"> </span><span class="kw">of</span><span class="text"> </span><span class="kw3">int</span><span class="text">
           </span><span class="kw">let</span><span class="text"> </span><span class="id">f</span><span class="text"> </span><span class="id">buf</span><span class="text"> =
@@ -1215,11 +1215,11 @@
 
   </span><span class="kw">module</span><span class="text"> </span><span class="kw2">Make_output</span><span class="text"> (</span><span class="kw2">Model</span><span class="text">: </span><span class="kw2">OUTPUT_MODEL</span><span class="text">) = </span><span class="kw1">struct</span><span class="text">
 
-    </span><span class="kw">let</span><span class="text"> (&gt;&gt;=) = </span><span class="kw2">Model</span><span class="text">.</span><span class="id">bind</span><span class="text">
+    </span><span class="kw">let</span><span class="text"> (</span><span class="kw10">&gt;&gt;=</span><span class="text">) = </span><span class="kw2">Model</span><span class="text">.</span><span class="id">bind</span><span class="text">
 
     </span><span class="kw">let</span><span class="text"> </span><span class="id">output</span><span class="text"> </span><span class="id">chan</span><span class="text"> </span><span class="id">l</span><span class="text"> =
       </span><span class="kw2">List</span><span class="text">.</span><span class="id">fold_left</span><span class="text"> </span><span class="id">l</span><span class="text"> </span><span class="kw4">~init</span><span class="text">:(</span><span class="kw2">Model</span><span class="text">.</span><span class="id">return</span><span class="text"> ()) </span><span class="kw4">~f</span><span class="text">:(</span><span class="kw">fun</span><span class="text"> </span><span class="id">prev_m</span><span class="text"> </span><span class="id">c</span><span class="text"> -&gt;
-          </span><span class="id">prev_m</span><span class="text"> &gt;&gt;= </span><span class="kw">fun</span><span class="text"> () -&gt;
+          </span><span class="id">prev_m</span><span class="text"> </span><span class="kw10">&gt;&gt;=</span><span class="text"> </span><span class="kw">fun</span><span class="text"> () -&gt;
           </span><span class="kw2">Model</span><span class="text">.</span><span class="id">output</span><span class="text"> </span><span class="id">chan</span><span class="text"> (</span><span class="kw2">Char</span><span class="text">.</span><span class="id">to_native_string</span><span class="text"> </span><span class="id">c</span><span class="text">))
 
   </span><span class="kw1">end</span><span class="text">
@@ -1612,7 +1612,7 @@
 
   </span><span class="kw">module</span><span class="text"> </span><span class="kw2">Make_output</span><span class="text"> (</span><span class="kw2">Model</span><span class="text">: </span><span class="kw2">OUTPUT_MODEL</span><span class="text">) = </span><span class="kw1">struct</span><span class="text">
 
-    </span><span class="kw">let</span><span class="text"> (&gt;&gt;=) = </span><span class="kw2">Model</span><span class="text">.</span><span class="id">bind</span><span class="text">
+    </span><span class="kw">let</span><span class="text"> (</span><span class="kw10">&gt;&gt;=</span><span class="text">) = </span><span class="kw2">Model</span><span class="text">.</span><span class="id">bind</span><span class="text">
 
     </span><span class="kw">let</span><span class="text"> </span><span class="id">output</span><span class="text"> </span><span class="id">chan</span><span class="text"> </span><span class="id">t</span><span class="text"> =
       </span><span class="kw2">Model</span><span class="text">.</span><span class="id">output</span><span class="text"> </span><span class="id">chan</span><span class="text"> (</span><span class="id">to_native_string</span><span class="text"> </span><span class="id">t</span><span class="text">)

@@ -479,13 +479,13 @@
       | `</span><span class="kw2">Create_file</span><span class="text"> </span><span class="id">file</span><span class="text"> -&gt;
         </span><span class="id">open_file</span><span class="text"> </span><span class="kw4">~flags</span><span class="text">:</span><span class="kw2">Unix</span><span class="text">.([ </span><span class="kw2">O_CREAT</span><span class="text">; </span><span class="kw2">O_WRONLY</span><span class="text">; </span><span class="kw2">O_EXCL</span><span class="text"> ]) </span><span class="id">file</span><span class="text">
       </span><span class="kw1">end</span><span class="text">
-      &gt;&gt;= </span><span class="kw">fun</span><span class="text"> </span><span class="id">outchan</span><span class="text"> -&gt;
+      </span><span class="kw10">&gt;&gt;=</span><span class="text"> </span><span class="kw">fun</span><span class="text"> </span><span class="id">outchan</span><span class="text"> -&gt;
       </span><span class="kw1">begin</span><span class="text">
         </span><span class="id">f</span><span class="text"> </span><span class="id">outchan</span><span class="text">
-        &gt;&gt;&lt; </span><span class="kw1">begin</span><span class="text"> </span><span class="kw">function</span><span class="text">
+        </span><span class="kw10">&gt;&gt;</span><span class="text">&lt; </span><span class="kw1">begin</span><span class="text"> </span><span class="kw">function</span><span class="text">
         | `</span><span class="kw2">Ok</span><span class="text"> </span><span class="id">o</span><span class="text"> -&gt;
           </span><span class="id">wrap_deferred_io</span><span class="text"> (</span><span class="kw">fun</span><span class="text"> () -&gt; </span><span class="kw2">Lwt_io</span><span class="text">.</span><span class="id">close</span><span class="text"> </span><span class="id">outchan</span><span class="text">)
-          &gt;&gt;= </span><span class="kw">fun</span><span class="text"> () -&gt;
+          </span><span class="kw10">&gt;&gt;=</span><span class="text"> </span><span class="kw">fun</span><span class="text"> () -&gt;
           </span><span class="id">return</span><span class="text"> </span><span class="id">o</span><span class="text">
         | `</span><span class="kw2">Error</span><span class="text"> </span><span class="id">e</span><span class="text"> -&gt;
           </span><span class="kw1">begin</span><span class="text"> </span><span class="kw1">match</span><span class="text"> </span><span class="id">out</span><span class="text"> </span><span class="kw1">with</span><span class="text">
@@ -493,14 +493,14 @@
           | `</span><span class="kw2">Overwrite_file</span><span class="text"> </span><span class="numeric">_</span><span class="text">
           | `</span><span class="kw2">Create_file</span><span class="text"> </span><span class="numeric">_</span><span class="text"> -&gt;
             </span><span class="id">wrap_deferred_io</span><span class="text"> (</span><span class="kw">fun</span><span class="text"> () -&gt; </span><span class="kw2">Lwt_io</span><span class="text">.</span><span class="id">close</span><span class="text"> </span><span class="id">outchan</span><span class="text">)
-            &gt;&gt;= </span><span class="kw">fun</span><span class="text"> </span><span class="numeric">_</span><span class="text"> -&gt;
+            </span><span class="kw10">&gt;&gt;=</span><span class="text"> </span><span class="kw">fun</span><span class="text"> </span><span class="numeric">_</span><span class="text"> -&gt;
             </span><span class="id">fail</span><span class="text"> </span><span class="id">e</span><span class="text">
           | </span><span class="numeric">_</span><span class="text"> -&gt; </span><span class="id">fail</span><span class="text"> </span><span class="id">e</span><span class="text">
           </span><span class="kw1">end</span><span class="text">
         </span><span class="kw1">end</span><span class="text">
       </span><span class="kw1">end</span><span class="text">
     </span><span class="kw1">end</span><span class="text">
-    &gt;&gt;&lt; </span><span class="kw1">begin</span><span class="text"> </span><span class="kw">function</span><span class="text">
+    </span><span class="kw10">&gt;&gt;</span><span class="text">&lt; </span><span class="kw1">begin</span><span class="text"> </span><span class="kw">function</span><span class="text">
     | `</span><span class="kw2">Ok</span><span class="text"> </span><span class="id">o</span><span class="text"> -&gt; </span><span class="id">return</span><span class="text"> </span><span class="id">o</span><span class="text">
     | `</span><span class="kw2">Error</span><span class="text"> (`</span><span class="kw2">IO</span><span class="text"> (`</span><span class="kw2">Exn</span><span class="text"> (</span><span class="kw2">Unix</span><span class="text">.</span><span class="kw2">Unix_error</span><span class="text"> (</span><span class="kw2">Unix</span><span class="text">.</span><span class="kw2">ENOENT</span><span class="text">, </span><span class="numeric">_</span><span class="text">, </span><span class="id">path</span><span class="text">)))) -&gt;
       </span><span class="id">fail_io</span><span class="text"> (`</span><span class="kw2">Wrong_path</span><span class="text"> </span><span class="id">path</span><span class="text">)
@@ -523,19 +523,19 @@
       </span><span class="id">wrap_deferred_io</span><span class="text"> (</span><span class="kw">fun</span><span class="text"> () -&gt;
           </span><span class="kw2">Lwt_io</span><span class="text">.</span><span class="id">open_file</span><span class="text"> </span><span class="kw4">~mode</span><span class="text">:</span><span class="kw2">Lwt_io</span><span class="text">.</span><span class="id">input</span><span class="text"> ?</span><span class="id">buffer_size</span><span class="text"> </span><span class="id">file</span><span class="text">)
     </span><span class="kw1">end</span><span class="text">
-    &gt;&gt;= </span><span class="kw">fun</span><span class="text"> </span><span class="id">inchan</span><span class="text"> -&gt;
+    </span><span class="kw10">&gt;&gt;=</span><span class="text"> </span><span class="kw">fun</span><span class="text"> </span><span class="id">inchan</span><span class="text"> -&gt;
     </span><span class="kw1">begin</span><span class="text">
       </span><span class="id">f</span><span class="text"> </span><span class="id">inchan</span><span class="text">
-      &gt;&gt;&lt; </span><span class="kw1">begin</span><span class="text"> </span><span class="kw">function</span><span class="text">
+      </span><span class="kw10">&gt;&gt;</span><span class="text">&lt; </span><span class="kw1">begin</span><span class="text"> </span><span class="kw">function</span><span class="text">
       | `</span><span class="kw2">Ok</span><span class="text"> </span><span class="id">o</span><span class="text"> -&gt;
         </span><span class="id">wrap_deferred_io</span><span class="text"> (</span><span class="kw">fun</span><span class="text"> () -&gt; </span><span class="kw2">Lwt_io</span><span class="text">.</span><span class="id">close</span><span class="text"> </span><span class="id">inchan</span><span class="text">)
-        &gt;&gt;= </span><span class="kw">fun</span><span class="text"> () -&gt;
+        </span><span class="kw10">&gt;&gt;=</span><span class="text"> </span><span class="kw">fun</span><span class="text"> () -&gt;
         </span><span class="id">return</span><span class="text"> </span><span class="id">o</span><span class="text">
       | `</span><span class="kw2">Error</span><span class="text"> </span><span class="id">e</span><span class="text"> -&gt;
         </span><span class="kw1">begin</span><span class="text"> </span><span class="kw1">match</span><span class="text"> </span><span class="id">inspec</span><span class="text"> </span><span class="kw1">with</span><span class="text">
         | `</span><span class="kw2">File</span><span class="text"> </span><span class="numeric">_</span><span class="text"> -&gt;
           </span><span class="id">wrap_deferred_io</span><span class="text"> (</span><span class="kw">fun</span><span class="text"> () -&gt; </span><span class="kw2">Lwt_io</span><span class="text">.</span><span class="id">close</span><span class="text"> </span><span class="id">inchan</span><span class="text">)
-          &gt;&gt;= </span><span class="kw">fun</span><span class="text"> </span><span class="numeric">_</span><span class="text"> -&gt;
+          </span><span class="kw10">&gt;&gt;=</span><span class="text"> </span><span class="kw">fun</span><span class="text"> </span><span class="numeric">_</span><span class="text"> -&gt;
           </span><span class="id">fail</span><span class="text"> </span><span class="id">e</span><span class="text">
         | </span><span class="numeric">_</span><span class="text"> -&gt; </span><span class="id">fail</span><span class="text"> </span><span class="id">e</span><span class="text">
         </span><span class="kw1">end</span><span class="text">
@@ -551,14 +551,14 @@
   </span><span class="kw">let</span><span class="text">  </span><span class="id">write_file</span><span class="text"> </span><span class="id">file</span><span class="text"> </span><span class="kw4">~content</span><span class="text"> =
     </span><span class="id">catch_deferred</span><span class="text"> </span><span class="kw2">Lwt_io</span><span class="text">.(</span><span class="kw">fun</span><span class="text"> () -&gt;
         </span><span class="id">with_file</span><span class="text"> </span><span class="kw4">~mode</span><span class="text">:</span><span class="id">output</span><span class="text"> </span><span class="id">file</span><span class="text"> (</span><span class="kw">fun</span><span class="text"> </span><span class="id">i</span><span class="text"> -&gt; </span><span class="id">write</span><span class="text"> </span><span class="id">i</span><span class="text"> </span><span class="id">content</span><span class="text">))
-    &gt;&gt;&lt; </span><span class="kw">function</span><span class="text">
+    </span><span class="kw10">&gt;&gt;</span><span class="text">&lt; </span><span class="kw">function</span><span class="text">
     | `</span><span class="kw2">Ok</span><span class="text"> </span><span class="id">o</span><span class="text"> -&gt; </span><span class="id">return</span><span class="text"> </span><span class="id">o</span><span class="text">
     | `</span><span class="kw2">Error</span><span class="text"> </span><span class="id">e</span><span class="text"> -&gt; </span><span class="id">fail_io</span><span class="text"> (`</span><span class="kw2">Write_file_exn</span><span class="text"> (</span><span class="id">file</span><span class="text">, </span><span class="id">e</span><span class="text">))
 
   </span><span class="kw">let</span><span class="text"> </span><span class="id">read_file</span><span class="text"> </span><span class="id">file</span><span class="text"> =
     </span><span class="id">catch_deferred</span><span class="text"> </span><span class="kw2">Lwt_io</span><span class="text">.(</span><span class="kw">fun</span><span class="text"> () -&gt;
         </span><span class="id">with_file</span><span class="text"> </span><span class="kw4">~mode</span><span class="text">:</span><span class="id">input</span><span class="text"> </span><span class="id">file</span><span class="text"> (</span><span class="kw">fun</span><span class="text"> </span><span class="id">i</span><span class="text"> -&gt; </span><span class="id">read</span><span class="text"> </span><span class="id">i</span><span class="text">))
-     &gt;&gt;&lt; </span><span class="kw">function</span><span class="text">
+     </span><span class="kw10">&gt;&gt;</span><span class="text">&lt; </span><span class="kw">function</span><span class="text">
     | `</span><span class="kw2">Ok</span><span class="text"> </span><span class="id">o</span><span class="text"> -&gt; </span><span class="id">return</span><span class="text"> </span><span class="id">o</span><span class="text">
     | `</span><span class="kw2">Error</span><span class="text"> </span><span class="id">e</span><span class="text"> -&gt; </span><span class="id">fail_io</span><span class="text"> (`</span><span class="kw2">Read_file_exn</span><span class="text"> (</span><span class="id">file</span><span class="text">, </span><span class="id">e</span><span class="text">))
 
@@ -589,7 +589,7 @@
     </span><span class="kw">let</span><span class="text"> </span><span class="id">do_or_fail</span><span class="text"> </span><span class="id">s</span><span class="text"> =
       </span><span class="id">wrap_deferred</span><span class="text">  </span><span class="kw2">Lwt_io</span><span class="text">.(</span><span class="kw">fun</span><span class="text"> () -&gt; </span><span class="kw2">Lwt_unix</span><span class="text">.</span><span class="id">system</span><span class="text"> </span><span class="id">s</span><span class="text">)
         </span><span class="kw4">~on_exn</span><span class="text">:(</span><span class="kw">fun</span><span class="text"> </span><span class="id">e</span><span class="text"> -&gt; `</span><span class="kw2">Shell</span><span class="text"> (</span><span class="id">s</span><span class="text">, `</span><span class="kw2">Exn</span><span class="text"> </span><span class="id">e</span><span class="text">))
-      &gt;&gt;= </span><span class="kw">fun</span><span class="text"> </span><span class="id">ret</span><span class="text"> -&gt;
+      </span><span class="kw10">&gt;&gt;=</span><span class="text"> </span><span class="kw">fun</span><span class="text"> </span><span class="id">ret</span><span class="text"> -&gt;
       </span><span class="id">discriminate_process_status</span><span class="text"> </span><span class="id">s</span><span class="text"> </span><span class="id">ret</span><span class="text">
 
 
@@ -599,10 +599,10 @@
           </span><span class="kw">let</span><span class="text"> </span><span class="id">inprocess</span><span class="text"> = </span><span class="kw2">Lwt_process</span><span class="text">.(</span><span class="id">open_process_full</span><span class="text"> (</span><span class="id">shell</span><span class="text"> </span><span class="id">s</span><span class="text">)) </span><span class="kw">in</span><span class="text">
           </span><span class="kw2">Lwt_list</span><span class="text">.</span><span class="id">map_p</span><span class="text"> </span><span class="kw2">Lwt_io</span><span class="text">.</span><span class="id">read</span><span class="text">
             [</span><span class="id">inprocess</span><span class="kw1">#</span><span class="id">stdout</span><span class="text">; </span><span class="id">inprocess</span><span class="kw1">#</span><span class="id">stderr</span><span class="text">; ]
-          &gt;&gt;= </span><span class="kw">fun</span><span class="text"> </span><span class="id">output</span><span class="text"> -&gt;
-          </span><span class="id">inprocess</span><span class="kw1">#</span><span class="id">status</span><span class="text"> &gt;&gt;= </span><span class="kw">fun</span><span class="text"> </span><span class="id">status</span><span class="text"> -&gt;
+          </span><span class="kw10">&gt;&gt;=</span><span class="text"> </span><span class="kw">fun</span><span class="text"> </span><span class="id">output</span><span class="text"> -&gt;
+          </span><span class="id">inprocess</span><span class="kw1">#</span><span class="id">status</span><span class="text"> </span><span class="kw10">&gt;&gt;=</span><span class="text"> </span><span class="kw">fun</span><span class="text"> </span><span class="id">status</span><span class="text"> -&gt;
           </span><span class="id">return</span><span class="text"> (</span><span class="id">status</span><span class="text">, </span><span class="id">output</span><span class="text">))
-      &gt;&gt;= </span><span class="kw">fun</span><span class="text"> (</span><span class="id">ret</span><span class="text">, </span><span class="id">output</span><span class="text">) -&gt;
+      </span><span class="kw10">&gt;&gt;=</span><span class="text"> </span><span class="kw">fun</span><span class="text"> (</span><span class="id">ret</span><span class="text">, </span><span class="id">output</span><span class="text">) -&gt;
       </span><span class="kw">let</span><span class="text"> </span><span class="id">code</span><span class="text"> =
         </span><span class="kw1">match</span><span class="text"> </span><span class="id">ret</span><span class="text"> </span><span class="kw1">with</span><span class="text">
         | </span><span class="kw2">Lwt_unix</span><span class="text">.</span><span class="kw2">WEXITED</span><span class="text"> </span><span class="id">n</span><span class="text"> -&gt;   (`</span><span class="kw2">Exited</span><span class="text"> </span><span class="id">n</span><span class="text">)
@@ -635,7 +635,7 @@
     </span><span class="kw">let</span><span class="text"> </span><span class="id">fail_here</span><span class="text"> </span><span class="id">e</span><span class="text"> =
       </span><span class="id">fail_sys</span><span class="text"> (`</span><span class="kw2">Make_directory</span><span class="text"> </span><span class="id">dirname</span><span class="text">, </span><span class="id">e</span><span class="text">) </span><span class="kw">in</span><span class="text">
     </span><span class="kw2">Lwt</span><span class="text">.</span><span class="id">catch</span><span class="text">
-      </span><span class="kw2">Lwt</span><span class="text">.(</span><span class="kw">fun</span><span class="text"> () -&gt; </span><span class="kw2">Lwt_unix</span><span class="text">.</span><span class="id">mkdir</span><span class="text"> </span><span class="id">dirname</span><span class="text"> </span><span class="id">perm</span><span class="text"> &gt;&gt;= </span><span class="kw">fun</span><span class="text"> () -&gt; </span><span class="id">return</span><span class="text"> (`</span><span class="kw2">Ok</span><span class="text"> ()))
+      </span><span class="kw2">Lwt</span><span class="text">.(</span><span class="kw">fun</span><span class="text"> () -&gt; </span><span class="kw2">Lwt_unix</span><span class="text">.</span><span class="id">mkdir</span><span class="text"> </span><span class="id">dirname</span><span class="text"> </span><span class="id">perm</span><span class="text"> </span><span class="kw10">&gt;&gt;=</span><span class="text"> </span><span class="kw">fun</span><span class="text"> () -&gt; </span><span class="id">return</span><span class="text"> (`</span><span class="kw2">Ok</span><span class="text"> ()))
       </span><span class="kw1">begin</span><span class="text"> </span><span class="kw">function</span><span class="text">
       | </span><span class="kw2">Unix</span><span class="text">.</span><span class="kw2">Unix_error</span><span class="text"> (</span><span class="kw2">Unix</span><span class="text">.</span><span class="kw2">EACCES</span><span class="text">, </span><span class="id">cmd</span><span class="text">, </span><span class="id">arg</span><span class="text">)  -&gt;
         </span><span class="id">fail_here</span><span class="text"> (`</span><span class="kw2">Wrong_access_rights</span><span class="text"> </span><span class="id">perm</span><span class="text">)
@@ -651,7 +651,7 @@
     </span><span class="kw">let</span><span class="text"> </span><span class="id">fail_here</span><span class="text"> </span><span class="id">e</span><span class="text"> =
       </span><span class="id">fail_sys</span><span class="text"> (`</span><span class="kw2">Make_directory</span><span class="text"> </span><span class="id">dirname</span><span class="text">, </span><span class="id">e</span><span class="text">) </span><span class="kw">in</span><span class="text">
     </span><span class="kw2">Lwt</span><span class="text">.</span><span class="id">catch</span><span class="text">
-      </span><span class="kw2">Lwt</span><span class="text">.(</span><span class="kw">fun</span><span class="text"> () -&gt; </span><span class="kw2">Lwt_unix</span><span class="text">.</span><span class="id">mkdir</span><span class="text"> </span><span class="id">dirname</span><span class="text"> </span><span class="id">perm</span><span class="text"> &gt;&gt;= </span><span class="kw">fun</span><span class="text"> () -&gt; </span><span class="id">return</span><span class="text"> (`</span><span class="kw2">Ok</span><span class="text"> ()))
+      </span><span class="kw2">Lwt</span><span class="text">.(</span><span class="kw">fun</span><span class="text"> () -&gt; </span><span class="kw2">Lwt_unix</span><span class="text">.</span><span class="id">mkdir</span><span class="text"> </span><span class="id">dirname</span><span class="text"> </span><span class="id">perm</span><span class="text"> </span><span class="kw10">&gt;&gt;=</span><span class="text"> </span><span class="kw">fun</span><span class="text"> () -&gt; </span><span class="id">return</span><span class="text"> (`</span><span class="kw2">Ok</span><span class="text"> ()))
       </span><span class="kw1">begin</span><span class="text"> </span><span class="kw">function</span><span class="text">
       | </span><span class="kw2">Unix</span><span class="text">.</span><span class="kw2">Unix_error</span><span class="text"> (</span><span class="kw2">Unix</span><span class="text">.</span><span class="kw2">EACCES</span><span class="text">, </span><span class="id">cmd</span><span class="text">, </span><span class="id">arg</span><span class="text">)  -&gt;
         </span><span class="id">fail_here</span><span class="text"> (`</span><span class="kw2">Wrong_access_rights</span><span class="text"> </span><span class="id">perm</span><span class="text">)
@@ -673,14 +673,14 @@
       | </span><span class="id">init</span><span class="text"> :: </span><span class="id">dirs</span><span class="text"> -&gt; (</span><span class="id">init</span><span class="text">, </span><span class="id">dirs</span><span class="text">)
     </span><span class="kw">in</span><span class="text">
     </span><span class="id">mkdir_even_if_exists</span><span class="text"> ?</span><span class="id">perm</span><span class="text"> </span><span class="id">init</span><span class="text">
-    &gt;&gt;= </span><span class="kw">fun</span><span class="text"> () -&gt;
+    </span><span class="kw10">&gt;&gt;=</span><span class="text"> </span><span class="kw">fun</span><span class="text"> () -&gt;
     </span><span class="kw2">List</span><span class="text">.</span><span class="id">fold_left</span><span class="text"> </span><span class="id">dirs</span><span class="text"> </span><span class="kw4">~init</span><span class="text">:(</span><span class="id">return</span><span class="text"> </span><span class="id">init</span><span class="text">) </span><span class="kw4">~f</span><span class="text">:(</span><span class="kw">fun</span><span class="text"> </span><span class="id">m</span><span class="text"> </span><span class="id">part</span><span class="text"> -&gt;
-        </span><span class="id">m</span><span class="text"> &gt;&gt;= </span><span class="kw">fun</span><span class="text"> </span><span class="id">previous</span><span class="text"> -&gt;
+        </span><span class="id">m</span><span class="text"> </span><span class="kw10">&gt;&gt;=</span><span class="text"> </span><span class="kw">fun</span><span class="text"> </span><span class="id">previous</span><span class="text"> -&gt;
         </span><span class="kw">let</span><span class="text"> </span><span class="id">dir</span><span class="text"> = </span><span class="kw2">Filename</span><span class="text">.</span><span class="id">concat</span><span class="text"> </span><span class="id">previous</span><span class="text"> </span><span class="id">part</span><span class="text"> </span><span class="kw">in</span><span class="text">
         </span><span class="id">mkdir_even_if_exists</span><span class="text"> ?</span><span class="id">perm</span><span class="text"> </span><span class="id">dir</span><span class="text">
-        &gt;&gt;= </span><span class="kw">fun</span><span class="text"> () -&gt;
+        </span><span class="kw10">&gt;&gt;=</span><span class="text"> </span><span class="kw">fun</span><span class="text"> () -&gt;
         </span><span class="id">return</span><span class="text"> </span><span class="id">dir</span><span class="text">)
-    &gt;&gt;= </span><span class="kw">fun</span><span class="text"> </span><span class="numeric">_</span><span class="text"> -&gt;
+    </span><span class="kw10">&gt;&gt;=</span><span class="text"> </span><span class="kw">fun</span><span class="text"> </span><span class="numeric">_</span><span class="text"> -&gt;
     </span><span class="id">return</span><span class="text"> ()
 
   </span><span class="kw">type</span><span class="text"> </span><span class="id">file_info</span><span class="text"> =
@@ -708,12 +708,12 @@
       </span><span class="kw1">if</span><span class="text"> </span><span class="id">follow_symlink</span><span class="text"> </span><span class="kw1">then</span><span class="text"> </span><span class="kw2">Lwt_unix</span><span class="text">.</span><span class="id">stat</span><span class="text"> </span><span class="kw1">else</span><span class="text"> </span><span class="kw2">Lwt_unix</span><span class="text">.</span><span class="id">lstat</span><span class="text"> </span><span class="kw">in</span><span class="text">
     </span><span class="comment">(* eprintf &quot;(l)stat %s? \n%!&quot; path; *)</span><span class="text">
     </span><span class="kw2">Lwt</span><span class="text">.</span><span class="id">catch</span><span class="text">
-      </span><span class="kw2">Lwt</span><span class="text">.(</span><span class="kw">fun</span><span class="text"> () -&gt; </span><span class="id">stat_fun</span><span class="text"> </span><span class="id">path</span><span class="text"> &gt;&gt;= </span><span class="kw">fun</span><span class="text"> </span><span class="id">s</span><span class="text"> -&gt; </span><span class="id">return</span><span class="text"> (`</span><span class="kw2">Ok</span><span class="text"> (`</span><span class="kw2">Unix_stats</span><span class="text"> </span><span class="id">s</span><span class="text">)))
+      </span><span class="kw2">Lwt</span><span class="text">.(</span><span class="kw">fun</span><span class="text"> () -&gt; </span><span class="id">stat_fun</span><span class="text"> </span><span class="id">path</span><span class="text"> </span><span class="kw10">&gt;&gt;=</span><span class="text"> </span><span class="kw">fun</span><span class="text"> </span><span class="id">s</span><span class="text"> -&gt; </span><span class="id">return</span><span class="text"> (`</span><span class="kw2">Ok</span><span class="text"> (`</span><span class="kw2">Unix_stats</span><span class="text"> </span><span class="id">s</span><span class="text">)))
       </span><span class="kw1">begin</span><span class="text"> </span><span class="kw">function</span><span class="text">
       | </span><span class="kw2">Unix</span><span class="text">.</span><span class="kw2">Unix_error</span><span class="text"> (</span><span class="kw2">Unix</span><span class="text">.</span><span class="kw2">ENOENT</span><span class="text">, </span><span class="id">cmd</span><span class="text">, </span><span class="id">arg</span><span class="text">)  -&gt; </span><span class="id">return</span><span class="text"> `</span><span class="kw2">Absent</span><span class="text">
       | </span><span class="id">e</span><span class="text"> -&gt; </span><span class="id">fail_sys</span><span class="text"> (`</span><span class="kw2">File_info</span><span class="text"> </span><span class="id">path</span><span class="text">, `</span><span class="kw2">Exn</span><span class="text"> </span><span class="id">e</span><span class="text">)
       </span><span class="kw1">end</span><span class="text">
-    &gt;&gt;= </span><span class="kw">fun</span><span class="text"> </span><span class="id">m</span><span class="text"> -&gt;
+    </span><span class="kw10">&gt;&gt;=</span><span class="text"> </span><span class="kw">fun</span><span class="text"> </span><span class="id">m</span><span class="text"> -&gt;
     </span><span class="kw">let</span><span class="text"> </span><span class="kw">open</span><span class="text"> </span><span class="kw2">Lwt_unix</span><span class="text"> </span><span class="kw">in</span><span class="text">
     </span><span class="kw1">begin</span><span class="text"> </span><span class="kw1">match</span><span class="text"> </span><span class="id">m</span><span class="text"> </span><span class="kw1">with</span><span class="text">
     | `</span><span class="kw2">Absent</span><span class="text"> -&gt; </span><span class="id">return</span><span class="text"> `</span><span class="kw2">Absent</span><span class="text">
@@ -725,12 +725,12 @@
         </span><span class="comment">(* eprintf &quot;readlink %s? \n%!&quot; path; *)</span><span class="text">
         </span><span class="kw1">begin</span><span class="text">
           </span><span class="id">catch_deferred</span><span class="text"> (</span><span class="kw">fun</span><span class="text"> () -&gt; </span><span class="id">lwt_unix_readlink</span><span class="text"> </span><span class="id">path</span><span class="text">)
-          &gt;&gt;&lt; </span><span class="kw1">begin</span><span class="text"> </span><span class="kw">function</span><span class="text">
+          </span><span class="kw10">&gt;&gt;</span><span class="text">&lt; </span><span class="kw1">begin</span><span class="text"> </span><span class="kw">function</span><span class="text">
           | `</span><span class="kw2">Ok</span><span class="text"> </span><span class="id">s</span><span class="text"> -&gt; </span><span class="id">return</span><span class="text"> </span><span class="id">s</span><span class="text">
           | `</span><span class="kw2">Error</span><span class="text"> </span><span class="id">e</span><span class="text"> -&gt; </span><span class="id">fail</span><span class="text"> (`</span><span class="kw2">System</span><span class="text"> (`</span><span class="kw2">File_info</span><span class="text"> </span><span class="id">path</span><span class="text">, `</span><span class="kw2">Exn</span><span class="text"> </span><span class="id">e</span><span class="text">))
           </span><span class="kw1">end</span><span class="text">
         </span><span class="kw1">end</span><span class="text">
-        &gt;&gt;= </span><span class="kw">fun</span><span class="text"> </span><span class="id">destination</span><span class="text"> -&gt;
+        </span><span class="kw10">&gt;&gt;=</span><span class="text"> </span><span class="kw">fun</span><span class="text"> </span><span class="id">destination</span><span class="text"> -&gt;
         </span><span class="comment">(* eprintf &quot;readlink %s worked \n%!&quot; path; *)</span><span class="text">
         </span><span class="id">return</span><span class="text"> (`</span><span class="kw2">Symlink</span><span class="text"> </span><span class="id">destination</span><span class="text">)
       | </span><span class="kw2">S_CHR</span><span class="text"> -&gt; </span><span class="id">return</span><span class="text"> (`</span><span class="kw2">Character_device</span><span class="text">)
@@ -745,14 +745,14 @@
     </span><span class="kw">let</span><span class="text"> </span><span class="id">next</span><span class="text"> </span><span class="id">s</span><span class="text"> =
       </span><span class="id">wrap_deferred</span><span class="text"> </span><span class="kw4">~on_exn</span><span class="text">:(</span><span class="kw">fun</span><span class="text"> </span><span class="id">e</span><span class="text"> -&gt; `</span><span class="kw2">System</span><span class="text"> (`</span><span class="kw2">List_directory</span><span class="text"> </span><span class="id">path</span><span class="text">, `</span><span class="kw2">Exn</span><span class="text"> </span><span class="id">e</span><span class="text">))
         </span><span class="kw2">Lwt</span><span class="text">.(</span><span class="kw">fun</span><span class="text"> () -&gt;
-            </span><span class="id">catch</span><span class="text"> (</span><span class="kw">fun</span><span class="text"> () -&gt; </span><span class="kw2">Lwt_stream</span><span class="text">.</span><span class="id">next</span><span class="text"> </span><span class="id">s</span><span class="text"> &gt;&gt;= </span><span class="kw">fun</span><span class="text"> </span><span class="id">n</span><span class="text"> -&gt; </span><span class="id">return</span><span class="text"> (</span><span class="kw2">Some</span><span class="text"> </span><span class="id">n</span><span class="text">))
+            </span><span class="id">catch</span><span class="text"> (</span><span class="kw">fun</span><span class="text"> () -&gt; </span><span class="kw2">Lwt_stream</span><span class="text">.</span><span class="id">next</span><span class="text"> </span><span class="id">s</span><span class="text"> </span><span class="kw10">&gt;&gt;=</span><span class="text"> </span><span class="kw">fun</span><span class="text"> </span><span class="id">n</span><span class="text"> -&gt; </span><span class="id">return</span><span class="text"> (</span><span class="kw2">Some</span><span class="text"> </span><span class="id">n</span><span class="text">))
               (</span><span class="kw">function</span><span class="text"> </span><span class="kw2">Lwt_stream</span><span class="text">.</span><span class="kw2">Empty</span><span class="text"> -&gt; </span><span class="id">return</span><span class="text"> </span><span class="kw2">None</span><span class="text"> | </span><span class="id">e</span><span class="text"> -&gt; </span><span class="id">fail</span><span class="text"> </span><span class="id">e</span><span class="text">)) </span><span class="kw">in</span><span class="text">
     `</span><span class="kw2">Stream</span><span class="text"> (</span><span class="kw">fun</span><span class="text"> () -&gt; (</span><span class="id">next</span><span class="text"> </span><span class="id">f_stream</span><span class="text">))
 
   </span><span class="kw">let</span><span class="text"> </span><span class="id">remove</span><span class="text"> </span><span class="id">path</span><span class="text"> =
     </span><span class="kw">let</span><span class="text"> </span><span class="kw">rec</span><span class="text"> </span><span class="id">remove_aux</span><span class="text"> </span><span class="id">path</span><span class="text"> =
       </span><span class="id">file_info</span><span class="text"> </span><span class="id">path</span><span class="text">
-      &gt;&gt;= </span><span class="kw1">begin</span><span class="text"> </span><span class="kw">function</span><span class="text">
+      </span><span class="kw10">&gt;&gt;=</span><span class="text"> </span><span class="kw1">begin</span><span class="text"> </span><span class="kw">function</span><span class="text">
       | `</span><span class="kw2">Absent</span><span class="text"> -&gt; </span><span class="id">return</span><span class="text"> ()
       | `</span><span class="kw2">Block_device</span><span class="text">
       | `</span><span class="kw2">Character_device</span><span class="text">
@@ -764,23 +764,23 @@
         </span><span class="kw">let</span><span class="text"> `</span><span class="kw2">Stream</span><span class="text"> </span><span class="id">next_dir</span><span class="text"> = </span><span class="id">list_directory</span><span class="text"> </span><span class="id">path</span><span class="text"> </span><span class="kw">in</span><span class="text">
         </span><span class="kw">let</span><span class="text"> </span><span class="kw">rec</span><span class="text"> </span><span class="id">loop</span><span class="text"> () =
           </span><span class="id">next_dir</span><span class="text"> ()
-          &gt;&gt;= </span><span class="kw1">begin</span><span class="text"> </span><span class="kw">function</span><span class="text">
+          </span><span class="kw10">&gt;&gt;=</span><span class="text"> </span><span class="kw1">begin</span><span class="text"> </span><span class="kw">function</span><span class="text">
           | </span><span class="kw2">Some</span><span class="text"> </span><span class="string">&quot;..&quot;</span><span class="text">
           | </span><span class="kw2">Some</span><span class="text"> </span><span class="string">&quot;.&quot;</span><span class="text"> -&gt; </span><span class="id">loop</span><span class="text"> ()
           | </span><span class="kw2">Some</span><span class="text"> </span><span class="id">name</span><span class="text"> -&gt;
             </span><span class="id">remove_aux</span><span class="text"> (</span><span class="kw2">Filename</span><span class="text">.</span><span class="id">concat</span><span class="text"> </span><span class="id">path</span><span class="text"> </span><span class="id">name</span><span class="text">)
-            &gt;&gt;= </span><span class="kw">fun</span><span class="text"> () -&gt;
+            </span><span class="kw10">&gt;&gt;=</span><span class="text"> </span><span class="kw">fun</span><span class="text"> () -&gt;
             </span><span class="id">loop</span><span class="text"> ()
           | </span><span class="kw2">None</span><span class="text"> -&gt; </span><span class="id">return</span><span class="text"> ()
           </span><span class="kw1">end</span><span class="text">
         </span><span class="kw">in</span><span class="text">
         </span><span class="id">loop</span><span class="text"> ()
-        &gt;&gt;= </span><span class="kw">fun</span><span class="text"> () -&gt;
+        </span><span class="kw10">&gt;&gt;=</span><span class="text"> </span><span class="kw">fun</span><span class="text"> () -&gt;
         </span><span class="id">wrap_deferred_system</span><span class="text"> (`</span><span class="kw2">Remove</span><span class="text"> </span><span class="id">path</span><span class="text">) (</span><span class="kw">fun</span><span class="text"> () -&gt; </span><span class="kw2">Lwt_unix</span><span class="text">.</span><span class="id">rmdir</span><span class="text"> </span><span class="id">path</span><span class="text">)
       </span><span class="kw1">end</span><span class="text">
     </span><span class="kw">in</span><span class="text">
     </span><span class="id">remove_aux</span><span class="text"> </span><span class="id">path</span><span class="text">
-    &gt;&gt;&lt; </span><span class="kw1">begin</span><span class="text"> </span><span class="kw">function</span><span class="text">
+    </span><span class="kw10">&gt;&gt;</span><span class="text">&lt; </span><span class="kw1">begin</span><span class="text"> </span><span class="kw">function</span><span class="text">
     | `</span><span class="kw2">Ok</span><span class="text"> () -&gt; </span><span class="id">return</span><span class="text"> ()
     | `</span><span class="kw2">Error</span><span class="text"> (`</span><span class="kw2">System_exn</span><span class="text"> </span><span class="id">e</span><span class="text">) -&gt; </span><span class="id">fail</span><span class="text"> (`</span><span class="kw2">System</span><span class="text"> (`</span><span class="kw2">Remove</span><span class="text"> </span><span class="id">path</span><span class="text">, `</span><span class="kw2">Exn</span><span class="text"> </span><span class="id">e</span><span class="text">))
     | `</span><span class="kw2">Error</span><span class="text"> (`</span><span class="kw2">System</span><span class="text"> </span><span class="id">e</span><span class="text">) -&gt; </span><span class="id">fail</span><span class="text"> (`</span><span class="kw2">System</span><span class="text"> </span><span class="id">e</span><span class="text">)
@@ -810,7 +810,7 @@
       </span><span class="kw4">~src</span><span class="text"> </span><span class="id">dst</span><span class="text"> =
     </span><span class="kw">let</span><span class="text"> </span><span class="kw">rec</span><span class="text"> </span><span class="id">copy_aux</span><span class="text"> </span><span class="kw4">~src</span><span class="text"> </span><span class="kw4">~dst</span><span class="text"> =
       </span><span class="id">file_info</span><span class="text"> </span><span class="id">src</span><span class="text">
-      &gt;&gt;= </span><span class="kw1">begin</span><span class="text"> </span><span class="kw">function</span><span class="text">
+      </span><span class="kw10">&gt;&gt;=</span><span class="text"> </span><span class="kw1">begin</span><span class="text"> </span><span class="kw">function</span><span class="text">
       | `</span><span class="kw2">Absent</span><span class="text"> -&gt; </span><span class="id">fail</span><span class="text"> (`</span><span class="kw2">File_not_found</span><span class="text"> </span><span class="id">src</span><span class="text">)
       | `</span><span class="kw2">Block_device</span><span class="text">
       | `</span><span class="kw2">Character_device</span><span class="text">
@@ -829,7 +829,7 @@
           | `</span><span class="kw2">Overwrite</span><span class="text">
           | `</span><span class="kw2">Update</span><span class="text"> -&gt; </span><span class="id">remove</span><span class="text"> </span><span class="id">link_path</span><span class="text"> </span><span class="comment">(* remove does not fail on missing files *)</span><span class="text">
           </span><span class="kw1">end</span><span class="text">
-          &gt;&gt;= </span><span class="kw">fun</span><span class="text"> () -&gt;
+          </span><span class="kw10">&gt;&gt;=</span><span class="text"> </span><span class="kw">fun</span><span class="text"> () -&gt;
           </span><span class="id">make_symlink</span><span class="text"> </span><span class="kw4">~target</span><span class="text">:</span><span class="id">content</span><span class="text"> </span><span class="kw4">~link_path</span><span class="text">
         </span><span class="kw1">end</span><span class="text">
       | `</span><span class="kw2">Regular_file</span><span class="text"> </span><span class="numeric">_</span><span class="text">-&gt;
@@ -843,10 +843,10 @@
             </span><span class="kw2">IO</span><span class="text">.</span><span class="id">with_in_channel</span><span class="text"> </span><span class="kw4">~buffer_size</span><span class="text"> (`</span><span class="kw2">File</span><span class="text"> </span><span class="id">src</span><span class="text">) </span><span class="kw4">~f</span><span class="text">:(</span><span class="kw">fun</span><span class="text"> </span><span class="id">inchan</span><span class="text"> -&gt;
                 </span><span class="kw">let</span><span class="text"> </span><span class="kw">rec</span><span class="text"> </span><span class="id">loop</span><span class="text"> () =
                   </span><span class="kw2">IO</span><span class="text">.</span><span class="id">read</span><span class="text"> </span><span class="kw4">~count</span><span class="text">:</span><span class="id">buffer_size</span><span class="text"> </span><span class="id">inchan</span><span class="text">
-                  &gt;&gt;= </span><span class="kw1">begin</span><span class="text"> </span><span class="kw">function</span><span class="text">
+                  </span><span class="kw10">&gt;&gt;=</span><span class="text"> </span><span class="kw1">begin</span><span class="text"> </span><span class="kw">function</span><span class="text">
                   | </span><span class="string">&quot;&quot;</span><span class="text"> -&gt; </span><span class="id">return</span><span class="text"> ()
                   | </span><span class="id">buf</span><span class="text"> -&gt;
-                    </span><span class="kw2">IO</span><span class="text">.</span><span class="id">write</span><span class="text"> </span><span class="id">outchan</span><span class="text"> </span><span class="id">buf</span><span class="text"> &gt;&gt;= </span><span class="kw">fun</span><span class="text"> () -&gt;
+                    </span><span class="kw2">IO</span><span class="text">.</span><span class="id">write</span><span class="text"> </span><span class="id">outchan</span><span class="text"> </span><span class="id">buf</span><span class="text"> </span><span class="kw10">&gt;&gt;=</span><span class="text"> </span><span class="kw">fun</span><span class="text"> () -&gt;
                     </span><span class="id">loop</span><span class="text"> ()
                   </span><span class="kw1">end</span><span class="text">
                 </span><span class="kw">in</span><span class="text">
@@ -854,7 +854,7 @@
       | `</span><span class="kw2">Directory</span><span class="text"> -&gt;
         </span><span class="kw">let</span><span class="text"> </span><span class="id">new_dir</span><span class="text"> = </span><span class="id">path_of_destination</span><span class="text"> </span><span class="kw4">~src</span><span class="text"> </span><span class="kw4">~dst</span><span class="text"> </span><span class="kw">in</span><span class="text">
         </span><span class="id">file_info</span><span class="text"> </span><span class="id">new_dir</span><span class="text">
-        &gt;&gt;= </span><span class="kw1">begin</span><span class="text"> </span><span class="kw">function</span><span class="text">
+        </span><span class="kw10">&gt;&gt;=</span><span class="text"> </span><span class="kw1">begin</span><span class="text"> </span><span class="kw">function</span><span class="text">
         | `</span><span class="kw2">Absent</span><span class="text"> -&gt;
           </span><span class="id">make_new_directory</span><span class="text"> </span><span class="id">new_dir</span><span class="text">
         | </span><span class="id">smth_else</span><span class="text"> -&gt;
@@ -862,7 +862,7 @@
           | `</span><span class="kw2">Fail</span><span class="text"> -&gt; </span><span class="id">fail</span><span class="text"> (`</span><span class="kw2">File_exists</span><span class="text"> </span><span class="id">new_dir</span><span class="text">)
           | `</span><span class="kw2">Overwrite</span><span class="text"> -&gt;
             </span><span class="id">remove</span><span class="text"> </span><span class="id">new_dir</span><span class="text">
-            &gt;&gt;= </span><span class="kw">fun</span><span class="text"> () -&gt;
+            </span><span class="kw10">&gt;&gt;=</span><span class="text"> </span><span class="kw">fun</span><span class="text"> () -&gt;
             </span><span class="id">make_new_directory</span><span class="text"> </span><span class="id">new_dir</span><span class="text">
           | `</span><span class="kw2">Update</span><span class="text"> -&gt;
             </span><span class="kw1">if</span><span class="text"> </span><span class="id">smth_else</span><span class="text"> = `</span><span class="kw2">Directory</span><span class="text">
@@ -870,18 +870,18 @@
             </span><span class="kw1">else</span><span class="text"> </span><span class="id">fail</span><span class="text"> (`</span><span class="kw2">Not_a_directory</span><span class="text"> </span><span class="id">new_dir</span><span class="text">)
           </span><span class="kw1">end</span><span class="text">
         </span><span class="kw1">end</span><span class="text">
-        &gt;&gt;= </span><span class="kw">fun</span><span class="text"> () -&gt;
+        </span><span class="kw10">&gt;&gt;=</span><span class="text"> </span><span class="kw">fun</span><span class="text"> () -&gt;
         </span><span class="kw">let</span><span class="text"> `</span><span class="kw2">Stream</span><span class="text"> </span><span class="id">next_dir</span><span class="text"> = </span><span class="id">list_directory</span><span class="text"> </span><span class="id">src</span><span class="text"> </span><span class="kw">in</span><span class="text">
         </span><span class="kw">let</span><span class="text"> </span><span class="kw">rec</span><span class="text"> </span><span class="id">loop</span><span class="text"> () =
           </span><span class="id">next_dir</span><span class="text"> ()
-          &gt;&gt;= </span><span class="kw1">begin</span><span class="text"> </span><span class="kw">function</span><span class="text">
+          </span><span class="kw10">&gt;&gt;=</span><span class="text"> </span><span class="kw1">begin</span><span class="text"> </span><span class="kw">function</span><span class="text">
           | </span><span class="kw2">Some</span><span class="text"> </span><span class="string">&quot;..&quot;</span><span class="text">
           | </span><span class="kw2">Some</span><span class="text"> </span><span class="string">&quot;.&quot;</span><span class="text"> -&gt; </span><span class="id">loop</span><span class="text"> ()
           | </span><span class="kw2">Some</span><span class="text"> </span><span class="id">name</span><span class="text"> -&gt;
             </span><span class="id">copy_aux</span><span class="text">
               </span><span class="kw4">~src</span><span class="text">:(</span><span class="kw2">Filename</span><span class="text">.</span><span class="id">concat</span><span class="text"> </span><span class="id">src</span><span class="text"> </span><span class="id">name</span><span class="text">)
               </span><span class="kw4">~dst</span><span class="text">:(`</span><span class="kw2">Into</span><span class="text"> </span><span class="id">new_dir</span><span class="text">)
-            &gt;&gt;= </span><span class="kw">fun</span><span class="text"> () -&gt;
+            </span><span class="kw10">&gt;&gt;=</span><span class="text"> </span><span class="kw">fun</span><span class="text"> () -&gt;
             </span><span class="id">loop</span><span class="text"> ()
           | </span><span class="kw2">None</span><span class="text"> -&gt; </span><span class="id">return</span><span class="text"> ()
           </span><span class="kw1">end</span><span class="text">
@@ -890,7 +890,7 @@
       </span><span class="kw1">end</span><span class="text">
     </span><span class="kw">in</span><span class="text">
     (</span><span class="id">copy_aux</span><span class="text"> </span><span class="kw4">~src</span><span class="text"> </span><span class="kw4">~dst</span><span class="text">
-     &gt;&gt;&lt; </span><span class="kw1">begin</span><span class="text"> </span><span class="kw">function</span><span class="text">
+     </span><span class="kw10">&gt;&gt;</span><span class="text">&lt; </span><span class="kw1">begin</span><span class="text"> </span><span class="kw">function</span><span class="text">
      | `</span><span class="kw2">Ok</span><span class="text"> () -&gt; </span><span class="id">return</span><span class="text"> ()
      | `</span><span class="kw2">Error</span><span class="text"> </span><span class="id">err</span><span class="text"> -&gt;
        </span><span class="kw1">begin</span><span class="text"> </span><span class="kw1">match</span><span class="text"> </span><span class="id">err</span><span class="text"> </span><span class="kw1">with</span><span class="text">
@@ -910,15 +910,15 @@
     </span><span class="kw1">begin</span><span class="text"> </span><span class="kw1">match</span><span class="text"> </span><span class="id">if_exists</span><span class="text"> </span><span class="kw1">with</span><span class="text">
     | `</span><span class="kw2">Fail</span><span class="text"> -&gt;
       </span><span class="id">file_info</span><span class="text"> </span><span class="id">real_dest</span><span class="text">
-      &gt;&gt;= </span><span class="kw1">begin</span><span class="text"> </span><span class="kw">function</span><span class="text">
+      </span><span class="kw10">&gt;&gt;=</span><span class="text"> </span><span class="kw1">begin</span><span class="text"> </span><span class="kw">function</span><span class="text">
       | `</span><span class="kw2">Absent</span><span class="text"> -&gt; </span><span class="id">return</span><span class="text"> ()
       | </span><span class="numeric">_</span><span class="text"> -&gt; </span><span class="id">fail</span><span class="text"> (`</span><span class="kw2">System</span><span class="text"> (`</span><span class="kw2">Move</span><span class="text"> </span><span class="id">src</span><span class="text">, `</span><span class="kw2">File_exists</span><span class="text"> </span><span class="id">real_dest</span><span class="text">))
       </span><span class="kw1">end</span><span class="text">
     | </span><span class="numeric">_</span><span class="text"> -&gt; </span><span class="comment">(* Unix.rename does overwriting *)</span><span class="text"> </span><span class="id">return</span><span class="text"> ()
     </span><span class="kw1">end</span><span class="text">
-    &gt;&gt;= </span><span class="kw">fun</span><span class="text"> () -&gt;
+    </span><span class="kw10">&gt;&gt;=</span><span class="text"> </span><span class="kw">fun</span><span class="text"> () -&gt;
     </span><span class="kw2">Lwt</span><span class="text">.</span><span class="id">catch</span><span class="text">
-      </span><span class="kw2">Lwt</span><span class="text">.(</span><span class="kw">fun</span><span class="text"> () -&gt; </span><span class="kw2">Lwt_unix</span><span class="text">.</span><span class="id">rename</span><span class="text"> </span><span class="id">src</span><span class="text"> </span><span class="id">real_dest</span><span class="text"> &gt;&gt;= </span><span class="kw">fun</span><span class="text"> () -&gt; </span><span class="id">return</span><span class="text"> (`</span><span class="kw2">Ok</span><span class="text"> `</span><span class="kw2">Moved</span><span class="text">))
+      </span><span class="kw2">Lwt</span><span class="text">.(</span><span class="kw">fun</span><span class="text"> () -&gt; </span><span class="kw2">Lwt_unix</span><span class="text">.</span><span class="id">rename</span><span class="text"> </span><span class="id">src</span><span class="text"> </span><span class="id">real_dest</span><span class="text"> </span><span class="kw10">&gt;&gt;=</span><span class="text"> </span><span class="kw">fun</span><span class="text"> () -&gt; </span><span class="id">return</span><span class="text"> (`</span><span class="kw2">Ok</span><span class="text"> `</span><span class="kw2">Moved</span><span class="text">))
       </span><span class="kw1">begin</span><span class="text"> </span><span class="kw">function</span><span class="text">
       | </span><span class="kw2">Unix</span><span class="text">.</span><span class="kw2">Unix_error</span><span class="text"> (</span><span class="kw2">Unix</span><span class="text">.</span><span class="kw2">EXDEV</span><span class="text">, </span><span class="id">cmd</span><span class="text">, </span><span class="id">arg</span><span class="text">)  -&gt; </span><span class="id">return</span><span class="text"> `</span><span class="kw2">Must_copy</span><span class="text">
       | </span><span class="kw2">Unix</span><span class="text">.</span><span class="kw2">Unix_error</span><span class="text"> (</span><span class="kw2">Unix</span><span class="text">.</span><span class="kw2">ENOTEMPTY</span><span class="text">, </span><span class="id">cmd</span><span class="text">, </span><span class="id">arg</span><span class="text">)  -&gt; </span><span class="id">return</span><span class="text"> `</span><span class="kw2">Must_copy</span><span class="text">
@@ -927,11 +927,11 @@
 
   </span><span class="kw">let</span><span class="text"> </span><span class="id">move</span><span class="text"> ?</span><span class="id">ignore_strange</span><span class="text"> ?</span><span class="id">symlinks</span><span class="text"> ?</span><span class="id">buffer_size</span><span class="text"> ?</span><span class="id">if_exists</span><span class="text"> </span><span class="kw4">~src</span><span class="text"> </span><span class="id">dst</span><span class="text"> =
     </span><span class="id">move_in_same_device</span><span class="text"> ?</span><span class="id">if_exists</span><span class="text"> </span><span class="kw4">~src</span><span class="text"> </span><span class="id">dst</span><span class="text">
-    &gt;&gt;= </span><span class="kw1">begin</span><span class="text"> </span><span class="kw">function</span><span class="text">
+    </span><span class="kw10">&gt;&gt;=</span><span class="text"> </span><span class="kw1">begin</span><span class="text"> </span><span class="kw">function</span><span class="text">
     | `</span><span class="kw2">Moved</span><span class="text"> -&gt; </span><span class="id">return</span><span class="text"> ()
     | `</span><span class="kw2">Must_copy</span><span class="text"> -&gt;
       </span><span class="id">copy</span><span class="text"> </span><span class="kw4">~src</span><span class="text"> ?</span><span class="id">buffer_size</span><span class="text"> ?</span><span class="id">ignore_strange</span><span class="text"> ?</span><span class="id">symlinks</span><span class="text"> ?</span><span class="id">if_exists</span><span class="text"> </span><span class="id">dst</span><span class="text">
-      &gt;&gt;= </span><span class="kw">fun</span><span class="text"> () -&gt;
+      </span><span class="kw10">&gt;&gt;=</span><span class="text"> </span><span class="kw">fun</span><span class="text"> () -&gt;
       </span><span class="id">remove</span><span class="text"> </span><span class="id">src</span><span class="text">
     </span><span class="kw1">end</span><span class="text">
 
@@ -950,7 +950,7 @@
         | </span><span class="kw2">Some</span><span class="text"> </span><span class="id">s</span><span class="text"> -&gt; </span><span class="id">s</span><span class="text">
         | </span><span class="kw2">None</span><span class="text"> -&gt; </span><span class="kw2">Filename</span><span class="text">.</span><span class="id">basename</span><span class="text"> </span><span class="id">path</span><span class="text"> </span><span class="kw">in</span><span class="text">
       </span><span class="id">file_info</span><span class="text"> </span><span class="id">path</span><span class="text">
-      &gt;&gt;= </span><span class="kw1">begin</span><span class="text"> </span><span class="kw">function</span><span class="text">
+      </span><span class="kw10">&gt;&gt;=</span><span class="text"> </span><span class="kw1">begin</span><span class="text"> </span><span class="kw">function</span><span class="text">
       | `</span><span class="kw2">Absent</span><span class="text"> -&gt; </span><span class="id">fail</span><span class="text"> (`</span><span class="kw2">File_not_found</span><span class="text"> </span><span class="id">path</span><span class="text">)
       | `</span><span class="kw2">Block_device</span><span class="text">
       | `</span><span class="kw2">Character_device</span><span class="text">
@@ -972,7 +972,7 @@
         </span><span class="kw">let</span><span class="text"> `</span><span class="kw2">Stream</span><span class="text"> </span><span class="id">next_dir</span><span class="text"> = </span><span class="id">list_directory</span><span class="text"> </span><span class="id">path</span><span class="text"> </span><span class="kw">in</span><span class="text">
         </span><span class="kw">let</span><span class="text"> </span><span class="kw">rec</span><span class="text"> </span><span class="id">loop</span><span class="text"> </span><span class="id">acc</span><span class="text"> =
           </span><span class="id">next_dir</span><span class="text"> ()
-          &gt;&gt;= </span><span class="kw1">begin</span><span class="text"> </span><span class="kw">function</span><span class="text">
+          </span><span class="kw10">&gt;&gt;=</span><span class="text"> </span><span class="kw1">begin</span><span class="text"> </span><span class="kw">function</span><span class="text">
           | </span><span class="kw2">Some</span><span class="text"> </span><span class="string">&quot;..&quot;</span><span class="text">
           | </span><span class="kw2">Some</span><span class="text"> </span><span class="string">&quot;.&quot;</span><span class="text"> -&gt; </span><span class="id">loop</span><span class="text"> </span><span class="id">acc</span><span class="text">
           | </span><span class="kw2">Some</span><span class="text"> </span><span class="id">name</span><span class="text"> -&gt; </span><span class="id">loop</span><span class="text"> (</span><span class="id">name</span><span class="text"> :: </span><span class="id">acc</span><span class="text">)
@@ -980,21 +980,21 @@
           </span><span class="kw1">end</span><span class="text">
         </span><span class="kw">in</span><span class="text">
         </span><span class="id">loop</span><span class="text"> []
-        &gt;&gt;= </span><span class="kw">fun</span><span class="text"> </span><span class="id">sub_list</span><span class="text"> -&gt;
+        </span><span class="kw10">&gt;&gt;=</span><span class="text"> </span><span class="kw">fun</span><span class="text"> </span><span class="id">sub_list</span><span class="text"> -&gt;
         </span><span class="kw2">List</span><span class="text">.</span><span class="id">fold_left</span><span class="text">
           </span><span class="kw4">~init</span><span class="text">:(</span><span class="id">return</span><span class="text"> []) (</span><span class="kw2">List</span><span class="text">.</span><span class="id">sort</span><span class="text"> </span><span class="kw4">~cmp</span><span class="text">:</span><span class="kw2">String</span><span class="text">.</span><span class="id">compare</span><span class="text"> </span><span class="id">sub_list</span><span class="text">)
           </span><span class="kw4">~f</span><span class="text">:(</span><span class="kw">fun</span><span class="text"> </span><span class="id">prev</span><span class="text"> </span><span class="id">dir</span><span class="text"> -&gt;
-              </span><span class="id">prev</span><span class="text"> &gt;&gt;= </span><span class="kw">fun</span><span class="text"> </span><span class="id">l</span><span class="text"> -&gt;
+              </span><span class="id">prev</span><span class="text"> </span><span class="kw10">&gt;&gt;=</span><span class="text"> </span><span class="kw">fun</span><span class="text"> </span><span class="id">l</span><span class="text"> -&gt;
               </span><span class="id">find_aux</span><span class="text"> (</span><span class="kw2">Filename</span><span class="text">.</span><span class="id">concat</span><span class="text"> </span><span class="id">path</span><span class="text"> </span><span class="id">dir</span><span class="text">)
-              &gt;&gt;= </span><span class="kw">fun</span><span class="text"> </span><span class="id">newone</span><span class="text"> -&gt;
+              </span><span class="kw10">&gt;&gt;=</span><span class="text"> </span><span class="kw">fun</span><span class="text"> </span><span class="id">newone</span><span class="text"> -&gt;
               </span><span class="id">return</span><span class="text"> (</span><span class="id">newone</span><span class="text"> :: </span><span class="id">l</span><span class="text">))
-        &gt;&gt;| </span><span class="kw2">List</span><span class="text">.</span><span class="id">rev</span><span class="text">
-        &gt;&gt;= </span><span class="kw">fun</span><span class="text"> </span><span class="id">sub_tree</span><span class="text"> -&gt;
+        </span><span class="kw10">&gt;&gt;</span><span class="text">| </span><span class="kw2">List</span><span class="text">.</span><span class="id">rev</span><span class="text">
+        </span><span class="kw10">&gt;&gt;=</span><span class="text"> </span><span class="kw">fun</span><span class="text"> </span><span class="id">sub_tree</span><span class="text"> -&gt;
         </span><span class="id">directory</span><span class="text"> </span><span class="id">name</span><span class="text"> </span><span class="id">sub_tree</span><span class="text">
       </span><span class="kw1">end</span><span class="text">
     </span><span class="kw">in</span><span class="text">
     (</span><span class="id">find_aux</span><span class="text"> </span><span class="id">path</span><span class="text">
-     &gt;&gt;&lt; </span><span class="kw">function</span><span class="text">
+     </span><span class="kw10">&gt;&gt;</span><span class="text">&lt; </span><span class="kw">function</span><span class="text">
      | `</span><span class="kw2">Ok</span><span class="text"> </span><span class="id">o</span><span class="text"> -&gt; </span><span class="id">return</span><span class="text"> </span><span class="id">o</span><span class="text">
      | `</span><span class="kw2">Error</span><span class="text"> </span><span class="id">e</span><span class="text"> -&gt;
        </span><span class="kw1">begin</span><span class="text"> </span><span class="kw1">match</span><span class="text"> </span><span class="id">e</span><span class="text"> </span><span class="kw1">with</span><span class="text">
@@ -1075,11 +1075,11 @@
       </span><span class="kw">let</span><span class="text"> </span><span class="id">oks</span><span class="text"> = </span><span class="kw1">ref</span><span class="text"> [] </span><span class="kw">in</span><span class="text">
       </span><span class="kw">let</span><span class="text"> </span><span class="id">errors</span><span class="text"> = </span><span class="kw1">ref</span><span class="text"> [] </span><span class="kw">in</span><span class="text">
       </span><span class="kw2">List</span><span class="text">.</span><span class="id">fold_left</span><span class="text"> </span><span class="id">l</span><span class="text"> </span><span class="kw4">~init</span><span class="text">:(</span><span class="id">return</span><span class="text"> ()) </span><span class="kw4">~f</span><span class="text">:(</span><span class="kw">fun</span><span class="text"> </span><span class="id">prevm</span><span class="text"> </span><span class="id">elt</span><span class="text"> -&gt;
-          </span><span class="id">prevm</span><span class="text"> &gt;&gt;= </span><span class="kw">fun</span><span class="text"> () -&gt;
-          </span><span class="id">f</span><span class="text"> </span><span class="id">elt</span><span class="text"> &gt;&gt;&lt; </span><span class="kw">function</span><span class="text">
+          </span><span class="id">prevm</span><span class="text"> </span><span class="kw10">&gt;&gt;=</span><span class="text"> </span><span class="kw">fun</span><span class="text"> () -&gt;
+          </span><span class="id">f</span><span class="text"> </span><span class="id">elt</span><span class="text"> </span><span class="kw10">&gt;&gt;</span><span class="text">&lt; </span><span class="kw">function</span><span class="text">
           | `</span><span class="kw2">Ok</span><span class="text"> </span><span class="id">o</span><span class="text"> -&gt; </span><span class="id">oks</span><span class="text"> := </span><span class="id">o</span><span class="text"> :: !</span><span class="id">oks</span><span class="text">; </span><span class="id">return</span><span class="text"> ()
           | `</span><span class="kw2">Error</span><span class="text"> </span><span class="id">e</span><span class="text"> -&gt; </span><span class="id">errors</span><span class="text"> := </span><span class="id">e</span><span class="text"> :: !</span><span class="id">errors</span><span class="text">; </span><span class="id">return</span><span class="text"> ())
-      &gt;&gt;= </span><span class="kw">fun</span><span class="text"> () -&gt;
+      </span><span class="kw10">&gt;&gt;=</span><span class="text"> </span><span class="kw">fun</span><span class="text"> () -&gt;
       </span><span class="id">return</span><span class="text"> (</span><span class="kw2">List</span><span class="text">.</span><span class="id">rev</span><span class="text"> !</span><span class="id">oks</span><span class="text">, </span><span class="kw2">List</span><span class="text">.</span><span class="id">rev</span><span class="text"> !</span><span class="id">errors</span><span class="text">)
 
   </span><span class="kw">let</span><span class="text"> </span><span class="id">for_concurrent</span><span class="text">:
@@ -1089,13 +1089,13 @@
       </span><span class="kw">let</span><span class="text"> </span><span class="id">errors</span><span class="text"> = </span><span class="kw1">ref</span><span class="text"> [] </span><span class="kw">in</span><span class="text">
       </span><span class="kw2">Lwt</span><span class="text">.(
         </span><span class="kw2">Lwt_list</span><span class="text">.</span><span class="id">map_p</span><span class="text"> (</span><span class="kw">fun</span><span class="text"> </span><span class="id">elt</span><span class="text"> -&gt;
-            </span><span class="id">f</span><span class="text"> </span><span class="id">elt</span><span class="text"> &gt;&gt;= </span><span class="kw">function</span><span class="text">
+            </span><span class="id">f</span><span class="text"> </span><span class="id">elt</span><span class="text"> </span><span class="kw10">&gt;&gt;=</span><span class="text"> </span><span class="kw">function</span><span class="text">
             | `</span><span class="kw2">Ok</span><span class="text"> </span><span class="id">o</span><span class="text"> -&gt; </span><span class="id">oks</span><span class="text"> := </span><span class="id">o</span><span class="text"> :: !</span><span class="id">oks</span><span class="text">; </span><span class="id">return</span><span class="text"> ()
             | `</span><span class="kw2">Error</span><span class="text"> </span><span class="id">e</span><span class="text"> -&gt; </span><span class="id">errors</span><span class="text"> := </span><span class="id">e</span><span class="text"> :: !</span><span class="id">errors</span><span class="text">; </span><span class="id">return</span><span class="text"> ()) </span><span class="id">l</span><span class="text">
-        &gt;&gt;= </span><span class="kw">fun</span><span class="text"> </span><span class="numeric">_</span><span class="text"> -&gt;
+        </span><span class="kw10">&gt;&gt;=</span><span class="text"> </span><span class="kw">fun</span><span class="text"> </span><span class="numeric">_</span><span class="text"> -&gt;
         </span><span class="id">return</span><span class="text"> (`</span><span class="kw2">Ok</span><span class="text"> ())
       )
-      &gt;&gt;= </span><span class="kw">fun</span><span class="text"> () -&gt;
+      </span><span class="kw10">&gt;&gt;=</span><span class="text"> </span><span class="kw">fun</span><span class="text"> () -&gt;
       </span><span class="id">return</span><span class="text"> (</span><span class="kw2">List</span><span class="text">.</span><span class="id">rev</span><span class="text"> !</span><span class="id">oks</span><span class="text">, </span><span class="kw2">List</span><span class="text">.</span><span class="id">rev</span><span class="text"> !</span><span class="id">errors</span><span class="text">)
 
 
@@ -1132,7 +1132,7 @@
         </span><span class="id">w</span><span class="text">.</span><span class="id">lwt_u</span><span class="text"> &lt;- </span><span class="id">u</span><span class="text">;
       </span><span class="kw1">end</span><span class="text">;
       </span><span class="id">wrap_deferred</span><span class="text"> </span><span class="kw4">~on_exn</span><span class="text">:(</span><span class="kw">fun</span><span class="text"> </span><span class="id">e</span><span class="text"> -&gt; </span><span class="id">e</span><span class="text">) (</span><span class="kw">fun</span><span class="text"> () -&gt; </span><span class="id">w</span><span class="text">.</span><span class="id">lwt_t</span><span class="text">)
-      &gt;&gt;&lt; </span><span class="kw">function</span><span class="text">
+      </span><span class="kw10">&gt;&gt;</span><span class="text">&lt; </span><span class="kw">function</span><span class="text">
       | `</span><span class="kw2">Error</span><span class="text"> </span><span class="kw2">Lwt</span><span class="text">.</span><span class="kw2">Canceled</span><span class="text"> -&gt; </span><span class="id">return</span><span class="text"> ()
       | `</span><span class="kw2">Error</span><span class="text"> </span><span class="id">other</span><span class="text"> -&gt; </span><span class="id">failwith</span><span class="text"> </span><span class="string">&quot;BUG: THIS SHOULD NOT HAPPEN&quot;</span><span class="text">
       | `</span><span class="kw2">Ok</span><span class="text"> () -&gt; </span><span class="id">return</span><span class="text"> ()

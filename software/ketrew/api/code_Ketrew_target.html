@@ -14,11 +14,13 @@
 <link title="Ketrew_command_line" rel="Chapter" href="Ketrew_command_line.html">
 <link title="Ketrew_configuration" rel="Chapter" href="Ketrew_configuration.html">
 <link title="Ketrew_daemonize" rel="Chapter" href="Ketrew_daemonize.html">
-<link title="Ketrew_database" rel="Chapter" href="Ketrew_database.html">
+<link title="Ketrew_document" rel="Chapter" href="Ketrew_document.html">
 <link title="Ketrew_edsl" rel="Chapter" href="Ketrew_edsl.html">
 <link title="Ketrew_engine" rel="Chapter" href="Ketrew_engine.html">
 <link title="Ketrew_error" rel="Chapter" href="Ketrew_error.html">
+<link title="Ketrew_explorer" rel="Chapter" href="Ketrew_explorer.html">
 <link title="Ketrew_host" rel="Chapter" href="Ketrew_host.html">
+<link title="Ketrew_interaction" rel="Chapter" href="Ketrew_interaction.html">
 <link title="Ketrew_long_running" rel="Chapter" href="Ketrew_long_running.html">
 <link title="Ketrew_long_running_utilities" rel="Chapter" href="Ketrew_long_running_utilities.html">
 <link title="Ketrew_lsf" rel="Chapter" href="Ketrew_lsf.html">
@@ -31,7 +33,8 @@
 <link title="Ketrew_protocol" rel="Chapter" href="Ketrew_protocol.html">
 <link title="Ketrew_server" rel="Chapter" href="Ketrew_server.html">
 <link title="Ketrew_target" rel="Chapter" href="Ketrew_target.html">
-<link title="Ketrew_unix_process" rel="Chapter" href="Ketrew_unix_process.html"><title>Ketrew API : Ketrew_target</title>
+<link title="Ketrew_unix_process" rel="Chapter" href="Ketrew_unix_process.html">
+<link title="Ketrew_yarn" rel="Chapter" href="Ketrew_yarn.html"><title>Ketrew API : Ketrew_target</title>
 </head>
 <body>
 <code class="code"></code><table><tr><td></td><td><span class="comment">(**************************************************************************)</span></td></tr></table><code class="code"><br>
@@ -98,8 +101,8 @@
 &nbsp;&nbsp;<span class="keyword">type</span>&nbsp;t&nbsp;=&nbsp;<span class="constructor">Ketrew_gen_target_v0</span>.<span class="constructor">Condition</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">let</span>&nbsp;<span class="keyword">rec</span>&nbsp;log&nbsp;=<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Log</span>.(<span class="keyword">function</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">True</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;s&nbsp;<span class="string">"True"</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">False</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;s&nbsp;<span class="string">"False"</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Satisfied</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;s&nbsp;<span class="string">"Satisfied"</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Never</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;s&nbsp;<span class="string">"Never"</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Volume_exists</span>&nbsp;v&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;parens&nbsp;(s&nbsp;<span class="string">"Volume&nbsp;"</span>&nbsp;%&nbsp;<span class="constructor">Artifact</span>.<span class="constructor">Volume</span>.log&nbsp;v&nbsp;%&nbsp;s&nbsp;<span class="string">"&nbsp;exists"</span>)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Volume_size_bigger_than</span>&nbsp;(v,&nbsp;sz)&nbsp;<span class="keywordsign">-&gt;</span><br>
@@ -112,6 +115,31 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)<br>
 &nbsp;&nbsp;<span class="keyword">let</span>&nbsp;to_string_hum&nbsp;c&nbsp;=&nbsp;<span class="constructor">Log</span>.to_long_string&nbsp;(log&nbsp;c)<br>
 <br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;<span class="keyword">rec</span>&nbsp;eval&nbsp;=&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">function</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Satisfied</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;return&nbsp;<span class="keyword">true</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Never</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;return&nbsp;<span class="keyword">false</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Volume_exists</span>&nbsp;v&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Artifact</span>.<span class="constructor">Volume</span>.exists&nbsp;v<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Volume_size_bigger_than</span>&nbsp;(v,&nbsp;sz)&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Artifact</span>.<span class="constructor">Volume</span>.get_size&nbsp;v<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;size&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;(size&nbsp;&gt;=&nbsp;sz)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Command_returns</span>&nbsp;(c,&nbsp;ret)&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Command</span>.get_return_value&nbsp;c&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;return_value&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;(ret&nbsp;=&nbsp;return_value)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">And</span>&nbsp;list_of_conditions&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">(*&nbsp;Should&nbsp;start&nbsp;at&nbsp;the&nbsp;first&nbsp;that&nbsp;returns&nbsp;`false`&nbsp;*)</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;<span class="keyword">rec</span>&nbsp;go&nbsp;=&nbsp;<span class="keyword">function</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;[]&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;return&nbsp;<span class="keyword">true</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;cond&nbsp;::&nbsp;rest&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;eval&nbsp;cond<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">function</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keyword">true</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;go&nbsp;rest<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keyword">false</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;return&nbsp;<span class="keyword">false</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;go&nbsp;list_of_conditions<br>
+<br>
 <span class="keyword">end</span><br>
 <br>
 <span class="keyword">module</span>&nbsp;<span class="constructor">Equivalence</span>&nbsp;=&nbsp;<span class="keyword">struct</span><br>
@@ -121,35 +149,366 @@
 <span class="keyword">module</span>&nbsp;<span class="constructor">Build_process</span>&nbsp;=&nbsp;<span class="keyword">struct</span><br>
 &nbsp;&nbsp;<span class="keyword">include</span>&nbsp;<span class="constructor">Ketrew_gen_target_v0</span>.<span class="constructor">Build_process</span><br>
 <br>
-&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;nop&nbsp;:&nbsp;t&nbsp;=&nbsp;<span class="keywordsign">`</span><span class="constructor">Artifact</span>&nbsp;(<span class="keywordsign">`</span><span class="constructor">Value</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Unit</span>)<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;nop&nbsp;:&nbsp;t&nbsp;=&nbsp;<span class="keywordsign">`</span><span class="constructor">No_operation</span><br>
+<span class="keyword">end</span><br>
+<br>
+<span class="keyword">module</span>&nbsp;<span class="constructor">Metadata</span>&nbsp;=&nbsp;<span class="keyword">struct</span><br>
+<br>
+&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;t&nbsp;=&nbsp;[&nbsp;<span class="keywordsign">`</span><span class="constructor">None</span>&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">String</span>&nbsp;<span class="keyword">of</span>&nbsp;string&nbsp;]<br>
+<br>
 <span class="keyword">end</span><br>
 <br>
 <br>
-<span class="keyword">type</span>&nbsp;submitted_state&nbsp;=&nbsp;<span class="constructor">Ketrew_gen_target_v0</span>.<span class="constructor">Submitted_state</span>.t<br>
-<span class="keyword">type</span>&nbsp;activated_state&nbsp;=&nbsp;<span class="constructor">Ketrew_gen_target_v0</span>.<span class="constructor">Activated_state</span>.t<br>
-<span class="keyword">type</span>&nbsp;run_bookkeeping&nbsp;=&nbsp;<span class="constructor">Ketrew_gen_target_v0</span>.<span class="constructor">Run_bookkeeping</span>.t&nbsp;=&nbsp;{<br>
-&nbsp;&nbsp;plugin_name&nbsp;:&nbsp;string;<br>
-&nbsp;&nbsp;run_parameters&nbsp;:&nbsp;string;<br>
-&nbsp;&nbsp;run_history&nbsp;:&nbsp;string&nbsp;list;<br>
-}<br>
-<span class="keyword">type</span>&nbsp;running_state&nbsp;=&nbsp;<span class="constructor">Ketrew_gen_target_v0</span>.<span class="constructor">Running_state</span>.t<br>
-<span class="keyword">type</span>&nbsp;death_reason&nbsp;=&nbsp;<span class="constructor">Ketrew_gen_target_v0</span>.<span class="constructor">Death_reason</span>.t<br>
-<span class="keyword">type</span>&nbsp;finished_state&nbsp;=&nbsp;<span class="constructor">Ketrew_gen_target_v0</span>.<span class="constructor">Finished_state</span>.t<br>
-<span class="keyword">type</span>&nbsp;workflow_state&nbsp;=&nbsp;<span class="constructor">Ketrew_gen_target_v0</span>.<span class="constructor">Workflow_state</span>.t<br>
+<span class="keyword">let</span>&nbsp;make_log&nbsp;?message&nbsp;()&nbsp;=&nbsp;<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;<span class="keyword">open</span>&nbsp;<span class="constructor">Ketrew_gen_target_v0</span>.<span class="constructor">Log</span>&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;{time&nbsp;=&nbsp;<span class="constructor">Time</span>.now&nbsp;();&nbsp;message}<br>
+<span class="keyword">let</span>&nbsp;to_history&nbsp;?log&nbsp;previous_state&nbsp;=<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;<span class="keyword">open</span>&nbsp;<span class="constructor">Ketrew_gen_target_v0</span>.<span class="constructor">History</span>&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;{log&nbsp;=&nbsp;make_log&nbsp;?message:log&nbsp;();&nbsp;previous_state}<br>
 <br>
-<span class="keyword">include</span>&nbsp;<span class="constructor">Ketrew_gen_target_v0</span>.<span class="constructor">Target</span><br>
+<span class="keyword">module</span>&nbsp;<span class="constructor">State</span>&nbsp;=&nbsp;<span class="keyword">struct</span><br>
+<br>
+&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;t&nbsp;=&nbsp;<span class="constructor">Ketrew_gen_target_v0</span>.<span class="constructor">State</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;history&nbsp;=&nbsp;<span class="constructor">Ketrew_gen_target_v0</span>.<span class="constructor">State</span>.t<br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;history&nbsp;t&nbsp;=&nbsp;t<br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;<span class="keyword">rec</span>&nbsp;simplify&nbsp;(t:&nbsp;t)&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">match</span>&nbsp;t&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Building</span>&nbsp;_<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Tried_to_start</span>&nbsp;_<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Started_running</span>&nbsp;_<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Starting</span>&nbsp;_<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Still_building</span>&nbsp;_<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Still_running</span>&nbsp;_<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Still_running_despite_recoverable_error</span>&nbsp;_<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Ran_successfully</span>&nbsp;_<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Successfully_did_nothing</span>&nbsp;_<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Tried_to_eval_condition</span>&nbsp;_<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Tried_to_reeval_condition</span>&nbsp;_<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Active</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">In_progress</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Verified_success</span>&nbsp;_<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Already_done</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Successful</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Dependencies_failed</span>&nbsp;_<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Failed_running</span>&nbsp;_<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Failed_to_kill</span>&nbsp;_<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Failed_to_start</span>&nbsp;_<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Failed_to_eval_condition</span>&nbsp;_<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Killing</span>&nbsp;_<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Tried_to_kill</span>&nbsp;_<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Did_not_ensure_condition</span>&nbsp;_<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Killed</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Failed</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Finished</span>&nbsp;s&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;simplify&nbsp;(s.<span class="constructor">Ketrew_gen_target_v0</span>.<span class="constructor">History</span>.previous_state&nbsp;:&gt;&nbsp;t)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Passive</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Activable</span><br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;<span class="keyword">rec</span>&nbsp;passive_time&nbsp;(t:&nbsp;t)&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;continue&nbsp;history&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;passive_time&nbsp;(history.<span class="constructor">Ketrew_gen_target_v0</span>.<span class="constructor">History</span>.previous_state&nbsp;:&gt;&nbsp;t)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">match</span>&nbsp;t&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Building</span>&nbsp;history&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;continue&nbsp;history<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Tried_to_start</span>&nbsp;(history,&nbsp;_)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;continue&nbsp;history<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Started_running</span>&nbsp;(history,&nbsp;_)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;continue&nbsp;history<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Starting</span>&nbsp;history&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;continue&nbsp;history<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Still_building</span>&nbsp;history&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;continue&nbsp;history<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Still_running</span>&nbsp;(history,&nbsp;_)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;continue&nbsp;history<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Still_running_despite_recoverable_error</span>&nbsp;(_,&nbsp;history,&nbsp;_)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;continue&nbsp;history<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Ran_successfully</span>&nbsp;(history,&nbsp;_)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;continue&nbsp;history<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Successfully_did_nothing</span>&nbsp;history&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;continue&nbsp;history<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Active</span>&nbsp;(history,&nbsp;_)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;continue&nbsp;history<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Tried_to_eval_condition</span>&nbsp;history&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;continue&nbsp;history<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Tried_to_reeval_condition</span>&nbsp;(_,&nbsp;history)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;continue&nbsp;history<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Verified_success</span>&nbsp;history&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;continue&nbsp;history<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Already_done</span>&nbsp;history&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;continue&nbsp;history<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Dependencies_failed</span>&nbsp;(history,&nbsp;_)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;continue&nbsp;history<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Failed_running</span>&nbsp;(history,&nbsp;_,&nbsp;_)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;continue&nbsp;history<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Failed_to_kill</span>&nbsp;history&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;continue&nbsp;history<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Failed_to_eval_condition</span>&nbsp;history&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;continue&nbsp;history<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Failed_to_start</span>&nbsp;(history,&nbsp;_)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;continue&nbsp;history<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Killing</span>&nbsp;history&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;continue&nbsp;history<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Tried_to_kill</span>&nbsp;history&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;continue&nbsp;history<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Did_not_ensure_condition</span>&nbsp;history&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;continue&nbsp;history<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Killed</span>&nbsp;history&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;continue&nbsp;history<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Finished</span>&nbsp;history&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;continue&nbsp;history<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Passive</span>&nbsp;log&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;log.<span class="constructor">Ketrew_gen_target_v0</span>.<span class="constructor">Log</span>.time<br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;name&nbsp;(t:&nbsp;t)&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;<span class="keyword">open</span>&nbsp;<span class="constructor">Ketrew_gen_target_v0</span>.<span class="constructor">State</span>&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">match</span>&nbsp;t&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Building</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="string">"Building"</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Tried_to_start</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="string">"Tried_to_start"</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Started_running</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="string">"Started_running"</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Starting</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="string">"Starting"</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Still_building</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="string">"Still_building"</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Still_running</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="string">"Still_running"</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Still_running_despite_recoverable_error</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">"Still_running_despite_recoverable_error"</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Ran_successfully</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="string">"Ran_successfully"</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Successfully_did_nothing</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="string">"Successfully_did_nothing"</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Active</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="string">"Active"</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Tried_to_eval_condition</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="string">"Tried_to_eval_condition"</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Tried_to_reeval_condition</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="string">"Tried_to_reeval_condition"</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Verified_success</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="string">"Verified_success"</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Already_done</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="string">"Already_done"</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Dependencies_failed</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="string">"Dependencies_failed"</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Failed_running</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="string">"Failed_running"</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Failed_to_kill</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="string">"Failed_to_kill"</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Failed_to_eval_condition</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="string">"Failed_to_eval_condition"</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Failed_to_start</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="string">"Failed_to_start"</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Killing</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="string">"Killing"</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Tried_to_kill</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="string">"Tried_to_kill"</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Did_not_ensure_condition</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="string">"Did_not_ensure_condition"</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Killed</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="string">"Killed"</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Finished</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="string">"Finished"</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Passive</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="string">"Passive"</span><br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;<span class="keyword">rec</span>&nbsp;latest_run_bookkeeping&nbsp;(t:&nbsp;t)&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;continue&nbsp;history&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;latest_run_bookkeeping<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(history.<span class="constructor">Ketrew_gen_target_v0</span>.<span class="constructor">History</span>.previous_state&nbsp;:&gt;&nbsp;t)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">match</span>&nbsp;t&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Building</span>&nbsp;history&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">None</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Tried_to_start</span>&nbsp;(hist,&nbsp;book)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;(<span class="constructor">Some</span>&nbsp;book)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Started_running</span>&nbsp;(hist,&nbsp;book)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;(<span class="constructor">Some</span>&nbsp;book)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Starting</span>&nbsp;history&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;(<span class="constructor">None</span>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Still_building</span>&nbsp;history&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;(<span class="constructor">None</span>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Still_running</span>&nbsp;(hist,&nbsp;book)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;(<span class="constructor">Some</span>&nbsp;book)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Still_running_despite_recoverable_error</span>&nbsp;(_,&nbsp;hist,&nbsp;book)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;(<span class="constructor">Some</span>&nbsp;book)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Ran_successfully</span>&nbsp;(hist,&nbsp;book)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;(<span class="constructor">Some</span>&nbsp;book)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Successfully_did_nothing</span>&nbsp;history&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;(<span class="constructor">None</span>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Tried_to_eval_condition</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;(<span class="constructor">None</span>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Tried_to_reeval_condition</span>&nbsp;(_,&nbsp;history)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;continue&nbsp;history<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Active</span>&nbsp;(history,&nbsp;_)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;(<span class="constructor">None</span>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Verified_success</span>&nbsp;history&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;continue&nbsp;history<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Already_done</span>&nbsp;history&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">None</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Dependencies_failed</span>&nbsp;(history,&nbsp;_)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;(<span class="constructor">None</span>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Failed_running</span>&nbsp;(hist,&nbsp;_,&nbsp;book)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;(<span class="constructor">Some</span>&nbsp;book)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Failed_to_kill</span>&nbsp;history&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;continue&nbsp;history<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Failed_to_eval_condition</span>&nbsp;history&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;continue&nbsp;history<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Failed_to_start</span>&nbsp;(hist,&nbsp;book)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;(<span class="constructor">Some</span>&nbsp;book)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Killing</span>&nbsp;history&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;continue&nbsp;history<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Tried_to_kill</span>&nbsp;history&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;continue&nbsp;history<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Did_not_ensure_condition</span>&nbsp;history&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;continue&nbsp;history<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Killed</span>&nbsp;history&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;continue&nbsp;history<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Finished</span>&nbsp;history&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;continue&nbsp;history<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Passive</span>&nbsp;log&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;(<span class="constructor">None</span>)<br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;contents&nbsp;(t:&nbsp;t)&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;some&nbsp;h&nbsp;=&nbsp;<span class="constructor">Some</span>&nbsp;(h&nbsp;:&gt;&nbsp;t&nbsp;<span class="constructor">Ketrew_gen_target_v0</span>.<span class="constructor">History</span>.t)&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">match</span>&nbsp;t&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Building</span>&nbsp;history&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;(some&nbsp;history,&nbsp;<span class="constructor">None</span>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Tried_to_start</span>&nbsp;(hist,&nbsp;book)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;(some&nbsp;hist,&nbsp;<span class="constructor">Some</span>&nbsp;book)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Started_running</span>&nbsp;(hist,&nbsp;book)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;(some&nbsp;hist,&nbsp;<span class="constructor">Some</span>&nbsp;book)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Starting</span>&nbsp;history&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;(some&nbsp;history,&nbsp;<span class="constructor">None</span>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Still_building</span>&nbsp;history&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;(some&nbsp;history,&nbsp;<span class="constructor">None</span>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Still_running</span>&nbsp;(hist,&nbsp;book)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;(some&nbsp;hist,&nbsp;<span class="constructor">Some</span>&nbsp;book)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Still_running_despite_recoverable_error</span>&nbsp;(_,&nbsp;hist,&nbsp;book)&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(some&nbsp;hist,&nbsp;<span class="constructor">Some</span>&nbsp;book)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Ran_successfully</span>&nbsp;(hist,&nbsp;book)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;(some&nbsp;hist,&nbsp;<span class="constructor">Some</span>&nbsp;book)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Successfully_did_nothing</span>&nbsp;history&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;(some&nbsp;history,&nbsp;<span class="constructor">None</span>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Active</span>&nbsp;(history,&nbsp;_)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;(some&nbsp;history,&nbsp;<span class="constructor">None</span>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Tried_to_eval_condition</span>&nbsp;history&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;(some&nbsp;history,&nbsp;<span class="constructor">None</span>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Tried_to_reeval_condition</span>&nbsp;(_,&nbsp;history)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;(some&nbsp;history,&nbsp;<span class="constructor">None</span>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Verified_success</span>&nbsp;history&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;(some&nbsp;history,&nbsp;<span class="constructor">None</span>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Already_done</span>&nbsp;history&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;(some&nbsp;history,&nbsp;<span class="constructor">None</span>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Dependencies_failed</span>&nbsp;(history,&nbsp;_)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;(some&nbsp;history,&nbsp;<span class="constructor">None</span>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Failed_running</span>&nbsp;(hist,&nbsp;_,&nbsp;book)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;(some&nbsp;hist,&nbsp;<span class="constructor">Some</span>&nbsp;book)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Failed_to_kill</span>&nbsp;history&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;(some&nbsp;history,&nbsp;<span class="constructor">None</span>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Failed_to_eval_condition</span>&nbsp;history&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;(some&nbsp;history,&nbsp;<span class="constructor">None</span>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Failed_to_start</span>&nbsp;(hist,&nbsp;book)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;(some&nbsp;hist,&nbsp;<span class="constructor">Some</span>&nbsp;book)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Killing</span>&nbsp;history&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;(some&nbsp;history,&nbsp;<span class="constructor">None</span>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Tried_to_kill</span>&nbsp;history&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;(some&nbsp;history,&nbsp;<span class="constructor">None</span>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Did_not_ensure_condition</span>&nbsp;history&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;(some&nbsp;history,&nbsp;<span class="constructor">None</span>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Killed</span>&nbsp;history&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;(some&nbsp;history,&nbsp;<span class="constructor">None</span>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Finished</span>&nbsp;history&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;(some&nbsp;history,&nbsp;<span class="constructor">None</span>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Passive</span>&nbsp;log&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;(<span class="constructor">None</span>,&nbsp;<span class="constructor">None</span>)<br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;summary&nbsp;t&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;<span class="keyword">open</span>&nbsp;<span class="constructor">Ketrew_gen_target_v0</span>&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;<span class="keyword">rec</span>&nbsp;count_start_attempts&nbsp;:&nbsp;<span class="constructor">Starting</span>.t&nbsp;<span class="constructor">History</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;int&nbsp;=&nbsp;<span class="keyword">fun</span>&nbsp;h&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;<span class="keyword">open</span>&nbsp;<span class="constructor">History</span>&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">match</span>&nbsp;h.previous_state&nbsp;<span class="keyword">with</span>&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Starting</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;1<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Tried_to_start</span>&nbsp;(hh,&nbsp;_)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;1&nbsp;+&nbsp;(count_start_attempts&nbsp;hh)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;<span class="keyword">rec</span>&nbsp;count_kill_attempts&nbsp;:&nbsp;<span class="constructor">Killing</span>.t&nbsp;<span class="constructor">History</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;int&nbsp;=&nbsp;<span class="keyword">fun</span>&nbsp;h&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;<span class="keyword">open</span>&nbsp;<span class="constructor">History</span>&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">match</span>&nbsp;h.previous_state&nbsp;<span class="keyword">with</span>&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Killing</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;1<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Tried_to_kill</span>&nbsp;hh&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;1&nbsp;+&nbsp;(count_kill_attempts&nbsp;hh)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;plural_of_int&nbsp;?(y=<span class="keyword">false</span>)&nbsp;n&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">match</span>&nbsp;y,&nbsp;n&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keyword">true</span>,&nbsp;1&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;&nbsp;<span class="string">"y"</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keyword">true</span>,&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="string">"ies"</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;_,&nbsp;1&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;&nbsp;<span class="string">""</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;_,&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="string">"s"</span>&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;<span class="keyword">rec</span>&nbsp;dive&nbsp;(t:&nbsp;t)&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;continue&nbsp;history&nbsp;=&nbsp;dive&nbsp;(history.<span class="constructor">History</span>.previous_state&nbsp;:&gt;&nbsp;t)&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">match</span>&nbsp;t&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Building</span>&nbsp;history&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;continue&nbsp;history<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Tried_to_start</span>&nbsp;(history,&nbsp;book)&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;attempts&nbsp;=&nbsp;count_start_attempts&nbsp;history&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fmt&nbsp;<span class="string">"&nbsp;%d&nbsp;start-attempt%s"</span>&nbsp;attempts&nbsp;(plural_of_int&nbsp;attempts)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::&nbsp;continue&nbsp;history<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Started_running</span>&nbsp;(history,&nbsp;book)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;continue&nbsp;history<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Starting</span>&nbsp;history&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;continue&nbsp;history<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Still_building</span>&nbsp;history&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;continue&nbsp;history<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Still_running</span>&nbsp;(history,&nbsp;book)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;continue&nbsp;history<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Still_running_despite_recoverable_error</span>&nbsp;(error,&nbsp;history,&nbsp;book)&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fmt&nbsp;<span class="string">"non-fatal&nbsp;error&nbsp;%S&nbsp;(check-running)"</span>&nbsp;error&nbsp;::&nbsp;continue&nbsp;history<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Ran_successfully</span>&nbsp;(history,&nbsp;book)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;continue&nbsp;history<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Successfully_did_nothing</span>&nbsp;history&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;continue&nbsp;history<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Active</span>&nbsp;(history,&nbsp;_)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;continue&nbsp;history<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Tried_to_eval_condition</span>&nbsp;history&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;continue&nbsp;history<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Tried_to_reeval_condition</span>&nbsp;(error,&nbsp;history)&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fmt&nbsp;<span class="string">"non-fatal&nbsp;error&nbsp;%S&nbsp;(eval-condition)"</span>&nbsp;error&nbsp;::&nbsp;continue&nbsp;history<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Verified_success</span>&nbsp;history&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;continue&nbsp;history<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Already_done</span>&nbsp;history&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">"already-done"</span>&nbsp;::&nbsp;continue&nbsp;history<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Dependencies_failed</span>&nbsp;(history,&nbsp;deps)&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;nb_deps&nbsp;=&nbsp;(<span class="constructor">List</span>.length&nbsp;deps)&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fmt&nbsp;<span class="string">"%d&nbsp;depependenc%s&nbsp;failed"</span>&nbsp;nb_deps&nbsp;(plural_of_int&nbsp;~y:<span class="keyword">true</span>&nbsp;nb_deps)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::&nbsp;continue&nbsp;history<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Failed_running</span>&nbsp;(history,&nbsp;reason,&nbsp;book)&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fmt&nbsp;<span class="string">"Reason:&nbsp;%S"</span>&nbsp;(<span class="keyword">match</span>&nbsp;reason&nbsp;<span class="keyword">with</span>&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Long_running_failure</span>&nbsp;s&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;s)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::&nbsp;continue&nbsp;history<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Failed_to_kill</span>&nbsp;history&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;continue&nbsp;history<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Failed_to_eval_condition</span>&nbsp;history&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;continue&nbsp;history<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Failed_to_start</span>&nbsp;(history,&nbsp;book)&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;continue&nbsp;history<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Killing</span>&nbsp;history&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fmt&nbsp;<span class="string">"killed&nbsp;from&nbsp;%s"</span>&nbsp;(name&nbsp;(history.<span class="constructor">History</span>.previous_state&nbsp;:&gt;&nbsp;t))<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::&nbsp;continue&nbsp;history<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Tried_to_kill</span>&nbsp;history&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fmt&nbsp;<span class="string">"%d&nbsp;killing-attempts"</span>&nbsp;(count_kill_attempts&nbsp;history)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::&nbsp;continue&nbsp;history<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Did_not_ensure_condition</span>&nbsp;history&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">"Did_not_ensure_condition"</span>&nbsp;::&nbsp;continue&nbsp;history<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Killed</span>&nbsp;history&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">"killed"</span>&nbsp;::&nbsp;continue&nbsp;history<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Finished</span>&nbsp;history&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;continue&nbsp;history<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Passive</span>&nbsp;log&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;[]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;history_opt,&nbsp;bookkeeping_opt&nbsp;=&nbsp;contents&nbsp;t&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;time,&nbsp;message&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Option</span>.map&nbsp;history_opt&nbsp;~f:(<span class="keyword">fun</span>&nbsp;history&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;<span class="keyword">open</span>&nbsp;<span class="constructor">Ketrew_gen_target_v0</span>.<span class="constructor">History</span>&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;<span class="keyword">open</span>&nbsp;<span class="constructor">Ketrew_gen_target_v0</span>.<span class="constructor">Log</span>&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;{&nbsp;log&nbsp;=&nbsp;{time;&nbsp;message};&nbsp;previous_state&nbsp;}&nbsp;=&nbsp;history&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(time,&nbsp;message))<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&gt;&nbsp;<span class="keyword">function</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">None</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;passive_time&nbsp;t,&nbsp;<span class="constructor">None</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Some</span>&nbsp;(time,&nbsp;m)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;time,&nbsp;m&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;(<span class="keywordsign">`</span><span class="constructor">Time</span>&nbsp;time,&nbsp;<span class="keywordsign">`</span><span class="constructor">Log</span>&nbsp;message,&nbsp;<span class="keywordsign">`</span><span class="constructor">Info</span>&nbsp;(dive&nbsp;t))<br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;<span class="keyword">rec</span>&nbsp;to_flat_list&nbsp;(t&nbsp;:&nbsp;t)&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;<span class="keyword">open</span>&nbsp;<span class="constructor">Ketrew_gen_target_v0</span>.<span class="constructor">History</span>&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;<span class="keyword">open</span>&nbsp;<span class="constructor">Ketrew_gen_target_v0</span>.<span class="constructor">Log</span>&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;<span class="keyword">open</span>&nbsp;<span class="constructor">Ketrew_gen_target_v0</span>.<span class="constructor">Run_bookkeeping</span>&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;<span class="keyword">open</span>&nbsp;<span class="constructor">Ketrew_gen_target_v0</span>.<span class="constructor">State</span>&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;make_item&nbsp;?bookkeeping&nbsp;~history&nbsp;name&nbsp;=&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;{&nbsp;log;&nbsp;previous_state&nbsp;}&nbsp;=&nbsp;history&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;bookkeeping_msg&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Option</span>.map&nbsp;bookkeeping&nbsp;~f:(<span class="keyword">fun</span>&nbsp;{&nbsp;plugin_name;&nbsp;run_parameters&nbsp;}&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fmt&nbsp;<span class="string">"[%s]&nbsp;Run-parameters:&nbsp;%d&nbsp;bytes"</span>&nbsp;plugin_name<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">String</span>.length&nbsp;run_parameters))&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(log.time,&nbsp;name,&nbsp;log.message,&nbsp;bookkeeping_msg)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::&nbsp;to_flat_list&nbsp;(previous_state&nbsp;:&gt;&nbsp;t)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;name&nbsp;=&nbsp;name&nbsp;t&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;history_opt,&nbsp;bookkeeping&nbsp;=&nbsp;contents&nbsp;t&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">match</span>&nbsp;t&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Passive</span>&nbsp;log&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="comment">(*&nbsp;passive&nbsp;!&nbsp;*)</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(log.time,&nbsp;name,&nbsp;log.message,&nbsp;<span class="constructor">None</span>)&nbsp;::&nbsp;[]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;other&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;history&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Option</span>.value_exn&nbsp;history_opt&nbsp;~msg:<span class="string">"non-passive&nbsp;got&nbsp;None&nbsp;history"</span>&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;make_item&nbsp;~history&nbsp;?bookkeeping&nbsp;name<br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;log&nbsp;?depth&nbsp;t&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;to_flat_list&nbsp;t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;|&gt;&nbsp;<span class="keyword">fun</span>&nbsp;l&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">begin</span>&nbsp;<span class="keyword">match</span>&nbsp;depth&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Some</span>&nbsp;d&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">List</span>.take&nbsp;l&nbsp;d<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">None</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;l<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;|&gt;&nbsp;<span class="constructor">List</span>.map&nbsp;~f:(<span class="keyword">fun</span>&nbsp;(time,&nbsp;name,&nbsp;msgopt,&nbsp;bookopt)&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Log</span>.(s&nbsp;<span class="string">"*&nbsp;"</span>&nbsp;%&nbsp;<span class="constructor">Time</span>.log&nbsp;time&nbsp;%&nbsp;s&nbsp;<span class="string">":&nbsp;"</span>&nbsp;%&nbsp;s&nbsp;name<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%&nbsp;(<span class="keyword">match</span>&nbsp;msgopt&nbsp;<span class="keyword">with</span>&nbsp;<span class="constructor">None</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;empty&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Some</span>&nbsp;m&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;n&nbsp;%&nbsp;indent&nbsp;(s&nbsp;m))<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%&nbsp;(<span class="keyword">match</span>&nbsp;bookopt&nbsp;<span class="keyword">with</span>&nbsp;<span class="constructor">None</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;empty&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Some</span>&nbsp;m&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;n&nbsp;%&nbsp;indent&nbsp;(s&nbsp;m))))<br>
+&nbsp;&nbsp;&nbsp;&nbsp;|&gt;&nbsp;<span class="constructor">Log</span>.(separate&nbsp;n)<br>
+<br>
+&nbsp;&nbsp;<span class="keyword">module</span>&nbsp;<span class="constructor">Is</span>&nbsp;=&nbsp;<span class="keyword">struct</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;building&nbsp;=&nbsp;<span class="keyword">function</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Building</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keyword">true</span>&nbsp;<span class="keywordsign">|</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keyword">false</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;tried_to_start&nbsp;=&nbsp;<span class="keyword">function</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Tried_to_start</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keyword">true</span>&nbsp;<span class="keywordsign">|</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keyword">false</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;started_running&nbsp;=&nbsp;<span class="keyword">function</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Started_running</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keyword">true</span>&nbsp;<span class="keywordsign">|</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keyword">false</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;starting&nbsp;=&nbsp;<span class="keyword">function</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Starting</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keyword">true</span>&nbsp;<span class="keywordsign">|</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keyword">false</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;still_building&nbsp;=&nbsp;<span class="keyword">function</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Still_building</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keyword">true</span>&nbsp;<span class="keywordsign">|</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keyword">false</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;still_running&nbsp;=&nbsp;<span class="keyword">function</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Still_running</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keyword">true</span>&nbsp;<span class="keywordsign">|</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keyword">false</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;ran_successfully&nbsp;=&nbsp;<span class="keyword">function</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Ran_successfully</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keyword">true</span>&nbsp;<span class="keywordsign">|</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keyword">false</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;successfully_did_nothing&nbsp;=&nbsp;<span class="keyword">function</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Successfully_did_nothing</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keyword">true</span>&nbsp;<span class="keywordsign">|</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keyword">false</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;active&nbsp;=&nbsp;<span class="keyword">function</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Active</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keyword">true</span>&nbsp;<span class="keywordsign">|</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keyword">false</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;tried_to_eval_condition&nbsp;=&nbsp;<span class="keyword">function</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Tried_to_eval_condition</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keyword">true</span>&nbsp;<span class="keywordsign">|</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keyword">false</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;verified_success&nbsp;=&nbsp;<span class="keyword">function</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Verified_success</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keyword">true</span>&nbsp;<span class="keywordsign">|</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keyword">false</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;already_done&nbsp;=&nbsp;<span class="keyword">function</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Already_done</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keyword">true</span>&nbsp;<span class="keywordsign">|</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keyword">false</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;dependencies_failed&nbsp;=&nbsp;<span class="keyword">function</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Dependencies_failed</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keyword">true</span>&nbsp;<span class="keywordsign">|</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keyword">false</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;failed_running&nbsp;=&nbsp;<span class="keyword">function</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Failed_running</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keyword">true</span>&nbsp;<span class="keywordsign">|</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keyword">false</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;failed_to_kill&nbsp;=&nbsp;<span class="keyword">function</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Failed_to_kill</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keyword">true</span>&nbsp;<span class="keywordsign">|</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keyword">false</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;failed_to_start&nbsp;=&nbsp;<span class="keyword">function</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Failed_to_start</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keyword">true</span>&nbsp;<span class="keywordsign">|</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keyword">false</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;failed_to_eval_condition&nbsp;=&nbsp;<span class="keyword">function</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Failed_to_eval_condition</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keyword">true</span>&nbsp;<span class="keywordsign">|</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keyword">false</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;killing&nbsp;=&nbsp;<span class="keyword">function</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Killing</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keyword">true</span>&nbsp;<span class="keywordsign">|</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keyword">false</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;tried_to_kill&nbsp;=&nbsp;<span class="keyword">function</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Tried_to_kill</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keyword">true</span>&nbsp;<span class="keywordsign">|</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keyword">false</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;did_not_ensure_condition&nbsp;=&nbsp;<span class="keyword">function</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Did_not_ensure_condition</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keyword">true</span>&nbsp;<span class="keywordsign">|</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keyword">false</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;killed&nbsp;=&nbsp;<span class="keyword">function</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Killed</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keyword">true</span>&nbsp;<span class="keywordsign">|</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keyword">false</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;finished&nbsp;=&nbsp;<span class="keyword">function</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Finished</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keyword">true</span>&nbsp;<span class="keywordsign">|</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keyword">false</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;passive&nbsp;=&nbsp;<span class="keyword">function</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Passive</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keyword">true</span>&nbsp;<span class="keywordsign">|</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keyword">false</span><br>
+&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;killable&nbsp;=&nbsp;<span class="keyword">function</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">#</span><span class="constructor">Ketrew_gen_target_v0</span>.<span class="constructor">Killable_state</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keyword">true</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keyword">false</span><br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;finished_because_dependencies_died&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;<span class="keyword">open</span>&nbsp;<span class="constructor">Ketrew_gen_target_v0</span>.<span class="constructor">History</span>&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">function</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Finished</span>&nbsp;{previous_state&nbsp;=&nbsp;(<span class="keywordsign">`</span><span class="constructor">Dependencies_failed</span>&nbsp;_);&nbsp;_&nbsp;}&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keyword">true</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;other&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keyword">false</span><br>
+<br>
+&nbsp;&nbsp;<span class="keyword">end</span><br>
+<span class="keyword">end</span><br>
+<br>
+<span class="keyword">open</span>&nbsp;<span class="constructor">Ketrew_gen_target_v0</span>.<span class="constructor">Target</span><br>
+<span class="keyword">type</span>&nbsp;t&nbsp;=&nbsp;<span class="constructor">Ketrew_gen_target_v0</span>.<span class="constructor">Target</span>.t<br>
 <br>
 <span class="keyword">let</span>&nbsp;create<br>
-&nbsp;&nbsp;&nbsp;&nbsp;?id&nbsp;?name&nbsp;?(persistence=<span class="keywordsign">`</span><span class="constructor">Input_data</span>)&nbsp;?(metadata=<span class="constructor">Artifact</span>.<span class="constructor">Value</span>.unit)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;?id&nbsp;?name&nbsp;?metadata<br>
 &nbsp;&nbsp;&nbsp;&nbsp;?(dependencies=[])&nbsp;?(if_fails_activate=[])&nbsp;?(success_triggers=[])<br>
 &nbsp;&nbsp;&nbsp;&nbsp;?(make=<span class="constructor">Build_process</span>.nop)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;?condition&nbsp;?(equivalence=<span class="keywordsign">`</span><span class="constructor">Same_active_condition</span>)&nbsp;?(tags=[])<br>
 &nbsp;&nbsp;&nbsp;&nbsp;()&nbsp;=&nbsp;<br>
-&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;history&nbsp;=&nbsp;<span class="keywordsign">`</span><span class="constructor">Created</span>&nbsp;<span class="constructor">Time</span>.(now&nbsp;())&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;history&nbsp;=&nbsp;<span class="keywordsign">`</span><span class="constructor">Passive</span>&nbsp;(make_log&nbsp;())&nbsp;<span class="keyword">in</span><br>
 &nbsp;&nbsp;<span class="keyword">let</span>&nbsp;id&nbsp;=&nbsp;<span class="constructor">Option</span>.value&nbsp;id&nbsp;~default:(<span class="constructor">Unique_id</span>.create&nbsp;())&nbsp;<span class="keyword">in</span><br>
-&nbsp;&nbsp;{&nbsp;id;&nbsp;name&nbsp;=&nbsp;<span class="constructor">Option</span>.value&nbsp;name&nbsp;~default:id;&nbsp;persistence;&nbsp;metadata;&nbsp;tags;&nbsp;<br>
+&nbsp;&nbsp;{&nbsp;id;&nbsp;name&nbsp;=&nbsp;<span class="constructor">Option</span>.value&nbsp;name&nbsp;~default:id;&nbsp;metadata;&nbsp;tags;&nbsp;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;log&nbsp;=&nbsp;[];&nbsp;dependencies;&nbsp;make;&nbsp;condition;&nbsp;history;&nbsp;equivalence;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;if_fails_activate;&nbsp;success_triggers;&nbsp;}<br>
+<br>
+<span class="keyword">let</span>&nbsp;to_serializable&nbsp;t&nbsp;=&nbsp;t<br>
+<span class="keyword">let</span>&nbsp;of_serializable&nbsp;t&nbsp;=&nbsp;t<br>
+<br>
+<span class="keyword">let</span>&nbsp;id&nbsp;:&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Unique_id</span>.t&nbsp;=&nbsp;<span class="keyword">fun</span>&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;t.id<br>
+<span class="keyword">let</span>&nbsp;name&nbsp;:&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;string&nbsp;=&nbsp;<span class="keyword">fun</span>&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;t.name<br>
+<span class="keyword">let</span>&nbsp;dependencies:&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;id&nbsp;list&nbsp;=&nbsp;<span class="keyword">fun</span>&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;t.dependencies<br>
+<span class="keyword">let</span>&nbsp;fallbacks:&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;id&nbsp;list&nbsp;=&nbsp;<span class="keyword">fun</span>&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;t.if_fails_activate<br>
+<span class="keyword">let</span>&nbsp;success_triggers:&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;id&nbsp;list&nbsp;=&nbsp;<span class="keyword">fun</span>&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;t.success_triggers<br>
+<span class="keyword">let</span>&nbsp;metadata&nbsp;=&nbsp;<span class="keyword">fun</span>&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;t.metadata<br>
+<span class="keyword">let</span>&nbsp;build_process:&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Build_process</span>.t&nbsp;=&nbsp;<span class="keyword">fun</span>&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;t.make<br>
+<span class="keyword">let</span>&nbsp;condition:&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Condition</span>.t&nbsp;option&nbsp;=&nbsp;<span class="keyword">fun</span>&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;t.condition<br>
+<span class="keyword">let</span>&nbsp;equivalence:&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Equivalence</span>.t&nbsp;=&nbsp;<span class="keyword">fun</span>&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;t.equivalence<br>
+<span class="keyword">let</span>&nbsp;additional_log:&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;(<span class="constructor">Time</span>.t&nbsp;*&nbsp;string)&nbsp;list&nbsp;=&nbsp;<span class="keyword">fun</span>&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;t.log<br>
+<span class="keyword">let</span>&nbsp;tags:&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;string&nbsp;list&nbsp;=&nbsp;<span class="keyword">fun</span>&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;t.tags<br>
+<span class="keyword">let</span>&nbsp;state:&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">State</span>.t&nbsp;=&nbsp;<span class="keyword">fun</span>&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;t.history<br>
 <br>
 <span class="keyword">let</span>&nbsp;is_equivalent&nbsp;t&nbsp;ext&nbsp;=<br>
 &nbsp;&nbsp;<span class="keyword">match</span>&nbsp;t.equivalence&nbsp;<span class="keyword">with</span><br>
@@ -160,191 +519,264 @@
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Some</span>&nbsp;other&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Some</span>&nbsp;other&nbsp;=&nbsp;ext.condition<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
 <br>
+<span class="keyword">let</span>&nbsp;with_history&nbsp;t&nbsp;h&nbsp;=&nbsp;{t&nbsp;<span class="keyword">with</span>&nbsp;history&nbsp;=&nbsp;h}<br>
 <br>
-</code><table><tr><td></td><td><span class="comment">(** Create a new  target but activated from a created one; 
-    raises <code class="code"><span class="constructor">Invalid_argument</span> _</code> if current status is not <code class="code"><span class="keywordsign">`</span><span class="constructor">Created</span> _</code>. *)</span></td></tr></table><code class="code"><br>
-<span class="keyword">let</span>&nbsp;activate_exn&nbsp;t&nbsp;~by&nbsp;=&nbsp;<br>
+<span class="keyword">let</span>&nbsp;activate_exn&nbsp;?log&nbsp;t&nbsp;~reason&nbsp;=<br>
 &nbsp;&nbsp;<span class="keyword">match</span>&nbsp;t.history&nbsp;<span class="keyword">with</span>&nbsp;<br>
-&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Created</span>&nbsp;_&nbsp;<span class="keyword">as</span>&nbsp;c&nbsp;<span class="keywordsign">-&gt;</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;t&nbsp;<span class="keyword">with</span>&nbsp;history&nbsp;=&nbsp;<span class="keywordsign">`</span><span class="constructor">Activated</span>&nbsp;(<span class="constructor">Time</span>.now&nbsp;(),&nbsp;c,&nbsp;by)&nbsp;}<br>
+&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Passive</span>&nbsp;_&nbsp;<span class="keyword">as</span>&nbsp;c&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;with_history&nbsp;t&nbsp;(<span class="keywordsign">`</span><span class="constructor">Active</span>&nbsp;(to_history&nbsp;?log&nbsp;c,&nbsp;reason))<br>
 &nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;raise&nbsp;(<span class="constructor">Invalid_argument</span>&nbsp;<span class="string">"activate_exn"</span>)<br>
 <br>
-<span class="keyword">let</span>&nbsp;make_succeed_exn&nbsp;t&nbsp;artifact&nbsp;=<br>
-&nbsp;&nbsp;<span class="keyword">match</span>&nbsp;t.history&nbsp;<span class="keyword">with</span><br>
-&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Activated</span>&nbsp;_&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Running</span>&nbsp;_&nbsp;<span class="keyword">as</span>&nbsp;state&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;t&nbsp;<span class="keyword">with</span>&nbsp;history&nbsp;=&nbsp;<span class="keywordsign">`</span><span class="constructor">Successful</span>&nbsp;(<span class="constructor">Time</span>.now&nbsp;(),&nbsp;state,&nbsp;artifact)&nbsp;}<br>
-&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;raise&nbsp;(<span class="constructor">Invalid_argument</span>&nbsp;<span class="string">"make_succeed_exn"</span>)<br>
+<span class="keyword">let</span>&nbsp;kill&nbsp;?log&nbsp;t&nbsp;=<br>
+&nbsp;&nbsp;<span class="keyword">match</span>&nbsp;state&nbsp;t&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">#</span><span class="constructor">Ketrew_gen_target_v0</span>.<span class="constructor">Killable_state</span>.t&nbsp;<span class="keyword">as</span>&nbsp;c&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Some</span>&nbsp;(with_history&nbsp;t&nbsp;(<span class="keywordsign">`</span><span class="constructor">Killing</span>&nbsp;(to_history&nbsp;?log&nbsp;c)))<br>
+&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;other&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">None</span><br>
 <br>
-<span class="keyword">let</span>&nbsp;kill_exn&nbsp;?(msg=<span class="string">""</span>)&nbsp;t&nbsp;=<br>
-&nbsp;&nbsp;<span class="keyword">match</span>&nbsp;t.history&nbsp;<span class="keyword">with</span><br>
-&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Activated</span>&nbsp;_&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Running</span>&nbsp;_&nbsp;<span class="keyword">as</span>&nbsp;state&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;t&nbsp;<span class="keyword">with</span>&nbsp;history&nbsp;=&nbsp;<span class="keywordsign">`</span><span class="constructor">Dead</span>&nbsp;(<span class="constructor">Time</span>.now&nbsp;(),&nbsp;state,&nbsp;<span class="keywordsign">`</span><span class="constructor">Killed</span>&nbsp;msg)&nbsp;}<br>
-&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;raise&nbsp;(<span class="constructor">Invalid_argument</span>&nbsp;<span class="string">"kill_exn"</span>)<br>
-<br>
-<span class="keyword">let</span>&nbsp;make_fail_exn&nbsp;?(msg=<span class="string">""</span>)&nbsp;t&nbsp;=<br>
-&nbsp;&nbsp;<span class="keyword">match</span>&nbsp;t.history&nbsp;<span class="keyword">with</span><br>
-&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Activated</span>&nbsp;_&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Running</span>&nbsp;_&nbsp;<span class="keyword">as</span>&nbsp;state&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;t&nbsp;<span class="keyword">with</span>&nbsp;history&nbsp;=&nbsp;<span class="keywordsign">`</span><span class="constructor">Dead</span>&nbsp;(<span class="constructor">Time</span>.now&nbsp;(),&nbsp;state,&nbsp;<span class="keywordsign">`</span><span class="constructor">Failed</span>&nbsp;msg)&nbsp;}<br>
-&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;raise&nbsp;(<span class="constructor">Invalid_argument</span>&nbsp;<span class="string">"kill_exn"</span>)<br>
-<br>
-<span class="keyword">let</span>&nbsp;set_running_exn&nbsp;t&nbsp;~plugin_name&nbsp;~run_parameters&nbsp;=<br>
-&nbsp;&nbsp;<span class="keyword">match</span>&nbsp;t.history&nbsp;<span class="keyword">with</span><br>
-&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Activated</span>&nbsp;_&nbsp;<span class="keyword">as</span>&nbsp;state&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;t&nbsp;<span class="keyword">with</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;history&nbsp;=<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">`</span><span class="constructor">Running</span>&nbsp;({<span class="constructor">Ketrew_gen_target_v0</span>.<span class="constructor">Run_bookkeeping</span>.&nbsp;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;plugin_name;&nbsp;run_parameters;&nbsp;run_history&nbsp;=&nbsp;[]},&nbsp;state)}<br>
-&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;invalid_argument_exn&nbsp;~where:<span class="string">"Target"</span>&nbsp;(fmt&nbsp;<span class="string">"set_running_exn"</span>)<br>
-<br>
-<span class="keyword">let</span>&nbsp;update_running_exn&nbsp;t&nbsp;~run_parameters&nbsp;=<br>
-&nbsp;&nbsp;<span class="keyword">match</span>&nbsp;t.history&nbsp;<span class="keyword">with</span><br>
-&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Running</span>&nbsp;(bookkeeping,&nbsp;activation)&nbsp;&nbsp;<span class="keywordsign">-&gt;</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;t&nbsp;<span class="keyword">with</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;history&nbsp;=<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">`</span><span class="constructor">Running</span>&nbsp;<span class="constructor">Ketrew_gen_target_v0</span>.<span class="constructor">Run_bookkeeping</span>.(<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{bookkeeping&nbsp;<span class="keyword">with</span>&nbsp;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;run_parameters;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;run_history&nbsp;=&nbsp;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bookkeeping.run_parameters&nbsp;::&nbsp;bookkeeping.run_history},<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;activation)}<br>
-&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;invalid_argument_exn&nbsp;~where:<span class="string">"Target"</span>&nbsp;(fmt&nbsp;<span class="string">"update_running_exn"</span>)<br>
-<br>
-<br>
-<br>
-<span class="keyword">let</span>&nbsp;active&nbsp;?id<br>
-&nbsp;&nbsp;&nbsp;&nbsp;?name&nbsp;?persistence&nbsp;?metadata<br>
-&nbsp;&nbsp;&nbsp;&nbsp;?dependencies&nbsp;?if_fails_activate&nbsp;?success_triggers&nbsp;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;?make&nbsp;?condition&nbsp;?equivalence&nbsp;?tags<br>
-&nbsp;&nbsp;&nbsp;&nbsp;()&nbsp;=&nbsp;<br>
-&nbsp;&nbsp;activate_exn&nbsp;~by:<span class="keywordsign">`</span><span class="constructor">User</span>&nbsp;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;(create&nbsp;?id&nbsp;?if_fails_activate&nbsp;?success_triggers&nbsp;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;?name&nbsp;?persistence&nbsp;?metadata&nbsp;?condition&nbsp;?tags<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;?equivalence&nbsp;?dependencies&nbsp;?make&nbsp;())<br>
-<br>
-<span class="keyword">let</span>&nbsp;reactivate&nbsp;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;?with_id&nbsp;?with_name&nbsp;?with_metadata&nbsp;t&nbsp;=<br>
-&nbsp;&nbsp;activate_exn&nbsp;~by:<span class="keywordsign">`</span><span class="constructor">User</span><br>
+<span class="keyword">let</span>&nbsp;reactivate<br>
+&nbsp;&nbsp;&nbsp;&nbsp;?with_id&nbsp;?with_name&nbsp;?with_metadata&nbsp;?log&nbsp;t&nbsp;=<br>
+&nbsp;&nbsp;<span class="comment">(*&nbsp;It's&nbsp;[`Passive]&nbsp;so&nbsp;there&nbsp;won't&nbsp;be&nbsp;any&nbsp;[exn].&nbsp;*)</span><br>
+&nbsp;&nbsp;activate_exn&nbsp;~reason:<span class="keywordsign">`</span><span class="constructor">User</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;{t&nbsp;<span class="keyword">with</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;history&nbsp;=&nbsp;<span class="keywordsign">`</span><span class="constructor">Created</span>&nbsp;(<span class="constructor">Time</span>.now&nbsp;());<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;history&nbsp;=&nbsp;<span class="keywordsign">`</span><span class="constructor">Passive</span>&nbsp;(make_log&nbsp;?message:log&nbsp;());<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;id&nbsp;=&nbsp;<span class="constructor">Option</span>.value&nbsp;with_id&nbsp;~default:(<span class="constructor">Unique_id</span>.create&nbsp;());<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;=&nbsp;<span class="constructor">Option</span>.value&nbsp;with_name&nbsp;~default:t.name;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;metadata&nbsp;=&nbsp;<span class="constructor">Option</span>.value&nbsp;with_metadata&nbsp;~default:t.metadata}<br>
 <br>
-<span class="keyword">let</span>&nbsp;id&nbsp;t&nbsp;:&nbsp;<span class="constructor">Unique_id</span>.t&nbsp;=&nbsp;t.id<br>
-<span class="keyword">let</span>&nbsp;name&nbsp;t&nbsp;=&nbsp;t.name<br>
+<span class="keyword">module</span>&nbsp;<span class="constructor">Automaton</span>&nbsp;=&nbsp;<span class="keyword">struct</span><br>
 <br>
-<span class="keyword">include</span><br>
-&nbsp;&nbsp;<span class="constructor">Json</span>.<span class="constructor">Make_versioned_serialization</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">Ketrew_gen_target_v0</span>.<span class="constructor">Target</span>)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">Ketrew_gen_versioned</span>.<span class="constructor">Target</span>)<br>
+&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;failure_reason&nbsp;=&nbsp;<span class="constructor">Ketrew_gen_target_v0</span>.<span class="constructor">Process_failure_reason</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;progress&nbsp;=&nbsp;[&nbsp;<span class="keywordsign">`</span><span class="constructor">Changed_state</span>&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">No_change</span>&nbsp;]<br>
+&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;<span class="keywordsign">'</span>a&nbsp;transition_callback&nbsp;=&nbsp;?log:string&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keywordsign">'</span>a&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;t&nbsp;*&nbsp;progress<br>
+&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;severity&nbsp;=&nbsp;[&nbsp;<span class="keywordsign">`</span><span class="constructor">Try_again</span>&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Fatal</span>&nbsp;]<br>
+&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;bookkeeping&nbsp;=&nbsp;<span class="constructor">Ketrew_gen_target_v0</span>.<span class="constructor">Run_bookkeeping</span>.t&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;plugin_name:&nbsp;string;&nbsp;run_parameters:&nbsp;string}<br>
+&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;long_running_failure&nbsp;=&nbsp;severity&nbsp;*&nbsp;string&nbsp;*&nbsp;bookkeeping<br>
+&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;long_running_action&nbsp;=&nbsp;&nbsp;(bookkeeping,&nbsp;long_running_failure)&nbsp;<span class="constructor">Pvem</span>.<span class="constructor">Result</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;process_check&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;[&nbsp;<span class="keywordsign">`</span><span class="constructor">Successful</span>&nbsp;<span class="keyword">of</span>&nbsp;bookkeeping&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Still_running</span>&nbsp;<span class="keyword">of</span>&nbsp;bookkeeping&nbsp;]<br>
+&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;process_status_check&nbsp;=&nbsp;(process_check,&nbsp;long_running_failure)&nbsp;<span class="constructor">Pvem</span>.<span class="constructor">Result</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;condition_evaluation&nbsp;=&nbsp;(bool,&nbsp;severity&nbsp;*&nbsp;string)&nbsp;<span class="constructor">Pvem</span>.<span class="constructor">Result</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;dependencies_status&nbsp;=&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;[&nbsp;<span class="keywordsign">`</span><span class="constructor">All_succeeded</span>&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">At_least_one_failed</span>&nbsp;<span class="keyword">of</span>&nbsp;id&nbsp;list&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Still_processing</span>&nbsp;]<br>
+&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;transition&nbsp;=&nbsp;[<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Do_nothing</span>&nbsp;<span class="keyword">of</span>&nbsp;unit&nbsp;transition_callback<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Activate</span>&nbsp;<span class="keyword">of</span>&nbsp;id&nbsp;list&nbsp;*&nbsp;unit&nbsp;transition_callback<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Check_and_activate_dependencies</span>&nbsp;<span class="keyword">of</span>&nbsp;dependencies_status&nbsp;transition_callback<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Start_running</span>&nbsp;<span class="keyword">of</span>&nbsp;bookkeeping&nbsp;*&nbsp;long_running_action&nbsp;transition_callback<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Eval_condition</span>&nbsp;<span class="keyword">of</span>&nbsp;<span class="constructor">Condition</span>.t&nbsp;*&nbsp;condition_evaluation&nbsp;transition_callback<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Check_process</span>&nbsp;<span class="keyword">of</span>&nbsp;bookkeeping&nbsp;*&nbsp;process_status_check&nbsp;transition_callback<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Kill</span>&nbsp;<span class="keyword">of</span>&nbsp;bookkeeping&nbsp;*&nbsp;long_running_action&nbsp;transition_callback<br>
+&nbsp;&nbsp;]<br>
 <br>
-<span class="keyword">let</span>&nbsp;deserialize&nbsp;s&nbsp;:&nbsp;(t,&nbsp;_)&nbsp;<span class="constructor">Result</span>.t&nbsp;=<br>
-&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;<span class="keyword">open</span>&nbsp;<span class="constructor">Result</span>&nbsp;<span class="keyword">in</span><br>
-&nbsp;&nbsp;<span class="keyword">try</span>&nbsp;return&nbsp;(deserialize_exn&nbsp;s)<br>
-&nbsp;&nbsp;<span class="keyword">with</span>&nbsp;e&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;fail&nbsp;(<span class="keywordsign">`</span><span class="constructor">Target</span>&nbsp;(<span class="keywordsign">`</span><span class="constructor">Deserilization</span>&nbsp;(<span class="constructor">Printexc</span>.to_string&nbsp;e)))<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;transition&nbsp;t&nbsp;:&nbsp;transition&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;return_with_history&nbsp;?(no_change=<span class="keyword">false</span>)&nbsp;t&nbsp;h&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;with_history&nbsp;t&nbsp;h,&nbsp;(<span class="keyword">if</span>&nbsp;no_change&nbsp;<span class="keyword">then</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">No_change</span>&nbsp;<span class="keyword">else</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Changed_state</span>)&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;activate_fallbacks&nbsp;c&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">`</span><span class="constructor">Activate</span>&nbsp;(t.if_fails_activate,&nbsp;(<span class="keyword">fun</span>&nbsp;?log&nbsp;()&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return_with_history&nbsp;t&nbsp;(<span class="keywordsign">`</span><span class="constructor">Finished</span>&nbsp;(to_history&nbsp;?log&nbsp;c))))&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;activate_success_triggers&nbsp;c&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">`</span><span class="constructor">Activate</span>&nbsp;(t.success_triggers,&nbsp;(<span class="keyword">fun</span>&nbsp;?log&nbsp;()&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return_with_history&nbsp;t&nbsp;(<span class="keywordsign">`</span><span class="constructor">Finished</span>&nbsp;(to_history&nbsp;?log&nbsp;c))))&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;from_killing_state&nbsp;killable_history&nbsp;current_state&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>{&nbsp;<span class="constructor">Ketrew_gen_target_v0</span>.<span class="constructor">History</span>.&nbsp;log;&nbsp;previous_state&nbsp;}&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;killable_history&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">begin</span>&nbsp;<span class="keyword">match</span>&nbsp;previous_state&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Building</span>&nbsp;_<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Starting</span>&nbsp;_<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Passive</span>&nbsp;_<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Tried_to_start</span>&nbsp;_<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Still_building</span>&nbsp;_&nbsp;<span class="comment">(*&nbsp;should&nbsp;we&nbsp;ask&nbsp;to&nbsp;kill&nbsp;the&nbsp;dependencies?&nbsp;*)</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Tried_to_eval_condition</span>&nbsp;_<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Tried_to_reeval_condition</span>&nbsp;_<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Active</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">`</span><span class="constructor">Do_nothing</span>&nbsp;(<span class="keyword">fun</span>&nbsp;?log&nbsp;()&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return_with_history&nbsp;t&nbsp;(<span class="keywordsign">`</span><span class="constructor">Killed</span>&nbsp;(to_history&nbsp;?log&nbsp;current_state)))<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Still_running</span>&nbsp;(_,&nbsp;bookkeeping)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Still_running_despite_recoverable_error</span>&nbsp;(_,&nbsp;_,&nbsp;bookkeeping)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Started_running</span>&nbsp;(_,&nbsp;bookkeeping)&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">`</span><span class="constructor">Kill</span>&nbsp;(bookkeeping,&nbsp;<span class="keyword">begin</span>&nbsp;<span class="keyword">fun</span>&nbsp;?log&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keyword">function</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Ok</span>&nbsp;bookkeeping&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="comment">(*&nbsp;loosing&nbsp;some&nbsp;bookeeping&nbsp;*)</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return_with_history&nbsp;t&nbsp;(<span class="keywordsign">`</span><span class="constructor">Killed</span>&nbsp;(to_history&nbsp;?log&nbsp;current_state))<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Error</span>&nbsp;(<span class="keywordsign">`</span><span class="constructor">Try_again</span>,&nbsp;reason,&nbsp;bookeeping)&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return_with_history&nbsp;~no_change:<span class="keyword">true</span>&nbsp;t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="keywordsign">`</span><span class="constructor">Tried_to_kill</span>&nbsp;(to_history&nbsp;?log&nbsp;current_state))<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Error</span>&nbsp;(<span class="keywordsign">`</span><span class="constructor">Fatal</span>,&nbsp;reason,&nbsp;bookeeping)&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return_with_history&nbsp;t&nbsp;(<span class="keywordsign">`</span><span class="constructor">Failed_to_kill</span>&nbsp;(to_history&nbsp;?log&nbsp;current_state))<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">begin</span>&nbsp;<span class="keyword">match</span>&nbsp;t.history&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Finished</span>&nbsp;_<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Passive</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">`</span><span class="constructor">Do_nothing</span>&nbsp;(<span class="keyword">fun</span>&nbsp;?log&nbsp;()&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;t,&nbsp;<span class="keywordsign">`</span><span class="constructor">No_change</span>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Tried_to_eval_condition</span>&nbsp;_<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Active</span>&nbsp;_&nbsp;<span class="keyword">as</span>&nbsp;c&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">begin</span>&nbsp;<span class="keyword">match</span>&nbsp;t.condition&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Some</span>&nbsp;cond&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">`</span><span class="constructor">Eval_condition</span>&nbsp;(cond,&nbsp;<span class="keyword">begin</span>&nbsp;<span class="keyword">fun</span>&nbsp;?log&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keyword">function</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Ok</span>&nbsp;<span class="keyword">true</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;return_with_history&nbsp;t&nbsp;(<span class="keywordsign">`</span><span class="constructor">Already_done</span>&nbsp;(to_history&nbsp;?log&nbsp;c))<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Ok</span>&nbsp;<span class="keyword">false</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;return_with_history&nbsp;t&nbsp;(<span class="keywordsign">`</span><span class="constructor">Building</span>&nbsp;(to_history&nbsp;?log&nbsp;c))<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Error</span>&nbsp;(<span class="keywordsign">`</span><span class="constructor">Try_again</span>,&nbsp;log)&nbsp;&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return_with_history&nbsp;t&nbsp;~no_change:<span class="keyword">true</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="keywordsign">`</span><span class="constructor">Tried_to_eval_condition</span>&nbsp;(to_history&nbsp;~log&nbsp;c))<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Error</span>&nbsp;(<span class="keywordsign">`</span><span class="constructor">Fatal</span>,&nbsp;reason)&nbsp;&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return_with_history&nbsp;t&nbsp;(<span class="keywordsign">`</span><span class="constructor">Failed_to_eval_condition</span>&nbsp;(to_history&nbsp;?log&nbsp;c))<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">None</span>&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">`</span><span class="constructor">Do_nothing</span>&nbsp;(<span class="keyword">fun</span>&nbsp;?log&nbsp;()&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return_with_history&nbsp;t&nbsp;(<span class="keywordsign">`</span><span class="constructor">Building</span>&nbsp;(to_history&nbsp;?log&nbsp;c)))<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Already_done</span>&nbsp;_&nbsp;<span class="keyword">as</span>&nbsp;c&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;activate_success_triggers&nbsp;c<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Still_building</span>&nbsp;_<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Building</span>&nbsp;_&nbsp;<span class="keyword">as</span>&nbsp;c&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">`</span><span class="constructor">Check_and_activate_dependencies</span>&nbsp;<span class="keyword">begin</span>&nbsp;<span class="keyword">fun</span>&nbsp;?log&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keyword">function</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">All_succeeded</span>&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return_with_history&nbsp;t&nbsp;(<span class="keywordsign">`</span><span class="constructor">Starting</span>&nbsp;(to_history&nbsp;?log&nbsp;c))<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">At_least_one_failed</span>&nbsp;id_list&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return_with_history&nbsp;t&nbsp;(<span class="keywordsign">`</span><span class="constructor">Dependencies_failed</span>&nbsp;(to_history&nbsp;?log&nbsp;c,&nbsp;id_list))<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Still_processing</span>&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return_with_history&nbsp;~no_change:<span class="keyword">true</span>&nbsp;t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="keywordsign">`</span><span class="constructor">Still_building</span>&nbsp;(to_history&nbsp;?log&nbsp;c))<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Did_not_ensure_condition</span>&nbsp;_<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Dependencies_failed</span>&nbsp;_&nbsp;<span class="keyword">as</span>&nbsp;c&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;activate_fallbacks&nbsp;c<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Starting</span>&nbsp;_<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Tried_to_start</span>&nbsp;_&nbsp;<span class="keyword">as</span>&nbsp;c&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">begin</span>&nbsp;<span class="keyword">match</span>&nbsp;build_process&nbsp;t&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Long_running</span>&nbsp;(plugin_name,&nbsp;created_run_paramters)&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;bookeeping&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{plugin_name;&nbsp;run_parameters&nbsp;=&nbsp;created_run_paramters&nbsp;}&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">`</span><span class="constructor">Start_running</span>&nbsp;(bookeeping,&nbsp;<span class="keyword">begin</span>&nbsp;<span class="keyword">fun</span>&nbsp;?log&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keyword">function</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Ok</span>&nbsp;bookkeeping&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return_with_history&nbsp;t&nbsp;(<span class="keywordsign">`</span><span class="constructor">Started_running</span>&nbsp;(to_history&nbsp;?log&nbsp;c,&nbsp;bookkeeping))<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Error</span>&nbsp;(<span class="keywordsign">`</span><span class="constructor">Try_again</span>,&nbsp;log,&nbsp;bookkeeping)&nbsp;&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return_with_history&nbsp;t&nbsp;~no_change:<span class="keyword">true</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="keywordsign">`</span><span class="constructor">Tried_to_start</span>&nbsp;(to_history&nbsp;~log&nbsp;c,&nbsp;bookkeeping))<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Error</span>&nbsp;(<span class="keywordsign">`</span><span class="constructor">Fatal</span>,&nbsp;reason,&nbsp;bookkeeping)&nbsp;&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return_with_history&nbsp;t&nbsp;(<span class="keywordsign">`</span><span class="constructor">Failed_to_start</span>&nbsp;(to_history&nbsp;?log&nbsp;c,&nbsp;bookkeeping))<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">No_operation</span>&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">`</span><span class="constructor">Do_nothing</span>&nbsp;(<span class="keyword">fun</span>&nbsp;?log&nbsp;()&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return_with_history&nbsp;t&nbsp;(<span class="keywordsign">`</span><span class="constructor">Successfully_did_nothing</span>&nbsp;(to_history&nbsp;?log&nbsp;c)))<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Started_running</span>&nbsp;(_,&nbsp;bookkeeping)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Still_running_despite_recoverable_error</span>&nbsp;(_,&nbsp;_,&nbsp;bookkeeping)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Still_running</span>&nbsp;(_,&nbsp;bookkeeping)&nbsp;<span class="keyword">as</span>&nbsp;c&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">`</span><span class="constructor">Check_process</span>&nbsp;(bookkeeping,&nbsp;<span class="keyword">begin</span>&nbsp;<span class="keyword">fun</span>&nbsp;?log&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keyword">function</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Ok</span>&nbsp;(<span class="keywordsign">`</span><span class="constructor">Still_running</span>&nbsp;bookkeeping)&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return_with_history&nbsp;t&nbsp;~no_change:<span class="keyword">true</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="keywordsign">`</span><span class="constructor">Still_running</span>&nbsp;(to_history&nbsp;?log&nbsp;c,&nbsp;bookkeeping))<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Ok</span>&nbsp;(<span class="keywordsign">`</span><span class="constructor">Successful</span>&nbsp;bookkeeping)&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return_with_history&nbsp;t&nbsp;(<span class="keywordsign">`</span><span class="constructor">Ran_successfully</span>&nbsp;(to_history&nbsp;?log&nbsp;c,&nbsp;bookkeeping))<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Error</span>&nbsp;(<span class="keywordsign">`</span><span class="constructor">Try_again</span>,&nbsp;how,&nbsp;bookkeeping)&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return_with_history&nbsp;t&nbsp;~no_change:<span class="keyword">true</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="keywordsign">`</span><span class="constructor">Still_running_despite_recoverable_error</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(how,&nbsp;to_history&nbsp;?log&nbsp;c,&nbsp;bookkeeping))<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Error</span>&nbsp;(<span class="keywordsign">`</span><span class="constructor">Fatal</span>,&nbsp;how,&nbsp;bookkeeping)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return_with_history&nbsp;t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="keywordsign">`</span><span class="constructor">Failed_running</span>&nbsp;(to_history&nbsp;?log&nbsp;c,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">`</span><span class="constructor">Long_running_failure</span>&nbsp;how,&nbsp;bookkeeping))<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Successfully_did_nothing</span>&nbsp;_<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Tried_to_reeval_condition</span>&nbsp;_<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Ran_successfully</span>&nbsp;_&nbsp;<span class="keyword">as</span>&nbsp;c&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">begin</span>&nbsp;<span class="keyword">match</span>&nbsp;t.condition&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Some</span>&nbsp;cond&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">`</span><span class="constructor">Eval_condition</span>&nbsp;(cond,&nbsp;<span class="keyword">begin</span>&nbsp;<span class="keyword">fun</span>&nbsp;?log&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keyword">function</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Ok</span>&nbsp;<span class="keyword">true</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;return_with_history&nbsp;t&nbsp;(<span class="keywordsign">`</span><span class="constructor">Verified_success</span>&nbsp;(to_history&nbsp;?log&nbsp;c))<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Ok</span>&nbsp;<span class="keyword">false</span>&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return_with_history&nbsp;t&nbsp;(<span class="keywordsign">`</span><span class="constructor">Did_not_ensure_condition</span>&nbsp;(to_history&nbsp;?log&nbsp;c))<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Error</span>&nbsp;(<span class="keywordsign">`</span><span class="constructor">Try_again</span>,&nbsp;how)&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return_with_history&nbsp;t&nbsp;~no_change:<span class="keyword">true</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="keywordsign">`</span><span class="constructor">Tried_to_reeval_condition</span>&nbsp;(how,&nbsp;to_history&nbsp;?log&nbsp;c))<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Error</span>&nbsp;(<span class="keywordsign">`</span><span class="constructor">Fatal</span>,log)&nbsp;&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return_with_history&nbsp;t&nbsp;(<span class="keywordsign">`</span><span class="constructor">Did_not_ensure_condition</span>&nbsp;(to_history&nbsp;~log&nbsp;c))<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">None</span>&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">`</span><span class="constructor">Do_nothing</span>&nbsp;(<span class="keyword">fun</span>&nbsp;?log&nbsp;()&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return_with_history&nbsp;t&nbsp;(<span class="keywordsign">`</span><span class="constructor">Verified_success</span>&nbsp;(to_history&nbsp;?log&nbsp;c)))<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Verified_success</span>&nbsp;_&nbsp;<span class="keyword">as</span>&nbsp;c&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;activate_success_triggers&nbsp;c<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Failed_running</span>&nbsp;_&nbsp;<span class="keyword">as</span>&nbsp;c&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;activate_fallbacks&nbsp;c<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Tried_to_kill</span>&nbsp;_&nbsp;<span class="keyword">as</span>&nbsp;c&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;killable_history&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;<span class="keyword">rec</span>&nbsp;go&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">function</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Killing</span>&nbsp;h&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;h<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Tried_to_kill</span>&nbsp;{<span class="constructor">Ketrew_gen_target_v0</span>.<span class="constructor">History</span>.&nbsp;previous_state;&nbsp;_}&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;go&nbsp;previous_state&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(go&nbsp;c)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;from_killing_state&nbsp;killable_history&nbsp;c<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Killing</span>&nbsp;history&nbsp;<span class="keyword">as</span>&nbsp;c&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;from_killing_state&nbsp;history&nbsp;c<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Killed</span>&nbsp;_<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Failed_to_start</span>&nbsp;_<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Failed_to_eval_condition</span>&nbsp;_<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Failed_to_kill</span>&nbsp;_&nbsp;<span class="keyword">as</span>&nbsp;c&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">(*&nbsp;what&nbsp;should&nbsp;we&nbsp;actually&nbsp;do?&nbsp;*)</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;activate_fallbacks&nbsp;c<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
+<br>
+<span class="keyword">end</span><br>
+<br>
+<span class="keyword">module</span>&nbsp;<span class="constructor">Target_pointer</span>&nbsp;=&nbsp;<span class="keyword">struct</span><br>
+&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;t&nbsp;=&nbsp;<span class="constructor">Ketrew_gen_target_v0</span>.<span class="constructor">Target_pointer</span>.t<br>
+<span class="keyword">end</span><br>
+<br>
+<span class="keyword">module</span>&nbsp;<span class="constructor">Stored_target</span>&nbsp;=&nbsp;<span class="keyword">struct</span><br>
+&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;target&nbsp;=&nbsp;t<br>
+&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;t&nbsp;=&nbsp;<span class="constructor">Ketrew_gen_target_v0</span>.<span class="constructor">Stored_target</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">include</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Json</span>.<span class="constructor">Make_versioned_serialization</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">Ketrew_gen_target_v0</span>.<span class="constructor">Stored_target</span>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">Ketrew_gen_versioned</span>.<span class="constructor">Stored_target</span>)<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;deserialize&nbsp;s&nbsp;:&nbsp;(t,&nbsp;_)&nbsp;<span class="constructor">Result</span>.t&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;<span class="keyword">open</span>&nbsp;<span class="constructor">Result</span>&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">try</span>&nbsp;return&nbsp;(deserialize_exn&nbsp;s)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">with</span>&nbsp;e&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;fail&nbsp;(<span class="keywordsign">`</span><span class="constructor">Target</span>&nbsp;(<span class="keywordsign">`</span><span class="constructor">Deserilization</span>&nbsp;(<span class="constructor">Printexc</span>.to_string&nbsp;e)))<br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;get_target&nbsp;=&nbsp;<span class="keyword">function</span><br>
+&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Target</span>&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Target</span>&nbsp;t<br>
+&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Pointer</span>&nbsp;{&nbsp;<span class="constructor">Ketrew_gen_target_v0</span>.<span class="constructor">Target_pointer</span>.&nbsp;pointer;&nbsp;_}&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Pointer</span>&nbsp;pointer<br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;of_target&nbsp;t&nbsp;=&nbsp;<span class="keywordsign">`</span><span class="constructor">Target</span>&nbsp;t<br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;id&nbsp;=&nbsp;<span class="keyword">function</span><br>
+&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Target</span>&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;t.id<br>
+&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Pointer</span>&nbsp;{&nbsp;<span class="constructor">Ketrew_gen_target_v0</span>.<span class="constructor">Target_pointer</span>.&nbsp;original&nbsp;}&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;original.id<br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;make_pointer&nbsp;~from&nbsp;~pointing_to&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">`</span><span class="constructor">Pointer</span>&nbsp;{&nbsp;<span class="constructor">Ketrew_gen_target_v0</span>.<span class="constructor">Target_pointer</span>.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;original&nbsp;=&nbsp;from;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pointer&nbsp;=&nbsp;pointing_to.id&nbsp;}<br>
+<br>
+<span class="keyword">end</span><br>
+<br>
+&nbsp;&nbsp;<br>
+<br>
 <br>
 <span class="keyword">let</span>&nbsp;log&nbsp;t&nbsp;=&nbsp;<span class="constructor">Log</span>.(brakets&nbsp;(sf&nbsp;<span class="string">"Target:&nbsp;%s&nbsp;(%s)"</span>&nbsp;t.name&nbsp;t.id))<br>
 <br>
-<span class="keyword">let</span>&nbsp;<span class="keyword">rec</span>&nbsp;eval_condition&nbsp;=&nbsp;<br>
-&nbsp;&nbsp;<span class="keyword">function</span><br>
-&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">True</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;return&nbsp;<span class="keyword">true</span><br>
-&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">False</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;return&nbsp;<span class="keyword">false</span><br>
-&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Volume_exists</span>&nbsp;v&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Artifact</span>.<span class="constructor">Volume</span>.exists&nbsp;v<br>
-&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Volume_size_bigger_than</span>&nbsp;(v,&nbsp;sz)&nbsp;<span class="keywordsign">-&gt;</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Artifact</span>.<span class="constructor">Volume</span>.get_size&nbsp;v<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;size&nbsp;<span class="keywordsign">-&gt;</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;(size&nbsp;&gt;=&nbsp;sz)<br>
-&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Command_returns</span>&nbsp;(c,&nbsp;ret)&nbsp;<span class="keywordsign">-&gt;</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Command</span>.get_return_value&nbsp;c&nbsp;&nbsp;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;return_value&nbsp;<span class="keywordsign">-&gt;</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;(ret&nbsp;=&nbsp;return_value)<br>
-&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">And</span>&nbsp;list_of_conditions&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">(*&nbsp;Should&nbsp;start&nbsp;at&nbsp;the&nbsp;first&nbsp;that&nbsp;returns&nbsp;`false`&nbsp;*)</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;<span class="keyword">rec</span>&nbsp;go&nbsp;=&nbsp;<span class="keyword">function</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;[]&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;return&nbsp;<span class="keyword">true</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;cond&nbsp;::&nbsp;rest&nbsp;<span class="keywordsign">-&gt;</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;eval_condition&nbsp;cond<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">function</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keyword">true</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;go&nbsp;rest<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keyword">false</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;return&nbsp;<span class="keyword">false</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">in</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;go&nbsp;list_of_conditions<br>
-<br>
 <span class="keyword">let</span>&nbsp;should_start&nbsp;t&nbsp;=<br>
 &nbsp;&nbsp;<span class="keyword">match</span>&nbsp;t.condition&nbsp;<span class="keyword">with</span><br>
-&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Some</span>&nbsp;c&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;eval_condition&nbsp;c&nbsp;&gt;&gt;|&nbsp;not<br>
+&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Some</span>&nbsp;c&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Condition</span>.eval&nbsp;c&nbsp;&gt;&gt;|&nbsp;not<br>
 &nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">None</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;return&nbsp;<span class="keyword">true</span><br>
 <br>
 <span class="keyword">let</span>&nbsp;did_ensure_condition&nbsp;t&nbsp;=<br>
 &nbsp;&nbsp;<span class="keyword">match</span>&nbsp;t.condition&nbsp;<span class="keyword">with</span><br>
-&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Some</span>&nbsp;c&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;eval_condition&nbsp;c<br>
+&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Some</span>&nbsp;c&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Condition</span>.eval&nbsp;c<br>
 &nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">None</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;return&nbsp;<span class="keyword">true</span><br>
-<br>
-<span class="keyword">module</span>&nbsp;<span class="constructor">Is</span>&nbsp;=&nbsp;<span class="keyword">struct</span><br>
-<br>
-&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;created&nbsp;(t:&nbsp;t)&nbsp;=&nbsp;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">match</span>&nbsp;t.history&nbsp;<span class="keyword">with</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Created</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keyword">true</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keyword">false</span><br>
-<br>
-&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;activated&nbsp;(t:&nbsp;t)&nbsp;=&nbsp;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">match</span>&nbsp;t.history&nbsp;<span class="keyword">with</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Activated</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keyword">true</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keyword">false</span><br>
-<br>
-&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;running&nbsp;t&nbsp;=&nbsp;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">match</span>&nbsp;t.history&nbsp;<span class="keyword">with</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Running</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keyword">true</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keyword">false</span><br>
-&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;finished&nbsp;t&nbsp;=<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">match</span>&nbsp;t.history&nbsp;<span class="keyword">with</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Successful</span>&nbsp;_&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Dead</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keyword">true</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keyword">false</span><br>
-<br>
-&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;failed&nbsp;t&nbsp;=<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">match</span>&nbsp;t.history&nbsp;<span class="keyword">with</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Dead</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keyword">true</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keyword">false</span><br>
-&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;successful&nbsp;t&nbsp;=<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">match</span>&nbsp;t.history&nbsp;<span class="keyword">with</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Successful</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keyword">true</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keyword">false</span>&nbsp;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<br>
-&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;killable&nbsp;t&nbsp;=<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">match</span>&nbsp;t.history&nbsp;<span class="keyword">with</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Created</span>&nbsp;_&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Activated</span>&nbsp;_&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Running</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keyword">true</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keyword">false</span><br>
-<br>
-&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;activated_by_user&nbsp;t&nbsp;=<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;<span class="keyword">open</span>&nbsp;<span class="constructor">Ketrew_gen_target_v0</span>&nbsp;<span class="keyword">in</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;<span class="keyword">rec</span>&nbsp;go_through_history&nbsp;(history:&nbsp;<span class="constructor">Workflow_state</span>.t)&nbsp;=<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">match</span>&nbsp;history&nbsp;<span class="keyword">with</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Created</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keyword">false</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Activated</span>&nbsp;(_,&nbsp;_,&nbsp;<span class="keywordsign">`</span><span class="constructor">User</span>)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keyword">true</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Activated</span>&nbsp;(_,&nbsp;_,&nbsp;<span class="keywordsign">`</span><span class="constructor">Dependency</span>)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keyword">false</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Activated</span>&nbsp;(_,&nbsp;_,&nbsp;<span class="keywordsign">`</span><span class="constructor">Fallback</span>)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keyword">false</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Activated</span>&nbsp;(_,&nbsp;_,&nbsp;<span class="keywordsign">`</span><span class="constructor">Success_trigger</span>)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keyword">false</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Running</span>&nbsp;(_,&nbsp;prev)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;go_through_history&nbsp;(prev&nbsp;:&gt;&nbsp;<span class="constructor">Workflow_state</span>.t)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Successful</span>&nbsp;(_,&nbsp;prev,&nbsp;_)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;go_through_history&nbsp;(prev&nbsp;:&gt;&nbsp;<span class="constructor">Workflow_state</span>.t)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Dead</span>&nbsp;(_,&nbsp;prev,&nbsp;_)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;go_through_history&nbsp;(prev&nbsp;:&gt;&nbsp;<span class="constructor">Workflow_state</span>.t)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">in</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;go_through_history&nbsp;t.history<br>
-<br>
-<span class="keyword">end</span><br>
 <br>
 <br>
 <span class="keyword">let</span>&nbsp;latest_run_parameters&nbsp;target&nbsp;=<br>
 &nbsp;&nbsp;<span class="keyword">let</span>&nbsp;<span class="keyword">open</span>&nbsp;<span class="constructor">Ketrew_gen_target_v0</span>.<span class="constructor">Run_bookkeeping</span>&nbsp;<span class="keyword">in</span><br>
-&nbsp;&nbsp;<span class="keyword">match</span>&nbsp;target.history&nbsp;<span class="keyword">with</span><br>
-&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Running</span>&nbsp;(rb,&nbsp;_)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Some</span>&nbsp;(rb.run_parameters)<br>
-&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Dead</span>&nbsp;(_,&nbsp;<span class="keywordsign">`</span><span class="constructor">Running</span>&nbsp;(rb,&nbsp;_),&nbsp;_)<br>
-&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Successful</span>&nbsp;(_,&nbsp;<span class="keywordsign">`</span><span class="constructor">Running</span>&nbsp;(rb,&nbsp;_),&nbsp;_)&nbsp;<span class="keywordsign">-&gt;</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Some</span>&nbsp;(rb.run_parameters)<br>
-&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Created</span>&nbsp;_&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Activated</span>&nbsp;_&nbsp;<br>
-&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Successful</span>&nbsp;(_,&nbsp;<span class="keywordsign">`</span><span class="constructor">Activated</span>&nbsp;_,&nbsp;_)<br>
-&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Dead</span>&nbsp;(_,&nbsp;<span class="keywordsign">`</span><span class="constructor">Activated</span>&nbsp;_,&nbsp;_)&nbsp;<span class="keywordsign">-&gt;</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">begin</span>&nbsp;<span class="keyword">match</span>&nbsp;target.make&nbsp;<span class="keyword">with</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Long_running</span>&nbsp;(plugin,&nbsp;rp)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Some</span>&nbsp;(rp)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">None</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
+&nbsp;&nbsp;state&nbsp;target&nbsp;|&gt;&nbsp;<span class="constructor">State</span>.latest_run_bookkeeping<br>
+&nbsp;&nbsp;|&gt;&nbsp;<span class="constructor">Option</span>.map&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;~f:(<span class="keyword">fun</span>&nbsp;rb&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;rb.run_parameters)<br>
 </code></body></html>

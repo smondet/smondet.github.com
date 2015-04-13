@@ -12,13 +12,13 @@
 &nbsp;&nbsp;<span class="keyword">type</span>&nbsp;<span class="keywordsign">'</span>a&nbsp;configuration&nbsp;=&nbsp;<span class="keywordsign">'</span>a<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">constraint</span>&nbsp;<span class="keywordsign">'</span>a&nbsp;=<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;&nbsp;catch_module_paths&nbsp;:&nbsp;(string&nbsp;*&nbsp;<span class="constructor">Re</span>.re&nbsp;*&nbsp;string)&nbsp;list;&nbsp;..&nbsp;&gt;<br>
-&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;code_url&nbsp;:&nbsp;<span class="constructor">Oredoc</span>.<span class="constructor">String</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;string<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;code_url&nbsp;:&nbsp;<span class="constructor">String</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;string<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;looks_like_module_path&nbsp;:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;configuration:&lt;&nbsp;catch_module_paths&nbsp;:&nbsp;(<span class="keywordsign">'</span>a&nbsp;*&nbsp;<span class="constructor">Re</span>.re&nbsp;*&nbsp;<span class="keywordsign">'</span>b)&nbsp;list;&nbsp;..&nbsp;&gt;&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;string&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;bool<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;url_of_module_path&nbsp;:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;configuration:&lt;&nbsp;catch_module_paths&nbsp;:&nbsp;(<span class="keywordsign">'</span>a&nbsp;*&nbsp;<span class="constructor">Re</span>.re&nbsp;*&nbsp;string)&nbsp;list;&nbsp;..&nbsp;&gt;&nbsp;<span class="keywordsign">-&gt;</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Oredoc</span>.<span class="constructor">String</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;string<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">String</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;string<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;preprocess&nbsp;:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;configuration:&lt;&nbsp;catch_module_paths&nbsp;:&nbsp;(<span class="keywordsign">'</span>a&nbsp;*&nbsp;<span class="constructor">Re</span>.re&nbsp;*&nbsp;string)&nbsp;list;&nbsp;..&nbsp;&gt;&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;string&nbsp;<span class="keywordsign">-&gt;</span><br>

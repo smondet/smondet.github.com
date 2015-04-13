@@ -16,11 +16,13 @@
 <link title="Ketrew_command_line" rel="Chapter" href="Ketrew_command_line.html">
 <link title="Ketrew_configuration" rel="Chapter" href="Ketrew_configuration.html">
 <link title="Ketrew_daemonize" rel="Chapter" href="Ketrew_daemonize.html">
-<link title="Ketrew_database" rel="Chapter" href="Ketrew_database.html">
+<link title="Ketrew_document" rel="Chapter" href="Ketrew_document.html">
 <link title="Ketrew_edsl" rel="Chapter" href="Ketrew_edsl.html">
 <link title="Ketrew_engine" rel="Chapter" href="Ketrew_engine.html">
 <link title="Ketrew_error" rel="Chapter" href="Ketrew_error.html">
+<link title="Ketrew_explorer" rel="Chapter" href="Ketrew_explorer.html">
 <link title="Ketrew_host" rel="Chapter" href="Ketrew_host.html">
+<link title="Ketrew_interaction" rel="Chapter" href="Ketrew_interaction.html">
 <link title="Ketrew_long_running" rel="Chapter" href="Ketrew_long_running.html">
 <link title="Ketrew_long_running_utilities" rel="Chapter" href="Ketrew_long_running_utilities.html">
 <link title="Ketrew_lsf" rel="Chapter" href="Ketrew_lsf.html">
@@ -33,7 +35,8 @@
 <link title="Ketrew_protocol" rel="Chapter" href="Ketrew_protocol.html">
 <link title="Ketrew_server" rel="Chapter" href="Ketrew_server.html">
 <link title="Ketrew_target" rel="Chapter" href="Ketrew_target.html">
-<link title="Ketrew_unix_process" rel="Chapter" href="Ketrew_unix_process.html"><title>Ketrew API</title>
+<link title="Ketrew_unix_process" rel="Chapter" href="Ketrew_unix_process.html">
+<link title="Ketrew_yarn" rel="Chapter" href="Ketrew_yarn.html"><title>Ketrew API</title>
 </head>
 <body>
 <h1>Ketrew API</h1>
@@ -52,7 +55,8 @@ Top-level module exporting the API (pack).
 </div>
 </td></tr>
 <tr><td class="module"><a href="Ketrew_artifact.html">Ketrew_artifact</a></td><td><div class="info">
-Artifacts are input values or files, or results of computations.
+Artifacts are inputs such as values or files, or outputs such as the
+    results of computations.
 </div>
 </td></tr>
 <tr><td class="module"><a href="Ketrew_client.html">Ketrew_client</a></td><td></td></tr>
@@ -70,8 +74,8 @@ Implementation of the <code class="code"><span class="constructor">LONG_RUNNING<
     processes or generated Python scripts.
 </div>
 </td></tr>
-<tr><td class="module"><a href="Ketrew_database.html">Ketrew_database</a></td><td><div class="info">
-A key-value database API with basic transactions.
+<tr><td class="module"><a href="Ketrew_document.html">Ketrew_document</a></td><td><div class="info">
+Transform complex Ketrew values into display-friendly <code class="code"><span class="constructor">Log</span>.t</code> values.
 </div>
 </td></tr>
 <tr><td class="module"><a href="Ketrew_edsl.html">Ketrew_edsl</a></td><td><div class="info">
@@ -86,8 +90,16 @@ The engine of the actual Workflow Engine.
 Deal with error values common across the library.
 </div>
 </td></tr>
+<tr><td class="module"><a href="Ketrew_explorer.html">Ketrew_explorer</a></td><td><div class="info">
+The “Target Explorer™“
+</div>
+</td></tr>
 <tr><td class="module"><a href="Ketrew_host.html">Ketrew_host</a></td><td><div class="info">
 Definition of a host; a place to run commands or handle files.
+</div>
+</td></tr>
+<tr><td class="module"><a href="Ketrew_interaction.html">Ketrew_interaction</a></td><td><div class="info">
+Keyboard interaction functions (build “menus”, ask questions, etc.)
 </div>
 </td></tr>
 <tr><td class="module"><a href="Ketrew_long_running.html">Ketrew_long_running</a></td><td><div class="info">
@@ -140,6 +152,12 @@ Definition of the basic building bloc of a workflow.
 </td></tr>
 <tr><td class="module"><a href="Ketrew_unix_process.html">Ketrew_unix_process</a></td><td><div class="info">
 Manage calls to Unix processes
+</div>
+</td></tr>
+<tr><td class="module"><a href="Ketrew_yarn.html">Ketrew_yarn</a></td><td><div class="info">
+Implementation of the <code class="code"><span class="constructor">LONG_RUNNING</span></code> API asking Aapache Yarn
+    for resources and using <a href="Ketrew_daemonize.html"><code class="code"><span class="constructor">Ketrew_daemonize</span></code></a> to “keep” the
+    process group together.
 </div>
 </td></tr>
 </table>

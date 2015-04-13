@@ -1,0 +1,154 @@
+ <!DOCTYPE html> <html> <head><link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootswatch/3.2.0/readable/bootstrap.min.css" type="text/css">
+<link rel="stylesheet" href="https://cdn.rawgit.com/hammerlab/ketrew/2d1c430cca52caa71e363a765ff8775a6ae14ba9/src/doc/code_style.css" type="text/css"><meta charset="utf-8"><title>Ketrew: The Configuration File</title></head><body><div class="container"><h1>Ketrew: The Configuration File</h1><div class="row">
+<div class="col-md-3">
+<h2>Contents</h2><ul><li><a href='#Location'>Location</a>
+</li><li><a href='#GeneratingFromCommandLine'>Generating From Command Line</a>
+</li><li><a href='#Examples'>Examples</a>
+</li><li><a href='#ExplanationoftheOptions'>Explanation of the Options</a>
+<ul><li><a href='#TheengineOptions'>The <code>engine</code> Options</a>
+</li><li><a href='#TheuiOptions'>The <code>ui</code> Options</a>
+</li><li><a href='#ThepluginsOption'>The <code>plugins</code> Option</a>
+</li><li><a href='#TheclientOptions'>The <code>client</code> Options</a>
+</li><li><a href='#TheserverOptions'>The <code>server</code> Options</a>
+</li></ul>
+</li><li><a href='#PrintTheConfiguration'>Print The Configuration</a>
+</li></ul><h2>Menu</h2><ul><li><a href='index.html'>Home</a></li><li><a href='Alternative_CLI_Application.html'>Alternative CLI Application</a></li><li><a href='Developer_Documentation.html'>Developer Documentation</a></li><li><a href='Glossary.html'>Glossary</a></li><li><a href='Long-Running_Plugins.html'>Long-Running Plugins</a></li><li><a href='Server_Commands.html'>Server Commands</a></li><li><a href='The_Configuration_File.html'>The Configuration File</a></li><li><a href='The_HTTP_API.html'>The HTTP API</a></li><li><a href='Workflow_Examples.html'>Workflow Examples</a></li><li><a href='dummy_plugin.html'>Plugin Example</a></li><li><a href='dummy_plugin_user.html'>Plugin-Usage Example</a></li><li><a href='integration.html'>Integration Test</a></li><li><a href='main.html'>Main Test</a></li><li><a href='preconfigured_main.html'>Preconfigured Main Example</a></li><li><a href='./api/index.html'>API Documentation</a></li><li>Documentation for the <a href='../index.html'><code>master</code></a> branch</li><li>Documentation for <a href='../doc.0.0.0/index.html'>version 0.0.0</a></li><li>Repository <a href='https://github.com/hammerlab/ketrew'>at Github</a></li><li>Up: <a href='../../index.html'>Software Projects</a></li></ul></div><div class="col-md-9"><h1 id="ConfigurationFile">Configuration File</h1>
+
+<p>Ketrew, the application, uses a configuration file based on the Json format (it
+is possible to avoid configuration files by using the library and/or creating
+your own
+<a href='./Alternative_CLI_Application.html'>ad-hoc command-line application</a>).</p>
+<p>The configuration file can contain one or more configurations, called
+“profiles,” accessed through their name.</p>
+<h2 id="Location">Location</h2>
+
+<p>Here is the process followed by Ketrew to find it&#39;s configuration, it tries
+these options successively:</p>
+<ul><li>the command line option <code>--configuration-file</code> (alias: <code>-C</code>)</li><li>the environment variables <code>KETREW_CONFIGURATION</code> and <code>KETREW_CONFIG</code>,</li><li>given a “root” directory (either the variable <code>KETREW_ROOT</code> or the default
+<code>$HOME/.ketrew/</code>), Ketrew will try to access the files:<ul><li><code>configuration.json</code>,</li><li><code>configuration.ml</code>, and</li><li><code>configuration.sh</code></li></ul></li></ul>
+
+<p>Given the extension of the filename Ketrew will read the configuration
+differently:</p>
+<ul><li><code>.json</code> → will read and parse the file;</li><li><code>.ml</code> → will execute <code>ocaml &lt;file&gt;</code>, collect <code>stdout</code>, and parse it;</li><li><code>.sh</code> → will execute <code>./&lt;file&gt;</code>, collect <code>stdout</code>, and parse it.</li></ul>
+
+<p>Other file extension are considered undefined behavior for future use.</p>
+<p>After parsing a configuration file, Ketrew will select a profile by name:</p>
+<ul><li>using the command line option <code>-P</code>/<code>--configuration-profile</code>,</li><li>checking the environment variable <code>KETREW_PROFILE</code>,</li><li>using <code>&quot;default&quot;</code>.</li></ul>
+
+<h2 id="GeneratingFromCommandLine">Generating From Command Line</h2>
+
+<p>The command <code>ketrew initialize</code> can generate a configuration file (limited to
+standalone for now); see <a href='ketrew_init___help.html' title='ketrew init --help'><code>ketrew init --help</code></a>.</p>
+<h2 id="Examples">Examples</h2>
+
+<p>A configuration file <code>config.ml</code> (hence that Ketrew will execute by itself)
+would look like:</p>
+<pre><span class="directive">#use</span><span class="text"> </span><span class="string">&quot;topfind&quot;</span><span class="directive">
+#thread</span><span class="directive">
+#use</span><span class="text"> </span><span class="string">&quot;ketrew&quot;</span><span class="text">
+
+</span><span class="kw">open</span><span class="text"> </span><span class="kw2">Ketrew_configuration</span><span class="text">
+
+</span><span class="kw">let</span><span class="text"> </span><span class="id">debug_level</span><span class="text"> = </span><span class="numeric">2</span><span class="text">
+</span><span class="comment">(* `debug-level`: integer specifying the amount of verbose messages: `0`: none,
+   `1`: verbose, `2`: very verbose.*)</span><span class="text">
+
+</span><span class="comment">(* Plugins to load: *)</span><span class="text">
+</span><span class="kw">let</span><span class="text"> </span><span class="id">plugins</span><span class="text"> = [
+  `</span><span class="kw2">OCamlfind</span><span class="text"> </span><span class="string">&quot;lwt.react&quot;</span><span class="text">;
+  `</span><span class="kw2">Compiled</span><span class="text"> </span><span class="string">&quot;/path/to/some/ketrew_plugin.cmxs&quot;</span><span class="text">;
+]
+
+</span><span class="comment">(* User-Interface preferences: *)</span><span class="text">
+</span><span class="kw">let</span><span class="text"> </span><span class="id">ui</span><span class="text"> = </span><span class="id">ui</span><span class="text"> </span><span class="kw4">~with_color</span><span class="text">:</span><span class="constant">true</span><span class="text"> ()
+
+</span><span class="comment">(* A function that given a boolean value creates a “server
+  configuration” that detaches or not from the shell. *)</span><span class="text">
+</span><span class="kw">let</span><span class="text"> </span><span class="id">my_servers</span><span class="text"> </span><span class="id">daemon</span><span class="text"> =
+  </span><span class="id">server</span><span class="text"> </span><span class="kw4">~ui</span><span class="text">
+    </span><span class="kw4">~engine</span><span class="text">:(</span><span class="id">engine</span><span class="text"> </span><span class="kw4">~database_parameters</span><span class="text">:</span><span class="string">&quot;/path/to/database-client-server&quot;</span><span class="text"> ())
+    </span><span class="kw4">~authorized_tokens_path</span><span class="text">:</span><span class="string">&quot;/path/to/authorized-tokens&quot;</span><span class="text">
+    </span><span class="kw4">~return_error_messages</span><span class="text">:</span><span class="constant">true</span><span class="text">
+    </span><span class="kw4">~log_path</span><span class="text">:</span><span class="string">&quot;/path/to/logs-of-server.txt&quot;</span><span class="text">
+    </span><span class="kw4">~daemon</span><span class="text">
+    </span><span class="kw4">~command_pipe</span><span class="text">:</span><span class="string">&quot;/path/to/command.pipe&quot;</span><span class="text">
+    (`</span><span class="kw2">Tls</span><span class="text"> (</span><span class="string">&quot;/path/to/cert.pem&quot;</span><span class="text">, </span><span class="string">&quot;/path/to/key.pem&quot;</span><span class="text">, </span><span class="numeric">8443</span><span class="text">))
+
+</span><span class="comment">(* We put together 4 profiles in this configuration and “output” them
+   (literally, as Json, to `stdout`).
+
+   `debug_level`, `plugins`, and `ui` are shared between configurations.
+*)</span><span class="text">
+</span><span class="kw">let</span><span class="text"> () =
+  </span><span class="id">output</span><span class="text"> [
+    </span><span class="id">profile</span><span class="text"> </span><span class="string">&quot;standalone&quot;</span><span class="text">
+      (</span><span class="id">create</span><span class="text"> </span><span class="kw4">~debug_level</span><span class="text"> </span><span class="kw4">~plugins</span><span class="text">
+         (</span><span class="id">standalone</span><span class="text"> </span><span class="kw4">~ui</span><span class="text"> ()
+            </span><span class="kw4">~engine</span><span class="text">:(</span><span class="id">engine</span><span class="text"> </span><span class="kw4">~database_parameters</span><span class="text">:</span><span class="string">&quot;/path/to/database-standalone&quot;</span><span class="text"> ())));
+    </span><span class="id">profile</span><span class="text"> </span><span class="string">&quot;daemon&quot;</span><span class="text">
+      (</span><span class="id">create</span><span class="text"> </span><span class="kw4">~debug_level</span><span class="text"> </span><span class="kw4">~plugins</span><span class="text"> (</span><span class="id">my_servers</span><span class="text"> </span><span class="constant">true</span><span class="text">));
+    </span><span class="id">profile</span><span class="text"> </span><span class="string">&quot;server&quot;</span><span class="text">
+      (</span><span class="id">create</span><span class="text"> </span><span class="kw4">~debug_level</span><span class="text"> </span><span class="kw4">~plugins</span><span class="text"> (</span><span class="id">my_servers</span><span class="text"> </span><span class="constant">false</span><span class="text">));
+    </span><span class="id">profile</span><span class="text"> </span><span class="string">&quot;client&quot;</span><span class="text">
+      (</span><span class="id">create</span><span class="text"> </span><span class="kw4">~debug_level</span><span class="text"> </span><span class="kw4">~plugins</span><span class="text"> (
+          </span><span class="id">client</span><span class="text"> </span><span class="kw4">~ui</span><span class="text"> </span><span class="kw4">~token</span><span class="text">:</span><span class="string">&quot;nekot&quot;</span><span class="text"> </span><span class="string">&quot;https://127.0.0.1:8443&quot;</span><span class="text">
+          ));
+  ]</span></pre>
+
+<p>You may run <code>ocaml config.json</code> to see the equivalent Json.</p>
+<p>Creating a test environment (<code>make test-env</code>, cf. developer
+<a href='./Developer_Documentation.html'>docs</a>) generates a very similar configuration
+file.</p>
+<h2 id="ExplanationoftheOptions">Explanation of the Options</h2>
+
+<p>To build configuration refere to the <a href='api/Ketrew_configuration.html'>API</a> of
+the <a href='api/Ketrew_configuration.html' title='Ketrew_configuration'><code>Ketrew_configuration</code></a> module.</p>
+<h3 id="TheengineOptions">The <code>engine</code> Options</h3>
+
+<p>In standalone and server modes, the <code>engine</code> configures how to run the
+workflows.</p>
+<ul><li><code>database_path</code>: the path to the database file/directory (the
+default is <code>~/.ketrew/database</code>).</li><li><code>turn_unix_ssh_failure_into_target_failure</code>: boolean;
+when an SSH or system call fails it may not mean that the command in your
+workflow is wrong (could be an SSH configuration or tunneling problem). By
+default (i.e. <code>false</code>), Ketrew tries to be clever and does not make targets
+fail. To change this behavior set the option to <code>true</code>.</li><li><code>host_timeout_upper_bound</code>: float (seconds, default is <code>60.</code>); every
+connection/command time-out will be <code>≤ upper-bound</code>.</li><li><code>persistent_state_key</code>: the name of a key to the “root of the tree”; if more
+than one application is using the same database, this can be useful to avoid
+conflicts (“normal” users should <em>never</em> need to set this).</li></ul>
+
+<h3 id="TheuiOptions">The <code>ui</code> Options</h3>
+
+<p>The <code>ui</code> function configures the behavior of the User Interface.</p>
+<ul><li><code>color</code>: boolean (default <code>true</code>); tell Ketrew to display <em>f-ANSI</em> colors.</li></ul>
+
+<h3 id="ThepluginsOption">The <code>plugins</code> Option</h3>
+
+<p>This optional argument asks Ketrew to dynamically load plugins:</p>
+<ul><li><code>`Ocamlfind</code>: a package name or a list of package names to find and load
+with <code>Findlib</code>.</li><li><code>`Compiled</code>: a path or a list of paths to load.</li></ul>
+
+<h3 id="TheclientOptions">The <code>client</code> Options</h3>
+
+<p>The <code>client</code> function configures Ketrew in client-mode:</p>
+<ul><li>the <code>connection</code>: URL for connecting to the server
+ (e.g. <code>&quot;https://example.com:8443&quot;</code>).</li><li><code>token</code>: API authentication token.</li></ul>
+
+<h3 id="TheserverOptions">The <code>server</code> Options</h3>
+
+<p>The <code>server</code> function configures the HTTP server:</p>
+<ul><li>The value `` <code>Tls (certificate, private_key, port)</code> configures the connection
+ settings:<ul><li><code>certificate</code>: path to the SSL certificate (<em>mandatory</em>).</li><li><code>private_key</code>: path to the SSL private-key (<em>mandatory</em>).</li><li><code>port</code>: port to listen on (<em>mandatory</em>).</li></ul></li><li><code>authorized_tokens_path</code>: path to the file of the authentication tokens that
+ the server accepts (<em>mandatory-ish</em> since authentication-less server-side is
+ not implemented so far). This file is in the SSH
+ <a href='http://en.wikibooks.org/wiki/OpenSSH/Client_Configuration_Files#.7E.2F.ssh.2Fauthorized_keys'><code>authorized_keys</code></a>
+ format.</li><li><code>command_pipe</code>: if set this asks the server to listen on a named pipe for
+ control commands (<em>highly recommended</em>).</li><li><code>daemonize</code>: if <code>true</code>, ask the server to detach from current terminal.</li><li><code>log_path</code>: if set together with <code>daemonize</code>, ask the server to redirect logs
+ to this path (if not set logs go to <code>/dev/null</code>).</li><li><code>return_error_messages</code>: if <code>true</code>, the server will return real error messages
+ (in the <em>body</em> of the response) to the client; if <code>false</code> (the default), any
+ kind of error will result in the same uninformative message.</li></ul>
+
+<h2 id="PrintTheConfiguration">Print The Configuration</h2>
+
+<p>One can always test their configuration with:</p>
+<pre><code>ketrew print-configuration</code></pre></div></div></div></body><html>

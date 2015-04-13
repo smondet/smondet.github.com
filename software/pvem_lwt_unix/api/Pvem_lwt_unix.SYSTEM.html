@@ -120,7 +120,7 @@ Heavy-weight function trying to mimic the behavior the UNIX command “mv”
       copied).<br>
 </div>
 
-<pre><span id="TYPEfile_tree"><span class="keyword">type</span> <code class="type"></code>file_tree</span> = <code class="type">[ `Leaf of string * <a href="Pvem_lwt_unix.SYSTEM.html#TYPEfile_info">file_info</a><br>       | `Node of string * <a href="Pvem_lwt_unix.SYSTEM.html#TYPEfile_tree">file_tree</a> list ]</code> </pre>
+<pre><span id="TYPEfile_tree"><span class="keyword">type</span> <code class="type"></code>file_tree</span> = <code class="type">[ `Leaf of string * <a href="Pvem_lwt_unix.SYSTEM.html#TYPEfile_info">file_info</a><br>       | `Node of string * file_tree list ]</code> </pre>
 <div class="info ">
 Representation of a hierarchy of files (<code class="code"><span class="keywordsign">`</span><span class="constructor">Leaf</span></code>) and directories (<code class="code"><span class="keywordsign">`</span><span class="constructor">Node</span></code>).<br>
 </div>

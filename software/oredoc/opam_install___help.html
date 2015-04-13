@@ -1,5 +1,5 @@
 <!-- Creator     : groff version 1.19.2 -->
-<!-- CreationDate: Mon Dec 22 17:59:46 2014 -->
+<!-- CreationDate: Mon Apr 13 17:44:57 2015 -->
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -89,15 +89,15 @@ optional version or constraint, e.g &lsquo;pkg&rsquo;,
 <b>&minus;&minus;keep&minus;build&minus;dir</b></p>
 
 <p style="margin-left:17%;">Keep the build directory. This
-is equivalent to setting <b>$OPAMKEEPBUILDDIR</b> to a
-non&minus;empty string.</p>
+is equivalent to setting <b>$OPAMKEEPBUILDDIR</b> to
+&quot;true&quot;.</p>
 
 <p style="margin-left:11%;"><b>&minus;d</b>,
 <b>&minus;&minus;build&minus;doc</b></p>
 
 <p style="margin-left:17%;">Build the package
 documentation. This is equivalent to setting
-<b>$OPAMBUILDDOC</b> to a non&minus;empty string.</p>
+<b>$OPAMBUILDDOC</b> to &quot;true&quot;.</p>
 
 
 <p style="margin-left:11%;"><b>&minus;&minus;deps&minus;only</b></p>
@@ -150,7 +150,7 @@ OPAM run in a computer&minus;readable file</p>
 
 <p style="margin-left:17%;">Do not verify the checksum of
 downloaded archives.This is equivalent to setting
-<b>$OPAMNOCHECKSUMS</b> to a non&minus;empty string.</p>
+<b>$OPAMNOCHECKSUMS</b> to &quot;true&quot;.</p>
 
 
 <p style="margin-left:11%;"><b>&minus;&minus;require&minus;checksums</b></p>
@@ -158,8 +158,7 @@ downloaded archives.This is equivalent to setting
 <p style="margin-left:17%;">Reject the installation of
 packages that don&rsquo;t provide a checksum for the
 upstream archives. This is equivalent to setting
-<b>$OPAMREQUIRECHECKSUMS</b> to a non&minus;empty
-string.</p>
+<b>$OPAMREQUIRECHECKSUMS</b> to &quot;true&quot;.</p>
 
 
 <p style="margin-left:11%;"><b>&minus;&minus;set&minus;root</b></p>
@@ -179,7 +178,7 @@ actions. Don&rsquo;t perform any changes.</p>
 
 <p style="margin-left:17%;">Build and <b>run</b> the
 package unit&minus;tests. This is equivalent to setting
-<b>$OPAMBUILDTEST</b> to a non&minus;empty string.</p>
+<b>$OPAMBUILDTEST</b> to &quot;true&quot;.</p>
 
 
 <p style="margin-left:11%;"><b>&minus;&minus;unset&minus;root</b></p>
@@ -196,14 +195,8 @@ are common to all commands. <b><br>
 &minus;&minus;color</b>=<i>WHEN</i> (absent=auto)</p>
 
 <p style="margin-left:17%;">Colorize the output.
-<i>WHEN</i> must be &lsquo;always&rsquo;,
+<i>WHEN</i> must be one of &lsquo;always&rsquo;,
 &lsquo;never&rsquo; or &lsquo;auto&rsquo;.</p>
-
-
-<p style="margin-left:11%;"><b>&minus;&minus;compat&minus;mode&minus;1.0</b></p>
-
-<p style="margin-left:17%;">Compatibility mode with OPAM
-1.0</p>
 
 
 <p style="margin-left:11%;"><b>&minus;&minus;criteria</b>=<i>CRITERIA</i></p>
@@ -219,7 +212,7 @@ A general guide to using solver preferences can be found at
 default value is
 &minus;count(down),&minus;count(removed),&minus;notuptodate(solution),&minus;count(new)
 for upgrades, and
-&minus;count(removed),&minus;notuptodate(request),&minus;count(down),&minus;count(changed)
+&minus;count(removed),&minus;notuptodate(request),&minus;count(down),&minus;notuptodate(changed),&minus;count(changed),&minus;notuptodate(solution)
 otherwise.</p>
 
 
@@ -232,8 +225,8 @@ requests sent to the solver to
 <p style="margin-left:11%;"><b>&minus;&minus;debug</b></p>
 
 <p style="margin-left:17%;">Print debug message to stderr.
-This is equivalent to setting <b>$OPAMDEBUG</b> to a
-non&minus;empty value.</p>
+This is equivalent to setting <b>$OPAMDEBUG</b> to
+&quot;true&quot;.</p>
 
 
 <p style="margin-left:11%;"><b>&minus;&minus;debug&minus;level</b>=<i>LEVEL</i></p>
@@ -241,7 +234,8 @@ non&minus;empty value.</p>
 <p style="margin-left:17%;">Like
 &lsquo;&minus;&minus;debug&rsquo;, but allows specifying the
 debug level (&lsquo;&minus;&minus;debug&rsquo; sets it to
-1.</p>
+1). Equivalent to setting <b>$OPAMDEBUG</b> to a positive
+integer.</p>
 
 
 <p style="margin-left:11%;"><b>&minus;&minus;git&minus;version</b></p>
@@ -276,19 +270,31 @@ disables this behaviour.</p>
 <p style="margin-left:17%;">Be quiet when installing a new
 compiler.</p>
 
-<p style="margin-left:11%;"><b>&minus;r</b> <i>ROOT</i>,
-<b>&minus;&minus;root</b>=<i>ROOT</i> (absent=~/.opam)</p>
+
+<p style="margin-left:11%;"><b>&minus;&minus;root</b>=<i>ROOT</i>
+(absent=~/.opam)</p>
 
 <p style="margin-left:17%;">Use <i>ROOT</i> as the current
 root path. This is equivalent to setting <b>$OPAMROOT</b> to
 <i>ROOT</i>.</p>
+
+<p style="margin-left:11%;"><b>&minus;&minus;safe</b></p>
+
+<p style="margin-left:17%;">Make sure nothing will be
+automatically updated or rewritten. Useful for calling from
+completion scripts, for example. Will fail whenever such an
+operation is needed ; also avoids waiting for locks, skips
+interactive questions and overrides the OPAMDEBUG
+variable.</p>
 
 
 <p style="margin-left:11%;"><b>&minus;&minus;solver</b>=<i>CMD</i></p>
 
 <p style="margin-left:17%;">Specify the name of the
 external dependency <i>solver</i>. The default value is
-aspcud</p>
+aspcud. Either &rsquo;aspcud&rsquo;, &rsquo;packup&rsquo; or
+a custom command that may contain the variables %{input}%,
+%{output}% and %{criteria}%</p>
 
 
 <p style="margin-left:11%;"><b>&minus;&minus;strict</b></p>
@@ -314,9 +320,10 @@ heuristics, even if an external solver is available.</p>
 <p style="margin-left:11%;"><b>&minus;v</b>,
 <b>&minus;&minus;verbose</b></p>
 
-<p style="margin-left:17%;">Be more verbose. Show output of
-all sub&minus;commands. This is equivalent to setting
-<b>$OPAMVERBOSE</b> to a non&minus;empty value.</p>
+<p style="margin-left:17%;">Be more verbose, show package
+sub&minus;commands and their output. Repeat to see more.
+Repeating <i>n</i> times is equivalent to setting
+<b>$OPAMVERBOSE</b> to &quot;<i>n</i>&quot;.</p>
 
 
 <p style="margin-left:11%;"><b>&minus;&minus;version</b></p>
@@ -328,8 +335,8 @@ all sub&minus;commands. This is equivalent to setting
 
 <p style="margin-left:17%;">Disable interactive mode and
 answer yes to all questions that would otherwise be asked to
-the user. This is equivalent to setting <b>$OPAMYES</b> to a
-non&minus;empty string.</p>
+the user. This is equivalent to setting <b>$OPAMYES</b> to
+&quot;true&quot;.</p>
 
 <a name="ENVIRONMENT VARIABLES"></a>
 <h2>ENVIRONMENT VARIABLES</h2>
@@ -337,8 +344,9 @@ non&minus;empty string.</p>
 
 <p style="margin-left:11%; margin-top: 1em">OPAM makes use
 of the environment variables listed here. Boolean variables
-are considered true when set to a non&minus;empty
-string.</p>
+should be set to &quot;0&quot;, &quot;no&quot; of
+&quot;false&quot; to disable, &quot;1&quot;, &quot;yes&quot;
+or &quot;true&quot; to enable.</p>
 
 
 <p style="margin-left:11%; margin-top: 1em"><i>OPAMCOLOR</i>,
@@ -349,26 +357,47 @@ value for the &minus;&minus;color option.</p>
 <p style="margin-left:11%; margin-top: 1em"><i>OPAMCRITERIA</i>
 specifies user <i>preferences</i> for dependency solving.The
 default value is
-&minus;count(removed),&minus;notuptodate(request),&minus;count(down),&minus;count(changed).
+&minus;count(removed),&minus;notuptodate(request),&minus;count(down),&minus;notuptodate(changed),&minus;count(changed),&minus;notuptodate(solution).
 See also option &minus;&minus;criteria</p>
 
 
 <p style="margin-left:11%; margin-top: 1em"><i>OPAMCURL</i>
-can be used to define an alternative for the
-&rsquo;curl&rsquo; command&minus;line utility to download
-files.</p>
+can be used to select a given &rsquo;curl&rsquo; program.
+See <i>OPAMFETCH</i> for more options.</p>
 
 
 <p style="margin-left:11%; margin-top: 1em"><i>OPAMDEBUG</i>
-see option &lsquo;&minus;&minus;debug&rsquo;.</p>
+see options &lsquo;&minus;&minus;debug&rsquo; and
+&lsquo;&minus;&minus;debug&minus;level&rsquo;.</p>
+
+
+<p style="margin-left:11%; margin-top: 1em"><i>OPAMDOWNLOADJOBS</i>
+sets the maximum number of simultaneous downloads.</p>
 
 
 <p style="margin-left:11%; margin-top: 1em"><i>OPAMEXTERNALSOLVER</i>
 see option &lsquo;&minus;&minus;solver&rsquo;.</p>
 
 
+<p style="margin-left:11%; margin-top: 1em"><i>OPAMFETCH</i>
+specifies how to download files: either &lsquo;wget&rsquo;,
+&lsquo;curl&rsquo; or a custom command where variables
+<b>%{url}%</b>, <b>%{out}%</b>, <b>%{retries}%</b> and
+<b>%{compress}%</b> will be replaced. Overrides the
+&rsquo;download&minus;command&rsquo; value from the main
+config file.</p>
+
+
 <p style="margin-left:11%; margin-top: 1em"><i>OPAMJOBS</i>
 sets the maximum number of parallel workers to run.</p>
+
+
+<p style="margin-left:11%; margin-top: 1em"><i>OPAMLOCKRETRIES</i>
+sets the number of tries after which OPAM gives up acquiring
+its lock and fails. &lt;= 0 means infinite wait.</p>
+
+<p style="margin-left:11%; margin-top: 1em"><i>OPAMNO</i>
+answer no to any question asked.</p>
 
 
 <p style="margin-left:11%; margin-top: 1em"><i>OPAMNOASPCUD</i>
@@ -380,15 +409,45 @@ see option
 &lsquo;&minus;&minus;no&minus;self&minus;upgrade&rsquo;.</p>
 
 
+<p style="margin-left:11%; margin-top: 1em"><i>OPAMPINKINDAUTO</i>
+if set, version control systems are detected when pinning to
+a local path.</p>
+
+
+<p style="margin-left:11%; margin-top: 1em"><i>OPAMREQUIRECHECKSUMS</i>
+see option
+&lsquo;&minus;&minus;require&minus;checksums&rsquo;.</p>
+
+
+<p style="margin-left:11%; margin-top: 1em"><i>OPAMRETRY</i>
+sets the number of tries before failing downloads.</p>
+
+
 <p style="margin-left:11%; margin-top: 1em"><i>OPAMROOT</i>
 see option &lsquo;&minus;&minus;root&rsquo;. This is
 automatically set by &lsquo;opam config env
-&minus;&minus;root=DIR&rsquo; when DIR is
-non&minus;default.</p>
+&minus;&minus;root=DIR&rsquo; when DIR is non&minus;default
+or OPAMROOT is already defined.</p>
+
+
+<p style="margin-left:11%; margin-top: 1em"><i>OPAMSAFE</i>
+see option &lsquo;&minus;&minus;safe&rsquo;</p>
+
+
+<p style="margin-left:11%; margin-top: 1em"><i>OPAMSKIPVERSIONCHECKS</i>
+bypasses some version checks. Unsafe, for compatibility
+testing only.</p>
 
 
 <p style="margin-left:11%; margin-top: 1em"><i>OPAMSOLVERTIMEOUT</i>
 change the time allowance of the internal solver.</p>
+
+
+<p style="margin-left:11%; margin-top: 1em"><i>OPAMSTATUSLINE</i>
+display a dynamic status line showing what&rsquo;s currently
+going on on the terminal. (one of one of
+&lsquo;always&rsquo;, &lsquo;never&rsquo; or
+&lsquo;auto&rsquo;)</p>
 
 
 <p style="margin-left:11%; margin-top: 1em"><i>OPAMSWITCH</i>
@@ -405,12 +464,22 @@ upgrades if both are set.The default value is
 See also option &minus;&minus;criteria</p>
 
 
+<p style="margin-left:11%; margin-top: 1em"><i>OPAMUSEINTERNALSOLVER</i>
+see option
+&lsquo;&minus;&minus;use&minus;internal&minus;solver&rsquo;.</p>
+
+
+<p style="margin-left:11%; margin-top: 1em"><i>OPAMUTF8</i>
+use UTF8 characters in output (one of one of
+&lsquo;always&rsquo;, &lsquo;never&rsquo; or
+&lsquo;auto&rsquo;). By default &lsquo;auto&rsquo;, which is
+determined from the locale).</p>
+
+
 <p style="margin-left:11%; margin-top: 1em"><i>OPAMUTF8MSGS</i>
-use nice UTF8 characters in OPAM messages.</p>
-
-
-<p style="margin-left:11%; margin-top: 1em"><i>OPAMVERBOSE</i>
-see option &lsquo;&minus;&minus;verbose&rsquo;.</p>
+use extended UTF8 characters (camels) in OPAM messages.
+Implies <i>OPAMUTF8</i>. This is set by default on OSX
+only.</p>
 
 
 <p style="margin-left:11%; margin-top: 1em"><i>OPAMVAR_var</i>
@@ -425,9 +494,8 @@ when substituting &lsquo;%{package:var}%&lsquo; strings in
 &lsquo;opam&lsquo; files.</p>
 
 
-<p style="margin-left:11%; margin-top: 1em"><i>OPAMUSEINTERNALSOLVER</i>
-see option
-&lsquo;&minus;&minus;use&minus;internal&minus;solver&rsquo;.</p>
+<p style="margin-left:11%; margin-top: 1em"><i>OPAMVERBOSE</i>
+see option &lsquo;&minus;&minus;verbose&rsquo;.</p>
 
 <p style="margin-left:11%; margin-top: 1em"><i>OPAMYES</i>
 see option &lsquo;&minus;&minus;yes&rsquo;.</p>

@@ -104,6 +104,16 @@ Convert the string to a human-readable native string (à la
 The standard <code class="code">fold</code> function, see <code class="code"><span class="constructor">List</span>.fold_left</code> for example.<br>
 </div>
 
+<pre><span id="VALfoldi"><span class="keyword">val</span> foldi</span> : <code class="type"><a href="Sosa.BASIC_STRING.html#TYPEt">t</a> -><br>       init:'a -> f:(int -> 'a -> <a href="Sosa.BASIC_STRING.html#TYPEcharacter">character</a> -> 'a) -> 'a</code></pre><div class="info ">
+Pass an accumulator over the string's characters and their ordinals,
+      starting with the first; left most.<br>
+</div>
+
+<pre><span id="VALfold2_exn"><span class="keyword">val</span> fold2_exn</span> : <code class="type"><a href="Sosa.BASIC_STRING.html#TYPEt">t</a> -><br>       <a href="Sosa.BASIC_STRING.html#TYPEt">t</a> -><br>       init:'a -><br>       f:('a -> <a href="Sosa.BASIC_STRING.html#TYPEcharacter">character</a> -> <a href="Sosa.BASIC_STRING.html#TYPEcharacter">character</a> -> 'a) -><br>       'a</code></pre><div class="info ">
+The standard <code class="code">fold2</code> function, see <code class="code"><span class="constructor">List</span>.fold_left2</code> for example. Fails on
+  <code class="code">t</code>s of different length.<br>
+</div>
+
 <pre><span id="VALcompare"><span class="keyword">val</span> compare</span> : <code class="type"><a href="Sosa.BASIC_STRING.html#TYPEt">t</a> -> <a href="Sosa.BASIC_STRING.html#TYPEt">t</a> -> int</code></pre><div class="info ">
 Comparison function (as expected by most common functors in the
       ecosystem).<br>
@@ -157,7 +167,7 @@ Like <code class="code">chop_suffix_exn</code> but return <code class="code"><sp
       an exception.<br>
 </div>
 
-<pre><span id="VALsplit_at"><span class="keyword">val</span> split_at</span> : <code class="type"><a href="Sosa.BASIC_STRING.html#TYPEt">t</a> -> int -> <a href="Sosa.BASIC_STRING.html#TYPEt">t</a> * <a href="Sosa.BASIC_STRING.html#TYPEt">t</a></code></pre><div class="info ">
+<pre><span id="VALsplit_at"><span class="keyword">val</span> split_at</span> : <code class="type"><a href="Sosa.BASIC_STRING.html#TYPEt">t</a> -> index:int -> <a href="Sosa.BASIC_STRING.html#TYPEt">t</a> * <a href="Sosa.BASIC_STRING.html#TYPEt">t</a></code></pre><div class="info ">
 Return a tuple where the first string is a prefix of the specified length
       and the second is the rest. If index is <code class="code">=&lt; 0</code> then the first element is
       empty and the string is returned in the second element, similarly if the
@@ -165,11 +175,11 @@ Return a tuple where the first string is a prefix of the specified length
       <code class="code">empty</code>.<br>
 </div>
 
-<pre><span id="VALtake"><span class="keyword">val</span> take</span> : <code class="type"><a href="Sosa.BASIC_STRING.html#TYPEt">t</a> -> int -> <a href="Sosa.BASIC_STRING.html#TYPEt">t</a></code></pre><div class="info ">
+<pre><span id="VALtake"><span class="keyword">val</span> take</span> : <code class="type"><a href="Sosa.BASIC_STRING.html#TYPEt">t</a> -> index:int -> <a href="Sosa.BASIC_STRING.html#TYPEt">t</a></code></pre><div class="info ">
 Just the first part of split_at<br>
 </div>
 
-<pre><span id="VALdrop"><span class="keyword">val</span> drop</span> : <code class="type"><a href="Sosa.BASIC_STRING.html#TYPEt">t</a> -> int -> <a href="Sosa.BASIC_STRING.html#TYPEt">t</a></code></pre><div class="info ">
+<pre><span id="VALdrop"><span class="keyword">val</span> drop</span> : <code class="type"><a href="Sosa.BASIC_STRING.html#TYPEt">t</a> -> index:int -> <a href="Sosa.BASIC_STRING.html#TYPEt">t</a></code></pre><div class="info ">
 Just the second part of split_at<br>
 </div>
 
@@ -216,6 +226,10 @@ Apply <code class="code">f</code> on every character and its index.<br>
 
 <pre><span id="VALiter_reverse"><span class="keyword">val</span> iter_reverse</span> : <code class="type"><a href="Sosa.BASIC_STRING.html#TYPEt">t</a> -> f:(<a href="Sosa.BASIC_STRING.html#TYPEcharacter">character</a> -> unit) -> unit</code></pre><div class="info ">
 Apply <code class="code">f</code> on every character successively in reverse order.<br>
+</div>
+
+<pre><span id="VALrev"><span class="keyword">val</span> rev</span> : <code class="type"><a href="Sosa.BASIC_STRING.html#TYPEt">t</a> -> <a href="Sosa.BASIC_STRING.html#TYPEt">t</a></code></pre><div class="info ">
+Reverse the string. *<br>
 </div>
 
 <pre><span id="VALmap"><span class="keyword">val</span> map</span> : <code class="type"><a href="Sosa.BASIC_STRING.html#TYPEt">t</a> -><br>       f:(<a href="Sosa.BASIC_STRING.html#TYPEcharacter">character</a> -> <a href="Sosa.BASIC_STRING.html#TYPEcharacter">character</a>) -><br>       <a href="Sosa.BASIC_STRING.html#TYPEt">t</a></code></pre><div class="info ">

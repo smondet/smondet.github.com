@@ -176,7 +176,7 @@
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Pvem_lwt_unix</span>.<span class="constructor">Deferred_result</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">type</span>&nbsp;file_tree&nbsp;=<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[&nbsp;<span class="keywordsign">`</span><span class="constructor">Leaf</span>&nbsp;<span class="keyword">of</span>&nbsp;string&nbsp;*&nbsp;<span class="constructor">Pvem_lwt_unix</span>.<span class="constructor">SYSTEM</span>.file_info<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Node</span>&nbsp;<span class="keyword">of</span>&nbsp;string&nbsp;*&nbsp;<span class="constructor">Pvem_lwt_unix</span>.<span class="constructor">SYSTEM</span>.file_tree&nbsp;list&nbsp;]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Node</span>&nbsp;<span class="keyword">of</span>&nbsp;string&nbsp;*&nbsp;file_tree&nbsp;list&nbsp;]<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;file_tree&nbsp;:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;?follow_symlinks:bool&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;string&nbsp;<span class="keywordsign">-&gt;</span><br>

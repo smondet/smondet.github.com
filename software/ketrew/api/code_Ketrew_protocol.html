@@ -14,11 +14,13 @@
 <link title="Ketrew_command_line" rel="Chapter" href="Ketrew_command_line.html">
 <link title="Ketrew_configuration" rel="Chapter" href="Ketrew_configuration.html">
 <link title="Ketrew_daemonize" rel="Chapter" href="Ketrew_daemonize.html">
-<link title="Ketrew_database" rel="Chapter" href="Ketrew_database.html">
+<link title="Ketrew_document" rel="Chapter" href="Ketrew_document.html">
 <link title="Ketrew_edsl" rel="Chapter" href="Ketrew_edsl.html">
 <link title="Ketrew_engine" rel="Chapter" href="Ketrew_engine.html">
 <link title="Ketrew_error" rel="Chapter" href="Ketrew_error.html">
+<link title="Ketrew_explorer" rel="Chapter" href="Ketrew_explorer.html">
 <link title="Ketrew_host" rel="Chapter" href="Ketrew_host.html">
+<link title="Ketrew_interaction" rel="Chapter" href="Ketrew_interaction.html">
 <link title="Ketrew_long_running" rel="Chapter" href="Ketrew_long_running.html">
 <link title="Ketrew_long_running_utilities" rel="Chapter" href="Ketrew_long_running_utilities.html">
 <link title="Ketrew_lsf" rel="Chapter" href="Ketrew_lsf.html">
@@ -31,7 +33,8 @@
 <link title="Ketrew_protocol" rel="Chapter" href="Ketrew_protocol.html">
 <link title="Ketrew_server" rel="Chapter" href="Ketrew_server.html">
 <link title="Ketrew_target" rel="Chapter" href="Ketrew_target.html">
-<link title="Ketrew_unix_process" rel="Chapter" href="Ketrew_unix_process.html"><title>Ketrew API : Ketrew_protocol</title>
+<link title="Ketrew_unix_process" rel="Chapter" href="Ketrew_unix_process.html">
+<link title="Ketrew_yarn" rel="Chapter" href="Ketrew_yarn.html"><title>Ketrew API : Ketrew_protocol</title>
 </head>
 <body>
 <code class="code"></code><table><tr><td></td><td><span class="comment">(**************************************************************************)</span></td></tr></table><code class="code"><br>
@@ -58,48 +61,56 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">Ketrew_gen_protocol_v0</span>.<span class="constructor">Down_message</span>)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">Ketrew_gen_versioned</span>.<span class="constructor">Down_message</span>)<br>
 <br>
-&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;added_target&nbsp;~original_id&nbsp;~fresh_id&nbsp;=<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;<span class="keyword">open</span>&nbsp;<span class="constructor">Ketrew_gen_protocol_v0</span>.<span class="constructor">Added_target</span>&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;<span class="comment">(*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;let&nbsp;added_target&nbsp;~original_id&nbsp;~fresh_id&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;let&nbsp;open&nbsp;Ketrew_gen_protocol_v0.Added_target&nbsp;in<br>
 &nbsp;&nbsp;&nbsp;&nbsp;{original_id;&nbsp;fresh_id}<br>
+&nbsp;*)</span><br>
 <br>
-&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;clean_up&nbsp;~to_kill&nbsp;~to_archive&nbsp;=<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;<span class="keyword">open</span>&nbsp;<span class="constructor">Ketrew_gen_protocol_v0</span>.<span class="constructor">Clean_up_todo_list</span>&nbsp;<span class="keyword">in</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;{to_kill;&nbsp;to_archive}<br>
-<br>
-&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;log&nbsp;:&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Log</span>.t&nbsp;=&nbsp;<span class="keyword">function</span><br>
-&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">List_of_targets</span>&nbsp;ts&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Log</span>.(s&nbsp;<span class="string">"List_of_targets:&nbsp;"</span>&nbsp;%&nbsp;<span class="constructor">OCaml</span>.list&nbsp;<span class="constructor">Ketrew_target</span>.log&nbsp;ts)<br>
-&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">List_of_query_descriptions</span>&nbsp;tsl&nbsp;<span class="keywordsign">-&gt;</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Log</span>.(s&nbsp;<span class="string">"List_of_query_descriptions:&nbsp;"</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%&nbsp;<span class="constructor">OCaml</span>.list&nbsp;(<span class="keyword">fun</span>&nbsp;(a,&nbsp;b)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;sf&nbsp;<span class="string">"%s:&nbsp;%s"</span>&nbsp;a&nbsp;b)&nbsp;tsl)<br>
-&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Query_result</span>&nbsp;str&nbsp;<span class="keywordsign">-&gt;</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Log</span>.(s&nbsp;<span class="string">"Query_result:&nbsp;"</span>&nbsp;%&nbsp;quote&nbsp;str)<br>
-&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Targets_added</span>&nbsp;tl&nbsp;<span class="keywordsign">-&gt;</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;<span class="keyword">open</span>&nbsp;<span class="constructor">Ketrew_gen_protocol_v0</span>.<span class="constructor">Added_target</span>&nbsp;<span class="keyword">in</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Log</span>.(s&nbsp;<span class="string">"Targets_added:&nbsp;"</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%&nbsp;<span class="constructor">OCaml</span>.list&nbsp;(<span class="keyword">fun</span>&nbsp;{original_id;&nbsp;fresh_id}&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;log&nbsp;:&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Log</span>.t&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">fun</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">assert</span>&nbsp;<span class="keyword">false</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">(*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;function<br>
+&nbsp;&nbsp;|&nbsp;`List_of_targets&nbsp;ts&nbsp;-&gt;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Log.(s&nbsp;"List_of_targets:&nbsp;"&nbsp;%&nbsp;OCaml.list&nbsp;Ketrew_target.log&nbsp;ts)<br>
+&nbsp;&nbsp;|&nbsp;`List_of_query_descriptions&nbsp;tsl&nbsp;-&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Log.(s&nbsp;"List_of_query_descriptions:&nbsp;"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%&nbsp;OCaml.list&nbsp;(fun&nbsp;(a,&nbsp;b)&nbsp;-&gt;&nbsp;sf&nbsp;"%s:&nbsp;%s"&nbsp;a&nbsp;b)&nbsp;tsl)<br>
+&nbsp;&nbsp;|&nbsp;`Query_result&nbsp;str&nbsp;-&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Log.(s&nbsp;"Query_result:&nbsp;"&nbsp;%&nbsp;quote&nbsp;str)<br>
+&nbsp;&nbsp;|&nbsp;`Targets_added&nbsp;tl&nbsp;-&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;let&nbsp;open&nbsp;Ketrew_gen_protocol_v0.Added_target&nbsp;in<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Log.(s&nbsp;"Targets_added:&nbsp;"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%&nbsp;OCaml.list&nbsp;(fun&nbsp;{original_id;&nbsp;fresh_id}&nbsp;-&gt;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;s&nbsp;original_id&nbsp;%&nbsp;sp&nbsp;%&nbsp;s&nbsp;fresh_id)&nbsp;tl)<br>
-&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Happens</span>&nbsp;_&nbsp;<span class="keyword">as</span>&nbsp;hl&nbsp;<span class="keywordsign">-&gt;</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Log</span>.(s&nbsp;<span class="string">"Happening-list:&nbsp;"</span>&nbsp;<br>
+&nbsp;&nbsp;|&nbsp;`Happens&nbsp;_&nbsp;as&nbsp;hl&nbsp;-&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Log.(s&nbsp;"Happening-list:&nbsp;"&nbsp;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%&nbsp;s&nbsp;(serialize&nbsp;hl))<br>
-&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Clean_up</span>&nbsp;todo&nbsp;<span class="keywordsign">-&gt;</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;<span class="keyword">open</span>&nbsp;<span class="constructor">Ketrew_gen_protocol_v0</span>.<span class="constructor">Clean_up_todo_list</span>&nbsp;<span class="keyword">in</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Log</span>.(s&nbsp;<span class="string">"Clean_up_todo_list:&nbsp;"</span>&nbsp;%&nbsp;n<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%&nbsp;s&nbsp;<span class="string">"to-kill:&nbsp;"</span>&nbsp;%&nbsp;<span class="constructor">OCaml</span>.list&nbsp;string&nbsp;todo.to_kill&nbsp;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%&nbsp;s&nbsp;<span class="string">"to-archive:&nbsp;"</span>&nbsp;%&nbsp;<span class="constructor">OCaml</span>.list&nbsp;string&nbsp;todo.to_archive)&nbsp;<br>
+&nbsp;&nbsp;|&nbsp;`Clean_up&nbsp;todo&nbsp;-&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;let&nbsp;open&nbsp;Ketrew_gen_protocol_v0.Clean_up_todo_list&nbsp;in<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Log.(s&nbsp;"Clean_up_todo_list:&nbsp;"&nbsp;%&nbsp;n<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%&nbsp;s&nbsp;"to-kill:&nbsp;"&nbsp;%&nbsp;OCaml.list&nbsp;string&nbsp;todo.to_kill&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%&nbsp;s&nbsp;"to-archive:&nbsp;"&nbsp;%&nbsp;OCaml.list&nbsp;string&nbsp;todo.to_archive)&nbsp;<br>
+&nbsp;&nbsp;*)</span><br>
 <span class="keyword">end</span><br>
 <br>
-<span class="keyword">module</span>&nbsp;<span class="constructor">Post_message</span>&nbsp;=&nbsp;<span class="keyword">struct</span><br>
-&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;t&nbsp;=&nbsp;<span class="constructor">Ketrew_gen_protocol_v0</span>.<span class="constructor">Post_message</span>.t<br>
+<span class="keyword">module</span>&nbsp;<span class="constructor">Up_message</span>&nbsp;=&nbsp;<span class="keyword">struct</span><br>
+&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;t&nbsp;=&nbsp;<span class="constructor">Ketrew_gen_protocol_v0</span>.<span class="constructor">Up_message</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">include</span>&nbsp;<span class="constructor">Json</span>.<span class="constructor">Make_versioned_serialization</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">Ketrew_gen_protocol_v0</span>.<span class="constructor">Post_message</span>)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">Ketrew_gen_versioned</span>.<span class="constructor">Post_message</span>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">Ketrew_gen_protocol_v0</span>.<span class="constructor">Up_message</span>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">Ketrew_gen_versioned</span>.<span class="constructor">Up_message</span>)<br>
 <br>
-&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;log&nbsp;:&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Log</span>.t&nbsp;=&nbsp;<span class="keyword">function</span><br>
-&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">List_of_targets</span>&nbsp;ts&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Log</span>.(s&nbsp;<span class="string">"List_of_targets:&nbsp;"</span>&nbsp;%&nbsp;<span class="constructor">OCaml</span>.list&nbsp;<span class="constructor">Ketrew_target</span>.log&nbsp;ts)<br>
-&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">List_of_target_ids</span>&nbsp;ts&nbsp;<span class="keywordsign">-&gt;</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Log</span>.(s&nbsp;<span class="string">"List_of_target_ids:&nbsp;"</span>&nbsp;%&nbsp;<span class="constructor">OCaml</span>.list&nbsp;string&nbsp;ts)<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;log&nbsp;:&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Log</span>.t&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">fun</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">assert</span>&nbsp;<span class="keyword">false</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">(*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;function<br>
+&nbsp;&nbsp;|&nbsp;`List_of_targets&nbsp;ts&nbsp;-&gt;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Log.(s&nbsp;"List_of_targets:&nbsp;"&nbsp;%&nbsp;OCaml.list&nbsp;Ketrew_target.log&nbsp;ts)<br>
+&nbsp;&nbsp;|&nbsp;`List_of_target_ids&nbsp;ts&nbsp;-&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Log.(s&nbsp;"List_of_target_ids:&nbsp;"&nbsp;%&nbsp;OCaml.list&nbsp;string&nbsp;ts)<br>
+&nbsp;&nbsp;*)</span><br>
 <br>
 &nbsp;&nbsp;<span class="keyword">let</span>&nbsp;to_string_hum&nbsp;t&nbsp;=&nbsp;log&nbsp;t&nbsp;|&gt;&nbsp;<span class="constructor">Log</span>.to_long_string<br>
 <span class="keyword">end</span><br>

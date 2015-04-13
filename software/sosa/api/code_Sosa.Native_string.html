@@ -92,12 +92,32 @@
 
   let concat ?(sep="") sl = concat ~sep sl
 
-  let fold s ~init ~f =
+  let fold t ~init ~f =
     let res = ref init in
-    for i = 0 to String.length s - 1 do
-      res := f !res s.[i];
+    for i = 0 to String.length t - 1 do
+      res := f !res t.[i];
     done;
     !res
+  
+  let foldi t ~init ~f =
+    let res = ref init in
+    for i = 0 to String.length t - 1 do
+      res := f i !res t.[i];
+    done;
+    !res
+
+  let fold2_exn t1 t2 ~init ~f =
+    let lgth1 = (length t1) in
+    let lgth2 = (length t2) in
+    match lgth1, lgth2 with
+    | 0, 0 -> init
+    | _, _ when lgth1 <> lgth2 -> failwith "fold2_exn"
+    | lgth1, lgth2 ->
+       let res = ref init in
+       for i = 0 to lgth1 - 1 do
+         res := f !res t1.[i] t2.[i];
+       done;
+       !res
 
   let sub_exn t ~index ~length =
     if length = 0 then empty else String.sub t index length
@@ -145,6 +165,18 @@
     for i = length t -1 downto 0 do
       f (get_exn t i)
     done
+
+  let rev t =
+    let lgth = length t in
+    match lgth with
+    | 0 -> empty
+    | lgth ->
+       let res = make lgth (String.get t 0) in
+       for i = 0 to lgth - 1 do
+         String.set res i (String.get t (lgth - 1 - i))
+       done;
+       res
+
   let map t ~f = String.map t ~f
 
   let map2_exn t1 t2 ~f =

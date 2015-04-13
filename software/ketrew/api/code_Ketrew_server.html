@@ -14,11 +14,13 @@
 <link title="Ketrew_command_line" rel="Chapter" href="Ketrew_command_line.html">
 <link title="Ketrew_configuration" rel="Chapter" href="Ketrew_configuration.html">
 <link title="Ketrew_daemonize" rel="Chapter" href="Ketrew_daemonize.html">
-<link title="Ketrew_database" rel="Chapter" href="Ketrew_database.html">
+<link title="Ketrew_document" rel="Chapter" href="Ketrew_document.html">
 <link title="Ketrew_edsl" rel="Chapter" href="Ketrew_edsl.html">
 <link title="Ketrew_engine" rel="Chapter" href="Ketrew_engine.html">
 <link title="Ketrew_error" rel="Chapter" href="Ketrew_error.html">
+<link title="Ketrew_explorer" rel="Chapter" href="Ketrew_explorer.html">
 <link title="Ketrew_host" rel="Chapter" href="Ketrew_host.html">
+<link title="Ketrew_interaction" rel="Chapter" href="Ketrew_interaction.html">
 <link title="Ketrew_long_running" rel="Chapter" href="Ketrew_long_running.html">
 <link title="Ketrew_long_running_utilities" rel="Chapter" href="Ketrew_long_running_utilities.html">
 <link title="Ketrew_lsf" rel="Chapter" href="Ketrew_lsf.html">
@@ -31,7 +33,8 @@
 <link title="Ketrew_protocol" rel="Chapter" href="Ketrew_protocol.html">
 <link title="Ketrew_server" rel="Chapter" href="Ketrew_server.html">
 <link title="Ketrew_target" rel="Chapter" href="Ketrew_target.html">
-<link title="Ketrew_unix_process" rel="Chapter" href="Ketrew_unix_process.html"><title>Ketrew API : Ketrew_server</title>
+<link title="Ketrew_unix_process" rel="Chapter" href="Ketrew_unix_process.html">
+<link title="Ketrew_yarn" rel="Chapter" href="Ketrew_yarn.html"><title>Ketrew API : Ketrew_server</title>
 </head>
 <body>
 <code class="code"></code><table><tr><td></td><td><span class="comment">(**************************************************************************)</span></td></tr></table><code class="code"><br>
@@ -100,7 +103,10 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">List</span>.exists&nbsp;t.valid_tokens&nbsp;~f:(<span class="keyword">fun</span>&nbsp;x&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;x.value&nbsp;=&nbsp;tok)&nbsp;<span class="keyword">in</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">begin</span>&nbsp;<span class="keyword">match</span>&nbsp;token,&nbsp;do_stuff&nbsp;<span class="keyword">with</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Some</span>&nbsp;tok,&nbsp;<span class="keywordsign">`</span><span class="constructor">See_targets</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Some</span>&nbsp;tok,&nbsp;<span class="keywordsign">`</span><span class="constructor">Query_targets</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;return&nbsp;(token_is_valid&nbsp;tok)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Some</span>&nbsp;tok,&nbsp;<span class="keywordsign">`</span><span class="constructor">Query_targets</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Some</span>&nbsp;tok,&nbsp;<span class="keywordsign">`</span><span class="constructor">Kill_targets</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Some</span>&nbsp;tok,&nbsp;<span class="keywordsign">`</span><span class="constructor">Restart_targets</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Some</span>&nbsp;tok,&nbsp;<span class="keywordsign">`</span><span class="constructor">Submit_targets</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;return&nbsp;(token_is_valid&nbsp;tok)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">None</span>,&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;return&nbsp;<span class="keyword">false</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
 <br>
@@ -195,31 +201,17 @@ M*)</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;wrong_request&nbsp;<span class="string">"wrong&nbsp;method"</span>&nbsp;(<span class="constructor">Cohttp</span>.<span class="constructor">Code</span>.string_of_method&nbsp;other)<br>
 &nbsp;&nbsp;<span class="keyword">end</span><br>
 <br>
-</code><table><tr><td></td><td><span class="comment">(** <h2 id="2_Services">Services</h2> *)</span></td></tr></table><code class="code"><br>
+</code><table><tr><td></td><td><span class="comment">(** Grab and deserialize a POST body into an up_message. *)</span></td></tr></table><code class="code"><br>
+<span class="keyword">let</span>&nbsp;message_of_body&nbsp;~body&nbsp;=<br>
+&nbsp;&nbsp;wrap_preemptively&nbsp;~on_exn:(<span class="keyword">fun</span>&nbsp;e&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Failure</span>&nbsp;(<span class="constructor">Printexc</span>.to_string&nbsp;e))<br>
+&nbsp;&nbsp;&nbsp;&nbsp;(<span class="keyword">fun</span>&nbsp;()&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Ketrew_protocol</span>.<span class="constructor">Up_message</span>.deserialize_exn&nbsp;body)<br>
 <br>
-<span class="keyword">let</span>&nbsp;targets_service:&nbsp;_&nbsp;service&nbsp;=&nbsp;<span class="keyword">fun</span>&nbsp;~server_state&nbsp;~body&nbsp;req&nbsp;<span class="keywordsign">-&gt;</span><br>
-&nbsp;&nbsp;check_that_it_is_a_get&nbsp;req&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;()&nbsp;<span class="keywordsign">-&gt;</span><br>
-&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;token&nbsp;=&nbsp;token_parameter&nbsp;req&nbsp;<span class="keyword">in</span><br>
-&nbsp;&nbsp;<span class="constructor">Authentication</span>.ensure_can&nbsp;server_state.authentication&nbsp;?token&nbsp;<span class="keywordsign">`</span><span class="constructor">See_targets</span><br>
-&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;()&nbsp;<span class="keywordsign">-&gt;</span><br>
-&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;target_ids&nbsp;=<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Uri</span>.get_query_param'&nbsp;(<span class="constructor">Cohttp_lwt_unix</span>.<span class="constructor">Server</span>.<span class="constructor">Request</span>.uri&nbsp;req)&nbsp;<span class="string">"id"</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;|&gt;&nbsp;<span class="constructor">Option</span>.value&nbsp;~default:[]&nbsp;<span class="keyword">in</span><br>
-&nbsp;&nbsp;format_parameter&nbsp;req<br>
-&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;response_format&nbsp;<span class="keywordsign">-&gt;</span><br>
+</code><table><tr><td></td><td><span class="comment">(** <h2 id="2_ServicesAnsweringRequests">Services; Answering Requests</h2> *)</span></td></tr></table><code class="code"><br>
+<br>
+<span class="keyword">let</span>&nbsp;answer_get_targets&nbsp;~server_state&nbsp;target_ids&nbsp;=<br>
 &nbsp;&nbsp;<span class="keyword">begin</span>&nbsp;<span class="keyword">match</span>&nbsp;target_ids&nbsp;&nbsp;<span class="keyword">with</span><br>
 &nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;[]&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Ketrew_engine</span>.current_targets&nbsp;server_state.state<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;current_targets&nbsp;<span class="keywordsign">-&gt;</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">begin</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span>&nbsp;<span class="constructor">Uri</span>.get_query_param&nbsp;(<span class="constructor">Cohttp_lwt_unix</span>.<span class="constructor">Server</span>.<span class="constructor">Request</span>.uri&nbsp;req)&nbsp;<span class="string">"archived"</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;<span class="constructor">Some</span>&nbsp;<span class="string">"true"</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">then</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Ketrew_engine</span>.archived_targets&nbsp;server_state.state<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;archived&nbsp;<span class="keywordsign">-&gt;</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;(current_targets&nbsp;@&nbsp;archived)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">else</span>&nbsp;return&nbsp;current_targets<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
 &nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;more&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Deferred_list</span>.while_sequential&nbsp;more&nbsp;~f:(<span class="keyword">fun</span>&nbsp;id&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Ketrew_engine</span>.get_target&nbsp;server_state.state&nbsp;id<br>
@@ -232,17 +224,12 @@ M*)</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;|&nbsp;<span class="constructor">List</span>.filter_opt<br>
 &nbsp;&nbsp;<span class="keyword">end</span><br>
 &nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;targets&nbsp;<span class="keywordsign">-&gt;</span><br>
-&nbsp;&nbsp;return&nbsp;(<span class="keywordsign">`</span><span class="constructor">Message</span>&nbsp;(response_format,&nbsp;<span class="keywordsign">`</span><span class="constructor">List_of_targets</span>&nbsp;targets))<br>
+&nbsp;&nbsp;return&nbsp;(<span class="keywordsign">`</span><span class="constructor">Message</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="keywordsign">`</span><span class="constructor">Json</span>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">`</span><span class="constructor">List_of_targets</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">List</span>.map&nbsp;~f:<span class="constructor">Ketrew_target</span>.to_serializable&nbsp;targets)))<br>
 <br>
-<span class="keyword">let</span>&nbsp;target_available_queries_service&nbsp;~server_state&nbsp;~body&nbsp;req&nbsp;=<br>
-&nbsp;&nbsp;check_that_it_is_a_get&nbsp;req&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;()&nbsp;<span class="keywordsign">-&gt;</span><br>
-&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;token&nbsp;=&nbsp;token_parameter&nbsp;req&nbsp;<span class="keyword">in</span><br>
-&nbsp;&nbsp;<span class="constructor">Authentication</span>.ensure_can&nbsp;server_state.authentication&nbsp;?token&nbsp;<span class="keywordsign">`</span><span class="constructor">Query_targets</span><br>
-&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;()&nbsp;<span class="keywordsign">-&gt;</span><br>
-&nbsp;&nbsp;mandatory_parameter&nbsp;req&nbsp;~name:<span class="string">"id"</span><br>
-&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;target_id&nbsp;<span class="keywordsign">-&gt;</span><br>
-&nbsp;&nbsp;format_parameter&nbsp;req<br>
-&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;response_format&nbsp;<span class="keywordsign">-&gt;</span><br>
+<span class="keyword">let</span>&nbsp;answer_get_target_available_queries&nbsp;~server_state&nbsp;target_id&nbsp;=<br>
 &nbsp;&nbsp;<span class="constructor">Ketrew_engine</span>.get_target&nbsp;server_state.state&nbsp;target_id<br>
 &nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;target&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;<span class="keyword">let</span>&nbsp;msg&nbsp;=<br>
@@ -250,104 +237,88 @@ M*)</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Ketrew_plugin</span>.additional_queries&nbsp;target<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&gt;&nbsp;<span class="constructor">List</span>.map&nbsp;~f:(<span class="keyword">fun</span>&nbsp;(a,&nbsp;l)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;a,&nbsp;<span class="constructor">Log</span>.to_long_string&nbsp;l)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;)&nbsp;<span class="keyword">in</span><br>
-&nbsp;&nbsp;return&nbsp;(<span class="keywordsign">`</span><span class="constructor">Message</span>&nbsp;(response_format,&nbsp;msg))<br>
+&nbsp;&nbsp;return&nbsp;(<span class="keywordsign">`</span><span class="constructor">Message</span>&nbsp;(<span class="keywordsign">`</span><span class="constructor">Json</span>,&nbsp;msg))<br>
 <br>
-<span class="keyword">let</span>&nbsp;target_call_query_service&nbsp;~server_state&nbsp;~body&nbsp;req&nbsp;=<br>
-&nbsp;&nbsp;check_that_it_is_a_get&nbsp;req&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;()&nbsp;<span class="keywordsign">-&gt;</span><br>
-&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;token&nbsp;=&nbsp;token_parameter&nbsp;req&nbsp;<span class="keyword">in</span><br>
-&nbsp;&nbsp;<span class="constructor">Authentication</span>.ensure_can&nbsp;server_state.authentication&nbsp;?token&nbsp;<span class="keywordsign">`</span><span class="constructor">Query_targets</span><br>
-&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;()&nbsp;<span class="keywordsign">-&gt;</span><br>
-&nbsp;&nbsp;mandatory_parameter&nbsp;req&nbsp;~name:<span class="string">"id"</span><br>
-&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;target_id&nbsp;<span class="keywordsign">-&gt;</span><br>
-&nbsp;&nbsp;format_parameter&nbsp;req<br>
-&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;response_format&nbsp;<span class="keywordsign">-&gt;</span><br>
-&nbsp;&nbsp;mandatory_parameter&nbsp;req&nbsp;~name:<span class="string">"query"</span><br>
-&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;query_name&nbsp;<span class="keywordsign">-&gt;</span><br>
+<br>
+<span class="keyword">let</span>&nbsp;answer_call_query&nbsp;~server_state&nbsp;~target_id&nbsp;~query&nbsp;=<br>
 &nbsp;&nbsp;<span class="constructor">Ketrew_engine</span>.get_target&nbsp;server_state.state&nbsp;target_id<br>
 &nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;target&nbsp;<span class="keywordsign">-&gt;</span><br>
-&nbsp;&nbsp;<span class="constructor">Log</span>.(s&nbsp;<span class="string">"Calling&nbsp;query&nbsp;"</span>&nbsp;%&nbsp;quote&nbsp;query_name&nbsp;%&nbsp;s&nbsp;<span class="string">"&nbsp;on&nbsp;"</span><br>
+&nbsp;&nbsp;<span class="constructor">Log</span>.(s&nbsp;<span class="string">"Calling&nbsp;query&nbsp;"</span>&nbsp;%&nbsp;quote&nbsp;query&nbsp;%&nbsp;s&nbsp;<span class="string">"&nbsp;on&nbsp;"</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%&nbsp;<span class="constructor">Ketrew_target</span>.log&nbsp;target&nbsp;@&nbsp;very_verbose);<br>
 &nbsp;&nbsp;<span class="keyword">begin</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Ketrew_plugin</span>.call_query&nbsp;~target&nbsp;query_name<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Ketrew_plugin</span>.call_query&nbsp;~target&nbsp;query<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&lt;&nbsp;<span class="keyword">function</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Ok</span>&nbsp;string&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;(<span class="keywordsign">`</span><span class="constructor">Message</span>&nbsp;(response_format,&nbsp;<span class="keywordsign">`</span><span class="constructor">Query_result</span>&nbsp;string))<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;(<span class="keywordsign">`</span><span class="constructor">Message</span>&nbsp;(<span class="keywordsign">`</span><span class="constructor">Json</span>,&nbsp;<span class="keywordsign">`</span><span class="constructor">Query_result</span>&nbsp;string))<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Error</span>&nbsp;error_log&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;wrong_request&nbsp;<span class="string">"Failed&nbsp;Query"</span>&nbsp;(<span class="constructor">Log</span>.to_long_string&nbsp;error_log)<br>
 &nbsp;&nbsp;<span class="keyword">end</span><br>
 <br>
-<span class="keyword">let</span>&nbsp;message_of_body&nbsp;~body&nbsp;~select&nbsp;=<br>
-&nbsp;&nbsp;wrap_preemptively&nbsp;~on_exn:(<span class="keyword">fun</span>&nbsp;e&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Failure</span>&nbsp;(<span class="constructor">Printexc</span>.to_string&nbsp;e))<br>
-&nbsp;&nbsp;&nbsp;&nbsp;(<span class="keyword">fun</span>&nbsp;()&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Ketrew_protocol</span>.<span class="constructor">Post_message</span>.deserialize_exn&nbsp;body)<br>
-&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;message&nbsp;<span class="keywordsign">-&gt;</span><br>
-&nbsp;&nbsp;<span class="keyword">begin</span>&nbsp;<span class="keyword">match</span>&nbsp;select&nbsp;message&nbsp;<span class="keyword">with</span><br>
-&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Some</span>&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;return&nbsp;t<br>
-&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">None</span>&nbsp;<span class="keywordsign">-&gt;</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;fail&nbsp;(<span class="keywordsign">`</span><span class="constructor">Failure</span>&nbsp;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(fmt&nbsp;<span class="string">"wrong&nbsp;post-message:&nbsp;%s"</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">Ketrew_protocol</span>.<span class="constructor">Post_message</span>.to_string_hum&nbsp;message)))<br>
-&nbsp;&nbsp;<span class="keyword">end</span><br>
 <br>
-<span class="keyword">let</span>&nbsp;add_targets_service&nbsp;&nbsp;~server_state&nbsp;~body&nbsp;req&nbsp;=<br>
-&nbsp;&nbsp;get_post_body&nbsp;req&nbsp;~body&nbsp;<br>
-&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;body&nbsp;<span class="keywordsign">-&gt;</span><br>
-&nbsp;&nbsp;message_of_body&nbsp;~body&nbsp;~select:(<span class="keyword">function</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">List_of_targets</span>&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Some</span>&nbsp;t<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">None</span>)<br>
-&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;targets&nbsp;<span class="keywordsign">-&gt;</span><br>
+<span class="keyword">let</span>&nbsp;answer_add_targets&nbsp;~server_state&nbsp;~targets&nbsp;=<br>
 &nbsp;&nbsp;<span class="constructor">Log</span>.(s&nbsp;<span class="string">"Adding&nbsp;"</span>&nbsp;%&nbsp;i&nbsp;(<span class="constructor">List</span>.length&nbsp;targets)&nbsp;%&nbsp;s&nbsp;<span class="string">"&nbsp;targets"</span>&nbsp;@&nbsp;normal);<br>
-&nbsp;&nbsp;<span class="constructor">Ketrew_engine</span>.add_targets&nbsp;server_state.state&nbsp;targets<br>
+&nbsp;&nbsp;<span class="constructor">Ketrew_engine</span>.add_targets&nbsp;server_state.state<br>
+&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">List</span>.map&nbsp;~f:<span class="constructor">Ketrew_target</span>.of_serializable&nbsp;targets)<br>
 &nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;()&nbsp;<span class="keywordsign">-&gt;</span><br>
-&nbsp;&nbsp;<span class="constructor">Deferred_list</span>.while_sequential&nbsp;targets&nbsp;~f:(<span class="keyword">fun</span>&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;original_id&nbsp;=&nbsp;<span class="constructor">Ketrew_target</span>.id&nbsp;t&nbsp;<span class="keyword">in</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Ketrew_engine</span>.get_target&nbsp;server_state.state&nbsp;original_id<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;freshen&nbsp;<span class="keywordsign">-&gt;</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;(<span class="constructor">Ketrew_protocol</span>.<span class="constructor">Down_message</span>.added_target<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;~original_id&nbsp;~fresh_id:(<span class="constructor">Ketrew_target</span>.id&nbsp;freshen))<br>
-&nbsp;&nbsp;&nbsp;&nbsp;)<br>
-&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;added_targets&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;<span class="constructor">Light</span>.green&nbsp;server_state.loop_traffic_light;<br>
-&nbsp;&nbsp;return&nbsp;(<span class="keywordsign">`</span><span class="constructor">Message</span>&nbsp;(<span class="keywordsign">`</span><span class="constructor">Json</span>,&nbsp;<span class="keywordsign">`</span><span class="constructor">Targets_added</span>&nbsp;added_targets))<br>
+&nbsp;&nbsp;return&nbsp;(<span class="keywordsign">`</span><span class="constructor">Message</span>&nbsp;(<span class="keywordsign">`</span><span class="constructor">Json</span>,&nbsp;<span class="keywordsign">`</span><span class="constructor">Ok</span>))<br>
 <br>
-<span class="keyword">let</span>&nbsp;action_on_ids_service:&nbsp;[<span class="keywordsign">`</span><span class="constructor">Kill</span>&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Archive</span>&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Restart</span>]&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;_&nbsp;service&nbsp;=&nbsp;<br>
-&nbsp;&nbsp;<span class="keyword">fun</span>&nbsp;what_to_do&nbsp;~server_state&nbsp;~body&nbsp;req&nbsp;<span class="keywordsign">-&gt;</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;get_post_body&nbsp;req&nbsp;~body&nbsp;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;body&nbsp;<span class="keywordsign">-&gt;</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;message_of_body&nbsp;~body&nbsp;~select:(<span class="keyword">function</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">List_of_target_ids</span>&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Some</span>&nbsp;t<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">None</span>)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;target_ids&nbsp;<span class="keywordsign">-&gt;</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Deferred_list</span>.while_sequential&nbsp;target_ids&nbsp;(<span class="keyword">fun</span>&nbsp;id&nbsp;<span class="keywordsign">-&gt;</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">begin</span>&nbsp;<span class="keyword">match</span>&nbsp;what_to_do&nbsp;<span class="keyword">with</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Kill</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Ketrew_engine</span>.kill&nbsp;server_state.state&nbsp;id<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Archive</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Ketrew_engine</span>.archive_target&nbsp;server_state.state&nbsp;id<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Restart</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Ketrew_engine</span>.restart_target&nbsp;server_state.state&nbsp;id<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span>)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;|&nbsp;<span class="constructor">List</span>.concat<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;happenings&nbsp;<span class="keywordsign">-&gt;</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Light</span>.green&nbsp;server_state.loop_traffic_light;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;(<span class="keywordsign">`</span><span class="constructor">Message</span>&nbsp;(<span class="keywordsign">`</span><span class="constructor">Json</span>,&nbsp;<span class="keywordsign">`</span><span class="constructor">Happens</span>&nbsp;happenings))<br>
+<span class="keyword">let</span>&nbsp;do_action_on_ids&nbsp;~server_state&nbsp;~ids&nbsp;(what_to_do:&nbsp;[<span class="keywordsign">`</span><span class="constructor">Kill</span>&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Restart</span>])&nbsp;=<br>
+&nbsp;&nbsp;<span class="constructor">Deferred_list</span>.while_sequential&nbsp;ids&nbsp;(<span class="keyword">fun</span>&nbsp;id&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">begin</span>&nbsp;<span class="keyword">match</span>&nbsp;what_to_do&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Kill</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Ketrew_engine</span>.kill&nbsp;server_state.state&nbsp;id<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Restart</span>&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Ketrew_engine</span>.restart_target&nbsp;server_state.state&nbsp;id<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;(_&nbsp;:&nbsp;<span class="constructor">Ketrew_target</span>.id)&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span>)<br>
+&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;(_&nbsp;:&nbsp;unit&nbsp;list)&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;<span class="constructor">Light</span>.green&nbsp;server_state.loop_traffic_light;<br>
+&nbsp;&nbsp;return&nbsp;(<span class="keywordsign">`</span><span class="constructor">Message</span>&nbsp;(<span class="keywordsign">`</span><span class="constructor">Json</span>,&nbsp;<span class="keywordsign">`</span><span class="constructor">Ok</span>))<br>
 <br>
-<span class="keyword">let</span>&nbsp;list_cleanable_targets&nbsp;~server_state&nbsp;~body&nbsp;req&nbsp;=<br>
-&nbsp;&nbsp;check_that_it_is_a_get&nbsp;req&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;()&nbsp;<span class="keywordsign">-&gt;</span><br>
-&nbsp;&nbsp;mandatory_parameter&nbsp;req&nbsp;~name:<span class="string">"howmuch"</span><br>
-&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;how_much_str&nbsp;<span class="keywordsign">-&gt;</span><br>
-&nbsp;&nbsp;<span class="keyword">begin</span>&nbsp;<span class="keyword">match</span>&nbsp;how_much_str&nbsp;<span class="keyword">with</span><br>
-&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="string">"soft"</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;return&nbsp;<span class="keywordsign">`</span><span class="constructor">Soft</span><br>
-&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="string">"hard"</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;return&nbsp;<span class="keywordsign">`</span><span class="constructor">Hard</span><br>
-&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;other&nbsp;<span class="keywordsign">-&gt;</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;failwith&nbsp;(fmt&nbsp;<span class="string">"wrong-parameter:&nbsp;%S&nbsp;expecting&nbsp;'soft'&nbsp;or&nbsp;'hard'"</span>&nbsp;other)<br>
+<span class="keyword">let</span>&nbsp;answer_get_target_ids&nbsp;~server_state&nbsp;query&nbsp;=<br>
+&nbsp;&nbsp;<span class="constructor">Ketrew_engine</span>.get_list_of_target_ids&nbsp;server_state.state&nbsp;query<br>
+&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;list_of_ids&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;return&nbsp;(<span class="keywordsign">`</span><span class="constructor">Message</span>&nbsp;(<span class="keywordsign">`</span><span class="constructor">Json</span>,&nbsp;<span class="keywordsign">`</span><span class="constructor">List_of_target_ids</span>&nbsp;list_of_ids))<br>
+<br>
+<span class="keyword">let</span>&nbsp;api_service&nbsp;~server_state&nbsp;~body&nbsp;req&nbsp;=<br>
+&nbsp;&nbsp;get_post_body&nbsp;req&nbsp;~body<br>
+&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;body&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;with_capability&nbsp;cap&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;token&nbsp;=&nbsp;token_parameter&nbsp;req&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Authentication</span>.ensure_can&nbsp;server_state.authentication&nbsp;?token&nbsp;cap<br>
+&nbsp;&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;message_of_body&nbsp;~body&nbsp;<br>
+&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">begin</span>&nbsp;<span class="keyword">function</span><br>
+&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Get_targets</span>&nbsp;l&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;with_capability&nbsp;<span class="keywordsign">`</span><span class="constructor">See_targets</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;()&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;answer_get_targets&nbsp;~server_state&nbsp;l<br>
+&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Get_available_queries</span>&nbsp;target_id&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;with_capability&nbsp;<span class="keywordsign">`</span><span class="constructor">Query_targets</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;()&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;answer_get_target_available_queries&nbsp;~server_state&nbsp;target_id<br>
+&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Call_query</span>&nbsp;(target_id,&nbsp;query)&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;with_capability&nbsp;<span class="keywordsign">`</span><span class="constructor">Query_targets</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;()&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;answer_call_query&nbsp;~server_state&nbsp;~target_id&nbsp;~query<br>
+&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Submit_targets</span>&nbsp;targets&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;with_capability&nbsp;<span class="keywordsign">`</span><span class="constructor">Submit_targets</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;()&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;answer_add_targets&nbsp;~server_state&nbsp;~targets<br>
+&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Kill_targets</span>&nbsp;ids&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;with_capability&nbsp;<span class="keywordsign">`</span><span class="constructor">Kill_targets</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;()&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;do_action_on_ids&nbsp;~server_state&nbsp;~ids&nbsp;<span class="keywordsign">`</span><span class="constructor">Kill</span><br>
+&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Restart_targets</span>&nbsp;ids&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;with_capability&nbsp;<span class="keywordsign">`</span><span class="constructor">Restart_targets</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;()&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;do_action_on_ids&nbsp;~server_state&nbsp;~ids&nbsp;<span class="keywordsign">`</span><span class="constructor">Restart</span><br>
+&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Get_target_ids</span>&nbsp;query&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;with_capability&nbsp;<span class="keywordsign">`</span><span class="constructor">See_targets</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;()&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;answer_get_target_ids&nbsp;~server_state&nbsp;query<br>
 &nbsp;&nbsp;<span class="keyword">end</span><br>
-&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;how_much&nbsp;<span class="keywordsign">-&gt;</span><br>
-&nbsp;&nbsp;<span class="constructor">Log</span>.(s&nbsp;<span class="string">"list_cleanable_targets:&nbsp;getting&nbsp;graph"</span>&nbsp;@&nbsp;verbose);<br>
-&nbsp;&nbsp;<span class="constructor">Ketrew_engine</span>.<span class="constructor">Target_graph</span>.(<br>
-&nbsp;&nbsp;&nbsp;&nbsp;get_current&nbsp;server_state.state<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;graph&nbsp;<span class="keywordsign">-&gt;</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">To_kill</span>&nbsp;to_kill,&nbsp;<span class="keywordsign">`</span><span class="constructor">To_archive</span>&nbsp;to_archive&nbsp;=<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;targets_to_clean_up&nbsp;graph&nbsp;how_much&nbsp;<span class="keyword">in</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;msg&nbsp;=&nbsp;<span class="constructor">Ketrew_protocol</span>.<span class="constructor">Down_message</span>.clean_up&nbsp;~to_archive&nbsp;~to_kill&nbsp;<span class="keyword">in</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;(<span class="keywordsign">`</span><span class="constructor">Message</span>&nbsp;(<span class="keywordsign">`</span><span class="constructor">Json</span>,&nbsp;<span class="keywordsign">`</span><span class="constructor">Clean_up</span>&nbsp;msg))<br>
-&nbsp;&nbsp;)<br>
 <br>
 </code><table><tr><td></td><td><span class="comment">(** <h2 id="2_Dispatcher">Dispatcher</h2> *)</span></td></tr></table><code class="code"><br>
 <br>
@@ -356,19 +327,7 @@ M*)</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@&nbsp;verbose);<br>
 &nbsp;&nbsp;<span class="keyword">match</span>&nbsp;<span class="constructor">Uri</span>.path&nbsp;(<span class="constructor">Cohttp_lwt_unix</span>.<span class="constructor">Server</span>.<span class="constructor">Request</span>.uri&nbsp;req)&nbsp;<span class="keyword">with</span><br>
 &nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="string">"/hello"</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;return&nbsp;<span class="keywordsign">`</span><span class="constructor">Unit</span><br>
-&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="string">"/targets"</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;targets_service&nbsp;~server_state&nbsp;~body&nbsp;req<br>
-&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="string">"/target-available-queries"</span>&nbsp;<span class="keywordsign">-&gt;</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;target_available_queries_service&nbsp;~server_state&nbsp;~body&nbsp;req<br>
-&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="string">"/target-call-query"</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;target_call_query_service&nbsp;~server_state&nbsp;~body&nbsp;req<br>
-&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="string">"/add-targets"</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;add_targets_service&nbsp;&nbsp;~server_state&nbsp;~body&nbsp;req<br>
-&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="string">"/kill-targets"</span>&nbsp;<span class="keywordsign">-&gt;</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;action_on_ids_service&nbsp;<span class="keywordsign">`</span><span class="constructor">Kill</span>&nbsp;&nbsp;~server_state&nbsp;~body&nbsp;req<br>
-&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="string">"/archive-targets"</span>&nbsp;<span class="keywordsign">-&gt;</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;action_on_ids_service&nbsp;<span class="keywordsign">`</span><span class="constructor">Archive</span>&nbsp;&nbsp;~server_state&nbsp;~body&nbsp;req<br>
-&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="string">"/restart-targets"</span>&nbsp;<span class="keywordsign">-&gt;</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;action_on_ids_service&nbsp;<span class="keywordsign">`</span><span class="constructor">Restart</span>&nbsp;&nbsp;~server_state&nbsp;~body&nbsp;req<br>
-&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="string">"/cleanable-targets"</span>&nbsp;<span class="keywordsign">-&gt;</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;list_cleanable_targets&nbsp;~server_state&nbsp;~body&nbsp;req<br>
+&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="string">"/api"</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;api_service&nbsp;~server_state&nbsp;~body&nbsp;req<br>
 &nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;other&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;wrong_request&nbsp;<span class="string">"Wrong&nbsp;path"</span>&nbsp;other<br>
 <br>
@@ -472,25 +431,32 @@ M*)</span><br>
 &nbsp;&nbsp;<span class="keyword">let</span>&nbsp;time_factor&nbsp;=&nbsp;2.&nbsp;<span class="keyword">in</span><br>
 &nbsp;&nbsp;<span class="keyword">let</span>&nbsp;max_sleep&nbsp;=&nbsp;120.&nbsp;<span class="keyword">in</span><br>
 &nbsp;&nbsp;<span class="keyword">let</span>&nbsp;<span class="keyword">rec</span>&nbsp;loop&nbsp;previous_sleep&nbsp;=<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Ketrew_engine</span>.fix_point&nbsp;server_state.state<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;(<span class="keywordsign">`</span><span class="constructor">Steps</span>&nbsp;step_count,&nbsp;what_happened)&nbsp;<span class="keywordsign">-&gt;</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">List</span>.iter&nbsp;what_happened&nbsp;~f:(<span class="constructor">List</span>.iter&nbsp;~f:(<span class="keyword">fun</span>&nbsp;hp&nbsp;<span class="keywordsign">-&gt;</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Log</span>.(brakets&nbsp;(f&nbsp;(<span class="constructor">Time</span>.now&nbsp;()))&nbsp;%&nbsp;sp&nbsp;%&nbsp;s&nbsp;<span class="string">"Fix-point"</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%&nbsp;<span class="constructor">Ketrew_engine</span>.log_what_happened&nbsp;hp&nbsp;@&nbsp;normal);<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;));<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;seconds&nbsp;=<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">match</span>&nbsp;what_happened&nbsp;<span class="keyword">with</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;[]&nbsp;<span class="keywordsign">|</span>&nbsp;[[]]&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;min&nbsp;(previous_sleep&nbsp;*.&nbsp;time_factor)&nbsp;max_sleep<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;something&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;time_step<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">in</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Log</span>.(s&nbsp;<span class="string">"Sleeping&nbsp;"</span>&nbsp;%&nbsp;f&nbsp;seconds&nbsp;%&nbsp;s&nbsp;<span class="string">" s"</span>&nbsp;@&nbsp;very_verbose);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">begin</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Ketrew_engine</span>.<span class="constructor">Run_automaton</span>.fix_point&nbsp;server_state.state<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&lt;&nbsp;<span class="keyword">function</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Ok</span>&nbsp;(<span class="keywordsign">`</span><span class="constructor">Steps</span>&nbsp;step_count)&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;seconds&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span>&nbsp;step_count&nbsp;=&nbsp;1&nbsp;<span class="keyword">then</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;min&nbsp;(previous_sleep&nbsp;*.&nbsp;time_factor)&nbsp;max_sleep<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">else</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;time_step<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Log</span>.(s&nbsp;<span class="string">"Successful&nbsp;fix-point:&nbsp;"</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%&nbsp;parens&nbsp;(i&nbsp;step_count&nbsp;%&nbsp;s&nbsp;<span class="string">"&nbsp;steps"</span>)&nbsp;%n<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%&nbsp;s&nbsp;<span class="string">"Sleeping&nbsp;"</span>&nbsp;%&nbsp;f&nbsp;seconds&nbsp;%&nbsp;s&nbsp;<span class="string">" s"</span>&nbsp;@&nbsp;verbose);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;seconds<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Error</span>&nbsp;e&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Log</span>.(s&nbsp;<span class="string">"Errorneous&nbsp;fix-point:&nbsp;"</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%&nbsp;s&nbsp;(<span class="constructor">Ketrew_error</span>.to_string&nbsp;e)&nbsp;%n<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%&nbsp;s&nbsp;<span class="string">"Sleeping&nbsp;"</span>&nbsp;%&nbsp;f&nbsp;time_step&nbsp;%&nbsp;s&nbsp;<span class="string">"&nbsp;s"</span>&nbsp;@&nbsp;verbose);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;time_step<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;seconds&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Deferred_list</span>.pick_and_cancel&nbsp;[<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">System</span>.sleep&nbsp;seconds;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">begin</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Light</span>.try_to_pass&nbsp;server_state.loop_traffic_light<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;()&nbsp;<span class="keywordsign">-&gt;</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Log</span>.(s&nbsp;<span class="string">"Waken-up&nbsp;early"</span>&nbsp;@&nbsp;verbose);&nbsp;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;server_state.loop_traffic_light.<span class="constructor">Light</span>.color&nbsp;&lt;-&nbsp;<span class="keywordsign">`</span><span class="constructor">Red</span>;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;()<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span>;<br>
@@ -537,7 +503,7 @@ M*)</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">`</span><span class="constructor">Key_file_path</span>&nbsp;keyfile,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">`</span><span class="constructor">No_password</span>,&nbsp;<span class="keywordsign">`</span><span class="constructor">Port</span>&nbsp;port)&nbsp;<span class="keyword">in</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">(*&nbsp;let&nbsp;sockaddr&nbsp;=&nbsp;Lwt_unix.(ADDR_INET&nbsp;(Unix.inet_addr_any,&nbsp;port))&nbsp;in&nbsp;*)</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;callback&nbsp;_&nbsp;request&nbsp;body&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;request_callback&nbsp;_&nbsp;request&nbsp;body&nbsp;=<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;connection_id&nbsp;=&nbsp;<span class="constructor">Unique_id</span>.create&nbsp;()&nbsp;<span class="keyword">in</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Ketrew_engine</span>.<span class="constructor">Measure</span>.incomming_request<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;server_state.state&nbsp;~connection_id&nbsp;~request;<br>
@@ -584,12 +550,12 @@ M*)</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;~connection_id&nbsp;~request&nbsp;~response_log&nbsp;~body_length;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;cohttp_answer<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">in</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;conn_closed&nbsp;(_,&nbsp;conn_id)&nbsp;()&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;conn_closed&nbsp;(_,&nbsp;conn_id)&nbsp;=<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Log</span>.(sf&nbsp;<span class="string">"conn&nbsp;%S&nbsp;closed"</span>&nbsp;(<span class="constructor">Cohttp</span>.<span class="constructor">Connection</span>.to_string&nbsp;conn_id)&nbsp;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@&nbsp;verbose);<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">in</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Cohttp_lwt_unix</span>.<span class="constructor">Server</span>.create&nbsp;~mode<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;<span class="constructor">Cohttp_lwt_unix</span>.<span class="constructor">Server</span>.callback&nbsp;=&nbsp;callback;&nbsp;conn_closed&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Cohttp_lwt_unix</span>.<span class="constructor">Server</span>.(<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;create&nbsp;~mode&nbsp;(make&nbsp;~callback:request_callback&nbsp;~conn_closed&nbsp;()))<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)<br>
 &nbsp;&nbsp;<span class="keyword">end</span><br>
 <br>

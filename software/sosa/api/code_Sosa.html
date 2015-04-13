@@ -187,6 +187,14 @@ module type BASIC_STRING = sig
   val fold: t -> init:'a -> f:('a -> character -> 'a) -> 'a
   (** The standard [fold] function, see [List.fold_left] for example. *)
 
+  val foldi: t -> init:'a -> f:(int -> 'a -> character -> 'a) -> 'a
+  (** Pass an accumulator over the string's characters and their ordinals,
+      starting with the first; left most. *)
+
+  val fold2_exn: t -> t -> init:'a -> f:('a -> character -> character -> 'a) -> 'a
+  (** The standard [fold2] function, see [List.fold_left2] for example. Fails on
+  [t]s of different length. *)
+
   val compare: t -> t -> int
   (** Comparison function (as expected by most common functors in the
       ecosystem). *)
@@ -229,17 +237,17 @@ module type BASIC_STRING = sig
   (** Like [chop_suffix_exn] but return [None] instead of throwing
       an exception. *)
 
-  val split_at: t -> int -> t * t
+  val split_at: t -> index:int -> t * t
   (** Return a tuple where the first string is a prefix of the specified length
       and the second is the rest. If index is [=< 0] then the first element is
       empty and the string is returned in the second element, similarly if the
       index is [>= length t] then the first element is [t] and the second is
       [empty]. *)
 
-  val take: t -> int -> t
+  val take: t -> index:int -> t
   (** Just the first part of split_at *)
 
-  val drop: t -> int -> t
+  val drop: t -> index:int -> t
   (** Just the second part of split_at *)
 
   val compare_substring: t * int * int -> t * int * int -> int
@@ -279,6 +287,9 @@ module type BASIC_STRING = sig
 
   val iter_reverse: t -> f:(character -> unit) -> unit
   (** Apply [f] on every character successively in reverse order. *)
+
+  val rev: t -> t
+  (** Reverse the string. **)
 
   val map: t -> f:(character -> character) -> t
   (** Make a new string by applying [f] to all characters of the
@@ -430,7 +441,7 @@ end
 
 open Printf
 
-(* Internal “Pervasives” module, tu be used in all the following
+(* Internal “Pervasives” module, to be used in all the following
    implementations. *)
 module Internal_pervasives = struct
   module List = ListLabels
@@ -871,24 +882,24 @@ module Make_split_at_index_functions (A:
       val sub_exn : t -> index:int -> length:int -> t
     end) = struct
 
-  let split_at t n =
+  let split_at t ~index =
     let l = A.length t in
-    if n < 0 then (A.empty, t)
-    else if n >= l then (t, A.empty)
-         else (A.sub_exn t ~index:0 ~length:n),
-              (A.sub_exn t ~index:n ~length:(l - n))
+    if index < 0 then (A.empty, t)
+    else if index >= l then (t, A.empty)
+         else (A.sub_exn t ~index:0 ~length:index),
+              (A.sub_exn t ~index:index ~length:(l - index))
 
-  let take t n =
+  let take t ~index =
     let l = A.length t in
-    if n < 0 then A.empty
-    else if n >= l then t
-         else A.sub_exn t ~index:0 ~length:n
+    if index < 0 then A.empty
+    else if index >= l then t
+         else A.sub_exn t ~index:0 ~length:index
 
-  let drop t n =
+  let drop t ~index =
     let l = A.length t in
-    if n < 0 then t
-    else if n >= l then A.empty
-         else (A.sub_exn t ~index:n ~length:(l - n))
+    if index < 0 then t
+    else if index >= l then A.empty
+         else (A.sub_exn t ~index:index ~length:(l - index))
 
 
   end
@@ -976,12 +987,32 @@ module Native_string : NATIVE_STRING = struct
 
   let concat ?(sep="") sl = concat ~sep sl
 
-  let fold s ~init ~f =
+  let fold t ~init ~f =
     let res = ref init in
-    for i = 0 to String.length s - 1 do
-      res := f !res s.[i];
+    for i = 0 to String.length t - 1 do
+      res := f !res t.[i];
     done;
     !res
+  
+  let foldi t ~init ~f =
+    let res = ref init in
+    for i = 0 to String.length t - 1 do
+      res := f i !res t.[i];
+    done;
+    !res
+
+  let fold2_exn t1 t2 ~init ~f =
+    let lgth1 = (length t1) in
+    let lgth2 = (length t2) in
+    match lgth1, lgth2 with
+    | 0, 0 -> init
+    | _, _ when lgth1 <> lgth2 -> failwith "fold2_exn"
+    | lgth1, lgth2 ->
+       let res = ref init in
+       for i = 0 to lgth1 - 1 do
+         res := f !res t1.[i] t2.[i];
+       done;
+       !res
 
   let sub_exn t ~index ~length =
     if length = 0 then empty else String.sub t index length
@@ -1029,6 +1060,18 @@ module Native_string : NATIVE_STRING = struct
     for i = length t -1 downto 0 do
       f (get_exn t i)
     done
+
+  let rev t =
+    let lgth = length t in
+    match lgth with
+    | 0 -> empty
+    | lgth ->
+       let res = make lgth (String.get t 0) in
+       for i = 0 to lgth - 1 do
+         String.set res i (String.get t (lgth - 1 - i))
+       done;
+       res
+
   let map t ~f = String.map t ~f
 
   let map2_exn t1 t2 ~f =
@@ -1311,7 +1354,13 @@ module List_of (Char: BASIC_CHARACTER) :
   let iter_reverse t ~f =
     List.iter (List.rev t) ~f
 
+  let rev t = List.rev t
+
   let fold t ~init ~f = List.fold_left t ~init ~f
+  let foldi t ~init ~f = 
+    snd (List.fold_left t ~init:(0,init)
+          ~f:(fun (i,a) c -> (i+1,f i a c)))
+  let fold2_exn t1 t2 ~init ~f = List.fold_left2 t1 t2 ~init ~f
   let map = Core_list_map.map
   let mapi = Core_list_map.mapi
   let map2_exn = Core_list_map.map2_exn
@@ -1434,14 +1483,14 @@ module List_of (Char: BASIC_CHARACTER) :
          in
          offset 0 ([],t)
 
-  let split_at t n =
-    let l,r = unrevSplit t n in
+  let split_at t ~index =
+    let l,r = unrevSplit t index in
     List.rev l, r
 
-  let take t n = fst (split_at t n)
+  let take t ~index = fst (split_at t index)
 
-  let drop t n =
-    let l,r = unrevSplit t n in
+  let drop t ~index =
+    let l,r = unrevSplit t index in
     r
 
 
@@ -1811,13 +1860,44 @@ module Of_mutable
     done;
     !x
 
+  let foldi t ~init ~f =
+    let x = ref init in
+    for i = 0 to length t - 1 do
+      x := f i !x (S.get t i)
+    done;
+    !x
+
+  let fold2_exn t1 t2 ~init ~f =
+    let lgth1 = (length t1) in
+    let lgth2 = (length t2) in
+    match lgth1, lgth2 with
+    | 0, 0 -> init
+    | _, _ when lgth1 <> lgth2 -> failwith "fold2_exn"
+    | lgth1, lgth2 ->
+       let res = ref init in
+       for i = 0 to lgth1 - 1 do
+         res := f !res (S.get t1 i) (S.get t2 i);
+       done;
+       !res
+
+  let rev t =
+    let lgth = length t in
+    match lgth with
+    | 0 -> empty
+    | lgth ->
+       let res = make lgth (S.get t 0) in
+       for i = 0 to lgth - 1 do
+         S.set res i (S.get t (lgth - 1 - i))
+       done;
+       res
+
   let map t ~f =
     let lgth = (length t) in
     if lgth = 0
     then empty
     else begin
       let res = make lgth (S.get t 0) in
-      for i = 1 to lgth - 1 do
+      for i = 0 to lgth - 1 do
         S.set res i (f (S.get t i))
       done;
       res
@@ -1829,7 +1909,7 @@ module Of_mutable
     then empty
     else begin
       let res = make lgth (S.get t 0) in
-      for i = 1 to lgth - 1 do
+      for i = 0 to lgth - 1 do
         S.set res i (f i (S.get t i))
       done;
       res
