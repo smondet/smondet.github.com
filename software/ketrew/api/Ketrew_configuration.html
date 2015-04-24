@@ -14,7 +14,6 @@
 <link title="Index of modules" rel=Appendix href="index_modules.html">
 <link title="Index of module types" rel=Appendix href="index_module_types.html">
 <link title="Ketrew" rel="Chapter" href="Ketrew.html">
-<link title="Ketrew_artifact" rel="Chapter" href="Ketrew_artifact.html">
 <link title="Ketrew_client" rel="Chapter" href="Ketrew_client.html">
 <link title="Ketrew_command_line" rel="Chapter" href="Ketrew_command_line.html">
 <link title="Ketrew_configuration" rel="Chapter" href="Ketrew_configuration.html">
@@ -23,12 +22,15 @@
 <link title="Ketrew_edsl" rel="Chapter" href="Ketrew_edsl.html">
 <link title="Ketrew_engine" rel="Chapter" href="Ketrew_engine.html">
 <link title="Ketrew_error" rel="Chapter" href="Ketrew_error.html">
+<link title="Ketrew_eval_condition" rel="Chapter" href="Ketrew_eval_condition.html">
 <link title="Ketrew_explorer" rel="Chapter" href="Ketrew_explorer.html">
 <link title="Ketrew_host" rel="Chapter" href="Ketrew_host.html">
+<link title="Ketrew_host_io" rel="Chapter" href="Ketrew_host_io.html">
 <link title="Ketrew_interaction" rel="Chapter" href="Ketrew_interaction.html">
 <link title="Ketrew_long_running" rel="Chapter" href="Ketrew_long_running.html">
 <link title="Ketrew_long_running_utilities" rel="Chapter" href="Ketrew_long_running_utilities.html">
 <link title="Ketrew_lsf" rel="Chapter" href="Ketrew_lsf.html">
+<link title="Ketrew_measurement" rel="Chapter" href="Ketrew_measurement.html">
 <link title="Ketrew_monitored_script" rel="Chapter" href="Ketrew_monitored_script.html">
 <link title="Ketrew_path" rel="Chapter" href="Ketrew_path.html">
 <link title="Ketrew_pbs" rel="Chapter" href="Ketrew_pbs.html">
@@ -38,6 +40,7 @@
 <link title="Ketrew_protocol" rel="Chapter" href="Ketrew_protocol.html">
 <link title="Ketrew_server" rel="Chapter" href="Ketrew_server.html">
 <link title="Ketrew_target" rel="Chapter" href="Ketrew_target.html">
+<link title="Ketrew_unix_io" rel="Chapter" href="Ketrew_unix_io.html">
 <link title="Ketrew_unix_process" rel="Chapter" href="Ketrew_unix_process.html">
 <link title="Ketrew_yarn" rel="Chapter" href="Ketrew_yarn.html"><title>Ketrew API : Ketrew_configuration</title>
 </head>
@@ -72,24 +75,35 @@ The 2 kinds of dynamically loaded “plugins” accepted by Ketrew:
 </div>
 
 
+<pre><span id="TYPEexplorer_defaults"><span class="keyword">type</span> <code class="type"></code>explorer_defaults</span> </pre>
+
+
+<pre><span id="VALdefault_explorer_defaults"><span class="keyword">val</span> <a href="code_VALKetrew_configuration.default_explorer_defaults.html">default_explorer_defaults</a></span> : <code class="type"><a href="Ketrew_configuration.html#TYPEexplorer_defaults">explorer_defaults</a></code></pre>
+<pre><span id="VALexplorer"><span class="keyword">val</span> <a href="code_VALKetrew_configuration.explorer.html">explorer</a></span> : <code class="type">?request_targets_ids:[ `All | `Younger_than of [ `Days of float ] ] -><br>       ?targets_per_page:int -><br>       ?targets_to_prefetch:int -> unit -> <a href="Ketrew_configuration.html#TYPEexplorer_defaults">explorer_defaults</a></code></pre>
 <pre><span id="TYPEui"><span class="keyword">type</span> <code class="type"></code>ui</span> </pre>
 
 
-<pre><span id="VALui"><span class="keyword">val</span> <a href="code_VALKetrew_configuration.ui.html">ui</a></span> : <code class="type">?with_color:bool -> unit -> <a href="Ketrew_configuration.html#TYPEui">ui</a></code></pre>
+<pre><span id="VALui"><span class="keyword">val</span> <a href="code_VALKetrew_configuration.ui.html">ui</a></span> : <code class="type">?with_color:bool -><br>       ?explorer:<a href="Ketrew_configuration.html#TYPEexplorer_defaults">explorer_defaults</a> -><br>       ?with_cbreak:bool -> unit -> <a href="Ketrew_configuration.html#TYPEui">ui</a></code></pre>
 <pre><span id="TYPEengine"><span class="keyword">type</span> <code class="type"></code>engine</span> </pre>
 
 
 <pre><span id="VALengine"><span class="keyword">val</span> <a href="code_VALKetrew_configuration.engine.html">engine</a></span> : <code class="type">?database_parameters:string -><br>       ?persistent_state_key:string -><br>       ?turn_unix_ssh_failure_into_target_failure:bool -><br>       ?host_timeout_upper_bound:float -> unit -> <a href="Ketrew_configuration.html#TYPEengine">engine</a></code></pre>
+<pre><span id="TYPEauthorized_tokens"><span class="keyword">type</span> <code class="type"></code>authorized_tokens</span> </pre>
+
+
+<pre><span id="VALauthorized_token"><span class="keyword">val</span> <a href="code_VALKetrew_configuration.authorized_token.html">authorized_token</a></span> : <code class="type">name:string -> string -> <a href="Ketrew_configuration.html#TYPEauthorized_tokens">authorized_tokens</a></code></pre>
+<pre><span id="VALauthorized_tokens_path"><span class="keyword">val</span> <a href="code_VALKetrew_configuration.authorized_tokens_path.html">authorized_tokens_path</a></span> : <code class="type">string -> <a href="Ketrew_configuration.html#TYPEauthorized_tokens">authorized_tokens</a></code></pre>
 <pre><span id="TYPEserver"><span class="keyword">type</span> <code class="type"></code>server</span> </pre>
 
 
-<pre><span id="VALserver"><span class="keyword">val</span> <a href="code_VALKetrew_configuration.server.html">server</a></span> : <code class="type">?ui:<a href="Ketrew_configuration.html#TYPEui">ui</a> -><br>       ?engine:<a href="Ketrew_configuration.html#TYPEengine">engine</a> -><br>       ?authorized_tokens_path:string -><br>       ?return_error_messages:bool -><br>       ?command_pipe:string -><br>       ?daemon:bool -><br>       ?log_path:string -><br>       [ `Tls of string * string * int ] -><br>       [> `Server of <a href="Ketrew_configuration.html#TYPEserver">server</a> ]</code></pre><div class="info ">
+<pre><span id="VALserver"><span class="keyword">val</span> <a href="code_VALKetrew_configuration.server.html">server</a></span> : <code class="type">?ui:<a href="Ketrew_configuration.html#TYPEui">ui</a> -><br>       ?engine:<a href="Ketrew_configuration.html#TYPEengine">engine</a> -><br>       ?authorized_tokens:<a href="Ketrew_configuration.html#TYPEauthorized_tokens">authorized_tokens</a> list -><br>       ?return_error_messages:bool -><br>       ?command_pipe:string -><br>       ?daemon:bool -><br>       ?log_path:string -><br>       [ `Tls of string * string * int ] -><br>       [> `Server of <a href="Ketrew_configuration.html#TYPEserver">server</a> ]</code></pre><div class="info ">
 Create a server configuration (to pass as optional argument to the
     <a href="Ketrew_configuration.html#VALcreate"><code class="code"><span class="constructor">Ketrew_configuration</span>.create</code></a> function).
 <p>
 <ul>
-<li><code class="code">authorized_tokens_path</code> is a path to a file similar to an SSH
-    <code class="code">authorized_keys</code> file.</li>
+<li><code class="code">authorized_tokens</code> is a list of either <code class="code">authorized_token ~name <span class="string">"value"</span></code> or
+    <code class="code">authorized_tokens_path <span class="string">"/path/to/file"</span></code> (i.e. a path to a file
+    similar to an SSH <code class="code">authorized_keys</code> file).</li>
 <li><code class="code">return_error_messages</code>: whether the server should return explicit error
     messages to clients (default <code class="code"><span class="keyword">false</span></code>).</li>
 <li><code class="code">command_pipe</code>: path to a named-piped for the server to listen to
@@ -130,10 +144,6 @@ Create a configuration, <code class="code">persistent_state_key</code> is the �
     the parameters.<br>
 </div>
 
-<pre><span id="VALdefault_configuration_path"><span class="keyword">val</span> <a href="code_VALKetrew_configuration.default_configuration_path.html">default_configuration_path</a></span> : <code class="type">string</code></pre><div class="info ">
-Default path to the configuration file.<br>
-</div>
-
 <pre><span id="VALdefault_database_path"><span class="keyword">val</span> <a href="code_VALKetrew_configuration.default_database_path.html">default_database_path</a></span> : <code class="type">string</code></pre><div class="info ">
 Default path to the database (used when generating custom configuration
     files).<br>
@@ -151,30 +161,6 @@ Get the “key” of the state values in the database.<br>
 Should we kill targets on ssh/unix errors.<br>
 </div>
 
-<pre><span id="VALparse"><span class="keyword">val</span> <a href="code_VALKetrew_configuration.parse.html">parse</a></span> : <code class="type">string -><br>       (<a href="Ketrew_configuration.html#TYPEt">t</a>, [> `Configuration of [> `Parsing of string ] ])<br>       Ketrew_pervasives.Result.t</code></pre><div class="info ">
-Parse the contents of a configuration file.<br>
-</div>
-<br>
-Apply options that have global impact.<br>
-
-<pre><span id="VALget_path"><span class="keyword">val</span> <a href="code_VALKetrew_configuration.get_path.html">get_path</a></span> : <code class="type">unit -> string</code></pre><div class="info ">
-Check environment variable KETREW_CONFIGURATION before returning
-    <code class="code">default_configuration_path</code>.<br>
-</div>
-
-<pre><span id="VALget_configuration"><span class="keyword">val</span> <a href="code_VALKetrew_configuration.get_configuration.html">get_configuration</a></span> : <code class="type">?and_apply:bool -><br>       ?override_configuration:<a href="Ketrew_configuration.html#TYPEt">t</a> -><br>       string -><br>       (<a href="Ketrew_configuration.html#TYPEt">t</a>,<br>        [> `Configuration of [> `Parsing of string ]<br>         | `Dyn_plugin of [> `Dynlink_error of Dynlink.error | `Findlib of exn ]<br>         | `Failure of string<br>         | `IO of [> `Read_file_exn of string * exn ] ])<br>       Ketrew_pervasives.Deferred_result.t</code></pre><div class="info ">
-The call <code class="code">get_configuration file</code> reads and parses the file <code class="code">f</code>, unless
-    <code class="code">override_configuration</code> is provided.
-    if <code class="code">and_apply</code> is <code class="code"><span class="keyword">true</span></code> (the default), then global settings are applied
-    and plugins are loaded.<br>
-</div>
-
-<pre><span id="VALget_configuration_for_daemon_exn"><span class="keyword">val</span> <a href="code_VALKetrew_configuration.get_configuration_for_daemon_exn.html">get_configuration_for_daemon_exn</a></span> : <code class="type">?override_configuration:<a href="Ketrew_configuration.html#TYPEt">t</a> -><br>       string -> [ `Daemonize_with of string option | `Do_not_daemonize ]</code></pre><div class="info ">
-Do like <a href="Ketrew_configuration.html#VALget_configuration"><code class="code"><span class="constructor">Ketrew_configuration</span>.get_configuration</code></a> but in a dirty Lwt-less way and
-    return only partial information: whether to daemonize or not (the <code class="code">string
-    option</code> is the potential log-file path).<br>
-</div>
-
 <pre><span id="VALplugins"><span class="keyword">val</span> <a href="code_VALKetrew_configuration.plugins.html">plugins</a></span> : <code class="type"><a href="Ketrew_configuration.html#TYPEt">t</a> -> <a href="Ketrew_configuration.html#TYPEplugin">plugin</a> list</code></pre><div class="info ">
 Get the configured list of plugins.<br>
 </div>
@@ -186,7 +172,7 @@ Get the configured list of plugins.<br>
 Get the potentiel server configuration.<br>
 </div>
 
-<pre><span id="VALauthorized_tokens_path"><span class="keyword">val</span> <a href="code_VALKetrew_configuration.authorized_tokens_path.html">authorized_tokens_path</a></span> : <code class="type"><a href="Ketrew_configuration.html#TYPEserver">server</a> -> string option</code></pre><div class="info ">
+<pre><span id="VALauthorized_tokens"><span class="keyword">val</span> <a href="code_VALKetrew_configuration.authorized_tokens.html">authorized_tokens</a></span> : <code class="type"><a href="Ketrew_configuration.html#TYPEserver">server</a> -><br>       [ `Inline of string * string | `Path of string ] list</code></pre><div class="info ">
 The path to the <code class="code">authorized_tokens</code> file.<br>
 </div>
 
@@ -216,4 +202,58 @@ Get a display-friendly list of configuration items.<br>
 
 <pre><span id="VALconnection"><span class="keyword">val</span> <a href="code_VALKetrew_configuration.connection.html">connection</a></span> : <code class="type"><a href="Ketrew_configuration.html#TYPEclient">client</a> -> string</code></pre>
 <pre><span id="VALtoken"><span class="keyword">val</span> <a href="code_VALKetrew_configuration.token.html">token</a></span> : <code class="type"><a href="Ketrew_configuration.html#TYPEclient">client</a> -> string</code></pre>
-<pre><span id="VALstandalone_of_server"><span class="keyword">val</span> <a href="code_VALKetrew_configuration.standalone_of_server.html">standalone_of_server</a></span> : <code class="type"><a href="Ketrew_configuration.html#TYPEserver">server</a> -> <a href="Ketrew_configuration.html#TYPEstandalone">standalone</a></code></pre></body></html>
+<pre><span id="VALstandalone_of_server"><span class="keyword">val</span> <a href="code_VALKetrew_configuration.standalone_of_server.html">standalone_of_server</a></span> : <code class="type"><a href="Ketrew_configuration.html#TYPEserver">server</a> -> <a href="Ketrew_configuration.html#TYPEstandalone">standalone</a></code></pre>
+<pre><span id="VALwith_color"><span class="keyword">val</span> <a href="code_VALKetrew_configuration.with_color.html">with_color</a></span> : <code class="type"><a href="Ketrew_configuration.html#TYPEt">t</a> -> bool</code></pre>
+<pre><span id="VALrequest_targets_ids"><span class="keyword">val</span> <a href="code_VALKetrew_configuration.request_targets_ids.html">request_targets_ids</a></span> : <code class="type"><a href="Ketrew_configuration.html#TYPEt">t</a> -> [ `All | `Younger_than of [ `Days of float ] ]</code></pre>
+<pre><span id="VALtargets_per_page"><span class="keyword">val</span> <a href="code_VALKetrew_configuration.targets_per_page.html">targets_per_page</a></span> : <code class="type"><a href="Ketrew_configuration.html#TYPEt">t</a> -> int</code></pre>
+<pre><span id="VALtargets_to_prefetch"><span class="keyword">val</span> <a href="code_VALKetrew_configuration.targets_to_prefetch.html">targets_to_prefetch</a></span> : <code class="type"><a href="Ketrew_configuration.html#TYPEt">t</a> -> int</code></pre>
+<pre><span id="VALuse_cbreak"><span class="keyword">val</span> <a href="code_VALKetrew_configuration.use_cbreak.html">use_cbreak</a></span> : <code class="type">unit -> bool</code></pre><div class="info ">
+See the documentation of <code class="code">with_cbreak</code>.<br>
+</div>
+
+<pre><span id="VALload_exn"><span class="keyword">val</span> <a href="code_VALKetrew_configuration.load_exn.html">load_exn</a></span> : <code class="type">?and_apply:bool -><br>       ?profile:string -><br>       [ `From_path of string<br>       | `Guess<br>       | `In_directory of string<br>       | `Override of <a href="Ketrew_configuration.html#TYPEt">t</a> ] -> <a href="Ketrew_configuration.html#TYPEt">t</a></code></pre><div class="info ">
+Load a configuration.
+<p>
+
+    If <code class="code">and_apply</code> is <code class="code"><span class="keyword">true</span></code> (the default), then global settings are applied
+    and plugins are loaded.
+<p>
+
+    When the configuration comes from a file, the argument <code class="code">profile</code>
+    allows to load a given profile. If <code class="code"><span class="constructor">None</span></code> then the loading process
+    will try the <code class="code"><span class="string">"KETREW_PROFILE"</span></code> environment variable, or use the name
+    <code class="code"><span class="string">"default"</span></code>.
+<p>
+
+    The last argument tells the functions how to load the configuration:
+<p>
+<ul>
+<li><code class="code"><span class="keywordsign">`</span><span class="constructor">Override</span> c</code>: use <code class="code">c</code> as configuration</li>
+<li><code class="code"><span class="keywordsign">`</span><span class="constructor">From_path</span> path</code>: parse the file <code class="code">path</code></li>
+<li><code class="code"><span class="keywordsign">`</span><span class="constructor">In_directory</span> root</code>: look for configuration files in the <code class="code">root</code>
+      directory</li>
+<li><code class="code"><span class="keywordsign">`</span><span class="constructor">Guess</span></code>: use environment variables and/or default values to
+      find the configuration file.</li>
+</ul>
+<br>
+</div>
+
+<pre><span id="TYPEprofile"><span class="keyword">type</span> <code class="type"></code>profile</span> </pre>
+<div class="info ">
+A profile is a name associated with a configuraton.<br>
+</div>
+
+
+<pre><span id="VALprofile"><span class="keyword">val</span> <a href="code_VALKetrew_configuration.profile.html">profile</a></span> : <code class="type">string -> <a href="Ketrew_configuration.html#TYPEt">t</a> -> <a href="Ketrew_configuration.html#TYPEprofile">profile</a></code></pre><div class="info ">
+Create a profile value.<br>
+</div>
+
+<pre><span id="VALoutput"><span class="keyword">val</span> <a href="code_VALKetrew_configuration.output.html">output</a></span> : <code class="type"><a href="Ketrew_configuration.html#TYPEprofile">profile</a> list -> unit</code></pre><div class="info ">
+Output a configuration file containing a list of profiles to <code class="code">stdout</code>.<br>
+</div>
+
+<pre><span id="VALto_json"><span class="keyword">val</span> <a href="code_VALKetrew_configuration.to_json.html">to_json</a></span> : <code class="type"><a href="Ketrew_configuration.html#TYPEprofile">profile</a> list -> string</code></pre><div class="info ">
+Create the contents of a configuration file containing a list of
+    profiles.<br>
+</div>
+</body></html>

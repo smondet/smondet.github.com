@@ -9,7 +9,6 @@
 <link title="Index of modules" rel=Appendix href="index_modules.html">
 <link title="Index of module types" rel=Appendix href="index_module_types.html">
 <link title="Ketrew" rel="Chapter" href="Ketrew.html">
-<link title="Ketrew_artifact" rel="Chapter" href="Ketrew_artifact.html">
 <link title="Ketrew_client" rel="Chapter" href="Ketrew_client.html">
 <link title="Ketrew_command_line" rel="Chapter" href="Ketrew_command_line.html">
 <link title="Ketrew_configuration" rel="Chapter" href="Ketrew_configuration.html">
@@ -18,12 +17,15 @@
 <link title="Ketrew_edsl" rel="Chapter" href="Ketrew_edsl.html">
 <link title="Ketrew_engine" rel="Chapter" href="Ketrew_engine.html">
 <link title="Ketrew_error" rel="Chapter" href="Ketrew_error.html">
+<link title="Ketrew_eval_condition" rel="Chapter" href="Ketrew_eval_condition.html">
 <link title="Ketrew_explorer" rel="Chapter" href="Ketrew_explorer.html">
 <link title="Ketrew_host" rel="Chapter" href="Ketrew_host.html">
+<link title="Ketrew_host_io" rel="Chapter" href="Ketrew_host_io.html">
 <link title="Ketrew_interaction" rel="Chapter" href="Ketrew_interaction.html">
 <link title="Ketrew_long_running" rel="Chapter" href="Ketrew_long_running.html">
 <link title="Ketrew_long_running_utilities" rel="Chapter" href="Ketrew_long_running_utilities.html">
 <link title="Ketrew_lsf" rel="Chapter" href="Ketrew_lsf.html">
+<link title="Ketrew_measurement" rel="Chapter" href="Ketrew_measurement.html">
 <link title="Ketrew_monitored_script" rel="Chapter" href="Ketrew_monitored_script.html">
 <link title="Ketrew_path" rel="Chapter" href="Ketrew_path.html">
 <link title="Ketrew_pbs" rel="Chapter" href="Ketrew_pbs.html">
@@ -33,6 +35,7 @@
 <link title="Ketrew_protocol" rel="Chapter" href="Ketrew_protocol.html">
 <link title="Ketrew_server" rel="Chapter" href="Ketrew_server.html">
 <link title="Ketrew_target" rel="Chapter" href="Ketrew_target.html">
+<link title="Ketrew_unix_io" rel="Chapter" href="Ketrew_unix_io.html">
 <link title="Ketrew_unix_process" rel="Chapter" href="Ketrew_unix_process.html">
 <link title="Ketrew_yarn" rel="Chapter" href="Ketrew_yarn.html"><title>Ketrew API : Ketrew_server</title>
 </head>
@@ -56,6 +59,7 @@
 <br>
 <span class="keyword">open</span>&nbsp;<span class="constructor">Ketrew_pervasives</span><br>
 <br>
+<span class="keyword">open</span>&nbsp;<span class="constructor">Ketrew_unix_io</span><br>
 <br>
 <br>
 </code><table><tr><td></td><td><span class="comment">(** A common error that simply means “invalid argument”. *)</span></td></tr></table><code class="code"><br>
@@ -71,9 +75,24 @@
 <span class="keyword">module</span>&nbsp;<span class="constructor">Authentication</span>&nbsp;=&nbsp;<span class="keyword">struct</span><br>
 <br>
 &nbsp;&nbsp;<span class="keyword">type</span>&nbsp;token&nbsp;=&nbsp;{name:&nbsp;string;&nbsp;value:&nbsp;string;&nbsp;comments&nbsp;:&nbsp;string&nbsp;list}<br>
-&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;t&nbsp;=&nbsp;{&nbsp;valid_tokens:&nbsp;token&nbsp;list&nbsp;}<br>
+&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;t&nbsp;=&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;valid_tokens:&nbsp;token&nbsp;list;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;authentication_input:&nbsp;[<span class="keywordsign">`</span><span class="constructor">Path</span>&nbsp;<span class="keyword">of</span>&nbsp;string&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Inline</span>&nbsp;<span class="keyword">of</span>&nbsp;(string&nbsp;*&nbsp;string)]&nbsp;list;<br>
+&nbsp;&nbsp;}<br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;log&nbsp;{valid_tokens;&nbsp;authentication_input}&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;paths&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">List</span>.filter_map&nbsp;authentication_input&nbsp;~f:(<span class="keyword">function</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Path</span>&nbsp;p&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Some</span>&nbsp;p&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Inline</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">None</span>)&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;inlines&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">List</span>.filter_map&nbsp;authentication_input&nbsp;~f:(<span class="keyword">function</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Path</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">None</span>&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Inline</span>&nbsp;(name,&nbsp;_)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Some</span>&nbsp;name)&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Log</span>.(<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;s&nbsp;<span class="string">"From&nbsp;paths:&nbsp;"</span>&nbsp;%&nbsp;<span class="constructor">OCaml</span>.list&nbsp;quote&nbsp;paths<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%&nbsp;s&nbsp;<span class="string">";&nbsp;inline:&nbsp;"</span>&nbsp;%&nbsp;<span class="constructor">OCaml</span>.list&nbsp;string&nbsp;inlines)<br>
 <br>
 &nbsp;&nbsp;<span class="keyword">let</span>&nbsp;load_file&nbsp;file&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Log</span>.(s&nbsp;<span class="string">"Authentication:&nbsp;loading&nbsp;"</span>&nbsp;%&nbsp;quote&nbsp;file&nbsp;@&nbsp;verbose);<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">IO</span>.read_file&nbsp;file<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;content&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;valid_tokens&nbsp;=<br>
@@ -96,7 +115,17 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">String</span>.concat&nbsp;~sep:<span class="string">"&nbsp;"</span>&nbsp;&nbsp;t.comments])<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;valid_tokens<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@&nbsp;verbose);<br>
-&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;{valid_tokens}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;valid_tokens<br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;load&nbsp;meta_tokens&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Deferred_list</span>.while_sequential&nbsp;meta_tokens&nbsp;~f:(<span class="keyword">function</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Path</span>&nbsp;p&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;load_file&nbsp;p<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Inline</span>&nbsp;(name,&nbsp;value)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;return&nbsp;[{name;&nbsp;value;&nbsp;comments&nbsp;=&nbsp;[]}])<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;|&nbsp;<span class="constructor">List</span>.concat<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;valid_tokens&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;{valid_tokens;&nbsp;authentication_input&nbsp;=&nbsp;meta_tokens}<br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;reload&nbsp;{authentication_input;&nbsp;_}&nbsp;=&nbsp;load&nbsp;authentication_input<br>
 <br>
 &nbsp;&nbsp;<span class="keyword">let</span>&nbsp;can&nbsp;t&nbsp;?token&nbsp;do_stuff&nbsp;=<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;token_is_valid&nbsp;tok&nbsp;=<br>
@@ -124,7 +153,6 @@
 &nbsp;&nbsp;<span class="keyword">type</span>&nbsp;t&nbsp;=&nbsp;{<br>
 &nbsp;&nbsp;&nbsp;&nbsp;state:&nbsp;<span class="constructor">Ketrew_engine</span>.t;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;server_configuration:&nbsp;<span class="constructor">Ketrew_configuration</span>.server;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;authentication_file:&nbsp;string;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">mutable</span>&nbsp;authentication:&nbsp;<span class="constructor">Authentication</span>.t;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;loop_traffic_light:&nbsp;<span class="constructor">Light</span>.t;<br>
 &nbsp;&nbsp;}<br>
@@ -135,10 +163,9 @@ can&nbsp;set&nbsp;it&nbsp;to&nbsp;`Green&nbsp;to&nbsp;wake-up&nbsp;it&nbsp;earli
 For&nbsp;example,&nbsp;after&nbsp;adding&nbsp;targets,&nbsp;the&nbsp;server&nbsp;will&nbsp;be&nbsp;woken-up&nbsp;to&nbsp;start&nbsp;running<br>
 the&nbsp;targets&nbsp;and&nbsp;not&nbsp;wait&nbsp;for&nbsp;the&nbsp;next&nbsp;“loop&nbsp;timeout.”<br>
 M*)</span><br>
-&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;create&nbsp;~state&nbsp;~authentication&nbsp;~authentication_file&nbsp;server_configuration&nbsp;=<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;create&nbsp;~state&nbsp;~authentication&nbsp;server_configuration&nbsp;=<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;loop_traffic_light&nbsp;=&nbsp;<span class="constructor">Light</span>.create&nbsp;()&nbsp;<span class="keyword">in</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;{state;&nbsp;authentication;&nbsp;authentication_file;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;server_configuration;&nbsp;loop_traffic_light;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{state;&nbsp;authentication;&nbsp;server_configuration;&nbsp;loop_traffic_light;}<br>
 <br>
 <br>
 <span class="keyword">end</span><br>
@@ -224,10 +251,7 @@ M*)</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;|&nbsp;<span class="constructor">List</span>.filter_opt<br>
 &nbsp;&nbsp;<span class="keyword">end</span><br>
 &nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;targets&nbsp;<span class="keywordsign">-&gt;</span><br>
-&nbsp;&nbsp;return&nbsp;(<span class="keywordsign">`</span><span class="constructor">Message</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="keywordsign">`</span><span class="constructor">Json</span>,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">`</span><span class="constructor">List_of_targets</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">List</span>.map&nbsp;~f:<span class="constructor">Ketrew_target</span>.to_serializable&nbsp;targets)))<br>
+&nbsp;&nbsp;return&nbsp;(<span class="keywordsign">`</span><span class="constructor">Message</span>&nbsp;(<span class="keywordsign">`</span><span class="constructor">Json</span>,&nbsp;<span class="keywordsign">`</span><span class="constructor">List_of_targets</span>&nbsp;targets))<br>
 <br>
 <span class="keyword">let</span>&nbsp;answer_get_target_available_queries&nbsp;~server_state&nbsp;target_id&nbsp;=<br>
 &nbsp;&nbsp;<span class="constructor">Ketrew_engine</span>.get_target&nbsp;server_state.state&nbsp;target_id<br>
@@ -257,8 +281,7 @@ M*)</span><br>
 <br>
 <span class="keyword">let</span>&nbsp;answer_add_targets&nbsp;~server_state&nbsp;~targets&nbsp;=<br>
 &nbsp;&nbsp;<span class="constructor">Log</span>.(s&nbsp;<span class="string">"Adding&nbsp;"</span>&nbsp;%&nbsp;i&nbsp;(<span class="constructor">List</span>.length&nbsp;targets)&nbsp;%&nbsp;s&nbsp;<span class="string">"&nbsp;targets"</span>&nbsp;@&nbsp;normal);<br>
-&nbsp;&nbsp;<span class="constructor">Ketrew_engine</span>.add_targets&nbsp;server_state.state<br>
-&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">List</span>.map&nbsp;~f:<span class="constructor">Ketrew_target</span>.of_serializable&nbsp;targets)<br>
+&nbsp;&nbsp;<span class="constructor">Ketrew_engine</span>.add_targets&nbsp;server_state.state&nbsp;targets<br>
 &nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;()&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;<span class="constructor">Light</span>.green&nbsp;server_state.loop_traffic_light;<br>
 &nbsp;&nbsp;return&nbsp;(<span class="keywordsign">`</span><span class="constructor">Message</span>&nbsp;(<span class="keywordsign">`</span><span class="constructor">Json</span>,&nbsp;<span class="keywordsign">`</span><span class="constructor">Ok</span>))<br>
@@ -340,8 +363,8 @@ M*)</span><br>
 <span class="keyword">let</span>&nbsp;die_command&nbsp;=&nbsp;<span class="string">"die"</span><br>
 <span class="keyword">let</span>&nbsp;reload_authorized_tokens&nbsp;=&nbsp;<span class="string">"reload-auth"</span><br>
 <br>
-<span class="keyword">let</span>&nbsp;reload_authentication_file&nbsp;~server_state&nbsp;=<br>
-&nbsp;&nbsp;<span class="constructor">Authentication</span>.load_file&nbsp;server_state.authentication_file<br>
+<span class="keyword">let</span>&nbsp;reload_authentication&nbsp;~server_state&nbsp;=<br>
+&nbsp;&nbsp;<span class="constructor">Authentication</span>.reload&nbsp;server_state.authentication<br>
 &nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;authentication&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;server_state.authentication&nbsp;&lt;-&nbsp;authentication;<br>
 &nbsp;&nbsp;return&nbsp;()<br>
@@ -382,12 +405,12 @@ M*)</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exit&nbsp;10<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;reload_auth&nbsp;<span class="keyword">when</span>&nbsp;reload_auth&nbsp;=&nbsp;reload_authorized_tokens&nbsp;<span class="keywordsign">-&gt;</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">begin</span>&nbsp;reload_authentication_file&nbsp;~server_state<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">begin</span>&nbsp;reload_authentication&nbsp;~server_state<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">function</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Ok</span>&nbsp;()&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;return&nbsp;()<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Error</span>&nbsp;e&nbsp;<span class="keywordsign">-&gt;</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Log</span>.(s&nbsp;<span class="string">"Could&nbsp;not&nbsp;reload&nbsp;"</span>&nbsp;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%&nbsp;quote&nbsp;server_state.authentication_file<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Log</span>.(s&nbsp;<span class="string">"Could&nbsp;not&nbsp;reload&nbsp;Authentication:"</span>&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%&nbsp;<span class="constructor">Authentication</span>.log&nbsp;server_state.authentication<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%&nbsp;s<span class="string">":&nbsp;"</span>&nbsp;%&nbsp;s&nbsp;(<span class="constructor">Ketrew_error</span>.to_string&nbsp;e)&nbsp;@&nbsp;error);<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;()<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
@@ -466,33 +489,12 @@ M*)</span><br>
 &nbsp;&nbsp;<span class="keyword">in</span><br>
 &nbsp;&nbsp;<span class="constructor">Lwt</span>.ignore_result&nbsp;(loop&nbsp;time_step)<br>
 <br>
-<br>
-<span class="keyword">let</span>&nbsp;start&nbsp;~configuration&nbsp;&nbsp;=<br>
-&nbsp;&nbsp;<span class="constructor">Log</span>.(s&nbsp;<span class="string">"Starting&nbsp;server!"</span>&nbsp;@&nbsp;very_verbose);<br>
-&nbsp;&nbsp;mandatory_for_starting<br>
-&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">Ketrew_configuration</span>.authorized_tokens_path&nbsp;configuration)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;~msg:<span class="string">"Authentication-less&nbsp;server&nbsp;not&nbsp;implemented"</span><br>
-&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;authentication_file&nbsp;<span class="keywordsign">-&gt;</span><br>
+<span class="keyword">let</span>&nbsp;start_listening_on_connections&nbsp;~server_state&nbsp;=<br>
 &nbsp;&nbsp;<span class="keyword">let</span>&nbsp;return_error_messages,&nbsp;how&nbsp;=<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Ketrew_configuration</span>.return_error_messages&nbsp;configuration,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Ketrew_configuration</span>.listen_to&nbsp;configuration&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Ketrew_configuration</span>.return_error_messages&nbsp;server_state.server_configuration,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Ketrew_configuration</span>.listen_to&nbsp;server_state.server_configuration&nbsp;<span class="keyword">in</span><br>
 &nbsp;&nbsp;<span class="keyword">begin</span>&nbsp;<span class="keyword">match</span>&nbsp;how&nbsp;<span class="keyword">with</span><br>
 &nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Tls</span>&nbsp;(certfile,&nbsp;keyfile,&nbsp;port)&nbsp;<span class="keywordsign">-&gt;</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Authentication</span>.load_file&nbsp;authentication_file<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;authentication&nbsp;<span class="keywordsign">-&gt;</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Ketrew_engine</span>.load&nbsp;(<span class="constructor">Ketrew_configuration</span>.server_engine&nbsp;configuration)&nbsp;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;engine&nbsp;<span class="keywordsign">-&gt;</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Log</span>.(s&nbsp;<span class="string">"Getting&nbsp;database"</span>&nbsp;@&nbsp;very_verbose);<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Ketrew_engine</span>.database&nbsp;engine<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Log</span>.(s&nbsp;<span class="string">"Got&nbsp;database"</span>&nbsp;@&nbsp;very_verbose);<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;server_state&nbsp;=<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Server_state</span>.create&nbsp;~authentication&nbsp;~state:engine<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;~authentication_file&nbsp;configuration<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">in</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;start_engine_loop&nbsp;~server_state;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;start_listening_on_command_pipe&nbsp;~server_state<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;()&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Deferred_result</span>.wrap_deferred<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;~on_exn:(<span class="keyword">function</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;e&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Start_server_error</span>&nbsp;(<span class="constructor">Printexc</span>.to_string&nbsp;e))<br>
@@ -612,4 +614,36 @@ M*)</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;&nbsp;<span class="keywordsign">`</span><span class="constructor">Error</span>&nbsp;(<span class="keywordsign">`</span><span class="constructor">Get_exn</span>&nbsp;other_exn)&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fail&nbsp;(<span class="keywordsign">`</span><span class="constructor">Server_status_error</span>&nbsp;(<span class="constructor">Printexc</span>.to_string&nbsp;other_exn))<br>
 &nbsp;&nbsp;<span class="keyword">end</span><br>
+<br>
+<br>
+<span class="keyword">let</span>&nbsp;start&nbsp;~configuration&nbsp;&nbsp;=<br>
+&nbsp;&nbsp;<span class="constructor">Log</span>.(s&nbsp;<span class="string">"Start-Server:&nbsp;Checking&nbsp;status"</span>&nbsp;@&nbsp;verbose);<br>
+&nbsp;&nbsp;<span class="keyword">begin</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;status&nbsp;~configuration<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">function</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Running</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;fail&nbsp;(<span class="keywordsign">`</span><span class="constructor">Start_server_error</span>&nbsp;<span class="string">"Server&nbsp;seems&nbsp;to&nbsp;be&nbsp;already&nbsp;running"</span>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Wrong_response</span>&nbsp;c&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fail&nbsp;(<span class="keywordsign">`</span><span class="constructor">Start_server_error</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(fmt&nbsp;<span class="string">"An&nbsp;unrecognized&nbsp;HTTPS&nbsp;Server&nbsp;seems&nbsp;to&nbsp;be&nbsp;already&nbsp;there;&nbsp;response:&nbsp;%s"</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">Cohttp</span>.<span class="constructor">Response</span>.sexp_of_t&nbsp;c&nbsp;|&gt;&nbsp;<span class="constructor">Sexplib</span>.<span class="constructor">Sexp</span>.to_string_hum)))<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Not_responding</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Log</span>.(s&nbsp;<span class="string">"Status&nbsp;answers&nbsp;`Not_responding`"</span>&nbsp;@&nbsp;verbose);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;()<br>
+&nbsp;&nbsp;<span class="keyword">end</span><br>
+&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;()&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;<span class="constructor">Log</span>.(s&nbsp;<span class="string">"Start-Server:&nbsp;Loading&nbsp;the&nbsp;Engine"</span>&nbsp;@&nbsp;verbose);<br>
+&nbsp;&nbsp;<span class="constructor">Ketrew_engine</span>.load&nbsp;(<span class="constructor">Ketrew_configuration</span>.server_engine&nbsp;configuration)&nbsp;<br>
+&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;engine&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;<span class="constructor">Log</span>.(s&nbsp;<span class="string">"Start-Server:&nbsp;Loading&nbsp;authentication&nbsp;config"</span>&nbsp;@&nbsp;verbose);<br>
+&nbsp;&nbsp;<span class="constructor">Authentication</span>.load&nbsp;(<span class="constructor">Ketrew_configuration</span>.authorized_tokens&nbsp;configuration)<br>
+&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;authentication&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;server_state&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Server_state</span>.create&nbsp;~authentication&nbsp;~state:engine&nbsp;configuration&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;<span class="constructor">Log</span>.(s&nbsp;<span class="string">"Start-Server:&nbsp;Starting&nbsp;the&nbsp;Engine&nbsp;loop"</span>&nbsp;@&nbsp;verbose);<br>
+&nbsp;&nbsp;start_engine_loop&nbsp;~server_state;<br>
+&nbsp;&nbsp;<span class="constructor">Log</span>.(s&nbsp;<span class="string">"Start-Server:&nbsp;Starting&nbsp;listening&nbsp;on&nbsp;command-pipe"</span>&nbsp;@&nbsp;verbose);<br>
+&nbsp;&nbsp;start_listening_on_command_pipe&nbsp;~server_state<br>
+&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;()&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;<span class="constructor">Log</span>.(s&nbsp;<span class="string">"Start-Server:&nbsp;Starting&nbsp;listening&nbsp;on&nbsp;connections"</span>&nbsp;@&nbsp;verbose);<br>
+&nbsp;&nbsp;start_listening_on_connections&nbsp;~server_state<br>
 </code></body></html>

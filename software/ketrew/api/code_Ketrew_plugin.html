@@ -9,7 +9,6 @@
 <link title="Index of modules" rel=Appendix href="index_modules.html">
 <link title="Index of module types" rel=Appendix href="index_module_types.html">
 <link title="Ketrew" rel="Chapter" href="Ketrew.html">
-<link title="Ketrew_artifact" rel="Chapter" href="Ketrew_artifact.html">
 <link title="Ketrew_client" rel="Chapter" href="Ketrew_client.html">
 <link title="Ketrew_command_line" rel="Chapter" href="Ketrew_command_line.html">
 <link title="Ketrew_configuration" rel="Chapter" href="Ketrew_configuration.html">
@@ -18,12 +17,15 @@
 <link title="Ketrew_edsl" rel="Chapter" href="Ketrew_edsl.html">
 <link title="Ketrew_engine" rel="Chapter" href="Ketrew_engine.html">
 <link title="Ketrew_error" rel="Chapter" href="Ketrew_error.html">
+<link title="Ketrew_eval_condition" rel="Chapter" href="Ketrew_eval_condition.html">
 <link title="Ketrew_explorer" rel="Chapter" href="Ketrew_explorer.html">
 <link title="Ketrew_host" rel="Chapter" href="Ketrew_host.html">
+<link title="Ketrew_host_io" rel="Chapter" href="Ketrew_host_io.html">
 <link title="Ketrew_interaction" rel="Chapter" href="Ketrew_interaction.html">
 <link title="Ketrew_long_running" rel="Chapter" href="Ketrew_long_running.html">
 <link title="Ketrew_long_running_utilities" rel="Chapter" href="Ketrew_long_running_utilities.html">
 <link title="Ketrew_lsf" rel="Chapter" href="Ketrew_lsf.html">
+<link title="Ketrew_measurement" rel="Chapter" href="Ketrew_measurement.html">
 <link title="Ketrew_monitored_script" rel="Chapter" href="Ketrew_monitored_script.html">
 <link title="Ketrew_path" rel="Chapter" href="Ketrew_path.html">
 <link title="Ketrew_pbs" rel="Chapter" href="Ketrew_pbs.html">
@@ -33,6 +35,7 @@
 <link title="Ketrew_protocol" rel="Chapter" href="Ketrew_protocol.html">
 <link title="Ketrew_server" rel="Chapter" href="Ketrew_server.html">
 <link title="Ketrew_target" rel="Chapter" href="Ketrew_target.html">
+<link title="Ketrew_unix_io" rel="Chapter" href="Ketrew_unix_io.html">
 <link title="Ketrew_unix_process" rel="Chapter" href="Ketrew_unix_process.html">
 <link title="Ketrew_yarn" rel="Chapter" href="Ketrew_yarn.html"><title>Ketrew API : Ketrew_plugin</title>
 </head>
@@ -54,6 +57,7 @@
 </code><table><tr><td></td><td><span class="comment">(**************************************************************************)</span></td></tr></table><code class="code"><br>
 <br>
 <span class="keyword">open</span>&nbsp;<span class="constructor">Ketrew_pervasives</span><br>
+<span class="keyword">open</span>&nbsp;<span class="constructor">Ketrew_unix_io</span><br>
 <br>
 <br>
 <span class="keyword">open</span>&nbsp;<span class="constructor">Ketrew_long_running</span><br>
@@ -71,12 +75,13 @@
 <span class="keyword">let</span>&nbsp;register_long_running_plugin&nbsp;~name&nbsp;m&nbsp;=<br>
 &nbsp;&nbsp;global_list_of_plugins&nbsp;:=&nbsp;(name,&nbsp;m)&nbsp;::&nbsp;!global_list_of_plugins<br>
 <br>
+<span class="keyword">let</span>&nbsp;dynlink_no_lwt_exn&nbsp;path&nbsp;=<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;adapted&nbsp;=&nbsp;<span class="constructor">Dynlink</span>.adapt_filename&nbsp;path&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;<span class="constructor">Log</span>.(s&nbsp;<span class="string">"Loading:&nbsp;"</span>&nbsp;%&nbsp;quote&nbsp;adapted&nbsp;@&nbsp;verbose);<br>
+&nbsp;&nbsp;<span class="constructor">Dynlink</span>.loadfile&nbsp;adapted<br>
+<br>
 <span class="keyword">let</span>&nbsp;dynlink&nbsp;path&nbsp;=<br>
-&nbsp;&nbsp;wrap_preemptively&nbsp;(<span class="keyword">fun</span>&nbsp;()&nbsp;<span class="keywordsign">-&gt;</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;adapted&nbsp;=&nbsp;<span class="constructor">Dynlink</span>.adapt_filename&nbsp;path&nbsp;<span class="keyword">in</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Log</span>.(s&nbsp;<span class="string">"Loading:&nbsp;"</span>&nbsp;%&nbsp;quote&nbsp;adapted&nbsp;@&nbsp;verbose);<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Dynlink</span>.loadfile&nbsp;adapted<br>
-&nbsp;&nbsp;&nbsp;&nbsp;)<br>
+&nbsp;&nbsp;wrap_preemptively&nbsp;(<span class="keyword">fun</span>&nbsp;()&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;dynlink_no_lwt_exn&nbsp;path)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;~on_exn:(<span class="keyword">function</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Dynlink</span>.<span class="constructor">Error</span>&nbsp;e&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Dyn_plugin</span>&nbsp;(<span class="keywordsign">`</span><span class="constructor">Dynlink_error</span>&nbsp;e)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;other&nbsp;<span class="keywordsign">-&gt;</span><br>
@@ -84,10 +89,27 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)<br>
 <br>
 <span class="keyword">let</span>&nbsp;ketrew_deep_ancestors&nbsp;()&nbsp;=<br>
-&nbsp;&nbsp;<span class="constructor">Lazy</span>.force&nbsp;(<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">lazy</span>&nbsp;(<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Findlib</span>.package_deep_ancestors&nbsp;[<span class="string">"native"</span>]&nbsp;<span class="constructor">Ketrew_metadata</span>.findlib_packages<br>
-&nbsp;&nbsp;&nbsp;&nbsp;))<br>
+&nbsp;&nbsp;<span class="constructor">Findlib</span>.package_deep_ancestors&nbsp;[<span class="string">"native"</span>]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">Lazy</span>.force&nbsp;<span class="constructor">Ketrew_metadata</span>.findlib_packages)<br>
+<br>
+<span class="keyword">let</span>&nbsp;files_to_load_from_package&nbsp;package&nbsp;=<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;predicates&nbsp;=&nbsp;[<span class="string">"native"</span>;&nbsp;<span class="string">"plugin"</span>;&nbsp;<span class="string">"mt"</span>]&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;deps&nbsp;=&nbsp;<span class="constructor">Findlib</span>.package_deep_ancestors&nbsp;predicates&nbsp;[package]&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;<span class="constructor">List</span>.concat_map&nbsp;deps&nbsp;~f:(<span class="keyword">fun</span>&nbsp;dep&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span>&nbsp;dep&nbsp;=&nbsp;<span class="string">"threads"</span>&nbsp;<span class="keywordsign">||</span>&nbsp;<span class="constructor">List</span>.mem&nbsp;dep&nbsp;~set:(ketrew_deep_ancestors&nbsp;())<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">then</span>&nbsp;[]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">else</span>&nbsp;(<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;base&nbsp;=&nbsp;<span class="constructor">Findlib</span>.package_directory&nbsp;dep&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;archives&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">try</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Findlib</span>.package_property&nbsp;predicates&nbsp;dep&nbsp;<span class="string">"archive"</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&gt;&nbsp;<span class="constructor">String</span>.split&nbsp;~on:(<span class="keywordsign">`</span><span class="constructor">Character</span>&nbsp;<span class="string">'&nbsp;'</span>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&gt;&nbsp;<span class="constructor">List</span>.filter&nbsp;~f:((&lt;&gt;)&nbsp;<span class="string">""</span>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&gt;&nbsp;<span class="constructor">List</span>.map&nbsp;~f:(<span class="constructor">Findlib</span>.resolve_path&nbsp;~base)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">with</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;&nbsp;[]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;archives<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;))<br>
 <br>
 <span class="keyword">let</span>&nbsp;load_plugins&nbsp;plugins_to_load&nbsp;=<br>
 &nbsp;&nbsp;wrap_preemptively&nbsp;<span class="constructor">Findlib</span>.init&nbsp;~on_exn:(<span class="keyword">fun</span>&nbsp;e&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Dyn_plugin</span>&nbsp;(<span class="keywordsign">`</span><span class="constructor">Findlib</span>&nbsp;e))<br>
@@ -95,25 +117,7 @@
 &nbsp;&nbsp;<span class="constructor">Deferred_list</span>.while_sequential&nbsp;plugins_to_load&nbsp;~f:(<span class="keyword">function</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Compiled</span>&nbsp;path&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;dynlink&nbsp;path<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">OCamlfind</span>&nbsp;package&nbsp;<span class="keywordsign">-&gt;</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;predicates&nbsp;=&nbsp;[<span class="string">"native"</span>;&nbsp;<span class="string">"plugin"</span>;&nbsp;<span class="string">"mt"</span>]&nbsp;<span class="keyword">in</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;deps&nbsp;=&nbsp;<span class="constructor">Findlib</span>.package_deep_ancestors&nbsp;predicates&nbsp;[package]&nbsp;<span class="keyword">in</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;to_load&nbsp;=<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">List</span>.concat_map&nbsp;deps&nbsp;~f:(<span class="keyword">fun</span>&nbsp;dep&nbsp;<span class="keywordsign">-&gt;</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span>&nbsp;<span class="constructor">List</span>.mem&nbsp;dep&nbsp;~set:(ketrew_deep_ancestors&nbsp;())<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">then</span>&nbsp;[]<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">else</span>&nbsp;(<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;base&nbsp;=&nbsp;<span class="constructor">Findlib</span>.package_directory&nbsp;dep&nbsp;<span class="keyword">in</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;archives&nbsp;=<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">try</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Findlib</span>.package_property&nbsp;predicates&nbsp;dep&nbsp;<span class="string">"archive"</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&gt;&nbsp;<span class="constructor">String</span>.split&nbsp;~on:(<span class="keywordsign">`</span><span class="constructor">Character</span>&nbsp;<span class="string">'&nbsp;'</span>)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&gt;&nbsp;<span class="constructor">List</span>.filter&nbsp;~f:((&lt;&gt;)&nbsp;<span class="string">""</span>)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&gt;&nbsp;<span class="constructor">List</span>.map&nbsp;~f:(<span class="constructor">Findlib</span>.resolve_path&nbsp;~base)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">with</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;&nbsp;[]<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">in</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;archives<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;))<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;to_load&nbsp;=&nbsp;files_to_load_from_package&nbsp;package&nbsp;<span class="keyword">in</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Log</span>.(s&nbsp;<span class="string">"Going&nbsp;to&nbsp;load:&nbsp;"</span>&nbsp;%&nbsp;<span class="constructor">OCaml</span>.list&nbsp;quote&nbsp;to_load&nbsp;@&nbsp;verbose);<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Deferred_list</span>.while_sequential&nbsp;to_load&nbsp;~f:dynlink<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;(_&nbsp;:&nbsp;unit&nbsp;list)&nbsp;<span class="keywordsign">-&gt;</span><br>
@@ -121,6 +125,15 @@
 &nbsp;&nbsp;&nbsp;&nbsp;)<br>
 &nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;(_&nbsp;:&nbsp;unit&nbsp;list)&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;return&nbsp;()<br>
+<br>
+<span class="keyword">let</span>&nbsp;load_plugins_no_lwt_exn&nbsp;plugins_to_load&nbsp;=<br>
+&nbsp;&nbsp;<span class="constructor">Findlib</span>.init&nbsp;();<br>
+&nbsp;&nbsp;<span class="constructor">List</span>.iter&nbsp;plugins_to_load&nbsp;~f:(<span class="keyword">function</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Compiled</span>&nbsp;path&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;dynlink_no_lwt_exn&nbsp;path<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">OCamlfind</span>&nbsp;package&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;to_load&nbsp;=&nbsp;files_to_load_from_package&nbsp;package&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Log</span>.(s&nbsp;<span class="string">"Going&nbsp;to&nbsp;load:&nbsp;"</span>&nbsp;%&nbsp;<span class="constructor">OCaml</span>.list&nbsp;quote&nbsp;to_load&nbsp;@&nbsp;verbose);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">List</span>.iter&nbsp;to_load&nbsp;~f:dynlink_no_lwt_exn)<br>
 <br>
 <span class="keyword">let</span>&nbsp;find_plugin&nbsp;plugin_name&nbsp;=<br>
 &nbsp;&nbsp;<span class="constructor">List</span>.find&nbsp;!global_list_of_plugins&nbsp;(<span class="keyword">fun</span>&nbsp;(n,&nbsp;_)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;n&nbsp;=&nbsp;plugin_name)<br>

@@ -10,7 +10,6 @@
 <link title="Index of modules" rel=Appendix href="index_modules.html">
 <link title="Index of module types" rel=Appendix href="index_module_types.html">
 <link title="Ketrew" rel="Chapter" href="Ketrew.html">
-<link title="Ketrew_artifact" rel="Chapter" href="Ketrew_artifact.html">
 <link title="Ketrew_client" rel="Chapter" href="Ketrew_client.html">
 <link title="Ketrew_command_line" rel="Chapter" href="Ketrew_command_line.html">
 <link title="Ketrew_configuration" rel="Chapter" href="Ketrew_configuration.html">
@@ -19,12 +18,15 @@
 <link title="Ketrew_edsl" rel="Chapter" href="Ketrew_edsl.html">
 <link title="Ketrew_engine" rel="Chapter" href="Ketrew_engine.html">
 <link title="Ketrew_error" rel="Chapter" href="Ketrew_error.html">
+<link title="Ketrew_eval_condition" rel="Chapter" href="Ketrew_eval_condition.html">
 <link title="Ketrew_explorer" rel="Chapter" href="Ketrew_explorer.html">
 <link title="Ketrew_host" rel="Chapter" href="Ketrew_host.html">
+<link title="Ketrew_host_io" rel="Chapter" href="Ketrew_host_io.html">
 <link title="Ketrew_interaction" rel="Chapter" href="Ketrew_interaction.html">
 <link title="Ketrew_long_running" rel="Chapter" href="Ketrew_long_running.html">
 <link title="Ketrew_long_running_utilities" rel="Chapter" href="Ketrew_long_running_utilities.html">
 <link title="Ketrew_lsf" rel="Chapter" href="Ketrew_lsf.html">
+<link title="Ketrew_measurement" rel="Chapter" href="Ketrew_measurement.html">
 <link title="Ketrew_monitored_script" rel="Chapter" href="Ketrew_monitored_script.html">
 <link title="Ketrew_path" rel="Chapter" href="Ketrew_path.html">
 <link title="Ketrew_pbs" rel="Chapter" href="Ketrew_pbs.html">
@@ -34,6 +36,7 @@
 <link title="Ketrew_protocol" rel="Chapter" href="Ketrew_protocol.html">
 <link title="Ketrew_server" rel="Chapter" href="Ketrew_server.html">
 <link title="Ketrew_target" rel="Chapter" href="Ketrew_target.html">
+<link title="Ketrew_unix_io" rel="Chapter" href="Ketrew_unix_io.html">
 <link title="Ketrew_unix_process" rel="Chapter" href="Ketrew_unix_process.html">
 <link title="Ketrew_yarn" rel="Chapter" href="Ketrew_yarn.html"><title>Ketrew API : Index of types</title>
 </head>
@@ -48,6 +51,8 @@
 A service can replay one of those cases; or an error.
 </div>
 </td></tr>
+<tr><td><a href="Ketrew_configuration.html#TYPEauthorized_tokens">authorized_tokens</a> [<a href="Ketrew_configuration.html">Ketrew_configuration</a>]</td>
+<td></td></tr>
 <tr><td align="left"><br>B</td></tr>
 <tr><td><a href="Ketrew_target.Automaton.html#TYPEbookkeeping">bookkeeping</a> [<a href="Ketrew_target.Automaton.html">Ketrew_target.Automaton</a>]</td>
 <td></td></tr>
@@ -58,11 +63,10 @@ A service can replay one of those cases; or an error.
 <td></td></tr>
 <tr><td align="left"><br>D</td></tr>
 <tr><td><a href="Ketrew_host.html#TYPEdefault_shell">default_shell</a> [<a href="Ketrew_host.html">Ketrew_host</a>]</td>
-<td><div class="info">
-Specification of the default shell of a Host.
-</div>
-</td></tr>
+<td></td></tr>
 <tr><td><a href="Ketrew_target.Automaton.html#TYPEdependencies_status">dependencies_status</a> [<a href="Ketrew_target.Automaton.html">Ketrew_target.Automaton</a>]</td>
+<td></td></tr>
+<tr><td><a href="Ketrew_yarn.html#TYPEdistributed_shell_parameters">distributed_shell_parameters</a> [<a href="Ketrew_yarn.html">Ketrew_yarn</a>]</td>
 <td></td></tr>
 <tr><td align="left"><br>E</td></tr>
 <tr><td><a href="Ketrew_engine.Target_graph.html#TYPEengine">engine</a> [<a href="Ketrew_engine.Target_graph.html">Ketrew_engine.Target_graph</a>]</td>
@@ -77,13 +81,15 @@ An alias for <a href="Ketrew_engine.Target_graph.html#TYPEt"><code class="code">
 The “imposed” error types for “long-running” plugins.
 </div>
 </td></tr>
-<tr><td><a href="Ketrew_host.Error.html#TYPEexecution">execution</a> [<a href="Ketrew_host.Error.html">Ketrew_host.Error</a>]</td>
+<tr><td><a href="Ketrew_host_io.Error.html#TYPEexecution">execution</a> [<a href="Ketrew_host_io.Error.html">Ketrew_host_io.Error</a>]</td>
+<td></td></tr>
+<tr><td><a href="Ketrew_configuration.html#TYPEexplorer_defaults">explorer_defaults</a> [<a href="Ketrew_configuration.html">Ketrew_configuration</a>]</td>
 <td></td></tr>
 <tr><td align="left"><br>F</td></tr>
 <tr><td><a href="Ketrew_target.Automaton.html#TYPEfailure_reason">failure_reason</a> [<a href="Ketrew_target.Automaton.html">Ketrew_target.Automaton</a>]</td>
 <td></td></tr>
 <tr><td align="left"><br>H</td></tr>
-<tr><td><a href="Ketrew_target.State.html#TYPEhistory">history</a> [<a href="Ketrew_target.State.html">Ketrew_target.State</a>]</td>
+<tr><td><a href="Ketrew_measurement.html#TYPEhttp_request">http_request</a> [<a href="Ketrew_measurement.html">Ketrew_measurement</a>]</td>
 <td></td></tr>
 <tr><td align="left"><br>I</td></tr>
 <tr><td><a href="Ketrew_target.html#TYPEid">id</a> [<a href="Ketrew_target.html">Ketrew_target</a>]</td>
@@ -97,6 +103,8 @@ The identifiers of targets.
 <tr><td><a href="Ketrew_target.Automaton.html#TYPElong_running_failure">long_running_failure</a> [<a href="Ketrew_target.Automaton.html">Ketrew_target.Automaton</a>]</td>
 <td></td></tr>
 <tr><td align="left"><br>M</td></tr>
+<tr><td><a href="Ketrew_measurement.html#TYPEmeasurement">measurement</a> [<a href="Ketrew_measurement.html">Ketrew_measurement</a>]</td>
+<td></td></tr>
 <tr><td><a href="Ketrew_interaction.html#TYPEmenu_item">menu_item</a> [<a href="Ketrew_interaction.html">Ketrew_interaction</a>]</td>
 <td><div class="info">
 The type of a menu item.
@@ -105,7 +113,7 @@ The type of a menu item.
 <tr><td><a href="Ketrew_configuration.html#TYPEmode">mode</a> [<a href="Ketrew_configuration.html">Ketrew_configuration</a>]</td>
 <td></td></tr>
 <tr><td align="left"><br>N</td></tr>
-<tr><td><a href="Ketrew_host.Error.html#TYPEnon_zero_execution">non_zero_execution</a> [<a href="Ketrew_host.Error.html">Ketrew_host.Error</a>]</td>
+<tr><td><a href="Ketrew_host_io.Error.html#TYPEnon_zero_execution">non_zero_execution</a> [<a href="Ketrew_host_io.Error.html">Ketrew_host_io.Error</a>]</td>
 <td></td></tr>
 <tr><td align="left"><br>P</td></tr>
 <tr><td><a href="Ketrew_configuration.html#TYPEplugin">plugin</a> [<a href="Ketrew_configuration.html">Ketrew_configuration</a>]</td>
@@ -117,14 +125,23 @@ The 2 kinds of dynamically loaded “plugins” accepted by Ketrew:
 <td></td></tr>
 <tr><td><a href="Ketrew_target.Automaton.html#TYPEprocess_status_check">process_status_check</a> [<a href="Ketrew_target.Automaton.html">Ketrew_target.Automaton</a>]</td>
 <td></td></tr>
+<tr><td><a href="Ketrew_configuration.html#TYPEprofile">profile</a> [<a href="Ketrew_configuration.html">Ketrew_configuration</a>]</td>
+<td><div class="info">
+A profile is a name associated with a configuraton.
+</div>
+</td></tr>
 <tr><td><a href="Ketrew_target.Automaton.html#TYPEprogress">progress</a> [<a href="Ketrew_target.Automaton.html">Ketrew_target.Automaton</a>]</td>
 <td></td></tr>
 <tr><td align="left"><br>R</td></tr>
+<tr><td><a href="Ketrew_measurement.html#TYPEresponse_log">response_log</a> [<a href="Ketrew_measurement.html">Ketrew_measurement</a>]</td>
+<td></td></tr>
 <tr><td><a href="Ketrew_long_running.LONG_RUNNING.html#TYPErun_parameters">run_parameters</a> [<a href="Ketrew_long_running.LONG_RUNNING.html">Ketrew_long_running.LONG_RUNNING</a>]</td>
 <td><div class="info">
 Hidden type kept serialized by the engine.
 </div>
 </td></tr>
+<tr><td><a href="Ketrew_daemonize.html#TYPErun_parameters">run_parameters</a> [<a href="Ketrew_daemonize.html">Ketrew_daemonize</a>]</td>
+<td></td></tr>
 <tr><td align="left"><br>S</td></tr>
 <tr><td><a href="Ketrew_configuration.html#TYPEserver">server</a> [<a href="Ketrew_configuration.html">Ketrew_configuration</a>]</td>
 <td></td></tr>
@@ -135,7 +152,7 @@ A service is something that replies an <code class="code">answer</code> on a <co
 </td></tr>
 <tr><td><a href="Ketrew_target.Automaton.html#TYPEseverity">severity</a> [<a href="Ketrew_target.Automaton.html">Ketrew_target.Automaton</a>]</td>
 <td></td></tr>
-<tr><td><a href="Ketrew_host.html#TYPEshell">shell</a> [<a href="Ketrew_host.html">Ketrew_host</a>]</td>
+<tr><td><a href="Ketrew_host_io.html#TYPEshell">shell</a> [<a href="Ketrew_host_io.html">Ketrew_host_io</a>]</td>
 <td><div class="info">
 A “shell” is a function that takes a command and returns, and
      execv-style string list; the default for each host
@@ -144,25 +161,8 @@ A “shell” is a function that takes a command and returns, and
 </td></tr>
 <tr><td><a href="Ketrew_configuration.html#TYPEstandalone">standalone</a> [<a href="Ketrew_configuration.html">Ketrew_configuration</a>]</td>
 <td></td></tr>
-<tr><td><a href="Ketrew_artifact.Volume.html#TYPEstructure">structure</a> [<a href="Ketrew_artifact.Volume.html">Ketrew_artifact.Volume</a>]</td>
-<td><div class="info">
-The structure of a volume defines the hierarchy of files relative to
-        a <code class="code">root</code> path, one constructs structures with <a href="Ketrew_artifact.Volume.html#VALfile"><code class="code"><span class="constructor">Ketrew_artifact</span>.<span class="constructor">Volume</span>.file</code></a> and <a href="Ketrew_artifact.Volume.html#VALdir"><code class="code"><span class="constructor">Ketrew_artifact</span>.<span class="constructor">Volume</span>.dir</code></a>:
-        <pre class="codepre"><code class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;src_dir_structure&nbsp;=<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dir&nbsp;<span class="string">"src"</span>&nbsp;[<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dir&nbsp;<span class="string">"lib"</span>&nbsp;[<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;file&nbsp;<span class="string">"ketrew.ml"</span>;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;file&nbsp;<span class="string">"ketrew_artifact.ml"</span>;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;file&nbsp;<span class="string">"ketrew_artifact.mli"</span>;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">(*&nbsp;...&nbsp;*)</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;];<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dir&nbsp;<span class="string">"test"</span>&nbsp;[<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;file&nbsp;<span class="string">"main.ml"</span>;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;];<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;]<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code></pre>
-</div>
-</td></tr>
+<tr><td><a href="Ketrew_target.Volume.html#TYPEstructure">structure</a> [<a href="Ketrew_target.Volume.html">Ketrew_target.Volume</a>]</td>
+<td></td></tr>
 <tr><td align="left"><br>T</td></tr>
 <tr><td><a href="Ketrew_unix_process.Exit_code.html#TYPEt">t</a> [<a href="Ketrew_unix_process.Exit_code.html">Ketrew_unix_process.Exit_code</a>]</td>
 <td></td></tr>
@@ -174,13 +174,20 @@ The structure of a volume defines the hierarchy of files relative to
 <td></td></tr>
 <tr><td><a href="Ketrew_protocol.Down_message.html#TYPEt">t</a> [<a href="Ketrew_protocol.Down_message.html">Ketrew_protocol.Down_message</a>]</td>
 <td></td></tr>
+<tr><td><a href="Ketrew_pervasives.Unique_id.html#TYPEt">t</a> [<a href="Ketrew_pervasives.Unique_id.html">Ketrew_pervasives.Unique_id</a>]</td>
+<td></td></tr>
+<tr><td><a href="Ketrew_pervasives.Time.html#TYPEt">t</a> [<a href="Ketrew_pervasives.Time.html">Ketrew_pervasives.Time</a>]</td>
+<td></td></tr>
+<tr><td><a href="Ketrew_pervasives.Json.Versioned.WITH_VERSIONED_SERIALIZATION.html#TYPEt">t</a> [<a href="Ketrew_pervasives.Json.Versioned.WITH_VERSIONED_SERIALIZATION.html">Ketrew_pervasives.Json.Versioned.WITH_VERSIONED_SERIALIZATION</a>]</td>
+<td></td></tr>
 <tr><td><a href="Ketrew_pervasives.Json.html#TYPEt">t</a> [<a href="Ketrew_pervasives.Json.html">Ketrew_pervasives.Json</a>]</td>
 <td></td></tr>
 <tr><td><a href="Ketrew_monitored_script.html#TYPEt">t</a> [<a href="Ketrew_monitored_script.html">Ketrew_monitored_script</a>]</td>
-<td><div class="info">
-The definition of a monitored script.
-</div>
-</td></tr>
+<td></td></tr>
+<tr><td><a href="Ketrew_measurement.Collection.html#TYPEt">t</a> [<a href="Ketrew_measurement.Collection.html">Ketrew_measurement.Collection</a>]</td>
+<td></td></tr>
+<tr><td><a href="Ketrew_measurement.Item.html#TYPEt">t</a> [<a href="Ketrew_measurement.Item.html">Ketrew_measurement.Item</a>]</td>
+<td></td></tr>
 <tr><td><a href="Ketrew_explorer.html#TYPEt">t</a> [<a href="Ketrew_explorer.html">Ketrew_explorer</a>]</td>
 <td></td></tr>
 <tr><td><a href="Ketrew_client.Http_client.html#TYPEt">t</a> [<a href="Ketrew_client.Http_client.html">Ketrew_client.Http_client</a>]</td>
@@ -236,44 +243,28 @@ An execution anti-condition; the condition defines when a target is
 Specification of how to build a target.
 </div>
 </td></tr>
+<tr><td><a href="Ketrew_target.Volume.html#TYPEt">t</a> [<a href="Ketrew_target.Volume.html">Ketrew_target.Volume</a>]</td>
+<td></td></tr>
 <tr><td><a href="Ketrew_target.Command.html#TYPEt">t</a> [<a href="Ketrew_target.Command.html">Ketrew_target.Command</a>]</td>
 <td><div class="info">
 The type of commands.
 </div>
 </td></tr>
 <tr><td><a href="Ketrew_target.html#TYPEt">t</a> [<a href="Ketrew_target.html">Ketrew_target</a>]</td>
-<td><div class="info">
-The thing holding targets.
-</div>
-</td></tr>
-<tr><td><a href="Ketrew_artifact.Volume.html#TYPEt">t</a> [<a href="Ketrew_artifact.Volume.html">Ketrew_artifact.Volume</a>]</td>
-<td><div class="info">
-The container of volumes.
-</div>
-</td></tr>
+<td></td></tr>
 <tr><td><a href="Ketrew_program.html#TYPEt">t</a> [<a href="Ketrew_program.html">Ketrew_program</a>]</td>
-<td><div class="info">
-A program.
-</div>
-</td></tr>
+<td></td></tr>
 <tr><td><a href="Ketrew_host.Ssh.html#TYPEt">t</a> [<a href="Ketrew_host.Ssh.html">Ketrew_host.Ssh</a>]</td>
-<td><div class="info">
-The type of SSH-based hosts.
-</div>
-</td></tr>
+<td></td></tr>
 <tr><td><a href="Ketrew_host.html#TYPEt">t</a> [<a href="Ketrew_host.html">Ketrew_host</a>]</td>
-<td><div class="info">
-Host container.
-</div>
-</td></tr>
+<td></td></tr>
 <tr><td><a href="Ketrew_path.html#TYPEt">t</a> [<a href="Ketrew_path.html">Ketrew_path</a>]</td>
-<td><div class="info">
-General type of file-paths.
-</div>
-</td></tr>
+<td></td></tr>
 <tr><td><a href="Ketrew_target.Stored_target.html#TYPEtarget">target</a> [<a href="Ketrew_target.Stored_target.html">Ketrew_target.Stored_target</a>]</td>
 <td></td></tr>
-<tr><td><a href="Ketrew_host.html#TYPEtimeout">timeout</a> [<a href="Ketrew_host.html">Ketrew_host</a>]</td>
+<tr><td><a href="Ketrew_protocol.Up_message.html#TYPEtarget_query">target_query</a> [<a href="Ketrew_protocol.Up_message.html">Ketrew_protocol.Up_message</a>]</td>
+<td></td></tr>
+<tr><td><a href="Ketrew_host_io.html#TYPEtimeout">timeout</a> [<a href="Ketrew_host_io.html">Ketrew_host_io</a>]</td>
 <td><div class="info">
 Timeout specification for execution functions below.
 </div>

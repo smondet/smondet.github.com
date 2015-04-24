@@ -1,5 +1,5 @@
 <!-- Creator     : groff version 1.19.2 -->
-<!-- CreationDate: Mon Apr 13 17:45:48 2015 -->
+<!-- CreationDate: Fri Apr 24 13:38:08 2015 -->
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -12,15 +12,16 @@
        pre   { margin-top: 0; margin-bottom: 0; }
        table { margin-top: 0; margin-bottom: 0; }
 </style>
-<title>KETREW-INIT</title>
+<title>KETREW-INITIALIZE</title>
 
 </head>
 <body>
 
-<h1 align=center>KETREW-INIT</h1>
+<h1 align=center>KETREW-INITIALIZE</h1>
 
 <a href="#NAME">NAME</a><br>
 <a href="#SYNOPSIS">SYNOPSIS</a><br>
+<a href="#ARGUMENTS">ARGUMENTS</a><br>
 <a href="#COMMON OPTIONS">COMMON OPTIONS</a><br>
 <a href="#OPTIONS">OPTIONS</a><br>
 
@@ -32,32 +33,33 @@
 
 
 
-<p style="margin-left:11%; margin-top: 1em">ketrew&minus;init
-&minus; Initialize the client (create config&minus;file)</p>
+<p style="margin-left:11%; margin-top: 1em">ketrew&minus;initialize
+&minus; Initialize the client (create a
+config&minus;file)</p>
 
 <a name="SYNOPSIS"></a>
 <h2>SYNOPSIS</h2>
 
 
 <p style="margin-left:11%; margin-top: 1em"><b>ketrew
-init</b> [<i>OPTION</i>]...</p>
+initialize</b> [<i>OPTION</i>]... <i>PATH</i></p>
+
+<a name="ARGUMENTS"></a>
+<h2>ARGUMENTS</h2>
+
+
+
+<p style="margin-left:11%; margin-top: 1em"><i>PATH</i></p>
+
+<p style="margin-left:17%;">Path of the generated config
+file</p>
 
 <a name="COMMON OPTIONS"></a>
 <h2>COMMON OPTIONS</h2>
 
 
 
-<p style="margin-left:11%; margin-top: 1em"><b>&minus;C</b>
-<i>FILE</i>,
-<b>&minus;&minus;configuration&minus;file</b>=<i>FILE</i>
-(absent=_test_env/configuration.ml)</p>
-
-<p style="margin-left:17%;">Use <i>FILE</i> as
-configuration file (can be overriden also with
-&lsquo;KETREW_CONFIGURATION&lsquo;).</p>
-
-
-<p style="margin-left:11%;"><b>&minus;&minus;help</b>[=<i>FMT</i>]
+<p style="margin-left:11%; margin-top: 1em"><b>&minus;&minus;help</b>[=<i>FMT</i>]
 (default=pager)</p>
 
 <p style="margin-left:17%;">Show this help in format
@@ -78,6 +80,13 @@ configuration file (can be overriden also with
 
 <p style="margin-left:17%;">Use <i>FILE</i> as
 database.</p>
+
+
+<p style="margin-left:11%;"><b>&minus;&minus;debug&minus;level</b>=<i>INT</i>
+(absent=1)</p>
+
+<p style="margin-left:17%;">Set the debug&minus;level
+<i>INT</i>.</p>
 <hr>
 </body>
 </html>

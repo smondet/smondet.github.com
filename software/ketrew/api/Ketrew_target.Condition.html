@@ -14,7 +14,6 @@
 <link title="Index of modules" rel=Appendix href="index_modules.html">
 <link title="Index of module types" rel=Appendix href="index_module_types.html">
 <link title="Ketrew" rel="Chapter" href="Ketrew.html">
-<link title="Ketrew_artifact" rel="Chapter" href="Ketrew_artifact.html">
 <link title="Ketrew_client" rel="Chapter" href="Ketrew_client.html">
 <link title="Ketrew_command_line" rel="Chapter" href="Ketrew_command_line.html">
 <link title="Ketrew_configuration" rel="Chapter" href="Ketrew_configuration.html">
@@ -23,12 +22,15 @@
 <link title="Ketrew_edsl" rel="Chapter" href="Ketrew_edsl.html">
 <link title="Ketrew_engine" rel="Chapter" href="Ketrew_engine.html">
 <link title="Ketrew_error" rel="Chapter" href="Ketrew_error.html">
+<link title="Ketrew_eval_condition" rel="Chapter" href="Ketrew_eval_condition.html">
 <link title="Ketrew_explorer" rel="Chapter" href="Ketrew_explorer.html">
 <link title="Ketrew_host" rel="Chapter" href="Ketrew_host.html">
+<link title="Ketrew_host_io" rel="Chapter" href="Ketrew_host_io.html">
 <link title="Ketrew_interaction" rel="Chapter" href="Ketrew_interaction.html">
 <link title="Ketrew_long_running" rel="Chapter" href="Ketrew_long_running.html">
 <link title="Ketrew_long_running_utilities" rel="Chapter" href="Ketrew_long_running_utilities.html">
 <link title="Ketrew_lsf" rel="Chapter" href="Ketrew_lsf.html">
+<link title="Ketrew_measurement" rel="Chapter" href="Ketrew_measurement.html">
 <link title="Ketrew_monitored_script" rel="Chapter" href="Ketrew_monitored_script.html">
 <link title="Ketrew_path" rel="Chapter" href="Ketrew_path.html">
 <link title="Ketrew_pbs" rel="Chapter" href="Ketrew_pbs.html">
@@ -38,6 +40,7 @@
 <link title="Ketrew_protocol" rel="Chapter" href="Ketrew_protocol.html">
 <link title="Ketrew_server" rel="Chapter" href="Ketrew_server.html">
 <link title="Ketrew_target" rel="Chapter" href="Ketrew_target.html">
+<link title="Ketrew_unix_io" rel="Chapter" href="Ketrew_unix_io.html">
 <link title="Ketrew_unix_process" rel="Chapter" href="Ketrew_unix_process.html">
 <link title="Ketrew_yarn" rel="Chapter" href="Ketrew_yarn.html"><title>Ketrew API : Ketrew_target.Condition</title>
 </head>
@@ -50,7 +53,7 @@
 
 <pre><span class="keyword">module</span> Condition: <code class="code"><span class="keyword">sig</span></code> <a href="Ketrew_target.Condition.html">..</a> <code class="code"><span class="keyword">end</span></code></pre><hr width="100%">
 
-<pre><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = <code class="type">[ `And of t list<br>       | `Command_returns of <a href="Ketrew_target.Command.html#TYPEt">Ketrew_target.Command.t</a> * int<br>       | `Never<br>       | `Satisfied<br>       | `Volume_exists of <a href="Ketrew_artifact.Volume.html#TYPEt">Ketrew_artifact.Volume.t</a><br>       | `Volume_size_bigger_than of <a href="Ketrew_artifact.Volume.html#TYPEt">Ketrew_artifact.Volume.t</a> * int ]</code> </pre>
+<pre><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = <code class="type">[ `And of t list<br>       | `Command_returns of <a href="Ketrew_target.Command.html#TYPEt">Ketrew_target.Command.t</a> * int<br>       | `Never<br>       | `Satisfied<br>       | `Volume_exists of <a href="Ketrew_target.Volume.html#TYPEt">Ketrew_target.Volume.t</a><br>       | `Volume_size_bigger_than of <a href="Ketrew_target.Volume.html#TYPEt">Ketrew_target.Volume.t</a> * int ]</code> </pre>
 <div class="info ">
 An execution anti-condition; the condition defines when a target is
     ready and therefore should be run if the condition is  met: <ul>
@@ -69,5 +72,4 @@ An execution anti-condition; the condition defines when a target is
 
 
 <pre><span id="VALlog"><span class="keyword">val</span> <a href="code_VALKetrew_target.Condition.log.html">log</a></span> : <code class="type"><a href="Ketrew_target.Condition.html#TYPEt">t</a> -> Ketrew_pervasives.Log.t</code></pre>
-<pre><span id="VALto_string_hum"><span class="keyword">val</span> <a href="code_VALKetrew_target.Condition.to_string_hum.html">to_string_hum</a></span> : <code class="type"><a href="Ketrew_target.Condition.html#TYPEt">t</a> -> string</code></pre>
-<pre><span id="VALeval"><span class="keyword">val</span> <a href="code_VALKetrew_target.Condition.eval.html">eval</a></span> : <code class="type"><a href="Ketrew_target.Condition.html#TYPEt">t</a> -><br>       (bool,<br>        [> `Host of<br>             [> `Execution of<br>                  < host : string; message : string; stderr : string option;<br>                    stdout : string option ><br>              | `Non_zero of string * int<br>              | `Ssh_failure of<br>                  [> `Wrong_log of string<br>                   | `Wrong_status of <a href="Ketrew_unix_process.Exit_code.html#TYPEt">Ketrew_unix_process.Exit_code.t</a> ] *<br>                  string<br>              | `System of [> `Sleep of float ] * [> `Exn of exn ]<br>              | `Timeout of float<br>              | `Unix_exec of string ]<br>             <a href="Ketrew_host.Error.html#TYPEexecution">Ketrew_host.Error.execution</a><br>         | `Volume of [> `No_size of Ketrew_pervasives.Log.t ] ])<br>       Ketrew_pervasives.Deferred_result.t</code></pre></body></html>
+<pre><span id="VALto_string_hum"><span class="keyword">val</span> <a href="code_VALKetrew_target.Condition.to_string_hum.html">to_string_hum</a></span> : <code class="type"><a href="Ketrew_target.Condition.html#TYPEt">t</a> -> string</code></pre></body></html>

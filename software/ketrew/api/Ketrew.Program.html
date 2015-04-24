@@ -5,7 +5,7 @@
 <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
 <link rel="Start" href="index.html">
 <link rel="previous" href="Ketrew.Host.html">
-<link rel="next" href="Ketrew.Artifact.html">
+<link rel="next" href="Ketrew.Target.html">
 <link rel="Up" href="Ketrew.html">
 <link title="Index of types" rel=Appendix href="index_types.html">
 <link title="Index of values" rel=Appendix href="index_values.html">
@@ -14,7 +14,6 @@
 <link title="Index of modules" rel=Appendix href="index_modules.html">
 <link title="Index of module types" rel=Appendix href="index_module_types.html">
 <link title="Ketrew" rel="Chapter" href="Ketrew.html">
-<link title="Ketrew_artifact" rel="Chapter" href="Ketrew_artifact.html">
 <link title="Ketrew_client" rel="Chapter" href="Ketrew_client.html">
 <link title="Ketrew_command_line" rel="Chapter" href="Ketrew_command_line.html">
 <link title="Ketrew_configuration" rel="Chapter" href="Ketrew_configuration.html">
@@ -23,12 +22,15 @@
 <link title="Ketrew_edsl" rel="Chapter" href="Ketrew_edsl.html">
 <link title="Ketrew_engine" rel="Chapter" href="Ketrew_engine.html">
 <link title="Ketrew_error" rel="Chapter" href="Ketrew_error.html">
+<link title="Ketrew_eval_condition" rel="Chapter" href="Ketrew_eval_condition.html">
 <link title="Ketrew_explorer" rel="Chapter" href="Ketrew_explorer.html">
 <link title="Ketrew_host" rel="Chapter" href="Ketrew_host.html">
+<link title="Ketrew_host_io" rel="Chapter" href="Ketrew_host_io.html">
 <link title="Ketrew_interaction" rel="Chapter" href="Ketrew_interaction.html">
 <link title="Ketrew_long_running" rel="Chapter" href="Ketrew_long_running.html">
 <link title="Ketrew_long_running_utilities" rel="Chapter" href="Ketrew_long_running_utilities.html">
 <link title="Ketrew_lsf" rel="Chapter" href="Ketrew_lsf.html">
+<link title="Ketrew_measurement" rel="Chapter" href="Ketrew_measurement.html">
 <link title="Ketrew_monitored_script" rel="Chapter" href="Ketrew_monitored_script.html">
 <link title="Ketrew_path" rel="Chapter" href="Ketrew_path.html">
 <link title="Ketrew_pbs" rel="Chapter" href="Ketrew_pbs.html">
@@ -38,23 +40,26 @@
 <link title="Ketrew_protocol" rel="Chapter" href="Ketrew_protocol.html">
 <link title="Ketrew_server" rel="Chapter" href="Ketrew_server.html">
 <link title="Ketrew_target" rel="Chapter" href="Ketrew_target.html">
+<link title="Ketrew_unix_io" rel="Chapter" href="Ketrew_unix_io.html">
 <link title="Ketrew_unix_process" rel="Chapter" href="Ketrew_unix_process.html">
 <link title="Ketrew_yarn" rel="Chapter" href="Ketrew_yarn.html"><title>Ketrew API : Ketrew.Program</title>
 </head>
 <body>
 <div class="navbar"><a class="pre" href="Ketrew.Host.html" title="Ketrew.Host">Previous</a>
 &nbsp;<a class="up" href="Ketrew.html" title="Ketrew">Up</a>
-&nbsp;<a class="post" href="Ketrew.Artifact.html" title="Ketrew.Artifact">Next</a>
+&nbsp;<a class="post" href="Ketrew.Target.html" title="Ketrew.Target">Next</a>
 </div>
 <h1>Module <a href="type_Ketrew.Program.html">Ketrew.Program</a> (<a href="code_Ketrew.Program.html">.ml</a>)</h1>
 
 <pre><span class="keyword">module</span> Program: <code class="type"><a href="Ketrew_program.html">Ketrew_program</a></code></pre><hr width="100%">
 
-<pre><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = <code class="type">Ketrew_gen_base_v0.Program.t</code> </pre>
-<div class="info ">
+<pre><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = <code class="type">[ `And of t list | `Exec of string list | `Shell_command of string ]</code> </pre>
+
+
+<pre><span id="VALto_yojson"><span class="keyword">val</span> <a href="code_VALKetrew_program.to_yojson.html">to_yojson</a></span> : <code class="type"><a href="Ketrew_program.html#TYPEt">t</a> -> Yojson.Safe.json</code></pre>
+<pre><span id="VALof_yojson"><span class="keyword">val</span> <a href="code_VALKetrew_program.of_yojson.html">of_yojson</a></span> : <code class="type">Yojson.Safe.json -> [ `Error of string | `Ok of <a href="Ketrew_program.html#TYPEt">t</a> ]</code></pre><div class="info ">
 A program.<br>
 </div>
-
 
 <pre><span id="VALto_shell_commands"><span class="keyword">val</span> <a href="code_VALKetrew_program.to_shell_commands.html">to_shell_commands</a></span> : <code class="type"><a href="Ketrew_program.html#TYPEt">t</a> -> string list</code></pre><div class="info ">
 Convert a program to a list of shell commands.<br>

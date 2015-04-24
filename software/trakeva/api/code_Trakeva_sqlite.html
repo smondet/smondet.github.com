@@ -8,8 +8,8 @@
 <link title="Index of modules" rel=Appendix href="index_modules.html">
 <link title="Index of module types" rel=Appendix href="index_module_types.html">
 <link title="Main" rel="Chapter" href="Main.html">
-<link title="Trakeva_git_commands" rel="Chapter" href="Trakeva_git_commands.html">
-<link title="Trakeva_interface" rel="Chapter" href="Trakeva_interface.html">
+<link title="Trakeva" rel="Chapter" href="Trakeva.html">
+<link title="Trakeva_cache" rel="Chapter" href="Trakeva_cache.html">
 <link title="Trakeva_sqlite" rel="Chapter" href="Trakeva_sqlite.html"><title>Trakeva API : Trakeva_sqlite</title>
 </head>
 <body>
@@ -40,6 +40,7 @@
 &nbsp;&nbsp;&nbsp;&nbsp;<br>
 <span class="keyword">type</span>&nbsp;t&nbsp;=&nbsp;{<br>
 &nbsp;&nbsp;handle:&nbsp;<span class="constructor">Sqlite3</span>.db;<br>
+&nbsp;&nbsp;action_mutex:&nbsp;<span class="constructor">Lwt_mutex</span>.t;<br>
 }<br>
 <br>
 <span class="keyword">let</span>&nbsp;in_posix_thread&nbsp;~on_exn&nbsp;f&nbsp;=<br>
@@ -48,13 +49,22 @@
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">try</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Ok</span>&nbsp;(f&nbsp;())<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">with</span>&nbsp;e&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;on_exn&nbsp;e)&nbsp;()<br>
 <br>
-<span class="keyword">let</span>&nbsp;escape_blob&nbsp;=&nbsp;<span class="constructor">Filename</span>.quote<br>
+<span class="keyword">let</span>&nbsp;escape_blob&nbsp;s&nbsp;=&nbsp;<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;b&nbsp;=&nbsp;<span class="constructor">Buffer</span>.create&nbsp;(<span class="constructor">String</span>.length&nbsp;s&nbsp;+&nbsp;4)&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;<span class="constructor">Buffer</span>.add_char&nbsp;b&nbsp;<span class="string">'\''</span>;<br>
+&nbsp;&nbsp;<span class="constructor">String</span>.iter&nbsp;s&nbsp;~f:(<span class="keyword">function</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="string">'\''</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Buffer</span>.add_string&nbsp;b&nbsp;<span class="string">"''"</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;other&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Buffer</span>.add_char&nbsp;b&nbsp;other<br>
+&nbsp;&nbsp;&nbsp;&nbsp;);<br>
+&nbsp;&nbsp;<span class="constructor">Buffer</span>.add_char&nbsp;b&nbsp;<span class="string">'\''</span>;<br>
+&nbsp;&nbsp;<span class="constructor">Buffer</span>.contents&nbsp;b<br>
+<br>
 <br>
 <span class="keyword">let</span>&nbsp;default_table&nbsp;=&nbsp;<span class="string">"trakeva_default_table"</span><br>
 <br>
 <span class="comment">(*&nbsp;https://www.sqlite.org/lang_createtable.html&nbsp;*)</span><br>
 <span class="keyword">let</span>&nbsp;create_table&nbsp;t&nbsp;=<br>
-&nbsp;&nbsp;sprintf&nbsp;<span class="string">"CREATE&nbsp;TABLE&nbsp;IF&nbsp;NOT&nbsp;EXISTS&nbsp;%s&nbsp;(collection&nbsp;BLOB,&nbsp;key&nbsp;BLOB&nbsp;PRIMARY&nbsp;KEY,&nbsp;value&nbsp;BLOB)"</span>&nbsp;t<br>
+&nbsp;&nbsp;sprintf&nbsp;<span class="string">"CREATE&nbsp;TABLE&nbsp;IF&nbsp;NOT&nbsp;EXISTS&nbsp;%s&nbsp;(collection&nbsp;BLOB,&nbsp;key&nbsp;BLOB,&nbsp;value&nbsp;BLOB,&nbsp;PRIMARY&nbsp;KEY(collection,&nbsp;key)&nbsp;ON&nbsp;CONFLICT&nbsp;REPLACE)"</span>&nbsp;t<br>
 <br>
 <span class="keyword">let</span>&nbsp;option_equals&nbsp;=<br>
 &nbsp;&nbsp;<span class="keyword">function</span><br>
@@ -67,8 +77,12 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(option_equals&nbsp;collection)<br>
 <br>
 <span class="keyword">let</span>&nbsp;get_all_statement&nbsp;table&nbsp;collection&nbsp;=<br>
-&nbsp;&nbsp;sprintf&nbsp;<span class="string">"SELECT&nbsp;value&nbsp;FROM&nbsp;%s&nbsp;WHERE&nbsp;collection&nbsp;%s"</span>&nbsp;table<br>
+&nbsp;&nbsp;sprintf&nbsp;<span class="string">"SELECT&nbsp;key&nbsp;FROM&nbsp;%s&nbsp;WHERE&nbsp;collection&nbsp;%s&nbsp;ORDER&nbsp;BY&nbsp;key"</span>&nbsp;table<br>
 &nbsp;&nbsp;&nbsp;&nbsp;(option_equals&nbsp;collection)<br>
+<br>
+<span class="keyword">let</span>&nbsp;keys_statement&nbsp;table&nbsp;collection&nbsp;=<br>
+&nbsp;&nbsp;sprintf&nbsp;<span class="string">"SELECT&nbsp;DISTINCT&nbsp;key&nbsp;FROM&nbsp;%s&nbsp;WHERE&nbsp;collection&nbsp;%s"</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;table&nbsp;(option_equals&nbsp;collection)<br>
 <br>
 <span class="comment">(*<br>
 https://www.sqlite.org/lang_insert.html<br>
@@ -98,12 +112,14 @@ https://www.sqlite.org/lang_insert.html<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;_&nbsp;=&nbsp;<span class="constructor">Sqlite3</span>.finalize&nbsp;prep&nbsp;<span class="keyword">in</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;raise&nbsp;e)<br>
 <br>
-<span class="keyword">let</span>&nbsp;is_ok_or_done_exn&nbsp;(rc:&nbsp;<span class="constructor">Sqlite3</span>.<span class="constructor">Rc</span>.t)&nbsp;=<br>
+<span class="keyword">let</span>&nbsp;is_ok_or_done_exn&nbsp;handle&nbsp;(rc:&nbsp;<span class="constructor">Sqlite3</span>.<span class="constructor">Rc</span>.t)&nbsp;=<br>
 &nbsp;&nbsp;<span class="keyword">let</span>&nbsp;<span class="keyword">open</span>&nbsp;<span class="constructor">Sqlite3</span>.<span class="constructor">Rc</span>&nbsp;<span class="keyword">in</span><br>
 &nbsp;&nbsp;<span class="keyword">match</span>&nbsp;rc&nbsp;<span class="keyword">with</span><br>
 &nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">OK</span>&nbsp;&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;()<br>
 &nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">DONE</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;()<br>
-&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;failwith&nbsp;(sprintf&nbsp;<span class="string">"not&nbsp;ok/done:&nbsp;%s"</span>&nbsp;(<span class="constructor">Sqlite3</span>.<span class="constructor">Rc</span>.to_string&nbsp;rc))<br>
+&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;failwith&nbsp;(sprintf&nbsp;<span class="string">"not&nbsp;ok/done:&nbsp;%s&nbsp;(global&nbsp;error:&nbsp;%s)"</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">Sqlite3</span>.<span class="constructor">Rc</span>.to_string&nbsp;rc)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">Sqlite3</span>.errmsg&nbsp;handle))<br>
 <br>
 <span class="keyword">let</span>&nbsp;get_row_exn&nbsp;prep&nbsp;=<br>
 &nbsp;&nbsp;<span class="keyword">match</span>&nbsp;<span class="constructor">Sqlite3</span>.step&nbsp;prep&nbsp;<span class="keyword">with</span><br>
@@ -113,7 +129,7 @@ https://www.sqlite.org/lang_insert.html<br>
 <br>
 <span class="keyword">let</span>&nbsp;exec_unit_exn&nbsp;handle&nbsp;statement&nbsp;=<br>
 &nbsp;&nbsp;with_executed_statement&nbsp;handle&nbsp;statement&nbsp;(<span class="keyword">fun</span>&nbsp;prep&nbsp;<span class="keywordsign">-&gt;</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Sqlite3</span>.step&nbsp;prep&nbsp;|&gt;&nbsp;is_ok_or_done_exn)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Sqlite3</span>.step&nbsp;prep&nbsp;|&gt;&nbsp;is_ok_or_done_exn&nbsp;handle)<br>
 <br>
 <span class="keyword">let</span>&nbsp;string_option_data_exn&nbsp;data&nbsp;=<br>
 &nbsp;&nbsp;<span class="keyword">let</span>&nbsp;<span class="keyword">open</span>&nbsp;<span class="constructor">Sqlite3</span>.<span class="constructor">Data</span>&nbsp;<span class="keyword">in</span><br>
@@ -151,6 +167,7 @@ https://www.sqlite.org/lang_insert.html<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">try</span>&nbsp;<span class="keyword">if</span>&nbsp;<span class="constructor">Sys</span>.getenv&nbsp;<span class="string">"TRAKEVA_SQLITE_DEBUG"</span>&nbsp;=&nbsp;<span class="string">"true"</span>&nbsp;<span class="keyword">then</span>&nbsp;debug&nbsp;:=&nbsp;<span class="keyword">true</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">with</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;()<br>
 &nbsp;&nbsp;<span class="keyword">end</span>;<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;action_mutex&nbsp;=&nbsp;<span class="constructor">Lwt_mutex</span>.create&nbsp;()&nbsp;<span class="keyword">in</span><br>
 &nbsp;&nbsp;in_posix_thread&nbsp;~on_exn&nbsp;(<span class="keyword">fun</span>&nbsp;()&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span>&nbsp;!debug&nbsp;<span class="keyword">then</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dbg&nbsp;<span class="string">"openning:&nbsp;%S"</span>&nbsp;path;<br>
@@ -159,7 +176,7 @@ https://www.sqlite.org/lang_insert.html<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;https://www.sqlite.org/sharedcache.html&nbsp;*)</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;handle&nbsp;=&nbsp;<span class="constructor">Sqlite3</span>.db_open&nbsp;~mutex:<span class="keywordsign">`</span><span class="constructor">FULL</span>&nbsp;~cache:<span class="keywordsign">`</span><span class="constructor">PRIVATE</span>&nbsp;path&nbsp;<span class="keyword">in</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exec_unit_exn&nbsp;handle&nbsp;(create_table&nbsp;default_table);<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{handle}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{handle;&nbsp;action_mutex}<br>
 &nbsp;&nbsp;&nbsp;&nbsp;)<br>
 <br>
 <span class="keyword">let</span>&nbsp;close&nbsp;{handle}&nbsp;=<br>
@@ -178,7 +195,7 @@ https://www.sqlite.org/lang_insert.html<br>
 &nbsp;&nbsp;&nbsp;&nbsp;loop&nbsp;5<br>
 &nbsp;&nbsp;<span class="keyword">end</span><br>
 <br>
-<span class="keyword">open</span>&nbsp;<span class="constructor">Trakeva_interface</span><br>
+<span class="keyword">open</span>&nbsp;<span class="constructor">Trakeva</span><br>
 <br>
 <span class="keyword">let</span>&nbsp;get&nbsp;?collection&nbsp;t&nbsp;~key&nbsp;=<br>
 &nbsp;&nbsp;<span class="keyword">let</span>&nbsp;statement&nbsp;=&nbsp;get_statement&nbsp;default_table&nbsp;collection&nbsp;key&nbsp;<span class="keyword">in</span><br>
@@ -195,6 +212,43 @@ https://www.sqlite.org/lang_insert.html<br>
 &nbsp;&nbsp;in_posix_thread&nbsp;~on_exn&nbsp;(<span class="keyword">fun</span>&nbsp;()&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exec_list_exn&nbsp;t.handle&nbsp;statement<br>
 &nbsp;&nbsp;&nbsp;&nbsp;)<br>
+<br>
+<span class="keyword">let</span>&nbsp;iterator&nbsp;t&nbsp;~collection&nbsp;=<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;keys_statement&nbsp;=&nbsp;keys_statement&nbsp;default_table&nbsp;(<span class="constructor">Some</span>&nbsp;collection)&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;error_loc&nbsp;=&nbsp;<span class="keywordsign">`</span><span class="constructor">Iter</span>&nbsp;collection&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;on_exn&nbsp;e&nbsp;=&nbsp;<span class="keywordsign">`</span><span class="constructor">Error</span>&nbsp;(<span class="keywordsign">`</span><span class="constructor">Database</span>&nbsp;(error_loc&nbsp;,&nbsp;<span class="constructor">Printexc</span>.to_string&nbsp;e))&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;state&nbsp;=&nbsp;ref&nbsp;<span class="constructor">None</span>&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;<span class="keyword">rec</span>&nbsp;next_exn&nbsp;prep&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span>&nbsp;!debug&nbsp;<span class="keyword">then</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dbg&nbsp;<span class="string">"exec:&nbsp;%S\n&nbsp;&nbsp;&nbsp;&nbsp;→&nbsp;counts:&nbsp;%d,&nbsp;%d"</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;keys_statement&nbsp;(<span class="constructor">Sqlite3</span>.column_count&nbsp;prep)&nbsp;(<span class="constructor">Sqlite3</span>.data_count&nbsp;prep);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">try</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;row,&nbsp;more_to_come&nbsp;&nbsp;=&nbsp;get_row_exn&nbsp;prep&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">begin</span>&nbsp;<span class="keyword">match</span>&nbsp;string_option_data_exn&nbsp;row&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Some</span>&nbsp;one_key&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Some</span>&nbsp;one_key<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">None</span>&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;_&nbsp;=&nbsp;<span class="constructor">Sqlite3</span>.finalize&nbsp;prep&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">None</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">with</span>&nbsp;e&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;_&nbsp;=&nbsp;<span class="constructor">Sqlite3</span>.finalize&nbsp;prep&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;raise&nbsp;e<br>
+&nbsp;&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;<span class="keyword">begin</span>&nbsp;<span class="keyword">fun</span>&nbsp;()&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;in_posix_thread&nbsp;~on_exn&nbsp;(<span class="keyword">fun</span>&nbsp;()&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">match</span>&nbsp;!state&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">None</span>&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;prep&nbsp;=&nbsp;<span class="constructor">Sqlite3</span>.prepare&nbsp;t.handle&nbsp;keys_statement&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">begin</span>&nbsp;<span class="keyword">match</span>&nbsp;<span class="constructor">Sqlite3</span>.prepare_tail&nbsp;prep&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">None</span>&nbsp;&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;state&nbsp;:=&nbsp;<span class="constructor">Some</span>&nbsp;prep;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Some</span>&nbsp;p&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;state&nbsp;:=&nbsp;<span class="constructor">Some</span>&nbsp;p;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;next_exn&nbsp;prep<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Some</span>&nbsp;prep&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;next_exn&nbsp;prep<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)<br>
+&nbsp;&nbsp;<span class="keyword">end</span><br>
+<br>
 <br>
 <span class="keyword">let</span>&nbsp;act&nbsp;t&nbsp;~(action:&nbsp;<span class="constructor">Action</span>.t)&nbsp;=<br>
 &nbsp;&nbsp;<span class="keyword">let</span>&nbsp;<span class="keyword">rec</span>&nbsp;transact&nbsp;(action:&nbsp;<span class="constructor">Action</span>.t)&nbsp;=<br>
@@ -216,15 +270,17 @@ https://www.sqlite.org/lang_insert.html<br>
 &nbsp;&nbsp;<span class="keyword">in</span><br>
 &nbsp;&nbsp;<span class="keyword">let</span>&nbsp;error_loc&nbsp;=&nbsp;<span class="keywordsign">`</span><span class="constructor">Act</span>&nbsp;action&nbsp;<span class="keyword">in</span><br>
 &nbsp;&nbsp;<span class="keyword">let</span>&nbsp;on_exn&nbsp;e&nbsp;=&nbsp;<span class="keywordsign">`</span><span class="constructor">Error</span>&nbsp;(<span class="keywordsign">`</span><span class="constructor">Database</span>&nbsp;(error_loc&nbsp;,&nbsp;<span class="constructor">Printexc</span>.to_string&nbsp;e))&nbsp;<span class="keyword">in</span><br>
-&nbsp;&nbsp;in_posix_thread&nbsp;~on_exn&nbsp;<span class="keyword">begin</span>&nbsp;<span class="keyword">fun</span>&nbsp;()&nbsp;<span class="keywordsign">-&gt;</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;exec_unit_exn&nbsp;t.handle&nbsp;<span class="string">"BEGIN&nbsp;TRANSACTION"</span>;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">begin</span>&nbsp;<span class="keyword">match</span>&nbsp;transact&nbsp;action&nbsp;<span class="keyword">with</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keyword">false</span>&nbsp;<span class="keywordsign">-&gt;</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exec_unit_exn&nbsp;t.handle&nbsp;<span class="string">"ROLLBACK"</span>;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">`</span><span class="constructor">Not_done</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keyword">true</span>&nbsp;<span class="keywordsign">-&gt;</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exec_unit_exn&nbsp;t.handle&nbsp;<span class="string">"COMMIT"</span>;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">`</span><span class="constructor">Done</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
-&nbsp;&nbsp;<span class="keyword">end</span><br>
+&nbsp;&nbsp;<span class="constructor">Lwt_mutex</span>.with_lock&nbsp;t.action_mutex&nbsp;(<span class="keyword">fun</span>&nbsp;()&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;in_posix_thread&nbsp;~on_exn&nbsp;<span class="keyword">begin</span>&nbsp;<span class="keyword">fun</span>&nbsp;()&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exec_unit_exn&nbsp;t.handle&nbsp;<span class="string">"BEGIN&nbsp;TRANSACTION"</span>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">begin</span>&nbsp;<span class="keyword">match</span>&nbsp;transact&nbsp;action&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keyword">false</span>&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exec_unit_exn&nbsp;t.handle&nbsp;<span class="string">"ROLLBACK"</span>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">`</span><span class="constructor">Not_done</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keyword">true</span>&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exec_unit_exn&nbsp;t.handle&nbsp;<span class="string">"COMMIT"</span>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">`</span><span class="constructor">Done</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;)<br>
 </code></body></html>

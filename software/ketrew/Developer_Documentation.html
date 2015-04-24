@@ -16,7 +16,7 @@
 </li><li><a href='#Coverage'>Coverage</a>
 </li></ul>
 </li><li><a href='#HowtoRelease'>How to Release</a>
-</li></ul><h2>Menu</h2><ul><li><a href='index.html'>Home</a></li><li><a href='Alternative_CLI_Application.html'>Alternative CLI Application</a></li><li><a href='Developer_Documentation.html'>Developer Documentation</a></li><li><a href='Glossary.html'>Glossary</a></li><li><a href='Long-Running_Plugins.html'>Long-Running Plugins</a></li><li><a href='Server_Commands.html'>Server Commands</a></li><li><a href='The_Configuration_File.html'>The Configuration File</a></li><li><a href='The_HTTP_API.html'>The HTTP API</a></li><li><a href='Workflow_Examples.html'>Workflow Examples</a></li><li><a href='dummy_plugin.html'>Plugin Example</a></li><li><a href='dummy_plugin_user.html'>Plugin-Usage Example</a></li><li><a href='integration.html'>Integration Test</a></li><li><a href='main.html'>Main Test</a></li><li><a href='preconfigured_main.html'>Preconfigured Main Example</a></li><li><a href='./api/index.html'>API Documentation</a></li><li>Documentation for <a href='./doc.0.0.0/index.html'>version 0.0.0</a></li><li>Documentation for <a href='./json_config/index.html'>“Full-PPX” branch</a></li><li>Repository <a href='https://github.com/hammerlab/ketrew'>at Github</a></li><li>Up: <a href='../index.html'>Software Projects</a></li></ul></div><div class="col-md-9"><h1 id="DevelopmentDocumentation">Development Documentation</h1>
+</li></ul><h2>Menu</h2><ul><li><a href='index.html'>Home</a></li><li><a href='Alternative_CLI_Application.html'>Alternative CLI Application</a></li><li><a href='Developer_Documentation.html'>Developer Documentation</a></li><li><a href='Glossary.html'>Glossary</a></li><li><a href='Long-Running_Plugins.html'>Long-Running Plugins</a></li><li><a href='Server_Commands.html'>Server Commands</a></li><li><a href='The_Configuration_File.html'>The Configuration File</a></li><li><a href='The_HTTP_API.html'>The HTTP API</a></li><li><a href='Workflow_Examples.html'>Workflow Examples</a></li><li><a href='dummy_plugin.html'>Plugin Example</a></li><li><a href='dummy_plugin_user.html'>Plugin-Usage Example</a></li><li><a href='integration.html'>Integration Test</a></li><li><a href='main.html'>Main Test</a></li><li><a href='preconfigured_main.html'>Preconfigured Main Example</a></li><li><a href='./api/index.html'>API Documentation</a></li><li>Documentation for <a href='./doc.0.0.0/index.html'>version 0.0.0</a></li><li>Repository <a href='https://github.com/hammerlab/ketrew'>at Github</a></li><li>Up: <a href='../index.html'>Software Projects</a></li></ul></div><div class="col-md-9"><h1 id="DevelopmentDocumentation">Development Documentation</h1>
 
 <h2 id="Build">Build</h2>
 
@@ -26,7 +26,8 @@
 <ul><li><code>nonstd</code>: nano-library providing a portable extract of <code>Core_kernel</code></li><li><code>pvem</code>: error monad</li><li><code>docout</code>: logging with <code>smart-print</code></li><li><code>sosa</code>:  String module/functor</li><li><code>pvem_lwt_unix</code>: <code>Lwt_unix</code> wrapped in a <code>Pvem.t</code> (error monad) with more
 precise error types.</li><li><code>uri</code>:
 parse <a href='http://www.ietf.org/rfc/rfc3986.txt'>RFC-3986</a>-compliant URIs
-(<code>uri</code> itself depends on <code>camlp4</code>).</li><li><code>cmdliner</code>: command line parsing</li><li><code>yojson</code>: JSON parsing/printing</li><li><code>atd2cconv</code>: definition of serialization formats (used with <code>Yojson</code>).</li><li><code>toml</code>: config-file parsing</li><li><code>cohttp.lwt</code>, <code>ssl</code>, and <code>conduit</code>: HTTP server and client</li><li><code>findlib</code> + <code>dynlink</code>: dynamic loading of plugins </li><li><code>trakeva</code> with the <code>sqlite</code> backend</li></ul>
+(<code>uri</code> itself depends on <code>camlp4</code>).</li><li><code>cmdliner</code>: command line parsing</li><li><code>ppx_blob</code>, <code>ppx_deriving_yojson</code>, <code>ppx_deriving</code>, <code>yojson</code>: JSON
+ parsing/printing and other code generation</li><li><code>cohttp.lwt</code>, <code>ssl</code>, and <code>conduit</code>: HTTP server and client</li><li><code>findlib</code> + <code>dynlink</code>: dynamic loading of plugins </li><li><code>trakeva</code> with the <code>sqlite</code> backend</li></ul>
 
 <p>and uses the <code>oasis</code> as a build system.</p>
 <p>At runtime, Ketrew may use an <code>ssh</code> client (tested only with OpenSSH; but SSH
@@ -34,8 +35,7 @@ calls are quite configurable).</p>
 <h3 id="Build_1">Build</h3>
 
 <p>Then you may setup and build everything:</p>
-<pre><code> make gen       # Generates the code of the `ketrew_data` library
- make configure # Generate the `_oasis`, call `oasis` and `configure`
+<pre><code> make configure # Generate the `_oasis`, call `oasis` and `configure`
  make           # The actual compilation of the library</code></pre><h3 id="Install">Install</h3>
 
 <p>Ketrew is installed by Oasis:</p>
@@ -86,15 +86,13 @@ commands <code>prepare</code>, <code>go</code>, and <code>clean-up</code> separa
 use:</p>
 <pre><code>make test-env</code></pre><pre class='goodresult'><code class='goodresult'>Using package lwt.react as findlin-plugin
 Creating cert-key pair: _test_env/test-cert.pem, _test_env/test-key.pem
-Creating _test_env/standalone-config-file.toml
-Creating _test_env/server-config-file.toml
-Creating _test_env/client-config-file.toml
+Creating _test_env/configuration.ml
 Creating _test_env/test-authorized-tokens
 Creating _test_env/env.env</code></pre>
 
 <p>The command creates the directory <code>_test_env/</code> with a preconfigured
 test-environment (a self-signed SSL certificate/key pair,
-client/server/standalone configuration files, an “authorization-tokens”
+client/server/standalone configuration file, an “authorization-tokens”
 configuration, … which all work together harmoniously).</p>
 <p>Sourcing <code>_test_env/env.env</code> will give a few aliases to run the tests.
 Aliases which start with <code>ks</code> mean “with a <em>standalone-mode</em> configuration file;”
@@ -103,7 +101,9 @@ those which start with <code>kd</code> are in <em>client-server</em> mode (<code
  <a href='integration.html'>integration</a> test in standalone and client modes.</li><li><code>ksplugin_user</code>, and <code>kdplugin_user</code>: the mini-workflow
  <a href='dummy_plugin_user.html'>using the plugin</a>.</li></ul>
 
-<h3 id="Coverage">Coverage</h3><p>To generate coverage reports <code>make configure EN=&quot;--enable-coverage&quot;</code> then
+<h3 id="Coverage">Coverage</h3>
+
+<p>To generate coverage reports <code>make configure EN=&quot;--enable-coverage&quot;</code> then
 <code>make</code> will build instrumented versions of the executibles that will generate
 <code>bisect*.out</code> files when run. <code>make report</code> will take the  latest such file
 and generate an html file in <code>_report_dir/index.html</code>. <code>make clean_reports</code>

@@ -4,7 +4,7 @@
 <link rel="stylesheet" href="style.css" type="text/css">
 <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
 <link rel="Start" href="index.html">
-<link rel="next" href="Trakeva_git_commands.html">
+<link rel="next" href="Trakeva.html">
 <link rel="Up" href="index.html">
 <link title="Index of types" rel=Appendix href="index_types.html">
 <link title="Index of exceptions" rel=Appendix href="index_exceptions.html">
@@ -12,13 +12,13 @@
 <link title="Index of modules" rel=Appendix href="index_modules.html">
 <link title="Index of module types" rel=Appendix href="index_module_types.html">
 <link title="Main" rel="Chapter" href="Main.html">
-<link title="Trakeva_git_commands" rel="Chapter" href="Trakeva_git_commands.html">
-<link title="Trakeva_interface" rel="Chapter" href="Trakeva_interface.html">
+<link title="Trakeva" rel="Chapter" href="Trakeva.html">
+<link title="Trakeva_cache" rel="Chapter" href="Trakeva_cache.html">
 <link title="Trakeva_sqlite" rel="Chapter" href="Trakeva_sqlite.html"><title>Trakeva API : Main</title>
 </head>
 <body>
 <div class="navbar">&nbsp;<a class="up" href="index.html" title="Index">Up</a>
-&nbsp;<a class="post" href="Trakeva_git_commands.html" title="Trakeva_git_commands">Next</a>
+&nbsp;<a class="post" href="Trakeva.html" title="Trakeva">Next</a>
 </div>
 <h1>Module <a href="type_Main.html">Main</a> (<a href="code_Main.html">.ml</a>)</h1>
 
@@ -29,11 +29,11 @@
 <pre><span id="VALsay"><span class="keyword">val</span> <a href="code_VALMain.say.html">say</a></span> : <code class="type">('a, unit, string, unit) Pervasives.format4 -> 'a</code></pre>
 <pre><span class="keyword">module</span> <a href="Main.Test.html">Test</a>: <code class="code"><span class="keyword">sig</span></code> <a href="Main.Test.html">..</a> <code class="code"><span class="keyword">end</span></code></pre>
 <pre><span class="keyword">module type</span> <a href="Main.TEST_DATABASE.html">TEST_DATABASE</a> = <code class="code"><span class="keyword">sig</span></code> <a href="Main.TEST_DATABASE.html">..</a> <code class="code"><span class="keyword">end</span></code></pre>
+<pre><span class="keyword">module</span> <a href="Main.In_memory.html">In_memory</a>: <code class="code"><span class="keyword">sig</span></code> <a href="Main.In_memory.html">..</a> <code class="code"><span class="keyword">end</span></code></pre>
 <pre><span id="VALopen_close_test"><span class="keyword">val</span> <a href="code_VALMain.open_close_test.html">open_close_test</a></span> : <code class="type">(module Main.TEST_DATABASE) -><br>       string -><br>       unit -><br>       (unit, [> `Database of [> `Close | `Load of string ] * string ])<br>       Pvem_lwt_unix.Deferred_result.t</code></pre>
-<pre><span id="VALbasic_test"><span class="keyword">val</span> <a href="code_VALMain.basic_test.html">basic_test</a></span> : <code class="type">(module Main.TEST_DATABASE) -><br>       String.t -><br>       unit -><br>       (unit,<br>        [> `Database of<br>             [> `Act of <a href="Trakeva_interface.Action.html#TYPEt">Trakeva_interface.Action.t</a><br>              | `Close<br>              | `Get of <a href="Trakeva_interface.Key_in_collection.html#TYPEt">Trakeva_interface.Key_in_collection.t</a><br>              | `Get_all of string<br>              | `Load of string ] *<br>             string ])<br>       Pvem_lwt_unix.Deferred_result.t</code></pre>
-<pre><span id="VALbenchmark_01"><span class="keyword">val</span> <a href="code_VALMain.benchmark_01.html">benchmark_01</a></span> : <code class="type">(module Main.TEST_DATABASE) -><br>       string -><br>       ?collection:int -><br>       ?big_string_kb:int -><br>       unit -><br>       (string * (string * float) list,<br>        [> `Database of<br>             [> `Act of <a href="Trakeva_interface.Action.html#TYPEt">Trakeva_interface.Action.t</a><br>              | `Close<br>              | `Get of <a href="Trakeva_interface.Key_in_collection.html#TYPEt">Trakeva_interface.Key_in_collection.t</a><br>              | `Get_all of string<br>              | `Load of string ] *<br>             string ])<br>       Pvem_lwt_unix.Deferred_result.t</code></pre>
-<pre><span id="VALgit_db_test"><span class="keyword">val</span> <a href="code_VALMain.git_db_test.html">git_db_test</a></span> : <code class="type">unit -><br>       (unit,<br>        [> `Database of<br>             [> `Act of <a href="Trakeva_interface.Action.html#TYPEt">Trakeva_interface.Action.t</a><br>              | `Close<br>              | `Get of <a href="Trakeva_interface.Key_in_collection.html#TYPEt">Trakeva_interface.Key_in_collection.t</a><br>              | `Get_all of string<br>              | `Load of string ] *<br>             string ])<br>       Pvem_lwt_unix.Deferred_result.t</code></pre>
-<pre><span class="keyword">module</span> <a href="Main.Test_git_commands.html">Test_git_commands</a>: <code class="code"><span class="keyword">sig</span></code> <a href="Main.Test_git_commands.html">..</a> <code class="code"><span class="keyword">end</span></code></pre>
+<pre><span id="VALbasic_test"><span class="keyword">val</span> <a href="code_VALMain.basic_test.html">basic_test</a></span> : <code class="type">(module Main.TEST_DATABASE) -><br>       String.t -><br>       unit -><br>       (unit,<br>        [> `Database of<br>             [> `Act of <a href="Trakeva.Action.html#TYPEt">Trakeva.Action.t</a><br>              | `Close<br>              | `Get of <a href="Trakeva.Key_in_collection.html#TYPEt">Trakeva.Key_in_collection.t</a><br>              | `Get_all of string<br>              | `Iter of string<br>              | `Load of string ] *<br>             string ])<br>       Pvem_lwt_unix.Deferred_result.t</code></pre>
+<pre><span id="VALbenchmark_01"><span class="keyword">val</span> <a href="code_VALMain.benchmark_01.html">benchmark_01</a></span> : <code class="type">(module Main.TEST_DATABASE) -><br>       string -><br>       ?collection:int -><br>       ?big_string_kb:int -><br>       unit -><br>       (string * (string * float) list,<br>        [> `Database of<br>             [> `Act of <a href="Trakeva.Action.html#TYPEt">Trakeva.Action.t</a><br>              | `Close<br>              | `Get of <a href="Trakeva.Key_in_collection.html#TYPEt">Trakeva.Key_in_collection.t</a><br>              | `Get_all of string<br>              | `Iter of string<br>              | `Load of string ] *<br>             string ])<br>       Pvem_lwt_unix.Deferred_result.t</code></pre>
 <pre><span class="keyword">module</span> <a href="Main.Test_sqlite.html">Test_sqlite</a>: <code class="code"><span class="keyword">sig</span></code> <a href="Main.Test_sqlite.html">..</a> <code class="code"><span class="keyword">end</span></code></pre>
+<pre><span class="keyword">module</span> <a href="Main.Test_sqlite_with_greedy_cache.html">Test_sqlite_with_greedy_cache</a>: <code class="code"><span class="keyword">sig</span></code> <a href="Main.Test_sqlite_with_greedy_cache.html">..</a> <code class="code"><span class="keyword">end</span></code></pre>
 <pre><span id="VALhas_arg"><span class="keyword">val</span> <a href="code_VALMain.has_arg.html">has_arg</a></span> : <code class="type">'a list -> 'a list -> bool</code></pre>
 <pre><span id="VALfind_arg"><span class="keyword">val</span> <a href="code_VALMain.find_arg.html">find_arg</a></span> : <code class="type">String.t list -><br>       name:String.t -> convert:(String.t -> 'a option) -> 'a option</code></pre></body></html>

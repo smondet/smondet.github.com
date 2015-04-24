@@ -14,7 +14,7 @@
 </li><li><a href='#BuildKetrewOnaVagrantVM'>Build Ketrew On a Vagrant VM</a>
 </li></ul>
 </li><li><a href='#MainOftheModule'>“Main” Of the Module</a>
-</li></ul><h2>Menu</h2><ul><li><a href='index.html'>Home</a></li><li><a href='Alternative_CLI_Application.html'>Alternative CLI Application</a></li><li><a href='Developer_Documentation.html'>Developer Documentation</a></li><li><a href='Glossary.html'>Glossary</a></li><li><a href='Long-Running_Plugins.html'>Long-Running Plugins</a></li><li><a href='Server_Commands.html'>Server Commands</a></li><li><a href='The_Configuration_File.html'>The Configuration File</a></li><li><a href='The_HTTP_API.html'>The HTTP API</a></li><li><a href='Workflow_Examples.html'>Workflow Examples</a></li><li><a href='dummy_plugin.html'>Plugin Example</a></li><li><a href='dummy_plugin_user.html'>Plugin-Usage Example</a></li><li><a href='integration.html'>Integration Test</a></li><li><a href='main.html'>Main Test</a></li><li><a href='preconfigured_main.html'>Preconfigured Main Example</a></li><li><a href='./api/index.html'>API Documentation</a></li><li>Documentation for <a href='./doc.0.0.0/index.html'>version 0.0.0</a></li><li>Documentation for <a href='./json_config/index.html'>“Full-PPX” branch</a></li><li>Repository <a href='https://github.com/hammerlab/ketrew'>at Github</a></li><li>Up: <a href='../index.html'>Software Projects</a></li></ul></div><div class="col-md-9">
+</li></ul><h2>Menu</h2><ul><li><a href='index.html'>Home</a></li><li><a href='Alternative_CLI_Application.html'>Alternative CLI Application</a></li><li><a href='Developer_Documentation.html'>Developer Documentation</a></li><li><a href='Glossary.html'>Glossary</a></li><li><a href='Long-Running_Plugins.html'>Long-Running Plugins</a></li><li><a href='Server_Commands.html'>Server Commands</a></li><li><a href='The_Configuration_File.html'>The Configuration File</a></li><li><a href='The_HTTP_API.html'>The HTTP API</a></li><li><a href='Workflow_Examples.html'>Workflow Examples</a></li><li><a href='dummy_plugin.html'>Plugin Example</a></li><li><a href='dummy_plugin_user.html'>Plugin-Usage Example</a></li><li><a href='integration.html'>Integration Test</a></li><li><a href='main.html'>Main Test</a></li><li><a href='preconfigured_main.html'>Preconfigured Main Example</a></li><li><a href='./api/index.html'>API Documentation</a></li><li>Documentation for <a href='./doc.0.0.0/index.html'>version 0.0.0</a></li><li>Repository <a href='https://github.com/hammerlab/ketrew'>at Github</a></li><li>Up: <a href='../index.html'>Software Projects</a></li></ul></div><div class="col-md-9">
 
 
 <h2 id="WorkflowExamples">Workflow Examples</h2>
@@ -68,7 +68,7 @@ It actually calls <code>submit</code> directly itself.</p>
 <h3 id="DaemonizeWithNohupSetsid">Daemonize With Nohup/Setsid</h3>
 
 <p>This function is like <code>run_command_with_lsf</code> but uses
-<code>daemonize</code> with the “nohup-setsid hack” instead of the batch scheduler.</p>
+<code>daemonize</code> with the “nohup-setsid” method instead of the batch scheduler.</p>
 
 <pre><span class="text">
 </span><span class="kw">let</span><span class="text"> </span><span class="id">run_command_with_nohup</span><span class="text"> </span><span class="kw4">~host</span><span class="text"> </span><span class="id">cmd</span><span class="text"> =
@@ -85,10 +85,10 @@ It actually calls <code>submit</code> directly itself.</p>
 <h3 id="DaemonizeWithThePythonHack">Daemonize With “The Python Hack”</h3>
 
 <p>This function is like <code>run_command_with_nohup</code> but uses
-the “python daemon hack” instead.</p>
+the “python daemon” method instead.</p>
 
 <pre><span class="text">
-</span><span class="kw">let</span><span class="text"> </span><span class="id">run_command_with_python_hack</span><span class="text"> </span><span class="kw4">~host</span><span class="text"> </span><span class="id">cmd</span><span class="text"> =
+</span><span class="kw">let</span><span class="text"> </span><span class="id">run_command_with_python_method</span><span class="text"> </span><span class="kw4">~host</span><span class="text"> </span><span class="id">cmd</span><span class="text"> =
   </span><span class="kw">let</span><span class="text"> </span><span class="kw">open</span><span class="text"> </span><span class="kw2">Ketrew</span><span class="text">.</span><span class="kw2">EDSL</span><span class="text"> </span><span class="kw">in</span><span class="text">
   </span><span class="kw">let</span><span class="text"> </span><span class="id">host</span><span class="text"> = </span><span class="kw2">Host</span><span class="text">.</span><span class="id">parse</span><span class="text"> </span><span class="id">host</span><span class="text"> </span><span class="kw">in</span><span class="text">
   </span><span class="kw2">Ketrew_client</span><span class="text">.</span><span class="id">submit</span><span class="text"> (
@@ -134,7 +134,7 @@ comes from the Hadoop ecosystem and is used to request resources.</p>
 <ul><li><code>target2</code> depends on <code>target1</code>.</li><li>We call <code>submit</code> on <code>target2</code> (the last target, i.e. the root of the dependency
  arborescence).</li><li><code>target1</code> will run and if it succeeds <code>target2</code> will run.</li></ul>
 <pre><span class="text">
-</span><span class="kw">let</span><span class="text"> </span><span class="id">run_2_commands_with_python_hack</span><span class="text"> </span><span class="kw4">~host</span><span class="text"> </span><span class="id">cmd1</span><span class="text"> </span><span class="id">cmd2</span><span class="text"> =
+</span><span class="kw">let</span><span class="text"> </span><span class="id">run_2_commands_with_python_method</span><span class="text"> </span><span class="kw4">~host</span><span class="text"> </span><span class="id">cmd1</span><span class="text"> </span><span class="id">cmd2</span><span class="text"> =
   </span><span class="kw">let</span><span class="text"> </span><span class="kw">open</span><span class="text"> </span><span class="kw2">Ketrew</span><span class="text">.</span><span class="kw2">EDSL</span><span class="text"> </span><span class="kw">in</span><span class="text">
   </span><span class="kw">let</span><span class="text"> </span><span class="id">host</span><span class="text"> = </span><span class="kw2">Host</span><span class="text">.</span><span class="id">parse</span><span class="text"> </span><span class="id">host</span><span class="text"> </span><span class="kw">in</span><span class="text">
   </span><span class="kw">let</span><span class="text"> </span><span class="id">target1</span><span class="text"> =
@@ -531,7 +531,7 @@ command:</p>
   | </span><span class="string">&quot;python-daemon&quot;</span><span class="text"> :: </span><span class="id">more</span><span class="text">
   | </span><span class="string">&quot;pyd&quot;</span><span class="text"> :: </span><span class="id">more</span><span class="text"> -&gt;
     </span><span class="kw1">begin</span><span class="text"> </span><span class="kw1">match</span><span class="text"> </span><span class="id">more</span><span class="text"> </span><span class="kw1">with</span><span class="text">
-    | </span><span class="id">host</span><span class="text"> :: </span><span class="id">cmd</span><span class="text"> :: [] -&gt; </span><span class="id">run_command_with_python_hack</span><span class="text"> </span><span class="kw4">~host</span><span class="text"> </span><span class="id">cmd</span><span class="text">
+    | </span><span class="id">host</span><span class="text"> :: </span><span class="id">cmd</span><span class="text"> :: [] -&gt; </span><span class="id">run_command_with_python_method</span><span class="text"> </span><span class="kw4">~host</span><span class="text"> </span><span class="id">cmd</span><span class="text">
     | </span><span class="id">other</span><span class="text"> -&gt;
       </span><span class="id">say</span><span class="text"> </span><span class="string">&quot;usage: %s pyd &lt;host&gt; &lt;cmd&gt;&quot;</span><span class="text"> </span><span class="kw2">Sys</span><span class="text">.</span><span class="id">argv</span><span class="text">.(</span><span class="numeric">0</span><span class="text">);
       </span><span class="id">failwith</span><span class="text"> </span><span class="string">&quot;Wrong command line&quot;</span><span class="text"> </span><span class="kw1">end</span><span class="text">
@@ -545,7 +545,7 @@ command:</p>
   | </span><span class="string">&quot;two-py&quot;</span><span class="text"> :: </span><span class="id">more</span><span class="text"> -&gt;
     </span><span class="kw1">begin</span><span class="text"> </span><span class="kw1">match</span><span class="text"> </span><span class="id">more</span><span class="text"> </span><span class="kw1">with</span><span class="text">
     | </span><span class="id">host</span><span class="text"> :: </span><span class="id">cmd1</span><span class="text"> :: </span><span class="id">cmd2</span><span class="text"> :: [] -&gt; 
-      </span><span class="id">run_2_commands_with_python_hack</span><span class="text"> </span><span class="kw4">~host</span><span class="text"> </span><span class="id">cmd1</span><span class="text"> </span><span class="id">cmd2</span><span class="text">
+      </span><span class="id">run_2_commands_with_python_method</span><span class="text"> </span><span class="kw4">~host</span><span class="text"> </span><span class="id">cmd1</span><span class="text"> </span><span class="id">cmd2</span><span class="text">
     | </span><span class="id">other</span><span class="text"> -&gt;
       </span><span class="id">say</span><span class="text"> </span><span class="string">&quot;usage: %s two-py &lt;host&gt; &lt;cmd1&gt; &lt;cmd2&gt;&quot;</span><span class="text"> </span><span class="kw2">Sys</span><span class="text">.</span><span class="id">argv</span><span class="text">.(</span><span class="numeric">0</span><span class="text">);
       </span><span class="id">failwith</span><span class="text"> </span><span class="string">&quot;Wrong command line&quot;</span><span class="text">

@@ -9,8 +9,8 @@
 <link title="Index of modules" rel=Appendix href="index_modules.html">
 <link title="Index of module types" rel=Appendix href="index_module_types.html">
 <link title="Main" rel="Chapter" href="Main.html">
-<link title="Trakeva_git_commands" rel="Chapter" href="Trakeva_git_commands.html">
-<link title="Trakeva_interface" rel="Chapter" href="Trakeva_interface.html">
+<link title="Trakeva" rel="Chapter" href="Trakeva.html">
+<link title="Trakeva_cache" rel="Chapter" href="Trakeva_cache.html">
 <link title="Trakeva_sqlite" rel="Chapter" href="Trakeva_sqlite.html"><title>Trakeva API : Index of values</title>
 </head>
 <body>
@@ -22,12 +22,14 @@
 <tr><td><a href="Main.html#VAL(//)">(//)</a> [<a href="Main.html">Main</a>]</td>
 <td></td></tr>
 <tr><td align="left"><br>A</td></tr>
-<tr><td><a href="Trakeva_interface.KEY_VALUE_STORE.html#VALact">act</a> [<a href="Trakeva_interface.KEY_VALUE_STORE.html">Trakeva_interface.KEY_VALUE_STORE</a>]</td>
+<tr><td><a href="Trakeva.KEY_VALUE_STORE.html#VALact">act</a> [<a href="Trakeva.KEY_VALUE_STORE.html">Trakeva.KEY_VALUE_STORE</a>]</td>
 <td><div class="info">
 Process a transaction, which can be <code class="code"><span class="keywordsign">`</span><span class="constructor">Done</span></code> is successful or <code class="code"><span class="keywordsign">`</span><span class="constructor">Not_done</span></code>
       if one of the checks in the <code class="code"><span class="constructor">Action</span>.t</code> failed.
 </div>
 </td></tr>
+<tr><td><a href="Main.In_memory.DB.html#VALact">act</a> [<a href="Main.In_memory.DB.html">Main.In_memory.DB</a>]</td>
+<td></td></tr>
 <tr><td align="left"><br>B</td></tr>
 <tr><td><a href="Main.html#VALbasic_test">basic_test</a> [<a href="Main.html">Main</a>]</td>
 <td></td></tr>
@@ -36,16 +38,23 @@ Process a transaction, which can be <code class="code"><span class="keywordsign"
 <tr><td align="left"><br>C</td></tr>
 <tr><td><a href="Main.Test.html#VALcheck">check</a> [<a href="Main.Test.html">Main.Test</a>]</td>
 <td></td></tr>
-<tr><td><a href="Trakeva_interface.KEY_VALUE_STORE.html#VALclose">close</a> [<a href="Trakeva_interface.KEY_VALUE_STORE.html">Trakeva_interface.KEY_VALUE_STORE</a>]</td>
+<tr><td><a href="Trakeva.KEY_VALUE_STORE.html#VALclose">close</a> [<a href="Trakeva.KEY_VALUE_STORE.html">Trakeva.KEY_VALUE_STORE</a>]</td>
 <td><div class="info">
 Close the DB.
 </div>
 </td></tr>
-<tr><td><a href="Trakeva_interface.Action.html#VALcontains">contains</a> [<a href="Trakeva_interface.Action.html">Trakeva_interface.Action</a>]</td>
+<tr><td><a href="Main.In_memory.DB.html#VALclose">close</a> [<a href="Main.In_memory.DB.html">Main.In_memory.DB</a>]</td>
 <td></td></tr>
-<tr><td><a href="Trakeva_interface.Key_in_collection.html#VALcreate">create</a> [<a href="Trakeva_interface.Key_in_collection.html">Trakeva_interface.Key_in_collection</a>]</td>
+<tr><td><a href="Trakeva.Action.html#VALcontains">contains</a> [<a href="Trakeva.Action.html">Trakeva.Action</a>]</td>
+<td></td></tr>
+<tr><td><a href="Trakeva.Key_in_collection.html#VALcreate">create</a> [<a href="Trakeva.Key_in_collection.html">Trakeva.Key_in_collection</a>]</td>
 <td></td></tr>
 <tr><td align="left"><br>D</td></tr>
+<tr><td><a href="Trakeva_cache.html#VALdebug">debug</a> [<a href="Trakeva_cache.html">Trakeva_cache</a>]</td>
+<td><div class="info">
+Enable over verbose debug priting.
+</div>
+</td></tr>
 <tr><td><a href="Trakeva_sqlite.html#VALdebug">debug</a> [<a href="Trakeva_sqlite.html">Trakeva_sqlite</a>]</td>
 <td><div class="info">
 Set <code class="code">dbug</code> to <code class="code"><span class="keyword">true</span></code> to print debug messages on <code class="code">stderr</code>, this variable
@@ -53,6 +62,14 @@ Set <code class="code">dbug</code> to <code class="code"><span class="keyword">t
     <code class="code"><span class="string">"TRAKEVA_SQLITE_DEBUG"</span></code> is set with the string <code class="code"><span class="string">"true"</span></code>.
 </div>
 </td></tr>
+<tr><td><a href="Main.TEST_DATABASE.html#VALdebug_mode">debug_mode</a> [<a href="Main.TEST_DATABASE.html">Main.TEST_DATABASE</a>]</td>
+<td></td></tr>
+<tr><td><a href="Main.Test_sqlite_with_greedy_cache.html#VALdebug_mode">debug_mode</a> [<a href="Main.Test_sqlite_with_greedy_cache.html">Main.Test_sqlite_with_greedy_cache</a>]</td>
+<td></td></tr>
+<tr><td><a href="Main.Test_sqlite.html#VALdebug_mode">debug_mode</a> [<a href="Main.Test_sqlite.html">Main.Test_sqlite</a>]</td>
+<td></td></tr>
+<tr><td><a href="Main.In_memory.html#VALdebug_mode">debug_mode</a> [<a href="Main.In_memory.html">Main.In_memory</a>]</td>
+<td></td></tr>
 <tr><td align="left"><br>F</td></tr>
 <tr><td><a href="Main.Test.html#VALfail">fail</a> [<a href="Main.Test.html">Main.Test</a>]</td>
 <td></td></tr>
@@ -61,37 +78,44 @@ Set <code class="code">dbug</code> to <code class="code"><span class="keyword">t
 <tr><td><a href="Main.html#VALfind_arg">find_arg</a> [<a href="Main.html">Main</a>]</td>
 <td></td></tr>
 <tr><td align="left"><br>G</td></tr>
-<tr><td><a href="Trakeva_interface.KEY_VALUE_STORE.html#VALget">get</a> [<a href="Trakeva_interface.KEY_VALUE_STORE.html">Trakeva_interface.KEY_VALUE_STORE</a>]</td>
+<tr><td><a href="Trakeva.KEY_VALUE_STORE.html#VALget">get</a> [<a href="Trakeva.KEY_VALUE_STORE.html">Trakeva.KEY_VALUE_STORE</a>]</td>
 <td><div class="info">
 Get a value in the DB.
 </div>
 </td></tr>
-<tr><td><a href="Trakeva_interface.KEY_VALUE_STORE.html#VALget_all">get_all</a> [<a href="Trakeva_interface.KEY_VALUE_STORE.html">Trakeva_interface.KEY_VALUE_STORE</a>]</td>
+<tr><td><a href="Main.In_memory.DB.html#VALget">get</a> [<a href="Main.In_memory.DB.html">Main.In_memory.DB</a>]</td>
+<td></td></tr>
+<tr><td><a href="Trakeva.KEY_VALUE_STORE.html#VALget_all">get_all</a> [<a href="Trakeva.KEY_VALUE_STORE.html">Trakeva.KEY_VALUE_STORE</a>]</td>
 <td><div class="info">
-Get all the values in a given collection.
+Get all the keys in a given collection as a list.
 </div>
 </td></tr>
-<tr><td><a href="Main.html#VALgit_db_test">git_db_test</a> [<a href="Main.html">Main</a>]</td>
+<tr><td><a href="Main.In_memory.DB.html#VALget_all">get_all</a> [<a href="Main.In_memory.DB.html">Main.In_memory.DB</a>]</td>
 <td></td></tr>
-<tr><td><a href="Trakeva_git_commands.Debug.html#VALglobal_debug">global_debug</a> [<a href="Trakeva_git_commands.Debug.html">Trakeva_git_commands.Debug</a>]</td>
+<tr><td><a href="Main.In_memory.DB.html#VALget_collection">get_collection</a> [<a href="Main.In_memory.DB.html">Main.In_memory.DB</a>]</td>
 <td></td></tr>
-<tr><td><a href="Trakeva_git_commands.html#VALglobal_debug_level">global_debug_level</a> [<a href="Trakeva_git_commands.html">Trakeva_git_commands</a>]</td>
-<td><div class="info">
-Debug-logging level used in the module (default: 4).
-</div>
-</td></tr>
 <tr><td align="left"><br>H</td></tr>
 <tr><td><a href="Main.html#VALhas_arg">has_arg</a> [<a href="Main.html">Main</a>]</td>
 <td></td></tr>
 <tr><td align="left"><br>I</td></tr>
-<tr><td><a href="Trakeva_interface.Action.html#VALis_not_set">is_not_set</a> [<a href="Trakeva_interface.Action.html">Trakeva_interface.Action</a>]</td>
+<tr><td><a href="Trakeva.Action.html#VALis_not_set">is_not_set</a> [<a href="Trakeva.Action.html">Trakeva.Action</a>]</td>
+<td></td></tr>
+<tr><td><a href="Trakeva.KEY_VALUE_STORE.html#VALiterator">iterator</a> [<a href="Trakeva.KEY_VALUE_STORE.html">Trakeva.KEY_VALUE_STORE</a>]</td>
+<td><div class="info">
+Go through all the kets in a given collection (exact semantics
+      versus concurrent writes still to be defined …).
+</div>
+</td></tr>
+<tr><td><a href="Main.In_memory.DB.html#VALiterator">iterator</a> [<a href="Main.In_memory.DB.html">Main.In_memory.DB</a>]</td>
 <td></td></tr>
 <tr><td align="left"><br>L</td></tr>
-<tr><td><a href="Trakeva_interface.KEY_VALUE_STORE.html#VALload">load</a> [<a href="Trakeva_interface.KEY_VALUE_STORE.html">Trakeva_interface.KEY_VALUE_STORE</a>]</td>
+<tr><td><a href="Trakeva.KEY_VALUE_STORE.html#VALload">load</a> [<a href="Trakeva.KEY_VALUE_STORE.html">Trakeva.KEY_VALUE_STORE</a>]</td>
 <td><div class="info">
 Load a handle from the given database parameters.
 </div>
 </td></tr>
+<tr><td><a href="Main.In_memory.DB.html#VALload">load</a> [<a href="Main.In_memory.DB.html">Main.In_memory.DB</a>]</td>
+<td></td></tr>
 <tr><td align="left"><br>M</td></tr>
 <tr><td><a href="Main.Test.html#VALmax_failures">max_failures</a> [<a href="Main.Test.html">Main.Test</a>]</td>
 <td></td></tr>
@@ -109,25 +133,27 @@ Load a handle from the given database parameters.
 <tr><td align="left"><br>S</td></tr>
 <tr><td><a href="Main.html#VALsay">say</a> [<a href="Main.html">Main</a>]</td>
 <td></td></tr>
-<tr><td><a href="Trakeva_interface.Action.html#VALseq">seq</a> [<a href="Trakeva_interface.Action.html">Trakeva_interface.Action</a>]</td>
+<tr><td><a href="Trakeva.Action.html#VALseq">seq</a> [<a href="Trakeva.Action.html">Trakeva.Action</a>]</td>
 <td></td></tr>
-<tr><td><a href="Trakeva_interface.Action.html#VALset">set</a> [<a href="Trakeva_interface.Action.html">Trakeva_interface.Action</a>]</td>
+<tr><td><a href="Trakeva.Action.html#VALset">set</a> [<a href="Trakeva.Action.html">Trakeva.Action</a>]</td>
 <td></td></tr>
 <tr><td align="left"><br>T</td></tr>
 <tr><td><a href="Main.TEST_DATABASE.html#VALtest_name">test_name</a> [<a href="Main.TEST_DATABASE.html">Main.TEST_DATABASE</a>]</td>
 <td></td></tr>
+<tr><td><a href="Main.Test_sqlite_with_greedy_cache.html#VALtest_name">test_name</a> [<a href="Main.Test_sqlite_with_greedy_cache.html">Main.Test_sqlite_with_greedy_cache</a>]</td>
+<td></td></tr>
 <tr><td><a href="Main.Test_sqlite.html#VALtest_name">test_name</a> [<a href="Main.Test_sqlite.html">Main.Test_sqlite</a>]</td>
 <td></td></tr>
-<tr><td><a href="Main.Test_git_commands.html#VALtest_name">test_name</a> [<a href="Main.Test_git_commands.html">Main.Test_git_commands</a>]</td>
+<tr><td><a href="Main.In_memory.html#VALtest_name">test_name</a> [<a href="Main.In_memory.html">Main.In_memory</a>]</td>
 <td></td></tr>
-<tr><td><a href="Trakeva_interface.Error.html#VALto_string">to_string</a> [<a href="Trakeva_interface.Error.html">Trakeva_interface.Error</a>]</td>
+<tr><td><a href="Trakeva.Error.html#VALto_string">to_string</a> [<a href="Trakeva.Error.html">Trakeva.Error</a>]</td>
 <td></td></tr>
-<tr><td><a href="Trakeva_interface.Action.html#VALto_string">to_string</a> [<a href="Trakeva_interface.Action.html">Trakeva_interface.Action</a>]</td>
+<tr><td><a href="Trakeva.Action.html#VALto_string">to_string</a> [<a href="Trakeva.Action.html">Trakeva.Action</a>]</td>
 <td></td></tr>
-<tr><td><a href="Trakeva_interface.Key_in_collection.html#VALto_string">to_string</a> [<a href="Trakeva_interface.Key_in_collection.html">Trakeva_interface.Key_in_collection</a>]</td>
+<tr><td><a href="Trakeva.Key_in_collection.html#VALto_string">to_string</a> [<a href="Trakeva.Key_in_collection.html">Trakeva.Key_in_collection</a>]</td>
 <td></td></tr>
 <tr><td align="left"><br>U</td></tr>
-<tr><td><a href="Trakeva_interface.Action.html#VALunset">unset</a> [<a href="Trakeva_interface.Action.html">Trakeva_interface.Action</a>]</td>
+<tr><td><a href="Trakeva.Action.html#VALunset">unset</a> [<a href="Trakeva.Action.html">Trakeva.Action</a>]</td>
 <td></td></tr>
 </table>
 </body>

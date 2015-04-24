@@ -14,7 +14,6 @@
 <link title="Index of modules" rel=Appendix href="index_modules.html">
 <link title="Index of module types" rel=Appendix href="index_module_types.html">
 <link title="Ketrew" rel="Chapter" href="Ketrew.html">
-<link title="Ketrew_artifact" rel="Chapter" href="Ketrew_artifact.html">
 <link title="Ketrew_client" rel="Chapter" href="Ketrew_client.html">
 <link title="Ketrew_command_line" rel="Chapter" href="Ketrew_command_line.html">
 <link title="Ketrew_configuration" rel="Chapter" href="Ketrew_configuration.html">
@@ -23,12 +22,15 @@
 <link title="Ketrew_edsl" rel="Chapter" href="Ketrew_edsl.html">
 <link title="Ketrew_engine" rel="Chapter" href="Ketrew_engine.html">
 <link title="Ketrew_error" rel="Chapter" href="Ketrew_error.html">
+<link title="Ketrew_eval_condition" rel="Chapter" href="Ketrew_eval_condition.html">
 <link title="Ketrew_explorer" rel="Chapter" href="Ketrew_explorer.html">
 <link title="Ketrew_host" rel="Chapter" href="Ketrew_host.html">
+<link title="Ketrew_host_io" rel="Chapter" href="Ketrew_host_io.html">
 <link title="Ketrew_interaction" rel="Chapter" href="Ketrew_interaction.html">
 <link title="Ketrew_long_running" rel="Chapter" href="Ketrew_long_running.html">
 <link title="Ketrew_long_running_utilities" rel="Chapter" href="Ketrew_long_running_utilities.html">
 <link title="Ketrew_lsf" rel="Chapter" href="Ketrew_lsf.html">
+<link title="Ketrew_measurement" rel="Chapter" href="Ketrew_measurement.html">
 <link title="Ketrew_monitored_script" rel="Chapter" href="Ketrew_monitored_script.html">
 <link title="Ketrew_path" rel="Chapter" href="Ketrew_path.html">
 <link title="Ketrew_pbs" rel="Chapter" href="Ketrew_pbs.html">
@@ -38,6 +40,7 @@
 <link title="Ketrew_protocol" rel="Chapter" href="Ketrew_protocol.html">
 <link title="Ketrew_server" rel="Chapter" href="Ketrew_server.html">
 <link title="Ketrew_target" rel="Chapter" href="Ketrew_target.html">
+<link title="Ketrew_unix_io" rel="Chapter" href="Ketrew_unix_io.html">
 <link title="Ketrew_unix_process" rel="Chapter" href="Ketrew_unix_process.html">
 <link title="Ketrew_yarn" rel="Chapter" href="Ketrew_yarn.html"><title>Ketrew API : Ketrew_target.State</title>
 </head>
@@ -53,16 +56,13 @@
 <pre><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> </pre>
 
 
-<pre><span id="TYPEhistory"><span class="keyword">type</span> <code class="type"></code>history</span> = <code class="type">Ketrew_gen_target_v0.State.t</code> </pre>
-
-
 <pre><span id="VALsimplify"><span class="keyword">val</span> <a href="code_VALKetrew_target.State.simplify.html">simplify</a></span> : <code class="type"><a href="Ketrew_target.State.html#TYPEt">t</a> -><br>       [ `Activable | `Failed | `In_progress | `Successful ]</code></pre>
-<pre><span id="VALhistory"><span class="keyword">val</span> <a href="code_VALKetrew_target.State.history.html">history</a></span> : <code class="type"><a href="Ketrew_target.State.html#TYPEt">t</a> -> <a href="Ketrew_target.State.html#TYPEhistory">history</a></code></pre>
 <pre><span id="VALname"><span class="keyword">val</span> <a href="code_VALKetrew_target.State.name.html">name</a></span> : <code class="type"><a href="Ketrew_target.State.html#TYPEt">t</a> -> string</code></pre>
-<pre><span id="VALsummary"><span class="keyword">val</span> <a href="code_VALKetrew_target.State.summary.html">summary</a></span> : <code class="type"><a href="Ketrew_target.State.html#TYPEt">t</a> -><br>       [ `Time of Ketrew_pervasives.Time.t ] * [ `Log of string option ] *<br>       [ `Info of string list ]</code></pre>
+<pre><span id="VALsummary"><span class="keyword">val</span> <a href="code_VALKetrew_target.State.summary.html">summary</a></span> : <code class="type"><a href="Ketrew_target.State.html#TYPEt">t</a> -><br>       [ `Time of <a href="Ketrew_pervasives.Time.html#TYPEt">Ketrew_pervasives.Time.t</a> ] * [ `Log of string option ] *<br>       [ `Info of string list ]</code></pre>
 <pre><span id="VALlog"><span class="keyword">val</span> <a href="code_VALKetrew_target.State.log.html">log</a></span> : <code class="type">?depth:int -> <a href="Ketrew_target.State.html#TYPEt">t</a> -> Ketrew_pervasives.Log.t</code></pre>
-<pre><span id="VALpassive_time"><span class="keyword">val</span> <a href="code_VALKetrew_target.State.passive_time.html">passive_time</a></span> : <code class="type"><a href="Ketrew_target.State.html#TYPEt">t</a> -> Ketrew_pervasives.Time.t</code></pre><div class="info ">
+<pre><span id="VALpassive_time"><span class="keyword">val</span> <a href="code_VALKetrew_target.State.passive_time.html">passive_time</a></span> : <code class="type"><a href="Ketrew_target.State.html#TYPEt">t</a> -> <a href="Ketrew_pervasives.Time.html#TYPEt">Ketrew_pervasives.Time.t</a></code></pre><div class="info ">
 The date the target's creation.<br>
 </div>
 
+<pre><span id="VALfinished_time"><span class="keyword">val</span> <a href="code_VALKetrew_target.State.finished_time.html">finished_time</a></span> : <code class="type"><a href="Ketrew_target.State.html#TYPEt">t</a> -> <a href="Ketrew_pervasives.Time.html#TYPEt">Ketrew_pervasives.Time.t</a> option</code></pre>
 <pre><span class="keyword">module</span> <a href="Ketrew_target.State.Is.html">Is</a>: <code class="code"><span class="keyword">sig</span></code> <a href="Ketrew_target.State.Is.html">..</a> <code class="code"><span class="keyword">end</span></code></pre></body></html>

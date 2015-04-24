@@ -14,7 +14,6 @@
 <link title="Index of modules" rel=Appendix href="index_modules.html">
 <link title="Index of module types" rel=Appendix href="index_module_types.html">
 <link title="Ketrew" rel="Chapter" href="Ketrew.html">
-<link title="Ketrew_artifact" rel="Chapter" href="Ketrew_artifact.html">
 <link title="Ketrew_client" rel="Chapter" href="Ketrew_client.html">
 <link title="Ketrew_command_line" rel="Chapter" href="Ketrew_command_line.html">
 <link title="Ketrew_configuration" rel="Chapter" href="Ketrew_configuration.html">
@@ -23,12 +22,15 @@
 <link title="Ketrew_edsl" rel="Chapter" href="Ketrew_edsl.html">
 <link title="Ketrew_engine" rel="Chapter" href="Ketrew_engine.html">
 <link title="Ketrew_error" rel="Chapter" href="Ketrew_error.html">
+<link title="Ketrew_eval_condition" rel="Chapter" href="Ketrew_eval_condition.html">
 <link title="Ketrew_explorer" rel="Chapter" href="Ketrew_explorer.html">
 <link title="Ketrew_host" rel="Chapter" href="Ketrew_host.html">
+<link title="Ketrew_host_io" rel="Chapter" href="Ketrew_host_io.html">
 <link title="Ketrew_interaction" rel="Chapter" href="Ketrew_interaction.html">
 <link title="Ketrew_long_running" rel="Chapter" href="Ketrew_long_running.html">
 <link title="Ketrew_long_running_utilities" rel="Chapter" href="Ketrew_long_running_utilities.html">
 <link title="Ketrew_lsf" rel="Chapter" href="Ketrew_lsf.html">
+<link title="Ketrew_measurement" rel="Chapter" href="Ketrew_measurement.html">
 <link title="Ketrew_monitored_script" rel="Chapter" href="Ketrew_monitored_script.html">
 <link title="Ketrew_path" rel="Chapter" href="Ketrew_path.html">
 <link title="Ketrew_pbs" rel="Chapter" href="Ketrew_pbs.html">
@@ -38,6 +40,7 @@
 <link title="Ketrew_protocol" rel="Chapter" href="Ketrew_protocol.html">
 <link title="Ketrew_server" rel="Chapter" href="Ketrew_server.html">
 <link title="Ketrew_target" rel="Chapter" href="Ketrew_target.html">
+<link title="Ketrew_unix_io" rel="Chapter" href="Ketrew_unix_io.html">
 <link title="Ketrew_unix_process" rel="Chapter" href="Ketrew_unix_process.html">
 <link title="Ketrew_yarn" rel="Chapter" href="Ketrew_yarn.html"><title>Ketrew API : Ketrew_target.Automaton</title>
 </head>
@@ -52,7 +55,7 @@
 <br>
 A <i>pure</i> automaton<br>
 
-<pre><span id="TYPEfailure_reason"><span class="keyword">type</span> <code class="type"></code>failure_reason</span> = <code class="type">Ketrew_gen_target_v0.Process_failure_reason.t</code> </pre>
+<pre><span id="TYPEfailure_reason"><span class="keyword">type</span> <code class="type"></code>failure_reason</span> </pre>
 
 
 <pre><span id="TYPEprogress"><span class="keyword">type</span> <code class="type"></code>progress</span> = <code class="type">[ `Changed_state | `No_change ]</code> </pre>
@@ -64,7 +67,7 @@ A <i>pure</i> automaton<br>
 <pre><span id="TYPEseverity"><span class="keyword">type</span> <code class="type"></code>severity</span> = <code class="type">[ `Fatal | `Try_again ]</code> </pre>
 
 
-<pre><span id="TYPEbookkeeping"><span class="keyword">type</span> <code class="type"></code>bookkeeping</span> = <code class="type">Ketrew_gen_target_v0.Run_bookkeeping.t</code> = {</pre><table class="typetable">
+<pre><code><span id="TYPEbookkeeping"><span class="keyword">type</span> <code class="type"></code>bookkeeping</span> = {</code></pre><table class="typetable">
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
