@@ -41,7 +41,7 @@
 </head>
 <body>
 <code class="code"><span class="keyword">let</span>&nbsp;build_sublist_of_targets&nbsp;~client&nbsp;~list_name&nbsp;~all_log&nbsp;~go_verb&nbsp;~filter&nbsp;=<br>
-&nbsp;&nbsp;<span class="constructor">Ketrew_client</span>.current_targets&nbsp;client<br>
+&nbsp;&nbsp;<span class="constructor">Ketrew_client</span>.all_targets&nbsp;client<br>
 &nbsp;&nbsp;&gt;&gt;|&nbsp;<span class="constructor">List</span>.filter&nbsp;~f:(<span class="keyword">fun</span>&nbsp;target&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;filter&nbsp;target)<br>
 &nbsp;&nbsp;&gt;&gt;|&nbsp;sort_target_list<br>
 &nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;all_targets&nbsp;<span class="keywordsign">-&gt;</span><br>

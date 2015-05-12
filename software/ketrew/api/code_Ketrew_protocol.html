@@ -41,7 +41,11 @@
 </head>
 <body>
 <code class="code"></code><table><tr><td></td><td><span class="comment">(**************************************************************************)</span></td></tr></table><code class="code"><br>
-<span class="comment">(*&nbsp;&nbsp;Copyright&nbsp;2014,&nbsp;Sebastien&nbsp;Mondet&nbsp;&lt;seb@mondet.org&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*)</span><br>
+<span class="comment">(*&nbsp;&nbsp;&nbsp;&nbsp;Copyright&nbsp;2014,&nbsp;2015:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*)</span><br>
+<span class="comment">(*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sebastien&nbsp;Mondet&nbsp;&lt;seb@mondet.org&gt;,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*)</span><br>
+<span class="comment">(*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Leonid&nbsp;Rozenberg&nbsp;&lt;leonidr@gmail.com&gt;,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*)</span><br>
+<span class="comment">(*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Arun&nbsp;Ahuja&nbsp;&lt;aahuja11@gmail.com&gt;,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*)</span><br>
+<span class="comment">(*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Jeff&nbsp;Hammerbacher&nbsp;&lt;jeff.hammerbacher@gmail.com&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*)</span><br>
 <span class="comment">(*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*)</span><br>
 <span class="comment">(*&nbsp;&nbsp;Licensed&nbsp;under&nbsp;the&nbsp;Apache&nbsp;License,&nbsp;Version&nbsp;2.0&nbsp;(the&nbsp;"License");&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*)</span><br>
 <span class="comment">(*&nbsp;&nbsp;you&nbsp;may&nbsp;not&nbsp;use&nbsp;this&nbsp;file&nbsp;except&nbsp;in&nbsp;compliance&nbsp;with&nbsp;the&nbsp;License.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*)</span><br>
@@ -71,38 +75,6 @@
 &nbsp;&nbsp;<span class="keyword">include</span>&nbsp;<span class="constructor">Json</span>.<span class="constructor">Versioned</span>.<span class="constructor">Of_v0</span>(<span class="constructor">V0</span>)<br>
 &nbsp;&nbsp;<span class="keyword">type</span>&nbsp;t&nbsp;=&nbsp;<span class="constructor">V0</span>.t<br>
 <br>
-&nbsp;&nbsp;<span class="comment">(*<br>
-&nbsp;&nbsp;&nbsp;&nbsp;let&nbsp;added_target&nbsp;~original_id&nbsp;~fresh_id&nbsp;=<br>
-&nbsp;&nbsp;&nbsp;&nbsp;let&nbsp;open&nbsp;Ketrew_gen_protocol_v0.Added_target&nbsp;in<br>
-&nbsp;&nbsp;&nbsp;&nbsp;{original_id;&nbsp;fresh_id}<br>
-&nbsp;*)</span><br>
-<br>
-&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;log&nbsp;:&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Log</span>.t&nbsp;=<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">fun</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">assert</span>&nbsp;<span class="keyword">false</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">(*<br>
-&nbsp;&nbsp;&nbsp;&nbsp;function<br>
-&nbsp;&nbsp;|&nbsp;`List_of_targets&nbsp;ts&nbsp;-&gt;&nbsp;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Log.(s&nbsp;"List_of_targets:&nbsp;"&nbsp;%&nbsp;OCaml.list&nbsp;Ketrew_target.log&nbsp;ts)<br>
-&nbsp;&nbsp;|&nbsp;`List_of_query_descriptions&nbsp;tsl&nbsp;-&gt;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Log.(s&nbsp;"List_of_query_descriptions:&nbsp;"<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%&nbsp;OCaml.list&nbsp;(fun&nbsp;(a,&nbsp;b)&nbsp;-&gt;&nbsp;sf&nbsp;"%s:&nbsp;%s"&nbsp;a&nbsp;b)&nbsp;tsl)<br>
-&nbsp;&nbsp;|&nbsp;`Query_result&nbsp;str&nbsp;-&gt;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Log.(s&nbsp;"Query_result:&nbsp;"&nbsp;%&nbsp;quote&nbsp;str)<br>
-&nbsp;&nbsp;|&nbsp;`Targets_added&nbsp;tl&nbsp;-&gt;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;let&nbsp;open&nbsp;Ketrew_gen_protocol_v0.Added_target&nbsp;in<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Log.(s&nbsp;"Targets_added:&nbsp;"<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%&nbsp;OCaml.list&nbsp;(fun&nbsp;{original_id;&nbsp;fresh_id}&nbsp;-&gt;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;s&nbsp;original_id&nbsp;%&nbsp;sp&nbsp;%&nbsp;s&nbsp;fresh_id)&nbsp;tl)<br>
-&nbsp;&nbsp;|&nbsp;`Happens&nbsp;_&nbsp;as&nbsp;hl&nbsp;-&gt;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Log.(s&nbsp;"Happening-list:&nbsp;"&nbsp;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%&nbsp;s&nbsp;(serialize&nbsp;hl))<br>
-&nbsp;&nbsp;|&nbsp;`Clean_up&nbsp;todo&nbsp;-&gt;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;let&nbsp;open&nbsp;Ketrew_gen_protocol_v0.Clean_up_todo_list&nbsp;in<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Log.(s&nbsp;"Clean_up_todo_list:&nbsp;"&nbsp;%&nbsp;n<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%&nbsp;s&nbsp;"to-kill:&nbsp;"&nbsp;%&nbsp;OCaml.list&nbsp;string&nbsp;todo.to_kill&nbsp;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%&nbsp;s&nbsp;"to-archive:&nbsp;"&nbsp;%&nbsp;OCaml.list&nbsp;string&nbsp;todo.to_archive)&nbsp;<br>
-&nbsp;&nbsp;*)</span><br>
 <span class="keyword">end</span><br>
 <br>
 <span class="keyword">module</span>&nbsp;<span class="constructor">Up_message</span>&nbsp;=&nbsp;<span class="keyword">struct</span><br>
@@ -125,19 +97,6 @@
 &nbsp;&nbsp;<span class="keyword">include</span>&nbsp;<span class="constructor">Json</span>.<span class="constructor">Versioned</span>.<span class="constructor">Of_v0</span>(<span class="constructor">V0</span>)<br>
 &nbsp;&nbsp;<span class="keyword">include</span>&nbsp;<span class="constructor">V0</span><br>
 <br>
-<br>
-&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;log&nbsp;:&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Log</span>.t&nbsp;=<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">fun</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">assert</span>&nbsp;<span class="keyword">false</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">(*<br>
-&nbsp;&nbsp;&nbsp;&nbsp;function<br>
-&nbsp;&nbsp;|&nbsp;`List_of_targets&nbsp;ts&nbsp;-&gt;&nbsp;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Log.(s&nbsp;"List_of_targets:&nbsp;"&nbsp;%&nbsp;OCaml.list&nbsp;Ketrew_target.log&nbsp;ts)<br>
-&nbsp;&nbsp;|&nbsp;`List_of_target_ids&nbsp;ts&nbsp;-&gt;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Log.(s&nbsp;"List_of_target_ids:&nbsp;"&nbsp;%&nbsp;OCaml.list&nbsp;string&nbsp;ts)<br>
-&nbsp;&nbsp;*)</span><br>
-<br>
-&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;to_string_hum&nbsp;t&nbsp;=&nbsp;log&nbsp;t&nbsp;|&gt;&nbsp;<span class="constructor">Log</span>.to_long_string<br>
 <span class="keyword">end</span><br>
 <br>
 </code></body></html>

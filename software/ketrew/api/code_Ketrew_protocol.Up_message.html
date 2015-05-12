@@ -60,17 +60,4 @@
 &nbsp;&nbsp;<span class="keyword">include</span>&nbsp;<span class="constructor">Json</span>.<span class="constructor">Versioned</span>.<span class="constructor">Of_v0</span>(<span class="constructor">V0</span>)<br>
 &nbsp;&nbsp;<span class="keyword">include</span>&nbsp;<span class="constructor">V0</span><br>
 <br>
-<br>
-&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;log&nbsp;:&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Log</span>.t&nbsp;=<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">fun</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">assert</span>&nbsp;<span class="keyword">false</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">(*<br>
-&nbsp;&nbsp;&nbsp;&nbsp;function<br>
-&nbsp;&nbsp;|&nbsp;`List_of_targets&nbsp;ts&nbsp;-&gt;&nbsp;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Log.(s&nbsp;"List_of_targets:&nbsp;"&nbsp;%&nbsp;OCaml.list&nbsp;Ketrew_target.log&nbsp;ts)<br>
-&nbsp;&nbsp;|&nbsp;`List_of_target_ids&nbsp;ts&nbsp;-&gt;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Log.(s&nbsp;"List_of_target_ids:&nbsp;"&nbsp;%&nbsp;OCaml.list&nbsp;string&nbsp;ts)<br>
-&nbsp;&nbsp;*)</span><br>
-<br>
-&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;to_string_hum&nbsp;t&nbsp;=&nbsp;log&nbsp;t&nbsp;|&gt;&nbsp;<span class="constructor">Log</span>.to_long_string<br>
 <span class="keyword">end</span></code></body></html>

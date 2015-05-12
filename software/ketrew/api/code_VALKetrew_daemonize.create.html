@@ -40,7 +40,7 @@
 <link title="Ketrew_yarn" rel="Chapter" href="Ketrew_yarn.html"><title>Ketrew API : Ketrew_daemonize.create</title>
 </head>
 <body>
-<code class="code"><span class="keyword">let</span>&nbsp;create&nbsp;<br>
+<code class="code"><span class="keyword">let</span>&nbsp;create<br>
 &nbsp;&nbsp;?(starting_timeout=5.)&nbsp;?(call_script=<span class="keyword">fun</span>&nbsp;s&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;[default_shell;&nbsp;s])<br>
 &nbsp;&nbsp;?(using=<span class="keywordsign">`</span><span class="constructor">Nohup_setsid</span>)&nbsp;?(host=<span class="constructor">Ketrew_host</span>.tmp_on_localhost)&nbsp;program&nbsp;=<br>
 &nbsp;&nbsp;<span class="keyword">let</span>&nbsp;shell_command&nbsp;=&nbsp;call_script&nbsp;script_placeholder&nbsp;<span class="keyword">in</span><br>

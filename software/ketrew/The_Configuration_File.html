@@ -3,14 +3,8 @@
 <div class="col-md-3">
 <h2>Contents</h2><ul><li><a href='#Location'>Location</a>
 </li><li><a href='#GeneratingFromCommandLine'>Generating From Command Line</a>
-</li><li><a href='#Examples'>Examples</a>
-</li><li><a href='#ExplanationoftheOptions'>Explanation of the Options</a>
-<ul><li><a href='#TheengineOptions'>The <code>engine</code> Options</a>
-</li><li><a href='#TheuiOptions'>The <code>ui</code> Options</a>
-</li><li><a href='#ThepluginsOption'>The <code>plugins</code> Option</a>
-</li><li><a href='#TheclientOptions'>The <code>client</code> Options</a>
-</li><li><a href='#TheserverOptions'>The <code>server</code> Options</a>
-</li></ul>
+</li><li><a href='#Example'>Example</a>
+</li><li><a href='#DetailsontheOptions'>Details on the Options</a>
 </li><li><a href='#PrintTheConfiguration'>Print The Configuration</a>
 </li></ul><h2>Menu</h2><ul><li><a href='index.html'>Home</a></li><li><a href='Alternative_CLI_Application.html'>Alternative CLI Application</a></li><li><a href='Developer_Documentation.html'>Developer Documentation</a></li><li><a href='Glossary.html'>Glossary</a></li><li><a href='Long-Running_Plugins.html'>Long-Running Plugins</a></li><li><a href='Server_Commands.html'>Server Commands</a></li><li><a href='The_Configuration_File.html'>The Configuration File</a></li><li><a href='The_HTTP_API.html'>The HTTP API</a></li><li><a href='Workflow_Examples.html'>Workflow Examples</a></li><li><a href='dummy_plugin.html'>Plugin Example</a></li><li><a href='dummy_plugin_user.html'>Plugin-Usage Example</a></li><li><a href='integration.html'>Integration Test</a></li><li><a href='main.html'>Main Test</a></li><li><a href='preconfigured_main.html'>Preconfigured Main Example</a></li><li><a href='./api/index.html'>API Documentation</a></li><li>Documentation for <a href='./doc.0.0.0/index.html'>version 0.0.0</a></li><li>Repository <a href='https://github.com/hammerlab/ketrew'>at Github</a></li><li>Up: <a href='../index.html'>Software Projects</a></li></ul></div><div class="col-md-9"><h1 id="ConfigurationFile">Configuration File</h1>
 
@@ -36,11 +30,11 @@ differently:</p>
 <h2 id="GeneratingFromCommandLine">Generating From Command Line</h2>
 
 <p>The command <code>ketrew initialize</code> can generate a configuration file (limited to
-standalone for now); see <a href='ketrew_init___help.html' title='ketrew init --help'><code>ketrew init --help</code></a>.</p>
-<h2 id="Examples">Examples</h2>
+standalone mode for now); see <a href='ketrew_init___help.html' title='ketrew init --help'><code>ketrew init --help</code></a>.</p>
+<h2 id="Example">Example</h2>
 
-<p>A configuration file <code>config.ml</code> (that Ketrew will execute through <code>OCaml</code>)
-would look like:</p>
+<p>A configuration file <code>configuration.ml</code> (that Ketrew will execute through
+<code>OCaml</code>) would look like:</p>
 <pre><span class="directive">#use</span><span class="text"> </span><span class="string">&quot;topfind&quot;</span><span class="directive">
 #thread</span><span class="directive">
 #require</span><span class="text"> </span><span class="string">&quot;ketrew&quot;</span><span class="text">
@@ -104,62 +98,17 @@ would look like:</p>
           ));
   ]</span></pre>
 
-<p>You may run <code>ocaml config.ml</code> to see the equivalent Json.</p>
+<p>You may run <code>ocaml configuration.ml</code> to see the equivalent Json.</p>
 <p>Creating a test environment (<code>make test-env</code>, cf. developer
 <a href='./Developer_Documentation.html'>docs</a>) generates a very similar configuration
 file.</p>
-<h2 id="ExplanationoftheOptions">Explanation of the Options</h2>
+<h2 id="DetailsontheOptions">Details on the Options</h2>
 
 <p>To build configurations refer to the <a href='api/Ketrew_configuration.html'>API</a> of
 the <a href='api/Ketrew_configuration.html' title='Ketrew_configuration'><code>Ketrew_configuration</code></a> module.</p>
-<h3 id="TheengineOptions">The <code>engine</code> Options</h3>
-
-<p>In standalone and server modes, the <code>engine</code> configures how to run the
-workflows.</p>
-<ul><li><code>database_parameters</code>: the path to the database file/directory (the
-default is <code>~/.ketrew/database</code>).</li><li><code>persistent_state_key</code>: the name of a key to the “root of the tree”; if more
-than one application is using the same database, this can be useful to avoid
-conflicts (“normal” users should <em>never</em> need to set this).</li><li><code>turn_unix_ssh_failure_into_target_failure</code>: boolean;
-when an SSH or system call fails it may not mean that the command in your
-workflow is wrong (could be an SSH configuration or tunneling problem). By
-default (i.e. <code>false</code>), Ketrew tries to be clever and does not make targets
-fail. To change this behavior set the option to <code>true</code>.</li><li><code>host_timeout_upper_bound</code>: float (seconds, default is <code>60.</code>); every
-connection/command time-out will be <code>≤ upper-bound</code>.
-<h3 id="TheuiOptions">The <code>ui</code> Options</h3></li></ul>
-
-<p>The <code>ui</code> function configures the behavior of the User Interface.</p>
-<ul><li><code>color</code>: boolean (default <code>true</code>); tell Ketrew to display <em>f-ANSI</em> colors.</li><li>The Interactive Explorer&#39;s configuration:<ul><li><code>request_targets_ids</code> how to request target IDs from the server.</li><li><code>targets_per_page</code>: the number of targets to display in a single “page.”</li><li><code>targets_to_prefetch</code>: how many targets to download at once while
- prefetching (the client-side cache fetches targets in advance to improve
- latency).</li></ul></li><li><code>with_cbreak</code>: should the interactive UI use “<code>cbreak</code>” or not:<ul><li>when <code>false</code>: it reads from <code>stdin</code> classically (i.e. it waits for the
- <code>return</code> key to be pressed),</li><li>when <code>true</code>: it gets the key-presses directly (it&#39;s the default but
- requires a compliant terminal).</li></ul></li></ul>
-
-<h3 id="ThepluginsOption">The <code>plugins</code> Option</h3>
-
-<p>This optional argument asks Ketrew to dynamically load plugins:</p>
-<ul><li><code>`Ocamlfind</code>: a package name or a list of package names to find and load
-with <code>Findlib</code>.</li><li><code>`Compiled</code>: a path or a list of paths to load.</li></ul>
-
-<h3 id="TheclientOptions">The <code>client</code> Options</h3>
-
-<p>The <code>client</code> function configures Ketrew in client-mode:</p>
-<ul><li>the <code>connection</code>: URL for connecting to the server
- (e.g. <code>&quot;https://example.com:8443&quot;</code>).</li><li><code>token</code>: API authentication token.</li></ul>
-
-<h3 id="TheserverOptions">The <code>server</code> Options</h3>
-
-<p>The <code>server</code> function configures the HTTP server:</p>
-<ul><li>The value <code>`Tls (certificate, private_key, port)</code> configures the connection
- settings:<ul><li><code>certificate</code>: path to the SSL certificate (<em>mandatory</em>).</li><li><code>private_key</code>: path to the SSL private-key (<em>mandatory</em>).</li><li><code>port</code>: port to listen on (<em>mandatory</em>).</li></ul></li><li><code>authorized_tokens</code>: list of values representing authorized tokens, either:<ul><li><code>authorized_token ~name value</code>: an <em>inline</em> token definition, or</li><li><code>authorized_token_path path</code>: a path to a file containing authentication
- tokens; it uses the SSH
- <a href='http://en.wikibooks.org/wiki/OpenSSH/Client_Configuration_Files#.7E.2F.ssh.2Fauthorized_keys'><code>authorized_keys</code></a>
- format (whitespace-separated lines of the form:
- <code>&lt;name&gt; &lt;token&gt; &lt;optional comments ...&gt;</code>).</li></ul></li><li><code>command_pipe</code>: if set this asks the server to listen on a named pipe for
- control commands (<em>highly recommended</em>).</li><li><code>daemonize</code>: if <code>true</code>, ask the server to detach from current terminal.</li><li><code>log_path</code>: if set together with <code>daemonize</code>, ask the server to redirect logs
- to this path (if not set logs go to <code>/dev/null</code>).</li><li><code>return_error_messages</code>: if <code>true</code>, the server will return real error messages
- (in the <em>body</em> of the response) to the client; if <code>false</code> (the default), any
- kind of error will result in the same uninformative message.</li></ul>
-
+<p>As shown above, the idea is to call the function <a href='api/Ketrew_configuration.html#VALoutput' title='Ketrew_configuration.output'><code>Ketrew_configuration.output</code></a>
+with results of the function <a href='api/Ketrew_configuration.html#VALprofile' title='Ketrew_configuration.profile'><code>Ketrew_configuration.profile</code></a>, themselves created
+thanks to the function <a href='api/Ketrew_configuration.html#VALcreate' title='Ketrew_configuration.create'><code>Ketrew_configuration.create</code></a>, etc.</p>
 <h2 id="PrintTheConfiguration">Print The Configuration</h2>
 
 <p>One can always test their configuration with:</p>

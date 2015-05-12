@@ -48,11 +48,6 @@
 <tr><td align="left"><br>A</td></tr>
 <tr><td><a href="Ketrew_pervasives.Array.html">Array</a> [<a href="Ketrew_pervasives.html">Ketrew_pervasives</a>]</td>
 <td></td></tr>
-<tr><td><a href="Ketrew_server.Authentication.html">Authentication</a> [<a href="Ketrew_server.html">Ketrew_server</a>]</td>
-<td><div class="info">
-Module dealing with access tokens and access rights.
-</div>
-</td></tr>
 <tr><td><a href="Ketrew_target.Automaton.html">Automaton</a> [<a href="Ketrew_target.html">Ketrew_target</a>]</td>
 <td></td></tr>
 <tr><td align="left"><br>B</td></tr>
@@ -91,6 +86,11 @@ Definition of command-lines to run on a given <a href="Ketrew_host.html#TYPEt"><
 <td></td></tr>
 <tr><td><a href="Ketrew_host_io.Error.html">Error</a> [<a href="Ketrew_host_io.html">Ketrew_host_io</a>]</td>
 <td></td></tr>
+<tr><td><a href="Ketrew_client.Error.html">Error</a> [<a href="Ketrew_client.html">Ketrew_client</a>]</td>
+<td><div class="info">
+<code class="code"><span class="constructor">Error</span>.t</code> is the type of the error kinds that this module introduces.
+</div>
+</td></tr>
 <tr><td><a href="Ketrew.Error.html">Error</a> [<a href="Ketrew.html">Ketrew</a>]</td>
 <td></td></tr>
 <tr><td><a href="Ketrew_unix_process.Exit_code.html">Exit_code</a> [<a href="Ketrew_unix_process.html">Ketrew_unix_process</a>]</td>
@@ -105,8 +105,6 @@ Higher-level representation of Unix exit codes.
 <tr><td><a href="Ketrew_edsl.Host.html">Host</a> [<a href="Ketrew_edsl.html">Ketrew_edsl</a>]</td>
 <td></td></tr>
 <tr><td><a href="Ketrew.Host.html">Host</a> [<a href="Ketrew.html">Ketrew</a>]</td>
-<td></td></tr>
-<tr><td><a href="Ketrew_client.Http_client.html">Http_client</a> [<a href="Ketrew_client.html">Ketrew_client</a>]</td>
 <td></td></tr>
 <tr><td align="left"><br>I</td></tr>
 <tr><td><a href="Ketrew_pervasives.Int.html">Int</a> [<a href="Ketrew_pervasives.html">Ketrew_pervasives</a>]</td>
@@ -128,7 +126,11 @@ Top-level module exporting the API (pack).
 </div>
 </td></tr>
 <tr><td><a href="Ketrew_client.html">Ketrew_client</a> </td>
-<td></td></tr>
+<td><div class="info">
+The “client” is the frontend to either a standalone engine or an
+   HTTP client talking to a server/engine.
+</div>
+</td></tr>
 <tr><td><a href="Ketrew_command_line.html">Ketrew_command_line</a> </td>
 <td><div class="info">
 Command line interface to the engine.
@@ -250,7 +252,7 @@ The “things” to run on a given host.
 <td></td></tr>
 <tr><td><a href="Ketrew_server.html">Ketrew_server</a> </td>
 <td><div class="info">
-A common error that simply means “invalid argument”.
+Implementation of the HTTP server.
 </div>
 </td></tr>
 <tr><td><a href="Ketrew_target.html">Ketrew_target</a> </td>
@@ -307,11 +309,6 @@ Build “things to run”, i.e.
 <tr><td><a href="Ketrew_engine.Run_automaton.html">Run_automaton</a> [<a href="Ketrew_engine.html">Ketrew_engine</a>]</td>
 <td></td></tr>
 <tr><td align="left"><br>S</td></tr>
-<tr><td><a href="Ketrew_server.Server_state.html">Server_state</a> [<a href="Ketrew_server.html">Ketrew_server</a>]</td>
-<td><div class="info">
-The state maintained by the HTTP server.
-</div>
-</td></tr>
 <tr><td><a href="Ketrew_host_io.Ssh.html">Ssh</a> [<a href="Ketrew_host_io.html">Ketrew_host_io</a>]</td>
 <td><div class="info">
 Helper functions to build SSH commands.
@@ -322,8 +319,6 @@ Helper functions to build SSH commands.
 Definitions specific to “SSH” hosts (see <a href="Ketrew_host.html#VALconnection"><code class="code"><span class="constructor">Ketrew_host</span>.connection</code></a>).
 </div>
 </td></tr>
-<tr><td><a href="Ketrew_client.Standalone.html">Standalone</a> [<a href="Ketrew_client.html">Ketrew_client</a>]</td>
-<td></td></tr>
 <tr><td><a href="Ketrew_target.State.html">State</a> [<a href="Ketrew_target.html">Ketrew_target</a>]</td>
 <td></td></tr>
 <tr><td><a href="Ketrew_target.Stored_target.html">Stored_target</a> [<a href="Ketrew_target.html">Ketrew_target</a>]</td>
@@ -333,11 +328,6 @@ Definitions specific to “SSH” hosts (see <a href="Ketrew_host.html#VALconnec
 <tr><td align="left"><br>T</td></tr>
 <tr><td><a href="Ketrew.Target.html">Target</a> [<a href="Ketrew.html">Ketrew</a>]</td>
 <td></td></tr>
-<tr><td><a href="Ketrew_engine.Target_graph.html">Target_graph</a> [<a href="Ketrew_engine.html">Ketrew_engine</a>]</td>
-<td><div class="info">
-A module to manipulate the graph of dependencies.
-</div>
-</td></tr>
 <tr><td><a href="Ketrew_pervasives.Time.html">Time</a> [<a href="Ketrew_pervasives.html">Ketrew_pervasives</a>]</td>
 <td><div class="info">
 Handle timestamps.

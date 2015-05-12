@@ -46,19 +46,21 @@
 <h1>Index of types</h1>
 <table>
 <tr><td align="left"><br>A</td></tr>
-<tr><td><a href="Ketrew_server.html#TYPEanswer">answer</a> [<a href="Ketrew_server.html">Ketrew_server</a>]</td>
+<tr><td><a href="Ketrew_configuration.html#TYPEauthorized_tokens">authorized_tokens</a> [<a href="Ketrew_configuration.html">Ketrew_configuration</a>]</td>
 <td><div class="info">
-A service can replay one of those cases; or an error.
+This type is a container for one more authentication-tokens,
+    used by the server's HTTP API
 </div>
 </td></tr>
-<tr><td><a href="Ketrew_configuration.html#TYPEauthorized_tokens">authorized_tokens</a> [<a href="Ketrew_configuration.html">Ketrew_configuration</a>]</td>
-<td></td></tr>
 <tr><td align="left"><br>B</td></tr>
 <tr><td><a href="Ketrew_target.Automaton.html#TYPEbookkeeping">bookkeeping</a> [<a href="Ketrew_target.Automaton.html">Ketrew_target.Automaton</a>]</td>
 <td></td></tr>
 <tr><td align="left"><br>C</td></tr>
 <tr><td><a href="Ketrew_configuration.html#TYPEclient">client</a> [<a href="Ketrew_configuration.html">Ketrew_configuration</a>]</td>
-<td></td></tr>
+<td><div class="info">
+Configuration of the client (as in HTTP client).
+</div>
+</td></tr>
 <tr><td><a href="Ketrew_target.Automaton.html#TYPEcondition_evaluation">condition_evaluation</a> [<a href="Ketrew_target.Automaton.html">Ketrew_target.Automaton</a>]</td>
 <td></td></tr>
 <tr><td align="left"><br>D</td></tr>
@@ -69,13 +71,12 @@ A service can replay one of those cases; or an error.
 <tr><td><a href="Ketrew_yarn.html#TYPEdistributed_shell_parameters">distributed_shell_parameters</a> [<a href="Ketrew_yarn.html">Ketrew_yarn</a>]</td>
 <td></td></tr>
 <tr><td align="left"><br>E</td></tr>
-<tr><td><a href="Ketrew_engine.Target_graph.html#TYPEengine">engine</a> [<a href="Ketrew_engine.Target_graph.html">Ketrew_engine.Target_graph</a>]</td>
+<tr><td><a href="Ketrew_configuration.html#TYPEengine">engine</a> [<a href="Ketrew_configuration.html">Ketrew_configuration</a>]</td>
 <td><div class="info">
-An alias for <a href="Ketrew_engine.Target_graph.html#TYPEt"><code class="code"><span class="constructor">Ketrew_engine</span>.<span class="constructor">Target_graph</span>.t</code></a>, the engine.
+The configuration of the engine, the component that orchestrates
+    the run of the targets (used both for standalone and server modes).
 </div>
 </td></tr>
-<tr><td><a href="Ketrew_configuration.html#TYPEengine">engine</a> [<a href="Ketrew_configuration.html">Ketrew_configuration</a>]</td>
-<td></td></tr>
 <tr><td><a href="Ketrew_long_running.html#TYPEerror">error</a> [<a href="Ketrew_long_running.html">Ketrew_long_running</a>]</td>
 <td><div class="info">
 The “imposed” error types for “long-running” plugins.
@@ -84,7 +85,10 @@ The “imposed” error types for “long-running” plugins.
 <tr><td><a href="Ketrew_host_io.Error.html#TYPEexecution">execution</a> [<a href="Ketrew_host_io.Error.html">Ketrew_host_io.Error</a>]</td>
 <td></td></tr>
 <tr><td><a href="Ketrew_configuration.html#TYPEexplorer_defaults">explorer_defaults</a> [<a href="Ketrew_configuration.html">Ketrew_configuration</a>]</td>
-<td></td></tr>
+<td><div class="info">
+Configuration of the Explorer text-user-interface.
+</div>
+</td></tr>
 <tr><td align="left"><br>F</td></tr>
 <tr><td><a href="Ketrew_target.Automaton.html#TYPEfailure_reason">failure_reason</a> [<a href="Ketrew_target.Automaton.html">Ketrew_target.Automaton</a>]</td>
 <td></td></tr>
@@ -111,7 +115,10 @@ The type of a menu item.
 </div>
 </td></tr>
 <tr><td><a href="Ketrew_configuration.html#TYPEmode">mode</a> [<a href="Ketrew_configuration.html">Ketrew_configuration</a>]</td>
-<td></td></tr>
+<td><div class="info">
+Union of the possible configuration “modes.”
+</div>
+</td></tr>
 <tr><td align="left"><br>N</td></tr>
 <tr><td><a href="Ketrew_host_io.Error.html#TYPEnon_zero_execution">non_zero_execution</a> [<a href="Ketrew_host_io.Error.html">Ketrew_host_io.Error</a>]</td>
 <td></td></tr>
@@ -127,7 +134,7 @@ The 2 kinds of dynamically loaded “plugins” accepted by Ketrew:
 <td></td></tr>
 <tr><td><a href="Ketrew_configuration.html#TYPEprofile">profile</a> [<a href="Ketrew_configuration.html">Ketrew_configuration</a>]</td>
 <td><div class="info">
-A profile is a name associated with a configuraton.
+A profile is a name associated with a configuration.
 </div>
 </td></tr>
 <tr><td><a href="Ketrew_target.Automaton.html#TYPEprogress">progress</a> [<a href="Ketrew_target.Automaton.html">Ketrew_target.Automaton</a>]</td>
@@ -144,10 +151,8 @@ Hidden type kept serialized by the engine.
 <td></td></tr>
 <tr><td align="left"><br>S</td></tr>
 <tr><td><a href="Ketrew_configuration.html#TYPEserver">server</a> [<a href="Ketrew_configuration.html">Ketrew_configuration</a>]</td>
-<td></td></tr>
-<tr><td><a href="Ketrew_server.html#TYPEservice">service</a> [<a href="Ketrew_server.html">Ketrew_server</a>]</td>
 <td><div class="info">
-A service is something that replies an <code class="code">answer</code> on a <code class="code"><span class="string">"/&lt;path&gt;"</span></code> URL.
+The configuration of the server.
 </div>
 </td></tr>
 <tr><td><a href="Ketrew_target.Automaton.html#TYPEseverity">severity</a> [<a href="Ketrew_target.Automaton.html">Ketrew_target.Automaton</a>]</td>
@@ -165,10 +170,6 @@ A “shell” is a function that takes a command and returns, and
 <td></td></tr>
 <tr><td align="left"><br>T</td></tr>
 <tr><td><a href="Ketrew_unix_process.Exit_code.html#TYPEt">t</a> [<a href="Ketrew_unix_process.Exit_code.html">Ketrew_unix_process.Exit_code</a>]</td>
-<td></td></tr>
-<tr><td><a href="Ketrew_server.Server_state.html#TYPEt">t</a> [<a href="Ketrew_server.Server_state.html">Ketrew_server.Server_state</a>]</td>
-<td></td></tr>
-<tr><td><a href="Ketrew_server.Authentication.html#TYPEt">t</a> [<a href="Ketrew_server.Authentication.html">Ketrew_server.Authentication</a>]</td>
 <td></td></tr>
 <tr><td><a href="Ketrew_protocol.Up_message.html#TYPEt">t</a> [<a href="Ketrew_protocol.Up_message.html">Ketrew_protocol.Up_message</a>]</td>
 <td></td></tr>
@@ -190,12 +191,13 @@ A “shell” is a function that takes a command and returns, and
 <td></td></tr>
 <tr><td><a href="Ketrew_explorer.html#TYPEt">t</a> [<a href="Ketrew_explorer.html">Ketrew_explorer</a>]</td>
 <td></td></tr>
-<tr><td><a href="Ketrew_client.Http_client.html#TYPEt">t</a> [<a href="Ketrew_client.Http_client.html">Ketrew_client.Http_client</a>]</td>
-<td></td></tr>
-<tr><td><a href="Ketrew_client.Standalone.html#TYPEt">t</a> [<a href="Ketrew_client.Standalone.html">Ketrew_client.Standalone</a>]</td>
+<tr><td><a href="Ketrew_client.Error.html#TYPEt">t</a> [<a href="Ketrew_client.Error.html">Ketrew_client.Error</a>]</td>
 <td></td></tr>
 <tr><td><a href="Ketrew_client.html#TYPEt">t</a> [<a href="Ketrew_client.html">Ketrew_client</a>]</td>
-<td></td></tr>
+<td><div class="info">
+The handle of the client.
+</div>
+</td></tr>
 <tr><td><a href="Ketrew_edsl.Condition.html#TYPEt">t</a> [<a href="Ketrew_edsl.Condition.html">Ketrew_edsl.Condition</a>]</td>
 <td></td></tr>
 <tr><td><a href="Ketrew_edsl.Program.html#TYPEt">t</a> [<a href="Ketrew_edsl.Program.html">Ketrew_edsl.Program</a>]</td>
@@ -208,11 +210,6 @@ Something to run <i>is</i> a <a href="Ketrew_program.html#TYPEt"><code class="co
 Alias for the host type.
 </div>
 </td></tr>
-<tr><td><a href="Ketrew_engine.Target_graph.html#TYPEt">t</a> [<a href="Ketrew_engine.Target_graph.html">Ketrew_engine.Target_graph</a>]</td>
-<td><div class="info">
-The actual representation of the Graph.
-</div>
-</td></tr>
 <tr><td><a href="Ketrew_engine.html#TYPEt">t</a> [<a href="Ketrew_engine.html">Ketrew_engine</a>]</td>
 <td><div class="info">
 The contents of the application engine.
@@ -220,7 +217,7 @@ The contents of the application engine.
 </td></tr>
 <tr><td><a href="Ketrew_configuration.html#TYPEt">t</a> [<a href="Ketrew_configuration.html">Ketrew_configuration</a>]</td>
 <td><div class="info">
-The contents of the configuration.
+The contents of a given instance of a configuration.
 </div>
 </td></tr>
 <tr><td><a href="Ketrew_target.Stored_target.html#TYPEt">t</a> [<a href="Ketrew_target.Stored_target.html">Ketrew_target.Stored_target</a>]</td>
@@ -269,15 +266,16 @@ The type of commands.
 Timeout specification for execution functions below.
 </div>
 </td></tr>
-<tr><td><a href="Ketrew_server.Authentication.html#TYPEtoken">token</a> [<a href="Ketrew_server.Authentication.html">Ketrew_server.Authentication</a>]</td>
-<td></td></tr>
 <tr><td><a href="Ketrew_target.Automaton.html#TYPEtransition">transition</a> [<a href="Ketrew_target.Automaton.html">Ketrew_target.Automaton</a>]</td>
 <td></td></tr>
 <tr><td><a href="Ketrew_target.Automaton.html#TYPEtransition_callback">transition_callback</a> [<a href="Ketrew_target.Automaton.html">Ketrew_target.Automaton</a>]</td>
 <td></td></tr>
 <tr><td align="left"><br>U</td></tr>
 <tr><td><a href="Ketrew_configuration.html#TYPEui">ui</a> [<a href="Ketrew_configuration.html">Ketrew_configuration</a>]</td>
-<td></td></tr>
+<td><div class="info">
+General configuration of the text-based user interface.
+</div>
+</td></tr>
 </table>
 </body>
 </html>

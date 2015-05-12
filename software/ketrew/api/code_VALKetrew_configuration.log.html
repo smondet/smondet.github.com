@@ -76,7 +76,6 @@
 &nbsp;&nbsp;<span class="keyword">let</span>&nbsp;engine&nbsp;t&nbsp;=<br>
 &nbsp;&nbsp;&nbsp;&nbsp;sublist&nbsp;[<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;item&nbsp;<span class="string">"Database"</span>&nbsp;(quote&nbsp;t.database_parameters);<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;item&nbsp;<span class="string">"State-key"</span>&nbsp;(quote&nbsp;t.persistent_state_key);<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;item&nbsp;<span class="string">"Unix-failure"</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;((<span class="keyword">if</span>&nbsp;t.turn_unix_ssh_failure_into_target_failure<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">then</span>&nbsp;s&nbsp;<span class="string">"turns"</span><br>

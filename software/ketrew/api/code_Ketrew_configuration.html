@@ -41,7 +41,11 @@
 </head>
 <body>
 <code class="code"></code><table><tr><td></td><td><span class="comment">(**************************************************************************)</span></td></tr></table><code class="code"><br>
-<span class="comment">(*&nbsp;&nbsp;Copyright&nbsp;2014,&nbsp;Sebastien&nbsp;Mondet&nbsp;&lt;seb@mondet.org&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*)</span><br>
+<span class="comment">(*&nbsp;&nbsp;&nbsp;&nbsp;Copyright&nbsp;2014,&nbsp;2015:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*)</span><br>
+<span class="comment">(*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sebastien&nbsp;Mondet&nbsp;&lt;seb@mondet.org&gt;,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*)</span><br>
+<span class="comment">(*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Leonid&nbsp;Rozenberg&nbsp;&lt;leonidr@gmail.com&gt;,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*)</span><br>
+<span class="comment">(*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Arun&nbsp;Ahuja&nbsp;&lt;aahuja11@gmail.com&gt;,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*)</span><br>
+<span class="comment">(*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Jeff&nbsp;Hammerbacher&nbsp;&lt;jeff.hammerbacher@gmail.com&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*)</span><br>
 <span class="comment">(*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*)</span><br>
 <span class="comment">(*&nbsp;&nbsp;Licensed&nbsp;under&nbsp;the&nbsp;Apache&nbsp;License,&nbsp;Version&nbsp;2.0&nbsp;(the&nbsp;"License");&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*)</span><br>
 <span class="comment">(*&nbsp;&nbsp;you&nbsp;may&nbsp;not&nbsp;use&nbsp;this&nbsp;file&nbsp;except&nbsp;in&nbsp;compliance&nbsp;with&nbsp;the&nbsp;License.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*)</span><br>
@@ -59,7 +63,6 @@
 <span class="keyword">open</span>&nbsp;<span class="constructor">Ketrew_pervasives</span><br>
 <span class="keyword">open</span>&nbsp;<span class="constructor">Ketrew_unix_io</span><br>
 <br>
-<span class="keyword">let</span>&nbsp;default_persistent_state_key&nbsp;=&nbsp;<span class="string">"ketrew_persistent_state"</span><br>
 <br>
 <span class="keyword">type</span>&nbsp;plugin&nbsp;=&nbsp;[&nbsp;<span class="keywordsign">`</span><span class="constructor">Compiled</span>&nbsp;<span class="keyword">of</span>&nbsp;string&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">OCamlfind</span>&nbsp;<span class="keyword">of</span>&nbsp;string&nbsp;]<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[@@deriving&nbsp;yojson]<br>
@@ -67,7 +70,6 @@
 <br>
 <span class="keyword">type</span>&nbsp;engine&nbsp;=&nbsp;{<br>
 &nbsp;&nbsp;database_parameters:&nbsp;string;<br>
-&nbsp;&nbsp;persistent_state_key:&nbsp;string&nbsp;[@default&nbsp;default_persistent_state_key];<br>
 &nbsp;&nbsp;turn_unix_ssh_failure_into_target_failure:&nbsp;bool&nbsp;[@default&nbsp;<span class="keyword">false</span>];<br>
 &nbsp;&nbsp;host_timeout_upper_bound:&nbsp;float&nbsp;option&nbsp;[@default&nbsp;<span class="constructor">None</span>];<br>
 }&nbsp;[@@deriving&nbsp;yojson]<br>
@@ -152,7 +154,6 @@
 &nbsp;&nbsp;<span class="keyword">let</span>&nbsp;engine&nbsp;t&nbsp;=<br>
 &nbsp;&nbsp;&nbsp;&nbsp;sublist&nbsp;[<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;item&nbsp;<span class="string">"Database"</span>&nbsp;(quote&nbsp;t.database_parameters);<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;item&nbsp;<span class="string">"State-key"</span>&nbsp;(quote&nbsp;t.persistent_state_key);<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;item&nbsp;<span class="string">"Unix-failure"</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;((<span class="keyword">if</span>&nbsp;t.turn_unix_ssh_failure_into_target_failure<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">then</span>&nbsp;s&nbsp;<span class="string">"turns"</span><br>
@@ -227,11 +228,9 @@
 <br>
 <span class="keyword">let</span>&nbsp;engine<br>
 &nbsp;&nbsp;&nbsp;&nbsp;?(database_parameters=default_database_path)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;?(persistent_state_key=default_persistent_state_key)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;?(turn_unix_ssh_failure_into_target_failure=<span class="keyword">false</span>)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;?host_timeout_upper_bound&nbsp;()&nbsp;=&nbsp;{<br>
 &nbsp;&nbsp;database_parameters;<br>
-&nbsp;&nbsp;persistent_state_key;<br>
 &nbsp;&nbsp;turn_unix_ssh_failure_into_target_failure;<br>
 &nbsp;&nbsp;host_timeout_upper_bound;<br>
 }<br>
@@ -270,7 +269,6 @@
 <span class="keyword">let</span>&nbsp;daemon&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;s&nbsp;=&nbsp;s.daemon<br>
 <span class="keyword">let</span>&nbsp;log_path&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;s&nbsp;=&nbsp;s.log_path<br>
 <span class="keyword">let</span>&nbsp;database_parameters&nbsp;e&nbsp;=&nbsp;e.database_parameters<br>
-<span class="keyword">let</span>&nbsp;persistent_state_key&nbsp;e&nbsp;=&nbsp;e.persistent_state_key<br>
 <span class="keyword">let</span>&nbsp;is_unix_ssh_failure_fatal&nbsp;e&nbsp;=&nbsp;e.turn_unix_ssh_failure_into_target_failure<br>
 <span class="keyword">let</span>&nbsp;mode&nbsp;t&nbsp;=&nbsp;t.mode<br>
 <span class="keyword">let</span>&nbsp;standalone_engine&nbsp;st&nbsp;=&nbsp;st.standalone_engine<br>

@@ -11,17 +11,32 @@
 <p>A <strong>target</strong> (<a href='api/Ketrew_edsl.html#VALtarget' title='Ketrew_edsl.target'><code>Ketrew_edsl.target</code></a>) is the basic building block of a
 workflow, a target has many components:</p>
 <ul><li>A <strong>build-process</strong> wraps a way for a target of running a program, usually on
-a given host; for example the function <a href='api/Ketrew_edsl.html#VALpbs' title='Ketrew_edsl.pbs'><code>Ketrew_edsl.pbs</code></a> returns a
-datastructure representing the action of running a program on a host with the
-PBS batch scheduler.<ul><li>A <strong>host</strong> (<a href='api/Ketrew_edsl.Host.html#TYPEt' title='Ketrew_edsl.Host.t'><code>Ketrew_edsl.Host.t</code></a>) is a place where one can run things.
- Usually a host is an SSH host with a “playground”, and a few other options.</li><li>A <strong>playground</strong> is a directory on a host where the Ketrew engine and its
- plugins can (and will) write log files, temporary scripts, etc.</li><li>A <strong>program</strong> (<a href='api/Ketrew_edsl.Program.html#TYPEt' title='Ketrew_edsl.Program.t'><code>Ketrew_edsl.Program.t</code></a>) is a datastructure representing
+ a given host; for example the function <a href='api/Ketrew_edsl.html#VALpbs' title='Ketrew_edsl.pbs'><code>Ketrew_edsl.pbs</code></a> returns a
+ datastructure representing the action of running a program on a host with the
+ PBS batch scheduler. It is the parameter <code>?make</code> of <a href='api/Ketrew.EDSL.html#VALtarget' title='Ketrew.EDSL.target'><code>Ketrew.EDSL.target</code></a>.<ul><li>A <strong>host</strong> (<a href='api/Ketrew_edsl.Host.html#TYPEt' title='Ketrew_edsl.Host.t'><code>Ketrew_edsl.Host.t</code></a>) is a place where one can run things.
+ Usually a host is an SSH host with a “playground”, and a few other
+ options.</li><li>A <strong>playground</strong> is a directory on a host where the Ketrew engine and its
+ plugins can (and will) write log files, temporary scripts, etc.
+ Most features which use hosts require playgrounds and will fail if not
+ provided.</li><li>A <strong>program</strong> (<a href='api/Ketrew_edsl.Program.html#TYPEt' title='Ketrew_edsl.Program.t'><code>Ketrew_edsl.Program.t</code></a>) is a datastructure representing
  shell scripts on steroids, Ketrew provides high-level combinators to build
  programs.</li></ul></li><li>A <strong>condition</strong> (<a href='api/Ketrew_edsl.Condition.html#TYPEt' title='Ketrew_edsl.Condition.t'><code>Ketrew_edsl.Condition.t</code></a>) defines how to tell if a target
-should be run or not (the argument <code>?done_when</code> of <a href='api/Ketrew_edsl.html#VALtarget' title='Ketrew_edsl.target'><code>Ketrew_edsl.target</code></a>).</li><li>Links to other targets:<ul><li><strong>dependencies</strong> are targets that need to be ensured or
- run before a target can start,</li><li><strong>fallbacks</strong> targets that will be activated if the target fails, and</li><li><strong>success-triggers</strong> targets that will be activated only <em>after</em> a target
- succeeds.</li></ul></li></ul>
+ should be run or not (the argument <code>?done_when</code> of <a href='api/Ketrew_edsl.html#VALtarget' title='Ketrew_edsl.target'><code>Ketrew_edsl.target</code></a>).</li><li>Links to other targets:<ul><li><strong>dependencies</strong> are targets that need to be satisfied or run before a
+ target can start,</li><li><strong>fallbacks</strong> targets that will be activated if the target fails, and</li><li><strong>success-triggers</strong> targets that will be activated only <em>after</em> a target
+ succeeds.</li></ul></li><li><strong>Metadata</strong> and <strong>tags</strong> are user-provided information; the <code>?metadata</code> is,
+ for now, just a raw string; the <code>?tags</code> are a list of strings which are
+ “searchable” (see “filters” sub-menu in the test-user-interface).</li><li>An <strong>Equivalence</strong> specification tells the engine when to consider a target
+ redundant, the default value is the most common:<br /><ul><li>when adding a target, if an active or activable target already has the
+ same <em>condition</em> then the new one is considered redundant and will be
+ replaced with a pointer to the older one;</li><li>the behavior above can be cancelled by providing <code>`None</code>
+ (cf. <a href='api/Ketrew_target.Equivalence.html#TYPEt' title='Ketrew_target.Equivalence.t'><code>Ketrew_target.Equivalence.t</code></a>).</li></ul></li></ul>
 
+<p>In the EDSL, a target may have a <strong>product</strong>, which is, for now, just a facility
+for the EDSL itself (the engine does not keep track of products).
+The <code>?product</code> argument can be used to track file-paths within your EDSL
+program (see for example the function <a href='api/Ketrew.EDSL.html#VALfile_target' title='Ketrew.EDSL.file_target'><code>Ketrew.EDSL.file_target</code></a> which
+just sets the product and the condition of a target for a given file-path; the
+path can be retrieved with <code>my_target#product#path</code>).</p>
 <h2 id="Ketrew39sEngine">Ketrew&#39;s Engine</h2>
 
 <p>Ketrew&#39;s <strong>engine</strong> is the process in charge of orchestrating and monitoring

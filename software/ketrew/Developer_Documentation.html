@@ -53,19 +53,15 @@ calls are quite configurable).</p>
 <h3 id="AutomatedTests">Automated Tests</h3>
 
 <p>Run the tests like this:</p>
-<pre class='bash'><code class='bash'>    ketrew_test_ssh=&lt;Host&gt; ./ketrew-test [-no-color] ALL</code></pre>
+<pre class='bash'><code class='bash'>    ./ketrew-test [-no-color] &lt;Test-names&gt;</code></pre>
 
-<p>where <code>&lt;Host&gt;</code> is often an entry in your <code>.ssh/config</code> file and <code>TestName</code> is one of</p>
-<ul><li><code>ALL</code> all of the following.</li><li><code>db-test</code></li><li><code>basic-test</code></li><li><code>nohup-test</code></li><li><code>ssh-failure</code></li></ul>
+<p>where a <code>Test-names</code> is one or more of</p>
+<ul><li><code>ALL</code> all of the following.</li><li><code>basic-test</code></li><li><code>nohup-test</code></li></ul>
 
-<p>The tests will look for the environment variable <code>ketrew_test_ssh</code> (defaulting to
- <code>&quot;localhost&quot;</code>). But for the tests to succeed the user running a test should be
-able to login int <code>&lt;Host&gt;</code> without a password. The test will run some commands
-on that host and create files and directories in its <code>/tmp</code> directory.</p>
 <h3 id="ThecliTest">The <code>cli</code> Test</h3>
 
 <p>The workflow <a href='Workflow_Examples.html'>examples</a> in the documentation
-are actually interactive tests (<code>./ketrew-workflow-examples-test</code>).</p>
+are actually interactive tests (cf. <code>./ketrew-workflow-examples-test</code>).</p>
 <h3 id="TheintegrationTest">The <code>integration</code> Test</h3>
 
 <p>The <a href='integration.html'>integration</a> test uses Ketrew to build
@@ -97,7 +93,10 @@ configuration, … which all work together harmoniously).</p>
 <p>Sourcing <code>_test_env/env.env</code> will give a few aliases to run the tests.
 Aliases which start with <code>ks</code> mean “with a <em>standalone-mode</em> configuration file;”
 those which start with <code>kd</code> are in <em>client-server</em> mode (<code>&#39;d&#39;</code> for “distributed”).</p>
-<ul><li><code>kscli</code>: the standalone <code>ketrew</code> application.</li><li><code>kdserver</code>: the server <code>ketrew</code> application.</li><li><code>kdclient</code>: the client <code>ketrew</code> application.</li><li><code>kstest</code>: the <a href='Workflow_Examples.html'><code>cli</code> test</a> with a “standalone-mode” configuration file.</li><li><code>kdtest</code>: the same <code>cli</code> test but as a client.</li><li><code>ksintegration</code>, and <code>kdintegration</code>: the
+<ul><li><code>kscli</code>: the standalone <code>ketrew</code> application.</li><li><code>kdserver</code>: the server <code>ketrew</code> application.</li><li><code>kddaemon</code>: the same as <code>kdserver</code> but quiting the current terminal (<code>daemon</code>
+ option).</li><li><code>kdclient</code>: the client <code>ketrew</code> application (talking to a <code>kdserver</code> or
+ <code>kddaemon</code> instance).</li><li><code>kstest</code>: the <a href='Workflow_Examples.html'><code>cli</code> test</a> with a “standalone-mode” configuration file.</li><li><code>kdtest</code>: the same <code>cli</code> test but as a client (again, talking to a <code>kdserver</code>
+ or <code>kddaemon</code> instance).</li><li><code>ksintegration</code>, and <code>kdintegration</code>: the
  <a href='integration.html'>integration</a> test in standalone and client modes.</li><li><code>ksplugin_user</code>, and <code>kdplugin_user</code>: the mini-workflow
  <a href='dummy_plugin_user.html'>using the plugin</a>.</li></ul>
 
@@ -117,7 +116,7 @@ documentation, issues that went into the “next release”
 <a href='https://github.com/hammerlab/ketrew/milestones'>milestone</a>), this is the
 release workflow:</p>
 <ul><li>Release dependencies for which we are using unreleased features
-(e.g. <a href='https://github.com/smondet/atd2cconv'><code>adt2cconv</code></a>,
+(e.g. <a href='https://github.com/smondet/trakeva'><code>trakeva</code></a>,
 <a href='https://github.com/smondet/sosa'><code>sosa</code></a>, etc.).</li><li>Set version string in <code>tools/please.ml</code>.</li><li>Update the introductory paragraph of the <code>README.md</code> file for the particular
 version.</li><li>Write a human-friendly change-log (go through git history and write important
 changes).</li><li>Create the release/tag <code>ketrew.x.y.z</code> (put the change-log there, see

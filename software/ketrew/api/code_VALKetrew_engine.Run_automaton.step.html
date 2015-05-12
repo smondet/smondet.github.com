@@ -48,8 +48,13 @@
 &nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;Process&nbsp;Archival&nbsp;to-do&nbsp;list&nbsp;(?)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;Process&nbsp;to-add&nbsp;list<br>
 &nbsp;&nbsp;*)</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;fold_targets&nbsp;t&nbsp;~init:[]&nbsp;~f:<span class="keyword">begin</span>&nbsp;<span class="keyword">fun</span>&nbsp;previous_happenings&nbsp;~target&nbsp;<span class="keywordsign">-&gt;</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">begin</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;fold_active_targets&nbsp;t&nbsp;~init:[]&nbsp;~f:<span class="keyword">begin</span>&nbsp;<span class="keyword">fun</span>&nbsp;previous_happenings&nbsp;~target&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">begin</span>&nbsp;<span class="keyword">match</span>&nbsp;<span class="constructor">Target</span>.state&nbsp;target&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;s&nbsp;<span class="keyword">when</span>&nbsp;<span class="constructor">Target</span>.<span class="constructor">State</span>.<span class="constructor">Is</span>.finished&nbsp;s&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;move_target_to_finished_collection&nbsp;t&nbsp;~target<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;()&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;[]&nbsp;<span class="comment">(*&nbsp;moving&nbsp;to&nbsp;the&nbsp;finsihed-set&nbsp;is&nbsp;not&nbsp;a&nbsp;worthy&nbsp;“change”&nbsp;*)</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;other&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_process_automaton_transition&nbsp;t&nbsp;target<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&lt;&nbsp;<span class="keyword">function</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Ok</span>&nbsp;(new_target,&nbsp;progress)&nbsp;<span class="keywordsign">-&gt;</span><br>

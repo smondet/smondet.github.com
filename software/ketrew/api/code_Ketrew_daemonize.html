@@ -41,7 +41,11 @@
 </head>
 <body>
 <code class="code"></code><table><tr><td></td><td><span class="comment">(**************************************************************************)</span></td></tr></table><code class="code"><br>
-<span class="comment">(*&nbsp;&nbsp;Copyright&nbsp;2014,&nbsp;Sebastien&nbsp;Mondet&nbsp;&lt;seb@mondet.org&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*)</span><br>
+<span class="comment">(*&nbsp;&nbsp;&nbsp;&nbsp;Copyright&nbsp;2014,&nbsp;2015:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*)</span><br>
+<span class="comment">(*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sebastien&nbsp;Mondet&nbsp;&lt;seb@mondet.org&gt;,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*)</span><br>
+<span class="comment">(*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Leonid&nbsp;Rozenberg&nbsp;&lt;leonidr@gmail.com&gt;,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*)</span><br>
+<span class="comment">(*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Arun&nbsp;Ahuja&nbsp;&lt;aahuja11@gmail.com&gt;,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*)</span><br>
+<span class="comment">(*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Jeff&nbsp;Hammerbacher&nbsp;&lt;jeff.hammerbacher@gmail.com&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*)</span><br>
 <span class="comment">(*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*)</span><br>
 <span class="comment">(*&nbsp;&nbsp;Licensed&nbsp;under&nbsp;the&nbsp;Apache&nbsp;License,&nbsp;Version&nbsp;2.0&nbsp;(the&nbsp;"License");&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*)</span><br>
 <span class="comment">(*&nbsp;&nbsp;you&nbsp;may&nbsp;not&nbsp;use&nbsp;this&nbsp;file&nbsp;except&nbsp;in&nbsp;compliance&nbsp;with&nbsp;the&nbsp;License.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*)</span><br>
@@ -94,9 +98,9 @@
 <br>
 <br>
 <span class="keyword">let</span>&nbsp;running&nbsp;=<br>
-&nbsp;&nbsp;<span class="keyword">function</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Running</span>&nbsp;r&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;r&nbsp;<br>
+&nbsp;&nbsp;<span class="keyword">function</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Running</span>&nbsp;r&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;r<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;invalid_argument_exn&nbsp;~where:<span class="string">"daemonize"</span>&nbsp;<span class="string">"running"</span><br>
-<span class="keyword">let</span>&nbsp;created&nbsp;=&nbsp;<br>
+<span class="keyword">let</span>&nbsp;created&nbsp;=<br>
 &nbsp;&nbsp;<span class="keyword">function</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Created</span>&nbsp;c&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;c<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;invalid_argument_exn&nbsp;~where:<span class="string">"daemonize"</span>&nbsp;<span class="string">"created"</span><br>
 <br>
@@ -105,7 +109,7 @@
 <span class="keyword">let</span>&nbsp;default_shell&nbsp;=&nbsp;<span class="string">"bash"</span><br>
 <span class="keyword">let</span>&nbsp;script_placeholder&nbsp;=&nbsp;<span class="string">"&lt;script&gt;"</span><br>
 <br>
-<span class="keyword">let</span>&nbsp;create&nbsp;<br>
+<span class="keyword">let</span>&nbsp;create<br>
 &nbsp;&nbsp;?(starting_timeout=5.)&nbsp;?(call_script=<span class="keyword">fun</span>&nbsp;s&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;[default_shell;&nbsp;s])<br>
 &nbsp;&nbsp;?(using=<span class="keywordsign">`</span><span class="constructor">Nohup_setsid</span>)&nbsp;?(host=<span class="constructor">Ketrew_host</span>.tmp_on_localhost)&nbsp;program&nbsp;=<br>
 &nbsp;&nbsp;<span class="keyword">let</span>&nbsp;shell_command&nbsp;=&nbsp;call_script&nbsp;script_placeholder&nbsp;<span class="keyword">in</span><br>
@@ -117,7 +121,7 @@
 <span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Nohup_setsid</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="string">"Nohup+Setsid"</span><br>
 <span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Python_daemon</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="string">"Python-script"</span><br>
 <br>
-<span class="keyword">let</span>&nbsp;log&nbsp;=&nbsp;<br>
+<span class="keyword">let</span>&nbsp;log&nbsp;=<br>
 &nbsp;&nbsp;<span class="keyword">let</span>&nbsp;<span class="keyword">open</span>&nbsp;<span class="constructor">Log</span>&nbsp;<span class="keyword">in</span><br>
 &nbsp;&nbsp;<span class="keyword">function</span><br>
 &nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Created</span>&nbsp;c&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;[<br>
@@ -128,7 +132,7 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">"Call-script"</span>,&nbsp;<span class="constructor">OCaml</span>.list&nbsp;quote&nbsp;c.shell_command;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;]<br>
 &nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Running</span>&nbsp;rp&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;[<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">"Status"</span>,&nbsp;s&nbsp;<span class="string">"Running"</span>&nbsp;%&nbsp;sp&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">"Status"</span>,&nbsp;s&nbsp;<span class="string">"Running"</span>&nbsp;%&nbsp;sp<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%&nbsp;parens&nbsp;(s&nbsp;(using_to_string&nbsp;rp.created.using));<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">"Host"</span>,&nbsp;<span class="constructor">Ketrew_host</span>.log&nbsp;rp.created.host;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">"PID"</span>,&nbsp;<span class="constructor">OCaml</span>.option&nbsp;i&nbsp;rp.pid;<br>
@@ -138,6 +142,12 @@
 <br>
 <span class="keyword">let</span>&nbsp;python_using_path&nbsp;~playground&nbsp;=<br>
 &nbsp;&nbsp;<span class="constructor">Ketrew_path</span>.(concat&nbsp;playground&nbsp;(relative_file_exn&nbsp;<span class="string">"daemonizator.py"</span>))<br>
+<br>
+<span class="keyword">let</span>&nbsp;get_pid&nbsp;run&nbsp;=<br>
+&nbsp;&nbsp;<span class="keyword">match</span>&nbsp;run.pid&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Some</span>&nbsp;p&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;return&nbsp;(<span class="constructor">Some</span>&nbsp;p)<br>
+&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">None</span>&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;get_pid_of_monitored_script&nbsp;~host:run.created.host&nbsp;~script:run.script<br>
 <br>
 <br>
 <span class="keyword">let</span>&nbsp;additional_queries&nbsp;=&nbsp;<span class="keyword">function</span><br>
@@ -156,7 +166,7 @@
 &nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Created</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;fail&nbsp;<span class="constructor">Log</span>.(s&nbsp;<span class="string">"not&nbsp;running"</span>)<br>
 &nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Running</span>&nbsp;rp&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">begin</span>&nbsp;<span class="keyword">match</span>&nbsp;item&nbsp;<span class="keyword">with</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="string">"log"</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="string">"log"</span>&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;log_file&nbsp;=&nbsp;<span class="constructor">Ketrew_monitored_script</span>.log_file&nbsp;rp.script&nbsp;<span class="keyword">in</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Ketrew_host_io</span>.grab_file_or_log&nbsp;rp.created.host&nbsp;log_file<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="string">"stdout"</span>&nbsp;<span class="keywordsign">-&gt;</span><br>
@@ -169,57 +179,62 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;monitored_script_path&nbsp;=&nbsp;script_path&nbsp;~playground:rp.playground&nbsp;<span class="keyword">in</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Ketrew_host_io</span>.grab_file_or_log&nbsp;rp.created.host&nbsp;monitored_script_path<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="string">"check-process"</span>&nbsp;<span class="keywordsign">-&gt;</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">begin</span>&nbsp;<span class="keyword">match</span>&nbsp;rp.pid&nbsp;<span class="keyword">with</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Some</span>&nbsp;pid&nbsp;<span class="keywordsign">-&gt;</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">begin</span>&nbsp;<span class="constructor">Ketrew_host_io</span>.get_shell_command_output&nbsp;rp.created.host<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">begin</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;get_pid&nbsp;rp<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">begin</span>&nbsp;<span class="keyword">function</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Some</span>&nbsp;pid&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Ketrew_host_io</span>.get_shell_command_output&nbsp;rp.created.host<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(fmt&nbsp;<span class="string">"ps&nbsp;-g&nbsp;%d"</span>&nbsp;pid)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&lt;&nbsp;<span class="keyword">function</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Ok</span>&nbsp;(o,&nbsp;_)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;return&nbsp;o<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Error</span>&nbsp;e&nbsp;<span class="keywordsign">-&gt;</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fail&nbsp;<span class="constructor">Log</span>.(s&nbsp;<span class="string">"Command&nbsp;`ps&nbsp;-g&nbsp;PID`&nbsp;failed:&nbsp;"</span>&nbsp;%&nbsp;s&nbsp;(<span class="constructor">Error</span>.to_string&nbsp;e))<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">None</span>&nbsp;<span class="keywordsign">-&gt;</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fail&nbsp;<span class="constructor">Log</span>.(s&nbsp;<span class="string">"Cannot&nbsp;get&nbsp;the&nbsp;processes&nbsp;status,&nbsp;PID&nbsp;not&nbsp;known&nbsp;(yet)"</span>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">None</span>&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fail&nbsp;<span class="keywordsign">`</span><span class="constructor">No_pid</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span>&nbsp;&gt;&gt;&lt;&nbsp;<span class="keyword">function</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Ok</span>&nbsp;(o,&nbsp;_)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;return&nbsp;o<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Error</span>&nbsp;(<span class="keywordsign">`</span><span class="constructor">Timeout</span>&nbsp;t)&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fail&nbsp;<span class="constructor">Log</span>.(s&nbsp;<span class="string">"Getting&nbsp;PID&nbsp;failed:&nbsp;time-out&nbsp;"</span>&nbsp;%&nbsp;sf&nbsp;<span class="string">"%f"</span>&nbsp;t)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Error</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">No_pid</span>&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fail&nbsp;<span class="constructor">Log</span>.(s&nbsp;<span class="string">"Cannot&nbsp;get&nbsp;the&nbsp;processes&nbsp;status,&nbsp;PID&nbsp;not&nbsp;known&nbsp;(yet)"</span>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Error</span>&nbsp;(<span class="keywordsign">`</span><span class="constructor">Host</span>&nbsp;_&nbsp;<span class="keyword">as</span>&nbsp;e)&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fail&nbsp;<span class="constructor">Log</span>.(s&nbsp;<span class="string">"Command&nbsp;`ps&nbsp;-g&nbsp;PID`&nbsp;failed:&nbsp;"</span>&nbsp;%&nbsp;s&nbsp;(<span class="constructor">Error</span>.to_string&nbsp;e))<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;other&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;fail&nbsp;<span class="constructor">Log</span>.(s&nbsp;<span class="string">"Unknown&nbsp;query:&nbsp;"</span>&nbsp;%&nbsp;sf&nbsp;<span class="string">"%S"</span>&nbsp;other)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
 <br>
 <span class="keyword">let</span>&nbsp;make_python_script&nbsp;~out&nbsp;~err&nbsp;~pid_file&nbsp;~call_script&nbsp;monitored_script_path&nbsp;=<br>
-&nbsp;&nbsp;fmt&nbsp;<span class="string">"<br>
-import&nbsp;os&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#&nbsp;Miscellaneous&nbsp;OS&nbsp;interfaces.<br>
-import&nbsp;sys&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#&nbsp;System-specific&nbsp;parameters&nbsp;and&nbsp;functions.<br>
+&nbsp;&nbsp;fmt&nbsp;{python<span class="keywordsign">|</span><br>
+import&nbsp;os&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">#</span>&nbsp;<span class="constructor">Miscellaneous</span>&nbsp;<span class="constructor">OS</span>&nbsp;interfaces.<br>
+import&nbsp;sys&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">#</span>&nbsp;<span class="constructor">System</span>-specific&nbsp;parameters&nbsp;<span class="keyword">and</span>&nbsp;functions.<br>
 import&nbsp;subprocess<br>
-if&nbsp;__name__&nbsp;==&nbsp;'__main__':<br>
-&nbsp;&nbsp;&nbsp;&nbsp;try:&nbsp;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pid&nbsp;=&nbsp;os.fork()&nbsp;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;pid&nbsp;&gt;&nbsp;0:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#&nbsp;exit&nbsp;first&nbsp;parent<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sys.exit(0)&nbsp;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;except&nbsp;OSError,&nbsp;e:&nbsp;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print&nbsp;&gt;&gt;sys.stderr,&nbsp;'fork&nbsp;#1&nbsp;failed:&nbsp;%%d&nbsp;(%%s)'&nbsp;%%&nbsp;(e.errno,&nbsp;e.strerror)&nbsp;<br>
+<span class="keyword">if</span>&nbsp;__name__&nbsp;==&nbsp;<span class="keywordsign">'</span>__main__':<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">try</span>:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pid&nbsp;=&nbsp;os.fork()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span>&nbsp;pid&nbsp;&gt;&nbsp;0:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">#</span>&nbsp;exit&nbsp;first&nbsp;parent<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sys.exit(0)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;except&nbsp;<span class="constructor">OSError</span>&nbsp;<span class="keyword">as</span>&nbsp;e:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sys.stderr.write(<span class="keywordsign">'</span>fork&nbsp;#1&nbsp;failed:&nbsp;%%d&nbsp;(%%s)'&nbsp;%%&nbsp;(e.errno,&nbsp;e.strerror))<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sys.exit(1)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;#&nbsp;decouple&nbsp;from&nbsp;parent&nbsp;environment<br>
-&nbsp;&nbsp;&nbsp;&nbsp;os.chdir('/')&nbsp;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;os.setsid()&nbsp;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;os.umask(0)&nbsp;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pid_file&nbsp;=&nbsp;file('%s',&nbsp;'w')<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pid_file.write('%%d\\n'&nbsp;%%&nbsp;os.getpid())<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">#</span>&nbsp;decouple&nbsp;from&nbsp;parent&nbsp;environment<br>
+&nbsp;&nbsp;&nbsp;&nbsp;os.chdir(<span class="string">'/'</span>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;os.setsid()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;os.umask(0)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pid_file&nbsp;=&nbsp;<span class="keyword">open</span>(<span class="keywordsign">'</span>%s',&nbsp;<span class="string">'w'</span>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pid_file.write(<span class="keywordsign">'</span>%%d'&nbsp;%%&nbsp;os.getpid())<br>
 &nbsp;&nbsp;&nbsp;&nbsp;pid_file.close()<br>
-&nbsp;&nbsp;&nbsp;&nbsp;#&nbsp;do&nbsp;second&nbsp;fork<br>
-&nbsp;&nbsp;&nbsp;&nbsp;try:&nbsp;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pid&nbsp;=&nbsp;os.fork()&nbsp;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;pid&nbsp;&gt;&nbsp;0:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#&nbsp;exit&nbsp;from&nbsp;second&nbsp;parent,&nbsp;print&nbsp;eventual&nbsp;PID&nbsp;before<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print&nbsp;'Daemon&nbsp;PID&nbsp;%%d'&nbsp;%%&nbsp;pid&nbsp;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sys.exit(0)&nbsp;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;except&nbsp;OSError,&nbsp;e:&nbsp;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print&nbsp;&gt;&gt;sys.stderr,&nbsp;'fork&nbsp;#2&nbsp;failed:&nbsp;%%d&nbsp;(%%s)'&nbsp;%%&nbsp;(e.errno,&nbsp;e.strerror)&nbsp;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sys.exit(1)&nbsp;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;p&nbsp;=&nbsp;subprocess.Popen([%s],<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cwd='/',<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;stdout=file('%s',&nbsp;'w'),&nbsp;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;stderr=file('%s',&nbsp;'w'))<br>
-"</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">#</span>&nbsp;<span class="keyword">do</span>&nbsp;second&nbsp;fork<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">try</span>:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pid&nbsp;=&nbsp;os.fork()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span>&nbsp;pid&nbsp;&gt;&nbsp;0:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">#</span>&nbsp;exit&nbsp;from&nbsp;second&nbsp;parent,&nbsp;print&nbsp;eventual&nbsp;<span class="constructor">PID</span>&nbsp;before<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print(<span class="keywordsign">'</span><span class="constructor">Daemon</span>&nbsp;<span class="constructor">PID</span>&nbsp;%%d'&nbsp;%%&nbsp;pid)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sys.exit(0)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;except&nbsp;<span class="constructor">OSError</span>&nbsp;<span class="keyword">as</span>&nbsp;e:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sys.stderr.write(<span class="keywordsign">'</span>fork&nbsp;#2&nbsp;failed:&nbsp;%%d&nbsp;(%%s)'&nbsp;%%&nbsp;(e.errno,&nbsp;e.strerror))<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sys.exit(1)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;p&nbsp;=&nbsp;subprocess.<span class="constructor">Popen</span>([%s],<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cwd=<span class="string">'/'</span>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;stdout=<span class="keyword">open</span>(<span class="keywordsign">'</span>%s',&nbsp;<span class="string">'w'</span>),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;stderr=<span class="keyword">open</span>(<span class="keywordsign">'</span>%s',&nbsp;<span class="string">'w'</span>))<br>
+<span class="keywordsign">|</span>python}<br>
 &nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">Ketrew_path</span>.to_string&nbsp;pid_file)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;(call_script<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">Ketrew_path</span>.to_string&nbsp;monitored_script_path)<br>
@@ -232,7 +247,7 @@ if&nbsp;__name__&nbsp;==&nbsp;'__main__':<br>
 &nbsp;&nbsp;<span class="keyword">let</span>&nbsp;created&nbsp;=&nbsp;created&nbsp;rp&nbsp;<span class="keyword">in</span><br>
 &nbsp;&nbsp;<span class="keyword">begin</span>&nbsp;<span class="keyword">match</span>&nbsp;<span class="constructor">Ketrew_host_io</span>.get_fresh_playground&nbsp;created.host&nbsp;<span class="keyword">with</span><br>
 &nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">None</span>&nbsp;<span class="keywordsign">-&gt;</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;fail_fatal&nbsp;(fmt&nbsp;&nbsp;<span class="string">"Host&nbsp;%s:&nbsp;Missing&nbsp;playground"</span>&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;fail_fatal&nbsp;(fmt&nbsp;&nbsp;<span class="string">"Host&nbsp;%s:&nbsp;Missing&nbsp;playground"</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">Host</span>.to_string_hum&nbsp;created.host))<br>
 &nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Some</span>&nbsp;playground&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;monitored_script&nbsp;=<br>
@@ -256,7 +271,7 @@ if&nbsp;__name__&nbsp;==&nbsp;'__main__':<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">begin</span>&nbsp;<span class="keyword">match</span>&nbsp;created.using&nbsp;<span class="keyword">with</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Nohup_setsid</span>&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;cmd&nbsp;=<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fmt&nbsp;<span class="string">"nohup&nbsp;setsid&nbsp;%s&nbsp;&gt;&nbsp;%s&nbsp;2&gt;&nbsp;%s&nbsp;&amp;"</span>&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fmt&nbsp;<span class="string">"nohup&nbsp;setsid&nbsp;%s&nbsp;&gt;&nbsp;%s&nbsp;2&gt;&nbsp;%s&nbsp;&amp;"</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(call_script<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">Ketrew_path</span>.to_string&nbsp;monitored_script_path)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&gt;&nbsp;<span class="constructor">List</span>.map&nbsp;~f:<span class="constructor">Filename</span>.quote<br>
@@ -274,7 +289,7 @@ if&nbsp;__name__&nbsp;==&nbsp;'__main__':<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;path&nbsp;=&nbsp;python_using_path&nbsp;~playground&nbsp;<span class="keyword">in</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Ketrew_host_io</span>.put_file&nbsp;~content&nbsp;created.host&nbsp;~path<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;()&nbsp;<span class="keywordsign">-&gt;</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Ketrew_host_io</span>.run_shell_command&nbsp;created.host&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Ketrew_host_io</span>.run_shell_command&nbsp;created.host<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(fmt&nbsp;<span class="string">"python&nbsp;%s"</span>&nbsp;(<span class="constructor">Path</span>.to_string_quoted&nbsp;path))<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;()&nbsp;<span class="keywordsign">-&gt;</span><br>
@@ -291,7 +306,7 @@ if&nbsp;__name__&nbsp;==&nbsp;'__main__':<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Ssh</span>&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Unix</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;fail&nbsp;(<span class="keywordsign">`</span><span class="constructor">Recoverable</span>&nbsp;(<span class="constructor">Error</span>.to_string&nbsp;e))<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Execution</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;fail_fatal&nbsp;(<span class="constructor">Error</span>.to_string&nbsp;e)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">IO</span>&nbsp;_&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">System</span>&nbsp;_&nbsp;<span class="keyword">as</span>&nbsp;e&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">IO</span>&nbsp;_&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">System</span>&nbsp;_&nbsp;<span class="keyword">as</span>&nbsp;e&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fail_fatal&nbsp;(<span class="constructor">Error</span>.to_string&nbsp;e)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
 &nbsp;&nbsp;<span class="keyword">end</span><br>
@@ -308,15 +323,17 @@ if&nbsp;__name__&nbsp;==&nbsp;'__main__':<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Some</span>&nbsp;(<span class="keywordsign">`</span><span class="constructor">Failure</span>&nbsp;(date,&nbsp;label,&nbsp;ret))&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;(<span class="keywordsign">`</span><span class="constructor">Failed</span>&nbsp;(run_parameters,&nbsp;fmt&nbsp;<span class="string">"%s&nbsp;returned&nbsp;%s"</span>&nbsp;label&nbsp;ret))<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">None</span>&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Some</span>&nbsp;_<span class="keywordsign">-&gt;</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;get_pid_of_monitored_script&nbsp;~host:run.created.host&nbsp;~script:run.script&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;get_pid&nbsp;run<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;pid&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;elapsed&nbsp;=&nbsp;<span class="constructor">Time</span>.(now&nbsp;())&nbsp;-.&nbsp;run.start_time&nbsp;<span class="keyword">in</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">begin</span>&nbsp;<span class="keyword">match</span>&nbsp;pid&nbsp;<span class="keyword">with</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">None</span>&nbsp;<span class="keyword">when</span>&nbsp;&nbsp;elapsed&nbsp;&gt;&nbsp;run.created.starting_timeout&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">(*&nbsp;no&nbsp;pid&nbsp;after&nbsp;timeout&nbsp;=&gt;&nbsp;fail!&nbsp;*)</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;(<span class="keywordsign">`</span><span class="constructor">Failed</span>&nbsp;(run_parameters,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fmt&nbsp;<span class="string">"starting&nbsp;timeouted:&nbsp;%.2f&nbsp;&gt;&nbsp;%.2f"</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;elapsed&nbsp;run.created.starting_timeout))<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fmt&nbsp;<span class="string">"Can't&nbsp;the&nbsp;PID&nbsp;after&nbsp;%.2f&nbsp;seconds&nbsp;(&gt;&nbsp;configured&nbsp;time-out:&nbsp;%.2f,&nbsp;file:&nbsp;%s)"</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;elapsed&nbsp;run.created.starting_timeout<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">Ketrew_monitored_script</span>.pid_file&nbsp;run.script<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&gt;&nbsp;<span class="constructor">Ketrew_path</span>.to_string)))<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">None</span>&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">(*&nbsp;we&nbsp;consider&nbsp;it&nbsp;didn't&nbsp;start&nbsp;yet&nbsp;*)</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;(<span class="keywordsign">`</span><span class="constructor">Still_running</span>&nbsp;run_parameters)<br>
@@ -327,7 +344,6 @@ if&nbsp;__name__&nbsp;==&nbsp;'__main__':<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;ps_return&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">begin</span>&nbsp;<span class="keyword">match</span>&nbsp;ps_return&nbsp;<span class="keyword">with</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;0&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="comment">(*&nbsp;most&nbsp;likely&nbsp;still&nbsp;running&nbsp;*)</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">(*&nbsp;TOOD&nbsp;save&nbsp;pid&nbsp;+&nbsp;find&nbsp;other&nbsp;way&nbsp;of&nbsp;checking&nbsp;*)</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;(<span class="keywordsign">`</span><span class="constructor">Still_running</span>&nbsp;new_run_parameters)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;n&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="comment">(*&nbsp;not&nbsp;running,&nbsp;for&nbsp;“sure”&nbsp;*)</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">(*&nbsp;we&nbsp;fetch&nbsp;the&nbsp;log&nbsp;file&nbsp;again,&nbsp;because&nbsp;the&nbsp;process&nbsp;could&nbsp;have<br>
@@ -354,7 +370,7 @@ if&nbsp;__name__&nbsp;==&nbsp;'__main__':<br>
 &nbsp;&nbsp;<span class="keyword">begin</span>&nbsp;<span class="keyword">match</span>&nbsp;run_parameters&nbsp;<span class="keyword">with</span><br>
 &nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Created</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;fail_fatal&nbsp;<span class="string">"not&nbsp;running"</span><br>
 &nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Running</span>&nbsp;run&nbsp;<span class="keyword">as</span>&nbsp;run_parameters&nbsp;<span class="keywordsign">-&gt;</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;get_pid_of_monitored_script&nbsp;~host:run.created.host&nbsp;~script:run.script&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;get_pid&nbsp;run<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;pid&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">begin</span>&nbsp;<span class="keyword">match</span>&nbsp;pid&nbsp;<span class="keyword">with</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">None</span>&nbsp;<span class="keywordsign">-&gt;</span><br>
@@ -371,5 +387,4 @@ if&nbsp;__name__&nbsp;==&nbsp;'__main__':<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
 &nbsp;&nbsp;<span class="keyword">end</span><br>
 &nbsp;&nbsp;&gt;&gt;&lt;&nbsp;classify_and_transform_errors<br>
-<br>
 </code></body></html>

@@ -43,7 +43,7 @@
 <code class="code"><span class="keyword">struct</span><br>
 &nbsp;&nbsp;<span class="keyword">open</span>&nbsp;<span class="constructor">Ketrew_measurement</span><br>
 &nbsp;&nbsp;<span class="keyword">let</span>&nbsp;incomming_request&nbsp;t&nbsp;~connection_id&nbsp;~request&nbsp;=<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Collection</span>.add&nbsp;t.measurements&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Collection</span>.add&nbsp;t.measurements<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">Item</span>.incoming_request&nbsp;(<span class="constructor">Item</span>.make_http_request&nbsp;connection_id&nbsp;request))<br>
 &nbsp;&nbsp;<span class="keyword">let</span>&nbsp;end_of_request&nbsp;t&nbsp;~connection_id&nbsp;~request&nbsp;~response_log&nbsp;~body_length&nbsp;=<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Collection</span>.add&nbsp;t.measurements<br>

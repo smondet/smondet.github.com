@@ -42,10 +42,7 @@
 <link title="Ketrew_target" rel="Chapter" href="Ketrew_target.html">
 <link title="Ketrew_unix_io" rel="Chapter" href="Ketrew_unix_io.html">
 <link title="Ketrew_unix_process" rel="Chapter" href="Ketrew_unix_process.html">
-<link title="Ketrew_yarn" rel="Chapter" href="Ketrew_yarn.html"><link title="Services; Answering Requests" rel="Section" href="#2_ServicesAnsweringRequests">
-<link title="Dispatcher" rel="Section" href="#2_Dispatcher">
-<link title="Start/Stop The Server" rel="Section" href="#2_StartStopTheServer">
-<title>Ketrew API : Ketrew_server</title>
+<link title="Ketrew_yarn" rel="Chapter" href="Ketrew_yarn.html"><title>Ketrew API : Ketrew_server</title>
 </head>
 <body>
 <div class="navbar"><a class="pre" href="Ketrew_protocol.html" title="Ketrew_protocol">Previous</a>
@@ -55,79 +52,22 @@
 <h1>Module <a href="type_Ketrew_server.html">Ketrew_server</a> (<a href="code_Ketrew_server.html">.ml</a>)</h1>
 
 <pre><span class="keyword">module</span> Ketrew_server: <code class="code"><span class="keyword">sig</span></code> <a href="Ketrew_server.html">..</a> <code class="code"><span class="keyword">end</span></code></pre><div class="info module top">
-A common error that simply means “invalid argument”.<br>
+Implementation of the HTTP server.<br>
 </div>
 <hr width="100%">
 
-<pre><span id="VALwrong_request"><span class="keyword">val</span> <a href="code_VALKetrew_server.wrong_request.html">wrong_request</a></span> : <code class="type">'a -> 'b -> ('c, [> `Wrong_http_request of 'a * 'b ]) Ketrew_unix_io.t</code></pre><div class="info ">
-A common error that simply means “invalid argument”.<br>
+<pre><span id="VALstart"><span class="keyword">val</span> <a href="code_VALKetrew_server.start.html">start</a></span> : <code class="type">configuration:<a href="Ketrew_configuration.html#TYPEserver">Ketrew_configuration.server</a> -><br>       (unit,<br>        [> `Database of Trakeva.Error.t<br>         | `Dyn_plugin of [> `Dynlink_error of Dynlink.error | `Findlib of exn ]<br>         | `Failure of string<br>         | `IO of [> `Read_file_exn of Ketrew_unix_io.IO.path * exn ]<br>         | `Server_status_error of string<br>         | `Start_server_error of string<br>         | `System of<br>             [> `File_info of string | `List_directory of string | `Remove of string ] *<br>             [> `Exn of exn ] ])<br>       Ketrew_unix_io.Deferred_result.t</code></pre><div class="info ">
+Start the server according to its configuration.<br>
 </div>
 
-<pre><span class="keyword">module</span> <a href="Ketrew_server.Authentication.html">Authentication</a>: <code class="code"><span class="keyword">sig</span></code> <a href="Ketrew_server.Authentication.html">..</a> <code class="code"><span class="keyword">end</span></code></pre><div class="info">
-Module dealing with access tokens and access rights.
+<pre><span id="VALstatus"><span class="keyword">val</span> <a href="code_VALKetrew_server.status.html">status</a></span> : <code class="type">configuration:<a href="Ketrew_configuration.html#TYPEserver">Ketrew_configuration.server</a> -><br>       ([ `Not_responding of string<br>        | `Running<br>        | `Wrong_response of Cohttp_lwt_unix.Client.Response.t ],<br>        [> `Failure of string | `Server_status_error of string ])<br>       Ketrew_unix_io.Deferred_result.t</code></pre><div class="info ">
+Ask for the status of the server running locally by calling
+    <code class="code"><span class="string">"https://127.0.0.1:&lt;port&gt;/hello"</span></code>.<br>
 </div>
 
-<pre><span class="keyword">module</span> <a href="Ketrew_server.Server_state.html">Server_state</a>: <code class="code"><span class="keyword">sig</span></code> <a href="Ketrew_server.Server_state.html">..</a> <code class="code"><span class="keyword">end</span></code></pre><div class="info">
-The state maintained by the HTTP server.
+<pre><span id="VALstop"><span class="keyword">val</span> <a href="code_VALKetrew_server.stop.html">stop</a></span> : <code class="type">configuration:<a href="Ketrew_configuration.html#TYPEserver">Ketrew_configuration.server</a> -><br>       ([ `Done | `Timeout ],<br>        [> `IO of [> `Exn of exn | `File_exists of string | `Wrong_path of string ]<br>         | `Stop_server_error of string<br>         | `System of [> `File_info of string ] * [> `Exn of exn ] ])<br>       Ketrew_unix_io.Deferred_result.t</code></pre><div class="info ">
+Stop the server by calling the commad <code class="code"><span class="string">"die"</span></code> on the configured
+    command-pipe, stopping will fail with <code class="code"><span class="keywordsign">`</span><span class="constructor">Stop_server_error</span> _</code> if
+    that path is not configured.<br>
 </div>
-
-<pre><span id="TYPEanswer"><span class="keyword">type</span> <code class="type"></code>answer</span> = <code class="type">[ `Message of [ `Json ] * <a href="Ketrew_protocol.Down_message.html#TYPEt">Ketrew_protocol.Down_message.t</a> | `Unit ]</code> </pre>
-<div class="info ">
-A service can replay one of those cases; or an error.<br>
-</div>
-
-
-<pre><span id="TYPEservice"><span class="keyword">type</span> <code class="type">'error</code> service</span> = <code class="type">server_state:<a href="Ketrew_server.Server_state.html#TYPEt">Server_state.t</a> -><br>       body:Cohttp_lwt_body.t -><br>       Cohttp_lwt_unix.Server.Request.t -><br>       (<a href="Ketrew_server.html#TYPEanswer">answer</a>, 'error) Ketrew_unix_io.Deferred_result.t</code> </pre>
-<div class="info ">
-A service is something that replies an <code class="code">answer</code> on a <code class="code"><span class="string">"/&lt;path&gt;"</span></code> URL.<br>
-</div>
-
-
-<pre><span id="VALtoken_parameter"><span class="keyword">val</span> <a href="code_VALKetrew_server.token_parameter.html">token_parameter</a></span> : <code class="type">Cohttp.Request.t -> string option</code></pre><div class="info ">
-Get the <code class="code"><span class="string">"token"</span></code> parameter from an URI.<br>
-</div>
-
-<pre><span id="VALmandatory_parameter"><span class="keyword">val</span> <a href="code_VALKetrew_server.mandatory_parameter.html">mandatory_parameter</a></span> : <code class="type">Cohttp.Request.t -><br>       name:string -><br>       (string, [> `Wrong_http_request of string * string ]) Ketrew_unix_io.t</code></pre><div class="info ">
-Get a parameter or fail.<br>
-</div>
-
-<pre><span id="VALformat_parameter"><span class="keyword">val</span> <a href="code_VALKetrew_server.format_parameter.html">format_parameter</a></span> : <code class="type">Cohttp.Request.t -><br>       ([> `Json ], [> `Wrong_http_request of string * string ]) Ketrew_unix_io.t</code></pre><div class="info ">
-Get the <code class="code"><span class="string">"format"</span></code> parameter from an URI.<br>
-</div>
-
-<pre><span id="VALcheck_that_it_is_a_get"><span class="keyword">val</span> <a href="code_VALKetrew_server.check_that_it_is_a_get.html">check_that_it_is_a_get</a></span> : <code class="type">Cohttp.Request.t -><br>       (unit, [> `Wrong_http_request of string * string ]) Ketrew_unix_io.t</code></pre><div class="info ">
-Fail if the request is not a <code class="code"><span class="keywordsign">`</span><span class="constructor">GET</span></code>.<br>
-</div>
-
-<pre><span id="VALget_post_body"><span class="keyword">val</span> <a href="code_VALKetrew_server.get_post_body.html">get_post_body</a></span> : <code class="type">Cohttp.Request.t -><br>       body:Cohttp_lwt_body.t -><br>       (string,<br>        [> `IO of [> `Exn of exn ] | `Wrong_http_request of string * string ])<br>       Ketrew_unix_io.t</code></pre><div class="info ">
-Check that it is a <code class="code"><span class="keywordsign">`</span><span class="constructor">POST</span></code>, get the <i>non-empty</i> body; or fail.<br>
-</div>
-
-<pre><span id="VALmessage_of_body"><span class="keyword">val</span> <a href="code_VALKetrew_server.message_of_body.html">message_of_body</a></span> : <code class="type">body:string -><br>       (<a href="Ketrew_protocol.Up_message.html#TYPEt">Ketrew_protocol.Up_message.t</a>, [> `Failure of string ]) Ketrew_unix_io.t</code></pre><div class="info ">
-Grab and deserialize a POST body into an up_message.<br>
-</div>
-<br>
-<h2 id="2_ServicesAnsweringRequests">Services; Answering Requests</h2><br>
-
-<pre><span id="VALanswer_get_targets"><span class="keyword">val</span> <a href="code_VALKetrew_server.answer_get_targets.html">answer_get_targets</a></span> : <code class="type">server_state:<a href="Ketrew_server.Server_state.html#TYPEt">Server_state.t</a> -><br>       <a href="Ketrew_pervasives.Unique_id.html#TYPEt">Ketrew_pervasives.Unique_id.t</a> list -><br>       ([> `Message of [> `Json ] * [> `List_of_targets of <a href="Ketrew_target.html#TYPEt">Ketrew_target.t</a> list ] ],<br>        [> `Database of Trakeva.Error.t<br>         | `IO of<br>             [> `Read_file_exn of string * exn | `Write_file_exn of string * exn ]<br>         | `Missing_data of <a href="Ketrew_target.html#TYPEid">Ketrew_target.id</a><br>         | `Persistent_state of [> `Deserilization of string ]<br>         | `System of [> `File_info of string ] * [> `Exn of exn ]<br>         | `Target of [> `Deserilization of string ] ])<br>       Ketrew_unix_io.t</code></pre>
-<pre><span id="VALanswer_get_target_available_queries"><span class="keyword">val</span> <a href="code_VALKetrew_server.answer_get_target_available_queries.html">answer_get_target_available_queries</a></span> : <code class="type">server_state:<a href="Ketrew_server.Server_state.html#TYPEt">Server_state.t</a> -><br>       <a href="Ketrew_pervasives.Unique_id.html#TYPEt">Ketrew_pervasives.Unique_id.t</a> -><br>       ([> `Message of<br>             [> `Json ] * [> `List_of_query_descriptions of (string * string) list ] ],<br>        [> `Database of Trakeva.Error.t<br>         | `Missing_data of string<br>         | `Persistent_state of [> `Deserilization of string ]<br>         | `Target of [> `Deserilization of string ] ])<br>       Ketrew_unix_io.t</code></pre>
-<pre><span id="VALanswer_call_query"><span class="keyword">val</span> <a href="code_VALKetrew_server.answer_call_query.html">answer_call_query</a></span> : <code class="type">server_state:<a href="Ketrew_server.Server_state.html#TYPEt">Server_state.t</a> -><br>       target_id:<a href="Ketrew_pervasives.Unique_id.html#TYPEt">Ketrew_pervasives.Unique_id.t</a> -><br>       query:string -><br>       ([> `Message of [> `Json ] * [> `Query_result of string ] ],<br>        [> `Database of Trakeva.Error.t<br>         | `Missing_data of string<br>         | `Persistent_state of [> `Deserilization of string ]<br>         | `Target of [> `Deserilization of string ]<br>         | `Wrong_http_request of string * string ])<br>       Ketrew_unix_io.t</code></pre>
-<pre><span id="VALanswer_add_targets"><span class="keyword">val</span> <a href="code_VALKetrew_server.answer_add_targets.html">answer_add_targets</a></span> : <code class="type">server_state:<a href="Ketrew_server.Server_state.html#TYPEt">Server_state.t</a> -><br>       targets:<a href="Ketrew_target.html#TYPEt">Ketrew_target.t</a> list -><br>       ([> `Message of [> `Json ] * [> `Ok ] ],<br>        [> `Database of Trakeva.Error.t<br>         | `Database_unavailable of <a href="Ketrew_target.html#TYPEid">Ketrew_target.id</a><br>         | `Missing_data of <a href="Ketrew_target.html#TYPEid">Ketrew_target.id</a><br>         | `Persistent_state of [> `Deserilization of string ]<br>         | `Target of [> `Deserilization of string ] ])<br>       Ketrew_unix_io.t</code></pre>
-<pre><span id="VALdo_action_on_ids"><span class="keyword">val</span> <a href="code_VALKetrew_server.do_action_on_ids.html">do_action_on_ids</a></span> : <code class="type">server_state:<a href="Ketrew_server.Server_state.html#TYPEt">Server_state.t</a> -><br>       ids:Ketrew_pervasives.String.t list -><br>       [ `Kill | `Restart ] -><br>       ([> `Message of [> `Json ] * [> `Ok ] ],<br>        [> `Database of Trakeva.Error.t<br>         | `Database_unavailable of <a href="Ketrew_target.html#TYPEid">Ketrew_target.id</a><br>         | `Missing_data of <a href="Ketrew_target.html#TYPEid">Ketrew_target.id</a><br>         | `Persistent_state of [> `Deserilization of string ]<br>         | `Target of [> `Deserilization of string ] ])<br>       Ketrew_unix_io.t</code></pre>
-<pre><span id="VALanswer_get_target_ids"><span class="keyword">val</span> <a href="code_VALKetrew_server.answer_get_target_ids.html">answer_get_target_ids</a></span> : <code class="type">server_state:<a href="Ketrew_server.Server_state.html#TYPEt">Server_state.t</a> -><br>       [ `All<br>       | `Created_after of <a href="Ketrew_pervasives.Time.html#TYPEt">Ketrew_pervasives.Time.t</a><br>       | `Not_finished_before of <a href="Ketrew_pervasives.Time.html#TYPEt">Ketrew_pervasives.Time.t</a> ] -><br>       ([> `Message of<br>             [> `Json ] * [> `List_of_target_ids of <a href="Ketrew_target.html#TYPEid">Ketrew_target.id</a> list ] ],<br>        [> `Database of Trakeva.Error.t<br>         | `Missing_data of string<br>         | `Target of [> `Deserilization of string ] ])<br>       Ketrew_unix_io.t</code></pre>
-<pre><span id="VALapi_service"><span class="keyword">val</span> <a href="code_VALKetrew_server.api_service.html">api_service</a></span> : <code class="type">server_state:<a href="Ketrew_server.Server_state.html#TYPEt">Server_state.t</a> -><br>       body:Cohttp_lwt_body.t -><br>       Cohttp.Request.t -><br>       ([> `Message of<br>             [> `Json ] *<br>             [> `List_of_query_descriptions of (string * string) list<br>              | `List_of_target_ids of <a href="Ketrew_target.html#TYPEid">Ketrew_target.id</a> list<br>              | `List_of_targets of <a href="Ketrew_target.html#TYPEt">Ketrew_target.t</a> list<br>              | `Ok<br>              | `Query_result of string ] ],<br>        [> `Database of Trakeva.Error.t<br>         | `Database_unavailable of <a href="Ketrew_target.html#TYPEid">Ketrew_target.id</a><br>         | `Failure of string<br>         | `IO of<br>             [> `Exn of exn<br>              | `Read_file_exn of string * exn<br>              | `Write_file_exn of string * exn ]<br>         | `Missing_data of <a href="Ketrew_target.html#TYPEid">Ketrew_target.id</a><br>         | `Persistent_state of [> `Deserilization of string ]<br>         | `System of [> `File_info of string ] * [> `Exn of exn ]<br>         | `Target of [> `Deserilization of string ]<br>         | `Wrong_http_request of string * string ])<br>       Ketrew_unix_io.t</code></pre><br>
-<h2 id="2_Dispatcher">Dispatcher</h2><br>
-
-<pre><span id="VALhandle_request"><span class="keyword">val</span> <a href="code_VALKetrew_server.handle_request.html">handle_request</a></span> : <code class="type">server_state:<a href="Ketrew_server.Server_state.html#TYPEt">Server_state.t</a> -><br>       body:Cohttp_lwt_body.t -><br>       Cohttp_lwt_unix.Server.Request.t -><br>       (<a href="Ketrew_server.html#TYPEanswer">answer</a>,<br>        [> `Database of Trakeva.Error.t<br>         | `Database_unavailable of <a href="Ketrew_target.html#TYPEid">Ketrew_target.id</a><br>         | `Failure of string<br>         | `IO of<br>             [> `Exn of exn<br>              | `Read_file_exn of string * exn<br>              | `Write_file_exn of string * exn ]<br>         | `Missing_data of <a href="Ketrew_target.html#TYPEid">Ketrew_target.id</a><br>         | `Persistent_state of [> `Deserilization of string ]<br>         | `System of [> `File_info of string ] * [> `Exn of exn ]<br>         | `Target of [> `Deserilization of string ]<br>         | `Wrong_http_request of string * string ])<br>       Ketrew_unix_io.Deferred_result.t</code></pre><br>
-<h2 id="2_StartStopTheServer">Start/Stop The Server</h2><br>
-
-<pre><span id="VALmandatory_for_starting"><span class="keyword">val</span> <a href="code_VALKetrew_server.mandatory_for_starting.html">mandatory_for_starting</a></span> : <code class="type">'a option -><br>       msg:'b -><br>       ('a, [> `Start_server_error of 'b ]) Ketrew_unix_io.Deferred_result.t</code></pre>
-<pre><span id="VALdie_command"><span class="keyword">val</span> <a href="code_VALKetrew_server.die_command.html">die_command</a></span> : <code class="type">string</code></pre>
-<pre><span id="VALreload_authorized_tokens"><span class="keyword">val</span> <a href="code_VALKetrew_server.reload_authorized_tokens.html">reload_authorized_tokens</a></span> : <code class="type">string</code></pre>
-<pre><span id="VALreload_authentication"><span class="keyword">val</span> <a href="code_VALKetrew_server.reload_authentication.html">reload_authentication</a></span> : <code class="type">server_state:<a href="Ketrew_server.Server_state.html#TYPEt">Server_state.t</a> -><br>       (unit, [> `IO of [> `Read_file_exn of Ketrew_unix_io.IO.path * exn ] ])<br>       Ketrew_unix_io.t</code></pre>
-<pre><span id="VALstart_listening_on_command_pipe"><span class="keyword">val</span> <a href="code_VALKetrew_server.start_listening_on_command_pipe.html">start_listening_on_command_pipe</a></span> : <code class="type">server_state:<a href="Ketrew_server.Server_state.html#TYPEt">Server_state.t</a> -><br>       (unit,<br>        [> `Start_server_error of string<br>         | `System of<br>             [> `File_info of string | `List_directory of string | `Remove of string ] *<br>             [> `Exn of exn ] ])<br>       Ketrew_unix_io.t</code></pre>
-<pre><span id="VALstart_engine_loop"><span class="keyword">val</span> <a href="code_VALKetrew_server.start_engine_loop.html">start_engine_loop</a></span> : <code class="type">server_state:<a href="Ketrew_server.Server_state.html#TYPEt">Server_state.t</a> -> unit</code></pre>
-<pre><span id="VALstart_listening_on_connections"><span class="keyword">val</span> <a href="code_VALKetrew_server.start_listening_on_connections.html">start_listening_on_connections</a></span> : <code class="type">server_state:<a href="Ketrew_server.Server_state.html#TYPEt">Server_state.t</a> -><br>       (unit, [> `Start_server_error of string ]) Ketrew_unix_io.Deferred_result.t</code></pre>
-<pre><span id="VALstop"><span class="keyword">val</span> <a href="code_VALKetrew_server.stop.html">stop</a></span> : <code class="type">configuration:<a href="Ketrew_configuration.html#TYPEserver">Ketrew_configuration.server</a> -><br>       ([> `Done | `Timeout ],<br>        [> `IO of [> `Exn of exn | `File_exists of string | `Wrong_path of string ]<br>         | `Stop_server_error of string<br>         | `System of [> `File_info of string ] * [> `Exn of exn ] ])<br>       Ketrew_unix_io.t</code></pre>
-<pre><span id="VALstatus"><span class="keyword">val</span> <a href="code_VALKetrew_server.status.html">status</a></span> : <code class="type">configuration:<a href="Ketrew_configuration.html#TYPEserver">Ketrew_configuration.server</a> -><br>       ([> `Not_responding of string<br>         | `Running<br>         | `Wrong_response of Cohttp_lwt_unix.Client.Response.t ],<br>        [> `Failure of string | `Server_status_error of string ])<br>       Ketrew_unix_io.t</code></pre>
-<pre><span id="VALstart"><span class="keyword">val</span> <a href="code_VALKetrew_server.start.html">start</a></span> : <code class="type">configuration:<a href="Ketrew_configuration.html#TYPEserver">Ketrew_configuration.server</a> -><br>       (unit,<br>        [> `Database of Trakeva.Error.t<br>         | `Dyn_plugin of [> `Dynlink_error of Dynlink.error | `Findlib of exn ]<br>         | `Failure of string<br>         | `IO of [> `Read_file_exn of Ketrew_unix_io.IO.path * exn ]<br>         | `Server_status_error of string<br>         | `Start_server_error of string<br>         | `System of<br>             [> `File_info of string | `List_directory of string | `Remove of string ] *<br>             [> `Exn of exn ] ])<br>       Ketrew_unix_io.t</code></pre></body></html>
+</body></html>

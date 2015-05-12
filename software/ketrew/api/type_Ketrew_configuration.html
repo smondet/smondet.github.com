@@ -58,7 +58,6 @@
 &nbsp;&nbsp;<span class="keyword">type</span>&nbsp;engine<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;engine&nbsp;:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;?database_parameters:string&nbsp;<span class="keywordsign">-&gt;</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;?persistent_state_key:string&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;?turn_unix_ssh_failure_into_target_failure:bool&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;?host_timeout_upper_bound:float&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;unit&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Ketrew_configuration</span>.engine<br>
 &nbsp;&nbsp;<span class="keyword">type</span>&nbsp;authorized_tokens<br>
@@ -94,9 +93,13 @@
 &nbsp;&nbsp;&nbsp;&nbsp;?debug_level:int&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;?plugins:<span class="constructor">Ketrew_configuration</span>.plugin&nbsp;list&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Ketrew_configuration</span>.mode&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Ketrew_configuration</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;profile<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;profile&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;string&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Ketrew_configuration</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Ketrew_configuration</span>.profile<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;output&nbsp;:&nbsp;<span class="constructor">Ketrew_configuration</span>.profile&nbsp;list&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;unit<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;to_json&nbsp;:&nbsp;<span class="constructor">Ketrew_configuration</span>.profile&nbsp;list&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;string<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;default_database_path&nbsp;:&nbsp;string<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;database_parameters&nbsp;:&nbsp;<span class="constructor">Ketrew_configuration</span>.engine&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;string<br>
-&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;persistent_state_key&nbsp;:&nbsp;<span class="constructor">Ketrew_configuration</span>.engine&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;string<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;is_unix_ssh_failure_fatal&nbsp;:&nbsp;<span class="constructor">Ketrew_configuration</span>.engine&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;bool<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;plugins&nbsp;:&nbsp;<span class="constructor">Ketrew_configuration</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Ketrew_configuration</span>.plugin&nbsp;list<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;mode&nbsp;:&nbsp;<span class="constructor">Ketrew_configuration</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Ketrew_configuration</span>.mode<br>
@@ -133,9 +136,4 @@
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Guess</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">In_directory</span>&nbsp;<span class="keyword">of</span>&nbsp;string<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Override</span>&nbsp;<span class="keyword">of</span>&nbsp;<span class="constructor">Ketrew_configuration</span>.t&nbsp;]&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Ketrew_configuration</span>.t<br>
-&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;profile<br>
-&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;profile&nbsp;:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;string&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Ketrew_configuration</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Ketrew_configuration</span>.profile<br>
-&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;output&nbsp;:&nbsp;<span class="constructor">Ketrew_configuration</span>.profile&nbsp;list&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;unit<br>
-&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;to_json&nbsp;:&nbsp;<span class="constructor">Ketrew_configuration</span>.profile&nbsp;list&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;string<br>
 <span class="keyword">end</span></code></body></html>

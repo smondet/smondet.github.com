@@ -10,7 +10,8 @@
 <pre><code>./please.sh test-env
 . _test_env/env.env</code></pre><p>Let&#39;s start the server:</p>
 <pre><code>kdserver start</code></pre><p>You should be able to stop it with</p>
-<pre><code>kdserver stop</code></pre><p>Let&#39;s add some targets to the database (c.f. <code>src/test/Workflow_Examples.ml</code>):</p>
+<pre><code>kdserver stop</code></pre><p>Let&#39;s add some targets to the database (cf. the
+<a href='Workflow_Examples.html'>workflow examples</a>):</p>
 <pre><code>kdtest two-py /tmp &quot;du -sh $HOME&quot; &quot;du -sh $PWD&quot;</code></pre><p>You can always browse with the client working like in standalone mode:</p>
 <pre><code>kdclient interact</code></pre><p>Let&#39;s see the API itself, we use <code>curl</code>, and we <code>POST</code> messages to the <code>/api</code>
 service:</p>
@@ -29,7 +30,8 @@ curl -d &quot;$json&quot; -k &quot;$ktest_url/api?token=nekot&quot;</code></pre>
 <p>where:</p>
 <ul><li>The variable <code>$ktest_url</code> is provided in <code>_test_env/env.env</code>.</li><li>The parameter <code>token</code> is an authentication token (the server reads the file
  <code>_test_env/test-authorized-tokens</code>, where there is an “easy token” <code>&quot;nekot&quot;</code>).</li><li>The <code>POST</code> data (<code>-d $json</code>) is the serialized up-message.  The available
- messages are defined in <code>src/atd/protocol_v0.atd</code> and tagged with a version.</li></ul>
+ messages are defined in <code>src/pure/ketrew_protocol.mli</code> and tagged with a
+ version.</li></ul>
 
 <p>To find out how to give the right JSON to to the API, you may just check from
 the top-level:</p>

@@ -15,8 +15,9 @@
 
 <h2 id="Examples">Examples</h2>
 
-<p>There are (for now) three long-running methods in the library, see
+<p>There are (for now) four long-running methods in the library, see
 <a href='api/Ketrew_lsf.html'><a href='api/Ketrew_lsf.html' title='Ketrew_lsf'><code>Ketrew_lsf</code></a></a>,
+<a href='api/Ketrew_yarn.html'><a href='api/Ketrew_yarn.html' title='Ketrew_yarn'><code>Ketrew_yarn</code></a></a>,
 <a href='api/Ketrew_pbs.html'><a href='api/Ketrew_pbs.html' title='Ketrew_pbs'><code>Ketrew_pbs</code></a></a>, and
 <a href='api/Ketrew_daemonize.html'><a href='api/Ketrew_daemonize.html' title='Ketrew_daemonize'><code>Ketrew_daemonize</code></a></a>.
 They all use the module <a href='api/Ketrew_long_running_utilities.html' title='Ketrew_long_running_utilities'><code>Ketrew_long_running_utilities</code></a> which provides a few
@@ -31,7 +32,7 @@ implementation of <a href='api/Ketrew_daemonize.html' title='Ketrew_daemonize'><
 
 <p>Dynamic linking can be annoying: for instance, some libraries do not install
 <code>.cmxs</code> files, and some architectures do not support native dynlink, …</p>
-<p>Hopefully there is an <strong>alternative</strong>, one can link plugins statically with
+<p>Luckily, there is an <strong>alternative</strong>, one can link plugins statically with
 <code>src/app/main.ml</code> (or another
 version of that), see the <a href='./Alternative_CLI_Application.html'>documentation</a>.</p>
 </div></div></div></body><html>

@@ -45,11 +45,9 @@
 &nbsp;&nbsp;<span class="keyword">let</span>&nbsp;log_action&nbsp;=<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">function</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Call</span>&nbsp;(meth,&nbsp;the_uri)&nbsp;<span class="keywordsign">-&gt;</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;s&nbsp;(<span class="constructor">Cohttp</span>.<span class="constructor">Code</span>.string_of_method&nbsp;meth)&nbsp;%&nbsp;sp&nbsp;%&nbsp;uri&nbsp;the_uri<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;s&nbsp;(<span class="constructor">Cohttp</span>.<span class="constructor">Code</span>.(string_of_method&nbsp;(meth&nbsp;:&gt;&nbsp;meth)))&nbsp;%&nbsp;sp&nbsp;%&nbsp;uri&nbsp;the_uri<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Targets</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;s&nbsp;<span class="string">"Getting&nbsp;targets"</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Kill_targets</span>&nbsp;ids&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;s&nbsp;<span class="string">"Killing&nbsp;targets"</span>&nbsp;%&nbsp;sp&nbsp;%&nbsp;<span class="constructor">OCaml</span>.list&nbsp;quote&nbsp;ids<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Archive_targets</span>&nbsp;ids&nbsp;<span class="keywordsign">-&gt;</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;s&nbsp;<span class="string">"Archiving&nbsp;targets"</span>&nbsp;%&nbsp;sp&nbsp;%&nbsp;<span class="constructor">OCaml</span>.list&nbsp;quote&nbsp;ids<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Restart_targets</span>&nbsp;ids&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;s&nbsp;<span class="string">"Restarting&nbsp;targets"</span>&nbsp;%&nbsp;sp&nbsp;%&nbsp;<span class="constructor">OCaml</span>.list&nbsp;quote&nbsp;ids<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Target_query</span>&nbsp;(id,&nbsp;query)&nbsp;<span class="keywordsign">-&gt;</span><br>
@@ -77,6 +75,6 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Wrong_json</span>&nbsp;j&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;s&nbsp;<span class="string">"Wrong&nbsp;Json:&nbsp;"</span>&nbsp;%&nbsp;indent&nbsp;(<span class="constructor">Json</span>.log&nbsp;j)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Unexpected_message</span>&nbsp;m&nbsp;<span class="keywordsign">-&gt;</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;s&nbsp;<span class="string">"Wrong&nbsp;Json:&nbsp;"</span>&nbsp;%&nbsp;indent&nbsp;(<span class="constructor">Ketrew_protocol</span>.<span class="constructor">Down_message</span>.log&nbsp;m)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;s&nbsp;<span class="string">"Wrong&nbsp;Json:&nbsp;"</span>&nbsp;%&nbsp;string&nbsp;(<span class="constructor">Ketrew_protocol</span>.<span class="constructor">Down_message</span>.serialize&nbsp;m)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">in</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;s&nbsp;<span class="string">"HTTP&nbsp;Call"</span>&nbsp;%&nbsp;sp&nbsp;%&nbsp;parens&nbsp;(act&nbsp;%&nbsp;s&nbsp;<span class="string">"&nbsp;→&nbsp;"</span>&nbsp;%&nbsp;error_log)</code></body></html>
