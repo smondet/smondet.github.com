@@ -8,7 +8,7 @@
 - [Pvem](./pvem/index.html): The "Polymorphic Variants-based Error Monad", `Pvem` (pronounce /pi:vɛm/), is a module providing simple handling of an error monad type based on polymorphic variants (see on [Bitbucket](https://bitbucket.org/smondet/pvem)).
 - [Atd2cconv](./atd2cconv/index.html): The `atd2cconv` application compiles [ATD](https://github.com/mjambon/atd/blob/master/atd_ast.mli) descriptions to OCaml code which defines [CConv](https://github.com/c-cube/cconv) sources and sinks (see on [Github](https://github.com/smondet/atd2cconv), and also the documentation for [version 0.0.0](atd2cconv/atd2cconv.0.0.0/index.html)).
 - [Pvem_lwt_unix](./pvem_lwt_unix/index.html): `Pvem_lwt_unix` provides a high-level API on top of `Lwt_unix`, with comprehensive error types (see on [Bitbucket](https://bitbucket.org/smondet/pvem_lwt_unix)).
-- [Ketrew](./ketrew/index.html): Workflow Engine for complex computational experiments (see on [Github](https://github.com/hammerlab/ketrew), and also the documentation for [version 0.0.0](ketrew/doc.0.0.0/index.html)).
+- [Ketrew](./ketrew/index.html): Workflow Engine for complex computational experiments (see on [Github](https://github.com/hammerlab/ketrew), and also the documentation for [version 0.0.0](ketrew/doc.0.0.0/index.html) and for [version 1.0.0](ketrew/doc.1.0.0/index.html)).
 - [Oredoc](./oredoc/index.html): Build documentation websites for *some* OCaml projects (see on [Github](https://github.com/smondet/oredoc)).
 - [Trakeva](./trakeva/index.html): Transactions, Keys, and Values: an API describing key-value storage with ACID transactions *and* different backends (see on [Github](https://github.com/smondet/trakeva), and also the documentation for [version 0.0.0](trakeva/trakeva.0.0.0/index.html)).
 

@@ -1,0 +1,134 @@
+ <!DOCTYPE html> <html> <head><link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootswatch/3.2.0/readable/bootstrap.min.css" type="text/css">
+<link rel="stylesheet" href="https://cdn.rawgit.com/hammerlab/ketrew/2d1c430cca52caa71e363a765ff8775a6ae14ba9/src/doc/code_style.css" type="text/css"><meta charset="utf-8"><title>Ketrew: Developer Documentation</title></head><body><div class="container"><h1>Ketrew: Developer Documentation</h1><div class="row">
+<div class="col-md-3">
+<h2>Contents</h2><ul><li><a href='#Build'>Build</a>
+<ul><li><a href='#GettingJustTheDependencies'>Getting Just The Dependencies</a>
+</li><li><a href='#Build_1'>Build</a>
+</li><li><a href='#Install'>Install</a>
+</li><li><a href='#BuildTheDocumentation'>Build The Documentation</a>
+</li></ul>
+</li><li><a href='#Tests'>Tests</a>
+<ul><li><a href='#AutomatedTests'>Automated Tests</a>
+</li><li><a href='#ThecliTest'>The <code>cli</code> Test</a>
+</li><li><a href='#TheintegrationTest'>The <code>integration</code> Test</a>
+</li><li><a href='#DynamicallyLoadedPlugins'>Dynamically Loaded Plugins</a>
+</li><li><a href='#GeneratingaTestEnvironment'>Generating a Test Environment</a>
+</li><li><a href='#Coverage'>Coverage</a>
+</li></ul>
+</li><li><a href='#HowtoRelease'>How to Release</a>
+</li></ul><h2>Menu</h2><ul><li><a href='index.html'>Home</a></li><li><a href='Alternative_CLI_Application.html'>Alternative CLI Application</a></li><li><a href='Developer_Documentation.html'>Developer Documentation</a></li><li><a href='Glossary.html'>Glossary</a></li><li><a href='Long-Running_Plugins.html'>Long-Running Plugins</a></li><li><a href='Server_Commands.html'>Server Commands</a></li><li><a href='The_Configuration_File.html'>The Configuration File</a></li><li><a href='The_HTTP_API.html'>The HTTP API</a></li><li><a href='Workflow_Examples.html'>Workflow Examples</a></li><li><a href='dummy_plugin.html'>Plugin Example</a></li><li><a href='dummy_plugin_user.html'>Plugin-Usage Example</a></li><li><a href='integration.html'>Integration Test</a></li><li><a href='main.html'>Main Test</a></li><li><a href='preconfigured_main.html'>Preconfigured Main Example</a></li><li><a href='./api/index.html'>API Documentation</a></li><li>Documentation for the <a href='../index.html'><code>master</code></a> branch</li><li>Documentation for <a href='../doc.0.0.0/index.html'>version 0.0.0</a></li><li>Repository <a href='https://github.com/hammerlab/ketrew'>at Github</a></li><li>Up: <a href='../../index.html'>Software Projects</a></li></ul></div><div class="col-md-9"><h1 id="DevelopmentDocumentation">Development Documentation</h1>
+
+<h2 id="Build">Build</h2>
+
+<h3 id="GettingJustTheDependencies">Getting Just The Dependencies</h3>
+
+<p>Ketrew depends on</p>
+<ul><li><code>nonstd</code>: nano-library providing a portable extract of <code>Core_kernel</code></li><li><code>pvem</code>: error monad</li><li><code>docout</code>: logging with <code>smart-print</code></li><li><code>sosa</code>:  String module/functor</li><li><code>pvem_lwt_unix</code>: <code>Lwt_unix</code> wrapped in a <code>Pvem.t</code> (error monad) with more
+precise error types.</li><li><code>uri</code>:
+parse <a href='http://www.ietf.org/rfc/rfc3986.txt'>RFC-3986</a>-compliant URIs
+(<code>uri</code> itself depends on <code>camlp4</code>).</li><li><code>cmdliner</code>: command line parsing</li><li><code>ppx_blob</code>, <code>ppx_deriving_yojson</code>, <code>ppx_deriving</code>, <code>yojson</code>: JSON
+ parsing/printing and other code generation</li><li><code>cohttp.lwt</code>, <code>ssl</code>, and <code>conduit</code>: HTTP server and client</li><li><code>findlib</code> + <code>dynlink</code>: dynamic loading of plugins </li><li><code>trakeva</code> with the <code>sqlite</code> backend</li></ul>
+
+<p>and uses the <code>oasis</code> as a build system.</p>
+<p>At runtime, Ketrew may use an <code>ssh</code> client (tested only with OpenSSH; but SSH
+calls are quite configurable).</p>
+<h3 id="Build_1">Build</h3>
+
+<p>Then you may setup and build everything:</p>
+<pre><code> make configure # Generate the `_oasis`, call `oasis` and `configure`
+ make           # The actual compilation of the library</code></pre><h3 id="Install">Install</h3>
+
+<p>Ketrew is installed by Oasis:</p>
+<pre><code> ocaml setup.ml -install
+ </code></pre><p>(using the option <code>--prefix</code> at configure time).</p>
+<p>There is an <code>opam</code> file in the repository:</p>
+<pre><code> opam pin add ketrew .</code></pre><p>will pick it (Opam ≥ <em>1.2.0</em>).</p>
+<h3 id="BuildTheDocumentation">Build The Documentation</h3>
+
+<p>The documentation depends on <a href='https://github.com/smondet/oredoc'>oredoc</a>:</p>
+<pre><code>make doc</code></pre><p>and check-out <code>_doc/&lt;branch&gt;/index.html</code> (unless branch is <code>master</code>, then
+<code>_doc/index.html</code>).</p>
+<h2 id="Tests">Tests</h2>
+
+<h3 id="AutomatedTests">Automated Tests</h3>
+
+<p>Run the tests like this:</p>
+<pre class='bash'><code class='bash'>    ./ketrew-test [-no-color] &lt;Test-names&gt;</code></pre>
+
+<p>where a <code>Test-names</code> is one or more of</p>
+<ul><li><code>ALL</code> all of the following.</li><li><code>basic-test</code></li><li><code>nohup-test</code></li></ul>
+
+<h3 id="ThecliTest">The <code>cli</code> Test</h3>
+
+<p>The workflow <a href='Workflow_Examples.html'>examples</a> in the documentation
+are actually interactive tests (cf. <code>./ketrew-workflow-examples-test</code>).</p>
+<h3 id="TheintegrationTest">The <code>integration</code> Test</h3>
+
+<p>The <a href='integration.html'>integration</a> test uses Ketrew to build
+<a href='https://github.com/mitchellh/vagrant'>Vagrant</a> virtual machines and uses them
+to test further features: we test the PBS and LSF long-running backends by
+creating “one-node clusters”. For now, running the whole test as a single
+workflow is a bit “shaky” (see progress of
+<a href='https://github.com/hammerlab/ketrew/issues/62'>issue 62</a>), please use the
+commands <code>prepare</code>, <code>go</code>, and <code>clean-up</code> separately.</p>
+<h3 id="DynamicallyLoadedPlugins">Dynamically Loaded Plugins</h3>
+
+<p>The build-system creates a plugin and a workflow which uses it:</p>
+<ul><li><a href='dummy_plugin.html'><code>src/test/dummy_plugin.ml</code></a>, and</li><li><a href='dummy_plugin_user.html'><code>src/test/dummy_plugin_user.ml</code></a>.</li></ul>
+
+<h3 id="GeneratingaTestEnvironment">Generating a Test Environment</h3>
+
+<p>In order to not impact a potential “global” installation of Ketrew, one can
+use:</p>
+<pre><code>make test-env</code></pre><pre class='goodresult'><code class='goodresult'>Using package lwt.react as findlin-plugin
+Creating cert-key pair: _test_env/test-cert.pem, _test_env/test-key.pem
+Creating _test_env/configuration.ml
+Creating _test_env/test-authorized-tokens
+Creating _test_env/env.env</code></pre>
+
+<p>The command creates the directory <code>_test_env/</code> with a preconfigured
+test-environment (a self-signed SSL certificate/key pair,
+client/server/standalone configuration file, an “authorization-tokens”
+configuration, … which all work together harmoniously).</p>
+<p>Sourcing <code>_test_env/env.env</code> will give a few aliases to run the tests.
+Aliases which start with <code>ks</code> mean “with a <em>standalone-mode</em> configuration file;”
+those which start with <code>kd</code> are in <em>client-server</em> mode (<code>&#39;d&#39;</code> for “distributed”).</p>
+<ul><li><code>kscli</code>: the standalone <code>ketrew</code> application.</li><li><code>kdserver</code>: the server <code>ketrew</code> application.</li><li><code>kddaemon</code>: the same as <code>kdserver</code> but quiting the current terminal (<code>daemon</code>
+ option).</li><li><code>kdclient</code>: the client <code>ketrew</code> application (talking to a <code>kdserver</code> or
+ <code>kddaemon</code> instance).</li><li><code>kstest</code>: the <a href='Workflow_Examples.html'><code>cli</code> test</a> with a “standalone-mode” configuration file.</li><li><code>kdtest</code>: the same <code>cli</code> test but as a client (again, talking to a <code>kdserver</code>
+ or <code>kddaemon</code> instance).</li><li><code>ksintegration</code>, and <code>kdintegration</code>: the
+ <a href='integration.html'>integration</a> test in standalone and client modes.</li><li><code>ksplugin_user</code>, and <code>kdplugin_user</code>: the mini-workflow
+ <a href='dummy_plugin_user.html'>using the plugin</a>.</li></ul>
+
+<h3 id="Coverage">Coverage</h3>
+
+<p>To generate coverage reports you need to instrument the code byt
+reconfiguring/compiling from scratch using the environment variable
+<code>WITH_BISECT</code> equal to <code>true</code>:</p>
+<pre><code>WITH_BISECT=true make distclean configure all</code></pre><p>Running the instrumented versions of the code will generate <code>bisect*.out</code> files
+when run.</p>
+<p>Then, <code>make report</code> will take the  latest such file
+and generate an html file in <code>_report_dir/index.html</code>. <code>make clean_reports</code>
+removes the reports and <code>_report_dir</code>.</p>
+<p>To remove the instrumentation just use <code>make distclean configure all</code> withou
+<code>WITH_BISECT</code> set to <code>true</code>.</p>
+<h2 id="HowtoRelease">How to Release</h2>
+
+<p>Once we are somewhat happy about the state of the <code>master</code> branch (tests,
+documentation, issues that went into the “next release”
+<a href='https://github.com/hammerlab/ketrew/milestones'>milestone</a>), this is the
+release workflow:</p>
+<ul><li>Release dependencies for which we are using unreleased features
+(e.g. <a href='https://github.com/smondet/trakeva'><code>trakeva</code></a>,
+<a href='https://github.com/smondet/sosa'><code>sosa</code></a>, etc.).</li><li>Set version string in <code>tools/please.ml</code>.</li><li>Update the introductory paragraph of the <code>README.md</code> file for the particular
+version.</li><li>Write a human-friendly change-log (go through git history and write important
+changes).</li><li>Create the release/tag <code>ketrew.x.y.z</code> (put the change-log there, see
+releases <a href='https://github.com/blog/1547-release-your-software'>documentation</a>).</li><li>Fork the
+<a href='https://github.com/ocaml/opam-repository'>mothership opam-repository</a>.</li><li>Add a new package by modifying the repository&#39;s one (see <code>./opam</code>),
+fix the URL and the MD5 sum (from release), test the package (in a new
+opam-switch, or remove <code>ocamlfind</code>), create pull-request.</li><li>Add the tag as an “interesting checkout” in
+<a href='https://github.com/smondet/build-docs-workflow'><code>smondet/build-docs-workflow</code></a>,
+then build and push the documentation (which is for now part of
+<a href='https://github.com/smondet/smondet.github.com'><code>smondet/smondet.github.com</code></a>).</li><li>Once the opam PR is merged, brag about it, write a blog post, start
+<a href='https://github.com/hammerlab/ketrew/issues?q=is%3Aopen+is%3Aissue'>hacking</a>
+on the next version.</li></ul></div></div></div></body><html>
