@@ -111,10 +111,10 @@ Construct a new target, the node of a workflow graph. The main
 <ul>
 <li><code class="code">?active</code>: whether this target should be started by the engine or
     wait to be ativated by another target (through <code class="code">depends_on</code> or
-    <code class="code">on_{success,failure}_activate</code>) p (default:
-    <code class="code"><span class="keyword">false</span></code>). Usual workflows should not set this value since
-    the function <code class="code"><span class="constructor">Ketrew</span>.<span class="constructor">Cliean</span>.submit</code> will activate the toplevel
-    target automatically.</li>
+    <code class="code">on_{success,failure}_activate</code>) (default:
+    <code class="code"><span class="keyword">false</span></code>, i.e., inactive). Usual workflows should not set this
+    value since the function <code class="code"><span class="constructor">Ketrew</span>.<span class="constructor">Cliean</span>.submit</code> will activate the
+    toplevel target automatically.</li>
 <li><code class="code">?depends_on</code>: list of the dependencies of the target.</li>
 <li><code class="code">?make</code>: the build-process used to “build” the target; where the
     computation happens.</li>
