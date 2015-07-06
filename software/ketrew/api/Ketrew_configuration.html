@@ -135,7 +135,7 @@ The configuration of the engine, the component that orchestrates
 </div>
 
 
-<pre><span id="VALengine"><span class="keyword">val</span> <a href="code_VALKetrew_configuration.engine.html">engine</a></span> : <code class="type">?database_parameters:string -><br>       ?turn_unix_ssh_failure_into_target_failure:bool -><br>       ?host_timeout_upper_bound:float -> unit -> <a href="Ketrew_configuration.html#TYPEengine">engine</a></code></pre><div class="info ">
+<pre><span id="VALengine"><span class="keyword">val</span> <a href="code_VALKetrew_configuration.engine.html">engine</a></span> : <code class="type">?database_parameters:string -><br>       ?turn_unix_ssh_failure_into_target_failure:bool -><br>       ?host_timeout_upper_bound:float -><br>       ?maximum_successive_attempts:int -> unit -> <a href="Ketrew_configuration.html#TYPEengine">engine</a></code></pre><div class="info ">
 Build an <code class="code">engine</code> configuration:
 <p>
 <ul>
@@ -149,6 +149,8 @@ Build an <code class="code">engine</code> configuration:
       behavior set the option to <code class="code"><span class="keyword">true</span></code>.</li>
 <li><code class="code">host_timeout_upper_bound</code>: every connection/command timeout
       will be “≤ upper-bound” (in seconds, default is <code class="code">60.</code>).</li>
+<li><code class="code">maximum_successive_attempts</code>: number of successive non-fatal
+      failures allowed before declaring a target dead (default is <code class="code">10</code>).</li>
 </ul>
 <br>
 </div>
@@ -288,6 +290,10 @@ Get the database parameters.<br>
 
 <pre><span id="VALis_unix_ssh_failure_fatal"><span class="keyword">val</span> <a href="code_VALKetrew_configuration.is_unix_ssh_failure_fatal.html">is_unix_ssh_failure_fatal</a></span> : <code class="type"><a href="Ketrew_configuration.html#TYPEengine">engine</a> -> bool</code></pre><div class="info ">
 Should we kill targets on ssh/unix errors.<br>
+</div>
+
+<pre><span id="VALmaximum_successive_attempts"><span class="keyword">val</span> <a href="code_VALKetrew_configuration.maximum_successive_attempts.html">maximum_successive_attempts</a></span> : <code class="type"><a href="Ketrew_configuration.html#TYPEengine">engine</a> -> int</code></pre><div class="info ">
+Get the maximum number of successive non-fatal failures.<br>
 </div>
 
 <pre><span id="VALplugins"><span class="keyword">val</span> <a href="code_VALKetrew_configuration.plugins.html">plugins</a></span> : <code class="type"><a href="Ketrew_configuration.html#TYPEt">t</a> -> <a href="Ketrew_configuration.html#TYPEplugin">plugin</a> list</code></pre><div class="info ">

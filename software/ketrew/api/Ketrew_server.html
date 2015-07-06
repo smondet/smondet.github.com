@@ -60,7 +60,7 @@ Implementation of the HTTP server.<br>
 Start the server according to its configuration.<br>
 </div>
 
-<pre><span id="VALstatus"><span class="keyword">val</span> <a href="code_VALKetrew_server.status.html">status</a></span> : <code class="type">configuration:<a href="Ketrew_configuration.html#TYPEserver">Ketrew_configuration.server</a> -><br>       ([ `Not_responding of string<br>        | `Running<br>        | `Wrong_response of Cohttp_lwt_unix.Client.Response.t ],<br>        [> `Failure of string | `Server_status_error of string ])<br>       Ketrew_unix_io.Deferred_result.t</code></pre><div class="info ">
+<pre><span id="VALstatus"><span class="keyword">val</span> <a href="code_VALKetrew_server.status.html">status</a></span> : <code class="type">configuration:<a href="Ketrew_configuration.html#TYPEserver">Ketrew_configuration.server</a> -><br>       ([ `Not_responding of string<br>        | `Running<br>        | `Wrong_response of Cohttp.Response.t ],<br>        [> `Failure of string | `Server_status_error of string ])<br>       Ketrew_unix_io.Deferred_result.t</code></pre><div class="info ">
 Ask for the status of the server running locally by calling
     <code class="code"><span class="string">"https://127.0.0.1:&lt;port&gt;/hello"</span></code>.<br>
 </div>

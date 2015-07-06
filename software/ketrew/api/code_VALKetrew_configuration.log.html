@@ -73,13 +73,17 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;item&nbsp;<span class="string">"Targets-to-prefectch"</span>&nbsp;(i&nbsp;targets_to_prefetch);<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;]);<br>
 &nbsp;&nbsp;&nbsp;&nbsp;]&nbsp;<span class="keyword">in</span><br>
-&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;engine&nbsp;t&nbsp;=<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;engine&nbsp;{&nbsp;database_parameters;&nbsp;turn_unix_ssh_failure_into_target_failure;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;host_timeout_upper_bound;&nbsp;maximum_successive_attempts&nbsp;}&nbsp;=<br>
 &nbsp;&nbsp;&nbsp;&nbsp;sublist&nbsp;[<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;item&nbsp;<span class="string">"Database"</span>&nbsp;(quote&nbsp;t.database_parameters);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;item&nbsp;<span class="string">"Database"</span>&nbsp;(quote&nbsp;database_parameters);<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;item&nbsp;<span class="string">"Unix-failure"</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;((<span class="keyword">if</span>&nbsp;t.turn_unix_ssh_failure_into_target_failure<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;((<span class="keyword">if</span>&nbsp;turn_unix_ssh_failure_into_target_failure<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">then</span>&nbsp;s&nbsp;<span class="string">"turns"</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">else</span>&nbsp;s&nbsp;<span class="string">"does&nbsp;not&nbsp;turn"</span>)&nbsp;%&nbsp;s&nbsp;<span class="string">"&nbsp;into&nbsp;target&nbsp;failure"</span>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;item&nbsp;<span class="string">"Host-timeout-upper-bound"</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(option&nbsp;f&nbsp;host_timeout_upper_bound);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;item&nbsp;<span class="string">"Maximum-successive-attempts"</span>&nbsp;(i&nbsp;maximum_successive_attempts);<br>
 &nbsp;&nbsp;&nbsp;&nbsp;]&nbsp;<span class="keyword">in</span><br>
 &nbsp;&nbsp;<span class="keyword">let</span>&nbsp;authorized_tokens&nbsp;=&nbsp;<span class="keyword">function</span><br>
 &nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Path</span>&nbsp;path&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;s&nbsp;<span class="string">"Path:&nbsp;"</span>&nbsp;%&nbsp;quote&nbsp;path<br>

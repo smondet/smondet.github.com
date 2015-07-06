@@ -43,7 +43,7 @@
 <code class="code"><span class="keyword">let</span>&nbsp;create<br>
 &nbsp;&nbsp;&nbsp;&nbsp;?(host=<span class="constructor">Ketrew_host</span>.tmp_on_localhost)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;?(daemonize_using=<span class="keywordsign">`</span><span class="constructor">Python_daemon</span>)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;?(daemon_start_timeout=3600.)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;?(daemon_start_timeout=20.)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;program&nbsp;=<br>
 &nbsp;&nbsp;<span class="keyword">let</span>&nbsp;created&nbsp;=&nbsp;{host;&nbsp;program;&nbsp;daemonize_using;&nbsp;daemon_start_timeout}&nbsp;<span class="keyword">in</span><br>
 &nbsp;&nbsp;<span class="keywordsign">`</span><span class="constructor">Long_running</span>&nbsp;(name,&nbsp;<span class="keywordsign">`</span><span class="constructor">Created</span>&nbsp;created&nbsp;|&gt;&nbsp;serialize)</code></body></html>

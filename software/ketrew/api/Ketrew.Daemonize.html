@@ -96,7 +96,7 @@ This module implements the <a href="Ketrew_long_running.LONG_RUNNING.html"><code
 The “standard” plugin-API.<br>
 </div>
 
-<pre><span id="VALcreate"><span class="keyword">val</span> <a href="code_VALKetrew_daemonize.create.html">create</a></span> : <code class="type">?starting_timeout:float -><br>       ?call_script:(string -> string list) -><br>       ?using:[ `Nohup_setsid | `Python_daemon ] -><br>       ?host:<a href="Ketrew_host.html#TYPEt">Ketrew_host.t</a> -><br>       <a href="Ketrew_program.html#TYPEt">Ketrew_program.t</a> -> [> `Long_running of string * string ]</code></pre><div class="info ">
+<pre><span id="VALcreate"><span class="keyword">val</span> <a href="code_VALKetrew_daemonize.create.html">create</a></span> : <code class="type">?starting_timeout:float -><br>       ?call_script:(string -> string list) -><br>       ?using:[ `Nohup_setsid | `Python_daemon ] -><br>       ?host:<a href="Ketrew_host.html#TYPEt">Ketrew_host.t</a> -><br>       ?no_log_is_ok:bool -><br>       <a href="Ketrew_program.html#TYPEt">Ketrew_program.t</a> -> [> `Long_running of string * string ]</code></pre><div class="info ">
 Create a “long-running” <a href="Ketrew_target.html#VALbuild_process"><code class="code"><span class="constructor">Ketrew_target</span>.build_process</code></a> (run parameters
     are already serialized), see <a href="Ketrew_edsl.html#VALdaemonize"><code class="code"><span class="constructor">Ketrew_edsl</span>.daemonize</code></a> for more
     details<br>

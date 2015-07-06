@@ -243,6 +243,12 @@ Configure global “Batch option”,
 <td></td></tr>
 <tr><td><a href="Ketrew_host.html#VALconnection">connection</a> [<a href="Ketrew_host.html">Ketrew_host</a>]</td>
 <td></td></tr>
+<tr><td><a href="Ketrew_target.State.Count.html#VALconsecutive_recent_attempts">consecutive_recent_attempts</a> [<a href="Ketrew_target.State.Count.html">Ketrew_target.State.Count</a>]</td>
+<td><div class="info">
+Count how many times a current non-fatal failure state
+      “repeats.” I.e.
+</div>
+</td></tr>
 <tr><td><a href="Ketrew_yarn.html#VALcreate">create</a> [<a href="Ketrew_yarn.html">Ketrew_yarn</a>]</td>
 <td><div class="info">
 Create a “long-running” <a href="Ketrew_target.html#VALbuild_process"><code class="code"><span class="constructor">Ketrew_target</span>.build_process</code></a> (run parameters
@@ -785,6 +791,11 @@ Create a menu with the targets.
 </td></tr>
 <tr><td><a href="Ketrew_pervasives.List.html#VALmap">map</a> [<a href="Ketrew_pervasives.List.html">Ketrew_pervasives.List</a>]</td>
 <td></td></tr>
+<tr><td><a href="Ketrew_configuration.html#VALmaximum_successive_attempts">maximum_successive_attempts</a> [<a href="Ketrew_configuration.html">Ketrew_configuration</a>]</td>
+<td><div class="info">
+Get the maximum number of successive non-fatal failures.
+</div>
+</td></tr>
 <tr><td><a href="Ketrew_interaction.html#VALmenu">menu</a> [<a href="Ketrew_interaction.html">Ketrew_interaction</a>]</td>
 <td><div class="info">
 Display a menu given the specified <code class="code">menu_items</code>
@@ -1199,7 +1210,7 @@ Do like <a href="Ketrew_unix_process.html#VALexec"><code class="code"><span clas
 <td></td></tr>
 <tr><td><a href="Ketrew_edsl.html#VALtarget">target</a> [<a href="Ketrew_edsl.html">Ketrew_edsl</a>]</td>
 <td><div class="info">
-Create a new target.
+Construct a new target, the node of a workflow graph.
 </div>
 </td></tr>
 <tr><td><a href="Ketrew_document.html#VALtarget_for_menu">target_for_menu</a> [<a href="Ketrew_document.html">Ketrew_document</a>]</td>

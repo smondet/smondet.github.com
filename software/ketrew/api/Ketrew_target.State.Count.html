@@ -1,7 +1,11 @@
-<html><head>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
 <link rel="stylesheet" href="style.css" type="text/css">
 <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
 <link rel="Start" href="index.html">
+<link rel="previous" href="Ketrew_target.State.Is.html">
+<link rel="Up" href="Ketrew_target.State.html">
 <link title="Index of types" rel=Appendix href="index_types.html">
 <link title="Index of values" rel=Appendix href="index_values.html">
 <link title="Index of class methods" rel=Appendix href="index_methods.html">
@@ -37,15 +41,22 @@
 <link title="Ketrew_target" rel="Chapter" href="Ketrew_target.html">
 <link title="Ketrew_unix_io" rel="Chapter" href="Ketrew_unix_io.html">
 <link title="Ketrew_unix_process" rel="Chapter" href="Ketrew_unix_process.html">
-<link title="Ketrew_yarn" rel="Chapter" href="Ketrew_yarn.html"><title>Ketrew API : Ketrew_target.is_equivalent</title>
+<link title="Ketrew_yarn" rel="Chapter" href="Ketrew_yarn.html"><title>Ketrew API : Ketrew_target.State.Count</title>
 </head>
 <body>
-<code class="code"><span class="keyword">let</span>&nbsp;is_equivalent&nbsp;t&nbsp;ext&nbsp;=<br>
-&nbsp;&nbsp;<span class="keyword">match</span>&nbsp;t.equivalence,&nbsp;ext.equivalence&nbsp;<span class="keyword">with</span><br>
-&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">None</span>,&nbsp;_<br>
-&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;_,&nbsp;<span class="keywordsign">`</span><span class="constructor">None</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keyword">false</span><br>
-&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Same_active_condition</span>,&nbsp;<span class="keywordsign">`</span><span class="constructor">Same_active_condition</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">begin</span>&nbsp;<span class="keyword">match</span>&nbsp;t.condition&nbsp;<span class="keyword">with</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">None</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keyword">false</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Some</span>&nbsp;other&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Some</span>&nbsp;other&nbsp;=&nbsp;ext.condition<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span></code></body></html>
+<div class="navbar"><a class="pre" href="Ketrew_target.State.Is.html" title="Ketrew_target.State.Is">Previous</a>
+&nbsp;<a class="up" href="Ketrew_target.State.html" title="Ketrew_target.State">Up</a>
+&nbsp;</div>
+<h1>Module <a href="type_Ketrew_target.State.Count.html">Ketrew_target.State.Count</a> (<a href="code_Ketrew_target.State.Count.html">.ml</a>)</h1>
+
+<pre><span class="keyword">module</span> Count: <code class="code"><span class="keyword">sig</span></code> <a href="Ketrew_target.State.Count.html">..</a> <code class="code"><span class="keyword">end</span></code></pre><div class="info module top">
+A module providing functions <code class="code">t <span class="keywordsign">-&gt;</span> int</code> to provide counts.<br>
+</div>
+<hr width="100%">
+
+<pre><span id="VALconsecutive_recent_attempts"><span class="keyword">val</span> <a href="code_VALKetrew_target.State.Count.consecutive_recent_attempts.html">consecutive_recent_attempts</a></span> : <code class="type"><a href="Ketrew_target.State.html#TYPEt">Ketrew_target.State.t</a> -> int</code></pre><div class="info ">
+Count how many times a current non-fatal failure state
+      “repeats.” I.e. how many <code class="code"><span class="keywordsign">`</span><span class="constructor">Tried_to_</span>...</code> state form recent
+      history of the target.<br>
+</div>
+</body></html>

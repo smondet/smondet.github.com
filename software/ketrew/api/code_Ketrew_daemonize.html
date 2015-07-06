@@ -76,6 +76,7 @@
 &nbsp;&nbsp;&nbsp;&nbsp;using:&nbsp;[&nbsp;<span class="keywordsign">`</span><span class="constructor">Nohup_setsid</span>&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Python_daemon</span>&nbsp;];<br>
 &nbsp;&nbsp;&nbsp;&nbsp;starting_timeout:&nbsp;<span class="constructor">Time</span>.t;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;shell_command:&nbsp;string&nbsp;list;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;no_log_is_ok:&nbsp;bool&nbsp;[@default&nbsp;<span class="keyword">false</span>];<br>
 &nbsp;&nbsp;}&nbsp;[@@deriving&nbsp;yojson]<br>
 <br>
 &nbsp;&nbsp;<span class="keyword">type</span>&nbsp;running&nbsp;=&nbsp;{<br>
@@ -111,10 +112,12 @@
 <br>
 <span class="keyword">let</span>&nbsp;create<br>
 &nbsp;&nbsp;?(starting_timeout=5.)&nbsp;?(call_script=<span class="keyword">fun</span>&nbsp;s&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;[default_shell;&nbsp;s])<br>
-&nbsp;&nbsp;?(using=<span class="keywordsign">`</span><span class="constructor">Nohup_setsid</span>)&nbsp;?(host=<span class="constructor">Ketrew_host</span>.tmp_on_localhost)&nbsp;program&nbsp;=<br>
+&nbsp;&nbsp;?(using=<span class="keywordsign">`</span><span class="constructor">Nohup_setsid</span>)&nbsp;?(host=<span class="constructor">Ketrew_host</span>.tmp_on_localhost)<br>
+&nbsp;&nbsp;?(no_log_is_ok=<span class="keyword">false</span>)<br>
+&nbsp;&nbsp;program&nbsp;=<br>
 &nbsp;&nbsp;<span class="keyword">let</span>&nbsp;shell_command&nbsp;=&nbsp;call_script&nbsp;script_placeholder&nbsp;<span class="keyword">in</span><br>
 &nbsp;&nbsp;<span class="keyword">let</span>&nbsp;c&nbsp;=<br>
-&nbsp;&nbsp;&nbsp;&nbsp;{host;&nbsp;program;&nbsp;using;&nbsp;starting_timeout;&nbsp;shell_command&nbsp;}&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;{host;&nbsp;program;&nbsp;using;&nbsp;starting_timeout;&nbsp;shell_command;&nbsp;no_log_is_ok&nbsp;}&nbsp;<span class="keyword">in</span><br>
 &nbsp;&nbsp;<span class="keywordsign">`</span><span class="constructor">Long_running</span>&nbsp;(name,&nbsp;<span class="keywordsign">`</span><span class="constructor">Created</span>&nbsp;c&nbsp;|&gt;&nbsp;serialize)<br>
 <br>
 <span class="keyword">let</span>&nbsp;using_to_string&nbsp;=&nbsp;<span class="keyword">function</span><br>
@@ -130,6 +133,7 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">"Program"</span>,&nbsp;<span class="constructor">Ketrew_program</span>.log&nbsp;c.program;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">"Starting-timeout"</span>,&nbsp;f&nbsp;c.starting_timeout&nbsp;%&nbsp;s&nbsp;<span class="string">" sec."</span>;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">"Call-script"</span>,&nbsp;<span class="constructor">OCaml</span>.list&nbsp;quote&nbsp;c.shell_command;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">"No-log-is-OK"</span>,&nbsp;<span class="constructor">OCaml</span>.bool&nbsp;c.no_log_is_ok;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;]<br>
 &nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Running</span>&nbsp;rp&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;[<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">"Status"</span>,&nbsp;s&nbsp;<span class="string">"Running"</span>&nbsp;%&nbsp;sp<br>
@@ -354,6 +358,9 @@ import&nbsp;subprocess<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">None</span>&nbsp;<span class="keyword">when</span>&nbsp;elapsed&nbsp;&lt;=&nbsp;run.created.starting_timeout&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">(*&nbsp;no&nbsp;log&nbsp;at&nbsp;all&nbsp;*)</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;(<span class="keywordsign">`</span><span class="constructor">Still_running</span>&nbsp;new_run_parameters)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">None</span>&nbsp;<span class="keyword">when</span>&nbsp;run.created.no_log_is_ok&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">(*&nbsp;The&nbsp;caller&nbsp;explicitly&nbsp;asked&nbsp;not&nbsp;to&nbsp;care&nbsp;about&nbsp;the&nbsp;log&nbsp;file.&nbsp;*)</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;(<span class="keywordsign">`</span><span class="constructor">Succeeded</span>&nbsp;new_run_parameters)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">None</span>&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;(<span class="keywordsign">`</span><span class="constructor">Failed</span>&nbsp;(new_run_parameters,&nbsp;<span class="string">"no&nbsp;log&nbsp;file"</span>))<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Some</span>&nbsp;(<span class="keywordsign">`</span><span class="constructor">Success</span>&nbsp;&nbsp;date)&nbsp;<span class="keywordsign">-&gt;</span><br>

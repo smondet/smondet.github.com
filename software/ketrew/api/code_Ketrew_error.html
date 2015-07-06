@@ -91,7 +91,7 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Wrong_response</span>&nbsp;(http_resp,&nbsp;body)&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;s&nbsp;<span class="string">"Returned:"</span>&nbsp;%&nbsp;n&nbsp;%&nbsp;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;indent&nbsp;(s&nbsp;<span class="string">"Response:&nbsp;"</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%&nbsp;sexp&nbsp;<span class="constructor">Cohttp_lwt_unix</span>.<span class="constructor">Client</span>.<span class="constructor">Response</span>.sexp_of_t&nbsp;http_resp)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%&nbsp;sexp&nbsp;<span class="constructor">Cohttp</span>.<span class="constructor">Response</span>.sexp_of_t&nbsp;http_resp)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%&nbsp;n<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%&nbsp;indent&nbsp;(s&nbsp;<span class="string">"Body:&nbsp;"</span>&nbsp;%&nbsp;quote&nbsp;body)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Json_parsing</span>&nbsp;(j,&nbsp;<span class="keywordsign">`</span><span class="constructor">Exn</span>&nbsp;e)&nbsp;<span class="keywordsign">-&gt;</span><br>

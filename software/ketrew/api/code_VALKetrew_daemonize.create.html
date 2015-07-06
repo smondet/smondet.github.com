@@ -42,8 +42,10 @@
 <body>
 <code class="code"><span class="keyword">let</span>&nbsp;create<br>
 &nbsp;&nbsp;?(starting_timeout=5.)&nbsp;?(call_script=<span class="keyword">fun</span>&nbsp;s&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;[default_shell;&nbsp;s])<br>
-&nbsp;&nbsp;?(using=<span class="keywordsign">`</span><span class="constructor">Nohup_setsid</span>)&nbsp;?(host=<span class="constructor">Ketrew_host</span>.tmp_on_localhost)&nbsp;program&nbsp;=<br>
+&nbsp;&nbsp;?(using=<span class="keywordsign">`</span><span class="constructor">Nohup_setsid</span>)&nbsp;?(host=<span class="constructor">Ketrew_host</span>.tmp_on_localhost)<br>
+&nbsp;&nbsp;?(no_log_is_ok=<span class="keyword">false</span>)<br>
+&nbsp;&nbsp;program&nbsp;=<br>
 &nbsp;&nbsp;<span class="keyword">let</span>&nbsp;shell_command&nbsp;=&nbsp;call_script&nbsp;script_placeholder&nbsp;<span class="keyword">in</span><br>
 &nbsp;&nbsp;<span class="keyword">let</span>&nbsp;c&nbsp;=<br>
-&nbsp;&nbsp;&nbsp;&nbsp;{host;&nbsp;program;&nbsp;using;&nbsp;starting_timeout;&nbsp;shell_command&nbsp;}&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;{host;&nbsp;program;&nbsp;using;&nbsp;starting_timeout;&nbsp;shell_command;&nbsp;no_log_is_ok&nbsp;}&nbsp;<span class="keyword">in</span><br>
 &nbsp;&nbsp;<span class="keywordsign">`</span><span class="constructor">Long_running</span>&nbsp;(name,&nbsp;<span class="keywordsign">`</span><span class="constructor">Created</span>&nbsp;c&nbsp;|&gt;&nbsp;serialize)</code></body></html>

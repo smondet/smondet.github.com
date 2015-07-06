@@ -335,6 +335,115 @@
     </span><span class="kw2">Log</span><span class="text">.(</span><span class="id">s</span><span class="text"> </span><span class="string">&quot;Trrreeees: &quot;</span><span class="text"> % </span><span class="id">n</span><span class="text"> % </span><span class="id">tree_to_log</span><span class="text"> </span><span class="id">result_tree</span><span class="text"> @ </span><span class="id">normal</span><span class="text">);
   ()
 
+</span><span class="kw">let</span><span class="text"> </span><span class="id">integration_meta_test</span><span class="text"> </span><span class="id">options</span><span class="text"> =
+  </span><span class="kw">let</span><span class="text"> </span><span class="id">say</span><span class="text"> </span><span class="id">fmt</span><span class="text"> =
+    </span><span class="kw2">Printf</span><span class="text">.(</span><span class="id">ksprintf</span><span class="text"> (</span><span class="kw">fun</span><span class="text"> </span><span class="id">s</span><span class="text"> -&gt;
+        </span><span class="id">printf</span><span class="text"> </span><span class="string">&quot;=&gt; %s\n%!&quot;</span><span class="text">
+          (</span><span class="kw2">String</span><span class="text">.</span><span class="id">split</span><span class="text"> </span><span class="id">s</span><span class="text"> </span><span class="kw4">~on</span><span class="text">:(`</span><span class="kw2">Character</span><span class="text"> </span><span class="string">'\n'</span><span class="text">) |&gt; </span><span class="kw2">String</span><span class="text">.</span><span class="id">concat</span><span class="text"> </span><span class="kw4">~sep</span><span class="text">:</span><span class="string">&quot;\n   &quot;</span><span class="text">)
+      ) </span><span class="id">fmt</span><span class="text">) </span><span class="kw">in</span><span class="text">
+  </span><span class="kw">let</span><span class="text"> </span><span class="id">phase</span><span class="text"> </span><span class="id">fmt</span><span class="text"> =
+    </span><span class="kw2">Printf</span><span class="text">.(</span><span class="id">ksprintf</span><span class="text"> (</span><span class="kw">fun</span><span class="text"> </span><span class="id">s</span><span class="text"> -&gt;
+        </span><span class="kw">let</span><span class="text"> </span><span class="id">sep</span><span class="text"> = </span><span class="kw2">String</span><span class="text">.</span><span class="id">make</span><span class="text"> (</span><span class="kw2">String</span><span class="text">.</span><span class="id">length</span><span class="text"> </span><span class="id">s</span><span class="text">) </span><span class="string">'#'</span><span class="text"> </span><span class="kw">in</span><span class="text">
+        </span><span class="id">printf</span><span class="text"> </span><span class="string">&quot;###%s###\n## %s ##\n###%s###\n%!&quot;</span><span class="text"> </span><span class="id">sep</span><span class="text"> </span><span class="id">s</span><span class="text"> </span><span class="id">sep</span><span class="text">
+      ) </span><span class="id">fmt</span><span class="text">)
+  </span><span class="kw">in</span><span class="text">
+  </span><span class="kw">let</span><span class="text"> </span><span class="id">tmpdir</span><span class="text"> = </span><span class="kw2">Sys</span><span class="text">.</span><span class="id">getenv</span><span class="text"> </span><span class="string">&quot;PWD&quot;</span><span class="text"> // </span><span class="string">&quot;_integration_testing&quot;</span><span class="text"> </span><span class="kw">in</span><span class="text">
+  </span><span class="kw">let</span><span class="text"> </span><span class="id">tmp</span><span class="text"> </span><span class="id">fmt</span><span class="text"> = </span><span class="kw2">Printf</span><span class="text">.</span><span class="id">ksprintf</span><span class="text"> (</span><span class="kw">fun</span><span class="text"> </span><span class="id">s</span><span class="text"> -&gt; </span><span class="id">tmpdir</span><span class="text"> // </span><span class="id">s</span><span class="text">) </span><span class="id">fmt</span><span class="text"> </span><span class="kw">in</span><span class="text">
+  </span><span class="kw">let</span><span class="text"> </span><span class="id">with_server</span><span class="text"> = </span><span class="kw2">List</span><span class="text">.</span><span class="id">mem</span><span class="text"> </span><span class="kw4">~set</span><span class="text">:</span><span class="id">options</span><span class="text"> </span><span class="string">&quot;with-server&quot;</span><span class="text"> </span><span class="kw">in</span><span class="text">
+  </span><span class="kw">let</span><span class="text"> </span><span class="id">verbose_commands</span><span class="text"> = </span><span class="kw2">List</span><span class="text">.</span><span class="id">mem</span><span class="text"> </span><span class="kw4">~set</span><span class="text">:</span><span class="id">options</span><span class="text"> </span><span class="string">&quot;quiet-cmd&quot;</span><span class="text"> |&gt; </span><span class="id">not</span><span class="text"> </span><span class="kw">in</span><span class="text">
+  </span><span class="kw">let</span><span class="text"> </span><span class="id">with_clean_up</span><span class="text"> = </span><span class="kw2">List</span><span class="text">.</span><span class="id">mem</span><span class="text"> </span><span class="kw4">~set</span><span class="text">:</span><span class="id">options</span><span class="text"> </span><span class="string">&quot;no-clean-up&quot;</span><span class="text"> |&gt; </span><span class="id">not</span><span class="text"> </span><span class="kw">in</span><span class="text">
+  </span><span class="comment">(*
+  let write_file f ~content =
+    let o = open_out f in
+    output_string o content;
+    close_out o in
+     *)</span><span class="text">
+  </span><span class="kw">let</span><span class="text"> </span><span class="id">cmdf</span><span class="text"> ?(</span><span class="id">returns</span><span class="text">=</span><span class="kw2">Some</span><span class="text"> </span><span class="numeric">0</span><span class="text">) </span><span class="id">fmt</span><span class="text"> =
+    </span><span class="kw2">Printf</span><span class="text">.(</span><span class="id">ksprintf</span><span class="text"> (</span><span class="kw">fun</span><span class="text"> </span><span class="id">s</span><span class="text"> -&gt;
+        </span><span class="kw1">if</span><span class="text"> </span><span class="id">verbose_commands</span><span class="text"> </span><span class="kw1">then</span><span class="text"> </span><span class="id">printf</span><span class="text"> </span><span class="string">&quot; $ %s\n%!&quot;</span><span class="text"> </span><span class="id">s</span><span class="text">;
+        </span><span class="kw1">match</span><span class="text"> </span><span class="kw2">Sys</span><span class="text">.</span><span class="id">command</span><span class="text"> </span><span class="id">s</span><span class="text">, </span><span class="id">returns</span><span class="text"> </span><span class="kw1">with</span><span class="text">
+        | </span><span class="id">n</span><span class="text">, </span><span class="kw2">Some</span><span class="text"> </span><span class="id">m</span><span class="text"> </span><span class="kw1">when</span><span class="text"> </span><span class="id">n</span><span class="text"> = </span><span class="id">m</span><span class="text"> -&gt; ()
+        | </span><span class="numeric">_</span><span class="text">, </span><span class="kw2">None</span><span class="text"> -&gt; ()
+        | </span><span class="id">other</span><span class="text">, </span><span class="kw2">Some</span><span class="text"> </span><span class="id">m</span><span class="text"> -&gt;
+          </span><span class="id">failwith</span><span class="text"> (</span><span class="id">sprintf</span><span class="text"> </span><span class="string">&quot;Command %S returned %d instead of %d&quot;</span><span class="text"> </span><span class="id">s</span><span class="text"> </span><span class="id">other</span><span class="text"> </span><span class="id">m</span><span class="text">)
+      ) </span><span class="id">fmt</span><span class="text">) </span><span class="kw">in</span><span class="text">
+  </span><span class="kw">let</span><span class="text"> </span><span class="id">ketrew_configuration_prefix</span><span class="text"> </span><span class="id">profile</span><span class="text"> =
+    </span><span class="kw">let</span><span class="text"> </span><span class="id">config_file</span><span class="text"> = </span><span class="kw2">Sys</span><span class="text">.</span><span class="id">getenv</span><span class="text"> </span><span class="string">&quot;PWD&quot;</span><span class="text"> // </span><span class="string">&quot;_test_env&quot;</span><span class="text"> // </span><span class="string">&quot;configuration.ml&quot;</span><span class="text"> </span><span class="kw">in</span><span class="text">
+    </span><span class="kw2">Printf</span><span class="text">.</span><span class="id">sprintf</span><span class="text"> </span><span class="string">&quot;KETREW_CONFIGURATION=%s KETREW_PROFILE=%s&quot;</span><span class="text">
+          </span><span class="kw2">Filename</span><span class="text">.(</span><span class="id">quote</span><span class="text"> </span><span class="id">config_file</span><span class="text">) </span><span class="id">profile</span><span class="text"> </span><span class="kw">in</span><span class="text">
+  </span><span class="kw">let</span><span class="text"> </span><span class="id">ketrew</span><span class="text"> ?(</span><span class="id">bin</span><span class="text">=</span><span class="string">&quot;./ketrew&quot;</span><span class="text">) </span><span class="id">profile</span><span class="text"> </span><span class="id">fmt</span><span class="text"> =
+    </span><span class="kw2">Printf</span><span class="text">.</span><span class="id">ksprintf</span><span class="text"> (</span><span class="kw">fun</span><span class="text"> </span><span class="id">s</span><span class="text"> -&gt;
+        </span><span class="id">cmdf</span><span class="text"> </span><span class="string">&quot;%s %s %s&quot;</span><span class="text"> (</span><span class="id">ketrew_configuration_prefix</span><span class="text"> </span><span class="id">profile</span><span class="text">) </span><span class="id">bin</span><span class="text"> </span><span class="id">s</span><span class="text">
+      ) </span><span class="id">fmt</span><span class="text"> </span><span class="kw">in</span><span class="text">
+  </span><span class="id">phase</span><span class="text"> </span><span class="string">&quot;Preparing Integration Meta-Test&quot;</span><span class="text">;
+  </span><span class="id">cmdf</span><span class="text"> </span><span class="string">&quot;mkdir -p %s&quot;</span><span class="text"> </span><span class="id">tmpdir</span><span class="text">;
+
+  </span><span class="kw">let</span><span class="text"> </span><span class="id">server_out</span><span class="text"> = </span><span class="id">tmp</span><span class="text"> </span><span class="string">&quot;server-out.txt&quot;</span><span class="text"> </span><span class="kw">in</span><span class="text">
+  </span><span class="kw">let</span><span class="text"> </span><span class="id">server_output</span><span class="text"> </span><span class="id">lines</span><span class="text"> =
+    </span><span class="kw1">if</span><span class="text"> </span><span class="id">with_server</span><span class="text"> </span><span class="kw1">then</span><span class="text"> (
+      </span><span class="id">say</span><span class="text"> </span><span class="string">&quot;Server output (%d lines)&quot;</span><span class="text"> </span><span class="id">lines</span><span class="text">;
+      </span><span class="id">cmdf</span><span class="text"> </span><span class="string">&quot;tail -n %d %s | sed 's/^/   /'&quot;</span><span class="text"> </span><span class="id">lines</span><span class="text"> </span><span class="kw2">Filename</span><span class="text">.(</span><span class="id">quote</span><span class="text"> </span><span class="id">server_out</span><span class="text">)
+    );
+  </span><span class="kw">in</span><span class="text">
+  </span><span class="kw1">begin</span><span class="text"> </span><span class="kw1">if</span><span class="text"> </span><span class="id">with_server</span><span class="text"> </span><span class="kw1">then</span><span class="text"> (
+      </span><span class="id">phase</span><span class="text"> </span><span class="string">&quot;Starting Server&quot;</span><span class="text">;
+      </span><span class="id">ketrew</span><span class="text"> </span><span class="string">&quot;server&quot;</span><span class="text"> </span><span class="string">&quot;start 2&gt;&amp;1 &gt; %s &amp;&quot;</span><span class="text">
+        </span><span class="kw2">Filename</span><span class="text">.(</span><span class="id">quote</span><span class="text"> </span><span class="id">server_out</span><span class="text">);
+      </span><span class="id">cmdf</span><span class="text"> </span><span class="string">&quot;sleep 3&quot;</span><span class="text">;
+    ) </span><span class="kw1">end</span><span class="text">;
+  </span><span class="id">server_output</span><span class="text"> </span><span class="numeric">10</span><span class="text">;
+
+  </span><span class="kw">let</span><span class="text"> </span><span class="id">wait_for_targets_to_complete</span><span class="text"> () =
+    </span><span class="id">ketrew</span><span class="text"> </span><span class="string">&quot;client&quot;</span><span class="text"> </span><span class="string">&quot;status --loop&quot;</span><span class="text">;
+    </span><span class="id">cmdf</span><span class="text"> </span><span class="string">&quot;sleep 2&quot;</span><span class="text">; </span><span class="comment">(* we “avoid” some kinds of race-conditions … *)</span><span class="text">
+    </span><span class="id">ketrew</span><span class="text"> </span><span class="string">&quot;client&quot;</span><span class="text"> </span><span class="string">&quot;status --loop&quot;</span><span class="text">;
+  </span><span class="kw">in</span><span class="text">
+  </span><span class="id">phase</span><span class="text"> </span><span class="string">&quot;Submit integration preparation&quot;</span><span class="text">;
+  </span><span class="id">ketrew</span><span class="text"> </span><span class="kw4">~bin</span><span class="text">:</span><span class="string">&quot;./ketrew-integration-test&quot;</span><span class="text"> </span><span class="string">&quot;client&quot;</span><span class="text"> </span><span class="string">&quot;prepare&quot;</span><span class="text">;
+  </span><span class="id">wait_for_targets_to_complete</span><span class="text"> ();
+
+  </span><span class="id">ketrew</span><span class="text"> </span><span class="kw4">~bin</span><span class="text">:</span><span class="string">&quot;./ketrew-integration-test&quot;</span><span class="text"> </span><span class="string">&quot;client&quot;</span><span class="text"> </span><span class="string">&quot;is-running LSF&quot;</span><span class="text">;
+  </span><span class="id">ketrew</span><span class="text"> </span><span class="kw4">~bin</span><span class="text">:</span><span class="string">&quot;./ketrew-integration-test&quot;</span><span class="text"> </span><span class="string">&quot;client&quot;</span><span class="text"> </span><span class="string">&quot;is-running PBS&quot;</span><span class="text">;
+  </span><span class="id">ketrew</span><span class="text"> </span><span class="kw4">~bin</span><span class="text">:</span><span class="string">&quot;./ketrew-integration-test&quot;</span><span class="text"> </span><span class="string">&quot;client&quot;</span><span class="text"> </span><span class="string">&quot;is-running Hadoop&quot;</span><span class="text">;
+
+  </span><span class="id">phase</span><span class="text"> </span><span class="string">&quot;Submit integration tests&quot;</span><span class="text">;
+  </span><span class="id">ketrew</span><span class="text"> </span><span class="kw4">~bin</span><span class="text">:</span><span class="string">&quot;./ketrew-integration-test&quot;</span><span class="text"> </span><span class="string">&quot;client&quot;</span><span class="text"> </span><span class="string">&quot;go&quot;</span><span class="text">;
+  </span><span class="id">wait_for_targets_to_complete</span><span class="text"> ();
+
+  
+  </span><span class="id">phase</span><span class="text"> </span><span class="string">&quot;Start the targets-to-kill&quot;</span><span class="text">;
+  </span><span class="id">ketrew</span><span class="text"> </span><span class="kw4">~bin</span><span class="text">:</span><span class="string">&quot;./ketrew-integration-test&quot;</span><span class="text"> </span><span class="string">&quot;client&quot;</span><span class="text"> </span><span class="string">&quot;start-jobs-to-kill&quot;</span><span class="text">;
+  </span><span class="comment">(* We need to kill the targets-to-kill. *)</span><span class="text">
+  </span><span class="id">phase</span><span class="text"> </span><span class="string">&quot;Kill the targets-to-kill&quot;</span><span class="text">;
+  </span><span class="id">cmdf</span><span class="text"> </span><span class="string">&quot;sleep 300&quot;</span><span class="text">;
+  </span><span class="comment">(* We hope it is enough for them to actually start; an observed
+     low-bound is 120 seconds (between application start and obtention of
+     an application ID from YARN!) *)</span><span class="text">
+  </span><span class="id">cmdf</span><span class="text"> </span><span class="string">&quot;for id in `./ketrew-integration-test to-kill` ; do \n\
+        echo \&quot;Kill $i\&quot;\n\
+        %s ./ketrew kill $id\n\
+        done&quot;</span><span class="text"> (</span><span class="id">ketrew_configuration_prefix</span><span class="text"> </span><span class="string">&quot;client&quot;</span><span class="text">);
+
+  </span><span class="id">wait_for_targets_to_complete</span><span class="text"> ();
+
+  </span><span class="id">ketrew</span><span class="text"> </span><span class="kw4">~bin</span><span class="text">:</span><span class="string">&quot;./ketrew-integration-test&quot;</span><span class="text"> </span><span class="string">&quot;client&quot;</span><span class="text"> </span><span class="string">&quot;check&quot;</span><span class="text">;
+
+  </span><span class="kw1">begin</span><span class="text"> </span><span class="kw1">match</span><span class="text"> </span><span class="id">with_clean_up</span><span class="text"> </span><span class="kw1">with</span><span class="text">
+  | </span><span class="constant">true</span><span class="text">  -&gt;
+    </span><span class="id">phase</span><span class="text"> </span><span class="string">&quot;Submit integration clean-up&quot;</span><span class="text">;
+    </span><span class="id">ketrew</span><span class="text"> </span><span class="kw4">~bin</span><span class="text">:</span><span class="string">&quot;./ketrew-integration-test&quot;</span><span class="text"> </span><span class="string">&quot;client&quot;</span><span class="text"> </span><span class="string">&quot;clean&quot;</span><span class="text">;
+    </span><span class="id">wait_for_targets_to_complete</span><span class="text"> ();
+  | </span><span class="constant">false</span><span class="text"> -&gt;
+    </span><span class="id">phase</span><span class="text"> </span><span class="string">&quot;NO integration clean-up&quot;</span><span class="text">;
+  </span><span class="kw1">end</span><span class="text">;
+
+  </span><span class="kw1">if</span><span class="text"> </span><span class="id">with_server</span><span class="text"> </span><span class="kw1">then</span><span class="text"> </span><span class="kw1">begin</span><span class="text">
+    </span><span class="id">phase</span><span class="text"> </span><span class="string">&quot;Stopping server&quot;</span><span class="text">;
+    </span><span class="id">ketrew</span><span class="text"> </span><span class="string">&quot;server&quot;</span><span class="text"> </span><span class="string">&quot;stop&quot;</span><span class="text">;
+    </span><span class="id">cmdf</span><span class="text"> </span><span class="string">&quot;sleep 3&quot;</span><span class="text">;
+  </span><span class="kw1">end</span><span class="text">;
+  </span><span class="id">cmdf</span><span class="text"> </span><span class="string">&quot;ps aux | grep ketrew&quot;</span><span class="text">;
+  ()
 
 </span><span class="kw">let</span><span class="text"> </span><span class="id">run_all_tests</span><span class="text"> () =
   </span><span class="kw2">Log</span><span class="text">.(</span><span class="id">s</span><span class="text"> </span><span class="string">&quot;Starting ALL Tests&quot;</span><span class="text"> @ </span><span class="id">normal</span><span class="text">);
@@ -355,6 +464,7 @@
     </span><span class="kw1">else</span><span class="text"> </span><span class="kw1">begin</span><span class="text">
       </span><span class="kw1">if</span><span class="text"> </span><span class="kw2">List</span><span class="text">.</span><span class="id">mem</span><span class="text"> </span><span class="kw4">~set</span><span class="text">:</span><span class="id">argl</span><span class="text"> </span><span class="string">&quot;basic-test&quot;</span><span class="text"> </span><span class="kw1">then</span><span class="text"> </span><span class="id">test_0</span><span class="text"> ();
       </span><span class="kw1">if</span><span class="text"> </span><span class="kw2">List</span><span class="text">.</span><span class="id">mem</span><span class="text"> </span><span class="kw4">~set</span><span class="text">:</span><span class="id">argl</span><span class="text"> </span><span class="string">&quot;automaton-graph&quot;</span><span class="text"> </span><span class="kw1">then</span><span class="text"> </span><span class="id">make_automaton_graph</span><span class="text"> ();
+      </span><span class="kw1">if</span><span class="text"> </span><span class="kw2">List</span><span class="text">.</span><span class="id">mem</span><span class="text"> </span><span class="kw4">~set</span><span class="text">:</span><span class="id">argl</span><span class="text"> </span><span class="string">&quot;integration&quot;</span><span class="text"> </span><span class="kw1">then</span><span class="text"> </span><span class="id">integration_meta_test</span><span class="text"> </span><span class="id">argl</span><span class="text">;
     </span><span class="kw1">end</span><span class="text">
   </span><span class="kw1">end</span><span class="text">;
   </span><span class="kw1">begin</span><span class="text"> </span><span class="kw1">match</span><span class="text"> !</span><span class="kw2">Test</span><span class="text">.</span><span class="id">failed_tests</span><span class="text"> </span><span class="kw1">with</span><span class="text">

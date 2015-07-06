@@ -59,7 +59,8 @@
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;engine&nbsp;:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;?database_parameters:string&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;?turn_unix_ssh_failure_into_target_failure:bool&nbsp;<span class="keywordsign">-&gt;</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;?host_timeout_upper_bound:float&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;unit&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Ketrew_configuration</span>.engine<br>
+&nbsp;&nbsp;&nbsp;&nbsp;?host_timeout_upper_bound:float&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?maximum_successive_attempts:int&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;unit&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Ketrew_configuration</span>.engine<br>
 &nbsp;&nbsp;<span class="keyword">type</span>&nbsp;authorized_tokens<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;authorized_token&nbsp;:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;name:string&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;string&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Ketrew_configuration</span>.authorized_tokens<br>
@@ -101,6 +102,7 @@
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;default_database_path&nbsp;:&nbsp;string<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;database_parameters&nbsp;:&nbsp;<span class="constructor">Ketrew_configuration</span>.engine&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;string<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;is_unix_ssh_failure_fatal&nbsp;:&nbsp;<span class="constructor">Ketrew_configuration</span>.engine&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;bool<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;maximum_successive_attempts&nbsp;:&nbsp;<span class="constructor">Ketrew_configuration</span>.engine&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;int<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;plugins&nbsp;:&nbsp;<span class="constructor">Ketrew_configuration</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Ketrew_configuration</span>.plugin&nbsp;list<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;mode&nbsp;:&nbsp;<span class="constructor">Ketrew_configuration</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Ketrew_configuration</span>.mode<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;standalone_engine&nbsp;:<br>

@@ -100,14 +100,53 @@ Targets are the nodes in the workflow arborescence (see also
 </div>
 
 <pre><span id="VALtarget"><span class="keyword">val</span> <a href="code_VALKetrew_edsl.target.html">target</a></span> : <code class="type">?active:bool -><br>       ?depends_on:<a href="Ketrew_edsl.user_target-c.html">user_target</a> list -><br>       ?make:<a href="Ketrew_target.Build_process.html#TYPEt">Ketrew_target.Build_process.t</a> -><br>       ?done_when:<a href="Ketrew_target.Condition.html#TYPEt">Ketrew_target.Condition.t</a> -><br>       ?metadata:[ `String of string ] -><br>       ?product:<a href="Ketrew_edsl.user_artifact-c.html">user_artifact</a> -><br>       ?equivalence:<a href="Ketrew_target.Equivalence.html#TYPEt">Ketrew_target.Equivalence.t</a> -><br>       ?on_failure_activate:<a href="Ketrew_edsl.user_target-c.html">user_target</a> list -><br>       ?on_success_activate:<a href="Ketrew_edsl.user_target-c.html">user_target</a> list -><br>       ?tags:string list -> string -> <a href="Ketrew_edsl.user_target-c.html">user_target</a></code></pre><div class="info ">
-Create a new target.<br>
+Construct a new target, the node of a workflow graph. The main
+    argument (the <code class="code">string</code>) is its name, then all optional arguments mean:
+<p>
+<ul>
+<li><code class="code">?active</code>: whether this target should be started by the engine or
+    wait to be ativated by another target (through <code class="code">depends_on</code> or
+    <code class="code">on_{success,failure}_activate</code>) p (default:
+    <code class="code"><span class="keyword">false</span></code>). Usual workflows should not set this value since
+    the function <code class="code"><span class="constructor">Ketrew</span>.<span class="constructor">Cliean</span>.submit</code> will activate the toplevel
+    target automatically.</li>
+<li><code class="code">?depends_on</code>: list of the dependencies of the target.</li>
+<li><code class="code">?make</code>: the build-process used to “build” the target; where the
+    computation happens.</li>
+<li><code class="code">?done_when</code>: the condition that the target ensures (checked
+    before potentially running and after running).</li>
+<li><code class="code">?metadata</code>: arbitrary metadata to attach to the target.</li>
+<li><code class="code">?product</code>: the <a href="Ketrew_edsl.user_artifact-c.html"><code class="code"><span class="constructor">Ketrew_edsl</span>.user_artifact</code></a> that the target embeds (returned
+    by the <code class="code"><span class="keywordsign">#</span>product</code> method of the target).</li>
+<li><code class="code">?equivalence</code>: how to tell if two targets are equivalent (and
+    then will be merged by the engine). The default is
+    <code class="code"><span class="keywordsign">`</span><span class="constructor">Same_active_condition</span></code> which means that if two targets have the
+    same non-<code class="code"><span class="constructor">None</span></code> <code class="code">?done_when</code> argument they will be considered
+    equivalent (i.e. they try to “ensure the same condition”).</li>
+<li><code class="code">?on_failure_activate</code>: targets to activate when this target fails.</li>
+<li><code class="code">?on_success_activate</code>: targets to activate when this target succeeds.</li>
+<li><code class="code">?tags</code>: arbitrary tags to add to the target (e.g. for
+    search/filter in the UI)</li>
+</ul>
+<br>
 </div>
 
 <pre><span id="VALfile_target"><span class="keyword">val</span> <a href="code_VALKetrew_edsl.file_target.html">file_target</a></span> : <code class="type">?depends_on:<a href="Ketrew_edsl.user_target-c.html">user_target</a> list -><br>       ?make:<a href="Ketrew_target.Build_process.html#TYPEt">Ketrew_target.Build_process.t</a> -><br>       ?metadata:[ `String of string ] -><br>       ?name:string -><br>       ?host:<a href="Ketrew_edsl.Host.html#TYPEt">Host.t</a> -><br>       ?equivalence:<a href="Ketrew_target.Equivalence.html#TYPEt">Ketrew_target.Equivalence.t</a> -><br>       ?on_failure_activate:<a href="Ketrew_edsl.user_target-c.html">user_target</a> list -><br>       ?on_success_activate:<a href="Ketrew_edsl.user_target-c.html">user_target</a> list -><br>       ?tags:string list -> string -> <a href="Ketrew_edsl.user_target-c.html">user_target</a></code></pre><div class="info ">
-Create a file <a href="Ketrew_edsl.user_artifact-c.html"><code class="code"><span class="constructor">Ketrew_edsl</span>.user_artifact</code></a> and the <a href="Ketrew_edsl.user_target-c.html"><code class="code"><span class="constructor">Ketrew_edsl</span>.user_target</code></a> that produces it.<br>
+Create a file <a href="Ketrew_edsl.user_artifact-c.html"><code class="code"><span class="constructor">Ketrew_edsl</span>.user_artifact</code></a> and the <a href="Ketrew_edsl.user_target-c.html"><code class="code"><span class="constructor">Ketrew_edsl</span>.user_target</code></a> that produces it.
+<p>
+
+    The <code class="code">?product</code> of the target will be the file given as argument on
+    the host given by the <code class="code">?host</code> option (default: localhost using <code class="code"><span class="string">"/tmp"</span></code>).
+<p>
+
+    The <code class="code">?done_when</code> condition will be the existence of that file.
+<p>
+
+    This can be seen as a classical <code class="code">make</code>-like file-producing target,
+    but on any arbitrary host.<br>
 </div>
 
-<pre><span id="VALdaemonize"><span class="keyword">val</span> <a href="code_VALKetrew_edsl.daemonize.html">daemonize</a></span> : <code class="type">?starting_timeout:float -><br>       ?call_script:(string -> string list) -><br>       ?using:[ `Nohup_setsid | `Python_daemon ] -><br>       ?host:<a href="Ketrew_edsl.Host.html#TYPEt">Host.t</a> -><br>       <a href="Ketrew_edsl.Program.html#TYPEt">Program.t</a> -> <a href="Ketrew_target.Build_process.html#TYPEt">Ketrew_target.Build_process.t</a></code></pre><div class="info ">
+<pre><span id="VALdaemonize"><span class="keyword">val</span> <a href="code_VALKetrew_edsl.daemonize.html">daemonize</a></span> : <code class="type">?starting_timeout:float -><br>       ?call_script:(string -> string list) -><br>       ?using:[ `Nohup_setsid | `Python_daemon ] -><br>       ?host:<a href="Ketrew_edsl.Host.html#TYPEt">Host.t</a> -><br>       ?no_log_is_ok:bool -> <a href="Ketrew_edsl.Program.html#TYPEt">Program.t</a> -> <a href="Ketrew_target.Build_process.html#TYPEt">Ketrew_target.Build_process.t</a></code></pre><div class="info ">
 Create a “daemonize” build process:
 <p>
 <ul>
@@ -119,6 +158,11 @@ Create a “daemonize” build process:
       (default: <code class="code">(<span class="keyword">fun</span> script <span class="keywordsign">-&gt;</span> [<span class="string">"bash"</span>; script])</code>).</li>
 <li><code class="code">?using</code>: which method to use when damonizing on the <code class="code">host</code>
     (see <a href="Ketrew_daemonize.html"><code class="code"><span class="constructor">Ketrew_daemonize</span></code></a> for more details).</li>
+<li><code class="code">?no_log_is_ok</code>: consider that if the script run does not
+      produce a log file, the process still has succeeded (the default
+      and most common is <code class="code"><span class="keyword">false</span></code>, this can be useful for example when
+      the <code class="code"><span class="constructor">Program</span>.t</code> or <code class="code">call_script</code> do something special over the
+      network).</li>
 </ul>
 <br>
 </div>

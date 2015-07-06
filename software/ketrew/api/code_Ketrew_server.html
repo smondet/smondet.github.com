@@ -184,20 +184,20 @@ M*)</span><br>
 <span class="keyword">type</span>&nbsp;<span class="keywordsign">'</span>error&nbsp;service&nbsp;=<br>
 &nbsp;&nbsp;server_state:<span class="constructor">Server_state</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;body:<span class="constructor">Cohttp_lwt_body</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
-&nbsp;&nbsp;<span class="constructor">Cohttp_lwt_unix</span>.<span class="constructor">Server</span>.<span class="constructor">Request</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;<span class="constructor">Cohttp</span>.<span class="constructor">Request</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;(answer,&nbsp;<span class="keywordsign">'</span>error)&nbsp;<span class="constructor">Deferred_result</span>.t<br>
 </code><table><tr><td></td><td><span class="comment">(** A service is something that replies an <code class="code">answer</code> on a <code class="code"><span class="string">"/&lt;path&gt;"</span></code> URL. *)</span></td></tr></table><code class="code"><br>
 <br>
 </code><table><tr><td></td><td><span class="comment">(** Get the <code class="code"><span class="string">"token"</span></code> parameter from an URI. *)</span></td></tr></table><code class="code"><br>
 <span class="keyword">let</span>&nbsp;token_parameter&nbsp;req&nbsp;=<br>
 &nbsp;&nbsp;<span class="keyword">let</span>&nbsp;token&nbsp;=<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Uri</span>.get_query_param&nbsp;(<span class="constructor">Cohttp_lwt_unix</span>.<span class="constructor">Server</span>.<span class="constructor">Request</span>.uri&nbsp;req)&nbsp;<span class="string">"token"</span>&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Uri</span>.get_query_param&nbsp;(<span class="constructor">Cohttp</span>.<span class="constructor">Request</span>.uri&nbsp;req)&nbsp;<span class="string">"token"</span>&nbsp;<span class="keyword">in</span><br>
 &nbsp;&nbsp;<span class="constructor">Log</span>.(s&nbsp;<span class="string">"Got&nbsp;token:&nbsp;"</span>&nbsp;%&nbsp;<span class="constructor">OCaml</span>.option&nbsp;quote&nbsp;token&nbsp;@&nbsp;very_verbose);<br>
 &nbsp;&nbsp;token<br>
 <br>
 </code><table><tr><td></td><td><span class="comment">(** Get a parameter or fail. *)</span></td></tr></table><code class="code"><br>
 <span class="keyword">let</span>&nbsp;mandatory_parameter&nbsp;req&nbsp;~name&nbsp;=<br>
-&nbsp;&nbsp;<span class="keyword">match</span>&nbsp;<span class="constructor">Uri</span>.get_query_param&nbsp;(<span class="constructor">Cohttp_lwt_unix</span>.<span class="constructor">Server</span>.<span class="constructor">Request</span>.uri&nbsp;req)&nbsp;name&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;<span class="keyword">match</span>&nbsp;<span class="constructor">Uri</span>.get_query_param&nbsp;(<span class="constructor">Cohttp</span>.<span class="constructor">Request</span>.uri&nbsp;req)&nbsp;name&nbsp;<span class="keyword">with</span><br>
 &nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Some</span>&nbsp;v&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Log</span>.(s&nbsp;<span class="string">"Got&nbsp;"</span>&nbsp;%&nbsp;quote&nbsp;name&nbsp;%&nbsp;s&nbsp;<span class="string">":&nbsp;"</span>&nbsp;%&nbsp;quote&nbsp;v&nbsp;@&nbsp;very_verbose);<br>
 &nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;v<br>
@@ -214,7 +214,7 @@ M*)</span><br>
 <br>
 </code><table><tr><td></td><td><span class="comment">(** Fail if the request is not a <code class="code"><span class="keywordsign">`</span><span class="constructor">GET</span></code>. *)</span></td></tr></table><code class="code"><br>
 <span class="keyword">let</span>&nbsp;check_that_it_is_a_get&nbsp;request&nbsp;=<br>
-&nbsp;&nbsp;<span class="keyword">begin</span>&nbsp;<span class="keyword">match</span>&nbsp;<span class="constructor">Cohttp_lwt_unix</span>.<span class="constructor">Server</span>.<span class="constructor">Request</span>.meth&nbsp;request&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;<span class="keyword">begin</span>&nbsp;<span class="keyword">match</span>&nbsp;<span class="constructor">Cohttp</span>.<span class="constructor">Request</span>.meth&nbsp;request&nbsp;<span class="keyword">with</span><br>
 &nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">GET</span>&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Log</span>.(s&nbsp;<span class="string">"It&nbsp;is&nbsp;a&nbsp;GET&nbsp;request"</span>&nbsp;@&nbsp;very_verbose);<br>
 &nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;()<br>
@@ -223,7 +223,7 @@ M*)</span><br>
 <br>
 </code><table><tr><td></td><td><span class="comment">(** Check that it is a <code class="code"><span class="keywordsign">`</span><span class="constructor">POST</span></code>, get the <i>non-empty</i> body; or fail. *)</span></td></tr></table><code class="code"><br>
 <span class="keyword">let</span>&nbsp;get_post_body&nbsp;request&nbsp;~body&nbsp;=<br>
-&nbsp;&nbsp;<span class="keyword">begin</span>&nbsp;<span class="keyword">match</span>&nbsp;<span class="constructor">Cohttp_lwt_unix</span>.<span class="constructor">Server</span>.<span class="constructor">Request</span>.meth&nbsp;request&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;<span class="keyword">begin</span>&nbsp;<span class="keyword">match</span>&nbsp;<span class="constructor">Cohttp</span>.<span class="constructor">Request</span>.meth&nbsp;request&nbsp;<span class="keyword">with</span><br>
 &nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">POST</span>&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Log</span>.(s&nbsp;<span class="string">"It&nbsp;is&nbsp;a&nbsp;GET&nbsp;request"</span>&nbsp;@&nbsp;very_verbose);<br>
 &nbsp;&nbsp;&nbsp;&nbsp;wrap_deferred&nbsp;~on_exn:(<span class="keyword">fun</span>&nbsp;e&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">IO</span>&nbsp;(<span class="keywordsign">`</span><span class="constructor">Exn</span>&nbsp;e))<br>
@@ -350,9 +350,9 @@ M*)</span><br>
 </code><table><tr><td></td><td><span class="comment">(** <h2 id="2_Dispatcher">Dispatcher</h2> *)</span></td></tr></table><code class="code"><br>
 <br>
 <span class="keyword">let</span>&nbsp;handle_request&nbsp;~server_state&nbsp;~body&nbsp;req&nbsp;:&nbsp;(answer,&nbsp;_)&nbsp;<span class="constructor">Deferred_result</span>.t&nbsp;=<br>
-&nbsp;&nbsp;<span class="constructor">Log</span>.(s&nbsp;<span class="string">"Request-in:&nbsp;"</span>&nbsp;%&nbsp;sexp&nbsp;<span class="constructor">Cohttp_lwt_unix</span>.<span class="constructor">Server</span>.<span class="constructor">Request</span>.sexp_of_t&nbsp;req<br>
+&nbsp;&nbsp;<span class="constructor">Log</span>.(s&nbsp;<span class="string">"Request-in:&nbsp;"</span>&nbsp;%&nbsp;sexp&nbsp;<span class="constructor">Cohttp</span>.<span class="constructor">Request</span>.sexp_of_t&nbsp;req<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@&nbsp;verbose);<br>
-&nbsp;&nbsp;<span class="keyword">match</span>&nbsp;<span class="constructor">Uri</span>.path&nbsp;(<span class="constructor">Cohttp_lwt_unix</span>.<span class="constructor">Server</span>.<span class="constructor">Request</span>.uri&nbsp;req)&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;<span class="keyword">match</span>&nbsp;<span class="constructor">Uri</span>.path&nbsp;(<span class="constructor">Cohttp</span>.<span class="constructor">Request</span>.uri&nbsp;req)&nbsp;<span class="keyword">with</span><br>
 &nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="string">"/hello"</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;return&nbsp;<span class="keywordsign">`</span><span class="constructor">Unit</span><br>
 &nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="string">"/api"</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;api_service&nbsp;~server_state&nbsp;~body&nbsp;req<br>
 &nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;other&nbsp;<span class="keywordsign">-&gt;</span><br>

@@ -118,7 +118,7 @@
 <span class="keyword">let</span>&nbsp;create<br>
 &nbsp;&nbsp;&nbsp;&nbsp;?(host=<span class="constructor">Ketrew_host</span>.tmp_on_localhost)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;?(daemonize_using=<span class="keywordsign">`</span><span class="constructor">Python_daemon</span>)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;?(daemon_start_timeout=3600.)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;?(daemon_start_timeout=20.)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;program&nbsp;=<br>
 &nbsp;&nbsp;<span class="keyword">let</span>&nbsp;created&nbsp;=&nbsp;{host;&nbsp;program;&nbsp;daemonize_using;&nbsp;daemon_start_timeout}&nbsp;<span class="keyword">in</span><br>
 &nbsp;&nbsp;<span class="keywordsign">`</span><span class="constructor">Long_running</span>&nbsp;(name,&nbsp;<span class="keywordsign">`</span><span class="constructor">Created</span>&nbsp;created&nbsp;|&gt;&nbsp;serialize)<br>
@@ -210,6 +210,20 @@ http://www.codatlas.com/github.com/apache/hadoop/trunk/hadoop-yarn-project/hadoo
 &nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;stderr&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;find_application_id&nbsp;(stdout&nbsp;^&nbsp;stderr)<br>
 <br>
+<span class="keyword">let</span>&nbsp;parse_status&nbsp;str&nbsp;=<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;lines&nbsp;=&nbsp;<span class="constructor">String</span>.split&nbsp;~on:(<span class="keywordsign">`</span><span class="constructor">Character</span>&nbsp;<span class="string">'\n'</span>)&nbsp;str&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;key_values&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">List</span>.map&nbsp;lines&nbsp;~f:(<span class="keyword">fun</span>&nbsp;line&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">String</span>.split&nbsp;~on:(<span class="keywordsign">`</span><span class="constructor">Character</span>&nbsp;<span class="string">':'</span>)&nbsp;line<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&gt;&nbsp;<span class="constructor">List</span>.map&nbsp;~f:<span class="constructor">String</span>.strip)<br>
+&nbsp;&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;<span class="keyword">match</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">List</span>.find&nbsp;key_values&nbsp;~f:(<span class="keyword">function</span>&nbsp;<span class="string">"Final-State"</span>&nbsp;::&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keyword">true</span>&nbsp;<span class="keywordsign">|</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keyword">false</span>)<br>
+&nbsp;&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Some</span>&nbsp;(_&nbsp;::&nbsp;<span class="string">"SUCCEEDED"</span>&nbsp;::&nbsp;_)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Succeeded</span><br>
+&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Some</span>&nbsp;(_&nbsp;::&nbsp;<span class="string">"FAILED"</span>&nbsp;::&nbsp;_)<br>
+&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Some</span>&nbsp;(_&nbsp;::&nbsp;<span class="string">"KILLED"</span>&nbsp;::&nbsp;_)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Failed</span><br>
+&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Some</span>&nbsp;_&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">None</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Unknown</span><br>
 <br>
 <span class="keyword">let</span>&nbsp;query&nbsp;run_param&nbsp;item&nbsp;=<br>
 &nbsp;&nbsp;<span class="keyword">match</span>&nbsp;run_param&nbsp;<span class="keyword">with</span><br>
@@ -273,7 +287,7 @@ http://www.codatlas.com/github.com/apache/hadoop/trunk/hadoop-yarn-project/hadoo
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Ketrew_daemonize</span>.create<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;~starting_timeout:daemon_start_timeout<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;~host&nbsp;actual_program&nbsp;~using:daemonize_using<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;?call_script&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;?call_script&nbsp;~no_log_is_ok:<span class="keyword">true</span>&nbsp;<span class="keyword">in</span><br>
 &nbsp;&nbsp;<span class="constructor">Ketrew_daemonize</span>.(start&nbsp;(deserialize_exn&nbsp;daemonize_run_param))<br>
 &nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;daemonized_script&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;return&nbsp;(<span class="keywordsign">`</span><span class="constructor">Running</span>&nbsp;{created;&nbsp;daemonized_script})<br>
@@ -293,7 +307,25 @@ http://www.codatlas.com/github.com/apache/hadoop/trunk/hadoop-yarn-project/hadoo
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;(<span class="keywordsign">`</span><span class="constructor">Failed</span>&nbsp;(new_rp,&nbsp;s))<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Succeeded</span>&nbsp;rp&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;make_new_rp&nbsp;rp&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;new_rp&nbsp;<span class="keywordsign">-&gt;</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;(<span class="keywordsign">`</span><span class="constructor">Succeeded</span>&nbsp;new_rp)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">(*&nbsp;Since&nbsp;we&nbsp;use&nbsp;`~no_log_is_ok:true`&nbsp;it&nbsp;is&nbsp;pretty&nbsp;easy&nbsp;for&nbsp;a<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;daemonized&nbsp;process&nbsp;to&nbsp;succeed&nbsp;while&nbsp;the&nbsp;yarn&nbsp;application<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;failed,&nbsp;hence&nbsp;we&nbsp;need&nbsp;to&nbsp;get&nbsp;the&nbsp;status&nbsp;from&nbsp;yarn.&nbsp;*)</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">begin</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">begin</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;host&nbsp;=&nbsp;run.created.host&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;get_application_id&nbsp;run.daemonized_script<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;app_id&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;shell_command_output_or_log&nbsp;~host&nbsp;(fmt&nbsp;<span class="string">"yarn&nbsp;application&nbsp;-status&nbsp;%s"</span>&nbsp;app_id)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;application_status_string&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">begin</span>&nbsp;<span class="keyword">match</span>&nbsp;parse_status&nbsp;application_status_string&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Succeeded</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;return&nbsp;(<span class="keywordsign">`</span><span class="constructor">Succeeded</span>&nbsp;new_rp)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Failed</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;return&nbsp;(<span class="keywordsign">`</span><span class="constructor">Failed</span>&nbsp;(new_rp,&nbsp;<span class="string">"Yarn-status:&nbsp;FAILED"</span>))<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Unknown</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;return&nbsp;(<span class="keywordsign">`</span><span class="constructor">Still_running</span>&nbsp;new_rp)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span>&nbsp;&gt;&gt;&lt;&nbsp;<span class="keyword">function</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Ok</span>&nbsp;o&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;return&nbsp;o<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Error</span>&nbsp;log&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;fail&nbsp;(<span class="keywordsign">`</span><span class="constructor">Fatal</span>&nbsp;(<span class="constructor">Log</span>.to_long_string&nbsp;log))<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Still_running</span>&nbsp;rp&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;make_new_rp&nbsp;rp&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;new_rp&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;(<span class="keywordsign">`</span><span class="constructor">Still_running</span>&nbsp;new_rp)<br>
