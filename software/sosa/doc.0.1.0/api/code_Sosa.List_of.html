@@ -1,0 +1,365 @@
+<html><head>
+<link rel="stylesheet" href="style.css" type="text/css">
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<link rel="Start" href="index.html">
+<link title="Index of types" rel=Appendix href="index_types.html">
+<link title="Index of values" rel=Appendix href="index_values.html">
+<link title="Index of modules" rel=Appendix href="index_modules.html">
+<link title="Index of module types" rel=Appendix href="index_module_types.html">
+<link title="Sosa" rel="Chapter" href="Sosa.html"><title>Sosa.List_of</title>
+</head>
+<body>
+<code class="code">(<span class="constructor">Char</span>:&nbsp;<span class="constructor">BASIC_CHARACTER</span>)&nbsp;:<br>
+&nbsp;&nbsp;<span class="constructor">BASIC_STRING</span><br>
+&nbsp;&nbsp;<span class="keyword">with</span>&nbsp;<span class="keyword">type</span>&nbsp;character&nbsp;=&nbsp;<span class="constructor">Char</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">with</span>&nbsp;<span class="keyword">type</span>&nbsp;t&nbsp;=&nbsp;<span class="constructor">Char</span>.t&nbsp;list&nbsp;=&nbsp;<span class="keyword">struct</span><br>
+<br>
+&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;character&nbsp;=&nbsp;<span class="constructor">Char</span>.t<br>
+<br>
+&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;t&nbsp;=&nbsp;character&nbsp;list<br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;empty&nbsp;=&nbsp;[]<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;is_empty&nbsp;=&nbsp;(=)&nbsp;[]<br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;make&nbsp;length&nbsp;c&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;<span class="keyword">rec</span>&nbsp;loop&nbsp;n&nbsp;acc&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span>&nbsp;n&nbsp;&gt;=&nbsp;length&nbsp;<span class="keyword">then</span>&nbsp;acc&nbsp;<span class="keyword">else</span>&nbsp;loop&nbsp;(n&nbsp;+&nbsp;1)&nbsp;(c&nbsp;::&nbsp;acc)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;loop&nbsp;0&nbsp;[]<br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;of_character&nbsp;c&nbsp;=&nbsp;[c]<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;of_character_list&nbsp;cl&nbsp;=&nbsp;cl<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;to_character_list&nbsp;cl&nbsp;=&nbsp;cl<br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;get&nbsp;sl&nbsp;~index&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">try</span>&nbsp;<span class="constructor">Some</span>&nbsp;(<span class="constructor">List</span>.nth&nbsp;sl&nbsp;index)&nbsp;<span class="keyword">with</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">None</span><br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;set&nbsp;s&nbsp;~index&nbsp;~v&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;<span class="keyword">rec</span>&nbsp;loop&nbsp;n&nbsp;acc&nbsp;=&nbsp;<span class="keyword">function</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;[]&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">None</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;q&nbsp;::&nbsp;t&nbsp;<span class="keyword">when</span>&nbsp;n&nbsp;=&nbsp;index&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Some</span>&nbsp;(<span class="constructor">List</span>.rev_append&nbsp;acc&nbsp;(v&nbsp;::&nbsp;t))<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;q&nbsp;::&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;loop&nbsp;(n&nbsp;+&nbsp;1)&nbsp;(q&nbsp;::&nbsp;acc)&nbsp;t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;loop&nbsp;0&nbsp;[]&nbsp;s<br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;get_exn&nbsp;s&nbsp;~index&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">match</span>&nbsp;get&nbsp;s&nbsp;~index&nbsp;<span class="keyword">with</span>&nbsp;<span class="constructor">None</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;failwith&nbsp;<span class="string">"get_exn"</span>&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Some</span>&nbsp;s&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;s<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;set_exn&nbsp;s&nbsp;~index&nbsp;~v&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">match</span>&nbsp;set&nbsp;s&nbsp;~index&nbsp;~v&nbsp;<span class="keyword">with</span>&nbsp;<span class="constructor">None</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;failwith&nbsp;<span class="string">"set_exn"</span>&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Some</span>&nbsp;s&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;s<br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;iter&nbsp;t&nbsp;~f&nbsp;=&nbsp;<span class="constructor">List</span>.iter&nbsp;t&nbsp;~f<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;iteri&nbsp;t&nbsp;~f&nbsp;=&nbsp;<span class="constructor">List</span>.iteri&nbsp;t&nbsp;~f<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;iter_reverse&nbsp;t&nbsp;~f&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">List</span>.iter&nbsp;(<span class="constructor">List</span>.rev&nbsp;t)&nbsp;~f<br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;rev&nbsp;t&nbsp;=&nbsp;<span class="constructor">List</span>.rev&nbsp;t<br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;fold&nbsp;t&nbsp;~init&nbsp;~f&nbsp;=&nbsp;<span class="constructor">List</span>.fold_left&nbsp;t&nbsp;~init&nbsp;~f<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;foldi&nbsp;t&nbsp;~init&nbsp;~f&nbsp;=&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;snd&nbsp;(<span class="constructor">List</span>.fold_left&nbsp;t&nbsp;~init:(0,init)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;~f:(<span class="keyword">fun</span>&nbsp;(i,a)&nbsp;c&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;(i+1,f&nbsp;i&nbsp;a&nbsp;c)))<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;fold2_exn&nbsp;t1&nbsp;t2&nbsp;~init&nbsp;~f&nbsp;=&nbsp;<span class="constructor">List</span>.fold_left2&nbsp;t1&nbsp;t2&nbsp;~init&nbsp;~f<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;map&nbsp;=&nbsp;<span class="constructor">Core_list_map</span>.map<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;mapi&nbsp;=&nbsp;<span class="constructor">Core_list_map</span>.mapi<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;map2_exn&nbsp;=&nbsp;<span class="constructor">Core_list_map</span>.map2_exn<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;for_all&nbsp;t&nbsp;~f&nbsp;=&nbsp;<span class="constructor">List</span>.for_all&nbsp;t&nbsp;~f<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;exists&nbsp;t&nbsp;~f&nbsp;=&nbsp;<span class="constructor">List</span>.exists&nbsp;t&nbsp;~f<br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;compare&nbsp;(a&nbsp;:&nbsp;<span class="constructor">Char</span>.t&nbsp;list)&nbsp;(b:&nbsp;<span class="constructor">Char</span>.t&nbsp;list)&nbsp;=&nbsp;compare&nbsp;a&nbsp;b<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;of_native_substring&nbsp;s&nbsp;~offset&nbsp;~length&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Make_native_conversions</span>.of_native_substring<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;~empty&nbsp;~init:(<span class="keyword">fun</span>&nbsp;()&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;ref&nbsp;[])<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;~on_new_character:(<span class="keyword">fun</span>&nbsp;x&nbsp;c&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;x&nbsp;:=&nbsp;c&nbsp;::&nbsp;!x)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;~finalize:(<span class="keyword">fun</span>&nbsp;x&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">List</span>.rev&nbsp;!x)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;~read_character_from_native_string:<span class="constructor">Char</span>.read_from_native_string<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;s&nbsp;~offset&nbsp;~length<br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;of_native_string&nbsp;s&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Make_native_conversions</span>.of_native_string<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;of_native_substring&nbsp;s<br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;to_native_string&nbsp;l&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Make_native_conversions</span>.to_native_string_knowing_size<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;~future_size:(<span class="keyword">fun</span>&nbsp;l&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">List</span>.fold_left&nbsp;l&nbsp;~init:0&nbsp;~f:(<span class="keyword">fun</span>&nbsp;sum&nbsp;c&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;sum&nbsp;+&nbsp;<span class="constructor">Char</span>.size&nbsp;c))<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;~iter&nbsp;~write_char_to_native_string:<span class="constructor">Char</span>.write_to_native_string<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;l<br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;to_string_hum&nbsp;l&nbsp;=&nbsp;sprintf&nbsp;<span class="string">"%S"</span>&nbsp;(to_native_string&nbsp;l)<br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;concat&nbsp;?(sep=[])&nbsp;ll&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">match</span>&nbsp;ll&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;[]&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;[]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;hh&nbsp;::&nbsp;tt&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;x&nbsp;=&nbsp;ref&nbsp;(<span class="constructor">List</span>.rev&nbsp;hh)&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">List</span>.iter&nbsp;tt&nbsp;~f:(<span class="keyword">fun</span>&nbsp;l&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;x&nbsp;:=&nbsp;<span class="constructor">List</span>.rev_append&nbsp;sep&nbsp;!x;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;x&nbsp;:=&nbsp;<span class="constructor">List</span>.rev_append&nbsp;l&nbsp;!x;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">List</span>.rev&nbsp;!x<br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;length&nbsp;=&nbsp;<span class="constructor">List</span>.length<br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;sub&nbsp;t&nbsp;~index&nbsp;~length&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;r&nbsp;=&nbsp;ref&nbsp;[]&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;c&nbsp;=&nbsp;ref&nbsp;0&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">try</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">List</span>.iteri&nbsp;t&nbsp;~f:(<span class="keyword">fun</span>&nbsp;i&nbsp;a&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span>&nbsp;i&nbsp;&gt;=&nbsp;index&nbsp;+&nbsp;length&nbsp;<span class="keyword">then</span>&nbsp;raise&nbsp;<span class="constructor">Not_found</span>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span>&nbsp;index&nbsp;&lt;=&nbsp;i&nbsp;<span class="keyword">then</span>&nbsp;(<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;r:=&nbsp;a&nbsp;::&nbsp;!r;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;incr&nbsp;c;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span>&nbsp;!c&nbsp;=&nbsp;length&nbsp;<span class="keyword">then</span>&nbsp;<span class="constructor">Some</span>&nbsp;(<span class="constructor">List</span>.rev&nbsp;!r)&nbsp;<span class="keyword">else</span>&nbsp;<span class="constructor">None</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Not_found</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Some</span>&nbsp;(<span class="constructor">List</span>.rev&nbsp;!r)<br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;sub_exn&nbsp;t&nbsp;~index&nbsp;~length&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">match</span>&nbsp;sub&nbsp;t&nbsp;~index&nbsp;~length&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Some</span>&nbsp;s&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;s<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">None</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;ksprintf&nbsp;failwith&nbsp;<span class="string">"sub_exn(%d,%d)"</span>&nbsp;index&nbsp;length<br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;slice_exn&nbsp;?(start=0)&nbsp;?finish&nbsp;t&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;length_of_t&nbsp;=&nbsp;<span class="constructor">List</span>.length&nbsp;t&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span>&nbsp;start&nbsp;&lt;&nbsp;0&nbsp;<span class="keywordsign">||</span>&nbsp;(not&nbsp;(is_empty&nbsp;t)&nbsp;<span class="keywordsign">&amp;&amp;</span>&nbsp;start&nbsp;&gt;=&nbsp;length_of_t)&nbsp;<span class="keyword">then</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ksprintf&nbsp;failwith&nbsp;<span class="string">"slice_exn:&nbsp;invalid&nbsp;start&nbsp;%d"</span>&nbsp;start<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">else</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">match</span>&nbsp;finish&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">None</span>&nbsp;&nbsp;&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;sub_exn&nbsp;t&nbsp;~index:start&nbsp;~length:(length_of_t&nbsp;-&nbsp;start)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Some</span>&nbsp;f&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keyword">if</span>&nbsp;f&nbsp;&lt;&nbsp;0&nbsp;<span class="keywordsign">||</span>&nbsp;f&nbsp;&gt;&nbsp;length_of_t&nbsp;<span class="keyword">then</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ksprintf&nbsp;failwith&nbsp;<span class="string">"slice_exn:&nbsp;invalid&nbsp;finish&nbsp;%d"</span>&nbsp;f<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">else</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sub_exn&nbsp;t&nbsp;~index:start&nbsp;~length:(f&nbsp;-&nbsp;start)<br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;slice&nbsp;?start&nbsp;?finish&nbsp;t&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">try</span>&nbsp;<span class="constructor">Some</span>&nbsp;(slice_exn&nbsp;?start&nbsp;?finish&nbsp;t)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">with</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">None</span><br>
+<br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;<span class="keyword">rec</span>&nbsp;comp_loop&nbsp;p&nbsp;lst_pair&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span>&nbsp;p<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">then</span>&nbsp;<span class="keyword">match</span>&nbsp;lst_pair&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;(i,[])&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Some</span>&nbsp;i<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;([],j)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">None</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;(i::is),&nbsp;(j::js)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;comp_loop&nbsp;(i&nbsp;=&nbsp;j)&nbsp;(is,js)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">else</span>&nbsp;<span class="constructor">None</span><br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;is_prefix&nbsp;t&nbsp;~prefix&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">match</span>&nbsp;comp_loop&nbsp;<span class="keyword">true</span>&nbsp;(t,prefix)&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Some</span>&nbsp;_&nbsp;&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keyword">true</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">None</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keyword">false</span><br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;is_suffix&nbsp;t&nbsp;~suffix&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;is_prefix&nbsp;(<span class="constructor">List</span>.rev&nbsp;t)&nbsp;~prefix:(<span class="constructor">List</span>.rev&nbsp;suffix)<br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;chop_prefix_exn&nbsp;t&nbsp;~prefix&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">match</span>&nbsp;comp_loop&nbsp;<span class="keyword">true</span>&nbsp;(t,prefix)&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Some</span>&nbsp;r&nbsp;&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;r<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">None</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;raise&nbsp;(<span class="constructor">Invalid_argument</span>&nbsp;<span class="string">"chop_prefix_exn:&nbsp;not&nbsp;a&nbsp;prefix"</span>)<br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;chop_prefix&nbsp;t&nbsp;~prefix&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">try</span>&nbsp;<span class="constructor">Some</span>&nbsp;(chop_prefix_exn&nbsp;t&nbsp;prefix)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">with</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">None</span><br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;chop_suffix_exn&nbsp;t&nbsp;~suffix&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">List</span>.rev&nbsp;(chop_prefix_exn&nbsp;(<span class="constructor">List</span>.rev&nbsp;t)&nbsp;~prefix:(<span class="constructor">List</span>.rev&nbsp;suffix))<br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;chop_suffix&nbsp;t&nbsp;~suffix&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">try</span>&nbsp;<span class="constructor">Some</span>&nbsp;(chop_suffix_exn&nbsp;t&nbsp;suffix)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">with</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">None</span><br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;unrevSplit&nbsp;t&nbsp;n&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span>&nbsp;n&nbsp;&lt;&nbsp;0<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">then</span>&nbsp;[],t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">else</span>&nbsp;<span class="keyword">let</span>&nbsp;<span class="keyword">rec</span>&nbsp;offset&nbsp;i&nbsp;((l,r)&nbsp;<span class="keyword">as</span>&nbsp;p)&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span>&nbsp;i&nbsp;=&nbsp;n<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">then</span>&nbsp;p<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">else</span>&nbsp;<span class="keyword">match</span>&nbsp;r&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;[]&nbsp;&nbsp;&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;p<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;h::t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;offset&nbsp;(i&nbsp;+&nbsp;1)&nbsp;(h::l,t)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;offset&nbsp;0&nbsp;([],t)<br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;split_at&nbsp;t&nbsp;~index&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;l,r&nbsp;=&nbsp;unrevSplit&nbsp;t&nbsp;index&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">List</span>.rev&nbsp;l,&nbsp;r<br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;take&nbsp;t&nbsp;~index&nbsp;=&nbsp;fst&nbsp;(split_at&nbsp;t&nbsp;index)<br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;drop&nbsp;t&nbsp;~index&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;l,r&nbsp;=&nbsp;unrevSplit&nbsp;t&nbsp;index&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;r<br>
+<br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;index_of_character&nbsp;t&nbsp;?(from=0)&nbsp;c&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;index&nbsp;=&nbsp;ref&nbsp;0&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">try</span>&nbsp;<span class="keyword">begin</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">List</span>.iter&nbsp;t&nbsp;~f:(<span class="keyword">fun</span>&nbsp;x&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span>&nbsp;!index&nbsp;&gt;=&nbsp;from<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">then</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span>&nbsp;x&nbsp;=&nbsp;c<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">then</span>&nbsp;failwith&nbsp;<span class="string">"found"</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">else</span>&nbsp;incr&nbsp;index<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">else</span>&nbsp;incr&nbsp;index);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">None</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">with</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Some</span>&nbsp;!index<br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;index_of_character_reverse&nbsp;t&nbsp;?from&nbsp;c&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;length_of_t,&nbsp;rev&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;<span class="keyword">rec</span>&nbsp;loop&nbsp;lgth&nbsp;acc&nbsp;=&nbsp;<span class="keyword">function</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;[]&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;(lgth,&nbsp;acc)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;h&nbsp;::&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;loop&nbsp;(lgth&nbsp;+&nbsp;1)&nbsp;(h&nbsp;::&nbsp;acc)&nbsp;t&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;loop&nbsp;0&nbsp;[]&nbsp;t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;from&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">match</span>&nbsp;from&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">None</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;length_of_t&nbsp;-&nbsp;1<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Some</span>&nbsp;s&nbsp;<span class="keyword">when</span>&nbsp;s&nbsp;&lt;&nbsp;0&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;-1<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Some</span>&nbsp;s&nbsp;<span class="keyword">when</span>&nbsp;s&nbsp;&gt;&nbsp;length_of_t&nbsp;-&nbsp;1&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;length_of_t&nbsp;-&nbsp;1<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Some</span>&nbsp;s&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;s<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">match</span>&nbsp;index_of_character&nbsp;rev&nbsp;~from:(length_of_t&nbsp;-&nbsp;from&nbsp;-&nbsp;1)&nbsp;c&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Some</span>&nbsp;c&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Some</span>&nbsp;(length_of_t&nbsp;-&nbsp;c&nbsp;-&nbsp;1)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">None</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">None</span><br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;compare_substring&nbsp;(a,&nbsp;idxa,&nbsp;lena)&nbsp;(b,&nbsp;idxb,&nbsp;lenb)&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;<span class="keyword">module</span>&nbsp;<span class="constructor">With_exns</span>&nbsp;=&nbsp;<span class="keyword">struct</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">exception</span>&nbsp;<span class="constructor">Left</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">exception</span>&nbsp;<span class="constructor">Right</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;<span class="keyword">rec</span>&nbsp;drop_until&nbsp;~exn&nbsp;idx&nbsp;l&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">match</span>&nbsp;idx,&nbsp;l&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;0,&nbsp;l&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;l<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;more,&nbsp;[]&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;raise&nbsp;exn<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;more,&nbsp;h&nbsp;::&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;drop_until&nbsp;~exn&nbsp;(more&nbsp;-&nbsp;1)&nbsp;t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;f&nbsp;()&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">begin</span>&nbsp;<span class="keyword">try</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;<span class="keyword">rec</span>&nbsp;cmp&nbsp;l1&nbsp;l2&nbsp;len1&nbsp;len2&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span>&nbsp;len1&nbsp;&lt;&nbsp;0&nbsp;<span class="keyword">then</span>&nbsp;raise&nbsp;<span class="constructor">Left</span>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span>&nbsp;len2&nbsp;&lt;&nbsp;0&nbsp;<span class="keyword">then</span>&nbsp;raise&nbsp;<span class="constructor">Right</span>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">match</span>&nbsp;l1,&nbsp;l2&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;_,&nbsp;_&nbsp;<span class="keyword">when</span>&nbsp;len1&nbsp;=&nbsp;0&nbsp;<span class="keywordsign">&amp;&amp;</span>&nbsp;len2&nbsp;=&nbsp;0&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;0<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;_,&nbsp;_&nbsp;<span class="keyword">when</span>&nbsp;len1&nbsp;=&nbsp;0&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;-1<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;_,&nbsp;_&nbsp;<span class="keyword">when</span>&nbsp;len2&nbsp;=&nbsp;0&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;1<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;[],&nbsp;[]&nbsp;<span class="keyword">when</span>&nbsp;len1&nbsp;=&nbsp;0&nbsp;<span class="keywordsign">||</span>&nbsp;len2&nbsp;=&nbsp;0&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Pervasives</span>.compare&nbsp;lena&nbsp;lenb<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;[],&nbsp;_&nbsp;<span class="keyword">when</span>&nbsp;len1&nbsp;&gt;&nbsp;0&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;raise&nbsp;<span class="constructor">Left</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;_,&nbsp;[]&nbsp;<span class="keyword">when</span>&nbsp;len2&nbsp;&gt;&nbsp;0&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;raise&nbsp;<span class="constructor">Right</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;h1&nbsp;::&nbsp;t1,&nbsp;h2&nbsp;::&nbsp;t2&nbsp;<span class="keyword">when</span>&nbsp;<span class="constructor">Char</span>.compare&nbsp;h1&nbsp;h2&nbsp;=&nbsp;0&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cmp&nbsp;t1&nbsp;t2&nbsp;(len1&nbsp;-&nbsp;1)&nbsp;(len2&nbsp;-&nbsp;1)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;h1&nbsp;::&nbsp;_,&nbsp;h2&nbsp;::&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Char</span>.compare&nbsp;h1&nbsp;h2<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;_,&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keyword">assert</span>&nbsp;<span class="keyword">false</span>&nbsp;<span class="comment">(*&nbsp;calming&nbsp;down&nbsp;the&nbsp;warnings..&nbsp;*)</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span>&nbsp;lena&nbsp;=&nbsp;0&nbsp;<span class="keywordsign">&amp;&amp;</span>&nbsp;lenb&nbsp;=&nbsp;0&nbsp;<span class="keyword">then</span>&nbsp;0<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">else</span>&nbsp;(<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;aa&nbsp;=&nbsp;drop_until&nbsp;~exn:<span class="constructor">Left</span>&nbsp;idxa&nbsp;a&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;bb&nbsp;=&nbsp;drop_until&nbsp;~exn:<span class="constructor">Right</span>&nbsp;idxb&nbsp;b&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(cmp&nbsp;aa&nbsp;bb&nbsp;lena&nbsp;lenb)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Left</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;-1<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Right</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;1<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Failure</span>&nbsp;s&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;1<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">(*&nbsp;dbg&nbsp;"(%d,&nbsp;%d/%d)&nbsp;Vs&nbsp;(%d,&nbsp;%d/%d)&nbsp;%s"&nbsp;idxa&nbsp;lena&nbsp;(length&nbsp;a)&nbsp;idxb&nbsp;lenb&nbsp;(length&nbsp;b)&nbsp;s;&nbsp;*)</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span>&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">With_exns</span>.f&nbsp;()<br>
+<br>
+&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;s&nbsp;=&nbsp;t<br>
+&nbsp;&nbsp;<span class="keyword">module</span>&nbsp;<span class="constructor">T_length_and_compsub</span>&nbsp;=&nbsp;<span class="keyword">struct</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;t&nbsp;=&nbsp;s&nbsp;<span class="keyword">let</span>&nbsp;length&nbsp;=&nbsp;length&nbsp;<span class="keyword">let</span>&nbsp;compare_substring&nbsp;=&nbsp;compare_substring<br>
+&nbsp;&nbsp;<span class="keyword">end</span><br>
+&nbsp;&nbsp;<span class="keyword">include</span>&nbsp;<span class="constructor">Compare_substring_strict_of_loose</span>(<span class="constructor">T_length_and_compsub</span>)<br>
+&nbsp;&nbsp;<span class="keyword">include</span>&nbsp;<span class="constructor">Make_index_of_string</span>(<span class="constructor">T_length_and_compsub</span>)<br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;find&nbsp;?(from=0)&nbsp;?length&nbsp;s&nbsp;~f&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">(*&nbsp;index&nbsp;and&nbsp;virtual_length&nbsp;are&nbsp;maybe&nbsp;a&nbsp;bit&nbsp;redundant&nbsp;but&nbsp;I&nbsp;favor<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;readability&nbsp;of&nbsp;the&nbsp;branches&nbsp;of&nbsp;the&nbsp;match&nbsp;*)</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;from&nbsp;=&nbsp;<span class="keyword">if</span>&nbsp;from&nbsp;&lt;=&nbsp;0&nbsp;<span class="keyword">then</span>&nbsp;0&nbsp;<span class="keyword">else</span>&nbsp;from&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;<span class="keyword">rec</span>&nbsp;find_from&nbsp;index&nbsp;virtual_length&nbsp;l&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">match</span>&nbsp;l,&nbsp;length&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;[],&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">None</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;_,&nbsp;<span class="constructor">Some</span>&nbsp;lgth&nbsp;<span class="keyword">when</span>&nbsp;lgth&nbsp;&lt;=&nbsp;virtual_length&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">None</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;h&nbsp;::&nbsp;t,&nbsp;_&nbsp;<span class="keyword">when</span>&nbsp;index&nbsp;&lt;&nbsp;from&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;find_from&nbsp;(index&nbsp;+&nbsp;1)&nbsp;virtual_length&nbsp;t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;h&nbsp;::&nbsp;t,&nbsp;_&nbsp;<span class="keyword">when</span>&nbsp;index&nbsp;&gt;=&nbsp;from&nbsp;<span class="keywordsign">&amp;&amp;</span>&nbsp;f&nbsp;h&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Some</span>&nbsp;index<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;h&nbsp;::&nbsp;t,&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;find_from&nbsp;(index&nbsp;+&nbsp;1)&nbsp;(virtual_length&nbsp;+&nbsp;1)&nbsp;t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;find_from&nbsp;0&nbsp;0&nbsp;s&nbsp;<br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;find_reverse&nbsp;?from&nbsp;?length&nbsp;s&nbsp;~f&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;length_of_s&nbsp;=&nbsp;<span class="constructor">List</span>.length&nbsp;s&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;from&nbsp;=&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">match</span>&nbsp;from&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">None</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">None</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Some</span>&nbsp;s&nbsp;<span class="keyword">when</span>&nbsp;s&nbsp;&lt;&nbsp;0&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Some</span>&nbsp;length_of_s<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Some</span>&nbsp;s&nbsp;<span class="keyword">when</span>&nbsp;s&nbsp;&gt;&nbsp;length_of_s&nbsp;-&nbsp;1&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Some</span>&nbsp;0<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Some</span>&nbsp;s&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Some</span>&nbsp;(length_of_s&nbsp;-&nbsp;1&nbsp;-&nbsp;s)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">match</span>&nbsp;find&nbsp;?from&nbsp;?length&nbsp;(<span class="constructor">List</span>.rev&nbsp;s)&nbsp;~f&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">None</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">None</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Some</span>&nbsp;i&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Some</span>&nbsp;(length_of_s&nbsp;-&nbsp;1&nbsp;-&nbsp;i)<br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;filter_map&nbsp;?(from=0)&nbsp;?length&nbsp;t&nbsp;~f&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;<span class="keyword">rec</span>&nbsp;filter_map_rec&nbsp;acc&nbsp;index&nbsp;virtual_length&nbsp;l&nbsp;=&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">match</span>&nbsp;l,&nbsp;length&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;[],&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">List</span>.rev&nbsp;acc<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;_,&nbsp;<span class="constructor">Some</span>&nbsp;lgth&nbsp;<span class="keyword">when</span>&nbsp;lgth&nbsp;&lt;=&nbsp;virtual_length&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">List</span>.rev&nbsp;acc<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;h&nbsp;::&nbsp;t,&nbsp;_&nbsp;<span class="keyword">when</span>&nbsp;index&nbsp;&lt;&nbsp;from&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;filter_map_rec&nbsp;acc&nbsp;(index&nbsp;+&nbsp;1)&nbsp;virtual_length&nbsp;t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;h&nbsp;::&nbsp;t,&nbsp;_&nbsp;<span class="comment">(*&nbsp;when&nbsp;index&nbsp;&gt;=&nbsp;from&nbsp;&nbsp;*)</span>&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">begin</span>&nbsp;<span class="keyword">match</span>&nbsp;f&nbsp;h&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Some</span>&nbsp;o&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;filter_map_rec&nbsp;(o&nbsp;::&nbsp;acc)&nbsp;(index&nbsp;+&nbsp;1)&nbsp;(virtual_length&nbsp;+&nbsp;1)&nbsp;t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">None</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;filter_map_rec&nbsp;acc&nbsp;(index&nbsp;+&nbsp;1)&nbsp;(virtual_length&nbsp;+&nbsp;1)&nbsp;t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;filter_map_rec&nbsp;[]&nbsp;0&nbsp;0&nbsp;t<br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;filter&nbsp;?from&nbsp;?length&nbsp;t&nbsp;~f&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;filter_map&nbsp;?from&nbsp;?length&nbsp;t&nbsp;~f:(<span class="keyword">fun</span>&nbsp;c&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keyword">if</span>&nbsp;f&nbsp;c&nbsp;<span class="keyword">then</span>&nbsp;<span class="constructor">Some</span>&nbsp;c&nbsp;<span class="keyword">else</span>&nbsp;<span class="constructor">None</span>)<br>
+<br>
+&nbsp;&nbsp;<span class="keyword">include</span>&nbsp;<span class="constructor">Make_strip_function</span>&nbsp;(<span class="keyword">struct</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;t&nbsp;=&nbsp;<span class="constructor">Char</span>.t&nbsp;list<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;character&nbsp;=&nbsp;<span class="constructor">Char</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;empty&nbsp;=&nbsp;empty<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;length&nbsp;=&nbsp;length<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;sub_exn&nbsp;=&nbsp;sub_exn<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;find&nbsp;=&nbsp;find<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;find_reverse&nbsp;=&nbsp;find_reverse<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;is_whitespace&nbsp;=&nbsp;<span class="constructor">Char</span>.is_whitespace<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span>)<br>
+<br>
+&nbsp;&nbsp;<span class="keyword">include</span>&nbsp;<span class="constructor">Make_split_function</span>(<span class="keyword">struct</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;t&nbsp;=&nbsp;<span class="constructor">Char</span>.t&nbsp;list<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;character&nbsp;=&nbsp;<span class="constructor">Char</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;length&nbsp;=&nbsp;length<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;sub_exn&nbsp;=&nbsp;sub_exn<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;index_of_string&nbsp;=&nbsp;index_of_string<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;index_of_character&nbsp;=&nbsp;index_of_character<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span>)<br>
+<br>
+<br>
+&nbsp;&nbsp;<span class="keyword">module</span>&nbsp;<span class="constructor">Make_output</span>&nbsp;(<span class="constructor">Model</span>:&nbsp;<span class="constructor">OUTPUT_MODEL</span>)&nbsp;=&nbsp;<span class="keyword">struct</span><br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;(&gt;&gt;=)&nbsp;=&nbsp;<span class="constructor">Model</span>.bind<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;output&nbsp;chan&nbsp;l&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">List</span>.fold_left&nbsp;l&nbsp;~init:(<span class="constructor">Model</span>.return&nbsp;())&nbsp;~f:(<span class="keyword">fun</span>&nbsp;prev_m&nbsp;c&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;prev_m&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;()&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Model</span>.output&nbsp;chan&nbsp;(<span class="constructor">Char</span>.to_native_string&nbsp;c))<br>
+<br>
+&nbsp;&nbsp;<span class="keyword">end</span><br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;take_while_with_index&nbsp;t&nbsp;~f&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;<span class="keyword">rec</span>&nbsp;loop&nbsp;idx&nbsp;acc&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">function</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;h&nbsp;::&nbsp;t&nbsp;<span class="keyword">when</span>&nbsp;f&nbsp;idx&nbsp;h&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;loop&nbsp;(idx&nbsp;+&nbsp;1)&nbsp;(h&nbsp;::&nbsp;acc)&nbsp;t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;[]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;_&nbsp;::&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">List</span>.rev&nbsp;acc<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;loop&nbsp;0&nbsp;[]&nbsp;t<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;take_while&nbsp;t&nbsp;~f&nbsp;=&nbsp;take_while_with_index&nbsp;t&nbsp;~f:(<span class="keyword">fun</span>&nbsp;_&nbsp;c&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;f&nbsp;c)<br>
+<br>
+<br>
+<span class="keyword">end</span></code></body></html>

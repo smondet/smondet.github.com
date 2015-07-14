@@ -1,0 +1,144 @@
+<html><head>
+<link rel="stylesheet" href="style.css" type="text/css">
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<link rel="Start" href="index.html">
+<link title="Index of types" rel=Appendix href="index_types.html">
+<link title="Index of values" rel=Appendix href="index_values.html">
+<link title="Index of modules" rel=Appendix href="index_modules.html">
+<link title="Index of module types" rel=Appendix href="index_module_types.html">
+<link title="Sosa" rel="Chapter" href="Sosa.html"><title>Sosa.Internal_pervasives</title>
+</head>
+<body>
+<code class="code"><span class="keyword">struct</span><br>
+&nbsp;&nbsp;<span class="keyword">module</span>&nbsp;<span class="constructor">List</span>&nbsp;=&nbsp;<span class="constructor">ListLabels</span><br>
+&nbsp;&nbsp;<span class="keyword">module</span>&nbsp;<span class="constructor">String</span>&nbsp;=&nbsp;<span class="constructor">StringLabels</span><br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;(|&gt;)&nbsp;x&nbsp;f&nbsp;=&nbsp;f&nbsp;x<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;return&nbsp;x&nbsp;:&nbsp;(_,&nbsp;_)&nbsp;result&nbsp;=&nbsp;<span class="keywordsign">`</span><span class="constructor">Ok</span>&nbsp;x<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;fail&nbsp;x&nbsp;:&nbsp;(_,&nbsp;_)&nbsp;result&nbsp;=&nbsp;<span class="keywordsign">`</span><span class="constructor">Error</span>&nbsp;x<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;bind&nbsp;x&nbsp;f&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">match</span>&nbsp;x&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Ok</span>&nbsp;o&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;f&nbsp;o<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Error</span>&nbsp;e&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;fail&nbsp;e<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;(&gt;&gt;=)&nbsp;=&nbsp;bind<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;dbg&nbsp;fmt&nbsp;=&nbsp;printf&nbsp;(<span class="string">"DBG:&nbsp;"</span>&nbsp;^^&nbsp;fmt&nbsp;^^&nbsp;<span class="string">"\n%!"</span>)<br>
+<br>
+&nbsp;&nbsp;<span class="comment">(*&nbsp;The&nbsp;function&nbsp;`List.map`&nbsp;adapted&nbsp;from&nbsp;`Core_kernel`'s&nbsp;way&nbsp;of<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unrolling&nbsp;the&nbsp;loops.&nbsp;*)</span><br>
+&nbsp;&nbsp;<span class="keyword">module</span>&nbsp;<span class="constructor">Core_list_map</span>&nbsp;=&nbsp;<span class="keyword">struct</span><br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;map_slow&nbsp;l&nbsp;~f&nbsp;=&nbsp;<span class="constructor">List</span>.rev&nbsp;(<span class="constructor">List</span>.rev_map&nbsp;~f&nbsp;l)<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;<span class="keyword">rec</span>&nbsp;count_map&nbsp;~f&nbsp;l&nbsp;ctr&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">match</span>&nbsp;l&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;[]&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;[]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;[x1]&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;f1&nbsp;=&nbsp;f&nbsp;x1&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[f1]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;[x1;&nbsp;x2]&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;f1&nbsp;=&nbsp;f&nbsp;x1&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;f2&nbsp;=&nbsp;f&nbsp;x2&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[f1;&nbsp;f2]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;[x1;&nbsp;x2;&nbsp;x3]&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;f1&nbsp;=&nbsp;f&nbsp;x1&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;f2&nbsp;=&nbsp;f&nbsp;x2&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;f3&nbsp;=&nbsp;f&nbsp;x3&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[f1;&nbsp;f2;&nbsp;f3]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;[x1;&nbsp;x2;&nbsp;x3;&nbsp;x4]&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;f1&nbsp;=&nbsp;f&nbsp;x1&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;f2&nbsp;=&nbsp;f&nbsp;x2&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;f3&nbsp;=&nbsp;f&nbsp;x3&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;f4&nbsp;=&nbsp;f&nbsp;x4&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[f1;&nbsp;f2;&nbsp;f3;&nbsp;f4]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;x1&nbsp;::&nbsp;x2&nbsp;::&nbsp;x3&nbsp;::&nbsp;x4&nbsp;::&nbsp;x5&nbsp;::&nbsp;tl&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;f1&nbsp;=&nbsp;f&nbsp;x1&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;f2&nbsp;=&nbsp;f&nbsp;x2&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;f3&nbsp;=&nbsp;f&nbsp;x3&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;f4&nbsp;=&nbsp;f&nbsp;x4&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;f5&nbsp;=&nbsp;f&nbsp;x5&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;f1&nbsp;::&nbsp;f2&nbsp;::&nbsp;f3&nbsp;::&nbsp;f4&nbsp;::&nbsp;f5&nbsp;::<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="keyword">if</span>&nbsp;ctr&nbsp;&gt;&nbsp;1000<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">then</span>&nbsp;map_slow&nbsp;~f&nbsp;tl<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">else</span>&nbsp;count_map&nbsp;~f&nbsp;tl&nbsp;(ctr&nbsp;+&nbsp;1))<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;map&nbsp;l&nbsp;~f&nbsp;=&nbsp;count_map&nbsp;~f&nbsp;l&nbsp;0<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;mapi_slow&nbsp;l&nbsp;~f&nbsp;~i&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;_,&nbsp;r&nbsp;=&nbsp;<span class="constructor">List</span>.fold_left&nbsp;l<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;~f:(<span class="keyword">fun</span>&nbsp;(i,&nbsp;a)&nbsp;e&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;(i&nbsp;+&nbsp;1,&nbsp;((f&nbsp;i&nbsp;e)::a)))<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;~init:(i,[])<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">List</span>.rev&nbsp;r<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;<span class="keyword">rec</span>&nbsp;count_mapi&nbsp;~f&nbsp;l&nbsp;ctr&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">match</span>&nbsp;l&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;[]&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;[]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;[x1]&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;f1&nbsp;=&nbsp;f&nbsp;ctr&nbsp;x1&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[f1]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;[x1;&nbsp;x2]&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;f1&nbsp;=&nbsp;f&nbsp;ctr&nbsp;x1&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;f2&nbsp;=&nbsp;f&nbsp;(ctr&nbsp;+&nbsp;1)&nbsp;x2&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[f1;&nbsp;f2]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;[x1;&nbsp;x2;&nbsp;x3]&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;f1&nbsp;=&nbsp;f&nbsp;ctr&nbsp;x1&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;f2&nbsp;=&nbsp;f&nbsp;(ctr&nbsp;+&nbsp;1)&nbsp;x2&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;f3&nbsp;=&nbsp;f&nbsp;(ctr&nbsp;+&nbsp;2)&nbsp;x3&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[f1;&nbsp;f2;&nbsp;f3]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;[x1;&nbsp;x2;&nbsp;x3;&nbsp;x4]&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;f1&nbsp;=&nbsp;f&nbsp;ctr&nbsp;x1&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;f2&nbsp;=&nbsp;f&nbsp;(ctr&nbsp;+&nbsp;1)&nbsp;x2&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;f3&nbsp;=&nbsp;f&nbsp;(ctr&nbsp;+&nbsp;2)&nbsp;x3&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;f4&nbsp;=&nbsp;f&nbsp;(ctr&nbsp;+&nbsp;3)&nbsp;x4&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[f1;&nbsp;f2;&nbsp;f3;&nbsp;f4]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;x1&nbsp;::&nbsp;x2&nbsp;::&nbsp;x3&nbsp;::&nbsp;x4&nbsp;::&nbsp;x5&nbsp;::&nbsp;tl&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;f1&nbsp;=&nbsp;f&nbsp;ctr&nbsp;x1&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;f2&nbsp;=&nbsp;f&nbsp;(ctr&nbsp;+&nbsp;1)&nbsp;x2&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;f3&nbsp;=&nbsp;f&nbsp;(ctr&nbsp;+&nbsp;2)&nbsp;x3&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;f4&nbsp;=&nbsp;f&nbsp;(ctr&nbsp;+&nbsp;3)&nbsp;x4&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;f5&nbsp;=&nbsp;f&nbsp;(ctr&nbsp;+&nbsp;4)&nbsp;x5&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;f1&nbsp;::&nbsp;f2&nbsp;::&nbsp;f3&nbsp;::&nbsp;f4&nbsp;::&nbsp;f5&nbsp;::<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="keyword">if</span>&nbsp;ctr&nbsp;&gt;&nbsp;5000<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">then</span>&nbsp;mapi_slow&nbsp;~f&nbsp;~i:(ctr&nbsp;+&nbsp;5)&nbsp;tl<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">else</span>&nbsp;count_mapi&nbsp;~f&nbsp;tl&nbsp;(ctr&nbsp;+&nbsp;5))<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;mapi&nbsp;l&nbsp;~f&nbsp;=&nbsp;count_mapi&nbsp;~f&nbsp;l&nbsp;0<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;map2_slow&nbsp;l1&nbsp;l2&nbsp;~f&nbsp;=&nbsp;<span class="constructor">List</span>.rev&nbsp;(<span class="constructor">List</span>.rev_map2&nbsp;~f&nbsp;l1&nbsp;l2)<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;<span class="keyword">rec</span>&nbsp;count_map2_exn&nbsp;~f&nbsp;l1&nbsp;l2&nbsp;ctr&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">match</span>&nbsp;l1,&nbsp;l2&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;[],&nbsp;[]&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;[]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;[x1],&nbsp;[y1]&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;f1&nbsp;=&nbsp;f&nbsp;x1&nbsp;y1&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[f1]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;[x1;&nbsp;x2],&nbsp;[y1;&nbsp;y2]&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;f1&nbsp;=&nbsp;f&nbsp;x1&nbsp;y1&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;f2&nbsp;=&nbsp;f&nbsp;x2&nbsp;y2&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[f1;&nbsp;f2]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;[x1;&nbsp;x2;&nbsp;x3],&nbsp;[y1;&nbsp;y2;&nbsp;y3]&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;f1&nbsp;=&nbsp;f&nbsp;x1&nbsp;y1&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;f2&nbsp;=&nbsp;f&nbsp;x2&nbsp;y2&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;f3&nbsp;=&nbsp;f&nbsp;x3&nbsp;y3&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[f1;&nbsp;f2;&nbsp;f3]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;[x1;&nbsp;x2;&nbsp;x3;&nbsp;x4],&nbsp;[y1;&nbsp;y2;&nbsp;y3;&nbsp;y4]&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;f1&nbsp;=&nbsp;f&nbsp;x1&nbsp;y1&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;f2&nbsp;=&nbsp;f&nbsp;x2&nbsp;y2&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;f3&nbsp;=&nbsp;f&nbsp;x3&nbsp;y3&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;f4&nbsp;=&nbsp;f&nbsp;x4&nbsp;y4&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[f1;&nbsp;f2;&nbsp;f3;&nbsp;f4]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;x1&nbsp;::&nbsp;x2&nbsp;::&nbsp;x3&nbsp;::&nbsp;x4&nbsp;::&nbsp;x5&nbsp;::&nbsp;tl1,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;y1&nbsp;::&nbsp;y2&nbsp;::&nbsp;y3&nbsp;::&nbsp;y4&nbsp;::&nbsp;y5&nbsp;::&nbsp;tl2&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;f1&nbsp;=&nbsp;f&nbsp;x1&nbsp;y1&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;f2&nbsp;=&nbsp;f&nbsp;x2&nbsp;y2&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;f3&nbsp;=&nbsp;f&nbsp;x3&nbsp;y3&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;f4&nbsp;=&nbsp;f&nbsp;x4&nbsp;y4&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;f5&nbsp;=&nbsp;f&nbsp;x5&nbsp;y5&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;f1&nbsp;::&nbsp;f2&nbsp;::&nbsp;f3&nbsp;::&nbsp;f4&nbsp;::&nbsp;f5&nbsp;::<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="keyword">if</span>&nbsp;ctr&nbsp;&gt;&nbsp;1000<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">then</span>&nbsp;map2_slow&nbsp;~f&nbsp;tl1&nbsp;tl2<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">else</span>&nbsp;count_map2_exn&nbsp;~f&nbsp;tl1&nbsp;tl2&nbsp;(ctr&nbsp;+&nbsp;1))<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;_,&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;failwith&nbsp;<span class="string">"count_map2"</span><br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;map2_exn&nbsp;l1&nbsp;l2&nbsp;~f&nbsp;=&nbsp;count_map2_exn&nbsp;~f&nbsp;l1&nbsp;l2&nbsp;0<br>
+&nbsp;&nbsp;<span class="keyword">end</span><br>
+<span class="keyword">end</span></code></body></html>
