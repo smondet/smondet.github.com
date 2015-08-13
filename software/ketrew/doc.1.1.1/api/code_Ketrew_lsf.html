@@ -1,0 +1,333 @@
+<html><head>
+<link rel="stylesheet" href="style.css" type="text/css">
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<link rel="Start" href="index.html">
+<link title="Index of types" rel=Appendix href="index_types.html">
+<link title="Index of values" rel=Appendix href="index_values.html">
+<link title="Index of class methods" rel=Appendix href="index_methods.html">
+<link title="Index of class types" rel=Appendix href="index_class_types.html">
+<link title="Index of modules" rel=Appendix href="index_modules.html">
+<link title="Index of module types" rel=Appendix href="index_module_types.html">
+<link title="Ketrew" rel="Chapter" href="Ketrew.html">
+<link title="Ketrew_client" rel="Chapter" href="Ketrew_client.html">
+<link title="Ketrew_command_line" rel="Chapter" href="Ketrew_command_line.html">
+<link title="Ketrew_configuration" rel="Chapter" href="Ketrew_configuration.html">
+<link title="Ketrew_daemonize" rel="Chapter" href="Ketrew_daemonize.html">
+<link title="Ketrew_document" rel="Chapter" href="Ketrew_document.html">
+<link title="Ketrew_edsl" rel="Chapter" href="Ketrew_edsl.html">
+<link title="Ketrew_engine" rel="Chapter" href="Ketrew_engine.html">
+<link title="Ketrew_error" rel="Chapter" href="Ketrew_error.html">
+<link title="Ketrew_eval_condition" rel="Chapter" href="Ketrew_eval_condition.html">
+<link title="Ketrew_explorer" rel="Chapter" href="Ketrew_explorer.html">
+<link title="Ketrew_host" rel="Chapter" href="Ketrew_host.html">
+<link title="Ketrew_host_io" rel="Chapter" href="Ketrew_host_io.html">
+<link title="Ketrew_interaction" rel="Chapter" href="Ketrew_interaction.html">
+<link title="Ketrew_long_running" rel="Chapter" href="Ketrew_long_running.html">
+<link title="Ketrew_long_running_utilities" rel="Chapter" href="Ketrew_long_running_utilities.html">
+<link title="Ketrew_lsf" rel="Chapter" href="Ketrew_lsf.html">
+<link title="Ketrew_measurement" rel="Chapter" href="Ketrew_measurement.html">
+<link title="Ketrew_monitored_script" rel="Chapter" href="Ketrew_monitored_script.html">
+<link title="Ketrew_path" rel="Chapter" href="Ketrew_path.html">
+<link title="Ketrew_pbs" rel="Chapter" href="Ketrew_pbs.html">
+<link title="Ketrew_pervasives" rel="Chapter" href="Ketrew_pervasives.html">
+<link title="Ketrew_plugin" rel="Chapter" href="Ketrew_plugin.html">
+<link title="Ketrew_program" rel="Chapter" href="Ketrew_program.html">
+<link title="Ketrew_protocol" rel="Chapter" href="Ketrew_protocol.html">
+<link title="Ketrew_server" rel="Chapter" href="Ketrew_server.html">
+<link title="Ketrew_target" rel="Chapter" href="Ketrew_target.html">
+<link title="Ketrew_unix_io" rel="Chapter" href="Ketrew_unix_io.html">
+<link title="Ketrew_unix_process" rel="Chapter" href="Ketrew_unix_process.html">
+<link title="Ketrew_yarn" rel="Chapter" href="Ketrew_yarn.html"><title>Ketrew API : Ketrew_lsf</title>
+</head>
+<body>
+<code class="code"></code><table><tr><td></td><td><span class="comment">(**************************************************************************)</span></td></tr></table><code class="code"><br>
+<span class="comment">(*&nbsp;&nbsp;&nbsp;&nbsp;Copyright&nbsp;2014,&nbsp;2015:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*)</span><br>
+<span class="comment">(*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sebastien&nbsp;Mondet&nbsp;&lt;seb@mondet.org&gt;,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*)</span><br>
+<span class="comment">(*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Leonid&nbsp;Rozenberg&nbsp;&lt;leonidr@gmail.com&gt;,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*)</span><br>
+<span class="comment">(*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Arun&nbsp;Ahuja&nbsp;&lt;aahuja11@gmail.com&gt;,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*)</span><br>
+<span class="comment">(*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Jeff&nbsp;Hammerbacher&nbsp;&lt;jeff.hammerbacher@gmail.com&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*)</span><br>
+<span class="comment">(*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*)</span><br>
+<span class="comment">(*&nbsp;&nbsp;Licensed&nbsp;under&nbsp;the&nbsp;Apache&nbsp;License,&nbsp;Version&nbsp;2.0&nbsp;(the&nbsp;"License");&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*)</span><br>
+<span class="comment">(*&nbsp;&nbsp;you&nbsp;may&nbsp;not&nbsp;use&nbsp;this&nbsp;file&nbsp;except&nbsp;in&nbsp;compliance&nbsp;with&nbsp;the&nbsp;License.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*)</span><br>
+<span class="comment">(*&nbsp;&nbsp;You&nbsp;may&nbsp;obtain&nbsp;a&nbsp;copy&nbsp;of&nbsp;the&nbsp;License&nbsp;at&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*)</span><br>
+<span class="comment">(*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*)</span><br>
+<span class="comment">(*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;http://www.apache.org/licenses/LICENSE-2.0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*)</span><br>
+<span class="comment">(*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*)</span><br>
+<span class="comment">(*&nbsp;&nbsp;Unless&nbsp;required&nbsp;by&nbsp;applicable&nbsp;law&nbsp;or&nbsp;agreed&nbsp;to&nbsp;in&nbsp;writing,&nbsp;software&nbsp;&nbsp;&nbsp;*)</span><br>
+<span class="comment">(*&nbsp;&nbsp;distributed&nbsp;under&nbsp;the&nbsp;License&nbsp;is&nbsp;distributed&nbsp;on&nbsp;an&nbsp;"AS&nbsp;IS"&nbsp;BASIS,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*)</span><br>
+<span class="comment">(*&nbsp;&nbsp;WITHOUT&nbsp;WARRANTIES&nbsp;OR&nbsp;CONDITIONS&nbsp;OF&nbsp;ANY&nbsp;KIND,&nbsp;either&nbsp;express&nbsp;or&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*)</span><br>
+<span class="comment">(*&nbsp;&nbsp;implied.&nbsp;&nbsp;See&nbsp;the&nbsp;License&nbsp;for&nbsp;the&nbsp;specific&nbsp;language&nbsp;governing&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*)</span><br>
+<span class="comment">(*&nbsp;&nbsp;permissions&nbsp;and&nbsp;limitations&nbsp;under&nbsp;the&nbsp;License.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*)</span><br>
+</code><table><tr><td></td><td><span class="comment">(**************************************************************************)</span></td></tr></table><code class="code"><br>
+<br>
+<span class="keyword">open</span>&nbsp;<span class="constructor">Ketrew_pervasives</span><br>
+<span class="keyword">open</span>&nbsp;<span class="constructor">Ketrew_unix_io</span><br>
+<br>
+<span class="keyword">open</span>&nbsp;<span class="constructor">Ketrew_long_running_utilities</span><br>
+<br>
+<br>
+<span class="keyword">module</span>&nbsp;<span class="constructor">Path</span>&nbsp;=&nbsp;<span class="constructor">Ketrew_path</span><br>
+<span class="keyword">module</span>&nbsp;<span class="constructor">Program</span>&nbsp;=&nbsp;<span class="constructor">Ketrew_program</span><br>
+<span class="keyword">module</span>&nbsp;<span class="constructor">Host</span>&nbsp;=&nbsp;<span class="constructor">Ketrew_host</span><br>
+<span class="keyword">module</span>&nbsp;<span class="constructor">Error</span>&nbsp;=&nbsp;<span class="constructor">Ketrew_error</span><br>
+<br>
+<span class="keyword">module</span>&nbsp;<span class="constructor">Run_parameters</span>&nbsp;=&nbsp;<span class="keyword">struct</span><br>
+&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;created&nbsp;=&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;host:&nbsp;<span class="constructor">Host</span>.t;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;program:&nbsp;<span class="constructor">Program</span>.t;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;queue:&nbsp;string&nbsp;option;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;name:&nbsp;string&nbsp;option;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;wall_limit:&nbsp;string&nbsp;option;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;project:&nbsp;string&nbsp;option;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;processors:&nbsp;[<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Min</span>&nbsp;<span class="keyword">of</span>&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Min_max</span>&nbsp;<span class="keyword">of</span>&nbsp;(int&nbsp;*&nbsp;int)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;]&nbsp;option;<br>
+&nbsp;&nbsp;}&nbsp;[@@deriving&nbsp;yojson]<br>
+&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;running&nbsp;=&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;lsf_id:&nbsp;int;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;playground:&nbsp;<span class="constructor">Path</span>.t;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;script:&nbsp;<span class="constructor">Ketrew_monitored_script</span>.t;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;created:&nbsp;created;<br>
+&nbsp;&nbsp;}&nbsp;[@@deriving&nbsp;yojson]<br>
+&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;t&nbsp;=&nbsp;[<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Created</span>&nbsp;<span class="keyword">of</span>&nbsp;created<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Running</span>&nbsp;<span class="keyword">of</span>&nbsp;running<br>
+&nbsp;&nbsp;]&nbsp;[@@deriving&nbsp;yojson]<br>
+<span class="keyword">end</span><br>
+<span class="keyword">type</span>&nbsp;run_parameters&nbsp;=&nbsp;<span class="constructor">Run_parameters</span>.t<br>
+<span class="keyword">include</span>&nbsp;<span class="constructor">Json</span>.<span class="constructor">Versioned</span>.<span class="constructor">Of_v0</span>(<span class="constructor">Run_parameters</span>)<br>
+<span class="keyword">open</span>&nbsp;<span class="constructor">Run_parameters</span><br>
+<br>
+<br>
+<span class="keyword">let</span>&nbsp;name&nbsp;=&nbsp;<span class="string">"LSF"</span><br>
+<span class="keyword">let</span>&nbsp;create<br>
+&nbsp;&nbsp;&nbsp;&nbsp;?(host=<span class="constructor">Ketrew_host</span>.tmp_on_localhost)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;?queue&nbsp;?name&nbsp;?wall_limit&nbsp;?processors&nbsp;?project<br>
+&nbsp;&nbsp;&nbsp;&nbsp;program&nbsp;=<br>
+&nbsp;&nbsp;<span class="keywordsign">`</span><span class="constructor">Long_running</span>&nbsp;(<span class="string">"LSF"</span>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">`</span><span class="constructor">Created</span>&nbsp;{host;&nbsp;program;&nbsp;queue;&nbsp;name;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;wall_limit;&nbsp;project;&nbsp;processors}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&gt;&nbsp;serialize)<br>
+<br>
+<span class="keyword">let</span>&nbsp;log&nbsp;=<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;<span class="keyword">open</span>&nbsp;<span class="constructor">Log</span>&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;created&nbsp;{host;&nbsp;program;&nbsp;queue;&nbsp;name;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;wall_limit;&nbsp;project;&nbsp;processors}&nbsp;=&nbsp;[<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">"Host"</span>,&nbsp;<span class="constructor">Ketrew_host</span>.log&nbsp;host;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">"Program"</span>,&nbsp;<span class="constructor">Program</span>.log&nbsp;program;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">"Queue"</span>,&nbsp;<span class="constructor">OCaml</span>.option&nbsp;quote&nbsp;queue;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">"Name"</span>,&nbsp;<span class="constructor">OCaml</span>.option&nbsp;quote&nbsp;name;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">"Wall-Limit"</span>,&nbsp;<span class="constructor">OCaml</span>.option&nbsp;quote&nbsp;wall_limit;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">"Project"</span>,&nbsp;<span class="constructor">OCaml</span>.option&nbsp;quote&nbsp;project;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">"Processors"</span>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;(<span class="keyword">match</span>&nbsp;processors&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">None</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;s&nbsp;<span class="string">"Default"</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Some</span>&nbsp;(<span class="keywordsign">`</span><span class="constructor">Min</span>&nbsp;min)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;s&nbsp;<span class="string">"≥&nbsp;"</span>&nbsp;%&nbsp;i&nbsp;min<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Some</span>&nbsp;(<span class="keywordsign">`</span><span class="constructor">Min_max</span>&nbsp;(min,&nbsp;max))&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;s&nbsp;<span class="string">"∈&nbsp;"</span>&nbsp;%&nbsp;brakets&nbsp;(i&nbsp;min&nbsp;%&nbsp;s&nbsp;<span class="string">",&nbsp;"</span>&nbsp;%&nbsp;i&nbsp;max));<br>
+&nbsp;&nbsp;]&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;<span class="keyword">function</span><br>
+&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Created</span>&nbsp;c&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;(<span class="string">"Status"</span>,&nbsp;s&nbsp;<span class="string">"Created"</span>)&nbsp;::&nbsp;created&nbsp;c<br>
+&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Running</span>&nbsp;rp&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">List</span>.concat&nbsp;[<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[<span class="string">"Status"</span>,&nbsp;s&nbsp;<span class="string">"Running"</span>;];<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;created&nbsp;rp.created;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[<span class="string">"LSF-ID"</span>,&nbsp;i&nbsp;rp.lsf_id;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">"Playground"</span>,&nbsp;s&nbsp;(<span class="constructor">Path</span>.to_string&nbsp;rp.playground);]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;]<br>
+<br>
+<span class="keyword">let</span>&nbsp;parse_bsub_output&nbsp;s&nbsp;=<br>
+&nbsp;&nbsp;<span class="comment">(*&nbsp;Output&nbsp;looks&nbsp;like<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Job&nbsp;&lt;1386656&gt;&nbsp;is&nbsp;submitted&nbsp;to&nbsp;queue&nbsp;&lt;queuename&gt;.<br>
+&nbsp;&nbsp;According&nbsp;to<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;http://www.vub.ac.be/BFUCC/LSF/bsub.1.html<br>
+&nbsp;&nbsp;the&nbsp;job&nbsp;id&nbsp;is&nbsp;a&nbsp;positive&nbsp;number.&nbsp;&nbsp;*)</span><br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;splitted&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">String</span>.split&nbsp;s&nbsp;~on:(<span class="keywordsign">`</span><span class="constructor">Character</span>&nbsp;<span class="string">'&lt;'</span>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;|&gt;&nbsp;<span class="constructor">List</span>.map&nbsp;~f:(<span class="constructor">String</span>.split&nbsp;~on:(<span class="keywordsign">`</span><span class="constructor">Character</span>&nbsp;<span class="string">'&gt;'</span>))<br>
+&nbsp;&nbsp;&nbsp;&nbsp;|&gt;&nbsp;<span class="constructor">List</span>.concat&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;<span class="keyword">match</span>&nbsp;splitted&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;_&nbsp;::&nbsp;jobid&nbsp;::&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Int</span>.of_string&nbsp;jobid<br>
+&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">None</span><br>
+<br>
+<span class="keyword">let</span>&nbsp;additional_queries&nbsp;=&nbsp;<span class="keyword">function</span><br>
+<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Created</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;[]<br>
+<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Running</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;[<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">"stdout"</span>,&nbsp;<span class="constructor">Log</span>.(s&nbsp;<span class="string">"LSF&nbsp;output&nbsp;file"</span>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">"stderr"</span>,&nbsp;<span class="constructor">Log</span>.(s&nbsp;<span class="string">"LSF&nbsp;error&nbsp;file"</span>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">"log"</span>,&nbsp;<span class="constructor">Log</span>.(s&nbsp;<span class="string">"Monitored-script&nbsp;`log`&nbsp;file"</span>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">"bjobs"</span>,&nbsp;<span class="constructor">Log</span>.(s&nbsp;<span class="string">"Call&nbsp;`bjobs&nbsp;-l`"</span>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">"bpeek"</span>,&nbsp;<span class="constructor">Log</span>.(s&nbsp;<span class="string">"Call&nbsp;`bpeek`"</span>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">"script"</span>,&nbsp;<span class="constructor">Log</span>.(s&nbsp;<span class="string">"Monitored-script&nbsp;used"</span>);<br>
+&nbsp;&nbsp;]<br>
+<br>
+<span class="keyword">let</span>&nbsp;query&nbsp;run_parameters&nbsp;item&nbsp;=<br>
+&nbsp;&nbsp;<span class="keyword">match</span>&nbsp;run_parameters&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Created</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;fail&nbsp;<span class="constructor">Log</span>.(s&nbsp;<span class="string">"not&nbsp;running"</span>)<br>
+&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Running</span>&nbsp;rp&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">begin</span>&nbsp;<span class="keyword">match</span>&nbsp;item&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="string">"log"</span>&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;log_file&nbsp;=&nbsp;<span class="constructor">Ketrew_monitored_script</span>.log_file&nbsp;rp.script&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Ketrew_host_io</span>.grab_file_or_log&nbsp;rp.created.host&nbsp;log_file<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="string">"stdout"</span>&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;out_file&nbsp;=&nbsp;out_file_path&nbsp;~playground:rp.playground&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Ketrew_host_io</span>.grab_file_or_log&nbsp;rp.created.host&nbsp;out_file<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="string">"stderr"</span>&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;err_file&nbsp;=&nbsp;err_file_path&nbsp;~playground:rp.playground&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Ketrew_host_io</span>.grab_file_or_log&nbsp;rp.created.host&nbsp;err_file<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="string">"script"</span>&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;monitored_script_path&nbsp;=&nbsp;script_path&nbsp;~playground:rp.playground&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Ketrew_host_io</span>.grab_file_or_log&nbsp;rp.created.host&nbsp;monitored_script_path<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="string">"bjobs"</span>&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">begin</span>&nbsp;<span class="constructor">Ketrew_host_io</span>.get_shell_command_output&nbsp;rp.created.host<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(fmt&nbsp;<span class="string">"bjobs&nbsp;-l&nbsp;%d"</span>&nbsp;rp.lsf_id)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&lt;&nbsp;<span class="keyword">function</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Ok</span>&nbsp;(o,&nbsp;_)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;return&nbsp;o<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Error</span>&nbsp;e&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fail&nbsp;<span class="constructor">Log</span>.(s&nbsp;<span class="string">"Command&nbsp;`bjobs&nbsp;-l&nbsp;&lt;ID&gt;`&nbsp;failed:&nbsp;"</span>&nbsp;%&nbsp;s&nbsp;(<span class="constructor">Error</span>.to_string&nbsp;e))<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="string">"bpeek"</span>&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">begin</span>&nbsp;<span class="constructor">Ketrew_host_io</span>.get_shell_command_output&nbsp;rp.created.host<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(fmt&nbsp;<span class="string">"bpeek&nbsp;%d"</span>&nbsp;rp.lsf_id)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&lt;&nbsp;<span class="keyword">function</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Ok</span>&nbsp;(o,&nbsp;_)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;return&nbsp;o<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Error</span>&nbsp;e&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fail&nbsp;<span class="constructor">Log</span>.(s&nbsp;<span class="string">"Command&nbsp;`bpeek`&nbsp;failed:&nbsp;"</span>&nbsp;%&nbsp;s&nbsp;(<span class="constructor">Error</span>.to_string&nbsp;e))<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;other&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;fail&nbsp;<span class="constructor">Log</span>.(s&nbsp;<span class="string">"Unknown&nbsp;query:&nbsp;"</span>&nbsp;%&nbsp;sf&nbsp;<span class="string">"%S"</span>&nbsp;other)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
+<br>
+<span class="keyword">let</span>&nbsp;start:&nbsp;run_parameters&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;(_,&nbsp;_)&nbsp;<span class="constructor">Deferred_result</span>.t&nbsp;=&nbsp;<span class="keyword">function</span><br>
+<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Running</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;fail_fatal&nbsp;<span class="string">"Wrong&nbsp;state:&nbsp;already&nbsp;running"</span><br>
+<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Created</span>&nbsp;created&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;<span class="keyword">begin</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;fresh_playground_or_fail&nbsp;created.host<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;playground&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;script&nbsp;=&nbsp;<span class="constructor">Ketrew_monitored_script</span>.create&nbsp;~playground&nbsp;created.program&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;monitored_script_path&nbsp;=&nbsp;script_path&nbsp;~playground&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Ketrew_host_io</span>.ensure_directory&nbsp;created.host&nbsp;playground<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;()&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;content&nbsp;=&nbsp;<span class="constructor">Ketrew_monitored_script</span>.to_string&nbsp;script&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Ketrew_host_io</span>.put_file&nbsp;~content&nbsp;created.host&nbsp;~path:monitored_script_path<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;()&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;out&nbsp;=&nbsp;out_file_path&nbsp;~playground&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;err&nbsp;=&nbsp;err_file_path&nbsp;~playground&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;cmd&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;option&nbsp;o&nbsp;~f&nbsp;=&nbsp;<span class="constructor">Option</span>.value_map&nbsp;o&nbsp;~f&nbsp;~default:<span class="string">""</span>&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">String</span>.concat&nbsp;~sep:<span class="string">"&nbsp;"</span>&nbsp;[<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">"bsub"</span>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fmt&nbsp;<span class="string">"-o&nbsp;%s"</span>&nbsp;(<span class="constructor">Path</span>.to_string&nbsp;out);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fmt&nbsp;<span class="string">"-e&nbsp;%s"</span>&nbsp;(<span class="constructor">Path</span>.to_string&nbsp;err);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(option&nbsp;created.queue&nbsp;(fmt&nbsp;<span class="string">"-q&nbsp;'%s'"</span>));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(option&nbsp;created.name&nbsp;(fmt&nbsp;<span class="string">"-J&nbsp;'%s'"</span>));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(option&nbsp;created.wall_limit&nbsp;(fmt&nbsp;<span class="string">"-W&nbsp;'%s'"</span>));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(option&nbsp;created.project&nbsp;(fmt&nbsp;<span class="string">"-P&nbsp;'%s'"</span>));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(option&nbsp;created.processors&nbsp;(<span class="keyword">function</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Min</span>&nbsp;m&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;fmt&nbsp;<span class="string">"-n&nbsp;%d&nbsp;-R&nbsp;'span[hosts=1]'"</span>&nbsp;m<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Min_max</span>&nbsp;(mi,&nbsp;ma)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;fmt&nbsp;<span class="string">"-n&nbsp;%d,%d&nbsp;-R&nbsp;'span[hosts=1]'"</span>&nbsp;mi&nbsp;ma));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fmt&nbsp;<span class="string">"&lt;&nbsp;%s"</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">Path</span>.to_string_quoted&nbsp;monitored_script_path)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Log</span>.(s&nbsp;<span class="string">"Cmd:&nbsp;"</span>&nbsp;%&nbsp;s&nbsp;cmd&nbsp;%n&nbsp;&nbsp;@&nbsp;verbose);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Ketrew_host_io</span>.get_shell_command_output&nbsp;created.host&nbsp;cmd<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;(stdout,&nbsp;stderr)&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Log</span>.(s&nbsp;<span class="string">"Cmd:&nbsp;"</span>&nbsp;%&nbsp;s&nbsp;cmd&nbsp;%n&nbsp;%&nbsp;s&nbsp;<span class="string">"Out:&nbsp;"</span>&nbsp;%&nbsp;s&nbsp;stdout&nbsp;%n<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%&nbsp;s&nbsp;<span class="string">"Err:&nbsp;"</span>&nbsp;%&nbsp;s&nbsp;stderr&nbsp;@&nbsp;verbose);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">begin</span>&nbsp;<span class="keyword">match</span>&nbsp;parse_bsub_output&nbsp;stdout&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Some</span>&nbsp;lsf_id&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;(<span class="keywordsign">`</span><span class="constructor">Running</span>&nbsp;{lsf_id;&nbsp;playground;&nbsp;script;&nbsp;created})<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">None</span>&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fail_fatal&nbsp;(fmt&nbsp;<span class="string">"bsub&nbsp;did&nbsp;not&nbsp;give&nbsp;a&nbsp;JOB&nbsp;ID:&nbsp;%S&nbsp;%S"</span>&nbsp;stdout&nbsp;stderr)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
+&nbsp;&nbsp;<span class="keyword">end</span><br>
+&nbsp;&nbsp;&gt;&gt;&lt;&nbsp;classify_and_transform_errors<br>
+<br>
+<span class="keyword">let</span>&nbsp;get_lsf_job_status&nbsp;host&nbsp;lsf_id&nbsp;=<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;cmd&nbsp;=&nbsp;fmt&nbsp;<span class="string">"bjobs&nbsp;-l&nbsp;%d"</span>&nbsp;lsf_id&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;<span class="constructor">Ketrew_host_io</span>.get_shell_command_output&nbsp;host&nbsp;cmd<br>
+&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;(stdout,&nbsp;stderr)&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;<span class="constructor">Log</span>.(s&nbsp;<span class="string">"Cmd:&nbsp;"</span>&nbsp;%&nbsp;s&nbsp;cmd&nbsp;%n&nbsp;%&nbsp;s&nbsp;<span class="string">"Out:&nbsp;"</span>&nbsp;%&nbsp;s&nbsp;stdout&nbsp;%n<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%&nbsp;s&nbsp;<span class="string">"Err:&nbsp;"</span>&nbsp;%&nbsp;s&nbsp;stderr&nbsp;@&nbsp;verbose);<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;status&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;sanitized&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">String</span>.split&nbsp;~on:(<span class="keywordsign">`</span><span class="constructor">Character</span>&nbsp;<span class="string">'\n'</span>)&nbsp;stdout<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&gt;&nbsp;<span class="constructor">List</span>.map&nbsp;~f:(<span class="constructor">String</span>.strip&nbsp;~on:<span class="keywordsign">`</span><span class="constructor">Left</span>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&gt;&nbsp;<span class="constructor">String</span>.concat&nbsp;~sep:<span class="string">""</span>&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;re&nbsp;=&nbsp;<span class="constructor">Re_posix</span>.compile_pat&nbsp;<span class="string">"Status&nbsp;&lt;([A-Z]+)&gt;"</span>&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;subs&nbsp;=&nbsp;<span class="constructor">Re</span>.(exec&nbsp;re&nbsp;sanitized&nbsp;|&gt;&nbsp;get_all)&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">try</span>&nbsp;<span class="constructor">Some</span>&nbsp;(<span class="constructor">Array</span>.get&nbsp;subs&nbsp;1)&nbsp;<span class="keyword">with</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">None</span><br>
+&nbsp;&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;ketrew_status&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">match</span>&nbsp;status&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Some</span>&nbsp;s&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">begin</span>&nbsp;<span class="keyword">match</span>&nbsp;s&nbsp;<span class="keyword">with</span>&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="string">"PEND"</span>&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="string">"UNKWN"</span>&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="string">"RUN"</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Running</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="string">"DONE"</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Done</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="string">"USUSP"</span>&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="string">"PSUSP"</span>&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="string">"SSUSP"</span>&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="string">"EXIT"</span>&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="string">"ZOMBI"</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Failed</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;other&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Log</span>.(s&nbsp;<span class="string">"LSF:&nbsp;unrocognized&nbsp;status&nbsp;string:&nbsp;"</span>&nbsp;%&nbsp;sf&nbsp;<span class="string">"%S"</span>&nbsp;other<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@&nbsp;error);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">`</span><span class="constructor">Failed</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">None</span>&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Log</span>.(s&nbsp;<span class="string">"LSF:&nbsp;cannot&nbsp;parse&nbsp;status:&nbsp;"</span>&nbsp;%&nbsp;quote&nbsp;stdout&nbsp;@&nbsp;error);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">`</span><span class="constructor">Failed</span><br>
+&nbsp;&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;return&nbsp;ketrew_status<br>
+<br>
+<span class="keyword">let</span>&nbsp;update&nbsp;=&nbsp;<span class="keyword">function</span><br>
+<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Created</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;fail_fatal&nbsp;<span class="string">"not&nbsp;running"</span><br>
+<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Running</span>&nbsp;run&nbsp;<span class="keyword">as</span>&nbsp;run_parameters&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;<span class="keyword">begin</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;get_log_of_monitored_script&nbsp;~host:run.created.host&nbsp;~script:run.script<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;log_opt&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">begin</span>&nbsp;<span class="keyword">match</span>&nbsp;<span class="constructor">Option</span>.bind&nbsp;log_opt&nbsp;&nbsp;<span class="constructor">List</span>.last&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Some</span>&nbsp;(<span class="keywordsign">`</span><span class="constructor">Success</span>&nbsp;date)&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;(<span class="keywordsign">`</span><span class="constructor">Succeeded</span>&nbsp;run_parameters)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Some</span>&nbsp;(<span class="keywordsign">`</span><span class="constructor">Failure</span>&nbsp;(date,&nbsp;label,&nbsp;ret))&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;(<span class="keywordsign">`</span><span class="constructor">Failed</span>&nbsp;(run_parameters,&nbsp;fmt&nbsp;<span class="string">"%s&nbsp;returned&nbsp;%s"</span>&nbsp;label&nbsp;ret))<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">None</span>&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Some</span>&nbsp;_<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;get_lsf_job_status&nbsp;run.created.host&nbsp;run.lsf_id<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;status&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">begin</span>&nbsp;<span class="keyword">match</span>&nbsp;status&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Failed</span>&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;(<span class="keywordsign">`</span><span class="constructor">Failed</span>&nbsp;(run_parameters,&nbsp;fmt&nbsp;<span class="string">"LSF&nbsp;status"</span>))<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Running</span>&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;(<span class="keywordsign">`</span><span class="constructor">Still_running</span>&nbsp;run_parameters)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Done</span>&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">(*&nbsp;To&nbsp;be&nbsp;sure&nbsp;we&nbsp;need&nbsp;to&nbsp;get&nbsp;again&nbsp;the&nbsp;log&nbsp;file,&nbsp;because&nbsp;there&nbsp;could<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;have&nbsp;been&nbsp;a&nbsp;race&nbsp;condition.&nbsp;*)</span>&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;get_log_of_monitored_script&nbsp;~host:run.created.host&nbsp;~script:run.script<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;log_opt&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">begin</span>&nbsp;<span class="keyword">match</span>&nbsp;<span class="constructor">Option</span>.bind&nbsp;log_opt&nbsp;<span class="constructor">List</span>.last&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">None</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="comment">(*&nbsp;no&nbsp;log&nbsp;at&nbsp;all&nbsp;*)</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;(<span class="keywordsign">`</span><span class="constructor">Failed</span>&nbsp;(run_parameters,&nbsp;<span class="string">"no&nbsp;log&nbsp;file"</span>))<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Some</span>&nbsp;(<span class="keywordsign">`</span><span class="constructor">Success</span>&nbsp;&nbsp;date)&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;(<span class="keywordsign">`</span><span class="constructor">Succeeded</span>&nbsp;run_parameters)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Some</span>&nbsp;other&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;(<span class="keywordsign">`</span><span class="constructor">Failed</span>&nbsp;(run_parameters,&nbsp;<span class="string">"failure&nbsp;in&nbsp;log"</span>))<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
+&nbsp;&nbsp;<span class="keyword">end</span><br>
+&nbsp;&nbsp;&gt;&gt;&lt;&nbsp;classify_and_transform_errors<br>
+<br>
+<span class="keyword">let</span>&nbsp;kill&nbsp;run_parameters&nbsp;=<br>
+&nbsp;&nbsp;<span class="keyword">begin</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">match</span>&nbsp;run_parameters&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Created</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;fail_fatal&nbsp;<span class="string">"not&nbsp;running"</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Running</span>&nbsp;run&nbsp;<span class="keyword">as</span>&nbsp;run_parameters&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">begin</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;cmd&nbsp;=&nbsp;fmt&nbsp;<span class="string">"bkill&nbsp;%d"</span>&nbsp;run.lsf_id&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Ketrew_host_io</span>.get_shell_command_output&nbsp;run.created.host&nbsp;cmd<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;(_,&nbsp;_)&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;(<span class="keywordsign">`</span><span class="constructor">Killed</span>&nbsp;run_parameters)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
+&nbsp;&nbsp;<span class="keyword">end</span><br>
+&nbsp;&nbsp;&gt;&gt;&lt;&nbsp;classify_and_transform_errors<br>
+</code></body></html>

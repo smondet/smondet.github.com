@@ -1,0 +1,67 @@
+<html><head>
+<link rel="stylesheet" href="style.css" type="text/css">
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<link rel="Start" href="index.html">
+<link title="Index of types" rel=Appendix href="index_types.html">
+<link title="Index of values" rel=Appendix href="index_values.html">
+<link title="Index of class methods" rel=Appendix href="index_methods.html">
+<link title="Index of class types" rel=Appendix href="index_class_types.html">
+<link title="Index of modules" rel=Appendix href="index_modules.html">
+<link title="Index of module types" rel=Appendix href="index_module_types.html">
+<link title="Client" rel="Chapter" href="Client.html">
+<link title="Command_line" rel="Chapter" href="Command_line.html">
+<link title="Configuration" rel="Chapter" href="Configuration.html">
+<link title="Daemonize" rel="Chapter" href="Daemonize.html">
+<link title="Document" rel="Chapter" href="Document.html">
+<link title="EDSL" rel="Chapter" href="EDSL.html">
+<link title="Engine" rel="Chapter" href="Engine.html">
+<link title="Error" rel="Chapter" href="Error.html">
+<link title="Eval_condition" rel="Chapter" href="Eval_condition.html">
+<link title="Explorer" rel="Chapter" href="Explorer.html">
+<link title="Host" rel="Chapter" href="Host.html">
+<link title="Host_io" rel="Chapter" href="Host_io.html">
+<link title="Interaction" rel="Chapter" href="Interaction.html">
+<link title="Internal_pervasives" rel="Chapter" href="Internal_pervasives.html">
+<link title="Long_running" rel="Chapter" href="Long_running.html">
+<link title="Long_running_utilities" rel="Chapter" href="Long_running_utilities.html">
+<link title="Lsf" rel="Chapter" href="Lsf.html">
+<link title="Monitored_script" rel="Chapter" href="Monitored_script.html">
+<link title="Path" rel="Chapter" href="Path.html">
+<link title="Pbs" rel="Chapter" href="Pbs.html">
+<link title="Persistent_data" rel="Chapter" href="Persistent_data.html">
+<link title="Plugin" rel="Chapter" href="Plugin.html">
+<link title="Program" rel="Chapter" href="Program.html">
+<link title="Protocol" rel="Chapter" href="Protocol.html">
+<link title="Server" rel="Chapter" href="Server.html">
+<link title="Target" rel="Chapter" href="Target.html">
+<link title="Unix_io" rel="Chapter" href="Unix_io.html">
+<link title="Unix_process" rel="Chapter" href="Unix_process.html">
+<link title="Yarn" rel="Chapter" href="Yarn.html"><title>Ketrew API : Host.Ssh</title>
+</head>
+<body>
+<code class="code"><span class="keyword">struct</span><br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;_configuration_ssh_batch_option&nbsp;=&nbsp;ref&nbsp;<span class="string">""</span><br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;configure_ssh_batch_option&nbsp;spec&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;op&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">match</span>&nbsp;spec&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Openssh</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="string">"-oBatchMode=yes"</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Dropbear</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="string">"-s"</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Custom</span>&nbsp;s&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;s<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;_configuration_ssh_batch_option&nbsp;:=&nbsp;op<br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;()&nbsp;=&nbsp;configure_ssh_batch_option&nbsp;<span class="keywordsign">`</span><span class="constructor">Openssh</span><br>
+<br>
+&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;t&nbsp;={<br>
+&nbsp;&nbsp;&nbsp;&nbsp;address:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;port:&nbsp;int&nbsp;option;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;user:&nbsp;string&nbsp;option;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;add_ssh_options:&nbsp;string&nbsp;list;<br>
+&nbsp;&nbsp;}&nbsp;[@@deriving&nbsp;yojson]<br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;ssh_batch_option&nbsp;_&nbsp;=&nbsp;!_configuration_ssh_batch_option<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">(*&nbsp;in&nbsp;the&nbsp;future&nbsp;`_`&nbsp;should&nbsp;really&nbsp;be&nbsp;`t`&nbsp;*)</span><br>
+<br>
+<span class="keyword">end</span></code></body></html>

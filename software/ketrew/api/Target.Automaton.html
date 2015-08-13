@@ -1,0 +1,107 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<link rel="stylesheet" href="style.css" type="text/css">
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<link rel="Start" href="index.html">
+<link rel="previous" href="Target.State.html">
+<link rel="next" href="Target.Stored_target.html">
+<link rel="Up" href="Target.html">
+<link title="Index of types" rel=Appendix href="index_types.html">
+<link title="Index of values" rel=Appendix href="index_values.html">
+<link title="Index of class methods" rel=Appendix href="index_methods.html">
+<link title="Index of class types" rel=Appendix href="index_class_types.html">
+<link title="Index of modules" rel=Appendix href="index_modules.html">
+<link title="Index of module types" rel=Appendix href="index_module_types.html">
+<link title="Client" rel="Chapter" href="Client.html">
+<link title="Command_line" rel="Chapter" href="Command_line.html">
+<link title="Configuration" rel="Chapter" href="Configuration.html">
+<link title="Daemonize" rel="Chapter" href="Daemonize.html">
+<link title="Document" rel="Chapter" href="Document.html">
+<link title="EDSL" rel="Chapter" href="EDSL.html">
+<link title="Engine" rel="Chapter" href="Engine.html">
+<link title="Error" rel="Chapter" href="Error.html">
+<link title="Eval_condition" rel="Chapter" href="Eval_condition.html">
+<link title="Explorer" rel="Chapter" href="Explorer.html">
+<link title="Host" rel="Chapter" href="Host.html">
+<link title="Host_io" rel="Chapter" href="Host_io.html">
+<link title="Interaction" rel="Chapter" href="Interaction.html">
+<link title="Internal_pervasives" rel="Chapter" href="Internal_pervasives.html">
+<link title="Long_running" rel="Chapter" href="Long_running.html">
+<link title="Long_running_utilities" rel="Chapter" href="Long_running_utilities.html">
+<link title="Lsf" rel="Chapter" href="Lsf.html">
+<link title="Monitored_script" rel="Chapter" href="Monitored_script.html">
+<link title="Path" rel="Chapter" href="Path.html">
+<link title="Pbs" rel="Chapter" href="Pbs.html">
+<link title="Persistent_data" rel="Chapter" href="Persistent_data.html">
+<link title="Plugin" rel="Chapter" href="Plugin.html">
+<link title="Program" rel="Chapter" href="Program.html">
+<link title="Protocol" rel="Chapter" href="Protocol.html">
+<link title="Server" rel="Chapter" href="Server.html">
+<link title="Target" rel="Chapter" href="Target.html">
+<link title="Unix_io" rel="Chapter" href="Unix_io.html">
+<link title="Unix_process" rel="Chapter" href="Unix_process.html">
+<link title="Yarn" rel="Chapter" href="Yarn.html"><title>Ketrew API : Target.Automaton</title>
+</head>
+<body>
+<div class="navbar"><a class="pre" href="Target.State.html" title="Target.State">Previous</a>
+&nbsp;<a class="up" href="Target.html" title="Target">Up</a>
+&nbsp;<a class="post" href="Target.Stored_target.html" title="Target.Stored_target">Next</a>
+</div>
+<h1>Module <a href="type_Target.Automaton.html">Target.Automaton</a> (<a href="code_Target.Automaton.html">.ml</a>)</h1>
+
+<pre><span class="keyword">module</span> Automaton: <code class="code"><span class="keyword">sig</span></code> <a href="Target.Automaton.html">..</a> <code class="code"><span class="keyword">end</span></code></pre><hr width="100%">
+
+<pre><span id="TYPEfailure_reason"><span class="keyword">type</span> <code class="type"></code>failure_reason</span> </pre>
+
+
+<pre><span id="TYPEprogress"><span class="keyword">type</span> <code class="type"></code>progress</span> = <code class="type">[ `Changed_state | `No_change ]</code> </pre>
+
+
+<pre><span id="TYPEtransition_callback"><span class="keyword">type</span> <code class="type">'a</code> transition_callback</span> = <code class="type">?log:string -> 'a -> <a href="Target.html#TYPEt">Target.t</a> * <a href="Target.Automaton.html#TYPEprogress">progress</a></code> </pre>
+
+
+<pre><span id="TYPEseverity"><span class="keyword">type</span> <code class="type"></code>severity</span> = <code class="type">[ `Fatal | `Try_again ]</code> </pre>
+
+
+<pre><code><span id="TYPEbookkeeping"><span class="keyword">type</span> <code class="type"></code>bookkeeping</span> = {</code></pre><table class="typetable">
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTbookkeeping.plugin_name">plugin_name</span>&nbsp;: <code class="type">string</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTbookkeeping.run_parameters">run_parameters</span>&nbsp;: <code class="type">string</code>;</code></td>
+
+</tr></table>
+}
+
+
+
+<pre><span id="TYPElong_running_failure"><span class="keyword">type</span> <code class="type"></code>long_running_failure</span> = <code class="type"><a href="Target.Automaton.html#TYPEseverity">severity</a> * string * <a href="Target.Automaton.html#TYPEbookkeeping">bookkeeping</a></code> </pre>
+
+
+<pre><span id="TYPElong_running_action"><span class="keyword">type</span> <code class="type"></code>long_running_action</span> = <code class="type">(<a href="Target.Automaton.html#TYPEbookkeeping">bookkeeping</a>, <a href="Target.Automaton.html#TYPElong_running_failure">long_running_failure</a>)<br>       Pvem.Result.t</code> </pre>
+
+
+<pre><span id="TYPEprocess_check"><span class="keyword">type</span> <code class="type"></code>process_check</span> = <code class="type">[ `Still_running of <a href="Target.Automaton.html#TYPEbookkeeping">bookkeeping</a><br>       | `Successful of <a href="Target.Automaton.html#TYPEbookkeeping">bookkeeping</a> ]</code> </pre>
+
+
+<pre><span id="TYPEprocess_status_check"><span class="keyword">type</span> <code class="type"></code>process_status_check</span> = <code class="type">(<a href="Target.Automaton.html#TYPEprocess_check">process_check</a>, <a href="Target.Automaton.html#TYPElong_running_failure">long_running_failure</a>)<br>       Pvem.Result.t</code> </pre>
+
+
+<pre><span id="TYPEcondition_evaluation"><span class="keyword">type</span> <code class="type"></code>condition_evaluation</span> = <code class="type">(bool, <a href="Target.Automaton.html#TYPEseverity">severity</a> * string) Pvem.Result.t</code> </pre>
+
+
+<pre><span id="TYPEdependencies_status"><span class="keyword">type</span> <code class="type"></code>dependencies_status</span> = <code class="type">[ `All_succeeded | `At_least_one_failed of <a href="Target.html#TYPEid">Target.id</a> list | `Still_processing ]</code> </pre>
+
+
+<pre><span id="TYPEtransition"><span class="keyword">type</span> <code class="type"></code>transition</span> = <code class="type">[ `Activate of <a href="Target.html#TYPEid">Target.id</a> list * unit <a href="Target.Automaton.html#TYPEtransition_callback">transition_callback</a><br>       | `Check_and_activate_dependencies of<br>           <a href="Target.Automaton.html#TYPEdependencies_status">dependencies_status</a> <a href="Target.Automaton.html#TYPEtransition_callback">transition_callback</a><br>       | `Check_process of<br>           <a href="Target.Automaton.html#TYPEbookkeeping">bookkeeping</a> *<br>           <a href="Target.Automaton.html#TYPEprocess_status_check">process_status_check</a><br>           <a href="Target.Automaton.html#TYPEtransition_callback">transition_callback</a><br>       | `Do_nothing of unit <a href="Target.Automaton.html#TYPEtransition_callback">transition_callback</a><br>       | `Eval_condition of<br>           <a href="Target.Condition.html#TYPEt">Target.Condition.t</a> *<br>           <a href="Target.Automaton.html#TYPEcondition_evaluation">condition_evaluation</a><br>           <a href="Target.Automaton.html#TYPEtransition_callback">transition_callback</a><br>       | `Kill of<br>           <a href="Target.Automaton.html#TYPEbookkeeping">bookkeeping</a> *<br>           <a href="Target.Automaton.html#TYPElong_running_action">long_running_action</a> <a href="Target.Automaton.html#TYPEtransition_callback">transition_callback</a><br>       | `Start_running of<br>           <a href="Target.Automaton.html#TYPEbookkeeping">bookkeeping</a> *<br>           <a href="Target.Automaton.html#TYPElong_running_action">long_running_action</a> <a href="Target.Automaton.html#TYPEtransition_callback">transition_callback</a> ]</code> </pre>
+
+
+<pre><span id="VALtransition"><span class="keyword">val</span> <a href="code_VALTarget.Automaton.transition.html">transition</a></span> : <code class="type"><a href="Target.html#TYPEt">Target.t</a> -> <a href="Target.Automaton.html#TYPEtransition">transition</a></code></pre></body></html>

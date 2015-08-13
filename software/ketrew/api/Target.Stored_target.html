@@ -1,0 +1,76 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<link rel="stylesheet" href="style.css" type="text/css">
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<link rel="Start" href="index.html">
+<link rel="previous" href="Target.Automaton.html">
+<link rel="next" href="Target.Summary.html">
+<link rel="Up" href="Target.html">
+<link title="Index of types" rel=Appendix href="index_types.html">
+<link title="Index of values" rel=Appendix href="index_values.html">
+<link title="Index of class methods" rel=Appendix href="index_methods.html">
+<link title="Index of class types" rel=Appendix href="index_class_types.html">
+<link title="Index of modules" rel=Appendix href="index_modules.html">
+<link title="Index of module types" rel=Appendix href="index_module_types.html">
+<link title="Client" rel="Chapter" href="Client.html">
+<link title="Command_line" rel="Chapter" href="Command_line.html">
+<link title="Configuration" rel="Chapter" href="Configuration.html">
+<link title="Daemonize" rel="Chapter" href="Daemonize.html">
+<link title="Document" rel="Chapter" href="Document.html">
+<link title="EDSL" rel="Chapter" href="EDSL.html">
+<link title="Engine" rel="Chapter" href="Engine.html">
+<link title="Error" rel="Chapter" href="Error.html">
+<link title="Eval_condition" rel="Chapter" href="Eval_condition.html">
+<link title="Explorer" rel="Chapter" href="Explorer.html">
+<link title="Host" rel="Chapter" href="Host.html">
+<link title="Host_io" rel="Chapter" href="Host_io.html">
+<link title="Interaction" rel="Chapter" href="Interaction.html">
+<link title="Internal_pervasives" rel="Chapter" href="Internal_pervasives.html">
+<link title="Long_running" rel="Chapter" href="Long_running.html">
+<link title="Long_running_utilities" rel="Chapter" href="Long_running_utilities.html">
+<link title="Lsf" rel="Chapter" href="Lsf.html">
+<link title="Monitored_script" rel="Chapter" href="Monitored_script.html">
+<link title="Path" rel="Chapter" href="Path.html">
+<link title="Pbs" rel="Chapter" href="Pbs.html">
+<link title="Persistent_data" rel="Chapter" href="Persistent_data.html">
+<link title="Plugin" rel="Chapter" href="Plugin.html">
+<link title="Program" rel="Chapter" href="Program.html">
+<link title="Protocol" rel="Chapter" href="Protocol.html">
+<link title="Server" rel="Chapter" href="Server.html">
+<link title="Target" rel="Chapter" href="Target.html">
+<link title="Unix_io" rel="Chapter" href="Unix_io.html">
+<link title="Unix_process" rel="Chapter" href="Unix_process.html">
+<link title="Yarn" rel="Chapter" href="Yarn.html"><title>Ketrew API : Target.Stored_target</title>
+</head>
+<body>
+<div class="navbar"><a class="pre" href="Target.Automaton.html" title="Target.Automaton">Previous</a>
+&nbsp;<a class="up" href="Target.html" title="Target">Up</a>
+&nbsp;<a class="post" href="Target.Summary.html" title="Target.Summary">Next</a>
+</div>
+<h1>Module <a href="type_Target.Stored_target.html">Target.Stored_target</a> (<a href="code_Target.Stored_target.html">.ml</a>)</h1>
+
+<pre><span class="keyword">module</span> Stored_target: <code class="code"><span class="keyword">sig</span></code> <a href="Target.Stored_target.html">..</a> <code class="code"><span class="keyword">end</span></code></pre><hr width="100%">
+
+<pre><span id="TYPEtarget"><span class="keyword">type</span> <code class="type"></code>target</span> = <code class="type"><a href="Target.html#TYPEt">Target.t</a></code> </pre>
+
+
+<pre><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> </pre>
+
+
+<pre><span id="VALto_json"><span class="keyword">val</span> to_json</span> : <code class="type"><a href="Target.Stored_target.html#TYPEt">t</a> -> <a href="Internal_pervasives.Json.html#TYPEt">Internal_pervasives.Json.t</a></code></pre><div class="info ">
+Serialize a target to <code class="code"><span class="constructor">Json</span>.t</code> intermediate representation.<br>
+</div>
+
+<pre><span id="VALserialize"><span class="keyword">val</span> serialize</span> : <code class="type"><a href="Target.Stored_target.html#TYPEt">t</a> -> string</code></pre><div class="info ">
+Serialize a target (for the database).<br>
+</div>
+
+<pre><span id="VALdeserialize"><span class="keyword">val</span> <a href="code_VALTarget.Stored_target.deserialize.html">deserialize</a></span> : <code class="type">string -><br>       (<a href="Target.Stored_target.html#TYPEt">t</a>, [> `Target of [> `Deserilization of string ] ])<br>       Internal_pervasives.Result.t</code></pre><div class="info ">
+Deserilize a target from a string.<br>
+</div>
+
+<pre><span id="VALget_target"><span class="keyword">val</span> <a href="code_VALTarget.Stored_target.get_target.html">get_target</a></span> : <code class="type"><a href="Target.Stored_target.html#TYPEt">t</a> -><br>       [ `Pointer of <a href="Target.html#TYPEid">Target.id</a> | `Target of <a href="Target.Stored_target.html#TYPEtarget">target</a> ]</code></pre>
+<pre><span id="VALof_target"><span class="keyword">val</span> <a href="code_VALTarget.Stored_target.of_target.html">of_target</a></span> : <code class="type"><a href="Target.Stored_target.html#TYPEtarget">target</a> -> <a href="Target.Stored_target.html#TYPEt">t</a></code></pre>
+<pre><span id="VALid"><span class="keyword">val</span> <a href="code_VALTarget.Stored_target.id.html">id</a></span> : <code class="type"><a href="Target.Stored_target.html#TYPEt">t</a> -> <a href="Target.html#TYPEid">Target.id</a></code></pre>
+<pre><span id="VALmake_pointer"><span class="keyword">val</span> <a href="code_VALTarget.Stored_target.make_pointer.html">make_pointer</a></span> : <code class="type">from:<a href="Target.Stored_target.html#TYPEtarget">target</a> -><br>       pointing_to:<a href="Target.Stored_target.html#TYPEtarget">target</a> -> <a href="Target.Stored_target.html#TYPEt">t</a></code></pre></body></html>

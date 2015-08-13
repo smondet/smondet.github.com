@@ -1,0 +1,150 @@
+<html><head>
+<link rel="stylesheet" href="style.css" type="text/css">
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<link rel="Start" href="index.html">
+<link title="Index of types" rel=Appendix href="index_types.html">
+<link title="Index of values" rel=Appendix href="index_values.html">
+<link title="Index of class methods" rel=Appendix href="index_methods.html">
+<link title="Index of class types" rel=Appendix href="index_class_types.html">
+<link title="Index of modules" rel=Appendix href="index_modules.html">
+<link title="Index of module types" rel=Appendix href="index_module_types.html">
+<link title="Client" rel="Chapter" href="Client.html">
+<link title="Command_line" rel="Chapter" href="Command_line.html">
+<link title="Configuration" rel="Chapter" href="Configuration.html">
+<link title="Daemonize" rel="Chapter" href="Daemonize.html">
+<link title="Document" rel="Chapter" href="Document.html">
+<link title="EDSL" rel="Chapter" href="EDSL.html">
+<link title="Engine" rel="Chapter" href="Engine.html">
+<link title="Error" rel="Chapter" href="Error.html">
+<link title="Eval_condition" rel="Chapter" href="Eval_condition.html">
+<link title="Explorer" rel="Chapter" href="Explorer.html">
+<link title="Host" rel="Chapter" href="Host.html">
+<link title="Host_io" rel="Chapter" href="Host_io.html">
+<link title="Interaction" rel="Chapter" href="Interaction.html">
+<link title="Internal_pervasives" rel="Chapter" href="Internal_pervasives.html">
+<link title="Long_running" rel="Chapter" href="Long_running.html">
+<link title="Long_running_utilities" rel="Chapter" href="Long_running_utilities.html">
+<link title="Lsf" rel="Chapter" href="Lsf.html">
+<link title="Monitored_script" rel="Chapter" href="Monitored_script.html">
+<link title="Path" rel="Chapter" href="Path.html">
+<link title="Pbs" rel="Chapter" href="Pbs.html">
+<link title="Persistent_data" rel="Chapter" href="Persistent_data.html">
+<link title="Plugin" rel="Chapter" href="Plugin.html">
+<link title="Program" rel="Chapter" href="Program.html">
+<link title="Protocol" rel="Chapter" href="Protocol.html">
+<link title="Server" rel="Chapter" href="Server.html">
+<link title="Target" rel="Chapter" href="Target.html">
+<link title="Unix_io" rel="Chapter" href="Unix_io.html">
+<link title="Unix_process" rel="Chapter" href="Unix_process.html">
+<link title="Yarn" rel="Chapter" href="Yarn.html"><title>Ketrew API : Error</title>
+</head>
+<body>
+<code class="code"></code><table><tr><td></td><td><span class="comment">(**************************************************************************)</span></td></tr></table><code class="code"><br>
+<span class="comment">(*&nbsp;&nbsp;&nbsp;&nbsp;Copyright&nbsp;2014,&nbsp;2015:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*)</span><br>
+<span class="comment">(*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sebastien&nbsp;Mondet&nbsp;&lt;seb@mondet.org&gt;,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*)</span><br>
+<span class="comment">(*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Leonid&nbsp;Rozenberg&nbsp;&lt;leonidr@gmail.com&gt;,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*)</span><br>
+<span class="comment">(*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Arun&nbsp;Ahuja&nbsp;&lt;aahuja11@gmail.com&gt;,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*)</span><br>
+<span class="comment">(*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Jeff&nbsp;Hammerbacher&nbsp;&lt;jeff.hammerbacher@gmail.com&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*)</span><br>
+<span class="comment">(*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*)</span><br>
+<span class="comment">(*&nbsp;&nbsp;Licensed&nbsp;under&nbsp;the&nbsp;Apache&nbsp;License,&nbsp;Version&nbsp;2.0&nbsp;(the&nbsp;"License");&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*)</span><br>
+<span class="comment">(*&nbsp;&nbsp;you&nbsp;may&nbsp;not&nbsp;use&nbsp;this&nbsp;file&nbsp;except&nbsp;in&nbsp;compliance&nbsp;with&nbsp;the&nbsp;License.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*)</span><br>
+<span class="comment">(*&nbsp;&nbsp;You&nbsp;may&nbsp;obtain&nbsp;a&nbsp;copy&nbsp;of&nbsp;the&nbsp;License&nbsp;at&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*)</span><br>
+<span class="comment">(*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*)</span><br>
+<span class="comment">(*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;http://www.apache.org/licenses/LICENSE-2.0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*)</span><br>
+<span class="comment">(*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*)</span><br>
+<span class="comment">(*&nbsp;&nbsp;Unless&nbsp;required&nbsp;by&nbsp;applicable&nbsp;law&nbsp;or&nbsp;agreed&nbsp;to&nbsp;in&nbsp;writing,&nbsp;software&nbsp;&nbsp;&nbsp;*)</span><br>
+<span class="comment">(*&nbsp;&nbsp;distributed&nbsp;under&nbsp;the&nbsp;License&nbsp;is&nbsp;distributed&nbsp;on&nbsp;an&nbsp;"AS&nbsp;IS"&nbsp;BASIS,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*)</span><br>
+<span class="comment">(*&nbsp;&nbsp;WITHOUT&nbsp;WARRANTIES&nbsp;OR&nbsp;CONDITIONS&nbsp;OF&nbsp;ANY&nbsp;KIND,&nbsp;either&nbsp;express&nbsp;or&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*)</span><br>
+<span class="comment">(*&nbsp;&nbsp;implied.&nbsp;&nbsp;See&nbsp;the&nbsp;License&nbsp;for&nbsp;the&nbsp;specific&nbsp;language&nbsp;governing&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*)</span><br>
+<span class="comment">(*&nbsp;&nbsp;permissions&nbsp;and&nbsp;limitations&nbsp;under&nbsp;the&nbsp;License.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*)</span><br>
+</code><table><tr><td></td><td><span class="comment">(**************************************************************************)</span></td></tr></table><code class="code"><br>
+<br>
+</code><table><tr><td></td><td><span class="comment">(** Deal with error values common across the library. *)</span></td></tr></table><code class="code"><br>
+<br>
+<span class="keyword">open</span>&nbsp;<span class="constructor">Ketrew_pure</span>.<span class="constructor">Internal_pervasives</span><br>
+<span class="keyword">open</span>&nbsp;<span class="constructor">Unix_io</span><br>
+<br>
+<span class="keyword">let</span>&nbsp;log_client_error&nbsp;error_value&nbsp;=&nbsp;<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;<span class="keyword">open</span>&nbsp;<span class="constructor">Log</span>&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;log_action&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">function</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Call</span>&nbsp;(meth,&nbsp;the_uri)&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;s&nbsp;(<span class="constructor">Cohttp</span>.<span class="constructor">Code</span>.(string_of_method&nbsp;(meth&nbsp;:&gt;&nbsp;meth)))&nbsp;%&nbsp;sp&nbsp;%&nbsp;uri&nbsp;the_uri<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Targets</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;s&nbsp;<span class="string">"Getting&nbsp;targets"</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Kill_targets</span>&nbsp;ids&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;s&nbsp;<span class="string">"Killing&nbsp;targets"</span>&nbsp;%&nbsp;sp&nbsp;%&nbsp;<span class="constructor">OCaml</span>.list&nbsp;quote&nbsp;ids<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Restart_targets</span>&nbsp;ids&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;s&nbsp;<span class="string">"Restarting&nbsp;targets"</span>&nbsp;%&nbsp;sp&nbsp;%&nbsp;<span class="constructor">OCaml</span>.list&nbsp;quote&nbsp;ids<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Target_query</span>&nbsp;(id,&nbsp;query)&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;s&nbsp;<span class="string">"Calling&nbsp;"</span>&nbsp;%&nbsp;quote&nbsp;query&nbsp;%&nbsp;s&nbsp;<span class="string">"&nbsp;on&nbsp;"</span>&nbsp;%&nbsp;quote&nbsp;id<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Cleanable_targets</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;s&nbsp;<span class="string">"Querying&nbsp;cleanable&nbsp;targets"</span><br>
+&nbsp;&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;<span class="keyword">match</span>&nbsp;error_value&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Server_error_response</span>&nbsp;(action,&nbsp;error_string)&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;s&nbsp;<span class="string">"Server&nbsp;replied:&nbsp;"</span>&nbsp;%&nbsp;s&nbsp;error_string<br>
+&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Http</span>&nbsp;(action,&nbsp;error)&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;act&nbsp;=&nbsp;log_action&nbsp;action&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;error_log&nbsp;=&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">match</span>&nbsp;error&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Exn</span>&nbsp;e&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;s&nbsp;<span class="string">"Exn:"</span>&nbsp;%&nbsp;sp&nbsp;%&nbsp;exn&nbsp;e<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Wrong_response</span>&nbsp;(http_resp,&nbsp;body)&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;s&nbsp;<span class="string">"Returned:"</span>&nbsp;%&nbsp;n&nbsp;%&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;indent&nbsp;(s&nbsp;<span class="string">"Response:&nbsp;"</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%&nbsp;sexp&nbsp;<span class="constructor">Cohttp</span>.<span class="constructor">Response</span>.sexp_of_t&nbsp;http_resp)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%&nbsp;n<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%&nbsp;indent&nbsp;(s&nbsp;<span class="string">"Body:&nbsp;"</span>&nbsp;%&nbsp;quote&nbsp;body)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Json_parsing</span>&nbsp;(j,&nbsp;<span class="keywordsign">`</span><span class="constructor">Exn</span>&nbsp;e)&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;s&nbsp;<span class="string">"Json&nbsp;parse&nbsp;error:&nbsp;"</span>&nbsp;%&nbsp;exn&nbsp;e<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%&nbsp;indent&nbsp;(string&nbsp;j)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Wrong_json</span>&nbsp;j&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;s&nbsp;<span class="string">"Wrong&nbsp;Json:&nbsp;"</span>&nbsp;%&nbsp;indent&nbsp;(<span class="constructor">Json</span>.log&nbsp;j)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Unexpected_message</span>&nbsp;m&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;s&nbsp;<span class="string">"Wrong&nbsp;Json:&nbsp;"</span>&nbsp;%&nbsp;string&nbsp;(<span class="constructor">Ketrew_pure</span>.<span class="constructor">Protocol</span>.<span class="constructor">Down_message</span>.serialize&nbsp;m)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;s&nbsp;<span class="string">"HTTP&nbsp;Call"</span>&nbsp;%&nbsp;sp&nbsp;%&nbsp;parens&nbsp;(act&nbsp;%&nbsp;s&nbsp;<span class="string">"&nbsp;→&nbsp;"</span>&nbsp;%&nbsp;error_log)<br>
+<br>
+<span class="keyword">let</span>&nbsp;to_string&nbsp;=&nbsp;<span class="keyword">function</span><br>
+<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Wrong_command_line</span>&nbsp;sl&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;fmt&nbsp;<span class="string">"Wrong&nbsp;command&nbsp;line:&nbsp;%s"</span>&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">String</span>.concat&nbsp;~sep:<span class="string">",&nbsp;"</span>&nbsp;(<span class="constructor">List</span>.map&nbsp;sl&nbsp;~f:(fmt&nbsp;<span class="string">"%S"</span>)))<br>
+<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">IO</span>&nbsp;_&nbsp;<span class="keyword">as</span>&nbsp;io&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">IO</span>.error_to_string&nbsp;io<br>
+<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">System</span>&nbsp;_&nbsp;<span class="keyword">as</span>&nbsp;s&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">System</span>.error_to_string&nbsp;s<br>
+<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Configuration</span>&nbsp;(<span class="keywordsign">`</span><span class="constructor">Parsing</span>&nbsp;e)&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;fmt&nbsp;<span class="string">"Parsing&nbsp;error&nbsp;in&nbsp;config-file:&nbsp;%S"</span>&nbsp;e<br>
+<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Wrong_configuration</span>&nbsp;(<span class="keywordsign">`</span><span class="constructor">Found</span>&nbsp;f,&nbsp;got)&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;fmt&nbsp;<span class="string">"Wrong&nbsp;configuration:&nbsp;%S&nbsp;→&nbsp;%s"</span>&nbsp;f<br>
+&nbsp;&nbsp;&nbsp;&nbsp;(<span class="keyword">match</span>&nbsp;got&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Expected</span>&nbsp;s&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;fmt&nbsp;<span class="string">"expected&nbsp;%s"</span>&nbsp;s<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Exn</span>&nbsp;e&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;fmt&nbsp;<span class="string">"exception:&nbsp;%S"</span>&nbsp;(<span class="constructor">Printexc</span>.to_string&nbsp;e))<br>
+<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Database</span>&nbsp;e&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;(<span class="constructor">Trakeva</span>.<span class="constructor">Error</span>.to_string&nbsp;e)<br>
+<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Host</span>&nbsp;e&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;fmt&nbsp;<span class="string">"Host:&nbsp;%s"</span>&nbsp;(<span class="constructor">Host_io</span>.<span class="constructor">Error</span>.log&nbsp;e&nbsp;|&gt;&nbsp;<span class="constructor">Log</span>.to_long_string)<br>
+<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Target</span>&nbsp;(<span class="keywordsign">`</span><span class="constructor">Deserilization</span>&nbsp;s)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;fmt&nbsp;<span class="string">"target-deserialization:&nbsp;%s"</span>&nbsp;s<br>
+<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Database_unavailable</span>&nbsp;s&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;fmt&nbsp;<span class="string">"DB&nbsp;%s"</span>&nbsp;s<br>
+<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Not_implemented</span>&nbsp;s&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;fmt&nbsp;<span class="string">"Not-impl&nbsp;%S"</span>&nbsp;s<br>
+<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Missing_data</span>&nbsp;p&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;fmt&nbsp;<span class="string">"missing&nbsp;data&nbsp;at&nbsp;id:&nbsp;%s"</span>&nbsp;p<br>
+<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Failed_to_kill</span>&nbsp;msg&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;fmt&nbsp;<span class="string">"Failed&nbsp;to&nbsp;kill&nbsp;target:&nbsp;%S"</span>&nbsp;msg<br>
+<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Long_running_failed_to_start</span>&nbsp;(id,&nbsp;msg)&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;fmt&nbsp;<span class="string">"Long&nbsp;running&nbsp;%s&nbsp;failed&nbsp;to&nbsp;start:&nbsp;%s"</span>&nbsp;id&nbsp;msg<br>
+<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Failure</span>&nbsp;msg&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;fmt&nbsp;<span class="string">"Failure:&nbsp;%S"</span>&nbsp;msg<br>
+<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Process</span>&nbsp;_&nbsp;<span class="keyword">as</span>&nbsp;pe&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Unix_process</span>.error_to_string&nbsp;pe<br>
+<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Shell</span>&nbsp;_&nbsp;<span class="keyword">as</span>&nbsp;se&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">System</span>.error_to_string&nbsp;se<br>
+<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Volume</span>&nbsp;(<span class="keywordsign">`</span><span class="constructor">No_size</span>&nbsp;l)&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;fmt&nbsp;<span class="string">"Did&nbsp;not&nbsp;get&nbsp;the&nbsp;size&nbsp;of&nbsp;the&nbsp;volume:&nbsp;%s"</span>&nbsp;(<span class="constructor">Log</span>.to_long_string&nbsp;l)<br>
+<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Deserialization</span>&nbsp;(except,&nbsp;str)&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;fmt&nbsp;<span class="string">"Deserialization:&nbsp;%s&nbsp;(%S)"</span>&nbsp;(<span class="constructor">Printexc</span>.to_string&nbsp;except)&nbsp;str<br>
+<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Start_server_error</span>&nbsp;e&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;fmt&nbsp;<span class="string">"Error&nbsp;starting&nbsp;the&nbsp;server:&nbsp;%s"</span>&nbsp;e<br>
+<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Stop_server_error</span>&nbsp;e&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;fmt&nbsp;<span class="string">"Error&nbsp;stopping&nbsp;the&nbsp;server:&nbsp;%s"</span>&nbsp;e<br>
+<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Server_status_error</span>&nbsp;e&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;fmt&nbsp;<span class="string">"Error&nbsp;while&nbsp;getting&nbsp;the&nbsp;server's&nbsp;status:&nbsp;%s"</span>&nbsp;e<br>
+<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Wrong_http_request</span>&nbsp;(short,&nbsp;long)&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;fmt&nbsp;<span class="string">"Wrong&nbsp;HTTP&nbsp;Request:&nbsp;%s&nbsp;→&nbsp;%s"</span>&nbsp;short&nbsp;long<br>
+<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Client</span>&nbsp;(client_error)&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;fmt&nbsp;<span class="string">"Client:&nbsp;%s"</span>&nbsp;(log_client_error&nbsp;client_error&nbsp;|&gt;&nbsp;<span class="constructor">Log</span>.to_long_string)&nbsp;<br>
+<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Dyn_plugin</span>&nbsp;e&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;<span class="keyword">begin</span>&nbsp;<span class="keyword">match</span>&nbsp;e&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Dynlink_error</span>&nbsp;e&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;fmt&nbsp;<span class="string">"Dynamic&nbsp;plugin&nbsp;linking&nbsp;error:&nbsp;%s"</span>&nbsp;(<span class="constructor">Dynlink</span>.error_message&nbsp;e)<br>
+&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Findlib</span>&nbsp;e&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;fmt&nbsp;<span class="string">"Dynamic&nbsp;plugin&nbsp;findlib&nbsp;error:&nbsp;%s"</span>&nbsp;(<span class="constructor">Printexc</span>.to_string&nbsp;e)<br>
+&nbsp;&nbsp;<span class="keyword">end</span><br>
+</code></body></html>

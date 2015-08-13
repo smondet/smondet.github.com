@@ -1,0 +1,75 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<link rel="stylesheet" href="style.css" type="text/css">
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<link rel="Start" href="index.html">
+<link rel="previous" href="Target.Build_process.html">
+<link rel="next" href="Target.Equivalence.html">
+<link rel="Up" href="Target.html">
+<link title="Index of types" rel=Appendix href="index_types.html">
+<link title="Index of values" rel=Appendix href="index_values.html">
+<link title="Index of class methods" rel=Appendix href="index_methods.html">
+<link title="Index of class types" rel=Appendix href="index_class_types.html">
+<link title="Index of modules" rel=Appendix href="index_modules.html">
+<link title="Index of module types" rel=Appendix href="index_module_types.html">
+<link title="Client" rel="Chapter" href="Client.html">
+<link title="Command_line" rel="Chapter" href="Command_line.html">
+<link title="Configuration" rel="Chapter" href="Configuration.html">
+<link title="Daemonize" rel="Chapter" href="Daemonize.html">
+<link title="Document" rel="Chapter" href="Document.html">
+<link title="EDSL" rel="Chapter" href="EDSL.html">
+<link title="Engine" rel="Chapter" href="Engine.html">
+<link title="Error" rel="Chapter" href="Error.html">
+<link title="Eval_condition" rel="Chapter" href="Eval_condition.html">
+<link title="Explorer" rel="Chapter" href="Explorer.html">
+<link title="Host" rel="Chapter" href="Host.html">
+<link title="Host_io" rel="Chapter" href="Host_io.html">
+<link title="Interaction" rel="Chapter" href="Interaction.html">
+<link title="Internal_pervasives" rel="Chapter" href="Internal_pervasives.html">
+<link title="Long_running" rel="Chapter" href="Long_running.html">
+<link title="Long_running_utilities" rel="Chapter" href="Long_running_utilities.html">
+<link title="Lsf" rel="Chapter" href="Lsf.html">
+<link title="Monitored_script" rel="Chapter" href="Monitored_script.html">
+<link title="Path" rel="Chapter" href="Path.html">
+<link title="Pbs" rel="Chapter" href="Pbs.html">
+<link title="Persistent_data" rel="Chapter" href="Persistent_data.html">
+<link title="Plugin" rel="Chapter" href="Plugin.html">
+<link title="Program" rel="Chapter" href="Program.html">
+<link title="Protocol" rel="Chapter" href="Protocol.html">
+<link title="Server" rel="Chapter" href="Server.html">
+<link title="Target" rel="Chapter" href="Target.html">
+<link title="Unix_io" rel="Chapter" href="Unix_io.html">
+<link title="Unix_process" rel="Chapter" href="Unix_process.html">
+<link title="Yarn" rel="Chapter" href="Yarn.html"><title>Ketrew API : Target.Condition</title>
+</head>
+<body>
+<div class="navbar"><a class="pre" href="Target.Build_process.html" title="Target.Build_process">Previous</a>
+&nbsp;<a class="up" href="Target.html" title="Target">Up</a>
+&nbsp;<a class="post" href="Target.Equivalence.html" title="Target.Equivalence">Next</a>
+</div>
+<h1>Module <a href="type_Target.Condition.html">Target.Condition</a> (<a href="code_Target.Condition.html">.ml</a>)</h1>
+
+<pre><span class="keyword">module</span> Condition: <code class="code"><span class="keyword">sig</span></code> <a href="Target.Condition.html">..</a> <code class="code"><span class="keyword">end</span></code></pre><hr width="100%">
+
+<pre><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = <code class="type">[ `And of <a href="Target.Condition.html#TYPEt">t</a> list<br>       | `Command_returns of <a href="Target.Command.html#TYPEt">Target.Command.t</a> * int<br>       | `Never<br>       | `Satisfied<br>       | `Volume_exists of <a href="Target.Volume.html#TYPEt">Target.Volume.t</a><br>       | `Volume_size_bigger_than of <a href="Target.Volume.html#TYPEt">Target.Volume.t</a> * int ]</code> </pre>
+<div class="info ">
+An execution anti-condition; the condition defines when a target is
+    ready and therefore should be run if the condition is  met: <ul>
+<li>with <code class="code"><span class="keywordsign">`</span><span class="constructor">Never</span></code> the target always runs (because never “ready”),</li>
+<li>with <code class="code"><span class="keywordsign">`</span><span class="constructor">Satisfied</span></code> the target never runs (a bit useless),</li>
+<li>with <code class="code"><span class="keywordsign">`</span><span class="constructor">Volume_exists</span> v</code> the target runs if the volume does not exist
+    (<code class="code">make</code>-like behavior).</li>
+<li>with <code class="code"><span class="keywordsign">`</span><span class="constructor">Volume_size_bigger_than</span> (v, sz)</code> Ketrew will get the total size
+    of the volume (in bytes) and check that it is bigger.</li>
+<li>with <code class="code"><span class="keywordsign">`</span><span class="constructor">Command_returns</span> (c, v)</code> Ketrew will run the <a href="Target.Command.html#TYPEt"><code class="code"><span class="constructor">Target</span>.<span class="constructor">Command</span>.t</code></a> and
+    check its return value.</li>
+<li><code class="code"><span class="keywordsign">`</span><span class="constructor">And</span> list_of_conditions</code> is a conjunction of conditions.</li>
+</ul>
+<br>
+</div>
+
+
+<pre><span id="VALlog"><span class="keyword">val</span> <a href="code_VALTarget.Condition.log.html">log</a></span> : <code class="type"><a href="Target.Condition.html#TYPEt">t</a> -> Internal_pervasives.Log.t</code></pre>
+<pre><span id="VALto_string_hum"><span class="keyword">val</span> <a href="code_VALTarget.Condition.to_string_hum.html">to_string_hum</a></span> : <code class="type"><a href="Target.Condition.html#TYPEt">t</a> -> string</code></pre>
+<pre><span id="VALmarkup"><span class="keyword">val</span> <a href="code_VALTarget.Condition.markup.html">markup</a></span> : <code class="type"><a href="Target.Condition.html#TYPEt">t</a> -> Internal_pervasives.Display_markup.t</code></pre></body></html>

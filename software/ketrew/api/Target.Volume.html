@@ -1,0 +1,91 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<link rel="stylesheet" href="style.css" type="text/css">
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<link rel="Start" href="index.html">
+<link rel="previous" href="Target.Command.html">
+<link rel="next" href="Target.Build_process.html">
+<link rel="Up" href="Target.html">
+<link title="Index of types" rel=Appendix href="index_types.html">
+<link title="Index of values" rel=Appendix href="index_values.html">
+<link title="Index of class methods" rel=Appendix href="index_methods.html">
+<link title="Index of class types" rel=Appendix href="index_class_types.html">
+<link title="Index of modules" rel=Appendix href="index_modules.html">
+<link title="Index of module types" rel=Appendix href="index_module_types.html">
+<link title="Client" rel="Chapter" href="Client.html">
+<link title="Command_line" rel="Chapter" href="Command_line.html">
+<link title="Configuration" rel="Chapter" href="Configuration.html">
+<link title="Daemonize" rel="Chapter" href="Daemonize.html">
+<link title="Document" rel="Chapter" href="Document.html">
+<link title="EDSL" rel="Chapter" href="EDSL.html">
+<link title="Engine" rel="Chapter" href="Engine.html">
+<link title="Error" rel="Chapter" href="Error.html">
+<link title="Eval_condition" rel="Chapter" href="Eval_condition.html">
+<link title="Explorer" rel="Chapter" href="Explorer.html">
+<link title="Host" rel="Chapter" href="Host.html">
+<link title="Host_io" rel="Chapter" href="Host_io.html">
+<link title="Interaction" rel="Chapter" href="Interaction.html">
+<link title="Internal_pervasives" rel="Chapter" href="Internal_pervasives.html">
+<link title="Long_running" rel="Chapter" href="Long_running.html">
+<link title="Long_running_utilities" rel="Chapter" href="Long_running_utilities.html">
+<link title="Lsf" rel="Chapter" href="Lsf.html">
+<link title="Monitored_script" rel="Chapter" href="Monitored_script.html">
+<link title="Path" rel="Chapter" href="Path.html">
+<link title="Pbs" rel="Chapter" href="Pbs.html">
+<link title="Persistent_data" rel="Chapter" href="Persistent_data.html">
+<link title="Plugin" rel="Chapter" href="Plugin.html">
+<link title="Program" rel="Chapter" href="Program.html">
+<link title="Protocol" rel="Chapter" href="Protocol.html">
+<link title="Server" rel="Chapter" href="Server.html">
+<link title="Target" rel="Chapter" href="Target.html">
+<link title="Unix_io" rel="Chapter" href="Unix_io.html">
+<link title="Unix_process" rel="Chapter" href="Unix_process.html">
+<link title="Yarn" rel="Chapter" href="Yarn.html"><title>Ketrew API : Target.Volume</title>
+</head>
+<body>
+<div class="navbar"><a class="pre" href="Target.Command.html" title="Target.Command">Previous</a>
+&nbsp;<a class="up" href="Target.html" title="Target">Up</a>
+&nbsp;<a class="post" href="Target.Build_process.html" title="Target.Build_process">Next</a>
+</div>
+<h1>Module <a href="type_Target.Volume.html">Target.Volume</a> (<a href="code_Target.Volume.html">.ml</a>)</h1>
+
+<pre><span class="keyword">module</span> Volume: <code class="code"><span class="keyword">sig</span></code> <a href="Target.Volume.html">..</a> <code class="code"><span class="keyword">end</span></code></pre><hr width="100%">
+
+<pre><span id="TYPEstructure"><span class="keyword">type</span> <code class="type"></code>structure</span> = <code class="type">[ `Directory of string * <a href="Target.Volume.html#TYPEstructure">structure</a> list | `File of string ]</code> </pre>
+
+
+<pre><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code></pre><table class="typetable">
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTt.host">host</span>&nbsp;: <code class="type"><a href="Host.html#TYPEt">Host.t</a></code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTt.root">root</span>&nbsp;: <code class="type"><a href="Path.html#TYPEt">Path.t</a></code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTt.structure">structure</span>&nbsp;: <code class="type"><a href="Target.Volume.html#TYPEstructure">structure</a></code>;</code></td>
+
+</tr></table>
+}
+
+
+
+<pre><span id="VALcreate"><span class="keyword">val</span> <a href="code_VALTarget.Volume.create.html">create</a></span> : <code class="type">host:<a href="Host.html#TYPEt">Host.t</a> -> root:<a href="Path.html#TYPEt">Path.t</a> -> <a href="Target.Volume.html#TYPEstructure">structure</a> -> <a href="Target.Volume.html#TYPEt">t</a></code></pre>
+<pre><span id="VALfile"><span class="keyword">val</span> <a href="code_VALTarget.Volume.file.html">file</a></span> : <code class="type">string -> <a href="Target.Volume.html#TYPEstructure">structure</a></code></pre>
+<pre><span id="VALdir"><span class="keyword">val</span> <a href="code_VALTarget.Volume.dir.html">dir</a></span> : <code class="type">string -> <a href="Target.Volume.html#TYPEstructure">structure</a> list -> <a href="Target.Volume.html#TYPEstructure">structure</a></code></pre>
+<pre><span id="VALall_paths"><span class="keyword">val</span> <a href="code_VALTarget.Volume.all_paths.html">all_paths</a></span> : <code class="type"><a href="Target.Volume.html#TYPEt">t</a> -> <a href="Path.html#TYPEt">Path.t</a> list</code></pre>
+<pre><span id="VALlog_structure"><span class="keyword">val</span> <a href="code_VALTarget.Volume.log_structure.html">log_structure</a></span> : <code class="type"><a href="Target.Volume.html#TYPEstructure">structure</a> -> Internal_pervasives.Log.t</code></pre>
+<pre><span id="VALlog"><span class="keyword">val</span> <a href="code_VALTarget.Volume.log.html">log</a></span> : <code class="type"><a href="Target.Volume.html#TYPEt">t</a> -> Internal_pervasives.Log.t</code></pre>
+<pre><span id="VALmarkup"><span class="keyword">val</span> <a href="code_VALTarget.Volume.markup.html">markup</a></span> : <code class="type"><a href="Target.Volume.html#TYPEt">t</a> -> Internal_pervasives.Display_markup.t</code></pre>
+<pre><span id="VALto_string_hum"><span class="keyword">val</span> <a href="code_VALTarget.Volume.to_string_hum.html">to_string_hum</a></span> : <code class="type"><a href="Target.Volume.html#TYPEt">t</a> -> string</code></pre></body></html>

@@ -1,0 +1,63 @@
+<html><head>
+<link rel="stylesheet" href="style.css" type="text/css">
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<link rel="Start" href="index.html">
+<link title="Index of types" rel=Appendix href="index_types.html">
+<link title="Index of values" rel=Appendix href="index_values.html">
+<link title="Index of class methods" rel=Appendix href="index_methods.html">
+<link title="Index of class types" rel=Appendix href="index_class_types.html">
+<link title="Index of modules" rel=Appendix href="index_modules.html">
+<link title="Index of module types" rel=Appendix href="index_module_types.html">
+<link title="Client" rel="Chapter" href="Client.html">
+<link title="Command_line" rel="Chapter" href="Command_line.html">
+<link title="Configuration" rel="Chapter" href="Configuration.html">
+<link title="Daemonize" rel="Chapter" href="Daemonize.html">
+<link title="Document" rel="Chapter" href="Document.html">
+<link title="EDSL" rel="Chapter" href="EDSL.html">
+<link title="Engine" rel="Chapter" href="Engine.html">
+<link title="Error" rel="Chapter" href="Error.html">
+<link title="Eval_condition" rel="Chapter" href="Eval_condition.html">
+<link title="Explorer" rel="Chapter" href="Explorer.html">
+<link title="Host" rel="Chapter" href="Host.html">
+<link title="Host_io" rel="Chapter" href="Host_io.html">
+<link title="Interaction" rel="Chapter" href="Interaction.html">
+<link title="Internal_pervasives" rel="Chapter" href="Internal_pervasives.html">
+<link title="Long_running" rel="Chapter" href="Long_running.html">
+<link title="Long_running_utilities" rel="Chapter" href="Long_running_utilities.html">
+<link title="Lsf" rel="Chapter" href="Lsf.html">
+<link title="Monitored_script" rel="Chapter" href="Monitored_script.html">
+<link title="Path" rel="Chapter" href="Path.html">
+<link title="Pbs" rel="Chapter" href="Pbs.html">
+<link title="Persistent_data" rel="Chapter" href="Persistent_data.html">
+<link title="Plugin" rel="Chapter" href="Plugin.html">
+<link title="Program" rel="Chapter" href="Program.html">
+<link title="Protocol" rel="Chapter" href="Protocol.html">
+<link title="Server" rel="Chapter" href="Server.html">
+<link title="Target" rel="Chapter" href="Target.html">
+<link title="Unix_io" rel="Chapter" href="Unix_io.html">
+<link title="Unix_process" rel="Chapter" href="Unix_process.html">
+<link title="Yarn" rel="Chapter" href="Yarn.html"><title>Ketrew API : Server.stop</title>
+</head>
+<body>
+<code class="code"><span class="keyword">let</span>&nbsp;stop&nbsp;~configuration&nbsp;=<br>
+&nbsp;&nbsp;<span class="constructor">Deferred_result</span>.some&nbsp;~or_fail:(<span class="keywordsign">`</span><span class="constructor">Stop_server_error</span>&nbsp;<span class="string">"No&nbsp;command-pipe&nbsp;configured"</span>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">Configuration</span>.command_pipe&nbsp;configuration)<br>
+&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;file_path&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;<span class="constructor">System</span>.file_info&nbsp;~follow_symlink:<span class="keyword">true</span>&nbsp;file_path<br>
+&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">function</span><br>
+&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Fifo</span>&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">begin</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">System</span>.with_timeout&nbsp;2.&nbsp;(<span class="keyword">fun</span>&nbsp;()&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">IO</span>.with_out_channel&nbsp;(<span class="keywordsign">`</span><span class="constructor">Append_to_file</span>&nbsp;file_path)&nbsp;~buffer_size:16&nbsp;~f:(<span class="keyword">fun</span>&nbsp;oc&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">IO</span>.write&nbsp;oc&nbsp;die_command<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;()&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">IO</span>.write&nbsp;oc&nbsp;<span class="string">"\n"</span>))<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&lt;&nbsp;<span class="keyword">function</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Ok</span>&nbsp;()&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;return&nbsp;<span class="keywordsign">`</span><span class="constructor">Done</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Error</span>&nbsp;(<span class="keywordsign">`</span><span class="constructor">Timeout</span>&nbsp;_)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;return&nbsp;<span class="keywordsign">`</span><span class="constructor">Timeout</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Error</span>&nbsp;(<span class="keywordsign">`</span><span class="constructor">IO</span>&nbsp;_&nbsp;<span class="keyword">as</span>&nbsp;e)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;fail&nbsp;e<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Error</span>&nbsp;(<span class="keywordsign">`</span><span class="constructor">System</span>&nbsp;_)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;fail&nbsp;(<span class="keywordsign">`</span><span class="constructor">Stop_server_error</span>&nbsp;<span class="string">"System.timeout&nbsp;failed!"</span>)<br>
+&nbsp;&nbsp;<span class="keyword">end</span><br>
+&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;other&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;fail&nbsp;(<span class="keywordsign">`</span><span class="constructor">Stop_server_error</span>&nbsp;(fmt&nbsp;<span class="string">"%S&nbsp;is&nbsp;not&nbsp;a&nbsp;named-pipe&nbsp;(%s)"</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;file_path&nbsp;(<span class="constructor">System</span>.file_info_to_string&nbsp;other)))</code></body></html>

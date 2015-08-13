@@ -1,0 +1,66 @@
+<html><head>
+<link rel="stylesheet" href="style.css" type="text/css">
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<link rel="Start" href="index.html">
+<link title="Index of types" rel=Appendix href="index_types.html">
+<link title="Index of values" rel=Appendix href="index_values.html">
+<link title="Index of class methods" rel=Appendix href="index_methods.html">
+<link title="Index of class types" rel=Appendix href="index_class_types.html">
+<link title="Index of modules" rel=Appendix href="index_modules.html">
+<link title="Index of module types" rel=Appendix href="index_module_types.html">
+<link title="Client" rel="Chapter" href="Client.html">
+<link title="Command_line" rel="Chapter" href="Command_line.html">
+<link title="Configuration" rel="Chapter" href="Configuration.html">
+<link title="Daemonize" rel="Chapter" href="Daemonize.html">
+<link title="Document" rel="Chapter" href="Document.html">
+<link title="EDSL" rel="Chapter" href="EDSL.html">
+<link title="Engine" rel="Chapter" href="Engine.html">
+<link title="Error" rel="Chapter" href="Error.html">
+<link title="Eval_condition" rel="Chapter" href="Eval_condition.html">
+<link title="Explorer" rel="Chapter" href="Explorer.html">
+<link title="Host" rel="Chapter" href="Host.html">
+<link title="Host_io" rel="Chapter" href="Host_io.html">
+<link title="Interaction" rel="Chapter" href="Interaction.html">
+<link title="Internal_pervasives" rel="Chapter" href="Internal_pervasives.html">
+<link title="Long_running" rel="Chapter" href="Long_running.html">
+<link title="Long_running_utilities" rel="Chapter" href="Long_running_utilities.html">
+<link title="Lsf" rel="Chapter" href="Lsf.html">
+<link title="Monitored_script" rel="Chapter" href="Monitored_script.html">
+<link title="Path" rel="Chapter" href="Path.html">
+<link title="Pbs" rel="Chapter" href="Pbs.html">
+<link title="Persistent_data" rel="Chapter" href="Persistent_data.html">
+<link title="Plugin" rel="Chapter" href="Plugin.html">
+<link title="Program" rel="Chapter" href="Program.html">
+<link title="Protocol" rel="Chapter" href="Protocol.html">
+<link title="Server" rel="Chapter" href="Server.html">
+<link title="Target" rel="Chapter" href="Target.html">
+<link title="Unix_io" rel="Chapter" href="Unix_io.html">
+<link title="Unix_process" rel="Chapter" href="Unix_process.html">
+<link title="Yarn" rel="Chapter" href="Yarn.html"><title>Ketrew API : EDSL.to_display_string</title>
+</head>
+<body>
+<code class="code"><span class="keyword">let</span>&nbsp;to_display_string&nbsp;?(ansi_colors=<span class="keyword">false</span>)&nbsp;?(indentation=2)&nbsp;ut&nbsp;=<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;escape&nbsp;c&nbsp;=&nbsp;fmt&nbsp;<span class="string">"\027[%sm"</span>&nbsp;c&nbsp;&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;color&nbsp;c&nbsp;t&nbsp;=&nbsp;<span class="keyword">if</span>&nbsp;ansi_colors&nbsp;<span class="keyword">then</span>&nbsp;escape&nbsp;c&nbsp;^&nbsp;t&nbsp;^&nbsp;escape&nbsp;<span class="string">"0"</span>&nbsp;<span class="keyword">else</span>&nbsp;t&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;bold_red&nbsp;t&nbsp;=&nbsp;&nbsp;color&nbsp;<span class="string">"1;31"</span>&nbsp;t&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;bold_yellow&nbsp;t&nbsp;=&nbsp;&nbsp;color&nbsp;<span class="string">"1;33"</span>&nbsp;t&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;bold_green&nbsp;t&nbsp;=&nbsp;&nbsp;color&nbsp;<span class="string">"1;32"</span>&nbsp;t&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;<span class="comment">(*&nbsp;let&nbsp;greyish&nbsp;t&nbsp;=&nbsp;color&nbsp;"37"&nbsp;t&nbsp;in&nbsp;*)</span><br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;<span class="keyword">rec</span>&nbsp;dump_workflow&nbsp;?(kind=<span class="keywordsign">`</span><span class="constructor">Dep</span>)&nbsp;?(depth=0)&nbsp;ut&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;sublist&nbsp;~kind&nbsp;l&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">String</span>.concat&nbsp;~sep:<span class="string">""</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">List</span>.map&nbsp;l&nbsp;~f:(dump_workflow&nbsp;~kind&nbsp;~depth:(depth&nbsp;+&nbsp;1)))&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;line&nbsp;content&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">match</span>&nbsp;kind&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Dep</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;bold_green&nbsp;(fmt&nbsp;<span class="string">"*&nbsp;%s"</span>&nbsp;content)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">OFA</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;bold_red&nbsp;(fmt&nbsp;<span class="string">"×&nbsp;%s"</span>&nbsp;content)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">OSA</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;bold_yellow&nbsp;(fmt&nbsp;<span class="string">"→&nbsp;%s"</span>&nbsp;content)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;fmt&nbsp;<span class="string">"%s%s\n%s%s%s"</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">String</span>.make&nbsp;(depth&nbsp;*&nbsp;indentation)&nbsp;<span class="string">'&nbsp;'</span>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(line&nbsp;ut<span class="keywordsign">#</span>name)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(sublist&nbsp;ut<span class="keywordsign">#</span>depends_on&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;~kind:<span class="keywordsign">`</span><span class="constructor">Dep</span>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(sublist&nbsp;ut<span class="keywordsign">#</span>on_failure_activate&nbsp;~kind:<span class="keywordsign">`</span><span class="constructor">OFA</span>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(sublist&nbsp;ut<span class="keywordsign">#</span>on_success_activate&nbsp;~kind:<span class="keywordsign">`</span><span class="constructor">OSA</span>)<br>
+&nbsp;&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;dump_workflow&nbsp;ut</code></body></html>

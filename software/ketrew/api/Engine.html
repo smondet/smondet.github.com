@@ -1,0 +1,109 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<link rel="stylesheet" href="style.css" type="text/css">
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<link rel="Start" href="index.html">
+<link rel="previous" href="EDSL.html">
+<link rel="next" href="Error.html">
+<link rel="Up" href="index.html">
+<link title="Index of types" rel=Appendix href="index_types.html">
+<link title="Index of values" rel=Appendix href="index_values.html">
+<link title="Index of class methods" rel=Appendix href="index_methods.html">
+<link title="Index of class types" rel=Appendix href="index_class_types.html">
+<link title="Index of modules" rel=Appendix href="index_modules.html">
+<link title="Index of module types" rel=Appendix href="index_module_types.html">
+<link title="Client" rel="Chapter" href="Client.html">
+<link title="Command_line" rel="Chapter" href="Command_line.html">
+<link title="Configuration" rel="Chapter" href="Configuration.html">
+<link title="Daemonize" rel="Chapter" href="Daemonize.html">
+<link title="Document" rel="Chapter" href="Document.html">
+<link title="EDSL" rel="Chapter" href="EDSL.html">
+<link title="Engine" rel="Chapter" href="Engine.html">
+<link title="Error" rel="Chapter" href="Error.html">
+<link title="Eval_condition" rel="Chapter" href="Eval_condition.html">
+<link title="Explorer" rel="Chapter" href="Explorer.html">
+<link title="Host" rel="Chapter" href="Host.html">
+<link title="Host_io" rel="Chapter" href="Host_io.html">
+<link title="Interaction" rel="Chapter" href="Interaction.html">
+<link title="Internal_pervasives" rel="Chapter" href="Internal_pervasives.html">
+<link title="Long_running" rel="Chapter" href="Long_running.html">
+<link title="Long_running_utilities" rel="Chapter" href="Long_running_utilities.html">
+<link title="Lsf" rel="Chapter" href="Lsf.html">
+<link title="Monitored_script" rel="Chapter" href="Monitored_script.html">
+<link title="Path" rel="Chapter" href="Path.html">
+<link title="Pbs" rel="Chapter" href="Pbs.html">
+<link title="Persistent_data" rel="Chapter" href="Persistent_data.html">
+<link title="Plugin" rel="Chapter" href="Plugin.html">
+<link title="Program" rel="Chapter" href="Program.html">
+<link title="Protocol" rel="Chapter" href="Protocol.html">
+<link title="Server" rel="Chapter" href="Server.html">
+<link title="Target" rel="Chapter" href="Target.html">
+<link title="Unix_io" rel="Chapter" href="Unix_io.html">
+<link title="Unix_process" rel="Chapter" href="Unix_process.html">
+<link title="Yarn" rel="Chapter" href="Yarn.html"><title>Ketrew API : Engine</title>
+</head>
+<body>
+<div class="navbar"><a class="pre" href="EDSL.html" title="EDSL">Previous</a>
+&nbsp;<a class="up" href="index.html" title="Index">Up</a>
+&nbsp;<a class="post" href="Error.html" title="Error">Next</a>
+</div>
+<h1>Module <a href="type_Engine.html">Engine</a> (<a href="code_Engine.html">.ml</a>)</h1>
+
+<pre><span class="keyword">module</span> Engine: <code class="code"><span class="keyword">sig</span></code> <a href="Engine.html">..</a> <code class="code"><span class="keyword">end</span></code></pre><div class="info module top">
+The engine of the actual Workflow Engine.<br>
+</div>
+<hr width="100%">
+
+<pre><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> </pre>
+<div class="info ">
+The contents of the application engine.<br>
+</div>
+
+
+<pre><span id="VALwith_engine"><span class="keyword">val</span> <a href="code_VALEngine.with_engine.html">with_engine</a></span> : <code class="type">configuration:<a href="Configuration.html#TYPEengine">Configuration.engine</a> -><br>       (engine:<a href="Engine.html#TYPEt">t</a> -><br>        (unit,<br>         [> `Database of Trakeva.Error.t<br>          | `Database_unavailable of Ketrew_pure.Target.id<br>          | `Dyn_plugin of [> `Dynlink_error of Dynlink.error | `Findlib of exn ]<br>          | `Failure of string<br>          | `Missing_data of bytes<br>          | `Target of [> `Deserilization of bytes ] ]<br>         as 'merge_error)<br>        Unix_io.Deferred_result.t) -><br>       (unit, 'merge_error) Unix_io.Deferred_result.t</code></pre><div class="info ">
+Create a <code class="code">engine.t</code>, run the function passed as argument, and properly dispose of it.<br>
+</div>
+
+<pre><span id="VALload"><span class="keyword">val</span> <a href="code_VALEngine.load.html">load</a></span> : <code class="type">configuration:<a href="Configuration.html#TYPEengine">Configuration.engine</a> -><br>       (<a href="Engine.html#TYPEt">t</a>,<br>        [> `Database of Trakeva.Error.t<br>         | `Dyn_plugin of [> `Dynlink_error of Dynlink.error | `Findlib of exn ]<br>         | `Failure of string<br>         | `Missing_data of bytes<br>         | `Target of [> `Deserilization of bytes ] ])<br>       Unix_io.Deferred_result.t</code></pre>
+<pre><span id="VALunload"><span class="keyword">val</span> <a href="code_VALEngine.unload.html">unload</a></span> : <code class="type"><a href="Engine.html#TYPEt">t</a> -><br>       (unit,<br>        [> `Database of Trakeva.Error.t<br>         | `Database_unavailable of Ketrew_pure.Target.id ])<br>       Unix_io.Deferred_result.t</code></pre>
+<pre><span id="VALconfiguration"><span class="keyword">val</span> <a href="code_VALEngine.configuration.html">configuration</a></span> : <code class="type"><a href="Engine.html#TYPEt">t</a> -> <a href="Configuration.html#TYPEengine">Configuration.engine</a></code></pre><div class="info ">
+Retrieve the configuration.<br>
+</div>
+
+<pre><span id="VALadd_targets"><span class="keyword">val</span> <a href="code_VALEngine.add_targets.html">add_targets</a></span> : <code class="type"><a href="Engine.html#TYPEt">t</a> -><br>       Ketrew_pure.Target.t list -><br>       (unit,<br>        [> `Database of Trakeva.Error.t<br>         | `Database_unavailable of Ketrew_pure.Target.id<br>         | `Missing_data of Ketrew_pure.Target.id<br>         | `Target of [> `Deserilization of string ] ])<br>       Unix_io.Deferred_result.t</code></pre><div class="info ">
+Add a list of targets to the engine.<br>
+</div>
+
+<pre><span id="VALget_target"><span class="keyword">val</span> <a href="code_VALEngine.get_target.html">get_target</a></span> : <code class="type"><a href="Engine.html#TYPEt">t</a> -><br>       Ketrew_pure.Internal_pervasives.Unique_id.t -><br>       (Ketrew_pure.Target.t,<br>        [> `Database of Trakeva.Error.t<br>         | `Missing_data of string<br>         | `Target of [> `Deserilization of string ] ])<br>       Unix_io.Deferred_result.t</code></pre><div class="info ">
+Get a target from its id.<br>
+</div>
+
+<pre><span id="VALall_targets"><span class="keyword">val</span> <a href="code_VALEngine.all_targets.html">all_targets</a></span> : <code class="type"><a href="Engine.html#TYPEt">t</a> -><br>       (Ketrew_pure.Target.t list,<br>        [> `Database of Trakeva.Error.t<br>         | `IO of<br>             [> `Read_file_exn of string * exn | `Write_file_exn of string * exn ]<br>         | `Missing_data of Ketrew_pure.Target.id<br>         | `System of [> `File_info of string ] * [> `Exn of exn ]<br>         | `Target of [> `Deserilization of string ] ])<br>       Unix_io.Deferred_result.t</code></pre><div class="info ">
+Get the list of targets currently handled.<br>
+</div>
+
+<pre><span id="VALget_list_of_target_ids"><span class="keyword">val</span> <a href="code_VALEngine.get_list_of_target_ids.html">get_list_of_target_ids</a></span> : <code class="type"><a href="Engine.html#TYPEt">t</a> -><br>       Ketrew_pure.Protocol.Up_message.target_query -><br>       (Ketrew_pure.Target.id list,<br>        [> `Database of Trakeva.Error.t<br>         | `Missing_data of string<br>         | `Target of [> `Deserilization of string ] ])<br>       Unix_io.Deferred_result.t</code></pre><div class="info ">
+Get only the Ids of the targets for a given “query”:
+<p>
+<ul>
+<li><code class="code"><span class="keywordsign">`</span><span class="constructor">All</span></code> for all the targets visible to the engine.</li>
+<li><code class="code"><span class="keywordsign">`</span><span class="constructor">Not_finished_before</span> _</code> for the targets that were not finished at a given date.</li>
+</ul>
+<br>
+</div>
+
+<pre><span class="keyword">module</span> <a href="Engine.Run_automaton.html">Run_automaton</a>: <code class="code"><span class="keyword">sig</span></code> <a href="Engine.Run_automaton.html">..</a> <code class="code"><span class="keyword">end</span></code></pre>
+<pre><span id="VALget_status"><span class="keyword">val</span> <a href="code_VALEngine.get_status.html">get_status</a></span> : <code class="type"><a href="Engine.html#TYPEt">t</a> -><br>       Ketrew_pure.Target.id -><br>       (Ketrew_pure.Target.State.t,<br>        [> `Database of Trakeva.Error.t<br>         | `IO of<br>             [> `Read_file_exn of string * exn | `Write_file_exn of string * exn ]<br>         | `Missing_data of string<br>         | `System of [> `File_info of string ] * [> `Exn of exn ]<br>         | `Target of [> `Deserilization of string ] ])<br>       Unix_io.Deferred_result.t</code></pre><div class="info ">
+Get the state description of a given target (by “id”).<br>
+</div>
+
+<pre><span id="VALkill"><span class="keyword">val</span> <a href="code_VALEngine.kill.html">kill</a></span> : <code class="type"><a href="Engine.html#TYPEt">t</a> -><br>       id:string -><br>       (unit,<br>        [> `Database of [> `Act of Trakeva.Action.t | `Load of string ] * string<br>         | `Database_unavailable of string ])<br>       Unix_io.Deferred_result.t</code></pre><div class="info ">
+Kill a target<br>
+</div>
+
+<pre><span id="VALrestart_target"><span class="keyword">val</span> <a href="code_VALEngine.restart_target.html">restart_target</a></span> : <code class="type"><a href="Engine.html#TYPEt">t</a> -><br>       Ketrew_pure.Target.id -><br>       (Ketrew_pure.Target.id,<br>        [> `Database of Trakeva.Error.t<br>         | `Database_unavailable of Ketrew_pure.Target.id<br>         | `Missing_data of Ketrew_pure.Target.id<br>         | `Target of [> `Deserilization of string ] ])<br>       Unix_io.Deferred_result.t</code></pre><div class="info ">
+Make new activated targets out of a given target and its “transitive
+    reverse dependencies”<br>
+</div>
+</body></html>

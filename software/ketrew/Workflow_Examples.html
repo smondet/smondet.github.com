@@ -13,8 +13,9 @@
 </li><li><a href='#ExampleBackupWorkflow'>Example “Backup” Workflow</a>
 </li><li><a href='#BuildKetrewOnaVagrantVM'>Build Ketrew On a Vagrant VM</a>
 </li></ul>
+</li><li><a href='#ThePythologicalWorkflow'>The Pythological Workflow</a>
 </li><li><a href='#MainOftheModule'>“Main” Of the Module</a>
-</li></ul><h2>Menu</h2><ul><li><a href='index.html'>Home</a></li><li><a href='Alternative_CLI_Application.html'>Alternative CLI Application</a></li><li><a href='Developer_Documentation.html'>Developer Documentation</a></li><li><a href='Glossary.html'>Glossary</a></li><li><a href='Long-Running_Plugins.html'>Long-Running Plugins</a></li><li><a href='Server_Commands.html'>Server Commands</a></li><li><a href='The_Configuration_File.html'>The Configuration File</a></li><li><a href='The_HTTP_API.html'>The HTTP API</a></li><li><a href='Workflow_Examples.html'>Workflow Examples</a></li><li><a href='dummy_plugin.html'>Plugin Example</a></li><li><a href='dummy_plugin_user.html'>Plugin-Usage Example</a></li><li><a href='integration.html'>Integration Test</a></li><li><a href='main.html'>Main Test</a></li><li><a href='preconfigured_main.html'>Preconfigured Main Example</a></li><li><a href='./api/index.html'>API Documentation</a></li><li>Documentation for <a href='./doc.0.0.0/index.html'>version 0.0.0</a></li><li>Documentation for <a href='./doc.1.0.0/index.html'>version 1.0.0</a></li><li>Documentation for <a href='./doc.1.1.0/index.html'>version 1.1.0</a></li><li>Repository <a href='https://github.com/hammerlab/ketrew'>at Github</a></li><li>Up: <a href='../index.html'>Software Projects</a></li></ul></div><div class="col-md-9"><pre><span class="comment">(**************************************************************************)</span><span class="text">
+</li></ul><h2>Menu</h2><ul><li><a href='index.html'>Home</a></li><li><a href='Alternative_CLI_Application.html'>Alternative CLI Application</a></li><li><a href='Developer_Documentation.html'>Developer Documentation</a></li><li><a href='Glossary.html'>Glossary</a></li><li><a href='Long-Running_Plugins.html'>Long-Running Plugins</a></li><li><a href='Server_Commands.html'>Server Commands</a></li><li><a href='The_Configuration_File.html'>The Configuration File</a></li><li><a href='The_HTTP_API.html'>The HTTP API</a></li><li><a href='Workflow_Examples.html'>Workflow Examples</a></li><li><a href='dummy_plugin_user.html'>Plugin-Usage Example</a></li><li><a href='integration.html'>Integration Test</a></li><li><a href='main.html'>Main Test</a></li><li><a href='preconfigured_main.html'>Preconfigured Main Example</a></li><li><a href='./api/index.html'>API Documentation</a></li><li>Documentation for <a href='./doc.0.0.0/index.html'>version 0.0.0</a></li><li>Documentation for <a href='./doc.1.0.0/index.html'>version 1.0.0</a></li><li>Documentation for <a href='./doc.1.1.0/index.html'>version 1.1.0</a></li><li>Documentation for <a href='./doc.1.1.1/index.html'>version 1.1.1</a></li><li>Repository <a href='https://github.com/hammerlab/ketrew'>at Github</a></li><li>Up: <a href='../index.html'>Software Projects</a></li></ul></div><div class="col-md-9"><pre><span class="comment">(**************************************************************************)</span><span class="text">
 </span><span class="comment">(*    Copyright 2014, 2015:                                               *)</span><span class="text">
 </span><span class="comment">(*          Sebastien Mondet &lt;seb@mondet.org&gt;,                            *)</span><span class="text">
 </span><span class="comment">(*          Leonid Rozenberg &lt;leonidr@gmail.com&gt;,                         *)</span><span class="text">
@@ -58,8 +59,8 @@ implied.  See the License for the specific language governing
 permissions and limitations under the License.</code></pre><p>And some preliminary OCaml settings:</p>
 
 <pre><span class="text">
-</span><span class="kw">open</span><span class="text"> </span><span class="kw2">Printf</span><span class="text">
-</span><span class="kw">module</span><span class="text"> </span><span class="kw2">List</span><span class="text"> = </span><span class="kw2">ListLabels</span><span class="text">
+</span><span class="kw">open</span><span class="text"> </span><span class="kw2">Nonstd</span><span class="text">
+</span><span class="kw">module</span><span class="text"> </span><span class="kw2">String</span><span class="text"> = </span><span class="kw2">Sosa</span><span class="text">.</span><span class="kw2">Native_string</span><span class="text">
 </span><span class="kw">let</span><span class="text"> </span><span class="id">say</span><span class="text"> </span><span class="id">fmt</span><span class="text"> = </span><span class="id">ksprintf</span><span class="text"> (</span><span class="kw">fun</span><span class="text"> </span><span class="id">s</span><span class="text"> -&gt; </span><span class="id">printf</span><span class="text"> </span><span class="string">&quot;%s\n%!&quot;</span><span class="text"> </span><span class="id">s</span><span class="text">) </span><span class="id">fmt</span><span class="text">
 </span></pre>
 
@@ -76,7 +77,7 @@ It actually calls <code>submit</code> directly itself.</p>
 </span><span class="kw">let</span><span class="text"> </span><span class="id">run_command_with_lsf</span><span class="text"> </span><span class="kw4">~host</span><span class="text"> </span><span class="kw4">~queue</span><span class="text"> </span><span class="id">cmd</span><span class="text"> =
   </span><span class="kw">let</span><span class="text"> </span><span class="kw">open</span><span class="text"> </span><span class="kw2">Ketrew</span><span class="text">.</span><span class="kw2">EDSL</span><span class="text"> </span><span class="kw">in</span><span class="text">
   </span><span class="kw">let</span><span class="text"> </span><span class="id">host</span><span class="text"> = </span><span class="kw2">Host</span><span class="text">.</span><span class="id">parse</span><span class="text"> </span><span class="id">host</span><span class="text"> </span><span class="kw">in</span><span class="text">
-  </span><span class="kw2">Ketrew_client</span><span class="text">.</span><span class="id">submit</span><span class="text"> (
+  </span><span class="kw2">Ketrew</span><span class="text">.</span><span class="kw2">Client</span><span class="text">.</span><span class="id">submit</span><span class="text"> (
     </span><span class="id">target</span><span class="text"> </span><span class="string">&quot;run_command_with_lsf&quot;</span><span class="text">
       </span><span class="kw4">~make</span><span class="text">:(</span><span class="id">lsf</span><span class="text"> (</span><span class="kw2">Program</span><span class="text">.</span><span class="id">sh</span><span class="text"> </span><span class="id">cmd</span><span class="text">)
                </span><span class="kw4">~queue</span><span class="text"> </span><span class="kw4">~wall_limit</span><span class="text">:</span><span class="string">&quot;1:30&quot;</span><span class="text"> </span><span class="kw4">~processors</span><span class="text">:(`</span><span class="kw2">Min_max</span><span class="text"> (</span><span class="numeric">1</span><span class="text">,</span><span class="numeric">1</span><span class="text">)) </span><span class="kw4">~host</span><span class="text">)
@@ -94,7 +95,7 @@ It actually calls <code>submit</code> directly itself.</p>
 </span><span class="kw">let</span><span class="text"> </span><span class="id">run_command_with_nohup</span><span class="text"> </span><span class="kw4">~host</span><span class="text"> </span><span class="id">cmd</span><span class="text"> =
   </span><span class="kw">let</span><span class="text"> </span><span class="kw">open</span><span class="text"> </span><span class="kw2">Ketrew</span><span class="text">.</span><span class="kw2">EDSL</span><span class="text"> </span><span class="kw">in</span><span class="text">
   </span><span class="kw">let</span><span class="text"> </span><span class="id">host</span><span class="text"> = </span><span class="kw2">Host</span><span class="text">.</span><span class="id">parse</span><span class="text"> </span><span class="id">host</span><span class="text"> </span><span class="kw">in</span><span class="text">
-  </span><span class="kw2">Ketrew_client</span><span class="text">.</span><span class="id">submit</span><span class="text"> (
+  </span><span class="kw2">Ketrew</span><span class="text">.</span><span class="kw2">Client</span><span class="text">.</span><span class="id">submit</span><span class="text"> (
     </span><span class="id">target</span><span class="text"> (</span><span class="id">sprintf</span><span class="text"> </span><span class="string">&quot;NhSs: %S&quot;</span><span class="text"> </span><span class="id">cmd</span><span class="text">)
       </span><span class="kw4">~make</span><span class="text">:(</span><span class="id">daemonize</span><span class="text"> </span><span class="kw4">~using</span><span class="text">:`</span><span class="kw2">Nohup_setsid</span><span class="text">  (</span><span class="kw2">Program</span><span class="text">.</span><span class="id">sh</span><span class="text"> </span><span class="id">cmd</span><span class="text">) </span><span class="kw4">~host</span><span class="text">)
   )
@@ -111,7 +112,7 @@ the “python daemon” method instead.</p>
 </span><span class="kw">let</span><span class="text"> </span><span class="id">run_command_with_python_method</span><span class="text"> </span><span class="kw4">~host</span><span class="text"> </span><span class="id">cmd</span><span class="text"> =
   </span><span class="kw">let</span><span class="text"> </span><span class="kw">open</span><span class="text"> </span><span class="kw2">Ketrew</span><span class="text">.</span><span class="kw2">EDSL</span><span class="text"> </span><span class="kw">in</span><span class="text">
   </span><span class="kw">let</span><span class="text"> </span><span class="id">host</span><span class="text"> = </span><span class="kw2">Host</span><span class="text">.</span><span class="id">parse</span><span class="text"> </span><span class="id">host</span><span class="text"> </span><span class="kw">in</span><span class="text">
-  </span><span class="kw2">Ketrew_client</span><span class="text">.</span><span class="id">submit</span><span class="text"> (
+  </span><span class="kw2">Ketrew</span><span class="text">.</span><span class="kw2">Client</span><span class="text">.</span><span class="id">submit</span><span class="text"> (
     </span><span class="id">target</span><span class="text"> (</span><span class="id">sprintf</span><span class="text"> </span><span class="string">&quot;Pyd: %S&quot;</span><span class="text"> </span><span class="id">cmd</span><span class="text">)
       </span><span class="kw4">~make</span><span class="text">:(</span><span class="id">daemonize</span><span class="text"> (</span><span class="kw2">Program</span><span class="text">.</span><span class="id">sh</span><span class="text"> </span><span class="id">cmd</span><span class="text">)
                </span><span class="kw4">~using</span><span class="text">:`</span><span class="kw2">Python_daemon</span><span class="text"> </span><span class="kw4">~host</span><span class="text">
@@ -141,7 +142,7 @@ comes from the Hadoop ecosystem and is used to request resources.</p>
       </span><span class="comment">(* do not put spaces up there, it can break Yarn *)</span><span class="text">
       (</span><span class="kw2">Program</span><span class="text">.</span><span class="id">sh</span><span class="text"> </span><span class="id">cmd</span><span class="text">)
   </span><span class="kw">in</span><span class="text">
-  </span><span class="kw2">Ketrew_client</span><span class="text">.</span><span class="id">submit</span><span class="text"> (
+  </span><span class="kw2">Ketrew</span><span class="text">.</span><span class="kw2">Client</span><span class="text">.</span><span class="id">submit</span><span class="text"> (
     </span><span class="id">target</span><span class="text"> (</span><span class="id">sprintf</span><span class="text"> </span><span class="string">&quot;Yarn: %S&quot;</span><span class="text"> </span><span class="id">cmd</span><span class="text">) </span><span class="kw4">~make</span><span class="text">
   )
 
@@ -166,7 +167,7 @@ comes from the Hadoop ecosystem and is used to request resources.</p>
       </span><span class="kw4">~depends_on</span><span class="text">:[ </span><span class="id">target1</span><span class="text"> ]
       </span><span class="kw4">~make</span><span class="text">:(</span><span class="id">daemonize</span><span class="text"> </span><span class="kw4">~using</span><span class="text">:`</span><span class="kw2">Python_daemon</span><span class="text"> (</span><span class="kw2">Program</span><span class="text">.</span><span class="id">sh</span><span class="text"> </span><span class="id">cmd2</span><span class="text">) </span><span class="kw4">~host</span><span class="text">)
   </span><span class="kw">in</span><span class="text">
-  </span><span class="kw2">Ketrew_client</span><span class="text">.</span><span class="id">submit</span><span class="text"> </span><span class="id">target2</span><span class="text">
+  </span><span class="kw2">Ketrew</span><span class="text">.</span><span class="kw2">Client</span><span class="text">.</span><span class="id">submit</span><span class="text"> </span><span class="id">target2</span><span class="text">
 </span></pre>
 <p>For example:</p>
 <pre><code>&lt;test-exec&gt; two-py /tmp &quot;du -sh $HOME&quot; &quot;du -sh $HOME/tmp/&quot;</code></pre><p>will run <code>du -sh</code> in <code>$HOME</code> and then in <code>$HOME/tmp</code> in the host <code>&quot;/tmp&quot;</code>
@@ -196,7 +197,7 @@ if the first target is not ensured by the build-process it runs.</p>
       </span><span class="kw4">~cmd</span><span class="text">:</span><span class="string">&quot;ls /tmp&quot;</span><span class="text">
       </span><span class="kw4">~depends_on</span><span class="text">:[ </span><span class="id">target_with_condition</span><span class="text"> ]
   </span><span class="kw">in</span><span class="text">
-  </span><span class="kw2">Ketrew_client</span><span class="text">.</span><span class="id">submit</span><span class="text"> </span><span class="id">target2</span><span class="text">
+  </span><span class="kw2">Ketrew</span><span class="text">.</span><span class="kw2">Client</span><span class="text">.</span><span class="id">submit</span><span class="text"> </span><span class="id">target2</span><span class="text">
 </span></pre>
 
 
@@ -228,7 +229,8 @@ nothing is new) which show ketrew&#39;s handling of errors in dependencies.</p>
   </span><span class="kw">let</span><span class="text"> </span><span class="id">local_deamonize</span><span class="text"> = </span><span class="id">daemonize</span><span class="text"> </span><span class="kw4">~host</span><span class="text"> </span><span class="kw4">~using</span><span class="text">:`</span><span class="kw2">Python_daemon</span><span class="text"> </span><span class="kw">in</span><span class="text">
   </span><span class="kw">let</span><span class="text"> </span><span class="id">current_path</span><span class="text"> = </span><span class="kw2">Sys</span><span class="text">.</span><span class="id">getenv</span><span class="text"> </span><span class="string">&quot;PWD&quot;</span><span class="text"> </span><span class="kw">in</span><span class="text">
   </span><span class="kw">let</span><span class="text"> </span><span class="id">dest_path</span><span class="text"> =
-    </span><span class="id">sprintf</span><span class="text"> </span><span class="string">&quot;/tmp/deploy_website_%s&quot;</span><span class="text"> (</span><span class="kw2">Ketrew_pervasives</span><span class="text">.</span><span class="kw2">Unique_id</span><span class="text">.</span><span class="id">create</span><span class="text"> ())
+    </span><span class="id">sprintf</span><span class="text"> </span><span class="string">&quot;/tmp/deploy_website_%s&quot;</span><span class="text">
+      (</span><span class="kw2">Ketrew_pure</span><span class="text">.</span><span class="kw2">Internal_pervasives</span><span class="text">.</span><span class="kw2">Unique_id</span><span class="text">.</span><span class="id">create</span><span class="text"> ())
   </span><span class="kw">in</span><span class="text">
   </span><span class="kw">let</span><span class="text"> </span><span class="id">target</span><span class="text"> ?(</span><span class="id">add_tags</span><span class="text">=[]) = </span><span class="id">target</span><span class="text"> </span><span class="kw4">~tags</span><span class="text">:(</span><span class="string">&quot;website&quot;</span><span class="text"> :: </span><span class="id">add_tags</span><span class="text">) </span><span class="kw">in</span><span class="text">
   </span><span class="kw">let</span><span class="text"> </span><span class="id">clone_repo</span><span class="text"> =
@@ -307,7 +309,7 @@ nothing is new) which show ketrew&#39;s handling of errors in dependencies.</p>
                </span><span class="kw2">Program</span><span class="text">.(
                  </span><span class="id">in_cloned_repo</span><span class="text">
                  &amp;&amp; </span><span class="id">shf</span><span class="text"> </span><span class="string">&quot;git add api *.html *.svg %s &quot;</span><span class="text">
-                   (</span><span class="kw2">String</span><span class="text">.</span><span class="id">concat</span><span class="text"> </span><span class="string">&quot; &quot;</span><span class="text"> (</span><span class="kw2">List</span><span class="text">.</span><span class="id">filter</span><span class="text"> </span><span class="kw4">~f</span><span class="text">:((&lt;&gt;) </span><span class="string">&quot;master&quot;</span><span class="text">) </span><span class="id">branches</span><span class="text">))
+                   (</span><span class="kw2">String</span><span class="text">.</span><span class="id">concat</span><span class="text"> </span><span class="kw4">~sep</span><span class="text">:</span><span class="string">&quot; &quot;</span><span class="text"> (</span><span class="kw2">List</span><span class="text">.</span><span class="id">filter</span><span class="text"> </span><span class="kw4">~f</span><span class="text">:((&lt;&gt;) </span><span class="string">&quot;master&quot;</span><span class="text">) </span><span class="id">branches</span><span class="text">))
                  &amp;&amp; </span><span class="id">sh</span><span class="text"> </span><span class="string">&quot;git commit -a -m 'update website'&quot;</span><span class="text">
                  &amp;&amp; </span><span class="id">shf</span><span class="text"> </span><span class="string">&quot;git push origin gh-pages&quot;</span><span class="text">
                ))
@@ -315,7 +317,7 @@ nothing is new) which show ketrew&#39;s handling of errors in dependencies.</p>
   </span><span class="kw">in</span><span class="text">
   </span><span class="comment">(* `submit` will activate the target `ancestor` and then `commit_website`, and
      add all their (transitive) dependencies to the system.  *)</span><span class="text">
-  </span><span class="kw2">Ketrew_client</span><span class="text">.</span><span class="id">submit</span><span class="text"> (</span><span class="id">ancestor</span><span class="text"> </span><span class="string">&quot;Success&quot;</span><span class="text"> </span><span class="kw4">~depends_on</span><span class="text">:[</span><span class="id">commit_website</span><span class="text">])
+  </span><span class="kw2">Ketrew</span><span class="text">.</span><span class="kw2">Client</span><span class="text">.</span><span class="id">submit</span><span class="text"> (</span><span class="id">ancestor</span><span class="text"> </span><span class="string">&quot;Success&quot;</span><span class="text"> </span><span class="kw4">~depends_on</span><span class="text">:[</span><span class="id">commit_website</span><span class="text">])
 
 </span></pre>
 
@@ -385,7 +387,7 @@ call <code>gpg -c</code> and delete the tar.gz.</p>
     </span><span class="id">target</span><span class="text"> </span><span class="string">&quot;make-targz common ancestor&quot;</span><span class="text"> </span><span class="kw4">~depends_on</span><span class="text">
   </span><span class="kw">in</span><span class="text">
   </span><span class="comment">(* By running the common-ancestor we pull and activate all the targets to do. *)</span><span class="text">
-  </span><span class="kw2">Ketrew_client</span><span class="text">.</span><span class="id">submit</span><span class="text"> </span><span class="id">common_ancestor</span><span class="text">
+  </span><span class="kw2">Ketrew</span><span class="text">.</span><span class="kw2">Client</span><span class="text">.</span><span class="id">submit</span><span class="text"> </span><span class="id">common_ancestor</span><span class="text">
 
 </span></pre>
 
@@ -436,7 +438,7 @@ command:</p>
     </span><span class="kw">let</span><span class="text"> </span><span class="id">vagrant_box</span><span class="text"> =
       </span><span class="kw">let</span><span class="text"> </span><span class="kw">open</span><span class="text"> </span><span class="kw2">Ketrew</span><span class="text"> </span><span class="kw">in</span><span class="text">
       </span><span class="kw2">Host</span><span class="text">.</span><span class="id">ssh</span><span class="text"> </span><span class="kw4">~add_ssh_options</span><span class="text">:[</span><span class="string">&quot;-F&quot;</span><span class="text">; </span><span class="id">ssh_config</span><span class="kw1">#</span><span class="id">path</span><span class="text">]
-        </span><span class="kw4">~playground</span><span class="text">:(</span><span class="kw2">Path</span><span class="text">.</span><span class="id">absolute_directory_exn</span><span class="text"> </span><span class="string">&quot;/tmp/KT/&quot;</span><span class="text">) </span><span class="string">&quot;Vagrew&quot;</span><span class="text">
+        </span><span class="kw4">~playground</span><span class="text">:</span><span class="string">&quot;/tmp/KT/&quot;</span><span class="text"> </span><span class="string">&quot;Vagrew&quot;</span><span class="text">
     </span><span class="kw">in</span><span class="text">
     </span><span class="kw">let</span><span class="text"> </span><span class="id">do_on_vagrant_box</span><span class="text"> </span><span class="id">p</span><span class="text"> =
       </span><span class="id">daemonize</span><span class="text"> </span><span class="kw4">~using</span><span class="text">:`</span><span class="kw2">Nohup_setsid</span><span class="text"> </span><span class="kw4">~host</span><span class="text">:</span><span class="id">vagrant_box</span><span class="text"> </span><span class="id">p</span><span class="text"> </span><span class="kw">in</span><span class="text">
@@ -504,6 +506,44 @@ command:</p>
 </span></pre>
 
 
+<h2 id="ThePythologicalWorkflow">The Pythological Workflow</h2>
+
+<p>This function creates a “pointless” workflow.</p>
+
+<pre><span class="text">
+</span><span class="kw">let</span><span class="text"> </span><span class="id">pythological</span><span class="text"> () =
+  </span><span class="kw">let</span><span class="text"> </span><span class="kw">open</span><span class="text"> </span><span class="kw2">Ketrew</span><span class="text">.</span><span class="kw2">EDSL</span><span class="text"> </span><span class="kw">in</span><span class="text">
+  </span><span class="kw">let</span><span class="text"> </span><span class="id">target_kind_1</span><span class="text"> </span><span class="id">f</span><span class="text"> =
+    </span><span class="id">file_target</span><span class="text"> </span><span class="id">f</span><span class="text">
+      </span><span class="kw4">~depends_on</span><span class="text">:[</span><span class="id">file_target</span><span class="text"> </span><span class="id">f</span><span class="text"> </span><span class="kw4">~name</span><span class="text">:(</span><span class="id">sprintf</span><span class="text"> </span><span class="string">&quot;obnoxious loop %S&quot;</span><span class="text"> </span><span class="id">f</span><span class="text">)]
+      </span><span class="kw4">~on_success_activate</span><span class="text">:[</span><span class="id">file_target</span><span class="text"> </span><span class="id">f</span><span class="text"> </span><span class="kw4">~name</span><span class="text">:(</span><span class="id">sprintf</span><span class="text"> </span><span class="string">&quot;obnoxious loop %S&quot;</span><span class="text"> </span><span class="id">f</span><span class="text">)]
+      </span><span class="kw4">~on_failure_activate</span><span class="text">:[</span><span class="id">file_target</span><span class="text"> </span><span class="id">f</span><span class="text"> </span><span class="kw4">~name</span><span class="text">:(</span><span class="id">sprintf</span><span class="text"> </span><span class="string">&quot;obnoxious loop %S&quot;</span><span class="text"> </span><span class="id">f</span><span class="text">)]
+      </span><span class="kw4">~tags</span><span class="text">:[</span><span class="string">&quot;pythological&quot;</span><span class="text">; </span><span class="string">&quot;workflow-examples&quot;</span><span class="text">; </span><span class="string">&quot;target-kind-1&quot;</span><span class="text">]
+      </span><span class="kw4">~metadata</span><span class="text">:(
+        </span><span class="kw">let</span><span class="text"> </span><span class="id">lines</span><span class="text"> = </span><span class="kw2">Random</span><span class="text">.</span><span class="kw3">int</span><span class="text"> </span><span class="numeric">300</span><span class="text"> </span><span class="kw">in</span><span class="text">
+        `</span><span class="kw2">String</span><span class="text"> (</span><span class="kw2">List</span><span class="text">.</span><span class="id">init</span><span class="text"> </span><span class="id">lines</span><span class="text">
+                   </span><span class="kw4">~f</span><span class="text">:(</span><span class="kw">fun</span><span class="text"> </span><span class="id">i</span><span class="text"> -&gt; </span><span class="id">sprintf</span><span class="text"> </span><span class="string">&quot;Metadata line %d/%d&quot;</span><span class="text"> </span><span class="id">i</span><span class="text"> </span><span class="id">lines</span><span class="text">)
+                 |&gt; </span><span class="kw2">String</span><span class="text">.</span><span class="id">concat</span><span class="text"> </span><span class="kw4">~sep</span><span class="text">:</span><span class="string">&quot;\n&quot;</span><span class="text">))
+      </span><span class="kw4">~make</span><span class="text">:(
+        </span><span class="id">daemonize</span><span class="text"> </span><span class="kw4">~using</span><span class="text">:`</span><span class="kw2">Python_daemon</span><span class="text"> </span><span class="kw2">Program</span><span class="text">.(
+            </span><span class="id">shf</span><span class="text"> </span><span class="string">&quot;sleep %d&quot;</span><span class="text"> (</span><span class="kw2">Random</span><span class="text">.</span><span class="kw3">int</span><span class="text"> </span><span class="numeric">42</span><span class="text"> + </span><span class="numeric">1</span><span class="text">)
+            &amp;&amp; </span><span class="id">shf</span><span class="text"> </span><span class="string">&quot;echo OK &gt; %s&quot;</span><span class="text"> </span><span class="id">f</span><span class="text">
+          ))
+  </span><span class="kw">in</span><span class="text">
+  </span><span class="kw">let</span><span class="text"> </span><span class="id">too_many_tags</span><span class="text"> =
+    </span><span class="id">target</span><span class="text"> </span><span class="string">&quot;too-many-tags&quot;</span><span class="text">
+      </span><span class="kw4">~equivalence</span><span class="text">:`</span><span class="kw2">None</span><span class="text">
+      </span><span class="kw4">~tags</span><span class="text">:(</span><span class="kw2">List</span><span class="text">.</span><span class="id">init</span><span class="text"> </span><span class="numeric">200</span><span class="text"> </span><span class="kw4">~f</span><span class="text">:(</span><span class="id">sprintf</span><span class="text"> </span><span class="string">&quot;tag%d&quot;</span><span class="text">))
+  </span><span class="kw">in</span><span class="text">
+  </span><span class="id">target</span><span class="text"> </span><span class="string">&quot;pythological common ancestor&quot;</span><span class="text">
+    </span><span class="kw4">~tags</span><span class="text">:[</span><span class="string">&quot;pythological&quot;</span><span class="text">; </span><span class="string">&quot;workflow-examples&quot;</span><span class="text">]
+    </span><span class="kw4">~depends_on</span><span class="text">:(</span><span class="kw2">List</span><span class="text">.</span><span class="id">init</span><span class="text"> </span><span class="numeric">10</span><span class="text">
+                   </span><span class="kw4">~f</span><span class="text">:(</span><span class="kw">fun</span><span class="text"> </span><span class="id">n</span><span class="text"> -&gt; </span><span class="id">target_kind_1</span><span class="text"> (</span><span class="id">sprintf</span><span class="text"> </span><span class="string">&quot;/tmp/f%d&quot;</span><span class="text"> </span><span class="id">n</span><span class="text">)))
+    </span><span class="kw4">~on_success_activate</span><span class="text">:[</span><span class="id">too_many_tags</span><span class="text">]
+
+</span></pre>
+
+
 <h2 id="MainOftheModule">“Main” Of the Module</h2>
 
 <p>Command line parsing for this multi-workflow script.</p>
@@ -513,12 +553,12 @@ command:</p>
 <pre><span class="text">
 </span><span class="kw">let</span><span class="text"> () =
   </span><span class="kw">let</span><span class="text"> </span><span class="id">argl</span><span class="text"> = </span><span class="kw2">Array</span><span class="text">.</span><span class="id">to_list</span><span class="text"> </span><span class="kw2">Sys</span><span class="text">.</span><span class="id">argv</span><span class="text"> </span><span class="kw">in</span><span class="text">
-  </span><span class="kw1">match</span><span class="text"> </span><span class="kw2">List</span><span class="text">.</span><span class="id">tl</span><span class="text"> </span><span class="id">argl</span><span class="text"> </span><span class="kw1">with</span><span class="text">
+  </span><span class="kw1">match</span><span class="text"> </span><span class="kw2">List</span><span class="text">.</span><span class="id">tl_exn</span><span class="text"> </span><span class="id">argl</span><span class="text"> </span><span class="kw1">with</span><span class="text">
   | </span><span class="string">&quot;website&quot;</span><span class="text"> :: </span><span class="id">more_args</span><span class="text"> -&gt;
     </span><span class="id">say</span><span class="text"> </span><span class="string">&quot;Deploying website for %s&quot;</span><span class="text">
       (</span><span class="kw1">match</span><span class="text"> </span><span class="id">more_args</span><span class="text"> </span><span class="kw1">with</span><span class="text">
        | [] -&gt; </span><span class="string">&quot;The current branch&quot;</span><span class="text">
-       | </span><span class="numeric">_</span><span class="text"> -&gt; </span><span class="string">&quot;branches: &quot;</span><span class="text"> ^ </span><span class="kw2">String</span><span class="text">.</span><span class="id">concat</span><span class="text"> </span><span class="string">&quot;, &quot;</span><span class="text"> </span><span class="id">more_args</span><span class="text">);
+       | </span><span class="numeric">_</span><span class="text"> -&gt; </span><span class="string">&quot;branches: &quot;</span><span class="text"> ^ </span><span class="kw2">String</span><span class="text">.</span><span class="id">concat</span><span class="text"> </span><span class="kw4">~sep</span><span class="text">:</span><span class="string">&quot;, &quot;</span><span class="text"> </span><span class="id">more_args</span><span class="text">);
     </span><span class="id">deploy_website</span><span class="text"> </span><span class="id">more_args</span><span class="text">
   | </span><span class="string">&quot;tgz&quot;</span><span class="text"> :: </span><span class="id">more_args</span><span class="text"> -&gt;
     </span><span class="kw1">begin</span><span class="text"> </span><span class="kw1">match</span><span class="text"> </span><span class="id">more_args</span><span class="text"> </span><span class="kw1">with</span><span class="text">
@@ -575,19 +615,21 @@ command:</p>
   | </span><span class="string">&quot;CI&quot;</span><span class="text"> :: </span><span class="id">more</span><span class="text"> -&gt;
     </span><span class="kw1">begin</span><span class="text"> </span><span class="kw1">match</span><span class="text"> </span><span class="id">more</span><span class="text"> </span><span class="kw1">with</span><span class="text">
     | </span><span class="string">&quot;prepare&quot;</span><span class="text"> :: [] -&gt;
-      </span><span class="kw2">Ketrew_client</span><span class="text">.</span><span class="id">submit</span><span class="text"> (</span><span class="id">run_ketrew_on_vagrant</span><span class="text"> `</span><span class="kw2">Prepare</span><span class="text">)
+      </span><span class="kw2">Ketrew</span><span class="text">.</span><span class="kw2">Client</span><span class="text">.</span><span class="id">submit</span><span class="text"> (</span><span class="id">run_ketrew_on_vagrant</span><span class="text"> `</span><span class="kw2">Prepare</span><span class="text">)
     | </span><span class="string">&quot;go&quot;</span><span class="text"> :: [] -&gt;
-      </span><span class="kw2">Ketrew_client</span><span class="text">.</span><span class="id">submit</span><span class="text"> (</span><span class="id">run_ketrew_on_vagrant</span><span class="text"> `</span><span class="kw2">Go</span><span class="text">)
+      </span><span class="kw2">Ketrew</span><span class="text">.</span><span class="kw2">Client</span><span class="text">.</span><span class="id">submit</span><span class="text"> (</span><span class="id">run_ketrew_on_vagrant</span><span class="text"> `</span><span class="kw2">Go</span><span class="text">)
     | </span><span class="string">&quot;clean&quot;</span><span class="text"> :: [] -&gt;
-      </span><span class="kw2">Ketrew_client</span><span class="text">.</span><span class="id">submit</span><span class="text"> (</span><span class="id">run_ketrew_on_vagrant</span><span class="text"> `</span><span class="kw2">Clean</span><span class="text">)
+      </span><span class="kw2">Ketrew</span><span class="text">.</span><span class="kw2">Client</span><span class="text">.</span><span class="id">submit</span><span class="text"> (</span><span class="id">run_ketrew_on_vagrant</span><span class="text"> `</span><span class="kw2">Clean</span><span class="text">)
     | </span><span class="id">other</span><span class="text"> -&gt;
       </span><span class="id">say</span><span class="text"> </span><span class="string">&quot;usage: %s CI {prepare,go,clean}&quot;</span><span class="text"> </span><span class="kw2">Sys</span><span class="text">.</span><span class="id">argv</span><span class="text">.(</span><span class="numeric">0</span><span class="text">);
       </span><span class="id">failwith</span><span class="text"> </span><span class="string">&quot;Wrong command line&quot;</span><span class="text">
     </span><span class="kw1">end</span><span class="text">
+  | </span><span class="string">&quot;pythological&quot;</span><span class="text"> :: </span><span class="numeric">_</span><span class="text"> -&gt;
+    </span><span class="kw2">Ketrew</span><span class="text">.</span><span class="kw2">Client</span><span class="text">.</span><span class="id">submit</span><span class="text"> (</span><span class="id">pythological</span><span class="text"> ())
   | </span><span class="id">args</span><span class="text"> -&gt;
-    </span><span class="id">say</span><span class="text"> </span><span class="string">&quot;usage: %s [website|tgz|lsf|nhss|pyd|two-py|failing-product|CI] ...&quot;</span><span class="text">
+    </span><span class="id">say</span><span class="text"> </span><span class="string">&quot;usage: %s [website|tgz|lsf|nhss|pyd|two-py|failing-product|CI|pythological] ...&quot;</span><span class="text">
       </span><span class="kw2">Sys</span><span class="text">.</span><span class="id">argv</span><span class="text">.(</span><span class="numeric">0</span><span class="text">);
-    </span><span class="id">say</span><span class="text"> </span><span class="string">&quot;Don't know what to do with %s&quot;</span><span class="text"> (</span><span class="kw2">String</span><span class="text">.</span><span class="id">concat</span><span class="text"> </span><span class="string">&quot;, &quot;</span><span class="text"> </span><span class="id">args</span><span class="text">);
+    </span><span class="id">say</span><span class="text"> </span><span class="string">&quot;Don't know what to do with %s&quot;</span><span class="text"> (</span><span class="kw2">String</span><span class="text">.</span><span class="id">concat</span><span class="text"> </span><span class="kw4">~sep</span><span class="text">:</span><span class="string">&quot;, &quot;</span><span class="text"> </span><span class="id">args</span><span class="text">);
     </span><span class="id">failwith</span><span class="text"> </span><span class="string">&quot;Wrong command line&quot;</span><span class="text">
 
 </span></pre></div></div></div></body><html>

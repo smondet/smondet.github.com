@@ -1,0 +1,134 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<link rel="stylesheet" href="style.css" type="text/css">
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<link rel="Start" href="index.html">
+<link rel="previous" href="Server.html">
+<link rel="next" href="Unix_io.html">
+<link rel="Up" href="index.html">
+<link title="Index of types" rel=Appendix href="index_types.html">
+<link title="Index of values" rel=Appendix href="index_values.html">
+<link title="Index of class methods" rel=Appendix href="index_methods.html">
+<link title="Index of class types" rel=Appendix href="index_class_types.html">
+<link title="Index of modules" rel=Appendix href="index_modules.html">
+<link title="Index of module types" rel=Appendix href="index_module_types.html">
+<link title="Client" rel="Chapter" href="Client.html">
+<link title="Command_line" rel="Chapter" href="Command_line.html">
+<link title="Configuration" rel="Chapter" href="Configuration.html">
+<link title="Daemonize" rel="Chapter" href="Daemonize.html">
+<link title="Document" rel="Chapter" href="Document.html">
+<link title="EDSL" rel="Chapter" href="EDSL.html">
+<link title="Engine" rel="Chapter" href="Engine.html">
+<link title="Error" rel="Chapter" href="Error.html">
+<link title="Eval_condition" rel="Chapter" href="Eval_condition.html">
+<link title="Explorer" rel="Chapter" href="Explorer.html">
+<link title="Host" rel="Chapter" href="Host.html">
+<link title="Host_io" rel="Chapter" href="Host_io.html">
+<link title="Interaction" rel="Chapter" href="Interaction.html">
+<link title="Internal_pervasives" rel="Chapter" href="Internal_pervasives.html">
+<link title="Long_running" rel="Chapter" href="Long_running.html">
+<link title="Long_running_utilities" rel="Chapter" href="Long_running_utilities.html">
+<link title="Lsf" rel="Chapter" href="Lsf.html">
+<link title="Monitored_script" rel="Chapter" href="Monitored_script.html">
+<link title="Path" rel="Chapter" href="Path.html">
+<link title="Pbs" rel="Chapter" href="Pbs.html">
+<link title="Persistent_data" rel="Chapter" href="Persistent_data.html">
+<link title="Plugin" rel="Chapter" href="Plugin.html">
+<link title="Program" rel="Chapter" href="Program.html">
+<link title="Protocol" rel="Chapter" href="Protocol.html">
+<link title="Server" rel="Chapter" href="Server.html">
+<link title="Target" rel="Chapter" href="Target.html">
+<link title="Unix_io" rel="Chapter" href="Unix_io.html">
+<link title="Unix_process" rel="Chapter" href="Unix_process.html">
+<link title="Yarn" rel="Chapter" href="Yarn.html"><title>Ketrew API : Target</title>
+</head>
+<body>
+<div class="navbar"><a class="pre" href="Server.html" title="Server">Previous</a>
+&nbsp;<a class="up" href="index.html" title="Index">Up</a>
+&nbsp;<a class="post" href="Unix_io.html" title="Unix_io">Next</a>
+</div>
+<h1>Module <a href="type_Target.html">Target</a> (<a href="code_Target.html">.ml</a>)</h1>
+
+<pre><span class="keyword">module</span> Target: <code class="code"><span class="keyword">sig</span></code> <a href="Target.html">..</a> <code class="code"><span class="keyword">end</span></code></pre><div class="info module top">
+Definition of the basic building bloc of a workflow.<br>
+</div>
+<hr width="100%">
+
+<pre><span class="keyword">module</span> <a href="Target.Command.html">Command</a>: <code class="code"><span class="keyword">sig</span></code> <a href="Target.Command.html">..</a> <code class="code"><span class="keyword">end</span></code></pre><div class="info">
+Definition of command-lines to run on a given <a href="Host.html#TYPEt"><code class="code"><span class="constructor">Host</span>.t</code></a>.
+</div>
+
+<pre><span class="keyword">module</span> <a href="Target.Volume.html">Volume</a>: <code class="code"><span class="keyword">sig</span></code> <a href="Target.Volume.html">..</a> <code class="code"><span class="keyword">end</span></code></pre>
+<pre><span class="keyword">module</span> <a href="Target.Build_process.html">Build_process</a>: <code class="code"><span class="keyword">sig</span></code> <a href="Target.Build_process.html">..</a> <code class="code"><span class="keyword">end</span></code></pre>
+<pre><span id="TYPEid"><span class="keyword">type</span> <code class="type"></code>id</span> = <code class="type"><a href="Internal_pervasives.Unique_id.html#TYPEt">Internal_pervasives.Unique_id.t</a></code> </pre>
+<div class="info ">
+The identifiers of targets.<br>
+</div>
+
+
+<pre><span class="keyword">module</span> <a href="Target.Condition.html">Condition</a>: <code class="code"><span class="keyword">sig</span></code> <a href="Target.Condition.html">..</a> <code class="code"><span class="keyword">end</span></code></pre>
+<pre><span class="keyword">module</span> <a href="Target.Equivalence.html">Equivalence</a>: <code class="code"><span class="keyword">sig</span></code> <a href="Target.Equivalence.html">..</a> <code class="code"><span class="keyword">end</span></code></pre>
+<pre><span class="keyword">module</span> <a href="Target.State.html">State</a>: <code class="code"><span class="keyword">sig</span></code> <a href="Target.State.html">..</a> <code class="code"><span class="keyword">end</span></code></pre>
+<pre><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> </pre>
+
+
+<pre><span id="VALto_yojson"><span class="keyword">val</span> to_yojson</span> : <code class="type"><a href="Target.html#TYPEt">t</a> -> Yojson.Safe.json</code></pre>
+<pre><span id="VALof_yojson"><span class="keyword">val</span> of_yojson</span> : <code class="type">Yojson.Safe.json -> [ `Error of string | `Ok of <a href="Target.html#TYPEt">t</a> ]</code></pre><div class="info ">
+The thing holding targets.<br>
+</div>
+
+<pre><span id="VALcreate"><span class="keyword">val</span> <a href="code_VALTarget.create.html">create</a></span> : <code class="type">?id:<a href="Target.html#TYPEid">id</a> -><br>       ?name:string -><br>       ?metadata:[ `String of string ] -><br>       ?depends_on:<a href="Target.html#TYPEid">id</a> list -><br>       ?on_failure_activate:<a href="Target.html#TYPEid">id</a> list -><br>       ?on_success_activate:<a href="Target.html#TYPEid">id</a> list -><br>       ?make:<a href="Target.Build_process.html#TYPEt">Build_process.t</a> -><br>       ?condition:<a href="Target.Condition.html#TYPEt">Condition.t</a> -><br>       ?equivalence:<a href="Target.Equivalence.html#TYPEt">Equivalence.t</a> -> ?tags:string list -> unit -> <a href="Target.html#TYPEt">t</a></code></pre><div class="info ">
+Create a target value (not stored in the DB yet).<br>
+</div>
+
+<pre><span id="VALid"><span class="keyword">val</span> <a href="code_VALTarget.id.html">id</a></span> : <code class="type"><a href="Target.html#TYPEt">t</a> -> <a href="Internal_pervasives.Unique_id.html#TYPEt">Internal_pervasives.Unique_id.t</a></code></pre><div class="info ">
+Get a target's id.<br>
+</div>
+
+<pre><span id="VALname"><span class="keyword">val</span> <a href="code_VALTarget.name.html">name</a></span> : <code class="type"><a href="Target.html#TYPEt">t</a> -> string</code></pre><div class="info ">
+Get a target's user-defined name.<br>
+</div>
+
+<pre><span id="VALdepends_on"><span class="keyword">val</span> <a href="code_VALTarget.depends_on.html">depends_on</a></span> : <code class="type"><a href="Target.html#TYPEt">t</a> -> <a href="Target.html#TYPEid">id</a> list</code></pre>
+<pre><span id="VALon_success_activate"><span class="keyword">val</span> <a href="code_VALTarget.on_success_activate.html">on_success_activate</a></span> : <code class="type"><a href="Target.html#TYPEt">t</a> -> <a href="Target.html#TYPEid">id</a> list</code></pre>
+<pre><span id="VALon_failure_activate"><span class="keyword">val</span> <a href="code_VALTarget.on_failure_activate.html">on_failure_activate</a></span> : <code class="type"><a href="Target.html#TYPEt">t</a> -> <a href="Target.html#TYPEid">id</a> list</code></pre>
+<pre><span id="VALmetadata"><span class="keyword">val</span> <a href="code_VALTarget.metadata.html">metadata</a></span> : <code class="type"><a href="Target.html#TYPEt">t</a> -> [ `String of string ] option</code></pre>
+<pre><span id="VALbuild_process"><span class="keyword">val</span> <a href="code_VALTarget.build_process.html">build_process</a></span> : <code class="type"><a href="Target.html#TYPEt">t</a> -> <a href="Target.Build_process.html#TYPEt">Build_process.t</a></code></pre>
+<pre><span id="VALcondition"><span class="keyword">val</span> <a href="code_VALTarget.condition.html">condition</a></span> : <code class="type"><a href="Target.html#TYPEt">t</a> -> <a href="Target.Condition.html#TYPEt">Condition.t</a> option</code></pre>
+<pre><span id="VALequivalence"><span class="keyword">val</span> <a href="code_VALTarget.equivalence.html">equivalence</a></span> : <code class="type"><a href="Target.html#TYPEt">t</a> -> <a href="Target.Equivalence.html#TYPEt">Equivalence.t</a></code></pre>
+<pre><span id="VALadditional_log"><span class="keyword">val</span> <a href="code_VALTarget.additional_log.html">additional_log</a></span> : <code class="type"><a href="Target.html#TYPEt">t</a> -> (<a href="Internal_pervasives.Time.html#TYPEt">Internal_pervasives.Time.t</a> * string) list</code></pre>
+<pre><span id="VALtags"><span class="keyword">val</span> <a href="code_VALTarget.tags.html">tags</a></span> : <code class="type"><a href="Target.html#TYPEt">t</a> -> string list</code></pre>
+<pre><span id="VALstate"><span class="keyword">val</span> <a href="code_VALTarget.state.html">state</a></span> : <code class="type"><a href="Target.html#TYPEt">t</a> -> <a href="Target.State.html#TYPEt">State.t</a></code></pre>
+<pre><span class="keyword">module</span> <a href="Target.Automaton.html">Automaton</a>: <code class="code"><span class="keyword">sig</span></code> <a href="Target.Automaton.html">..</a> <code class="code"><span class="keyword">end</span></code></pre>
+<pre><span id="VALactivate_exn"><span class="keyword">val</span> <a href="code_VALTarget.activate_exn.html">activate_exn</a></span> : <code class="type">?log:string -><br>       <a href="Target.html#TYPEt">t</a> -> reason:[ `Dependency of <a href="Target.html#TYPEid">id</a> | `User ] -> <a href="Target.html#TYPEt">t</a></code></pre><div class="info ">
+Get an activated target out of a “submitted” one,
+    raises <code class="code"><span class="constructor">Invalid_argument</span> _</code> if the target is in a wrong state.<br>
+</div>
+
+<pre><span id="VALkill"><span class="keyword">val</span> <a href="code_VALTarget.kill.html">kill</a></span> : <code class="type">?log:string -> <a href="Target.html#TYPEt">t</a> -> <a href="Target.html#TYPEt">t</a> option</code></pre><div class="info ">
+Get dead target out of a killable one,
+    or <code class="code"><span class="constructor">None</span></code> if not killable.<br>
+</div>
+
+<pre><span id="VALreactivate"><span class="keyword">val</span> <a href="code_VALTarget.reactivate.html">reactivate</a></span> : <code class="type">?with_id:<a href="Target.html#TYPEid">id</a> -><br>       ?with_name:string -><br>       ?with_metadata:[ `String of string ] option -><br>       ?log:string -> <a href="Target.html#TYPEt">t</a> -> <a href="Target.html#TYPEt">t</a></code></pre><div class="info ">
+</div>
+
+<pre><span id="VALis_equivalent"><span class="keyword">val</span> <a href="code_VALTarget.is_equivalent.html">is_equivalent</a></span> : <code class="type"><a href="Target.html#TYPEt">t</a> -> <a href="Target.html#TYPEt">t</a> -> bool</code></pre><div class="info ">
+Tell whether the first on is equivalent to the second one. This not
+    a commutative operation: the function does not look at
+    the second target's <code class="code"><span class="constructor">Equivalence</span></code> field.<br>
+</div>
+
+<pre><span id="VALlog"><span class="keyword">val</span> <a href="code_VALTarget.log.html">log</a></span> : <code class="type"><a href="Target.html#TYPEt">t</a> -> Internal_pervasives.Log.t</code></pre><div class="info ">
+Get a <code class="code"><span class="constructor">Log</span>.t</code> “document” to display the target.<br>
+</div>
+
+<pre><span id="VALlatest_run_parameters"><span class="keyword">val</span> <a href="code_VALTarget.latest_run_parameters.html">latest_run_parameters</a></span> : <code class="type"><a href="Target.html#TYPEt">t</a> -> string option</code></pre><div class="info ">
+Get the most recent serialized
+    <code class="code">run_parameters</code> if the target is a “long-running”,
+    <code class="code"><span class="constructor">None</span></code> otherwise.<br>
+</div>
+
+<pre><span class="keyword">module</span> <a href="Target.Stored_target.html">Stored_target</a>: <code class="code"><span class="keyword">sig</span></code> <a href="Target.Stored_target.html">..</a> <code class="code"><span class="keyword">end</span></code></pre>
+<pre><span class="keyword">module</span> <a href="Target.Summary.html">Summary</a>: <code class="code"><span class="keyword">sig</span></code> <a href="Target.Summary.html">..</a> <code class="code"><span class="keyword">end</span></code></pre></body></html>

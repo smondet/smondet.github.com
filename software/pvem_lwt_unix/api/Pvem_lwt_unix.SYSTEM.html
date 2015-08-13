@@ -21,8 +21,6 @@
 <h1>Module type <a href="type_Pvem_lwt_unix.SYSTEM.html">Pvem_lwt_unix.SYSTEM</a></h1>
 
 <pre><span class="keyword">module type</span> SYSTEM = <code class="code"><span class="keyword">sig</span></code> <a href="Pvem_lwt_unix.SYSTEM.html">..</a> <code class="code"><span class="keyword">end</span></code></pre><hr width="100%">
-<br>
-Basic system access functions.<br>
 
 <pre><span id="VALsleep"><span class="keyword">val</span> sleep</span> : <code class="type">float -><br>       (unit, [> `System of [> `Sleep of float ] * [> `Exn of exn ] ])<br>       Pvem_lwt_unix.Deferred_result.t</code></pre><div class="info ">
 Block for a given amount of seconds (<code class="code"><span class="constructor">Lwt_unix</span>.sleep</code>).<br>
@@ -120,7 +118,7 @@ Heavy-weight function trying to mimic the behavior the UNIX command “mv”
       copied).<br>
 </div>
 
-<pre><span id="TYPEfile_tree"><span class="keyword">type</span> <code class="type"></code>file_tree</span> = <code class="type">[ `Leaf of string * <a href="Pvem_lwt_unix.SYSTEM.html#TYPEfile_info">file_info</a><br>       | `Node of string * file_tree list ]</code> </pre>
+<pre><span id="TYPEfile_tree"><span class="keyword">type</span> <code class="type"></code>file_tree</span> = <code class="type">[ `Leaf of string * <a href="Pvem_lwt_unix.SYSTEM.html#TYPEfile_info">file_info</a><br>       | `Node of string * <a href="Pvem_lwt_unix.SYSTEM.html#TYPEfile_tree">file_tree</a> list ]</code> </pre>
 <div class="info ">
 Representation of a hierarchy of files (<code class="code"><span class="keywordsign">`</span><span class="constructor">Leaf</span></code>) and directories (<code class="code"><span class="keywordsign">`</span><span class="constructor">Node</span></code>).<br>
 </div>

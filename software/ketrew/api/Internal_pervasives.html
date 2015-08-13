@@ -1,0 +1,103 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<link rel="stylesheet" href="style.css" type="text/css">
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<link rel="Start" href="index.html">
+<link rel="previous" href="Interaction.html">
+<link rel="next" href="Long_running.html">
+<link rel="Up" href="index.html">
+<link title="Index of types" rel=Appendix href="index_types.html">
+<link title="Index of values" rel=Appendix href="index_values.html">
+<link title="Index of class methods" rel=Appendix href="index_methods.html">
+<link title="Index of class types" rel=Appendix href="index_class_types.html">
+<link title="Index of modules" rel=Appendix href="index_modules.html">
+<link title="Index of module types" rel=Appendix href="index_module_types.html">
+<link title="Client" rel="Chapter" href="Client.html">
+<link title="Command_line" rel="Chapter" href="Command_line.html">
+<link title="Configuration" rel="Chapter" href="Configuration.html">
+<link title="Daemonize" rel="Chapter" href="Daemonize.html">
+<link title="Document" rel="Chapter" href="Document.html">
+<link title="EDSL" rel="Chapter" href="EDSL.html">
+<link title="Engine" rel="Chapter" href="Engine.html">
+<link title="Error" rel="Chapter" href="Error.html">
+<link title="Eval_condition" rel="Chapter" href="Eval_condition.html">
+<link title="Explorer" rel="Chapter" href="Explorer.html">
+<link title="Host" rel="Chapter" href="Host.html">
+<link title="Host_io" rel="Chapter" href="Host_io.html">
+<link title="Interaction" rel="Chapter" href="Interaction.html">
+<link title="Internal_pervasives" rel="Chapter" href="Internal_pervasives.html">
+<link title="Long_running" rel="Chapter" href="Long_running.html">
+<link title="Long_running_utilities" rel="Chapter" href="Long_running_utilities.html">
+<link title="Lsf" rel="Chapter" href="Lsf.html">
+<link title="Monitored_script" rel="Chapter" href="Monitored_script.html">
+<link title="Path" rel="Chapter" href="Path.html">
+<link title="Pbs" rel="Chapter" href="Pbs.html">
+<link title="Persistent_data" rel="Chapter" href="Persistent_data.html">
+<link title="Plugin" rel="Chapter" href="Plugin.html">
+<link title="Program" rel="Chapter" href="Program.html">
+<link title="Protocol" rel="Chapter" href="Protocol.html">
+<link title="Server" rel="Chapter" href="Server.html">
+<link title="Target" rel="Chapter" href="Target.html">
+<link title="Unix_io" rel="Chapter" href="Unix_io.html">
+<link title="Unix_process" rel="Chapter" href="Unix_process.html">
+<link title="Yarn" rel="Chapter" href="Yarn.html"><title>Ketrew API : Internal_pervasives</title>
+</head>
+<body>
+<div class="navbar"><a class="pre" href="Interaction.html" title="Interaction">Previous</a>
+&nbsp;<a class="up" href="index.html" title="Index">Up</a>
+&nbsp;<a class="post" href="Long_running.html" title="Long_running">Next</a>
+</div>
+<h1>Module <a href="type_Internal_pervasives.html">Internal_pervasives</a> (<a href="code_Internal_pervasives.html">.ml</a>)</h1>
+
+<pre><span class="keyword">module</span> Internal_pervasives: <code class="code"><span class="keyword">sig</span></code> <a href="Internal_pervasives.html">..</a> <code class="code"><span class="keyword">end</span></code></pre><div class="info module top">
+<code class="code"><span class="constructor">Pervasives</span></code> module for the library.<br>
+</div>
+<hr width="100%">
+
+<pre><span class="keyword">module</span> <a href="Internal_pervasives.Result.html">Result</a>: <code class="type">Pvem.Result</code></pre>
+<pre><span class="keyword">module</span> <a href="Internal_pervasives.String.html">String</a>: <code class="code"><span class="keyword">sig</span></code> <a href="Internal_pervasives.String.html">..</a> <code class="code"><span class="keyword">end</span></code></pre>
+<pre><span class="keyword">module</span> <a href="Internal_pervasives.Array.html">Array</a>: <code class="type">Nonstd.Array</code></pre>
+<pre><span class="keyword">module</span> <a href="Internal_pervasives.Option.html">Option</a>: <code class="type">Nonstd.Option</code></pre>
+<pre><span class="keyword">module</span> <a href="Internal_pervasives.Int.html">Int</a>: <code class="type">Nonstd.Int</code></pre>
+<pre><span class="keyword">module</span> <a href="Internal_pervasives.Float.html">Float</a>: <code class="type">Nonstd.Float</code></pre>
+<pre><span class="keyword">module</span> <a href="Internal_pervasives.List.html">List</a>: <code class="code"><span class="keyword">sig</span></code> <a href="Internal_pervasives.List.html">..</a> <code class="code"><span class="keyword">end</span></code></pre>
+<pre><span id="VAL(//)"><span class="keyword">val</span> <a href="code_VALInternal_pervasives.(_slash__slash_).html">(//)</a></span> : <code class="type">string -> string -> string</code></pre><br>
+A very standard operator.<br>
+
+<pre><span id="VALprintf"><span class="keyword">val</span> <a href="code_VALInternal_pervasives.printf.html">printf</a></span> : <code class="type">[> `No ]</code></pre><br>
+We disable <code class="code">printf</code>.<br>
+
+<pre><span id="VALsprintf"><span class="keyword">val</span> <a href="code_VALInternal_pervasives.sprintf.html">sprintf</a></span> : <code class="type">[> `No ]</code></pre><br>
+We disable <code class="code">sprintf</code>, renamed as:<br>
+
+<pre><span id="VALfmt"><span class="keyword">val</span> <a href="code_VALInternal_pervasives.fmt.html">fmt</a></span> : <code class="type">('a, unit, string) Pervasives.format -> 'a</code></pre><br>
+The only function dealing with “formats.”<br>
+
+<pre><span id="VALglobal_debug_level"><span class="keyword">val</span> <a href="code_VALInternal_pervasives.global_debug_level.html">global_debug_level</a></span> : <code class="type">int Pervasives.ref</code></pre><br>
+Global reference.<br>
+
+<pre><span id="VALglobal_with_color"><span class="keyword">val</span> <a href="code_VALInternal_pervasives.global_with_color.html">global_with_color</a></span> : <code class="type">bool Pervasives.ref</code></pre><br>
+Global reference.<br>
+
+<pre><span id="VALglobal_log_print_string"><span class="keyword">val</span> <a href="code_VALInternal_pervasives.global_log_print_string.html">global_log_print_string</a></span> : <code class="type">(string -> unit) Pervasives.ref</code></pre>
+<pre><span class="keyword">module</span> <a href="Internal_pervasives.Log.html">Log</a>: <code class="code"><span class="keyword">sig</span></code> <a href="Internal_pervasives.Log.html">..</a> <code class="code"><span class="keyword">end</span></code></pre><div class="info">
+Application of the functor <code class="code"><span class="constructor">Docout</span>.<span class="constructor">Make_logger</span></code> to write to <code class="code">stderr</code>
+    without buffering.
+</div>
+
+<pre><span class="keyword">module</span> <a href="Internal_pervasives.Json.html">Json</a>: <code class="code"><span class="keyword">sig</span></code> <a href="Internal_pervasives.Json.html">..</a> <code class="code"><span class="keyword">end</span></code></pre>
+<pre><span id="VALinvalid_argument_exn"><span class="keyword">val</span> <a href="code_VALInternal_pervasives.invalid_argument_exn.html">invalid_argument_exn</a></span> : <code class="type">?where:string -> string -> 'a</code></pre><div class="info ">
+Function that have a documented, easy to check contract, can raise
+    <code class="code"><span class="constructor">Invalid_argument</span> _</code> (their name should end in <code class="code">_exn</code>).<br>
+</div>
+
+<pre><span class="keyword">module</span> <a href="Internal_pervasives.Time.html">Time</a>: <code class="code"><span class="keyword">sig</span></code> <a href="Internal_pervasives.Time.html">..</a> <code class="code"><span class="keyword">end</span></code></pre><div class="info">
+Handle timestamps.
+</div>
+
+<pre><span class="keyword">module</span> <a href="Internal_pervasives.Unique_id.html">Unique_id</a>: <code class="code"><span class="keyword">sig</span></code> <a href="Internal_pervasives.Unique_id.html">..</a> <code class="code"><span class="keyword">end</span></code></pre><div class="info">
+Provide pseudo-unique identifiers.
+</div>
+
+<pre><span class="keyword">module</span> <a href="Internal_pervasives.Display_markup.html">Display_markup</a>: <code class="code"><span class="keyword">sig</span></code> <a href="Internal_pervasives.Display_markup.html">..</a> <code class="code"><span class="keyword">end</span></code></pre></body></html>

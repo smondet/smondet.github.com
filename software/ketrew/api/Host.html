@@ -1,0 +1,154 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<link rel="stylesheet" href="style.css" type="text/css">
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<link rel="Start" href="index.html">
+<link rel="previous" href="Explorer.html">
+<link rel="next" href="Host_io.html">
+<link rel="Up" href="index.html">
+<link title="Index of types" rel=Appendix href="index_types.html">
+<link title="Index of values" rel=Appendix href="index_values.html">
+<link title="Index of class methods" rel=Appendix href="index_methods.html">
+<link title="Index of class types" rel=Appendix href="index_class_types.html">
+<link title="Index of modules" rel=Appendix href="index_modules.html">
+<link title="Index of module types" rel=Appendix href="index_module_types.html">
+<link title="Client" rel="Chapter" href="Client.html">
+<link title="Command_line" rel="Chapter" href="Command_line.html">
+<link title="Configuration" rel="Chapter" href="Configuration.html">
+<link title="Daemonize" rel="Chapter" href="Daemonize.html">
+<link title="Document" rel="Chapter" href="Document.html">
+<link title="EDSL" rel="Chapter" href="EDSL.html">
+<link title="Engine" rel="Chapter" href="Engine.html">
+<link title="Error" rel="Chapter" href="Error.html">
+<link title="Eval_condition" rel="Chapter" href="Eval_condition.html">
+<link title="Explorer" rel="Chapter" href="Explorer.html">
+<link title="Host" rel="Chapter" href="Host.html">
+<link title="Host_io" rel="Chapter" href="Host_io.html">
+<link title="Interaction" rel="Chapter" href="Interaction.html">
+<link title="Internal_pervasives" rel="Chapter" href="Internal_pervasives.html">
+<link title="Long_running" rel="Chapter" href="Long_running.html">
+<link title="Long_running_utilities" rel="Chapter" href="Long_running_utilities.html">
+<link title="Lsf" rel="Chapter" href="Lsf.html">
+<link title="Monitored_script" rel="Chapter" href="Monitored_script.html">
+<link title="Path" rel="Chapter" href="Path.html">
+<link title="Pbs" rel="Chapter" href="Pbs.html">
+<link title="Persistent_data" rel="Chapter" href="Persistent_data.html">
+<link title="Plugin" rel="Chapter" href="Plugin.html">
+<link title="Program" rel="Chapter" href="Program.html">
+<link title="Protocol" rel="Chapter" href="Protocol.html">
+<link title="Server" rel="Chapter" href="Server.html">
+<link title="Target" rel="Chapter" href="Target.html">
+<link title="Unix_io" rel="Chapter" href="Unix_io.html">
+<link title="Unix_process" rel="Chapter" href="Unix_process.html">
+<link title="Yarn" rel="Chapter" href="Yarn.html"><title>Ketrew API : Host</title>
+</head>
+<body>
+<div class="navbar"><a class="pre" href="Explorer.html" title="Explorer">Previous</a>
+&nbsp;<a class="up" href="index.html" title="Index">Up</a>
+&nbsp;<a class="post" href="Host_io.html" title="Host_io">Next</a>
+</div>
+<h1>Module <a href="type_Host.html">Host</a> (<a href="code_Host.html">.ml</a>)</h1>
+
+<pre><span class="keyword">module</span> Host: <code class="code"><span class="keyword">sig</span></code> <a href="Host.html">..</a> <code class="code"><span class="keyword">end</span></code></pre><div class="info module top">
+Definition of a host; a place to run commands or handle files.<br>
+</div>
+<hr width="100%">
+
+<pre><span class="keyword">module</span> <a href="Host.Ssh.html">Ssh</a>: <code class="code"><span class="keyword">sig</span></code> <a href="Host.Ssh.html">..</a> <code class="code"><span class="keyword">end</span></code></pre><div class="info">
+Definitions specific to “SSH” hosts (see <a href="Host.html#VALconnection"><code class="code"><span class="constructor">Host</span>.connection</code></a>).
+</div>
+
+<pre><span id="TYPEdefault_shell"><span class="keyword">type</span> <code class="type"></code>default_shell</span> </pre>
+
+
+<pre><span id="VALdefault_shell_to_yojson"><span class="keyword">val</span> <a href="code_VALHost.default_shell_to_yojson.html">default_shell_to_yojson</a></span> : <code class="type"><a href="Host.html#TYPEdefault_shell">default_shell</a> -> Yojson.Safe.json</code></pre>
+<pre><span id="VALdefault_shell_of_yojson"><span class="keyword">val</span> <a href="code_VALHost.default_shell_of_yojson.html">default_shell_of_yojson</a></span> : <code class="type">Yojson.Safe.json -> [ `Error of string | `Ok of <a href="Host.html#TYPEdefault_shell">default_shell</a> ]</code></pre><div class="info ">
+Specification of the default shell of a Host.<br>
+</div>
+
+<pre><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> </pre>
+
+
+<pre><span id="VALto_yojson"><span class="keyword">val</span> <a href="code_VALHost.to_yojson.html">to_yojson</a></span> : <code class="type"><a href="Host.html#TYPEt">t</a> -> Yojson.Safe.json</code></pre>
+<pre><span id="VALof_yojson"><span class="keyword">val</span> <a href="code_VALHost.of_yojson.html">of_yojson</a></span> : <code class="type">Yojson.Safe.json -> [ `Error of string | `Ok of <a href="Host.html#TYPEt">t</a> ]</code></pre><div class="info ">
+Host container.
+<p>
+
+  A host is the current machine, or an SSH-accessed distant host.
+  It may have a plaground: a directory where Ketrew can create runtime-files.
+  It keeps track of a default-shell to use (the “default” <code class="code">default_shell</code>, is
+  <code class="code">(<span class="string">"sh"</span>, <span class="string">"-c"</span>)</code>).<br>
+</div>
+
+<pre><span id="VALdefault_shell"><span class="keyword">val</span> <a href="code_VALHost.default_shell.html">default_shell</a></span> : <code class="type">?binary:string -><br>       ?options:string list -><br>       ?command_option:string -> string -> <a href="Host.html#TYPEdefault_shell">default_shell</a></code></pre><div class="info ">
+Use
+  <code class="code">default_shell ~binary:<span class="string">"/bin/sh"</span> ~options:[<span class="string">"-l"</span>; <span class="string">"--something"</span>; <span class="string">"blah"</span> ]
+      ~command_option:<span class="string">"-c"</span> <span class="string">"sh"</span></code>
+  to define a default-shell calling <code class="code"><span class="string">"sh -l --something blah -c &lt;command&gt;"</span></code>.<br>
+</div>
+
+<pre><span id="VALlocalhost"><span class="keyword">val</span> <a href="code_VALHost.localhost.html">localhost</a></span> : <code class="type">?execution_timeout:<a href="Internal_pervasives.Time.html#TYPEt">Internal_pervasives.Time.t</a> -><br>       ?default_shell:<a href="Host.html#TYPEdefault_shell">default_shell</a> -><br>       ?playground:<a href="Path.html#TYPEt">Path.t</a> -> ?name:string -> unit -> <a href="Host.html#TYPEt">t</a></code></pre><div class="info ">
+The host <code class="code"><span class="string">"localhost"</span></code> (i.e. not over SSH).<br>
+</div>
+
+<pre><span id="VALtmp_on_localhost"><span class="keyword">val</span> <a href="code_VALHost.tmp_on_localhost.html">tmp_on_localhost</a></span> : <code class="type"><a href="Host.html#TYPEt">t</a></code></pre><div class="info ">
+The host <code class="code"><span class="string">"localhost"</span></code>, with <code class="code"><span class="string">"/tmp"</span></code> as <code class="code">playground</code>.<br>
+</div>
+
+<pre><span id="VALssh"><span class="keyword">val</span> <a href="code_VALHost.ssh.html">ssh</a></span> : <code class="type">?execution_timeout:<a href="Internal_pervasives.Time.html#TYPEt">Internal_pervasives.Time.t</a> -><br>       ?add_ssh_options:string list -><br>       ?default_shell:<a href="Host.html#TYPEdefault_shell">default_shell</a> -><br>       ?playground:<a href="Path.html#TYPEt">Path.t</a> -><br>       ?port:int -> ?user:string -> ?name:string -> string -> <a href="Host.html#TYPEt">t</a></code></pre><div class="info ">
+Create an SSH host.<br>
+</div>
+
+<pre><span id="VALshell_of_default_shell"><span class="keyword">val</span> <a href="code_VALHost.shell_of_default_shell.html">shell_of_default_shell</a></span> : <code class="type"><a href="Host.html#TYPEt">t</a> -> string -> string list</code></pre>
+<pre><span id="VALof_uri"><span class="keyword">val</span> <a href="code_VALHost.of_uri.html">of_uri</a></span> : <code class="type">Uri.t -> <a href="Host.html#TYPEt">t</a></code></pre><div class="info ">
+Get a <code class="code"><span class="constructor">Host</span>.t</code> from an URI (library <a href="https://github.com/mirage/ocaml-uri">ocaml-uri</a>);
+    the “path” part of the URI is the playground.
+<p>
+
+    Optional arguments can be added to the URL:
+<p>
+<ul>
+<li>a <code class="code"><span class="string">"shell"</span></code> argument defines the <code class="code">default_shell</code>.</li>
+<li>a list of <code class="code"><span class="string">"ssh-option"</span></code> parameters can be added for SSH-based host, they
+    add options to SSH/SCP calls.</li>
+<li>a <code class="code"><span class="string">"timeout"</span></code> value can be defined (in seconds) for all system/SSH calls.</li>
+</ul>
+
+    For example
+    <code class="code">of_string <span class="string">"//user@SomeHost:42/tmp/pg?shell=bash,-l,--init-file,bouh,-c&amp;timeout=42"</span></code>
+    will be like using 
+    <pre class="codepre"><code class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ssh&nbsp;~default_shell:(default_shell&nbsp;&nbsp;<span class="string">"bash"</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;~command_name&nbsp;~options:[<span class="string">"-l"</span>;&nbsp;<span class="string">"--init-file"</span>;&nbsp;<span class="string">"bouh"</span>]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;~command_option:<span class="string">"-c"</span>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;~execution_timeout:42.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;~port:42&nbsp;~user:<span class="string">"user"</span>&nbsp;<span class="string">"SomeHost"</span></code></pre><br>
+</div>
+
+<pre><span id="VALof_string"><span class="keyword">val</span> <a href="code_VALHost.of_string.html">of_string</a></span> : <code class="type">string -> <a href="Host.html#TYPEt">t</a></code></pre><div class="info ">
+Parse an <a href="http://www.ietf.org/rfc/rfc3986.txt">RFC-3986</a>-compliant
+  string into a host, see <a href="Host.html#VALof_uri"><code class="code"><span class="constructor">Host</span>.of_uri</code></a>.<br>
+</div>
+
+<pre><span id="VALto_uri"><span class="keyword">val</span> <a href="code_VALHost.to_uri.html">to_uri</a></span> : <code class="type"><a href="Host.html#TYPEt">t</a> -> Uri.t</code></pre><div class="info ">
+Convert a <code class="code"><span class="constructor">Host</span>.t</code> to an URI representing it.<br>
+</div>
+
+<pre><span id="VALto_string_hum"><span class="keyword">val</span> <a href="code_VALHost.to_string_hum.html">to_string_hum</a></span> : <code class="type"><a href="Host.html#TYPEt">t</a> -> string</code></pre><div class="info ">
+Get a display-friendly string for the host.<br>
+</div>
+
+<pre><span id="VALlog"><span class="keyword">val</span> <a href="code_VALHost.log.html">log</a></span> : <code class="type"><a href="Host.html#TYPEt">t</a> -> Internal_pervasives.Log.t</code></pre><div class="info ">
+Get a <code class="code"><span class="constructor">Log</span>.t</code> document.<br>
+</div>
+
+<pre><span id="VALmarkup"><span class="keyword">val</span> <a href="code_VALHost.markup.html">markup</a></span> : <code class="type"><a href="Host.html#TYPEt">t</a> -> Internal_pervasives.Display_markup.t</code></pre><div class="info ">
+Get a higher-level display document.<br>
+</div>
+
+<pre><span id="VALexecution_timeout"><span class="keyword">val</span> <a href="code_VALHost.execution_timeout.html">execution_timeout</a></span> : <code class="type"><a href="Host.html#TYPEt">t</a> -> <a href="Internal_pervasives.Time.html#TYPEt">Internal_pervasives.Time.t</a> option</code></pre><div class="info ">
+The execution timeout configured for the host.<br>
+</div>
+
+<pre><span id="VALconnection"><span class="keyword">val</span> <a href="code_VALHost.connection.html">connection</a></span> : <code class="type"><a href="Host.html#TYPEt">t</a> -> [ `Localhost | `Ssh of <a href="Host.Ssh.html#TYPEt">Ssh.t</a> ]</code></pre>
+<pre><span id="VALplayground"><span class="keyword">val</span> <a href="code_VALHost.playground.html">playground</a></span> : <code class="type"><a href="Host.html#TYPEt">t</a> -> <a href="Path.html#TYPEt">Path.t</a> option</code></pre></body></html>

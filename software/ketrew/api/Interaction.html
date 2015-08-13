@@ -1,0 +1,108 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<link rel="stylesheet" href="style.css" type="text/css">
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<link rel="Start" href="index.html">
+<link rel="previous" href="Host_io.html">
+<link rel="next" href="Internal_pervasives.html">
+<link rel="Up" href="index.html">
+<link title="Index of types" rel=Appendix href="index_types.html">
+<link title="Index of values" rel=Appendix href="index_values.html">
+<link title="Index of class methods" rel=Appendix href="index_methods.html">
+<link title="Index of class types" rel=Appendix href="index_class_types.html">
+<link title="Index of modules" rel=Appendix href="index_modules.html">
+<link title="Index of module types" rel=Appendix href="index_module_types.html">
+<link title="Client" rel="Chapter" href="Client.html">
+<link title="Command_line" rel="Chapter" href="Command_line.html">
+<link title="Configuration" rel="Chapter" href="Configuration.html">
+<link title="Daemonize" rel="Chapter" href="Daemonize.html">
+<link title="Document" rel="Chapter" href="Document.html">
+<link title="EDSL" rel="Chapter" href="EDSL.html">
+<link title="Engine" rel="Chapter" href="Engine.html">
+<link title="Error" rel="Chapter" href="Error.html">
+<link title="Eval_condition" rel="Chapter" href="Eval_condition.html">
+<link title="Explorer" rel="Chapter" href="Explorer.html">
+<link title="Host" rel="Chapter" href="Host.html">
+<link title="Host_io" rel="Chapter" href="Host_io.html">
+<link title="Interaction" rel="Chapter" href="Interaction.html">
+<link title="Internal_pervasives" rel="Chapter" href="Internal_pervasives.html">
+<link title="Long_running" rel="Chapter" href="Long_running.html">
+<link title="Long_running_utilities" rel="Chapter" href="Long_running_utilities.html">
+<link title="Lsf" rel="Chapter" href="Lsf.html">
+<link title="Monitored_script" rel="Chapter" href="Monitored_script.html">
+<link title="Path" rel="Chapter" href="Path.html">
+<link title="Pbs" rel="Chapter" href="Pbs.html">
+<link title="Persistent_data" rel="Chapter" href="Persistent_data.html">
+<link title="Plugin" rel="Chapter" href="Plugin.html">
+<link title="Program" rel="Chapter" href="Program.html">
+<link title="Protocol" rel="Chapter" href="Protocol.html">
+<link title="Server" rel="Chapter" href="Server.html">
+<link title="Target" rel="Chapter" href="Target.html">
+<link title="Unix_io" rel="Chapter" href="Unix_io.html">
+<link title="Unix_process" rel="Chapter" href="Unix_process.html">
+<link title="Yarn" rel="Chapter" href="Yarn.html"><title>Ketrew API : Interaction</title>
+</head>
+<body>
+<div class="navbar"><a class="pre" href="Host_io.html" title="Host_io">Previous</a>
+&nbsp;<a class="up" href="index.html" title="Index">Up</a>
+&nbsp;<a class="post" href="Internal_pervasives.html" title="Internal_pervasives">Next</a>
+</div>
+<h1>Module <a href="type_Interaction.html">Interaction</a> (<a href="code_Interaction.html">.ml</a>)</h1>
+
+<pre><span class="keyword">module</span> Interaction: <code class="code"><span class="keyword">sig</span></code> <a href="Interaction.html">..</a> <code class="code"><span class="keyword">end</span></code></pre><div class="info module top">
+Keyboard interaction functions (build “menus”, ask questions, etc.)<br>
+</div>
+<hr width="100%">
+
+<pre><span id="VALinit"><span class="keyword">val</span> <a href="code_VALInteraction.init.html">init</a></span> : <code class="type">unit -> unit</code></pre><div class="info ">
+Initialize the module.<br>
+</div>
+
+<pre><span id="VALtoggle_verbose"><span class="keyword">val</span> <a href="code_VALInteraction.toggle_verbose.html">toggle_verbose</a></span> : <code class="type">unit -> unit</code></pre><div class="info ">
+Turn on or off messages about which key is pressed.<br>
+</div>
+
+<pre><span id="TYPEmenu_item"><span class="keyword">type</span> <code class="type">+'a</code> menu_item</span> </pre>
+<div class="info ">
+The type of a menu item.<br>
+</div>
+
+
+<pre><span id="VALmenu_item"><span class="keyword">val</span> <a href="code_VALInteraction.menu_item.html">menu_item</a></span> : <code class="type">?char:char -> ?log:SmartPrint.t -> 'a -> 'a <a href="Interaction.html#TYPEmenu_item">menu_item</a></code></pre><div class="info ">
+Represent a menu item.<br>
+</div>
+
+<pre><span id="VALmenu"><span class="keyword">val</span> <a href="code_VALInteraction.menu.html">menu</a></span> : <code class="type">?max_per_page:int -><br>       ?always_there:'a <a href="Interaction.html#TYPEmenu_item">menu_item</a> list -><br>       sentence:SmartPrint.t -><br>       'a <a href="Interaction.html#TYPEmenu_item">menu_item</a> list -> ('a, [> `Failure of string ]) Unix_io.t</code></pre><div class="info ">
+Display a menu given the specified <code class="code">menu_items</code><br>
+</div>
+
+<pre><span id="VALopen_in_dollar_editor"><span class="keyword">val</span> <a href="code_VALInteraction.open_in_dollar_editor.html">open_in_dollar_editor</a></span> : <code class="type">string -> (unit, 'a) Unix_io.Deferred_result.t</code></pre><div class="info ">
+Open a file in <code class="code"><span class="string">"$EDITOR"</span></code>.<br>
+</div>
+
+<pre><span id="VALview_in_dollar_editor"><span class="keyword">val</span> <a href="code_VALInteraction.view_in_dollar_editor.html">view_in_dollar_editor</a></span> : <code class="type">?extension:string -><br>       string -><br>       (unit, [> `IO of [> `Write_file_exn of string * exn ] ])<br>       Unix_io.Deferred_result.t</code></pre><div class="info ">
+View a string in <code class="code"><span class="string">"$EDITOR"</span></code>.<br>
+</div>
+
+<pre><span id="VALask_for_edition"><span class="keyword">val</span> <a href="code_VALInteraction.ask_for_edition.html">ask_for_edition</a></span> : <code class="type">?extension:string -><br>       string -><br>       (string,<br>        [> `IO of<br>             [> `Read_file_exn of Unix_io.IO.path * exn<br>              | `Write_file_exn of Unix_io.IO.path * exn ] ])<br>       Unix_io.Deferred_result.t</code></pre><div class="info ">
+Edit content in <code class="code"><span class="string">"$EDITOR"</span></code>.<br>
+</div>
+
+<pre><span id="VALget_key"><span class="keyword">val</span> <a href="code_VALInteraction.get_key.html">get_key</a></span> : <code class="type">unit -> (char, [> `Failure of string ]) Unix_io.t</code></pre><div class="info ">
+Get a key from the terminal input.<br>
+</div>
+
+<pre><span id="VALbuild_sublist_of_targets"><span class="keyword">val</span> <a href="code_VALInteraction.build_sublist_of_targets.html">build_sublist_of_targets</a></span> : <code class="type">client:<a href="Client.html#TYPEt">Client.t</a> -><br>       list_name:string -><br>       all_log:SmartPrint.t -><br>       go_verb:SmartPrint.t -><br>       filter:(Ketrew_pure.Target.t -> bool) -><br>       ([> `Cancel | `Go of string list ],<br>        [> `Client of <a href="Client.Error.html#TYPEt">Client.Error.t</a><br>         | `Database of Trakeva.Error.t<br>         | `Failure of string<br>         | `IO of<br>             [> `Read_file_exn of string * exn | `Write_file_exn of string * exn ]<br>         | `Missing_data of string<br>         | `System of [> `File_info of string ] * [> `Exn of exn ]<br>         | `Target of [> `Deserilization of string ] ])<br>       Unix_io.t</code></pre><div class="info ">
+Figure out the targets to be displayed.<br>
+</div>
+
+<pre><span id="VALmake_target_menu"><span class="keyword">val</span> <a href="code_VALInteraction.make_target_menu.html">make_target_menu</a></span> : <code class="type">targets:Ketrew_pure.Target.t list -><br>       ?filter_target:(Ketrew_pure.Target.t -> bool) -><br>       unit -> [> `Go of string ] <a href="Interaction.html#TYPEmenu_item">menu_item</a> list</code></pre><div class="info ">
+Create a menu with the targets.<br>
+</div>
+
+<pre><span id="VALrun_with_quit_key"><span class="keyword">val</span> <a href="code_VALInteraction.run_with_quit_key.html">run_with_quit_key</a></span> : <code class="type">< start : (unit, [> `Failure of string ] as 'start_error)<br>                 Unix_io.Deferred_result.t;<br>         stop : unit > -><br>       (unit, 'start_error) Unix_io.Deferred_result.t</code></pre><div class="info ">
+Start and run an action until it finishes or unitl the key
+    <code class="code"><span class="string">"q"</span></code> is pressed.<br>
+</div>
+</body></html>

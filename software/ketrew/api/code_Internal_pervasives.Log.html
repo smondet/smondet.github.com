@@ -1,0 +1,74 @@
+<html><head>
+<link rel="stylesheet" href="style.css" type="text/css">
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<link rel="Start" href="index.html">
+<link title="Index of types" rel=Appendix href="index_types.html">
+<link title="Index of values" rel=Appendix href="index_values.html">
+<link title="Index of class methods" rel=Appendix href="index_methods.html">
+<link title="Index of class types" rel=Appendix href="index_class_types.html">
+<link title="Index of modules" rel=Appendix href="index_modules.html">
+<link title="Index of module types" rel=Appendix href="index_module_types.html">
+<link title="Client" rel="Chapter" href="Client.html">
+<link title="Command_line" rel="Chapter" href="Command_line.html">
+<link title="Configuration" rel="Chapter" href="Configuration.html">
+<link title="Daemonize" rel="Chapter" href="Daemonize.html">
+<link title="Document" rel="Chapter" href="Document.html">
+<link title="EDSL" rel="Chapter" href="EDSL.html">
+<link title="Engine" rel="Chapter" href="Engine.html">
+<link title="Error" rel="Chapter" href="Error.html">
+<link title="Eval_condition" rel="Chapter" href="Eval_condition.html">
+<link title="Explorer" rel="Chapter" href="Explorer.html">
+<link title="Host" rel="Chapter" href="Host.html">
+<link title="Host_io" rel="Chapter" href="Host_io.html">
+<link title="Interaction" rel="Chapter" href="Interaction.html">
+<link title="Internal_pervasives" rel="Chapter" href="Internal_pervasives.html">
+<link title="Long_running" rel="Chapter" href="Long_running.html">
+<link title="Long_running_utilities" rel="Chapter" href="Long_running_utilities.html">
+<link title="Lsf" rel="Chapter" href="Lsf.html">
+<link title="Monitored_script" rel="Chapter" href="Monitored_script.html">
+<link title="Path" rel="Chapter" href="Path.html">
+<link title="Pbs" rel="Chapter" href="Pbs.html">
+<link title="Persistent_data" rel="Chapter" href="Persistent_data.html">
+<link title="Plugin" rel="Chapter" href="Plugin.html">
+<link title="Program" rel="Chapter" href="Program.html">
+<link title="Protocol" rel="Chapter" href="Protocol.html">
+<link title="Server" rel="Chapter" href="Server.html">
+<link title="Target" rel="Chapter" href="Target.html">
+<link title="Unix_io" rel="Chapter" href="Unix_io.html">
+<link title="Unix_process" rel="Chapter" href="Unix_process.html">
+<link title="Yarn" rel="Chapter" href="Yarn.html"><title>Ketrew API : Internal_pervasives.Log</title>
+</head>
+<body>
+<code class="code"><span class="keyword">struct</span><br>
+&nbsp;&nbsp;<span class="keyword">include</span>&nbsp;<span class="constructor">Docout</span>.<span class="constructor">Make_logger</span>&nbsp;(<span class="keyword">struct</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;(<span class="keywordsign">'</span>a,&nbsp;<span class="keywordsign">'</span>b)&nbsp;result&nbsp;=&nbsp;<span class="keywordsign">'</span>a<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;debug_level&nbsp;()&nbsp;=&nbsp;!global_debug_level<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;with_color&nbsp;()&nbsp;=&nbsp;!global_with_color<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;line_width&nbsp;=&nbsp;72<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;indent&nbsp;=&nbsp;4<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;print_string&nbsp;s&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;!global_log_print_string&nbsp;s&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;do_nothing&nbsp;()&nbsp;=&nbsp;()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;name&nbsp;=&nbsp;<span class="string">"ketrew"</span><br>
+&nbsp;&nbsp;<span class="keyword">end</span>)<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;a&nbsp;f&nbsp;x&nbsp;=&nbsp;s&nbsp;(f&nbsp;x)<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;to_long_string&nbsp;=&nbsp;to_string&nbsp;~line_width:max_int&nbsp;~indent:4<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;if_color&nbsp;color&nbsp;log&nbsp;=&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span>&nbsp;!global_with_color&nbsp;<span class="keyword">then</span>&nbsp;color&nbsp;log&nbsp;<span class="keyword">else</span>&nbsp;log<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;nbsp&nbsp;=&nbsp;s&nbsp;<span class="string">" "</span><br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;quote&nbsp;=&nbsp;sf&nbsp;<span class="string">"%S"</span><br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;sexp&nbsp;sexp_of_t&nbsp;t&nbsp;=&nbsp;s&nbsp;(sexp_of_t&nbsp;t&nbsp;|&gt;&nbsp;<span class="constructor">Sexplib</span>.<span class="constructor">Sexp</span>.to_string)<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;uri&nbsp;theuri&nbsp;=&nbsp;s&nbsp;(<span class="constructor">Uri</span>.to_string&nbsp;theuri)<br>
+<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;big_byte_sequence&nbsp;?(string=quote)&nbsp;?(max_length=20)&nbsp;str&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">match</span>&nbsp;<span class="constructor">String</span>.sub&nbsp;str&nbsp;~index:0&nbsp;~length:max_length&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">None</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;string&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Some</span>&nbsp;substr&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;braces&nbsp;(<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;string&nbsp;substr&nbsp;%&nbsp;s&nbsp;<span class="string">"…"</span>&nbsp;%&nbsp;nbsp&nbsp;%<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="keyword">match</span>&nbsp;<span class="constructor">String</span>.length&nbsp;str&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;n&nbsp;<span class="keyword">when</span>&nbsp;n&nbsp;/&nbsp;1024&nbsp;&gt;&nbsp;10&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;i&nbsp;(n&nbsp;/&nbsp;1024)&nbsp;%&nbsp;nbsp&nbsp;%&nbsp;s&nbsp;<span class="string">"KB"</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;n&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;i&nbsp;n&nbsp;%&nbsp;nbsp&nbsp;%&nbsp;s&nbsp;<span class="string">"B"</span>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)<br>
+<span class="keyword">end</span></code></body></html>

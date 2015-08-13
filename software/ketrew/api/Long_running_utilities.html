@@ -1,0 +1,97 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<link rel="stylesheet" href="style.css" type="text/css">
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<link rel="Start" href="index.html">
+<link rel="previous" href="Long_running.html">
+<link rel="next" href="Lsf.html">
+<link rel="Up" href="index.html">
+<link title="Index of types" rel=Appendix href="index_types.html">
+<link title="Index of values" rel=Appendix href="index_values.html">
+<link title="Index of class methods" rel=Appendix href="index_methods.html">
+<link title="Index of class types" rel=Appendix href="index_class_types.html">
+<link title="Index of modules" rel=Appendix href="index_modules.html">
+<link title="Index of module types" rel=Appendix href="index_module_types.html">
+<link title="Client" rel="Chapter" href="Client.html">
+<link title="Command_line" rel="Chapter" href="Command_line.html">
+<link title="Configuration" rel="Chapter" href="Configuration.html">
+<link title="Daemonize" rel="Chapter" href="Daemonize.html">
+<link title="Document" rel="Chapter" href="Document.html">
+<link title="EDSL" rel="Chapter" href="EDSL.html">
+<link title="Engine" rel="Chapter" href="Engine.html">
+<link title="Error" rel="Chapter" href="Error.html">
+<link title="Eval_condition" rel="Chapter" href="Eval_condition.html">
+<link title="Explorer" rel="Chapter" href="Explorer.html">
+<link title="Host" rel="Chapter" href="Host.html">
+<link title="Host_io" rel="Chapter" href="Host_io.html">
+<link title="Interaction" rel="Chapter" href="Interaction.html">
+<link title="Internal_pervasives" rel="Chapter" href="Internal_pervasives.html">
+<link title="Long_running" rel="Chapter" href="Long_running.html">
+<link title="Long_running_utilities" rel="Chapter" href="Long_running_utilities.html">
+<link title="Lsf" rel="Chapter" href="Lsf.html">
+<link title="Monitored_script" rel="Chapter" href="Monitored_script.html">
+<link title="Path" rel="Chapter" href="Path.html">
+<link title="Pbs" rel="Chapter" href="Pbs.html">
+<link title="Persistent_data" rel="Chapter" href="Persistent_data.html">
+<link title="Plugin" rel="Chapter" href="Plugin.html">
+<link title="Program" rel="Chapter" href="Program.html">
+<link title="Protocol" rel="Chapter" href="Protocol.html">
+<link title="Server" rel="Chapter" href="Server.html">
+<link title="Target" rel="Chapter" href="Target.html">
+<link title="Unix_io" rel="Chapter" href="Unix_io.html">
+<link title="Unix_process" rel="Chapter" href="Unix_process.html">
+<link title="Yarn" rel="Chapter" href="Yarn.html"><title>Ketrew API : Long_running_utilities</title>
+</head>
+<body>
+<div class="navbar"><a class="pre" href="Long_running.html" title="Long_running">Previous</a>
+&nbsp;<a class="up" href="index.html" title="Index">Up</a>
+&nbsp;<a class="post" href="Lsf.html" title="Lsf">Next</a>
+</div>
+<h1>Module <a href="type_Long_running_utilities.html">Long_running_utilities</a> (<a href="code_Long_running_utilities.html">.ml</a>)</h1>
+
+<pre><span class="keyword">module</span> Long_running_utilities: <code class="code"><span class="keyword">sig</span></code> <a href="Long_running_utilities.html">..</a> <code class="code"><span class="keyword">end</span></code></pre><div class="info module top">
+Call <code class="code"><span class="constructor">Deferred_result</span>.fail</code> with a “fatal error” (Mandatory in the
+    Long-running API).<br>
+</div>
+<hr width="100%">
+
+<pre><span id="VALfail_fatal"><span class="keyword">val</span> <a href="code_VALLong_running_utilities.fail_fatal.html">fail_fatal</a></span> : <code class="type">string -> ('b, [> `Fatal of string ]) Unix_io.Deferred_result.t</code></pre><div class="info ">
+Call <code class="code"><span class="constructor">Deferred_result</span>.fail</code> with a “fatal error” (Mandatory in the
+    Long-running API).<br>
+</div>
+
+<pre><span id="VALout_file_path"><span class="keyword">val</span> <a href="code_VALLong_running_utilities.out_file_path.html">out_file_path</a></span> : <code class="type">playground:Ketrew_pure.Path.t -> Ketrew_pure.Path.t</code></pre><div class="info ">
+Standard path for <code class="code">stdout</code> files (given a fresh playground).<br>
+</div>
+
+<pre><span id="VALerr_file_path"><span class="keyword">val</span> <a href="code_VALLong_running_utilities.err_file_path.html">err_file_path</a></span> : <code class="type">playground:Ketrew_pure.Path.t -> Ketrew_pure.Path.t</code></pre><div class="info ">
+Standard path for <code class="code">stderr</code> files.<br>
+</div>
+
+<pre><span id="VALscript_path"><span class="keyword">val</span> <a href="code_VALLong_running_utilities.script_path.html">script_path</a></span> : <code class="type">playground:Ketrew_pure.Path.t -> Ketrew_pure.Path.t</code></pre><div class="info ">
+Standard path for monitored-script files.<br>
+</div>
+
+<pre><span id="VALclassify_and_transform_errors"><span class="keyword">val</span> <a href="code_VALLong_running_utilities.classify_and_transform_errors.html">classify_and_transform_errors</a></span> : <code class="type">('a,<br>        [< `Fatal of string<br>         | `Host of<br>             [ `Execution of<br>                 < host : string; message : string; stderr : string option;<br>                   stdout : string option ><br>             | `Non_zero of string * int<br>             | `Ssh_failure of<br>                 [ `Wrong_log of string | `Wrong_status of <a href="Unix_process.Exit_code.html#TYPEt">Unix_process.Exit_code.t</a> ] *<br>                 string<br>             | `System of [ `Sleep of float ] * [ `Exn of exn ]<br>             | `Timeout of float<br>             | `Unix_exec of string ]<br>         | `IO of<br>             [< `Exn of exn<br>              | `File_exists of string<br>              | `Read_file_exn of string * exn<br>              | `Write_file_exn of string * exn<br>              | `Wrong_path of string ]<br>         | `System of<br>             [< `Copy of string<br>              | `File_info of string<br>              | `File_tree of string<br>              | `List_directory of string<br>              | `Make_directory of string<br>              | `Make_symlink of string * string<br>              | `Move of string<br>              | `Remove of string ] *<br>             [< `Already_exists<br>              | `Exn of exn<br>              | `File_exists of string<br>              | `File_not_found of string<br>              | `IO of<br>                  [< `Exn of exn<br>                   | `File_exists of string<br>                   | `Read_file_exn of string * exn<br>                   | `Write_file_exn of string * exn<br>                   | `Wrong_path of string ]<br>              | `Not_a_directory of string<br>              | `Wrong_access_rights of int<br>              | `Wrong_file_kind of string * Unix_io.System.file_info<br>              | `Wrong_path of string ]<br>         | `Timeout of 'b ])<br>       Ketrew_pure.Internal_pervasives.Result.t -><br>       ('a, [ `Fatal of string | `Recoverable of string ]) Unix_io.Deferred_result.t</code></pre><div class="info ">
+Transform most known errors into long-running plugin API errors; using
+    <code class="code"><span class="constructor">Ketrew_pure</span>.<span class="constructor">Host</span>.<span class="constructor">Error</span>.classify</code>.<br>
+</div>
+
+<pre><span id="VALfresh_playground_or_fail"><span class="keyword">val</span> <a href="code_VALLong_running_utilities.fresh_playground_or_fail.html">fresh_playground_or_fail</a></span> : <code class="type">Ketrew_pure.Host.t -><br>       (Ketrew_pure.Path.t, [> `Fatal of string ]) Unix_io.Deferred_result.t</code></pre><div class="info ">
+Get a fresh-playground from a <code class="code"><span class="constructor">Host</span>.t</code>.<br>
+</div>
+
+<pre><span id="VALget_log_of_monitored_script"><span class="keyword">val</span> <a href="code_VALLong_running_utilities.get_log_of_monitored_script.html">get_log_of_monitored_script</a></span> : <code class="type">host:Ketrew_pure.Host.t -><br>       script:Ketrew_pure.Monitored_script.t -><br>       ([ `After of string * string * string<br>        | `Before of string * string * string<br>        | `Error of string list<br>        | `Failure of string * string * string<br>        | `Start of string<br>        | `Success of string ] list option,<br>        [> `Timeout of Ketrew_pure.Internal_pervasives.Time.t ])<br>       Unix_io.Deferred_result.t</code></pre><div class="info ">
+Fetch and parse the <code class="code">log</code> file of a monitored-script.<br>
+</div>
+
+<pre><span id="VALget_pid_of_monitored_script"><span class="keyword">val</span> <a href="code_VALLong_running_utilities.get_pid_of_monitored_script.html">get_pid_of_monitored_script</a></span> : <code class="type">host:Ketrew_pure.Host.t -><br>       script:Ketrew_pure.Monitored_script.t -><br>       (int option, [> `Timeout of Ketrew_pure.Internal_pervasives.Time.t ])<br>       Unix_io.Deferred_result.t</code></pre><div class="info ">
+Fetch and parse the <code class="code">pid</code> file of a monitored-script.<br>
+</div>
+
+<pre><span id="VALshell_command_output_or_log"><span class="keyword">val</span> <a href="code_VALLong_running_utilities.shell_command_output_or_log.html">shell_command_output_or_log</a></span> : <code class="type">host:Ketrew_pure.Host.t -><br>       string -><br>       (string, Ketrew_pure.Internal_pervasives.Log.t) Unix_io.Deferred_result.t</code></pre><div class="info ">
+Call <a href="Host_io.html#VALget_shell_command_output"><code class="code"><span class="constructor">Host_io</span>.get_shell_command_output</code></a> and transform errors
+    into a <code class="code"><span class="constructor">Log</span>.t</code>.<br>
+</div>
+</body></html>
