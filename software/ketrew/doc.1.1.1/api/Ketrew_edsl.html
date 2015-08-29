@@ -42,7 +42,13 @@
 <link title="Ketrew_target" rel="Chapter" href="Ketrew_target.html">
 <link title="Ketrew_unix_io" rel="Chapter" href="Ketrew_unix_io.html">
 <link title="Ketrew_unix_process" rel="Chapter" href="Ketrew_unix_process.html">
-<link title="Ketrew_yarn" rel="Chapter" href="Ketrew_yarn.html"><title>Ketrew API : Ketrew_edsl</title>
+<link title="Ketrew_yarn" rel="Chapter" href="Ketrew_yarn.html"><link title="Utilities " rel="Section" href="#2_Utilities">
+<link title="Hosts" rel="Subsection" href="#3_Hosts">
+<link title="Build Programs" rel="Subsection" href="#3_BuildPrograms">
+<link title="Conditions " rel="Subsection" href="#3_Conditions">
+<link title="Artifacts" rel="Subsection" href="#3_Artifacts">
+<link title="Targets" rel="Subsection" href="#3_Targets">
+<title>Ketrew API : Ketrew_edsl</title>
 </head>
 <body>
 <div class="navbar"><a class="pre" href="Ketrew_document.html" title="Ketrew_document">Previous</a>
@@ -55,13 +61,35 @@
 Easy interface to the library <b>for end users</b>.<br>
 </div>
 <hr width="100%">
+<br>
+This is a more stable EDSL/API for end-users to make workflows and deal with
+  the system.
+<p>
 
-<pre><span class="keyword">module</span> <a href="Ketrew_edsl.Host.html">Host</a>: <code class="code"><span class="keyword">sig</span></code> <a href="Ketrew_edsl.Host.html">..</a> <code class="code"><span class="keyword">end</span></code></pre>
+  Many functions may raise exceptions when called improperly, but this
+  should happen while building the workflow, not after it starts running.<br>
+<br>
+This is a more stable EDSL/API for end-users to make workflows and deal with
+  the system.
+<p>
+
+  Many functions may raise exceptions when called improperly, but this
+  should happen while building the workflow, not after it starts running.<br>
+<br>
+<h3 id="3_Hosts">Hosts</h3><br>
+
+<pre><span class="keyword">module</span> <a href="Ketrew_edsl.Host.html">Host</a>: <code class="code"><span class="keyword">sig</span></code> <a href="Ketrew_edsl.Host.html">..</a> <code class="code"><span class="keyword">end</span></code></pre><br>
+<h3 id="3_BuildPrograms">Build Programs</h3><br>
+
 <pre><span class="keyword">module</span> <a href="Ketrew_edsl.Program.html">Program</a>: <code class="code"><span class="keyword">sig</span></code> <a href="Ketrew_edsl.Program.html">..</a> <code class="code"><span class="keyword">end</span></code></pre><div class="info">
 Build “things to run”, i.e.
 </div>
+<br>
+<h3 id="3_Conditions">Conditions </h3><br>
 
-<pre><span class="keyword">module</span> <a href="Ketrew_edsl.Condition.html">Condition</a>: <code class="code"><span class="keyword">sig</span></code> <a href="Ketrew_edsl.Condition.html">..</a> <code class="code"><span class="keyword">end</span></code></pre>
+<pre><span class="keyword">module</span> <a href="Ketrew_edsl.Condition.html">Condition</a>: <code class="code"><span class="keyword">sig</span></code> <a href="Ketrew_edsl.Condition.html">..</a> <code class="code"><span class="keyword">end</span></code></pre><br>
+<h3 id="3_Artifacts">Artifacts</h3><br>
+
 <pre><span id="TYPEuser_artifact"><span class="keyword">class type</span> <a href="Ketrew_edsl.user_artifact-c.html">user_artifact</a></span> = <code class="code"><span class="keyword">object</span></code> <a href="Ketrew_edsl.user_artifact-c.html">..</a> <code class="code"><span class="keyword">end</span></code></pre><div class="info">
 Artifacts are things to be built (they may already exist), most often
     file-tree-locations on a given <code class="code">host</code> (see also <code class="code"><span class="constructor">Ketrew_artifact</span>.t</code>).
@@ -75,6 +103,8 @@ Create a volume containing one file.<br>
 The artifact that is “never done” (i.e. the target associated will always
     be (re-)run if activated).<br>
 </div>
+<br>
+<h3 id="3_Targets">Targets</h3><br>
 
 <pre><span id="TYPEuser_target"><span class="keyword">class type</span> <a href="Ketrew_edsl.user_target-c.html">user_target</a></span> = <code class="code"><span class="keyword">object</span></code> <a href="Ketrew_edsl.user_target-c.html">..</a> <code class="code"><span class="keyword">end</span></code></pre><div class="info">
 Targets are the nodes in the workflow arborescence (see also
@@ -200,6 +230,8 @@ Create a build process that will use Hadoop's `DistributedShell`  class
 </ul>
 <br>
 </div>
+<br>
+<h2 id="2_Utilities">Utilities </h2><br>
 
 <pre><span id="VALto_display_string"><span class="keyword">val</span> <a href="code_VALKetrew_edsl.to_display_string.html">to_display_string</a></span> : <code class="type">?ansi_colors:bool -> ?indentation:int -> <a href="Ketrew_edsl.user_target-c.html">user_target</a> -> string</code></pre><div class="info ">
 Build a display-friendly string summarizing the workflow.<br>

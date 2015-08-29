@@ -56,6 +56,22 @@ Implementation of the <code class="code"><span class="constructor">LONG_RUNNING<
     scheduler.<br>
 </div>
 <hr width="100%">
+<br>
+“Long-running” plugin based on the
+    <a href="http://en.wikipedia.org/wiki/Portable_Batch_System">PBS</a>
+    batch scheduler.
+<p>
+
+    Shell commands are put in a <a href="Ketrew_monitored_script.html#TYPEt"><code class="code"><span class="constructor">Ketrew_monitored_script</span>.t</code></a>, and
+    started with <code class="code"><span class="string">"qsub [OPTIONS] &lt;script&gt;"</span></code> (we gather the job-id while
+    submitting).
+<p>
+
+    The <code class="code">update</code> function uses the log-file of the monitored-script, and the
+    command <code class="code"><span class="string">"qstat [OPTIONS] &lt;job-ID&gt;"</span></code>.
+<p>
+
+    The <code class="code">kill</code> function kills the job with <code class="code"><span class="string">"qdel &lt;job-ID&gt;"</span></code>.<br>
 
 <pre><span class="keyword">include</span> <a href="Ketrew_long_running.LONG_RUNNING.html">Ketrew_long_running.LONG_RUNNING</a></pre>
 <br>

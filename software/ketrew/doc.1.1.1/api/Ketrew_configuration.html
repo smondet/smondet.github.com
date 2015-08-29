@@ -42,7 +42,10 @@
 <link title="Ketrew_target" rel="Chapter" href="Ketrew_target.html">
 <link title="Ketrew_unix_io" rel="Chapter" href="Ketrew_unix_io.html">
 <link title="Ketrew_unix_process" rel="Chapter" href="Ketrew_unix_process.html">
-<link title="Ketrew_yarn" rel="Chapter" href="Ketrew_yarn.html"><title>Ketrew API : Ketrew_configuration</title>
+<link title="Ketrew_yarn" rel="Chapter" href="Ketrew_yarn.html"><link title="Construct Configuration Values" rel="Section" href="#2_ConstructConfigurationValues">
+<link title="Output/Serialize Configuration Profiles" rel="Section" href="#2_OutputSerializeConfigurationProfiles">
+<link title="Access Configuration Values" rel="Section" href="#2_AccessConfigurationValues">
+<title>Ketrew API : Ketrew_configuration</title>
 </head>
 <body>
 <div class="navbar"><a class="pre" href="Ketrew_command_line.html" title="Ketrew_command_line">Previous</a>
@@ -56,6 +59,8 @@ Definition of the configuration (input to state creation; contents of the
     config-file).<br>
 </div>
 <hr width="100%">
+<br>
+<h2 id="2_ConstructConfigurationValues">Construct Configuration Values</h2><br>
 
 <pre><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> </pre>
 <div class="info ">
@@ -260,6 +265,8 @@ A profile is a name associated with a configuration.<br>
 <pre><span id="VALprofile"><span class="keyword">val</span> <a href="code_VALKetrew_configuration.profile.html">profile</a></span> : <code class="type">string -> <a href="Ketrew_configuration.html#TYPEt">t</a> -> <a href="Ketrew_configuration.html#TYPEprofile">profile</a></code></pre><div class="info ">
 Create a profile value.<br>
 </div>
+<br>
+<h2 id="2_OutputSerializeConfigurationProfiles">Output/Serialize Configuration Profiles</h2><br>
 
 <pre><span id="VALoutput"><span class="keyword">val</span> <a href="code_VALKetrew_configuration.output.html">output</a></span> : <code class="type"><a href="Ketrew_configuration.html#TYPEprofile">profile</a> list -> unit</code></pre><div class="info ">
 Output a configuration file containing a list of profiles to <code class="code">stdout</code>.<br>
@@ -269,6 +276,8 @@ Output a configuration file containing a list of profiles to <code class="code">
 Create the contents of a configuration file containing a list of
     profiles.<br>
 </div>
+<br>
+<h2 id="2_AccessConfigurationValues">Access Configuration Values</h2><br>
 
 <pre><span id="VALdefault_database_path"><span class="keyword">val</span> <a href="code_VALKetrew_configuration.default_database_path.html">default_database_path</a></span> : <code class="type">string</code></pre><div class="info ">
 Default path to the database (used when generating custom configuration

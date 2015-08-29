@@ -10,35 +10,8 @@
 <link title="Index of class types" rel=Appendix href="index_class_types.html">
 <link title="Index of modules" rel=Appendix href="index_modules.html">
 <link title="Index of module types" rel=Appendix href="index_module_types.html">
-<link title="Client" rel="Chapter" href="Client.html">
-<link title="Command_line" rel="Chapter" href="Command_line.html">
-<link title="Configuration" rel="Chapter" href="Configuration.html">
-<link title="Daemonize" rel="Chapter" href="Daemonize.html">
-<link title="Document" rel="Chapter" href="Document.html">
-<link title="EDSL" rel="Chapter" href="EDSL.html">
-<link title="Engine" rel="Chapter" href="Engine.html">
-<link title="Error" rel="Chapter" href="Error.html">
-<link title="Eval_condition" rel="Chapter" href="Eval_condition.html">
-<link title="Explorer" rel="Chapter" href="Explorer.html">
-<link title="Host" rel="Chapter" href="Host.html">
-<link title="Host_io" rel="Chapter" href="Host_io.html">
-<link title="Interaction" rel="Chapter" href="Interaction.html">
-<link title="Internal_pervasives" rel="Chapter" href="Internal_pervasives.html">
-<link title="Long_running" rel="Chapter" href="Long_running.html">
-<link title="Long_running_utilities" rel="Chapter" href="Long_running_utilities.html">
-<link title="Lsf" rel="Chapter" href="Lsf.html">
-<link title="Monitored_script" rel="Chapter" href="Monitored_script.html">
-<link title="Path" rel="Chapter" href="Path.html">
-<link title="Pbs" rel="Chapter" href="Pbs.html">
-<link title="Persistent_data" rel="Chapter" href="Persistent_data.html">
-<link title="Plugin" rel="Chapter" href="Plugin.html">
-<link title="Program" rel="Chapter" href="Program.html">
-<link title="Protocol" rel="Chapter" href="Protocol.html">
-<link title="Server" rel="Chapter" href="Server.html">
-<link title="Target" rel="Chapter" href="Target.html">
-<link title="Unix_io" rel="Chapter" href="Unix_io.html">
-<link title="Unix_process" rel="Chapter" href="Unix_process.html">
-<link title="Yarn" rel="Chapter" href="Yarn.html"><title>Ketrew API</title>
+<link title="Ketrew_pure" rel="Chapter" href="Ketrew_pure.html">
+<link title="Ketrew" rel="Chapter" href="Ketrew.html"><title>Ketrew API</title>
 </head>
 <body>
 <h1>Ketrew API</h1>
@@ -52,119 +25,12 @@
 </ul>
 <br/><br>
 <table class="indextable">
-<tr><td class="module"><a href="Client.html">Client</a></td><td><div class="info">
-The “client” is the frontend to either a standalone engine or an
-   HTTP client talking to a server/engine.
+<tr><td class="module"><a href="Ketrew_pure.html">Ketrew_pure</a></td><td><div class="info">
+The “pure” common library (mostly data)
 </div>
 </td></tr>
-<tr><td class="module"><a href="Command_line.html">Command_line</a></td><td><div class="info">
-Command line interface to the engine.
-</div>
-</td></tr>
-<tr><td class="module"><a href="Configuration.html">Configuration</a></td><td><div class="info">
-Definition of the configuration (input to state creation; contents of the
-    config-file).
-</div>
-</td></tr>
-<tr><td class="module"><a href="Daemonize.html">Daemonize</a></td><td><div class="info">
-Implementation of the <code class="code"><span class="constructor">LONG_RUNNING</span></code> API with <code class="code">nohup setsid</code> unix
-    processes or generated Python scripts.
-</div>
-</td></tr>
-<tr><td class="module"><a href="Document.html">Document</a></td><td><div class="info">
-Transform complex Ketrew values into display-friendly <code class="code"><span class="constructor">Log</span>.t</code> values.
-</div>
-</td></tr>
-<tr><td class="module"><a href="EDSL.html">EDSL</a></td><td><div class="info">
-Easy interface to the library <b>for end users</b>.
-</div>
-</td></tr>
-<tr><td class="module"><a href="Engine.html">Engine</a></td><td><div class="info">
-The engine of the actual Workflow Engine.
-</div>
-</td></tr>
-<tr><td class="module"><a href="Error.html">Error</a></td><td><div class="info">
-Deal with error values common across the library.
-</div>
-</td></tr>
-<tr><td class="module"><a href="Eval_condition.html">Eval_condition</a></td><td><div class="info">
-Evaluation of <code class="code"><span class="constructor">Ketrew_target</span>.<span class="constructor">Condition</span>.t</code> values.
-</div>
-</td></tr>
-<tr><td class="module"><a href="Explorer.html">Explorer</a></td><td><div class="info">
-The “Target Explorer™“
-</div>
-</td></tr>
-<tr><td class="module"><a href="Host.html">Host</a></td><td><div class="info">
-Definition of a host; a place to run commands or handle files.
-</div>
-</td></tr>
-<tr><td class="module"><a href="Host_io.html">Host_io</a></td><td><div class="info">
-Definition of a host; a place to run commands or handle files.
-</div>
-</td></tr>
-<tr><td class="module"><a href="Interaction.html">Interaction</a></td><td><div class="info">
-Keyboard interaction functions (build “menus”, ask questions, etc.)
-</div>
-</td></tr>
-<tr><td class="module"><a href="Internal_pervasives.html">Internal_pervasives</a></td><td><div class="info">
-<code class="code"><span class="constructor">Pervasives</span></code> module for the library.
-</div>
-</td></tr>
-<tr><td class="module"><a href="Long_running.html">Long_running</a></td><td><div class="info">
-Definition of the interface required from “long-running task” plugins.
-</div>
-</td></tr>
-<tr><td class="module"><a href="Long_running_utilities.html">Long_running_utilities</a></td><td><div class="info">
-Call <code class="code"><span class="constructor">Deferred_result</span>.fail</code> with a “fatal error” (Mandatory in the
-    Long-running API).
-</div>
-</td></tr>
-<tr><td class="module"><a href="Lsf.html">Lsf</a></td><td><div class="info">
-Implementation of the <code class="code"><span class="constructor">LONG_RUNNING</span></code> API with the LSF batch processing
-    scheduler.
-</div>
-</td></tr>
-<tr><td class="module"><a href="Monitored_script.html">Monitored_script</a></td><td><div class="info">
-Generate Shell scripts that “monitor” commands.
-</div>
-</td></tr>
-<tr><td class="module"><a href="Path.html">Path</a></td><td><div class="info">
-File-path handling
-</div>
-</td></tr>
-<tr><td class="module"><a href="Pbs.html">Pbs</a></td><td><div class="info">
-Implementation of the <code class="code"><span class="constructor">LONG_RUNNING</span></code> API with the PBS batch processing
-    scheduler.
-</div>
-</td></tr>
-<tr><td class="module"><a href="Persistent_data.html">Persistent_data</a></td><td></td></tr>
-<tr><td class="module"><a href="Plugin.html">Plugin</a></td><td><div class="info">
-The “long-running” plugins loaded by default.
-</div>
-</td></tr>
-<tr><td class="module"><a href="Program.html">Program</a></td><td><div class="info">
-The “things” to run on a given host.
-</div>
-</td></tr>
-<tr><td class="module"><a href="Protocol.html">Protocol</a></td><td></td></tr>
-<tr><td class="module"><a href="Server.html">Server</a></td><td><div class="info">
-Implementation of the HTTP server.
-</div>
-</td></tr>
-<tr><td class="module"><a href="Target.html">Target</a></td><td><div class="info">
-Definition of the basic building bloc of a workflow.
-</div>
-</td></tr>
-<tr><td class="module"><a href="Unix_io.html">Unix_io</a></td><td></td></tr>
-<tr><td class="module"><a href="Unix_process.html">Unix_process</a></td><td><div class="info">
-Manage calls to Unix processes
-</div>
-</td></tr>
-<tr><td class="module"><a href="Yarn.html">Yarn</a></td><td><div class="info">
-Implementation of the <code class="code"><span class="constructor">LONG_RUNNING</span></code> API asking Aapache Yarn
-    for resources and using <code class="code"><span class="constructor">Ketrew_daemonize</span></code> to “keep” the
-    process group together.
+<tr><td class="module"><a href="Ketrew.html">Ketrew</a></td><td><div class="info">
+The library that actually does things in a UNIX environment (contains the engine and the server)
 </div>
 </td></tr>
 </table>

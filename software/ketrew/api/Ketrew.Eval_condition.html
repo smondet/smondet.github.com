@@ -1,0 +1,30 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<link rel="stylesheet" href="style.css" type="text/css">
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<link rel="Start" href="index.html">
+<link rel="previous" href="Ketrew.Engine.html">
+<link rel="next" href="Ketrew.Explorer.html">
+<link rel="Up" href="Ketrew.html">
+<link title="Index of types" rel=Appendix href="index_types.html">
+<link title="Index of values" rel=Appendix href="index_values.html">
+<link title="Index of class methods" rel=Appendix href="index_methods.html">
+<link title="Index of class types" rel=Appendix href="index_class_types.html">
+<link title="Index of modules" rel=Appendix href="index_modules.html">
+<link title="Index of module types" rel=Appendix href="index_module_types.html">
+<link title="Ketrew_pure" rel="Chapter" href="Ketrew_pure.html">
+<link title="Ketrew" rel="Chapter" href="Ketrew.html"><title>Ketrew API : Ketrew.Eval_condition</title>
+</head>
+<body>
+<div class="navbar"><a class="pre" href="Ketrew.Engine.html" title="Ketrew.Engine">Previous</a>
+&nbsp;<a class="up" href="Ketrew.html" title="Ketrew">Up</a>
+&nbsp;<a class="post" href="Ketrew.Explorer.html" title="Ketrew.Explorer">Next</a>
+</div>
+<h1>Module <a href="type_Ketrew.Eval_condition.html">Ketrew.Eval_condition</a></h1>
+
+<pre><span class="keyword">module</span> Eval_condition: <code class="code"><span class="keyword">sig</span></code> <a href="Ketrew.Eval_condition.html">..</a> <code class="code"><span class="keyword">end</span></code></pre><hr width="100%">
+<br>
+Evaluation of <code class="code"><span class="constructor">Ketrew_target</span>.<span class="constructor">Condition</span>.t</code> values.<br>
+
+<pre><span id="VALbool"><span class="keyword">val</span> bool</span> : <code class="type"><a href="Ketrew_pure.Target.Condition.html#TYPEt">Ketrew_pure.Target.Condition.t</a> -><br>       (bool,<br>        [> `Host of<br>             [> `Execution of<br>                  < host : string; message : string; stderr : string option;<br>                    stdout : string option ><br>              | `Non_zero of string * int<br>              | `Ssh_failure of<br>                  [> `Wrong_log of string<br>                   | `Wrong_status of Unix_process.Exit_code.t ] *<br>                  string<br>              | `System of [> `Sleep of float ] * [> `Exn of exn ]<br>              | `Timeout of float<br>              | `Unix_exec of string ]<br>             Host_io.Error.execution<br>         | `Volume of [> `No_size of Ketrew_pure.Internal_pervasives.Log.t ] ])<br>       Unix_io.Deferred_result.t</code></pre></body></html>

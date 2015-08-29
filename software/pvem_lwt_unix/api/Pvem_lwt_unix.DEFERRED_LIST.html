@@ -21,6 +21,8 @@
 <h1>Module type <a href="type_Pvem_lwt_unix.DEFERRED_LIST.html">Pvem_lwt_unix.DEFERRED_LIST</a></h1>
 
 <pre><span class="keyword">module type</span> DEFERRED_LIST = <code class="code"><span class="keyword">sig</span></code> <a href="Pvem_lwt_unix.DEFERRED_LIST.html">..</a> <code class="code"><span class="keyword">end</span></code></pre><hr width="100%">
+<br>
+Monadic “operations” on lists.<br>
 
 <pre><span id="VALwhile_sequential"><span class="keyword">val</span> while_sequential</span> : <code class="type">'a list -><br>       f:('a -> ('c, 'b) Pvem_lwt_unix.Deferred_result.t) -><br>       ('c list, 'b) Pvem_lwt_unix.Deferred_result.t</code></pre><div class="info ">
 Sequentially launch <code class="code">f</code> on the first argument and

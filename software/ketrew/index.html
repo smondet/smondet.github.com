@@ -5,19 +5,14 @@
 <ul><li><a href='#FromOpam'>From Opam</a>
 </li><li><a href='#WithoutOpam'>Without Opam</a>
 </li></ul>
+</li><li><a href='#GettingStarted'>Getting Started</a>
 </li><li><a href='#TheEDSLDefiningWorkflows'>The EDSL: Defining Workflows</a>
 <ul><li><a href='#Overview'>Overview</a>
 </li><li><a href='#Example'>Example</a>
 </li></ul>
-</li><li><a href='#TheEngineRunningStuff'>The Engine: Running Stuff</a>
-<ul><li><a href='#ForTheImpatient'>For The Impatient</a>
-</li><li><a href='#Initialization'>Initialization</a>
-</li><li><a href='#StandaloneKetrew'>Standalone Ketrew</a>
-</li><li><a href='#ClientServerMode'>Client-Server Mode</a>
-</li></ul>
 </li><li><a href='#WheretoGoNext'>Where to Go Next</a>
 </li><li><a href='#License'>License</a>
-</li></ul><h2>Menu</h2><ul><li><a href='index.html'>Home</a></li><li><a href='Alternative_CLI_Application.html'>Alternative CLI Application</a></li><li><a href='Developer_Documentation.html'>Developer Documentation</a></li><li><a href='Glossary.html'>Glossary</a></li><li><a href='Long-Running_Plugins.html'>Long-Running Plugins</a></li><li><a href='Server_Commands.html'>Server Commands</a></li><li><a href='The_Configuration_File.html'>The Configuration File</a></li><li><a href='The_HTTP_API.html'>The HTTP API</a></li><li><a href='Workflow_Examples.html'>Workflow Examples</a></li><li><a href='dummy_plugin_user.html'>Plugin-Usage Example</a></li><li><a href='integration.html'>Integration Test</a></li><li><a href='main.html'>Main Test</a></li><li><a href='preconfigured_main.html'>Preconfigured Main Example</a></li><li><a href='./api/index.html'>API Documentation</a></li><li>Documentation for <a href='./doc.0.0.0/index.html'>version 0.0.0</a></li><li>Documentation for <a href='./doc.1.0.0/index.html'>version 1.0.0</a></li><li>Documentation for <a href='./doc.1.1.0/index.html'>version 1.1.0</a></li><li>Documentation for <a href='./doc.1.1.1/index.html'>version 1.1.1</a></li><li>Repository <a href='https://github.com/hammerlab/ketrew'>at Github</a></li><li>Up: <a href='../index.html'>Software Projects</a></li></ul></div><div class="col-md-9"><h1 id="KetrewKeepTrackofExperimentalWorkflows">Ketrew: Keep Track of Experimental Workflows</h1>
+</li></ul><h2>Menu</h2><ul><li><a href='index.html'>Home</a></li><li><a href='Alternative_CLI_Application.html'>Alternative CLI Application</a></li><li><a href='Developer_Documentation.html'>Developer Documentation</a></li><li><a href='Glossary.html'>Glossary</a></li><li><a href='Long-Running_Plugins.html'>Long-Running Plugins</a></li><li><a href='Server_Commands.html'>Server Commands</a></li><li><a href='Standalone_Mode.html'>Standalone Mode</a></li><li><a href='The_Configuration_File.html'>The Configuration File</a></li><li><a href='The_HTTP_API.html'>The HTTP API</a></li><li><a href='Workflow_Examples.html'>Workflow Examples</a></li><li><a href='dummy_plugin_user.html'>Plugin-Usage Example</a></li><li><a href='dummy_plugin.html'>Plugin Example</a></li><li><a href='./api/index.html'>API Documentation</a></li><li>Documentation for <a href='./doc.0.0.0/index.html'>version 0.0.0</a></li><li>Documentation for <a href='./doc.1.0.0/index.html'>version 1.0.0</a></li><li>Documentation for <a href='./doc.1.1.0/index.html'>version 1.1.0</a></li><li>Documentation for <a href='./doc.1.1.1/index.html'>version 1.1.1</a></li><li>Repository <a href='https://github.com/hammerlab/ketrew'>at Github</a></li><li>Up: <a href='../index.html'>Software Projects</a></li></ul></div><div class="col-md-9"><h1 id="KetrewKeepTrackofExperimentalWorkflows">Ketrew: Keep Track of Experimental Workflows</h1>
 
 <p><a href='https://travis-ci.org/hammerlab/ketrew'><img src='https://travis-ci.org/hammerlab/ketrew.svg?branch=master' alt='Build Status' /></a></p>
 <p><strong>Ketrew</strong> is:</p>
@@ -29,7 +24,7 @@ Ketrew can be a standalone application, or use a client-server architecture.</li
 
 <p>This is the development version of Ketrew, see also
 the documentation for the
-<a href='http://seb.mondet.org/software/ketrew/doc.1.1.0/index.html'><code>1.1.0</code></a> release.</p>
+<a href='http://seb.mondet.org/software/ketrew/doc.1.1.1/index.html'><code>1.1.1</code></a> release.</p>
 <h2 id="BuildampInstall">Build &amp; Install</h2>
 
 <p>Ketrew requires at least OCaml <strong>4.02.2</strong> and should be able to build &amp; work on
@@ -44,8 +39,41 @@ libraries.</p>
 
 <p>See the <a href='./Developer_Documentation.html'>development documentation</a> to find
 out how to build Ketrew (and its dependencies) from the sources.</p>
-<h2 id="TheEDSLDefiningWorkflows">The EDSL: Defining Workflows</h2>
+<h2 id="GettingStarted">Getting Started</h2>
 
+<p>Ketrew is very flexible and hence may seem difficult to understand, let&#39;s get a
+very minimalistic workflow running.</p>
+<p>The first time you use Ketrew, you need to configure it, simplest by calling
+<code>ketrew init</code>, and please choose an authentication token:</p>
+<pre><code>rm -fr ~/.ketrew/ # if you had a previous configuration there
+ketrew init --with-token my-not-so-secret-token
+</code></pre><p>by default this will configure Ketrew in <code>$HOME/.ketrew/</code> with a client/server
+mode <strong>not</strong> using TLS on port <code>8756</code> (see <a href='ketrew_init___help.html' title='ketrew init --help'><code>ketrew init --help</code></a> you can even ask
+it to generate self-signed TLS certificates).
+See also the <a href='./The_Configuration_File.html'>documentation</a>
+on the configuration file learn how to tweak it.</p>
+<p>You can check that the client or the server are configured:</p>
+<pre><code>ketrew print-configuration
+ketrew print-configuration --configuration-profile server
+ketrew print-configuration -P daemon</code></pre><p>You may then start a server:</p>
+<pre><code>KETREW_PROFILE=daemon ketrew start-server</code></pre><p>and then open the GUI:</p>
+<pre><code>ketrew gui</code></pre><p>which is just trying to load
+<a href='http://127.0.0.1:8756/gui?token=my-not-so-secret-token'>http://127.0.0.1:8756/gui?token=my-not-so-secret-token</a> ☺</p>
+<p>You can always stop the server or check its status:</p>
+<pre><code>ketrew stop -P daemon
+ketrew status -P daemon</code></pre><p>The <code>ketrew submit</code> sub-command can create tiny workflows:</p>
+<pre><code>ketrew submit --wet-run --tag 1st-workflow --tag command-line --daemonize /tmp/KT,&quot;du -sh $HOME&quot;
+</code></pre><p>The job will appear on the WebUI and you can inspect/restart/kill it.</p>
+<div>
+<img width="100%"
+  src="https://cloud.githubusercontent.com/assets/617111/9421006/17bceb36-483a-11e5-8845-bb2234697a14.gif">
+</div>
+
+<p>If you don&#39;t like Web UI&#39;s you can use the text-based UI:</p>
+<pre><code>ketrew interact</code></pre><h2 id="TheEDSLDefiningWorkflows">The EDSL: Defining Workflows</h2>
+
+<p>The previous section uses <code>ketrew submit</code> to launch an extremely simple
+workflow, to go further we need the EDSL.</p>
 <h3 id="Overview">Overview</h3>
 
 <p>The EDSL is an OCaml library where all the functions are used to build a
@@ -59,7 +87,7 @@ if the target fails, and</li><li><em>success-triggers:</em> targets that will be
 succeeds.</li></ul>
 
 <p>Any OCaml program can use the EDSL (script, compiled, or even inside the
-toplevel), see the <a href='api/Ketrew_edsl.html'>documentation of the EDSL API</a>.</p>
+toplevel), see the <a href='api/EDSL.html'>documentation of the EDSL API</a>.</p>
 <h3 id="Example">Example</h3>
 
 <p>This example is a “single-target” workflow that runs an arbitrary shell command
@@ -110,61 +138,22 @@ on an <a href='http://en.wikipedia.org/wiki/Platform_LSF'>LSF-based</a> cluster:
      If Ketrew is in Client-Server mode, this means sending the workflow to the
      server over HTTPS. The server will start running the workflow right away.  *)</span></pre>
 
-<p>If you actually have access to an LSF cluster and want to try this workflow see
-below: <a href='#ForTheImpatient'>“For The Impatient”</a>.</p>
-<p>To learn more about the EDSL, you can also explore <a href='Workflow_Examples.html'>examples of more and more
+<p>If you actually have access to an LSF cluster and want to try this workflow,
+put it in a file <code>my_second_workflow.ml</code>, and simply:</p>
+<pre><code>ocaml my_second_workflow.ml &#39;du -sh $HOME&#39;</code></pre><p>To learn more about the EDSL, you can also explore <a href='Workflow_Examples.html'>examples of more and more
 complicated workflows</a> (<em>work-in-progress</em>).</p>
-<h2 id="TheEngineRunningStuff">The Engine: Running Stuff</h2>
-
-<h3 id="ForTheImpatient">For The Impatient</h3>
-
-<p>Let&#39;s say the example above is in a file <code>my_first_workflow.ml</code>:</p>
-<p>The first time you use Ketrew, you need to call <code>init</code>:</p>
-<pre><code>ketrew init</code></pre><p>Then you can <em>submit</em> your workflow:</p>
-<pre><code>ocaml my_first_workflow.ml &#39;du -sh $HOME&#39;</code></pre><p>When the function <a href='api/Ketrew.Client.html#VALsubmit' title='Ketrew.Client.submit'><code>Ketrew.Client.submit</code></a> is called, the workflow will be
-<em>submitted</em> but not yet running. To run the <em>engine</em> do:</p>
-<pre><code>ketrew run loop</code></pre><p>The engine will run until you type <code>q</code> or until there is nothing left to do.</p>
-<p>Anytime, you can go a check the status and do many things with your
-workflows, for example with:</p>
-<pre><code>ketrew interact</code></pre><p>which is an interactive text-based interface.</p>
-<h3 id="Initialization">Initialization</h3>
-
-<p>Let&#39;s go back to the beginning; to create a configuration file, run:</p>
-<pre><code>ketrew init</code></pre><p>This creates <code>$HOME/.ketrew/configuration.json</code> (see <a href='ketrew_init___help.html' title='ketrew init --help'><code>ketrew init --help</code></a> to
-choose another path).</p>
-<p>By default this configures Ketrew in <strong>Standalone</strong> mode;
-See the <a href='./The_Configuration_File.html'>documentation</a>
-on the configuration file to tweak it.</p>
-<h3 id="StandaloneKetrew">Standalone Ketrew</h3>
-
-<p>The default for Ketrew is to run in “Standalone” mode.
-From the command-line client, one can both query and run the engine.  See
-first: <a href='ketrew___help.html' title='ketrew --help'><code>ketrew --help</code></a>; then:</p>
-<ul><li>To display the current status: <a href='ketrew_status___help.html' title='ketrew status --help'><code>ketrew status --help</code></a>.</li><li>To run as many steps as possible until a “fix-point” is reached:
-<code>ketrew run fix</code> (see <a href='ketrew_run_engine___help.html' title='ketrew run-engine --help'><code>ketrew run-engine --help</code></a>).</li><li>To kill running jobs use <code>ketrew kill</code> + the target Identifier,<br />
-or do an interactive murder: <code>ketrew kill --interactive</code>
-(see <a href='ketrew_kill___help.html' title='ketrew kill --help'><code>ketrew kill --help</code></a>).</li></ul>
-
-<p>See also <a href='ketrew_interact___help.html' title='ketrew interact --help'><code>ketrew interact --help</code></a> or <a href='ketrew_explore___help.html' title='ketrew explore --help'><code>ketrew explore --help</code></a> for fun
-<em>one-key-based</em> navigation.</p>
-<h3 id="ClientServerMode">Client-Server Mode</h3>
-
-<p>In this mode, the Ketrew engine runs a proper server which is
-accessed over an HTTP API.</p>
-<p>See the commands <a href='ketrew_start_server___help.html' title='ketrew start-server --help'><code>ketrew start-server --help</code></a>
-and <a href='ketrew_stop_server___help.html' title='ketrew stop-server --help'><code>ketrew stop-server --help</code></a>.</p>
-<p>The client works in the same way as in “Standalone” mode.</p>
 <h2 id="WheretoGoNext">Where to Go Next</h2>
 
 <p>From here:</p>
 <ul><li>To write workflows for Ketrew,
 see <a href='Workflow_Examples.html'><code>src/test/Workflow_Examples.ml</code></a> for
 examples and the <a href='api/Ketrew_edsl.html'>documentation of the EDSL API</a>.</li><li>To configure Ketrew use the configuration file
-<a href='./The_Configuration_File.html'>documentation</a>.</li><li>You may want to “extend” Ketrew with new ways of running “long-running&quot;
+<a href='./The_Configuration_File.html'>documentation</a>.</li><li>If you don&#39;t want a server running and listening on HTTP(S), Ketrew can run a
+ <em>degraded</em> mode called <a href='./Standalone_Mode.html'>“standalone.”</a></li><li>You may want to “extend” Ketrew with new ways of running “long-running&quot;
 computations:  see the documentation on
 <a href='./Long-Running_Plugins.html'>plugins</a>,
 and the examples in the library:
-like <a href='api/Ketrew_lsf.html'><a href='api/Ketrew_lsf.html' title='Ketrew_lsf'><code>Ketrew_lsf</code></a></a> or in the tests:
+like <a href='api/Lsf.html'><a href='api/Ketrew.Lsf.html' title='Ketrew.Lsf'><code>Ketrew.Lsf</code></a></a> or in the tests:
 <a href='dummy_plugin.html'><code>src/test/dummy_plugin.ml</code></a>.</li><li>You may want to extend Ketrew, or preconfigure it, <em>without</em> configuration
 files or dynamically loaded libraries: just
 <a href='./Alternative_CLI_Application.html'>create</a> your own comand-line app.</li><li>If you are using Ketrew in server mode, you may want to know about the
@@ -173,7 +162,7 @@ listens on a Unix-pipe.</li><li>You may want to call out directly to the <a href
 (i.e. without <code>ketrew</code> as a client).</li><li>If you want to help or simply to understand Ketrew
 see the <a href='./Developer_Documentation.html'>development</a>
 documentation, and have a look at the modules
-like <a href='api/Ketrew_engine.html'><a href='api/Ketrew_engine.html' title='Ketrew_engine'><code>Ketrew_engine</code></a></a>.</li></ul>
+like <a href='api/Engine.html'><a href='api/Ketrew.Engine.html' title='Ketrew.Engine'><code>Ketrew.Engine</code></a></a>.</li></ul>
 
 <h2 id="License">License</h2>
 
