@@ -1,0 +1,27 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<link rel="stylesheet" href="style.css" type="text/css">
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<link rel="Start" href="index.html">
+<link rel="previous" href="Ketrew.Persistent_data.Killing_targets.html">
+<link rel="Up" href="Ketrew.Persistent_data.html">
+<link title="Index of types" rel=Appendix href="index_types.html">
+<link title="Index of values" rel=Appendix href="index_values.html">
+<link title="Index of class methods" rel=Appendix href="index_methods.html">
+<link title="Index of class types" rel=Appendix href="index_class_types.html">
+<link title="Index of modules" rel=Appendix href="index_modules.html">
+<link title="Index of module types" rel=Appendix href="index_module_types.html">
+<link title="Ketrew_pure" rel="Chapter" href="Ketrew_pure.html">
+<link title="Ketrew" rel="Chapter" href="Ketrew.html"><title>Ketrew API : Ketrew.Persistent_data.Adding_targets</title>
+</head>
+<body>
+<div class="navbar"><a class="pre" href="Ketrew.Persistent_data.Killing_targets.html" title="Ketrew.Persistent_data.Killing_targets">Previous</a>
+&nbsp;<a class="up" href="Ketrew.Persistent_data.html" title="Ketrew.Persistent_data">Up</a>
+&nbsp;</div>
+<h1>Module <a href="type_Ketrew.Persistent_data.Adding_targets.html">Ketrew.Persistent_data.Adding_targets</a></h1>
+
+<pre><span class="keyword">module</span> Adding_targets: <code class="code"><span class="keyword">sig</span></code> <a href="Ketrew.Persistent_data.Adding_targets.html">..</a> <code class="code"><span class="keyword">end</span></code></pre><hr width="100%">
+
+<pre><span id="VALregister_targets_to_add"><span class="keyword">val</span> register_targets_to_add</span> : <code class="type"><a href="Ketrew.Persistent_data.html#TYPEt">Ketrew.Persistent_data.t</a> -><br>       <a href="Ketrew_pure.Target.html#TYPEt">Ketrew_pure.Target.t</a> list -><br>       (unit,<br>        [> `Database of [> `Act of Trakeva.Action.t | `Load of string ] * string<br>         | `Database_unavailable of string ])<br>       Unix_io.Deferred_result.t</code></pre>
+<pre><span id="VALcheck_and_really_add_targets"><span class="keyword">val</span> check_and_really_add_targets</span> : <code class="type"><a href="Ketrew.Persistent_data.html#TYPEt">Ketrew.Persistent_data.t</a> -><br>       (bool,<br>        [> `Database of<br>             [> `Act of Trakeva.Action.t<br>              | `Get of Trakeva.Key_in_collection.t<br>              | `Get_all of string<br>              | `Load of string ] *<br>             string<br>         | `Database_unavailable of string<br>         | `Missing_data of string<br>         | `Target of [> `Deserilization of string ] ])<br>       Unix_io.Deferred_result.t</code></pre></body></html>

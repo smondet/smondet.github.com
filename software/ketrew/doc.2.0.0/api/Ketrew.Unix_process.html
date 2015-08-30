@@ -1,0 +1,47 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<link rel="stylesheet" href="style.css" type="text/css">
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<link rel="Start" href="index.html">
+<link rel="previous" href="Ketrew.Server.html">
+<link rel="next" href="Ketrew.Yarn.html">
+<link rel="Up" href="Ketrew.html">
+<link title="Index of types" rel=Appendix href="index_types.html">
+<link title="Index of values" rel=Appendix href="index_values.html">
+<link title="Index of class methods" rel=Appendix href="index_methods.html">
+<link title="Index of class types" rel=Appendix href="index_class_types.html">
+<link title="Index of modules" rel=Appendix href="index_modules.html">
+<link title="Index of module types" rel=Appendix href="index_module_types.html">
+<link title="Ketrew_pure" rel="Chapter" href="Ketrew_pure.html">
+<link title="Ketrew" rel="Chapter" href="Ketrew.html"><title>Ketrew API : Ketrew.Unix_process</title>
+</head>
+<body>
+<div class="navbar"><a class="pre" href="Ketrew.Server.html" title="Ketrew.Server">Previous</a>
+&nbsp;<a class="up" href="Ketrew.html" title="Ketrew">Up</a>
+&nbsp;<a class="post" href="Ketrew.Yarn.html" title="Ketrew.Yarn">Next</a>
+</div>
+<h1>Module <a href="type_Ketrew.Unix_process.html">Ketrew.Unix_process</a></h1>
+
+<pre><span class="keyword">module</span> Unix_process: <code class="code"><span class="keyword">sig</span></code> <a href="Ketrew.Unix_process.html">..</a> <code class="code"><span class="keyword">end</span></code></pre><hr width="100%">
+<br>
+Manage calls to Unix processes<br>
+
+<pre><span class="keyword">module</span> <a href="Ketrew.Unix_process.Exit_code.html">Exit_code</a>: <code class="code"><span class="keyword">sig</span></code> <a href="Ketrew.Unix_process.Exit_code.html">..</a> <code class="code"><span class="keyword">end</span></code></pre><div class="info">
+Higher-level representation of Unix exit codes.
+</div>
+
+<pre><span id="VALexec"><span class="keyword">val</span> exec</span> : <code class="type">?bin:string -><br>       string list -><br>       (string * string * <a href="Ketrew.Unix_process.Exit_code.html#TYPEt">Exit_code.t</a>,<br>        [> `Process of [> `Exec of string * string list ] * [> `Exn of exn ] ])<br>       Unix_io.Deferred_result.t</code></pre><div class="info ">
+Execute a process with a given list of strings as “<code class="code">argv</code>”, if you can
+    provide the <code class="code">~bin</code> argument to specify the actual file to be executed. The
+    function returns the tuple <code class="code">(stdout, stderr, exit_code)</code>.<br>
+</div>
+
+<pre><span id="VALsucceed"><span class="keyword">val</span> succeed</span> : <code class="type">?bin:string -><br>       string list -><br>       (string * string,<br>        [> `Process of<br>             [> `Exec of string * string list ] *<br>             [> `Exn of exn | `Non_zero of string ] ])<br>       Unix_io.Deferred_result.t</code></pre><div class="info ">
+Do like <a href="Ketrew.Unix_process.html#VALexec"><code class="code"><span class="constructor">Ketrew</span>.<span class="constructor">Unix_process</span>.exec</code></a> but fail if the process does not exit with <code class="code">0</code> status.<br>
+</div>
+
+<pre><span id="VALerror_to_string"><span class="keyword">val</span> error_to_string</span> : <code class="type">[< `Process of<br>            [< `Exec of string * string list ] *<br>            [< `Exn of exn | `Non_zero of string ] ] -><br>       string</code></pre><div class="info ">
+Display-friendly version of the errors of this module.<br>
+</div>
+</body></html>

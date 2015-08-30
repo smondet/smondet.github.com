@@ -1,0 +1,44 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<link rel="stylesheet" href="style.css" type="text/css">
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<link rel="Start" href="index.html">
+<link rel="previous" href="Ketrew.Plugin.html">
+<link rel="next" href="Ketrew.Unix_process.html">
+<link rel="Up" href="Ketrew.html">
+<link title="Index of types" rel=Appendix href="index_types.html">
+<link title="Index of values" rel=Appendix href="index_values.html">
+<link title="Index of class methods" rel=Appendix href="index_methods.html">
+<link title="Index of class types" rel=Appendix href="index_class_types.html">
+<link title="Index of modules" rel=Appendix href="index_modules.html">
+<link title="Index of module types" rel=Appendix href="index_module_types.html">
+<link title="Ketrew_pure" rel="Chapter" href="Ketrew_pure.html">
+<link title="Ketrew" rel="Chapter" href="Ketrew.html"><title>Ketrew API : Ketrew.Server</title>
+</head>
+<body>
+<div class="navbar"><a class="pre" href="Ketrew.Plugin.html" title="Ketrew.Plugin">Previous</a>
+&nbsp;<a class="up" href="Ketrew.html" title="Ketrew">Up</a>
+&nbsp;<a class="post" href="Ketrew.Unix_process.html" title="Ketrew.Unix_process">Next</a>
+</div>
+<h1>Module <a href="type_Ketrew.Server.html">Ketrew.Server</a></h1>
+
+<pre><span class="keyword">module</span> Server: <code class="code"><span class="keyword">sig</span></code> <a href="Ketrew.Server.html">..</a> <code class="code"><span class="keyword">end</span></code></pre><hr width="100%">
+<br>
+Implementation of the HTTP server.<br>
+
+<pre><span id="VALstart"><span class="keyword">val</span> start</span> : <code class="type">configuration:<a href="Ketrew.Configuration.html#TYPEserver">Ketrew.Configuration.server</a> -><br>       (unit,<br>        [> `Database of Trakeva.Error.t<br>         | `Dyn_plugin of [> `Dynlink_error of Dynlink.error | `Findlib of exn ]<br>         | `Failure of bytes<br>         | `IO of [> `Read_file_exn of bytes * exn ]<br>         | `Missing_data of bytes<br>         | `Server_status_error of bytes<br>         | `Start_server_error of bytes<br>         | `System of<br>             [> `File_info of bytes | `List_directory of bytes | `Remove of bytes ] *<br>             [> `Exn of exn ]<br>         | `Target of [> `Deserilization of bytes ] ])<br>       Unix_io.Deferred_result.t</code></pre><div class="info ">
+Start the server according to its configuration.<br>
+</div>
+
+<pre><span id="VALstatus"><span class="keyword">val</span> status</span> : <code class="type">configuration:<a href="Ketrew.Configuration.html#TYPEserver">Ketrew.Configuration.server</a> -><br>       ([ `Not_responding of string<br>        | `Running<br>        | `Wrong_response of Cohttp.Response.t ],<br>        [> `Failure of string | `Server_status_error of string ])<br>       Unix_io.Deferred_result.t</code></pre><div class="info ">
+Ask for the status of the server running locally by calling
+    <code class="code"><span class="string">"https://127.0.0.1:&lt;port&gt;/hello"</span></code>.<br>
+</div>
+
+<pre><span id="VALstop"><span class="keyword">val</span> stop</span> : <code class="type">configuration:<a href="Ketrew.Configuration.html#TYPEserver">Ketrew.Configuration.server</a> -><br>       ([ `Done | `Timeout ],<br>        [> `IO of [> `Exn of exn | `File_exists of string | `Wrong_path of string ]<br>         | `Stop_server_error of string<br>         | `System of [> `File_info of string ] * [> `Exn of exn ] ])<br>       Unix_io.Deferred_result.t</code></pre><div class="info ">
+Stop the server by calling the commad <code class="code"><span class="string">"die"</span></code> on the configured
+    command-pipe, stopping will fail with <code class="code"><span class="keywordsign">`</span><span class="constructor">Stop_server_error</span> _</code> if
+    that path is not configured.<br>
+</div>
+</body></html>

@@ -1,0 +1,44 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<link rel="stylesheet" href="style.css" type="text/css">
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<link rel="Start" href="index.html">
+<link rel="previous" href="Ketrew.Client.html">
+<link rel="next" href="Ketrew.Configuration.html">
+<link rel="Up" href="Ketrew.html">
+<link title="Index of types" rel=Appendix href="index_types.html">
+<link title="Index of values" rel=Appendix href="index_values.html">
+<link title="Index of class methods" rel=Appendix href="index_methods.html">
+<link title="Index of class types" rel=Appendix href="index_class_types.html">
+<link title="Index of modules" rel=Appendix href="index_modules.html">
+<link title="Index of module types" rel=Appendix href="index_module_types.html">
+<link title="Ketrew_pure" rel="Chapter" href="Ketrew_pure.html">
+<link title="Ketrew" rel="Chapter" href="Ketrew.html"><title>Ketrew API : Ketrew.Command_line</title>
+</head>
+<body>
+<div class="navbar"><a class="pre" href="Ketrew.Client.html" title="Ketrew.Client">Previous</a>
+&nbsp;<a class="up" href="Ketrew.html" title="Ketrew">Up</a>
+&nbsp;<a class="post" href="Ketrew.Configuration.html" title="Ketrew.Configuration">Next</a>
+</div>
+<h1>Module <a href="type_Ketrew.Command_line.html">Ketrew.Command_line</a></h1>
+
+<pre><span class="keyword">module</span> Command_line: <code class="code"><span class="keyword">sig</span></code> <a href="Ketrew.Command_line.html">..</a> <code class="code"><span class="keyword">end</span></code></pre><hr width="100%">
+<br>
+Command line interface to the engine.<br>
+
+<pre><span id="VALrun_main"><span class="keyword">val</span> run_main</span> : <code class="type">?argv:string array -><br>       ?override_configuration:Configuration.t -><br>       ?additional_commands:((unit, string) Unix_io.Deferred_result.t<br>                             Cmdliner.Term.t * Cmdliner.Term.info)<br>                            list -><br>       unit -> [ `Never_returns ]</code></pre><div class="info ">
+The “main” function for the application, it will <code class="code">exit n</code> with <code class="code">n = 0</code> if
+    succeed or <code class="code">n &gt; 0</code> if an error occurs.
+<p>
+<ul>
+<li><code class="code">argv</code>: one can provide an array of arguments to be used instead of
+    <code class="code"><span class="constructor">Sys</span>.argv</code>.</li>
+<li><code class="code">override_configuration</code>: providing a custom configuration will prevent
+    Ketrew from looking up a configuration file.</li>
+<li><code class="code">additional_commands</code>: a list of <code class="code"><span class="constructor">Cmdliner</span></code> commands to add to the
+    interface.</li>
+</ul>
+<br>
+</div>
+</body></html>

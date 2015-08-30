@@ -1,0 +1,55 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<link rel="stylesheet" href="style.css" type="text/css">
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<link rel="Start" href="index.html">
+<link rel="previous" href="Ketrew.Unix_process.html">
+<link rel="next" href="Ketrew.Long_running.html">
+<link rel="Up" href="Ketrew.html">
+<link title="Index of types" rel=Appendix href="index_types.html">
+<link title="Index of values" rel=Appendix href="index_values.html">
+<link title="Index of class methods" rel=Appendix href="index_methods.html">
+<link title="Index of class types" rel=Appendix href="index_class_types.html">
+<link title="Index of modules" rel=Appendix href="index_modules.html">
+<link title="Index of module types" rel=Appendix href="index_module_types.html">
+<link title="Ketrew_pure" rel="Chapter" href="Ketrew_pure.html">
+<link title="Ketrew" rel="Chapter" href="Ketrew.html"><title>Ketrew API : Ketrew.Yarn</title>
+</head>
+<body>
+<div class="navbar"><a class="pre" href="Ketrew.Unix_process.html" title="Ketrew.Unix_process">Previous</a>
+&nbsp;<a class="up" href="Ketrew.html" title="Ketrew">Up</a>
+&nbsp;<a class="post" href="Ketrew.Long_running.html" title="Ketrew.Long_running">Next</a>
+</div>
+<h1>Module <a href="type_Ketrew.Yarn.html">Ketrew.Yarn</a></h1>
+
+<pre><span class="keyword">module</span> Yarn: <code class="code"><span class="keyword">sig</span></code> <a href="Ketrew.Yarn.html">..</a> <code class="code"><span class="keyword">end</span></code></pre><hr width="100%">
+<br>
+Implementation of the <code class="code"><span class="constructor">LONG_RUNNING</span></code> API asking Aapache Yarn
+    for resources and using <code class="code"><span class="constructor">Ketrew_daemonize</span></code> to “keep” the
+    process group together.<br>
+<br>
+Implementation of the <code class="code"><span class="constructor">LONG_RUNNING</span></code> API asking Aapache Yarn
+    for resources and using <code class="code"><span class="constructor">Ketrew_daemonize</span></code> to “keep” the
+    process group together.<br>
+<br>
+This module implements <code class="code"><span class="constructor">Ketrew_long_running</span>.<span class="constructor">LONG_RUNNING</span></code> plugin-API.<br>
+
+<pre><span class="keyword">include</span> Long_running.LONG_RUNNING</pre>
+<div class="info ">
+The “standard” plugin-API.<br>
+</div>
+
+<pre><span id="TYPEdistributed_shell_parameters"><span class="keyword">type</span> <code class="type"></code>distributed_shell_parameters</span> </pre>
+
+
+<pre><span id="VALdistributed_shell_program"><span class="keyword">val</span> distributed_shell_program</span> : <code class="type">?hadoop_bin:string -><br>       ?distributed_shell_shell_jar:string -><br>       container_memory:[ `GB of int | `MB of int | `Raw of string ] -><br>       timeout:[ `Raw of string | `Seconds of int ] -><br>       application_name:string -><br>       <a href="Ketrew_pure.Program.html#TYPEt">Ketrew_pure.Program.t</a> -><br>       [> `Distributed_shell of<br>            <a href="Ketrew.Yarn.html#TYPEdistributed_shell_parameters">distributed_shell_parameters</a> * <a href="Ketrew_pure.Program.html#TYPEt">Ketrew_pure.Program.t</a> ]</code></pre><div class="info ">
+Create a value <code class="code"><span class="keywordsign">`</span><span class="constructor">Distributed_shell</span> _</code> to feed to <a href="Ketrew.Yarn.html#VALcreate"><code class="code"><span class="constructor">Ketrew</span>.<span class="constructor">Yarn</span>.create</code></a>,
+    see <code class="code"><span class="constructor">Edsl</span>.yarn_distributed_shell</code>.<br>
+</div>
+
+<pre><span id="VALcreate"><span class="keyword">val</span> create</span> : <code class="type">?host:<a href="Ketrew_pure.Host.html#TYPEt">Ketrew_pure.Host.t</a> -><br>       ?daemonize_using:[ `Nohup_setsid | `Python_daemon ] -><br>       ?daemon_start_timeout:float -><br>       [ `Distributed_shell of<br>           <a href="Ketrew.Yarn.html#TYPEdistributed_shell_parameters">distributed_shell_parameters</a> * <a href="Ketrew_pure.Program.html#TYPEt">Ketrew_pure.Program.t</a><br>       | `Yarn_application of <a href="Ketrew_pure.Program.html#TYPEt">Ketrew_pure.Program.t</a> ] -><br>       [> `Long_running of string * string ]</code></pre><div class="info ">
+Create a “long-running” <a href="Ketrew_pure.Target.html#VALbuild_process"><code class="code"><span class="constructor">Ketrew_pure</span>.<span class="constructor">Target</span>.build_process</code></a> (run parameters
+    are already serialized), see <code class="code"><span class="constructor">Edsl</span>.yarn_application</code>.<br>
+</div>
+</body></html>
