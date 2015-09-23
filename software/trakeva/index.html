@@ -13,20 +13,23 @@ transactional key-value stores with different backends.</p>
 <p>The interfaces are defined in the <code>Trakeva</code> module, we have, for now, one
 DB implementation of the module type <code>Trakeva.KEY_VALUE_STORE</code>:</p>
 <ul><li><a href='api/Trakeva_sqlite.html' title='Trakeva_sqlite'><code>Trakeva_sqlite</code></a> (in the separate library <code>trakeva_sqlite</code>) uses
- <a href='http://mmottl.github.io/sqlite3-ocaml/'>Sqlite3-ocaml</a>.</li></ul>
+ <a href='http://mmottl.github.io/sqlite3-ocaml/'>Sqlite3-ocaml</a>.</li><li><a href='api/Trakeva_postgresql.html' title='Trakeva_postgresql'><code>Trakeva_postgresql</code></a> (in the separate library <code>trakeva_postgresql</code>) uses
+ <a href='http://mmottl.github.io/postgresql-ocaml/'><code>postgresql-ocaml</code></a></li><li><a href='api/Trakeva_of_uri.html' title='Trakeva_of_uri'><code>Trakeva_of_uri</code></a> (in the separate library <code>trakeva_of_uri</code>)
+ chooses dynamically between the 2 backends above thanks to the URI passed to
+ the <a href='api/Trakeva_of_uri.html#VALload' title='Trakeva_of_uri.load'><code>Trakeva_of_uri.load</code></a> function. The backends are optionally compiled so
+ they might be missing;<code>load</code> would then throw an exception.</li></ul>
 
 <p>There is also a very basic in “in-memory” cache functor, adding a cache layer on
 top of any key-value DB, cf. <a href='api/Trakeva_cache.html' title='Trakeva_cache'><code>Trakeva_cache</code></a>.</p>
-<p>This is Trakeva <code>0.0.0</code>, see also the repository
+<p>This is Trakeva <code>0.0.0+master</code>, see also the repository
 <a href='https://github.com/smondet/trakeva'><code>smondet/trakeva</code></a> for issues/questions.</p>
 <h2 id="Build">Build</h2>
 
 <p>To install the libraries use opam:</p>
-<pre><code>opam install trakeva</code></pre><p>If the library <code>sqlite3</code> is installed the library <code>trakeva_sqlite</code> will be
-picked-up for installation too (higly recommended).</p>
-<p>To get the development version you can use</p>
-<pre><code>opam remote add smondet https://github.com/smondet/dev-opam-repo.git
-opam update</code></pre><p>or from the repository, just run:</p>
+<pre><code>opam install trakeva</code></pre><p>If the packages <code>sqlite3</code> and/or <code>postgresql</code> are installed, then the libraries
+<code>trakeva_sqlite</code> and/or <code>trakeva_postgresql</code> will be picked-up for installation
+too.</p>
+<p>To build the development version from the repository, just run:</p>
 <pre><code>make configure
 make</code></pre><p>(this will enable all backends and the tests).</p>
 <h2 id="Tests">Tests</h2>
@@ -35,7 +38,11 @@ make</code></pre><p>(this will enable all backends and the tests).</p>
 <a href='http://seb.mondet.org/software/sosa/index.html'>Sosa</a> library
 (<code>opam install sosa</code>).</p>
 <p>To run the unit tests:</p>
-<pre><code>./trakeva_tests</code></pre><p>To run the benchmarks:</p>
+<pre><code>./trakeva_tests</code></pre><p>The main test starts a temporary Postgresql server on port <code>4242</code>, this can be
+overridden with the environment variable <code>POSTGRESQL_PORT</code>.
+To use an existing database server instead of creating one use the variable
+<code>POSTGRESQL_CONNECTION_INFO</code>.</p>
+<p>To run the benchmarks:</p>
 <pre><code>./trakeva_tests bench collection=100 kb=5     # quick bench
 ./trakeva_tests bench collection=1000 kb=20   # about a minute long</code></pre><p>To build the documentation:</p>
 <pre><code>make doc</code></pre><p>and checkout <code>_doc/index.html</code>.</p>

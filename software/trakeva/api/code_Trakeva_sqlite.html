@@ -10,6 +10,8 @@
 <link title="Main" rel="Chapter" href="Main.html">
 <link title="Trakeva" rel="Chapter" href="Trakeva.html">
 <link title="Trakeva_cache" rel="Chapter" href="Trakeva_cache.html">
+<link title="Trakeva_of_uri" rel="Chapter" href="Trakeva_of_uri.html">
+<link title="Trakeva_postgresql" rel="Chapter" href="Trakeva_postgresql.html">
 <link title="Trakeva_sqlite" rel="Chapter" href="Trakeva_sqlite.html"><title>Trakeva API : Trakeva_sqlite</title>
 </head>
 <body>
@@ -49,16 +51,26 @@
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">try</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Ok</span>&nbsp;(f&nbsp;())<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">with</span>&nbsp;e&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;on_exn&nbsp;e)&nbsp;()<br>
 <br>
+<span class="comment">(*<br>
+let&nbsp;escape_blob&nbsp;s&nbsp;=&nbsp;<br>
+&nbsp;&nbsp;let&nbsp;b&nbsp;=&nbsp;Buffer.create&nbsp;(String.length&nbsp;s&nbsp;+&nbsp;4)&nbsp;in<br>
+&nbsp;&nbsp;Buffer.add_char&nbsp;b&nbsp;'\'';<br>
+&nbsp;&nbsp;String.iter&nbsp;s&nbsp;~f:(function<br>
+&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;'\''&nbsp;-&gt;&nbsp;Buffer.add_string&nbsp;b&nbsp;"''"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;other&nbsp;-&gt;&nbsp;Buffer.add_char&nbsp;b&nbsp;other<br>
+&nbsp;&nbsp;&nbsp;&nbsp;);<br>
+&nbsp;&nbsp;Buffer.add_char&nbsp;b&nbsp;'\'';<br>
+&nbsp;&nbsp;Buffer.contents&nbsp;b<br>
+*)</span>&nbsp;&nbsp;&nbsp;&nbsp;<br>
 <span class="keyword">let</span>&nbsp;escape_blob&nbsp;s&nbsp;=&nbsp;<br>
-&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;b&nbsp;=&nbsp;<span class="constructor">Buffer</span>.create&nbsp;(<span class="constructor">String</span>.length&nbsp;s&nbsp;+&nbsp;4)&nbsp;<span class="keyword">in</span><br>
-&nbsp;&nbsp;<span class="constructor">Buffer</span>.add_char&nbsp;b&nbsp;<span class="string">'\''</span>;<br>
-&nbsp;&nbsp;<span class="constructor">String</span>.iter&nbsp;s&nbsp;~f:(<span class="keyword">function</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="string">'\''</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Buffer</span>.add_string&nbsp;b&nbsp;<span class="string">"''"</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;other&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Buffer</span>.add_char&nbsp;b&nbsp;other<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;b&nbsp;=&nbsp;<span class="constructor">Buffer</span>.create&nbsp;(<span class="constructor">String</span>.length&nbsp;s&nbsp;*&nbsp;2&nbsp;+&nbsp;4)&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;<span class="constructor">Buffer</span>.add_string&nbsp;b&nbsp;<span class="string">"X'"</span>;<br>
+&nbsp;&nbsp;<span class="constructor">String</span>.iter&nbsp;s&nbsp;~f:(<span class="keyword">fun</span>&nbsp;c&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Buffer</span>.add_string&nbsp;b&nbsp;(sprintf&nbsp;<span class="string">"%02X"</span>&nbsp;(int_of_char&nbsp;c));<br>
 &nbsp;&nbsp;&nbsp;&nbsp;);<br>
 &nbsp;&nbsp;<span class="constructor">Buffer</span>.add_char&nbsp;b&nbsp;<span class="string">'\''</span>;<br>
 &nbsp;&nbsp;<span class="constructor">Buffer</span>.contents&nbsp;b<br>
-<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<br>
 <br>
 <span class="keyword">let</span>&nbsp;default_table&nbsp;=&nbsp;<span class="string">"trakeva_default_table"</span><br>
 <br>

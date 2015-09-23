@@ -14,6 +14,8 @@
 <link title="Main" rel="Chapter" href="Main.html">
 <link title="Trakeva" rel="Chapter" href="Trakeva.html">
 <link title="Trakeva_cache" rel="Chapter" href="Trakeva_cache.html">
+<link title="Trakeva_of_uri" rel="Chapter" href="Trakeva_of_uri.html">
+<link title="Trakeva_postgresql" rel="Chapter" href="Trakeva_postgresql.html">
 <link title="Trakeva_sqlite" rel="Chapter" href="Trakeva_sqlite.html"><title>Trakeva API : Main</title>
 </head>
 <body>
@@ -35,5 +37,8 @@
 <pre><span id="VALbenchmark_01"><span class="keyword">val</span> <a href="code_VALMain.benchmark_01.html">benchmark_01</a></span> : <code class="type">(module Main.TEST_DATABASE) -><br>       string -><br>       ?collection:int -><br>       ?big_string_kb:int -><br>       unit -><br>       (string * (string * float) list,<br>        [> `Database of<br>             [> `Act of <a href="Trakeva.Action.html#TYPEt">Trakeva.Action.t</a><br>              | `Close<br>              | `Get of <a href="Trakeva.Key_in_collection.html#TYPEt">Trakeva.Key_in_collection.t</a><br>              | `Get_all of string<br>              | `Iter of string<br>              | `Load of string ] *<br>             string ])<br>       Pvem_lwt_unix.Deferred_result.t</code></pre>
 <pre><span class="keyword">module</span> <a href="Main.Test_sqlite.html">Test_sqlite</a>: <code class="code"><span class="keyword">sig</span></code> <a href="Main.Test_sqlite.html">..</a> <code class="code"><span class="keyword">end</span></code></pre>
 <pre><span class="keyword">module</span> <a href="Main.Test_sqlite_with_greedy_cache.html">Test_sqlite_with_greedy_cache</a>: <code class="code"><span class="keyword">sig</span></code> <a href="Main.Test_sqlite_with_greedy_cache.html">..</a> <code class="code"><span class="keyword">end</span></code></pre>
+<pre><span class="keyword">module</span> <a href="Main.Test_postgresql.html">Test_postgresql</a>: <code class="code"><span class="keyword">sig</span></code> <a href="Main.Test_postgresql.html">..</a> <code class="code"><span class="keyword">end</span></code></pre>
+<pre><span id="VALpg_server"><span class="keyword">val</span> <a href="code_VALMain.pg_server.html">pg_server</a></span> : <code class="type">unit -> < conninfo : string; port : int; status : unit; stop : unit ></code></pre>
+<pre><span id="VALindependent_pg_test"><span class="keyword">val</span> <a href="code_VALMain.independent_pg_test.html">independent_pg_test</a></span> : <code class="type">unit -> 'a</code></pre>
 <pre><span id="VALhas_arg"><span class="keyword">val</span> <a href="code_VALMain.has_arg.html">has_arg</a></span> : <code class="type">'a list -> 'a list -> bool</code></pre>
 <pre><span id="VALfind_arg"><span class="keyword">val</span> <a href="code_VALMain.find_arg.html">find_arg</a></span> : <code class="type">String.t list -><br>       name:String.t -> convert:(String.t -> 'a option) -> 'a option</code></pre></body></html>

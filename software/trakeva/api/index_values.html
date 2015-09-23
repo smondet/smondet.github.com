@@ -11,6 +11,8 @@
 <link title="Main" rel="Chapter" href="Main.html">
 <link title="Trakeva" rel="Chapter" href="Trakeva.html">
 <link title="Trakeva_cache" rel="Chapter" href="Trakeva_cache.html">
+<link title="Trakeva_of_uri" rel="Chapter" href="Trakeva_of_uri.html">
+<link title="Trakeva_postgresql" rel="Chapter" href="Trakeva_postgresql.html">
 <link title="Trakeva_sqlite" rel="Chapter" href="Trakeva_sqlite.html"><title>Trakeva API : Index of values</title>
 </head>
 <body>
@@ -50,6 +52,13 @@ Close the DB.
 <tr><td><a href="Trakeva.Key_in_collection.html#VALcreate">create</a> [<a href="Trakeva.Key_in_collection.html">Trakeva.Key_in_collection</a>]</td>
 <td></td></tr>
 <tr><td align="left"><br>D</td></tr>
+<tr><td><a href="Trakeva_postgresql.html#VALdebug">debug</a> [<a href="Trakeva_postgresql.html">Trakeva_postgresql</a>]</td>
+<td><div class="info">
+Set <code class="code">dbug</code> to <code class="code"><span class="keyword">true</span></code> to print debug messages on <code class="code">stderr</code>, this variable
+    is also set when <code class="code">load</code> is called while the environment variable
+    <code class="code"><span class="string">"TRAKEVA_SQLITE_DEBUG"</span></code> is set with the string <code class="code"><span class="string">"true"</span></code>.
+</div>
+</td></tr>
 <tr><td><a href="Trakeva_cache.html#VALdebug">debug</a> [<a href="Trakeva_cache.html">Trakeva_cache</a>]</td>
 <td><div class="info">
 Enable over verbose debug priting.
@@ -63,6 +72,8 @@ Set <code class="code">dbug</code> to <code class="code"><span class="keyword">t
 </div>
 </td></tr>
 <tr><td><a href="Main.TEST_DATABASE.html#VALdebug_mode">debug_mode</a> [<a href="Main.TEST_DATABASE.html">Main.TEST_DATABASE</a>]</td>
+<td></td></tr>
+<tr><td><a href="Main.Test_postgresql.html#VALdebug_mode">debug_mode</a> [<a href="Main.Test_postgresql.html">Main.Test_postgresql</a>]</td>
 <td></td></tr>
 <tr><td><a href="Main.Test_sqlite_with_greedy_cache.html#VALdebug_mode">debug_mode</a> [<a href="Main.Test_sqlite_with_greedy_cache.html">Main.Test_sqlite_with_greedy_cache</a>]</td>
 <td></td></tr>
@@ -98,6 +109,8 @@ Get all the keys in a given collection as a list.
 <tr><td><a href="Main.html#VALhas_arg">has_arg</a> [<a href="Main.html">Main</a>]</td>
 <td></td></tr>
 <tr><td align="left"><br>I</td></tr>
+<tr><td><a href="Main.html#VALindependent_pg_test">independent_pg_test</a> [<a href="Main.html">Main</a>]</td>
+<td></td></tr>
 <tr><td><a href="Trakeva.Action.html#VALis_not_set">is_not_set</a> [<a href="Trakeva.Action.html">Trakeva.Action</a>]</td>
 <td></td></tr>
 <tr><td><a href="Trakeva.KEY_VALUE_STORE.html#VALiterator">iterator</a> [<a href="Trakeva.KEY_VALUE_STORE.html">Trakeva.KEY_VALUE_STORE</a>]</td>
@@ -127,6 +140,9 @@ Load a handle from the given database parameters.
 <tr><td align="left"><br>O</td></tr>
 <tr><td><a href="Main.html#VALopen_close_test">open_close_test</a> [<a href="Main.html">Main</a>]</td>
 <td></td></tr>
+<tr><td align="left"><br>P</td></tr>
+<tr><td><a href="Main.html#VALpg_server">pg_server</a> [<a href="Main.html">Main</a>]</td>
+<td></td></tr>
 <tr><td align="left"><br>R</td></tr>
 <tr><td><a href="Main.Test.html#VALrun_monad">run_monad</a> [<a href="Main.Test.html">Main.Test</a>]</td>
 <td></td></tr>
@@ -138,7 +154,14 @@ Load a handle from the given database parameters.
 <tr><td><a href="Trakeva.Action.html#VALset">set</a> [<a href="Trakeva.Action.html">Trakeva.Action</a>]</td>
 <td></td></tr>
 <tr><td align="left"><br>T</td></tr>
+<tr><td><a href="Trakeva_postgresql.html#VALtable_name">table_name</a> [<a href="Trakeva_postgresql.html">Trakeva_postgresql</a>]</td>
+<td><div class="info">
+The SQL table that is used internally.
+</div>
+</td></tr>
 <tr><td><a href="Main.TEST_DATABASE.html#VALtest_name">test_name</a> [<a href="Main.TEST_DATABASE.html">Main.TEST_DATABASE</a>]</td>
+<td></td></tr>
+<tr><td><a href="Main.Test_postgresql.html#VALtest_name">test_name</a> [<a href="Main.Test_postgresql.html">Main.Test_postgresql</a>]</td>
 <td></td></tr>
 <tr><td><a href="Main.Test_sqlite_with_greedy_cache.html#VALtest_name">test_name</a> [<a href="Main.Test_sqlite_with_greedy_cache.html">Main.Test_sqlite_with_greedy_cache</a>]</td>
 <td></td></tr>

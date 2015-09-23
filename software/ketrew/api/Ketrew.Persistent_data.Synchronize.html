@@ -1,0 +1,26 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<link rel="stylesheet" href="style.css" type="text/css">
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<link rel="Start" href="index.html">
+<link rel="previous" href="Ketrew.Persistent_data.Adding_targets.html">
+<link rel="Up" href="Ketrew.Persistent_data.html">
+<link title="Index of types" rel=Appendix href="index_types.html">
+<link title="Index of values" rel=Appendix href="index_values.html">
+<link title="Index of class methods" rel=Appendix href="index_methods.html">
+<link title="Index of class types" rel=Appendix href="index_class_types.html">
+<link title="Index of modules" rel=Appendix href="index_modules.html">
+<link title="Index of module types" rel=Appendix href="index_module_types.html">
+<link title="Ketrew_pure" rel="Chapter" href="Ketrew_pure.html">
+<link title="Ketrew" rel="Chapter" href="Ketrew.html"><title>Ketrew API : Ketrew.Persistent_data.Synchronize</title>
+</head>
+<body>
+<div class="navbar"><a class="pre" href="Ketrew.Persistent_data.Adding_targets.html" title="Ketrew.Persistent_data.Adding_targets">Previous</a>
+&nbsp;<a class="up" href="Ketrew.Persistent_data.html" title="Ketrew.Persistent_data">Up</a>
+&nbsp;</div>
+<h1>Module <a href="type_Ketrew.Persistent_data.Synchronize.html">Ketrew.Persistent_data.Synchronize</a></h1>
+
+<pre><span class="keyword">module</span> Synchronize: <code class="code"><span class="keyword">sig</span></code> <a href="Ketrew.Persistent_data.Synchronize.html">..</a> <code class="code"><span class="keyword">end</span></code></pre><hr width="100%">
+
+<pre><span id="VALcopy"><span class="keyword">val</span> copy</span> : <code class="type">string -><br>       string -><br>       (unit,<br>        [> `Database of Trakeva.Error.t<br>         | `Database_unavailable of bytes<br>         | `IO of<br>             [> `Read_file_exn of bytes * exn | `Write_file_exn of bytes * exn ]<br>         | `Missing_data of bytes<br>         | `Not_a_directory of bytes<br>         | `System of<br>             [> `File_info of bytes<br>              | `List_directory of bytes<br>              | `Make_directory of bytes ] *<br>             [> `Exn of exn | `Wrong_access_rights of int ]<br>         | `Target of [> `Deserilization of bytes ] ])<br>       Unix_io.Deferred_result.t</code></pre></body></html>

@@ -306,8 +306,9 @@ val engine:
   unit -> engine
 (** Build an [engine] configuration:
 
-    - [database_parameters]: the path to the database file/directory
-      (the default is ["~/.ketrew/database"]).
+    - [database_parameters]: the URI passed to the [trakeva_of_uri]
+      library to create the database
+      (the default is a Sqlite database: ["~/.ketrew/database"]).
     - [turn_unix_ssh_failure_into_target_failure]: when an
       SSH or system call fails it may not mean that the command in
       your workflow is wrong (could be an SSH configuration or
@@ -1969,6 +1970,27 @@ module Adding_targets: sig
      | `Database_unavailable of string
      | `Missing_data of string
      | `Target of [> `Deserilization of string ] ])
+      Deferred_result.t
+end
+
+module Synchronize: sig
+  val copy :
+    string ->
+    string ->
+    (unit,
+     [> `Database of Trakeva.Error.t
+     | `Database_unavailable of bytes
+     | `IO of
+          [> `Read_file_exn of bytes * exn
+          | `Write_file_exn of bytes * exn ]
+     | `Missing_data of bytes
+     | `Not_a_directory of bytes
+     | `System of
+          [> `File_info of bytes
+          | `List_directory of bytes
+          | `Make_directory of bytes ] *
+          [> `Exn of exn | `Wrong_access_rights of int ]
+     | `Target of [> `Deserilization of bytes ] ])
       Deferred_result.t
 end
 end

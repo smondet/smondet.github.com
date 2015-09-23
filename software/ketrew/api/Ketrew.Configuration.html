@@ -110,8 +110,9 @@ The configuration of the engine, the component that orchestrates
 Build an <code class="code">engine</code> configuration:
 <p>
 <ul>
-<li><code class="code">database_parameters</code>: the path to the database file/directory
-      (the default is <code class="code"><span class="string">"~/.ketrew/database"</span></code>).</li>
+<li><code class="code">database_parameters</code>: the URI passed to the <code class="code">trakeva_of_uri</code>
+      library to create the database
+      (the default is a Sqlite database: <code class="code"><span class="string">"~/.ketrew/database"</span></code>).</li>
 <li><code class="code">turn_unix_ssh_failure_into_target_failure</code>: when an
       SSH or system call fails it may not mean that the command in
       your workflow is wrong (could be an SSH configuration or

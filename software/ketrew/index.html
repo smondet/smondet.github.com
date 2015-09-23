@@ -12,7 +12,7 @@
 </li></ul>
 </li><li><a href='#WheretoGoNext'>Where to Go Next</a>
 </li><li><a href='#License'>License</a>
-</li></ul><h2>Menu</h2><ul><li><a href='index.html'>Home</a></li><li><a href='Alternative_CLI_Application.html'>Alternative CLI Application</a></li><li><a href='Developer_Documentation.html'>Developer Documentation</a></li><li><a href='Glossary.html'>Glossary</a></li><li><a href='Long-Running_Plugins.html'>Long-Running Plugins</a></li><li><a href='Server_Commands.html'>Server Commands</a></li><li><a href='Standalone_Mode.html'>Standalone Mode</a></li><li><a href='The_Configuration_File.html'>The Configuration File</a></li><li><a href='The_HTTP_API.html'>The HTTP API</a></li><li><a href='Workflow_Examples.html'>Workflow Examples</a></li><li><a href='dummy_plugin_user.html'>Plugin-Usage Example</a></li><li><a href='dummy_plugin.html'>Plugin Example</a></li><li><a href='./api/index.html'>API Documentation</a></li><li>Documentation for <a href='./doc.0.0.0/index.html'>version 0.0.0</a></li><li>Documentation for <a href='./doc.1.0.0/index.html'>version 1.0.0</a></li><li>Documentation for <a href='./doc.1.1.0/index.html'>version 1.1.0</a></li><li>Documentation for <a href='./doc.1.1.1/index.html'>version 1.1.1</a></li><li>Documentation for <a href='./doc.2.0.0/index.html'>version 2.0.0</a></li><li>Repository <a href='https://github.com/hammerlab/ketrew'>at Github</a></li><li>Up: <a href='../index.html'>Software Projects</a></li></ul></div><div class="col-md-9"><h1 id="KetrewKeepTrackofExperimentalWorkflows">Ketrew: Keep Track of Experimental Workflows</h1>
+</li></ul><h2>Menu</h2><ul><li><a href='index.html'>Home</a></li><li><a href='Alternative_CLI_Application.html'>Alternative CLI Application</a></li><li><a href='Database_Backends.html'>Database Backends</a></li><li><a href='Developer_Documentation.html'>Developer Documentation</a></li><li><a href='Glossary.html'>Glossary</a></li><li><a href='Long-Running_Plugins.html'>Long-Running Plugins</a></li><li><a href='Server_Commands.html'>Server Commands</a></li><li><a href='Standalone_Mode.html'>Standalone Mode</a></li><li><a href='The_Configuration_File.html'>The Configuration File</a></li><li><a href='The_HTTP_API.html'>The HTTP API</a></li><li><a href='Workflow_Examples.html'>Workflow Examples</a></li><li><a href='dummy_plugin_user.html'>Plugin-Usage Example</a></li><li><a href='dummy_plugin.html'>Plugin Example</a></li><li><a href='./api/index.html'>API Documentation</a></li><li>Documentation for <a href='./doc.0.0.0/index.html'>version 0.0.0</a></li><li>Documentation for <a href='./doc.1.0.0/index.html'>version 1.0.0</a></li><li>Documentation for <a href='./doc.1.1.0/index.html'>version 1.1.0</a></li><li>Documentation for <a href='./doc.1.1.1/index.html'>version 1.1.1</a></li><li>Documentation for <a href='./doc.2.0.0/index.html'>version 2.0.0</a></li><li>Repository <a href='https://github.com/hammerlab/ketrew'>at Github</a></li><li>Up: <a href='../index.html'>Software Projects</a></li></ul></div><div class="col-md-9"><h1 id="KetrewKeepTrackofExperimentalWorkflows">Ketrew: Keep Track of Experimental Workflows</h1>
 
 <p><a href='https://travis-ci.org/hammerlab/ketrew'><img src='https://travis-ci.org/hammerlab/ketrew.svg?branch=master' alt='Build Status' /></a></p>
 <p><strong>Ketrew</strong> is:</p>
@@ -31,8 +31,9 @@ See also the documentation for the latest release:
 any Unix platform.</p>
 <h3 id="FromOpam">From Opam</h3>
 
-<p>If you have <code>opam</code> up and running:</p>
-<pre><code>opam install ketrew</code></pre><p>Then you need at runtime <code>ssh</code> in the <code>$PATH</code>.</p>
+<p>If you have <code>opam</code> up and running, just install Ketrew while choose a database
+backend (you may pick both and choose later in the config-file):</p>
+<pre><code>opam install  (sqlite | postgresql)  ketrew</code></pre><p>Then you need at runtime <code>ssh</code> in the <code>$PATH</code>.</p>
 <p>This gets you the <code>ketrew</code> executable and the <code>ketrew_pure</code> and <code>ketrew</code>
 libraries.</p>
 <h3 id="WithoutOpam">Without Opam</h3>
@@ -48,8 +49,11 @@ very minimalistic workflow running.</p>
 <pre><code>rm -fr ~/.ketrew/ # if you had a previous configuration there
 ketrew init --with-token my-not-so-secret-token
 </code></pre><p>by default this will configure Ketrew in <code>$HOME/.ketrew/</code> with a client/server
-mode <strong>not</strong> using TLS on port <code>8756</code> (see <a href='ketrew_init___help.html' title='ketrew init --help'><code>ketrew init --help</code></a> you can even ask
-it to generate self-signed TLS certificates).
+mode <strong>not</strong> using TLS on port <code>8756</code> and with a local Sqlite database
+(use the option <code>--use-database URI</code> to choose another
+<a href='./Database_Backends.html'>database backend</a>).
+See <a href='ketrew_init___help.html' title='ketrew init --help'><code>ketrew init --help</code></a> for more
+options, you can even ask it to generate self-signed TLS certificates.
 See also the <a href='./The_Configuration_File.html'>documentation</a>
 on the configuration file learn how to tweak it.</p>
 <p>You can check that the client or the server are configured:</p>
