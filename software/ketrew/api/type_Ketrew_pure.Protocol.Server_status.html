@@ -20,6 +20,10 @@
 &nbsp;&nbsp;&nbsp;&nbsp;preemptive_bounds&nbsp;:&nbsp;int&nbsp;*&nbsp;int;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;preemptive_queue&nbsp;:&nbsp;int;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;libev&nbsp;:&nbsp;bool;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;database&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;host_timeout_upper_bound&nbsp;:&nbsp;float&nbsp;option;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;maximum_successive_attempts&nbsp;:&nbsp;int;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;concurrent_automaton_steps&nbsp;:&nbsp;int;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;gc_minor_words&nbsp;:&nbsp;float;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;gc_promoted_words&nbsp;:&nbsp;float;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;gc_major_words&nbsp;:&nbsp;float;<br>
@@ -30,8 +34,14 @@
 &nbsp;&nbsp;&nbsp;&nbsp;gc_compactions&nbsp;:&nbsp;int;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;gc_top_heap_words&nbsp;:&nbsp;int;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;gc_stack_size&nbsp;:&nbsp;int;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;enable_ssh_ui&nbsp;:&nbsp;bool;<br>
 &nbsp;&nbsp;}<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;create&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;database:string&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;host_timeout_upper_bound:float&nbsp;option&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;maximum_successive_attempts:int&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;concurrent_automaton_steps:int&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;enable_ssh_ui:bool&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;time:float&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;read_only:bool&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;tls:[&nbsp;<span class="keywordsign">`</span><span class="constructor">Native</span>&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">None</span>&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">OpenSSL</span>&nbsp;]&nbsp;<span class="keywordsign">-&gt;</span><br>

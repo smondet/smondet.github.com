@@ -1,0 +1,36 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<link rel="stylesheet" href="style.css" type="text/css">
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<link rel="Start" href="index.html">
+<link rel="previous" href="Ketrew_pure.Reactive.Source.html">
+<link rel="Up" href="Ketrew_pure.Reactive.html">
+<link title="Index of types" rel=Appendix href="index_types.html">
+<link title="Index of values" rel=Appendix href="index_values.html">
+<link title="Index of class methods" rel=Appendix href="index_methods.html">
+<link title="Index of class types" rel=Appendix href="index_class_types.html">
+<link title="Index of modules" rel=Appendix href="index_modules.html">
+<link title="Index of module types" rel=Appendix href="index_module_types.html">
+<link title="Ketrew_pure" rel="Chapter" href="Ketrew_pure.html">
+<link title="Ketrew" rel="Chapter" href="Ketrew.html"><title>Ketrew API : Ketrew_pure.Reactive.Signal</title>
+</head>
+<body>
+<div class="navbar"><a class="pre" href="Ketrew_pure.Reactive.Source.html" title="Ketrew_pure.Reactive.Source">Previous</a>
+&nbsp;<a class="up" href="Ketrew_pure.Reactive.html" title="Ketrew_pure.Reactive">Up</a>
+&nbsp;</div>
+<h1>Module <a href="type_Ketrew_pure.Reactive.Signal.html">Ketrew_pure.Reactive.Signal</a></h1>
+
+<pre><span class="keyword">module</span> Signal: <code class="code"><span class="keyword">sig</span></code> <a href="Ketrew_pure.Reactive.Signal.html">..</a> <code class="code"><span class="keyword">end</span></code></pre><hr width="100%">
+
+<pre><span id="TYPEt"><span class="keyword">type</span> <code class="type">'a</code> t</span> = <code class="type">'a <a href="Ketrew_pure.Reactive.html#TYPEsignal">Ketrew_pure.Reactive.signal</a></code> </pre>
+
+
+<pre><span id="VALmap"><span class="keyword">val</span> map</span> : <code class="type">'a <a href="Ketrew_pure.Reactive.Signal.html#TYPEt">t</a> -><br>       f:('a -> 'b) -> 'b <a href="Ketrew_pure.Reactive.Signal.html#TYPEt">t</a></code></pre>
+<pre><span id="VALbind"><span class="keyword">val</span> bind</span> : <code class="type">'a <a href="Ketrew_pure.Reactive.Signal.html#TYPEt">t</a> -><br>       f:('a -> 'b <a href="Ketrew_pure.Reactive.Signal.html#TYPEt">t</a>) -><br>       'b <a href="Ketrew_pure.Reactive.Signal.html#TYPEt">t</a></code></pre>
+<pre><span id="VALconstant"><span class="keyword">val</span> constant</span> : <code class="type">'a -> 'a <a href="Ketrew_pure.Reactive.Signal.html#TYPEt">t</a></code></pre>
+<pre><span id="VALvalue"><span class="keyword">val</span> value</span> : <code class="type">'a <a href="Ketrew_pure.Reactive.Signal.html#TYPEt">t</a> -> 'a</code></pre>
+<pre><span id="VALsingleton"><span class="keyword">val</span> singleton</span> : <code class="type">'a <a href="Ketrew_pure.Reactive.Signal.html#TYPEt">t</a> -> 'a <a href="Ketrew_pure.Reactive.html#TYPEsignal_list_wrap">Ketrew_pure.Reactive.signal_list_wrap</a></code></pre>
+<pre><span id="VALlist"><span class="keyword">val</span> list</span> : <code class="type">'a list <a href="Ketrew_pure.Reactive.Signal.html#TYPEt">t</a> -><br>       'a <a href="Ketrew_pure.Reactive.html#TYPEsignal_list_wrap">Ketrew_pure.Reactive.signal_list_wrap</a></code></pre>
+<pre><span id="VALtuple_2"><span class="keyword">val</span> tuple_2</span> : <code class="type">'a <a href="Ketrew_pure.Reactive.Signal.html#TYPEt">t</a> -><br>       'b <a href="Ketrew_pure.Reactive.Signal.html#TYPEt">t</a> -> ('a * 'b) <a href="Ketrew_pure.Reactive.Signal.html#TYPEt">t</a></code></pre>
+<pre><span id="VALtuple_3"><span class="keyword">val</span> tuple_3</span> : <code class="type">'a <a href="Ketrew_pure.Reactive.Signal.html#TYPEt">t</a> -><br>       'b <a href="Ketrew_pure.Reactive.Signal.html#TYPEt">t</a> -><br>       'c <a href="Ketrew_pure.Reactive.Signal.html#TYPEt">t</a> -><br>       ('a * 'b * 'c) <a href="Ketrew_pure.Reactive.Signal.html#TYPEt">t</a></code></pre></body></html>

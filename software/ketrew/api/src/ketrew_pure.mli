@@ -94,9 +94,21 @@ val ssh :
   ?port:int -> ?user:string -> ?name:string -> string -> t
 (** Create an SSH host. *)
 
+val named :
+  ?execution_timeout:Time.t ->
+  ?default_shell:default_shell ->
+  ?playground:Path.t ->
+  string -> t
+(** Create an "named" host, the actual connection will be resolved
+    form the name by the engine. *)
+
+val with_ssh_connection: t -> Ssh.t -> t
+
 val shell_of_default_shell: t -> string -> string list
 
-val of_uri: Uri.t -> t
+val of_uri :
+  Uri.t ->
+  (t, [> `Host_uri_parsing_error of string * string ]) Pvem.Result.t
 (** Get a [Host.t] from an URI (library {{:https://github.com/mirage/ocaml-uri}ocaml-uri});
     the “path” part of the URI is the playground.
 
@@ -108,7 +120,7 @@ val of_uri: Uri.t -> t
     - a ["timeout"] value can be defined (in seconds) for all system/SSH calls.
 
     For example
-    [of_string "//user@SomeHost:42/tmp/pg?shell=bash,-l,--init-file,bouh,-c&timeout=42"]
+    [of_string "ssh://user@SomeHost:42/tmp/pg?shell=bash,-l,--init-file,bouh,-c&timeout=42"]
     will be like using 
     {[
       ssh ~default_shell:(default_shell  "bash"
@@ -119,9 +131,10 @@ val of_uri: Uri.t -> t
 
 *)
 
-val of_string: string -> t
+val of_string: string ->
+  (t, [> `Host_uri_parsing_error of string * string ]) Pvem.Result.t
 (** Parse an {{:http://www.ietf.org/rfc/rfc3986.txt}RFC-3986}-compliant
-  string into a host, see {!of_uri}. *)
+    string into a host, see {!of_uri}. *)
 
 val to_uri: t -> Uri.t
 (** Convert a [Host.t] to an URI representing it. *)
@@ -138,7 +151,7 @@ val markup: t -> Display_markup.t
 val execution_timeout: t -> Time.t option
 (** The execution timeout configured for the host. *)
 
-val connection: t -> [ `Localhost | `Ssh of Ssh.t ]
+val connection: t -> [ `Localhost | `Ssh of Ssh.t | `Named of string ]
 val playground: t -> Path.t option
 end
 module Monitored_script : sig
@@ -347,6 +360,10 @@ module Server_status : sig
     preemptive_bounds: int * int;
     preemptive_queue: int;
     libev: bool;
+    database: string;
+    host_timeout_upper_bound: float option;
+    maximum_successive_attempts: int;
+    concurrent_automaton_steps: int;
     gc_minor_words : float;
     gc_promoted_words : float;
     gc_major_words : float;
@@ -357,12 +374,69 @@ module Server_status : sig
     gc_compactions : int;
     gc_top_heap_words : int;
     gc_stack_size : int;
+    enable_ssh_ui: bool;
   }
   val create:
+    database: string ->
+    host_timeout_upper_bound: float option ->
+    maximum_successive_attempts: int ->
+    concurrent_automaton_steps: int ->
+    enable_ssh_ui: bool ->
     time:float -> read_only:bool ->
     tls:[ `Native | `OpenSSL | `None ] ->
     preemptive_bounds:int * int ->
     preemptive_queue:int -> libev:bool -> gc:Gc.stat -> t
+end
+
+module Process_sub_protocol : sig
+
+  module Command : sig
+    type t = {
+      connection: string;
+      id: string;
+      command: string;
+    }
+  end
+  type up = [
+    | `Start_ssh_connetion of [
+        | `New of string * string (* name × connection-uri *)
+        | `Configured of string (* id *)
+      ]
+    | `Get_all_ssh_ids of string (* client-id *)
+    | `Get_logs of string * [ `Full ] (* id *)
+    | `Send_ssh_input of string * string (* id × input-string *)
+    | `Send_command of Command.t
+    | `Kill of string (* id *)
+  ]
+  module Ssh_connection : sig
+    type status = [
+      | `Alive of [ `Askpass_waiting_for_input of (float * string) list | `Idle ]
+      | `Dead of string
+      | `Configured
+      | `Unknown of string
+    ]
+    type t = {
+      id: string;
+      name: string;
+      uri: string;
+      status: status;
+    }
+  end
+  module Command_output: sig
+    type t = {
+      id: string;
+      stdout: string;
+      stderr: string;
+    }
+  end
+  type down = [
+    | `List_of_ssh_ids of Ssh_connection.t list
+    | `Logs of string * string (* id × serialized markup *)
+    | `Error of string
+    | `Command_output of Command_output.t
+    | `Ok
+  ]
+
 end
 
 module Down_message : sig
@@ -374,11 +448,14 @@ module Down_message : sig
          pointer, Summary.id can be different. *)
     | `List_of_target_flat_states of (string (* ID *) * Target.State.Flat.t) list
     | `List_of_target_ids of string list
+    | `Deferred_list_of_target_ids of string * int (* id × total-length *)
     | `List_of_query_descriptions of (string * string) list
     | `Query_result of string
     | `Query_error of string
     | `Server_status of Server_status.t
     | `Ok
+    | `Missing_deferred
+    | `Process of Process_sub_protocol.down
   ]
   include Json.Versioned.WITH_VERSIONED_SERIALIZATION with type t := t
 
@@ -429,10 +506,45 @@ module Up_message : sig
     | `Restart_targets of string list (* List of Ids *)
     | `Get_target_ids of target_query * (query_option list)
     | `Get_server_status
+    | `Get_deferred of string * int * int (* id × index × length *)
+    | `Process of Process_sub_protocol.up
   ]
   include Json.Versioned.WITH_VERSIONED_SERIALIZATION with type t := t
 
   val target_query_markup: target_query -> Display_markup.t
+end
+end
+module Reactive : sig
+
+(**
+Convenient wrapper around [React] and [ReactiveData] modules.
+*)
+
+type 'a signal = 'a React.S.t
+
+type 'a signal_list_wrap = 'a ReactiveData.RList.t
+
+module Source: sig
+  type 'a t
+  val create: ?eq:('a -> 'a -> bool) -> 'a -> 'a t
+  val set: 'a t -> 'a -> unit
+  val signal: 'a t -> 'a signal
+  val value: 'a t -> 'a
+  val modify: 'a t -> f:('a -> 'a) -> unit
+  val modify_opt: 'a t -> f:('a -> 'a option) -> unit
+  val map_signal: 'a t -> f:('a -> 'b) -> 'b signal
+
+end
+module Signal: sig
+  type 'a t = 'a signal
+  val map: 'a t -> f:('a -> 'b) -> 'b t
+  val bind: 'a t -> f:('a -> 'b t) -> 'b t
+  val constant: 'a -> 'a t
+  val value: 'a t -> 'a
+  val singleton: 'a t -> 'a signal_list_wrap
+  val list: 'a list t -> 'a signal_list_wrap
+  val tuple_2: 'a t -> 'b t -> ('a * 'b) t
+  val tuple_3: 'a t -> 'b t -> 'c t -> ('a * 'b * 'c) t
 end
 end
 module Target : sig
@@ -638,6 +750,7 @@ module State : sig
       message: string option;
       more_info: string list;
       finished: bool;
+      depth: int;
     } [@@deriving yojson]
 
     val time: item ->  float

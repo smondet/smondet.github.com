@@ -44,18 +44,18 @@ Deserialize the run parameters from a string; the engine guaranties
       and assumes that no exception will be thrown in that case.<br>
 </div>
 
-<pre><span id="VALstart"><span class="keyword">val</span> start</span> : <code class="type"><a href="Ketrew.Long_running.LONG_RUNNING.html#TYPErun_parameters">run_parameters</a> -><br>       (<a href="Ketrew.Long_running.LONG_RUNNING.html#TYPErun_parameters">run_parameters</a>,<br>        <a href="Ketrew.Host_io.Error.html#TYPEclassified">Ketrew.Host_io.Error.classified</a>)<br>       Unix_io.Deferred_result.t</code></pre><div class="info ">
+<pre><span id="VALstart"><span class="keyword">val</span> start</span> : <code class="type"><a href="Ketrew.Long_running.LONG_RUNNING.html#TYPErun_parameters">run_parameters</a> -><br>       host_io:<a href="Ketrew.Host_io.html#TYPEt">Ketrew.Host_io.t</a> -><br>       (<a href="Ketrew.Long_running.LONG_RUNNING.html#TYPErun_parameters">run_parameters</a>,<br>        <a href="Ketrew.Host_io.Error.html#TYPEclassified">Ketrew.Host_io.Error.classified</a>)<br>       Unix_io.Deferred_result.t</code></pre><div class="info ">
 Start the long-running computation, the returned <code class="code">run_parameters</code> will be
       stored and used for the first call to <a href="Ketrew.Long_running.LONG_RUNNING.html#VALupdate"><code class="code"><span class="constructor">Ketrew</span>.<span class="constructor">Long_running</span>.<span class="constructor">LONG_RUNNING</span>.update</code></a>.<br>
 </div>
 
-<pre><span id="VALupdate"><span class="keyword">val</span> update</span> : <code class="type"><a href="Ketrew.Long_running.LONG_RUNNING.html#TYPErun_parameters">run_parameters</a> -><br>       ([ `Failed of <a href="Ketrew.Long_running.LONG_RUNNING.html#TYPErun_parameters">run_parameters</a> * string<br>        | `Still_running of <a href="Ketrew.Long_running.LONG_RUNNING.html#TYPErun_parameters">run_parameters</a><br>        | `Succeeded of <a href="Ketrew.Long_running.LONG_RUNNING.html#TYPErun_parameters">run_parameters</a> ],<br>        <a href="Ketrew.Host_io.Error.html#TYPEclassified">Ketrew.Host_io.Error.classified</a>)<br>       Unix_io.Deferred_result.t</code></pre><div class="info ">
+<pre><span id="VALupdate"><span class="keyword">val</span> update</span> : <code class="type"><a href="Ketrew.Long_running.LONG_RUNNING.html#TYPErun_parameters">run_parameters</a> -><br>       host_io:<a href="Ketrew.Host_io.html#TYPEt">Ketrew.Host_io.t</a> -><br>       ([ `Failed of <a href="Ketrew.Long_running.LONG_RUNNING.html#TYPErun_parameters">run_parameters</a> * string<br>        | `Still_running of <a href="Ketrew.Long_running.LONG_RUNNING.html#TYPErun_parameters">run_parameters</a><br>        | `Succeeded of <a href="Ketrew.Long_running.LONG_RUNNING.html#TYPErun_parameters">run_parameters</a> ],<br>        <a href="Ketrew.Host_io.Error.html#TYPEclassified">Ketrew.Host_io.Error.classified</a>)<br>       Unix_io.Deferred_result.t</code></pre><div class="info ">
 Check and update the status of the long-running job. Again, is
       <code class="code"><span class="keywordsign">`</span><span class="constructor">Still_running</span> rp</code> is returned, the next call to <a href="Ketrew.Long_running.LONG_RUNNING.html#VALupdate"><code class="code"><span class="constructor">Ketrew</span>.<span class="constructor">Long_running</span>.<span class="constructor">LONG_RUNNING</span>.update</code></a> (or <a href="Ketrew.Long_running.LONG_RUNNING.html#VALkill"><code class="code"><span class="constructor">Ketrew</span>.<span class="constructor">Long_running</span>.<span class="constructor">LONG_RUNNING</span>.kill</code></a>)
       will receive those parameters.<br>
 </div>
 
-<pre><span id="VALkill"><span class="keyword">val</span> kill</span> : <code class="type"><a href="Ketrew.Long_running.LONG_RUNNING.html#TYPErun_parameters">run_parameters</a> -><br>       ([ `Killed of <a href="Ketrew.Long_running.LONG_RUNNING.html#TYPErun_parameters">run_parameters</a> ],<br>        <a href="Ketrew.Host_io.Error.html#TYPEclassified">Ketrew.Host_io.Error.classified</a>)<br>       Unix_io.Deferred_result.t</code></pre><div class="info ">
+<pre><span id="VALkill"><span class="keyword">val</span> kill</span> : <code class="type"><a href="Ketrew.Long_running.LONG_RUNNING.html#TYPErun_parameters">run_parameters</a> -><br>       host_io:<a href="Ketrew.Host_io.html#TYPEt">Ketrew.Host_io.t</a> -><br>       ([ `Killed of <a href="Ketrew.Long_running.LONG_RUNNING.html#TYPErun_parameters">run_parameters</a> ],<br>        <a href="Ketrew.Host_io.Error.html#TYPEclassified">Ketrew.Host_io.Error.classified</a>)<br>       Unix_io.Deferred_result.t</code></pre><div class="info ">
 Kill the long-running computation.<br>
 </div>
 
@@ -68,7 +68,7 @@ List of potential <code class="code">(query, description)</code> pairs that can 
       to <a href="Ketrew.Long_running.LONG_RUNNING.html#VALquery"><code class="code"><span class="constructor">Ketrew</span>.<span class="constructor">Long_running</span>.<span class="constructor">LONG_RUNNING</span>.query</code></a>.<br>
 </div>
 
-<pre><span id="VALquery"><span class="keyword">val</span> query</span> : <code class="type"><a href="Ketrew.Long_running.LONG_RUNNING.html#TYPErun_parameters">run_parameters</a> -><br>       string -><br>       (string, Ketrew_pure.Internal_pervasives.Log.t) Unix_io.Deferred_result.t</code></pre><div class="info ">
+<pre><span id="VALquery"><span class="keyword">val</span> query</span> : <code class="type"><a href="Ketrew.Long_running.LONG_RUNNING.html#TYPErun_parameters">run_parameters</a> -><br>       host_io:<a href="Ketrew.Host_io.html#TYPEt">Ketrew.Host_io.t</a> -><br>       string -><br>       (string, Ketrew_pure.Internal_pervasives.Log.t) Unix_io.Deferred_result.t</code></pre><div class="info ">
 Perform a query.<br>
 </div>
 </body></html>

@@ -1,0 +1,35 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<link rel="stylesheet" href="style.css" type="text/css">
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<link rel="Start" href="index.html">
+<link rel="next" href="Ketrew_pure.Reactive.Signal.html">
+<link rel="Up" href="Ketrew_pure.Reactive.html">
+<link title="Index of types" rel=Appendix href="index_types.html">
+<link title="Index of values" rel=Appendix href="index_values.html">
+<link title="Index of class methods" rel=Appendix href="index_methods.html">
+<link title="Index of class types" rel=Appendix href="index_class_types.html">
+<link title="Index of modules" rel=Appendix href="index_modules.html">
+<link title="Index of module types" rel=Appendix href="index_module_types.html">
+<link title="Ketrew_pure" rel="Chapter" href="Ketrew_pure.html">
+<link title="Ketrew" rel="Chapter" href="Ketrew.html"><title>Ketrew API : Ketrew_pure.Reactive.Source</title>
+</head>
+<body>
+<div class="navbar">&nbsp;<a class="up" href="Ketrew_pure.Reactive.html" title="Ketrew_pure.Reactive">Up</a>
+&nbsp;<a class="post" href="Ketrew_pure.Reactive.Signal.html" title="Ketrew_pure.Reactive.Signal">Next</a>
+</div>
+<h1>Module <a href="type_Ketrew_pure.Reactive.Source.html">Ketrew_pure.Reactive.Source</a></h1>
+
+<pre><span class="keyword">module</span> Source: <code class="code"><span class="keyword">sig</span></code> <a href="Ketrew_pure.Reactive.Source.html">..</a> <code class="code"><span class="keyword">end</span></code></pre><hr width="100%">
+
+<pre><span id="TYPEt"><span class="keyword">type</span> <code class="type">'a</code> t</span> </pre>
+
+
+<pre><span id="VALcreate"><span class="keyword">val</span> create</span> : <code class="type">?eq:('a -> 'a -> bool) -> 'a -> 'a <a href="Ketrew_pure.Reactive.Source.html#TYPEt">t</a></code></pre>
+<pre><span id="VALset"><span class="keyword">val</span> set</span> : <code class="type">'a <a href="Ketrew_pure.Reactive.Source.html#TYPEt">t</a> -> 'a -> unit</code></pre>
+<pre><span id="VALsignal"><span class="keyword">val</span> signal</span> : <code class="type">'a <a href="Ketrew_pure.Reactive.Source.html#TYPEt">t</a> -> 'a <a href="Ketrew_pure.Reactive.html#TYPEsignal">Ketrew_pure.Reactive.signal</a></code></pre>
+<pre><span id="VALvalue"><span class="keyword">val</span> value</span> : <code class="type">'a <a href="Ketrew_pure.Reactive.Source.html#TYPEt">t</a> -> 'a</code></pre>
+<pre><span id="VALmodify"><span class="keyword">val</span> modify</span> : <code class="type">'a <a href="Ketrew_pure.Reactive.Source.html#TYPEt">t</a> -> f:('a -> 'a) -> unit</code></pre>
+<pre><span id="VALmodify_opt"><span class="keyword">val</span> modify_opt</span> : <code class="type">'a <a href="Ketrew_pure.Reactive.Source.html#TYPEt">t</a> -> f:('a -> 'a option) -> unit</code></pre>
+<pre><span id="VALmap_signal"><span class="keyword">val</span> map_signal</span> : <code class="type">'a <a href="Ketrew_pure.Reactive.Source.html#TYPEt">t</a> -><br>       f:('a -> 'b) -> 'b <a href="Ketrew_pure.Reactive.html#TYPEsignal">Ketrew_pure.Reactive.signal</a></code></pre></body></html>

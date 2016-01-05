@@ -77,8 +77,10 @@
 &nbsp;&nbsp;local_assert&nbsp;<span class="string">"full&nbsp;collection&nbsp;'c'"</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">List</span>.sort&nbsp;~cmp:<span class="constructor">String</span>.compare&nbsp;list&nbsp;=&nbsp;[<span class="string">"k1"</span>;&nbsp;<span class="string">"k2"</span>;&nbsp;<span class="string">"k3"</span>;&nbsp;<span class="string">"k4"</span>;&nbsp;<span class="string">"k5"</span>]);<br>
 &nbsp;&nbsp;<span class="keyword">let</span>&nbsp;key&nbsp;=&nbsp;<span class="string">"K"</span>&nbsp;<span class="keyword">in</span><br>
-&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;insane&nbsp;=&nbsp;<span class="constructor">String</span>.make&nbsp;256&nbsp;<span class="string">'\000'</span>&nbsp;<span class="keyword">in</span><br>
-&nbsp;&nbsp;<span class="keyword">for</span>&nbsp;i&nbsp;=&nbsp;0&nbsp;<span class="keyword">to</span>&nbsp;255&nbsp;<span class="keyword">do</span>&nbsp;<span class="constructor">String</span>.mutate_exn&nbsp;insane&nbsp;i&nbsp;(char_of_int&nbsp;i)&nbsp;<span class="keyword">done</span>;<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;insane&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;buf&nbsp;=&nbsp;<span class="constructor">Bytes</span>.make&nbsp;256&nbsp;<span class="string">'\000'</span>&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">for</span>&nbsp;i&nbsp;=&nbsp;0&nbsp;<span class="keyword">to</span>&nbsp;255&nbsp;<span class="keyword">do</span>&nbsp;<span class="constructor">Bytes</span>.set&nbsp;buf&nbsp;i&nbsp;(char_of_int&nbsp;i)&nbsp;<span class="keyword">done</span>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Bytes</span>.to_string&nbsp;buf&nbsp;<span class="keyword">in</span><br>
 &nbsp;&nbsp;test_actions&nbsp;<span class="keywordsign">`</span><span class="constructor">Done</span>&nbsp;[<br>
 &nbsp;&nbsp;&nbsp;&nbsp;set&nbsp;~key&nbsp;<span class="string">"\""</span>;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;set&nbsp;~key&nbsp;<span class="string">"\\\""</span>;<br>

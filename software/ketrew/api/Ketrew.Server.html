@@ -4,7 +4,7 @@
 <link rel="stylesheet" href="style.css" type="text/css">
 <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
 <link rel="Start" href="index.html">
-<link rel="previous" href="Ketrew.Plugin.html">
+<link rel="previous" href="Ketrew.Process_holder.html">
 <link rel="next" href="Ketrew.Unix_process.html">
 <link rel="Up" href="Ketrew.html">
 <link title="Index of types" rel=Appendix href="index_types.html">
@@ -17,7 +17,7 @@
 <link title="Ketrew" rel="Chapter" href="Ketrew.html"><title>Ketrew API : Ketrew.Server</title>
 </head>
 <body>
-<div class="navbar"><a class="pre" href="Ketrew.Plugin.html" title="Ketrew.Plugin">Previous</a>
+<div class="navbar"><a class="pre" href="Ketrew.Process_holder.html" title="Ketrew.Process_holder">Previous</a>
 &nbsp;<a class="up" href="Ketrew.html" title="Ketrew">Up</a>
 &nbsp;<a class="post" href="Ketrew.Unix_process.html" title="Ketrew.Unix_process">Next</a>
 </div>
@@ -27,7 +27,7 @@
 <br>
 Implementation of the HTTP server.<br>
 
-<pre><span id="VALstart"><span class="keyword">val</span> start</span> : <code class="type">configuration:<a href="Ketrew.Configuration.html#TYPEserver">Ketrew.Configuration.server</a> -><br>       (unit,<br>        [> `Database of Trakeva.Error.t<br>         | `Dyn_plugin of [> `Dynlink_error of Dynlink.error | `Findlib of exn ]<br>         | `Failure of bytes<br>         | `IO of [> `Read_file_exn of bytes * exn ]<br>         | `Missing_data of bytes<br>         | `Server_status_error of bytes<br>         | `Start_server_error of bytes<br>         | `System of<br>             [> `File_info of bytes | `List_directory of bytes | `Remove of bytes ] *<br>             [> `Exn of exn ]<br>         | `Target of [> `Deserilization of bytes ] ])<br>       Unix_io.Deferred_result.t</code></pre><div class="info ">
+<pre><span id="VALstart"><span class="keyword">val</span> start</span> : <code class="type">just_before_listening:(unit -><br>                              (unit,<br>                               [> `Database of Trakeva.Error.t<br>                                | `Database_unavailable of string<br>                                | `Dyn_plugin of<br>                                    [> `Dynlink_error of Dynlink.error<br>                                     | `Findlib of exn ]<br>                                | `Failure of string<br>                                | `IO of [> `Read_file_exn of string * exn ]<br>                                | `Missing_data of string<br>                                | `Server_status_error of string<br>                                | `Start_server_error of string<br>                                | `System of<br>                                    [> `File_info of string<br>                                     | `List_directory of string<br>                                     | `Remove of string ] *<br>                                    [> `Exn of exn ]<br>                                | `Target of [> `Deserilization of string ] ]<br>                               as 'propagated_error)<br>                              Unix_io.t) -><br>       configuration:<a href="Ketrew.Configuration.html#TYPEserver">Ketrew.Configuration.server</a> -><br>       (unit, 'propagated_error) Unix_io.t</code></pre><div class="info ">
 Start the server according to its configuration.<br>
 </div>
 

@@ -14,12 +14,14 @@
 <link title="Index of modules" rel=Appendix href="index_modules.html">
 <link title="Index of module types" rel=Appendix href="index_module_types.html">
 <link title="Ketrew_pure" rel="Chapter" href="Ketrew_pure.html">
-<link title="Ketrew" rel="Chapter" href="Ketrew.html"><link title="Utilities " rel="Section" href="#2_Utilities">
-<link title="Hosts" rel="Subsection" href="#3_Hosts">
-<link title="Build Programs" rel="Subsection" href="#3_BuildPrograms">
-<link title="Conditions " rel="Subsection" href="#3_Conditions">
-<link title="Artifacts" rel="Subsection" href="#3_Artifacts">
-<link title="Targets" rel="Subsection" href="#3_Targets">
+<link title="Ketrew" rel="Chapter" href="Ketrew.html"><link title="Hosts" rel="Section" href="#3_Hosts">
+<link title="Build Programs" rel="Section" href="#3_BuildPrograms">
+<link title="Conditions " rel="Section" href="#3_Conditions">
+<link title="Build Processes " rel="Section" href="#3_BuildProcesses">
+<link title="Workflow Nodes and Edges" rel="Section" href="#3_WorkflowNodesandEdges">
+<link title="Legacy Deprecated API: Artifacts and Targets" rel="Section" href="#3_LegacyDeprecatedAPIArtifactsandTargets">
+<link title="Targets" rel="Subsection" href="#4_Targets">
+<link title="Utilities " rel="Subsection" href="#4_Utilities">
 <title>Ketrew API : Ketrew.EDSL</title>
 </head>
 <body>
@@ -52,11 +54,317 @@ Build “things to run”, i.e.
 <h3 id="3_Conditions">Conditions </h3><br>
 
 <pre><span class="keyword">module</span> <a href="Ketrew.EDSL.Condition.html">Condition</a>: <code class="code"><span class="keyword">sig</span></code> <a href="Ketrew.EDSL.Condition.html">..</a> <code class="code"><span class="keyword">end</span></code></pre><br>
-<h3 id="3_Artifacts">Artifacts</h3><br>
+<h3 id="3_BuildProcesses">Build Processes </h3><br>
+
+<pre><span class="keyword">module</span> <a href="Ketrew.EDSL.Build_process.html">Build_process</a>: <code class="code"><span class="keyword">sig</span></code> <a href="Ketrew.EDSL.Build_process.html">..</a> <code class="code"><span class="keyword">end</span></code></pre>
+<pre><span id="VALdaemonize"><span class="keyword">val</span> daemonize</span> : <code class="type">?starting_timeout:float -><br>       ?call_script:(string -> string list) -><br>       ?using:[ `Nohup_setsid | `Python_daemon ] -><br>       ?host:<a href="Ketrew.EDSL.Host.html#TYPEt">Host.t</a> -><br>       ?no_log_is_ok:bool -> <a href="Ketrew.EDSL.Program.html#TYPEt">Program.t</a> -> <a href="Ketrew.EDSL.Build_process.html#TYPEt">Build_process.t</a></code></pre><div class="info ">
+Create a “daemonize” build process:
+<p>
+<ul>
+<li><code class="code">?host</code>: the <code class="code"><span class="constructor">Host</span>.t</code> on which the program is to be run.</li>
+<li><code class="code">?starting_timeout</code>: how long to wait before considering that a
+      script failed to start (default: <code class="code">5.</code> seconds).</li>
+<li><code class="code">?call_script</code>: function creating a <code class="code"><span class="constructor">Unix</span>.exec</code>-style command
+      given a shell script path 
+      (default: <code class="code">(<span class="keyword">fun</span> script <span class="keywordsign">-&gt;</span> [<span class="string">"bash"</span>; script])</code>).</li>
+<li><code class="code">?using</code>: which method to use when damonizing on the <code class="code">host</code>
+    (see <code class="code"><span class="constructor">Ketrew_daemonize</span></code> for more details).</li>
+<li><code class="code">?no_log_is_ok</code>: consider that if the script run does not
+      produce a log file, the process still has succeeded (the default
+      and most common is <code class="code"><span class="keyword">false</span></code>, this can be useful for example when
+      the <code class="code"><span class="constructor">Program</span>.t</code> or <code class="code">call_script</code> do something special over the
+      network).</li>
+</ul>
+<br>
+</div>
+
+<pre><span id="VALlsf"><span class="keyword">val</span> lsf</span> : <code class="type">?host:<a href="Ketrew.EDSL.Host.html#TYPEt">Host.t</a> -><br>       ?queue:string -><br>       ?name:string -><br>       ?wall_limit:string -><br>       ?processors:[ `Min of int | `Min_max of int * int ] -><br>       ?project:string -> <a href="Ketrew.EDSL.Program.html#TYPEt">Program.t</a> -> <a href="Ketrew.EDSL.Build_process.html#TYPEt">Build_process.t</a></code></pre><div class="info ">
+Create an “LSF” build process.<br>
+</div>
+
+<pre><span id="VALpbs"><span class="keyword">val</span> pbs</span> : <code class="type">?host:<a href="Ketrew.EDSL.Host.html#TYPEt">Host.t</a> -><br>       ?queue:string -><br>       ?name:string -><br>       ?wall_limit:[ `Hours of float ] -><br>       ?processors:int -><br>       ?email_user:[ `Always of string | `Never ] -><br>       ?shell:string -> <a href="Ketrew.EDSL.Program.html#TYPEt">Program.t</a> -> <a href="Ketrew.EDSL.Build_process.html#TYPEt">Build_process.t</a></code></pre><div class="info ">
+Create a “PSB” build process.<br>
+</div>
+
+<pre><span id="VALyarn_application"><span class="keyword">val</span> yarn_application</span> : <code class="type">?host:<a href="Ketrew.EDSL.Host.html#TYPEt">Host.t</a> -><br>       ?daemonize_using:[ `Nohup_setsid | `Python_daemon ] -><br>       ?daemon_start_timeout:float -><br>       <a href="Ketrew.EDSL.Program.html#TYPEt">Program.t</a> -> <a href="Ketrew.EDSL.Build_process.html#TYPEt">Build_process.t</a></code></pre><div class="info ">
+Create a build process that requests resources from Yarn, the
+    command must be an application in the Yarn sense (i.e.
+    a program that is going to contact Yarn by itself to request
+    containers):
+<p>
+<ul>
+<li><code class="code">?host</code>: the “login” node of the Yarn cluster (default: localhost).</li>
+<li><code class="code">?daemonize_using</code>: how to daemonize the process that calls and
+      waits-for the application-manager (default: <code class="code"><span class="keywordsign">`</span><span class="constructor">Python_daemon</span></code>).</li>
+<li><code class="code">?daemon_start_timeout</code>: the timeout for the daemon.</li>
+</ul>
+<br>
+</div>
+
+<pre><span id="VALyarn_distributed_shell"><span class="keyword">val</span> yarn_distributed_shell</span> : <code class="type">?host:<a href="Ketrew.EDSL.Host.html#TYPEt">Host.t</a> -><br>       ?daemonize_using:[ `Nohup_setsid | `Python_daemon ] -><br>       ?daemon_start_timeout:float -><br>       ?hadoop_bin:string -><br>       ?distributed_shell_shell_jar:string -><br>       ?container_vcores:int -><br>       container_memory:[ `GB of int | `MB of int | `Raw of string ] -><br>       timeout:[ `Raw of string | `Seconds of int ] -><br>       application_name:string -><br>       <a href="Ketrew.EDSL.Program.html#TYPEt">Program.t</a> -> <a href="Ketrew.EDSL.Build_process.html#TYPEt">Build_process.t</a></code></pre><div class="info ">
+Create a build process that will use Hadoop's `DistributedShell`  class
+    to request a container to run the given arbitrary program.
+<p>
+<ul>
+<li><code class="code">?host</code>: the “login” node of the Yarn cluster (default: localhost).</li>
+<li><code class="code">?daemonize_using</code>: how to daemonize the process that calls and
+      waits-for the application-manager (default: <code class="code"><span class="keywordsign">`</span><span class="constructor">Python_daemon</span></code>).</li>
+<li><code class="code">?daemon_start_timeout</code>: the timeout for the daemon.</li>
+<li><code class="code">hadoop_bin</code>: the <code class="code">hdaoop</code> executable (default: <code class="code"><span class="string">"hadoop"</span></code>).</li>
+<li><code class="code">distributed_shell_shell_jar</code>:
+    path to the Jar file containing the
+    <code class="code">org.apache.hadoop.yarn.applications.distributedshell.<span class="constructor">Client</span></code> class
+    (default: <code class="code"><span class="string">"/opt/cloudera/parcels/CDH/lib/hadoop-yarn/hadoop-yarn-applications-distributedshell.jar"</span></code>
+    which seems to be the default installation path when using Cloudera-manager).</li>
+<li><code class="code">container_vcores</code>: how many virtual cores to request (default <code class="code">1</code>).</li>
+<li><code class="code">container_memory</code>: how much memory to request from Yarn for the container
+    (<code class="code"><span class="keywordsign">`</span><span class="constructor">GB</span> 42</code> for 42 GB; <code class="code"><span class="keywordsign">`</span><span class="constructor">Raw</span> some_string</code> to pass directly <code class="code">some_string</code>
+    to the option <code class="code"><span class="string">"-container_memory"</span></code> of <code class="code">distributedshell.<span class="constructor">Cllient</span></code>).</li>
+<li><code class="code">timeout</code>: the “whole application” timeout
+    (<code class="code"><span class="keywordsign">`</span><span class="constructor">Seconds</span> (24 * 60 * 60)</code> for about a day, <code class="code"><span class="keywordsign">`</span><span class="constructor">Raw</span> some_string</code> to
+    pass directly <code class="code">some_string</code> to the option <code class="code"><span class="string">"-timeout"</span></code> of
+    <code class="code">distributedshell.<span class="constructor">Cllient</span></code>).</li>
+<li><code class="code">application_name</code>: name of the application for Yarn (it is not
+      sanitized by Ketrew and, at least with some configurations, Yarn
+      can fail if this string contains spaces for example).</li>
+</ul>
+<br>
+</div>
+<br>
+<h3 id="3_WorkflowNodesandEdges">Workflow Nodes and Edges</h3><br>
+
+<pre><span class="keyword">module</span> <a href="Ketrew.EDSL.Internal_representation.html">Internal_representation</a>: <code class="code"><span class="keyword">sig</span></code> <a href="Ketrew.EDSL.Internal_representation.html">..</a> <code class="code"><span class="keyword">end</span></code></pre>
+<pre><span id="TYPEproduct"><span class="keyword">type</span> <code class="type">< is_done : <a href="Ketrew.EDSL.Condition.html#TYPEt">Condition.t</a> option; .. ></code> product</span> = <code class="type">< is_done : <a href="Ketrew.EDSL.Condition.html#TYPEt">Condition.t</a> option; .. > as 'a</code> </pre>
+<div class="info ">
+The type of the things produced by workflow nodes.
+    A product is an object that has at least one method giving its
+    <a href="Ketrew.EDSL.Condition.html#TYPEt"><code class="code"><span class="constructor">Ketrew</span>.<span class="constructor">EDSL</span>.<span class="constructor">Condition</span>.t</code></a>.<br>
+</div>
+
+
+<pre><span id="TYPEworkflow_node"><span class="keyword">type</span> <code class="type">< is_done : <a href="Ketrew.EDSL.Condition.html#TYPEt">Condition.t</a> option; .. ></code> workflow_node</span> = &lt;</pre><table class="typetable">
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTworkflow_node.product">product</span>&nbsp;: <code class="type">(< is_done : <a href="Ketrew.EDSL.Condition.html#TYPEt">Condition.t</a> option; .. > as 'a) <a href="Ketrew.EDSL.html#TYPEproduct">product</a></code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTworkflow_node.render">render</span>&nbsp;: <code class="type">Internal_representation.t</code>;</code></td>
+
+</tr></table>
+>
+ </pre>
+<div class="info ">
+The main building bloc of the worfklow graph is workflow node, it
+    carries a “product” accessible with the <code class="code"><span class="keywordsign">#</span>product</code> method.
+<p>
+
+    The <code class="code"><span class="keywordsign">#</span>render</code> method is used internally by
+    <a href="Ketrew.Client.html#VALsubmit_workflow"><code class="code"><span class="constructor">Ketrew</span>.<span class="constructor">Client</span>.submit_workflow</code></a>.<br>
+</div>
+
+
+<pre><span id="TYPEworkflow_edge"><span class="keyword">type</span> <code class="type"></code>workflow_edge</span> </pre>
+<div class="info ">
+The edges of the graph (<code class="code">?edges</code> argument of the <a href="Ketrew.EDSL.html#VALworkflow_node"><code class="code"><span class="constructor">Ketrew</span>.<span class="constructor">EDSL</span>.workflow_node</code></a>
+    function).<br>
+</div>
+
+
+<pre><span id="VALdepends_on"><span class="keyword">val</span> depends_on</span> : <code class="type">< is_done : <a href="Ketrew.EDSL.Condition.html#TYPEt">Condition.t</a> option; .. > <a href="Ketrew.EDSL.html#TYPEworkflow_node">workflow_node</a> -><br>       <a href="Ketrew.EDSL.html#TYPEworkflow_edge">workflow_edge</a></code></pre><div class="info ">
+Create a “dependency” edge, in other words, the node using the
+    edges “depends on” the node given as argument.<br>
+</div>
+
+<pre><span id="VALon_success_activate"><span class="keyword">val</span> on_success_activate</span> : <code class="type">< is_done : <a href="Ketrew.EDSL.Condition.html#TYPEt">Condition.t</a> option; .. > <a href="Ketrew.EDSL.html#TYPEworkflow_node">workflow_node</a> -><br>       <a href="Ketrew.EDSL.html#TYPEworkflow_edge">workflow_edge</a></code></pre><div class="info ">
+Create an edge to a node that will be activated after a node <i>    succeeds</i>.<br>
+</div>
+
+<pre><span id="VALon_failure_activate"><span class="keyword">val</span> on_failure_activate</span> : <code class="type">< is_done : <a href="Ketrew.EDSL.Condition.html#TYPEt">Condition.t</a> option; .. > <a href="Ketrew.EDSL.html#TYPEworkflow_node">workflow_node</a> -><br>       <a href="Ketrew.EDSL.html#TYPEworkflow_edge">workflow_edge</a></code></pre><div class="info ">
+Create an edge to a node that will be activated after a node <i>    fails</i>.<br>
+</div>
+
+<pre><span id="VALworkflow_node"><span class="keyword">val</span> workflow_node</span> : <code class="type">?name:string -><br>       ?active:bool -><br>       ?make:<a href="Ketrew.EDSL.Build_process.html#TYPEt">Build_process.t</a> -><br>       ?done_when:<a href="Ketrew.EDSL.Condition.html#TYPEt">Condition.t</a> -><br>       ?metadata:[ `String of string ] -><br>       ?equivalence:<a href="Ketrew_pure.Target.Equivalence.html#TYPEt">Ketrew_pure.Target.Equivalence.t</a> -><br>       ?tags:string list -><br>       ?edges:<a href="Ketrew.EDSL.html#TYPEworkflow_edge">workflow_edge</a> list -><br>       (< is_done : <a href="Ketrew.EDSL.Condition.html#TYPEt">Condition.t</a> option; .. > as 'a) <a href="Ketrew.EDSL.html#TYPEproduct">product</a> -><br>       'a <a href="Ketrew.EDSL.html#TYPEworkflow_node">workflow_node</a></code></pre><div class="info ">
+Create a workflow node:
+<p>
+<ul>
+<li><code class="code">?name</code>: give a name to the node (visible in the UIs).</li>
+<li><code class="code">?active</code>: whether this node should be started by the engine or
+    wait to be ativated by another node (through an edge)
+    The default is <code class="code"><span class="keyword">false</span></code>, i.e., inactive, normal workflows should not
+    set this value since the function <a href="Ketrew.Client.html#VALsubmit_workflow"><code class="code"><span class="constructor">Ketrew</span>.<span class="constructor">Client</span>.submit_workflow</code></a>
+    will activate the toplevel node automatically.</li>
+<li><code class="code">?make</code>: the build-process used to “run/build” the node; where the
+    computation happens.</li>
+<li><code class="code">?done_when</code>: the condition that the node ensures (checked
+    before potentially running and after running, by default it is
+    provided by the product's <code class="code"><span class="keywordsign">#</span>is_done</code> method, this argument allows
+    to override it, for convenience).</li>
+<li><code class="code">?metadata</code>: arbitrary metadata to attach to the node.</li>
+<li><code class="code">?equivalence</code>: how to tell if two nodes are equivalent (and
+    then will be merged by the engine). The default is
+    <code class="code"><span class="keywordsign">`</span><span class="constructor">Same_active_condition</span></code> which means that if two nodes have the
+    same non-<code class="code"><span class="constructor">None</span></code> <code class="code">?done_when</code> argument they will be considered
+    equivalent (i.e. they try to “ensure the same condition”).</li>
+<li><code class="code">?tags</code>: arbitrary tags to add to the node (e.g. for
+    search/filter in the UI)</li>
+<li><code class="code">?edges</code>: links to other nodes from the current node
+    (list of edges created with the <a href="Ketrew.EDSL.html#VALdepends_on"><code class="code"><span class="constructor">Ketrew</span>.<span class="constructor">EDSL</span>.depends_on</code></a>,
+    <a href="Ketrew.EDSL.html#VALon_failure_activate"><code class="code"><span class="constructor">Ketrew</span>.<span class="constructor">EDSL</span>.on_failure_activate</code></a>, and <a href="Ketrew.EDSL.html#VALon_success_activate"><code class="code"><span class="constructor">Ketrew</span>.<span class="constructor">EDSL</span>.on_success_activate</code></a> functions).</li>
+<li><code class="code"><span class="keywordsign">'</span>product_type product</code>: the main argument of the function is
+    the artifact produced by the node (returned by the <code class="code"><span class="keywordsign">#</span>product</code>
+    method of the node).</li>
+</ul>
+<br>
+</div>
+
+<pre><span id="TYPEnot_already_done"><span class="keyword">type</span> <code class="type"></code>not_already_done</span> = &lt;</pre><table class="typetable">
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTnot_already_done.is_done">is_done</span>&nbsp;: <code class="type"><a href="Ketrew.EDSL.Condition.html#TYPEt">Condition.t</a> option</code>;</code></td>
+
+</tr></table>
+>
+ </pre>
+<div class="info ">
+The type of “empty” products.<br>
+</div>
+
+
+<pre><span id="VALwithout_product"><span class="keyword">val</span> without_product</span> : <code class="type"><a href="Ketrew.EDSL.html#TYPEnot_already_done">not_already_done</a></code></pre><div class="info ">
+Create an “empty” product, it won't require checking any condition,
+    so the node carrying it (unless
+    forced with the <code class="code">?is_done</code> argument) will always run.
+<p>
+
+    This can be understood as a <code class="code"><span class="string">".PHONY"</span></code> target in
+    <a href="https://www.gnu.org/software/make/manual/html_node/Phony-Targets.html">make</a>.<br>
+</div>
+
+<pre><span id="TYPEsingle_file"><span class="keyword">type</span> <code class="type"></code>single_file</span> = &lt;</pre><table class="typetable">
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTsingle_file.exists">exists</span>&nbsp;: <code class="type"><a href="Ketrew_pure.Target.Condition.html#TYPEt">Ketrew_pure.Target.Condition.t</a></code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTsingle_file.is_bigger_than">is_bigger_than</span>&nbsp;: <code class="type">int -> <a href="Ketrew_pure.Target.Condition.html#TYPEt">Ketrew_pure.Target.Condition.t</a></code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTsingle_file.is_done">is_done</span>&nbsp;: <code class="type"><a href="Ketrew_pure.Target.Condition.html#TYPEt">Ketrew_pure.Target.Condition.t</a> option</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTsingle_file.path">path</span>&nbsp;: <code class="type">string</code>;</code></td>
+
+</tr></table>
+>
+ </pre>
+<div class="info ">
+The type of products that carry a simple file (on a given
+    <code class="code"><span class="constructor">Host</span>.t</code>).<br>
+</div>
+
+
+<pre><span id="VALsingle_file"><span class="keyword">val</span> single_file</span> : <code class="type">?host:<a href="Ketrew.EDSL.Host.html#TYPEt">Host.t</a> -><br>       string -> <a href="Ketrew.EDSL.html#TYPEsingle_file">single_file</a> <a href="Ketrew.EDSL.html#TYPEproduct">product</a></code></pre><div class="info ">
+Create a <code class="code">single_file</code> product.
+<p>
+
+    The path argument should be absolute since the notion of “current
+    directory” is very ill-defined when it comes to this kind of
+    distributed application.
+<p>
+
+    The condition returned by the <code class="code"><span class="keywordsign">#</span>is_done</code> method (used by default
+    in any worfklow-node that uses the <code class="code">single_file product</code>) is to
+    check the existence of the file.<br>
+</div>
+
+<pre><span id="TYPElist_of_files"><span class="keyword">type</span> <code class="type"></code>list_of_files</span> = &lt;</pre><table class="typetable">
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTlist_of_files.is_done">is_done</span>&nbsp;: <code class="type"><a href="Ketrew_pure.Target.Condition.html#TYPEt">Ketrew_pure.Target.Condition.t</a> option</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTlist_of_files.paths">paths</span>&nbsp;: <code class="type">string list</code>;</code></td>
+
+</tr></table>
+>
+ </pre>
+<div class="info ">
+The type of products that carry a list of files (on a same <code class="code"><span class="constructor">Host</span>.t</code>).<br>
+</div>
+
+
+<pre><span id="VALlist_of_files"><span class="keyword">val</span> list_of_files</span> : <code class="type">?host:<a href="Ketrew.EDSL.Host.html#TYPEt">Host.t</a> -><br>       string list -> <a href="Ketrew.EDSL.html#TYPElist_of_files">list_of_files</a> <a href="Ketrew.EDSL.html#TYPEproduct">product</a></code></pre><div class="info ">
+Create a <code class="code">list_of_files</code> product (<code class="code"><span class="keywordsign">#</span>is_done</code> checks the existence
+    of all these files).<br>
+</div>
+
+<pre><span id="VALworkflow_to_string"><span class="keyword">val</span> workflow_to_string</span> : <code class="type">?ansi_colors:bool -><br>       ?indentation:int -><br>       < is_done : <a href="Ketrew.EDSL.Condition.html#TYPEt">Condition.t</a> option; .. > <a href="Ketrew.EDSL.html#TYPEworkflow_node">workflow_node</a> -><br>       string</code></pre><div class="info ">
+Build a display-friendly string summarizing the workflow.<br>
+</div>
+
+<pre><span id="TYPEunknown_product"><span class="keyword">type</span> <code class="type"></code>unknown_product</span> = &lt;</pre><table class="typetable">
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTunknown_product.is_done">is_done</span>&nbsp;: <code class="type"><a href="Ketrew.EDSL.Condition.html#TYPEt">Condition.t</a> option</code>;</code></td>
+
+</tr></table>
+>
+ </pre>
+<div class="info ">
+The type of the products that have been “hidden” or “forgotten,”
+    see <a href="Ketrew.EDSL.html#VALforget_product"><code class="code"><span class="constructor">Ketrew</span>.<span class="constructor">EDSL</span>.forget_product</code></a>.<br>
+</div>
+
+
+<pre><span id="VALforget_product"><span class="keyword">val</span> forget_product</span> : <code class="type">< is_done : <a href="Ketrew.EDSL.Condition.html#TYPEt">Condition.t</a> option; .. > <a href="Ketrew.EDSL.html#TYPEworkflow_node">workflow_node</a> -><br>       <a href="Ketrew.EDSL.html#TYPEunknown_product">unknown_product</a> <a href="Ketrew.EDSL.html#TYPEworkflow_node">workflow_node</a></code></pre><div class="info ">
+“Cast” a node to the <code class="code">unknown_product workflow_node</code> type, this is
+    useful to make some programs that generate workflows type check
+    (putting nodes into lists, or in different branches of a <code class="code"><span class="keyword">match</span>
+    .. <span class="keyword">with</span></code>).<br>
+</div>
+<br>
+<h3 id="3_LegacyDeprecatedAPIArtifactsandTargets">Legacy Deprecated API: Artifacts and Targets</h3>
+<p>
+
+This is the old and deprecated API to build workflows (deprecated
+since Ketrew 2.1.0).
+<p>
+
+Using functions like <a href="Ketrew.EDSL.html#VALtarget"><code class="code"><span class="constructor">Ketrew</span>.<span class="constructor">EDSL</span>.target</code></a> is still possible but they will trigger
+a compilation warning e.g. <code class="code"><span class="string">"Warning 3: deprecated: Ketrew.EDSL.target"</span></code>.<br>
 
 <pre><span id="TYPEuser_artifact"><span class="keyword">class type</span> <a href="Ketrew.EDSL.user_artifact-c.html">user_artifact</a></span> = <code class="code"><span class="keyword">object</span></code> <a href="Ketrew.EDSL.user_artifact-c.html">..</a> <code class="code"><span class="keyword">end</span></code></pre><div class="info">
-Artifacts are things to be built (they may already exist), most often
-    file-tree-locations on a given <code class="code">host</code> (see also <code class="code"><span class="constructor">Artifact</span>.t</code>).
+Artifacts
 </div>
 
 <pre><span id="VALfile"><span class="keyword">val</span> file</span> : <code class="type">?host:<a href="Ketrew.EDSL.Host.html#TYPEt">Host.t</a> -> string -> <a href="Ketrew.EDSL.user_artifact-c.html">user_artifact</a></code></pre><div class="info ">
@@ -68,14 +376,14 @@ The artifact that is “never done” (i.e. the target associated will always
     be (re-)run if activated).<br>
 </div>
 <br>
-<h3 id="3_Targets">Targets</h3><br>
+<h4 id="4_Targets">Targets</h4><br>
 
 <pre><span id="TYPEuser_target"><span class="keyword">class type</span> <a href="Ketrew.EDSL.user_target-c.html">user_target</a></span> = <code class="code"><span class="keyword">object</span></code> <a href="Ketrew.EDSL.user_target-c.html">..</a> <code class="code"><span class="keyword">end</span></code></pre><div class="info">
 Targets are the nodes in the workflow arborescence (see also
     <code class="code"><span class="constructor">Target</span>.t</code>).
 </div>
 
-<pre><span id="VALtarget"><span class="keyword">val</span> target</span> : <code class="type">?active:bool -><br>       ?depends_on:<a href="Ketrew.EDSL.user_target-c.html">user_target</a> list -><br>       ?make:<a href="Ketrew_pure.Target.Build_process.html#TYPEt">Ketrew_pure.Target.Build_process.t</a> -><br>       ?done_when:<a href="Ketrew_pure.Target.Condition.html#TYPEt">Ketrew_pure.Target.Condition.t</a> -><br>       ?metadata:[ `String of string ] -><br>       ?product:<a href="Ketrew.EDSL.user_artifact-c.html">user_artifact</a> -><br>       ?equivalence:<a href="Ketrew_pure.Target.Equivalence.html#TYPEt">Ketrew_pure.Target.Equivalence.t</a> -><br>       ?on_failure_activate:<a href="Ketrew.EDSL.user_target-c.html">user_target</a> list -><br>       ?on_success_activate:<a href="Ketrew.EDSL.user_target-c.html">user_target</a> list -><br>       ?tags:string list -> string -> <a href="Ketrew.EDSL.user_target-c.html">user_target</a></code></pre><div class="info ">
+<pre><span id="VALtarget"><span class="keyword">val</span> target</span> : <code class="type">?active:bool -><br>       ?depends_on:<a href="Ketrew.EDSL.user_target-c.html">user_target</a> list -><br>       ?make:<a href="Ketrew.EDSL.Build_process.html#TYPEt">Build_process.t</a> -><br>       ?done_when:<a href="Ketrew_pure.Target.Condition.html#TYPEt">Ketrew_pure.Target.Condition.t</a> -><br>       ?metadata:[ `String of string ] -><br>       ?product:<a href="Ketrew.EDSL.user_artifact-c.html">user_artifact</a> -><br>       ?equivalence:<a href="Ketrew_pure.Target.Equivalence.html#TYPEt">Ketrew_pure.Target.Equivalence.t</a> -><br>       ?on_failure_activate:<a href="Ketrew.EDSL.user_target-c.html">user_target</a> list -><br>       ?on_success_activate:<a href="Ketrew.EDSL.user_target-c.html">user_target</a> list -><br>       ?tags:string list -> string -> <a href="Ketrew.EDSL.user_target-c.html">user_target</a></code></pre><div class="info ">
 Construct a new target, the node of a workflow graph. The main
     argument (the <code class="code">string</code>) is its name, then all optional arguments mean:
 <p>
@@ -84,7 +392,7 @@ Construct a new target, the node of a workflow graph. The main
     wait to be ativated by another target (through <code class="code">depends_on</code> or
     <code class="code">on_{success,failure}_activate</code>) (default:
     <code class="code"><span class="keyword">false</span></code>, i.e., inactive). Usual workflows should not set this
-    value since the function <code class="code"><span class="constructor">Ketrew</span>.<span class="constructor">Cliean</span>.submit</code> will activate the
+    value since the function <a href="Ketrew.Client.html#VALsubmit"><code class="code"><span class="constructor">Ketrew</span>.<span class="constructor">Client</span>.submit</code></a> will activate the
     toplevel target automatically.</li>
 <li><code class="code">?depends_on</code>: list of the dependencies of the target.</li>
 <li><code class="code">?make</code>: the build-process used to “build” the target; where the
@@ -107,7 +415,7 @@ Construct a new target, the node of a workflow graph. The main
 <br>
 </div>
 
-<pre><span id="VALfile_target"><span class="keyword">val</span> file_target</span> : <code class="type">?depends_on:<a href="Ketrew.EDSL.user_target-c.html">user_target</a> list -><br>       ?make:<a href="Ketrew_pure.Target.Build_process.html#TYPEt">Ketrew_pure.Target.Build_process.t</a> -><br>       ?metadata:[ `String of string ] -><br>       ?name:string -><br>       ?host:<a href="Ketrew.EDSL.Host.html#TYPEt">Host.t</a> -><br>       ?equivalence:<a href="Ketrew_pure.Target.Equivalence.html#TYPEt">Ketrew_pure.Target.Equivalence.t</a> -><br>       ?on_failure_activate:<a href="Ketrew.EDSL.user_target-c.html">user_target</a> list -><br>       ?on_success_activate:<a href="Ketrew.EDSL.user_target-c.html">user_target</a> list -><br>       ?tags:string list -> string -> <a href="Ketrew.EDSL.user_target-c.html">user_target</a></code></pre><div class="info ">
+<pre><span id="VALfile_target"><span class="keyword">val</span> file_target</span> : <code class="type">?depends_on:<a href="Ketrew.EDSL.user_target-c.html">user_target</a> list -><br>       ?make:<a href="Ketrew.EDSL.Build_process.html#TYPEt">Build_process.t</a> -><br>       ?metadata:[ `String of string ] -><br>       ?name:string -><br>       ?host:<a href="Ketrew.EDSL.Host.html#TYPEt">Host.t</a> -><br>       ?equivalence:<a href="Ketrew_pure.Target.Equivalence.html#TYPEt">Ketrew_pure.Target.Equivalence.t</a> -><br>       ?on_failure_activate:<a href="Ketrew.EDSL.user_target-c.html">user_target</a> list -><br>       ?on_success_activate:<a href="Ketrew.EDSL.user_target-c.html">user_target</a> list -><br>       ?tags:string list -> string -> <a href="Ketrew.EDSL.user_target-c.html">user_target</a></code></pre><div class="info ">
 Create a file <a href="Ketrew.EDSL.user_artifact-c.html"><code class="code"><span class="constructor">Ketrew</span>.<span class="constructor">EDSL</span>.user_artifact</code></a> and the <a href="Ketrew.EDSL.user_target-c.html"><code class="code"><span class="constructor">Ketrew</span>.<span class="constructor">EDSL</span>.user_target</code></a> that produces it.
 <p>
 
@@ -121,81 +429,8 @@ Create a file <a href="Ketrew.EDSL.user_artifact-c.html"><code class="code"><spa
     This can be seen as a classical <code class="code">make</code>-like file-producing target,
     but on any arbitrary host.<br>
 </div>
-
-<pre><span id="VALdaemonize"><span class="keyword">val</span> daemonize</span> : <code class="type">?starting_timeout:float -><br>       ?call_script:(string -> string list) -><br>       ?using:[ `Nohup_setsid | `Python_daemon ] -><br>       ?host:<a href="Ketrew.EDSL.Host.html#TYPEt">Host.t</a> -><br>       ?no_log_is_ok:bool -><br>       <a href="Ketrew.EDSL.Program.html#TYPEt">Program.t</a> -> <a href="Ketrew_pure.Target.Build_process.html#TYPEt">Ketrew_pure.Target.Build_process.t</a></code></pre><div class="info ">
-Create a “daemonize” build process:
-<p>
-<ul>
-<li><code class="code">?host</code>: the <code class="code"><span class="constructor">Host</span>.t</code> on which the program is to be run.</li>
-<li><code class="code">?starting_timeout</code>: how long to wait before considering that a
-      script failed to start (default: <code class="code">5.</code> seconds).</li>
-<li><code class="code">?call_script</code>: function creating a <code class="code"><span class="constructor">Unix</span>.exec</code>-style command
-      given a shell script path 
-      (default: <code class="code">(<span class="keyword">fun</span> script <span class="keywordsign">-&gt;</span> [<span class="string">"bash"</span>; script])</code>).</li>
-<li><code class="code">?using</code>: which method to use when damonizing on the <code class="code">host</code>
-    (see <code class="code"><span class="constructor">Ketrew_daemonize</span></code> for more details).</li>
-<li><code class="code">?no_log_is_ok</code>: consider that if the script run does not
-      produce a log file, the process still has succeeded (the default
-      and most common is <code class="code"><span class="keyword">false</span></code>, this can be useful for example when
-      the <code class="code"><span class="constructor">Program</span>.t</code> or <code class="code">call_script</code> do something special over the
-      network).</li>
-</ul>
 <br>
-</div>
-
-<pre><span id="VALlsf"><span class="keyword">val</span> lsf</span> : <code class="type">?host:<a href="Ketrew.EDSL.Host.html#TYPEt">Host.t</a> -><br>       ?queue:string -><br>       ?name:string -><br>       ?wall_limit:string -><br>       ?processors:[ `Min of int | `Min_max of int * int ] -><br>       ?project:string -><br>       <a href="Ketrew.EDSL.Program.html#TYPEt">Program.t</a> -> <a href="Ketrew_pure.Target.Build_process.html#TYPEt">Ketrew_pure.Target.Build_process.t</a></code></pre><div class="info ">
-Create an “LSF” build process.<br>
-</div>
-
-<pre><span id="VALpbs"><span class="keyword">val</span> pbs</span> : <code class="type">?host:<a href="Ketrew.EDSL.Host.html#TYPEt">Host.t</a> -><br>       ?queue:string -><br>       ?name:string -><br>       ?wall_limit:[ `Hours of float ] -><br>       ?processors:int -><br>       ?email_user:[ `Always of string | `Never ] -><br>       ?shell:string -><br>       <a href="Ketrew.EDSL.Program.html#TYPEt">Program.t</a> -> [> `Long_running of string * string ]</code></pre><div class="info ">
-Create a “PSB” build process.<br>
-</div>
-
-<pre><span id="VALyarn_application"><span class="keyword">val</span> yarn_application</span> : <code class="type">?host:<a href="Ketrew.EDSL.Host.html#TYPEt">Host.t</a> -><br>       ?daemonize_using:[ `Nohup_setsid | `Python_daemon ] -><br>       ?daemon_start_timeout:float -><br>       <a href="Ketrew.EDSL.Program.html#TYPEt">Program.t</a> -> [> `Long_running of string * string ]</code></pre><div class="info ">
-Create a build process that requests resources from Yarn, the
-    command must be an application in the Yarn sense (i.e.
-    a program that is going to contact Yarn by itself to request
-    containers):
-<p>
-<ul>
-<li><code class="code">?host</code>: the “login” node of the Yarn cluster (default: localhost).</li>
-<li><code class="code">?daemonize_using</code>: how to daemonize the process that calls and
-      waits-for the application-manager (default: <code class="code"><span class="keywordsign">`</span><span class="constructor">Python_daemon</span></code>).</li>
-<li><code class="code">?daemon_start_timeout</code>: the timeout for the daemon.</li>
-</ul>
-<br>
-</div>
-
-<pre><span id="VALyarn_distributed_shell"><span class="keyword">val</span> yarn_distributed_shell</span> : <code class="type">?host:<a href="Ketrew.EDSL.Host.html#TYPEt">Host.t</a> -><br>       ?daemonize_using:[ `Nohup_setsid | `Python_daemon ] -><br>       ?daemon_start_timeout:float -><br>       ?hadoop_bin:string -><br>       ?distributed_shell_shell_jar:string -><br>       container_memory:[ `GB of int | `MB of int | `Raw of string ] -><br>       timeout:[ `Raw of string | `Seconds of int ] -><br>       application_name:string -><br>       <a href="Ketrew.EDSL.Program.html#TYPEt">Program.t</a> -> [> `Long_running of string * string ]</code></pre><div class="info ">
-Create a build process that will use Hadoop's `DistributedShell`  class
-    to request a container to run the given arbitrary program.
-<p>
-<ul>
-<li><code class="code">?host</code>: the “login” node of the Yarn cluster (default: localhost).</li>
-<li><code class="code">?daemonize_using</code>: how to daemonize the process that calls and
-      waits-for the application-manager (default: <code class="code"><span class="keywordsign">`</span><span class="constructor">Python_daemon</span></code>).</li>
-<li><code class="code">?daemon_start_timeout</code>: the timeout for the daemon.</li>
-<li><code class="code">hadoop_bin</code>: the <code class="code">hdaoop</code> executable (default: <code class="code"><span class="string">"hadoop"</span></code>).</li>
-<li><code class="code">distributed_shell_shell_jar</code>:
-    path to the Jar file containing the
-    <code class="code">org.apache.hadoop.yarn.applications.distributedshell.<span class="constructor">Client</span></code> class
-    (default: <code class="code"><span class="string">"/opt/cloudera/parcels/CDH/lib/hadoop-yarn/hadoop-yarn-applications-distributedshell.jar"</span></code>
-    which seems to be the default installation path when using Cloudera-manager).</li>
-<li><code class="code">container_memory</code>: how much memory to request from Yarn for the container
-    (<code class="code"><span class="keywordsign">`</span><span class="constructor">GB</span> 42</code> for 42 GB; <code class="code"><span class="keywordsign">`</span><span class="constructor">Raw</span> some_string</code> to pass directly <code class="code">some_string</code>
-    to the option <code class="code"><span class="string">"-container_memory"</span></code> of <code class="code">distributedshell.<span class="constructor">Cllient</span></code>).</li>
-<li><code class="code">timeout</code>: the “whole application” timeout
-    (<code class="code"><span class="keywordsign">`</span><span class="constructor">Seconds</span> (24 * 60 * 60)</code> for about a day, <code class="code"><span class="keywordsign">`</span><span class="constructor">Raw</span> some_string</code> to
-    pass directly <code class="code">some_string</code> to the option <code class="code"><span class="string">"-timeout"</span></code> of
-    <code class="code">distributedshell.<span class="constructor">Cllient</span></code>).</li>
-<li><code class="code">application_name</code>: name of the application for Yarn (it is not
-      sanitized by Ketrew and, at least with some configurations, Yarn
-      can fail if this string contains spaces for example).</li>
-</ul>
-<br>
-</div>
-<br>
-<h2 id="2_Utilities">Utilities </h2><br>
+<h4 id="4_Utilities">Utilities </h4><br>
 
 <pre><span id="VALto_display_string"><span class="keyword">val</span> to_display_string</span> : <code class="type">?ansi_colors:bool -> ?indentation:int -> <a href="Ketrew.EDSL.user_target-c.html">user_target</a> -> string</code></pre><div class="info ">
 Build a display-friendly string summarizing the workflow.<br>

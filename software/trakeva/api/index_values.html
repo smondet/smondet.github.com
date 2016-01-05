@@ -32,6 +32,11 @@ Process a transaction, which can be <code class="code"><span class="keywordsign"
 </td></tr>
 <tr><td><a href="Main.In_memory.DB.html#VALact">act</a> [<a href="Main.In_memory.DB.html">Main.In_memory.DB</a>]</td>
 <td></td></tr>
+<tr><td><a href="Trakeva_of_uri.html#VALavailable_backends">available_backends</a> [<a href="Trakeva_of_uri.html">Trakeva_of_uri</a>]</td>
+<td><div class="info">
+The databases that are available via <code class="code">create</code>
+</div>
+</td></tr>
 <tr><td align="left"><br>B</td></tr>
 <tr><td><a href="Main.html#VALbasic_test">basic_test</a> [<a href="Main.html">Main</a>]</td>
 <td></td></tr>
@@ -48,7 +53,11 @@ Close the DB.
 <tr><td><a href="Main.In_memory.DB.html#VALclose">close</a> [<a href="Main.In_memory.DB.html">Main.In_memory.DB</a>]</td>
 <td></td></tr>
 <tr><td><a href="Trakeva.Action.html#VALcontains">contains</a> [<a href="Trakeva.Action.html">Trakeva.Action</a>]</td>
-<td></td></tr>
+<td><div class="info">
+An action that checks that the <code class="code">key</code> is set in the DB and has the given
+      value.
+</div>
+</td></tr>
 <tr><td><a href="Trakeva.Key_in_collection.html#VALcreate">create</a> [<a href="Trakeva.Key_in_collection.html">Trakeva.Key_in_collection</a>]</td>
 <td></td></tr>
 <tr><td align="left"><br>D</td></tr>
@@ -112,7 +121,10 @@ Get all the keys in a given collection as a list.
 <tr><td><a href="Main.html#VALindependent_pg_test">independent_pg_test</a> [<a href="Main.html">Main</a>]</td>
 <td></td></tr>
 <tr><td><a href="Trakeva.Action.html#VALis_not_set">is_not_set</a> [<a href="Trakeva.Action.html">Trakeva.Action</a>]</td>
-<td></td></tr>
+<td><div class="info">
+An action that checks that the <code class="code">key</code> is not set in the DB.
+</div>
+</td></tr>
 <tr><td><a href="Trakeva.KEY_VALUE_STORE.html#VALiterator">iterator</a> [<a href="Trakeva.KEY_VALUE_STORE.html">Trakeva.KEY_VALUE_STORE</a>]</td>
 <td><div class="info">
 Go through all the kets in a given collection (exact semantics
@@ -150,9 +162,16 @@ Load a handle from the given database parameters.
 <tr><td><a href="Main.html#VALsay">say</a> [<a href="Main.html">Main</a>]</td>
 <td></td></tr>
 <tr><td><a href="Trakeva.Action.html#VALseq">seq</a> [<a href="Trakeva.Action.html">Trakeva.Action</a>]</td>
-<td></td></tr>
+<td><div class="info">
+Put a sequence of actions into a transaction.
+</div>
+</td></tr>
 <tr><td><a href="Trakeva.Action.html#VALset">set</a> [<a href="Trakeva.Action.html">Trakeva.Action</a>]</td>
-<td></td></tr>
+<td><div class="info">
+Create a “set” action: <code class="code">set ~key v</code> will add or set the value <code class="code">v</code> for the
+      key <code class="code">key</code>, optionally in the collection <code class="code">collection</code>.
+</div>
+</td></tr>
 <tr><td align="left"><br>T</td></tr>
 <tr><td><a href="Trakeva_postgresql.html#VALtable_name">table_name</a> [<a href="Trakeva_postgresql.html">Trakeva_postgresql</a>]</td>
 <td><div class="info">
@@ -172,12 +191,20 @@ The SQL table that is used internally.
 <tr><td><a href="Trakeva.Error.html#VALto_string">to_string</a> [<a href="Trakeva.Error.html">Trakeva.Error</a>]</td>
 <td></td></tr>
 <tr><td><a href="Trakeva.Action.html#VALto_string">to_string</a> [<a href="Trakeva.Action.html">Trakeva.Action</a>]</td>
-<td></td></tr>
+<td><div class="info">
+Convert the action to a display friendly string (the
+      implementation is quite naive and not tail-recursive, hence avoid
+      displaying huge transaction).
+</div>
+</td></tr>
 <tr><td><a href="Trakeva.Key_in_collection.html#VALto_string">to_string</a> [<a href="Trakeva.Key_in_collection.html">Trakeva.Key_in_collection</a>]</td>
 <td></td></tr>
 <tr><td align="left"><br>U</td></tr>
 <tr><td><a href="Trakeva.Action.html#VALunset">unset</a> [<a href="Trakeva.Action.html">Trakeva.Action</a>]</td>
-<td></td></tr>
+<td><div class="info">
+An actions that removes a value from the DB.
+</div>
+</td></tr>
 </table>
 </body>
 </html>

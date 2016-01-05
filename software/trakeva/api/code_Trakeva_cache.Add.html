@@ -18,7 +18,7 @@
 <code class="code">(<span class="constructor">KV_DB</span>:&nbsp;<span class="constructor">Trakeva</span>.<span class="constructor">KEY_VALUE_STORE</span>):&nbsp;<span class="constructor">Trakeva</span>.<span class="constructor">KEY_VALUE_STORE</span>&nbsp;=&nbsp;<span class="keyword">struct</span><br>
 <br>
 &nbsp;&nbsp;<span class="keyword">let</span>&nbsp;default_collection_name&nbsp;=&nbsp;<span class="string">"trakeva-greedy-cache-default-collection"</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;<br>
+<br>
 &nbsp;&nbsp;<span class="keyword">type</span>&nbsp;t&nbsp;=&nbsp;{<br>
 &nbsp;&nbsp;&nbsp;&nbsp;original:&nbsp;<span class="constructor">KV_DB</span>.t;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;cache:&nbsp;<span class="constructor">Greedy_cache</span>.t;<br>
@@ -34,8 +34,6 @@
 <br>
 &nbsp;&nbsp;<span class="keyword">open</span>&nbsp;<span class="constructor">Trakeva</span>.<span class="constructor">Action</span><br>
 &nbsp;&nbsp;<span class="keyword">open</span>&nbsp;<span class="constructor">Trakeva</span>.<span class="constructor">Key_in_collection</span><br>
-&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;_key&nbsp;?collection&nbsp;key&nbsp;=&nbsp;{key;&nbsp;collection}<br>
-<br>
 <br>
 &nbsp;&nbsp;<span class="keyword">let</span>&nbsp;cache_collection&nbsp;t&nbsp;~collection&nbsp;=<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span>&nbsp;!debug&nbsp;<span class="keyword">then</span>&nbsp;dbg&nbsp;<span class="string">"cache_collection&nbsp;%s"</span>&nbsp;collection;<br>
@@ -59,7 +57,7 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;col<br>
 <br>
 &nbsp;&nbsp;<span class="keyword">let</span>&nbsp;get&nbsp;?(collection&nbsp;=&nbsp;default_collection_name)&nbsp;t&nbsp;~key&nbsp;=<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Lwt_mutex</span>.with_lock&nbsp;t.mutex&nbsp;(<span class="keyword">fun</span>&nbsp;()&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Lwt_mutex</span>.with_lock&nbsp;t.mutex&nbsp;(<span class="keyword">fun</span>&nbsp;()&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cache_collection&nbsp;t&nbsp;~collection<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;col&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;(<span class="constructor">Greedy_cache</span>.from_collection&nbsp;col&nbsp;key)<br>
@@ -67,11 +65,11 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&lt;&nbsp;<span class="keyword">function</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Ok</span>&nbsp;o&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;return&nbsp;o<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Error</span>&nbsp;(<span class="keywordsign">`</span><span class="constructor">Database</span>&nbsp;(<span class="keywordsign">`</span><span class="constructor">Get_all</span>&nbsp;_,&nbsp;s_))&nbsp;<span class="keywordsign">-&gt;</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fail&nbsp;(<span class="keywordsign">`</span><span class="constructor">Database</span>&nbsp;(<span class="keywordsign">`</span><span class="constructor">Get</span>&nbsp;(_key&nbsp;~collection&nbsp;key),&nbsp;s_))<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fail&nbsp;(<span class="keywordsign">`</span><span class="constructor">Database</span>&nbsp;(<span class="keywordsign">`</span><span class="constructor">Get</span>&nbsp;(create&nbsp;~collection&nbsp;key),&nbsp;s_))<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Error</span>&nbsp;(<span class="keywordsign">`</span><span class="constructor">Database</span>&nbsp;(<span class="keywordsign">`</span><span class="constructor">Get</span>&nbsp;_,_)&nbsp;<span class="keyword">as</span>&nbsp;e)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;fail&nbsp;e<br>
 <br>
 &nbsp;&nbsp;<span class="keyword">let</span>&nbsp;get_all&nbsp;t&nbsp;~collection&nbsp;=<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Lwt_mutex</span>.with_lock&nbsp;t.mutex&nbsp;(<span class="keyword">fun</span>&nbsp;()&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Lwt_mutex</span>.with_lock&nbsp;t.mutex&nbsp;(<span class="keyword">fun</span>&nbsp;()&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cache_collection&nbsp;t&nbsp;~collection<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;col&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span>&nbsp;!debug&nbsp;<span class="keyword">then</span>&nbsp;dbg&nbsp;<span class="string">"get_all&nbsp;%s"</span>&nbsp;collection;<br>
@@ -104,7 +102,7 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&lt;&nbsp;<span class="keyword">function</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Ok</span>&nbsp;o&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;return&nbsp;o<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Error</span>&nbsp;(<span class="keywordsign">`</span><span class="constructor">Database</span>&nbsp;(<span class="keywordsign">`</span><span class="constructor">Get_all</span>&nbsp;_,&nbsp;s_))&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Error</span>&nbsp;(<span class="keywordsign">`</span><span class="constructor">Database</span>&nbsp;(<span class="keywordsign">`</span><span class="constructor">Get_all</span>&nbsp;_,&nbsp;s_))&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fail&nbsp;(<span class="keywordsign">`</span><span class="constructor">Database</span>&nbsp;(<span class="keywordsign">`</span><span class="constructor">Iter</span>&nbsp;collection,&nbsp;sprintf&nbsp;<span class="string">"get-all&nbsp;%s:&nbsp;%s"</span>&nbsp;collection&nbsp;s_))<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Error</span>&nbsp;(<span class="keywordsign">`</span><span class="constructor">Database</span>&nbsp;(<span class="keywordsign">`</span><span class="constructor">Get</span>&nbsp;{&nbsp;key;&nbsp;_&nbsp;},&nbsp;s_))&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fail&nbsp;(<span class="keywordsign">`</span><span class="constructor">Database</span>&nbsp;(<span class="keywordsign">`</span><span class="constructor">Iter</span>&nbsp;collection,&nbsp;sprintf&nbsp;<span class="string">"getting&nbsp;%s:&nbsp;%s"</span>&nbsp;key&nbsp;s_))<br>
@@ -144,7 +142,7 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Not_done</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;return&nbsp;<span class="keywordsign">`</span><span class="constructor">Not_done</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span>&nbsp;&gt;&gt;&lt;&nbsp;<span class="keyword">function</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Ok</span>&nbsp;o&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;return&nbsp;o<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Error</span>&nbsp;(<span class="keywordsign">`</span><span class="constructor">Database</span>&nbsp;(<span class="keywordsign">`</span><span class="constructor">Get_all</span>&nbsp;collection,&nbsp;s_))&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Error</span>&nbsp;(<span class="keywordsign">`</span><span class="constructor">Database</span>&nbsp;(<span class="keywordsign">`</span><span class="constructor">Get_all</span>&nbsp;collection,&nbsp;s_))&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fail&nbsp;(<span class="keywordsign">`</span><span class="constructor">Database</span>&nbsp;(<span class="keywordsign">`</span><span class="constructor">Act</span>&nbsp;action,&nbsp;sprintf&nbsp;<span class="string">"get-all&nbsp;%s:&nbsp;%s"</span>&nbsp;collection&nbsp;s_))<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Error</span>&nbsp;(<span class="keywordsign">`</span><span class="constructor">Database</span>&nbsp;(<span class="keywordsign">`</span><span class="constructor">Get</span>&nbsp;{&nbsp;key;&nbsp;_&nbsp;},&nbsp;s_))&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fail&nbsp;(<span class="keywordsign">`</span><span class="constructor">Database</span>&nbsp;(<span class="keywordsign">`</span><span class="constructor">Act</span>&nbsp;action,&nbsp;sprintf&nbsp;<span class="string">"getting&nbsp;%s:&nbsp;%s"</span>&nbsp;key&nbsp;s_))<br>

@@ -32,12 +32,18 @@
 &nbsp;&nbsp;&nbsp;&nbsp;?database_parameters:string&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;?turn_unix_ssh_failure_into_target_failure:bool&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;?host_timeout_upper_bound:float&nbsp;<span class="keywordsign">-&gt;</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;?maximum_successive_attempts:int&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;unit&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Ketrew</span>.<span class="constructor">Configuration</span>.engine<br>
+&nbsp;&nbsp;&nbsp;&nbsp;?maximum_successive_attempts:int&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?concurrent_automaton_steps:int&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;unit&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Ketrew</span>.<span class="constructor">Configuration</span>.engine<br>
 &nbsp;&nbsp;<span class="keyword">type</span>&nbsp;authorized_tokens<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;authorized_token&nbsp;:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;name:string&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;string&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Ketrew</span>.<span class="constructor">Configuration</span>.authorized_tokens<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;authorized_tokens_path&nbsp;:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;string&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Ketrew</span>.<span class="constructor">Configuration</span>.authorized_tokens<br>
+&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;ssh_connection<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;ssh_connection&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;uri:string&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;string&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Ketrew</span>.<span class="constructor">Configuration</span>.ssh_connection<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;ssh_connection_name_uri&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Ketrew</span>.<span class="constructor">Configuration</span>.ssh_connection&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;string&nbsp;*&nbsp;string<br>
 &nbsp;&nbsp;<span class="keyword">type</span>&nbsp;server<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;server&nbsp;:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;?ui:<span class="constructor">Ketrew</span>.<span class="constructor">Configuration</span>.ui&nbsp;<span class="keywordsign">-&gt;</span><br>
@@ -50,6 +56,8 @@
 &nbsp;&nbsp;&nbsp;&nbsp;?max_blocking_time:float&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;?block_step_time:float&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;?read_only_mode:bool&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?ssh_connections:<span class="constructor">Ketrew</span>.<span class="constructor">Configuration</span>.ssh_connection&nbsp;list&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?ssh_processes_ui:bool&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;[&nbsp;<span class="keywordsign">`</span><span class="constructor">Tcp</span>&nbsp;<span class="keyword">of</span>&nbsp;int&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Tls</span>&nbsp;<span class="keyword">of</span>&nbsp;string&nbsp;*&nbsp;string&nbsp;*&nbsp;int&nbsp;]&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;[&gt;&nbsp;<span class="keywordsign">`</span><span class="constructor">Server</span>&nbsp;<span class="keyword">of</span>&nbsp;<span class="constructor">Ketrew</span>.<span class="constructor">Configuration</span>.server&nbsp;]<br>
 &nbsp;&nbsp;<span class="keyword">type</span>&nbsp;standalone<br>
@@ -78,6 +86,8 @@
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;database_parameters&nbsp;:&nbsp;<span class="constructor">Ketrew</span>.<span class="constructor">Configuration</span>.engine&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;string<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;is_unix_ssh_failure_fatal&nbsp;:&nbsp;<span class="constructor">Ketrew</span>.<span class="constructor">Configuration</span>.engine&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;bool<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;maximum_successive_attempts&nbsp;:&nbsp;<span class="constructor">Ketrew</span>.<span class="constructor">Configuration</span>.engine&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;int<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;concurrent_automaton_steps&nbsp;:&nbsp;<span class="constructor">Ketrew</span>.<span class="constructor">Configuration</span>.engine&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;int<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;host_timeout_upper_bound&nbsp;:&nbsp;<span class="constructor">Ketrew</span>.<span class="constructor">Configuration</span>.engine&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;float&nbsp;option<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;plugins&nbsp;:&nbsp;<span class="constructor">Ketrew</span>.<span class="constructor">Configuration</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Ketrew</span>.<span class="constructor">Configuration</span>.plugin&nbsp;list<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;mode&nbsp;:&nbsp;<span class="constructor">Ketrew</span>.<span class="constructor">Configuration</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Ketrew</span>.<span class="constructor">Configuration</span>.mode<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;standalone_engine&nbsp;:<br>
@@ -86,6 +96,9 @@
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Ketrew</span>.<span class="constructor">Configuration</span>.server&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Ketrew</span>.<span class="constructor">Configuration</span>.engine<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;server_configuration&nbsp;:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Ketrew</span>.<span class="constructor">Configuration</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Ketrew</span>.<span class="constructor">Configuration</span>.server&nbsp;option<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;ssh_connections&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Ketrew</span>.<span class="constructor">Configuration</span>.server&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Ketrew</span>.<span class="constructor">Configuration</span>.ssh_connection&nbsp;list<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;ssh_processes_ui&nbsp;:&nbsp;<span class="constructor">Ketrew</span>.<span class="constructor">Configuration</span>.server&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;bool<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;authorized_tokens&nbsp;:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Ketrew</span>.<span class="constructor">Configuration</span>.server&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;[&nbsp;<span class="keywordsign">`</span><span class="constructor">Inline</span>&nbsp;<span class="keyword">of</span>&nbsp;string&nbsp;*&nbsp;string&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Path</span>&nbsp;<span class="keyword">of</span>&nbsp;string&nbsp;]&nbsp;list<br>

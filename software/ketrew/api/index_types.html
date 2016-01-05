@@ -28,6 +28,12 @@ This type is a container for one more authentication-tokens,
 <tr><td><a href="Ketrew_pure.Target.Automaton.html#TYPEbookkeeping">bookkeeping</a> [<a href="Ketrew_pure.Target.Automaton.html">Ketrew_pure.Target.Automaton</a>]</td>
 <td></td></tr>
 <tr><td align="left"><br>C</td></tr>
+<tr><td><a href="Ketrew.Authentication.html#TYPEcapabilities">capabilities</a> [<a href="Ketrew.Authentication.html">Ketrew.Authentication</a>]</td>
+<td><div class="info">
+The capabilities that are validated, these are grouped according to the
+    <a href="Ketrew_pure.Protocol.Up_message.html#TYPEt"> Up_message.t</a> that is received.
+</div>
+</td></tr>
 <tr><td><a href="Ketrew.Host_io.Error.html#TYPEclassified">classified</a> [<a href="Ketrew.Host_io.Error.html">Ketrew.Host_io.Error</a>]</td>
 <td><div class="info">
 The “imposed” error types for “long-running” plugins.
@@ -46,6 +52,8 @@ Configuration of the client (as in HTTP client).
 <tr><td><a href="Ketrew_pure.Target.Automaton.html#TYPEdependencies_status">dependencies_status</a> [<a href="Ketrew_pure.Target.Automaton.html">Ketrew_pure.Target.Automaton</a>]</td>
 <td></td></tr>
 <tr><td><a href="Ketrew.Yarn.html#TYPEdistributed_shell_parameters">distributed_shell_parameters</a> [<a href="Ketrew.Yarn.html">Ketrew.Yarn</a>]</td>
+<td></td></tr>
+<tr><td><a href="Ketrew_pure.Protocol.Process_sub_protocol.html#TYPEdown">down</a> [<a href="Ketrew_pure.Protocol.Process_sub_protocol.html">Ketrew_pure.Protocol.Process_sub_protocol</a>]</td>
 <td></td></tr>
 <tr><td align="left"><br>E</td></tr>
 <tr><td><a href="Ketrew.Configuration.html#TYPEengine">engine</a> [<a href="Ketrew.Configuration.html">Ketrew.Configuration</a>]</td>
@@ -77,6 +85,11 @@ The identifiers of targets.
 <tr><td><a href="Ketrew_pure.Target.State.Flat.html#TYPEitem">item</a> [<a href="Ketrew_pure.Target.State.Flat.html">Ketrew_pure.Target.State.Flat</a>]</td>
 <td></td></tr>
 <tr><td align="left"><br>L</td></tr>
+<tr><td><a href="Ketrew.EDSL.html#TYPElist_of_files">list_of_files</a> [<a href="Ketrew.EDSL.html">Ketrew.EDSL</a>]</td>
+<td><div class="info">
+The type of products that carry a list of files (on a same <code class="code"><span class="constructor">Host</span>.t</code>).
+</div>
+</td></tr>
 <tr><td><a href="Ketrew_pure.Target.Automaton.html#TYPElong_running_action">long_running_action</a> [<a href="Ketrew_pure.Target.Automaton.html">Ketrew_pure.Target.Automaton</a>]</td>
 <td></td></tr>
 <tr><td><a href="Ketrew_pure.Target.Automaton.html#TYPElong_running_failure">long_running_failure</a> [<a href="Ketrew_pure.Target.Automaton.html">Ketrew_pure.Target.Automaton</a>]</td>
@@ -95,6 +108,11 @@ Union of the possible configuration “modes.”
 <tr><td align="left"><br>N</td></tr>
 <tr><td><a href="Ketrew.Host_io.Error.html#TYPEnon_zero_execution">non_zero_execution</a> [<a href="Ketrew.Host_io.Error.html">Ketrew.Host_io.Error</a>]</td>
 <td></td></tr>
+<tr><td><a href="Ketrew.EDSL.html#TYPEnot_already_done">not_already_done</a> [<a href="Ketrew.EDSL.html">Ketrew.EDSL</a>]</td>
+<td><div class="info">
+The type of “empty” products.
+</div>
+</td></tr>
 <tr><td align="left"><br>P</td></tr>
 <tr><td><a href="Ketrew.Configuration.html#TYPEplugin">plugin</a> [<a href="Ketrew.Configuration.html">Ketrew.Configuration</a>]</td>
 <td><div class="info">
@@ -105,6 +123,11 @@ The 2 kinds of dynamically loaded “plugins” accepted by Ketrew:
 <td></td></tr>
 <tr><td><a href="Ketrew_pure.Target.Automaton.html#TYPEprocess_status_check">process_status_check</a> [<a href="Ketrew_pure.Target.Automaton.html">Ketrew_pure.Target.Automaton</a>]</td>
 <td></td></tr>
+<tr><td><a href="Ketrew.EDSL.html#TYPEproduct">product</a> [<a href="Ketrew.EDSL.html">Ketrew.EDSL</a>]</td>
+<td><div class="info">
+The type of the things produced by workflow nodes.
+</div>
+</td></tr>
 <tr><td><a href="Ketrew.Configuration.html#TYPEprofile">profile</a> [<a href="Ketrew.Configuration.html">Ketrew.Configuration</a>]</td>
 <td><div class="info">
 A profile is a name associated with a configuration.
@@ -138,11 +161,28 @@ A “shell” is a function that takes a command and returns, and
      is <code class="code"><span class="string">"sh"</span>; <span class="string">"-c"</span>; cmd</code>
 </div>
 </td></tr>
+<tr><td><a href="Ketrew_pure.Reactive.html#TYPEsignal">signal</a> [<a href="Ketrew_pure.Reactive.html">Ketrew_pure.Reactive</a>]</td>
+<td></td></tr>
+<tr><td><a href="Ketrew_pure.Reactive.html#TYPEsignal_list_wrap">signal_list_wrap</a> [<a href="Ketrew_pure.Reactive.html">Ketrew_pure.Reactive</a>]</td>
+<td></td></tr>
 <tr><td><a href="Ketrew_pure.Target.State.html#TYPEsimple">simple</a> [<a href="Ketrew_pure.Target.State.html">Ketrew_pure.Target.State</a>]</td>
 <td></td></tr>
+<tr><td><a href="Ketrew.EDSL.html#TYPEsingle_file">single_file</a> [<a href="Ketrew.EDSL.html">Ketrew.EDSL</a>]</td>
+<td><div class="info">
+The type of products that carry a simple file (on a given
+    <code class="code"><span class="constructor">Host</span>.t</code>).
+</div>
+</td></tr>
+<tr><td><a href="Ketrew.Configuration.html#TYPEssh_connection">ssh_connection</a> [<a href="Ketrew.Configuration.html">Ketrew.Configuration</a>]</td>
+<td><div class="info">
+Preconfigured named SSH connections.
+</div>
+</td></tr>
 <tr><td><a href="Ketrew.Configuration.html#TYPEstandalone">standalone</a> [<a href="Ketrew.Configuration.html">Ketrew.Configuration</a>]</td>
 <td></td></tr>
 <tr><td><a href="Ketrew_pure.Target.State.Flat.html#TYPEstate">state</a> [<a href="Ketrew_pure.Target.State.Flat.html">Ketrew_pure.Target.State.Flat</a>]</td>
+<td></td></tr>
+<tr><td><a href="Ketrew_pure.Protocol.Process_sub_protocol.Ssh_connection.html#TYPEstatus">status</a> [<a href="Ketrew_pure.Protocol.Process_sub_protocol.Ssh_connection.html">Ketrew_pure.Protocol.Process_sub_protocol.Ssh_connection</a>]</td>
 <td></td></tr>
 <tr><td><a href="Ketrew_pure.Protocol.Up_message.html#TYPEstring_predicate">string_predicate</a> [<a href="Ketrew_pure.Protocol.Up_message.html">Ketrew_pure.Protocol.Up_message</a>]</td>
 <td></td></tr>
@@ -153,6 +193,11 @@ A “shell” is a function that takes a command and returns, and
 <tr><td align="left"><br>T</td></tr>
 <tr><td><a href="Ketrew.Unix_process.Exit_code.html#TYPEt">t</a> [<a href="Ketrew.Unix_process.Exit_code.html">Ketrew.Unix_process.Exit_code</a>]</td>
 <td></td></tr>
+<tr><td><a href="Ketrew.Process_holder.html#TYPEt">t</a> [<a href="Ketrew.Process_holder.html">Ketrew.Process_holder</a>]</td>
+<td><div class="info">
+The container for mnoitored server-side processes.
+</div>
+</td></tr>
 <tr><td><a href="Ketrew.Persistent_data.html#TYPEt">t</a> [<a href="Ketrew.Persistent_data.html">Ketrew.Persistent_data</a>]</td>
 <td></td></tr>
 <tr><td><a href="Ketrew.Host_io.html#TYPEt">t</a> [<a href="Ketrew.Host_io.html">Ketrew.Host_io</a>]</td>
@@ -164,6 +209,8 @@ A “shell” is a function that takes a command and returns, and
 The contents of the application engine.
 </div>
 </td></tr>
+<tr><td><a href="Ketrew.EDSL.Build_process.html#TYPEt">t</a> [<a href="Ketrew.EDSL.Build_process.html">Ketrew.EDSL.Build_process</a>]</td>
+<td></td></tr>
 <tr><td><a href="Ketrew.EDSL.Condition.html#TYPEt">t</a> [<a href="Ketrew.EDSL.Condition.html">Ketrew.EDSL.Condition</a>]</td>
 <td></td></tr>
 <tr><td><a href="Ketrew.EDSL.Program.html#TYPEt">t</a> [<a href="Ketrew.EDSL.Program.html">Ketrew.EDSL.Program</a>]</td>
@@ -188,6 +235,8 @@ The contents of a configuration.
 The handle of the client.
 </div>
 </td></tr>
+<tr><td><a href="Ketrew.Authentication.html#TYPEt">t</a> [<a href="Ketrew.Authentication.html">Ketrew.Authentication</a>]</td>
+<td></td></tr>
 <tr><td><a href="Ketrew_pure.Target.Summary.html#TYPEt">t</a> [<a href="Ketrew_pure.Target.Summary.html">Ketrew_pure.Target.Summary</a>]</td>
 <td></td></tr>
 <tr><td><a href="Ketrew_pure.Target.Stored_target.html#TYPEt">t</a> [<a href="Ketrew_pure.Target.Stored_target.html">Ketrew_pure.Target.Stored_target</a>]</td>
@@ -221,9 +270,19 @@ The type of commands.
 </td></tr>
 <tr><td><a href="Ketrew_pure.Target.html#TYPEt">t</a> [<a href="Ketrew_pure.Target.html">Ketrew_pure.Target</a>]</td>
 <td></td></tr>
+<tr><td><a href="Ketrew_pure.Reactive.Signal.html#TYPEt">t</a> [<a href="Ketrew_pure.Reactive.Signal.html">Ketrew_pure.Reactive.Signal</a>]</td>
+<td></td></tr>
+<tr><td><a href="Ketrew_pure.Reactive.Source.html#TYPEt">t</a> [<a href="Ketrew_pure.Reactive.Source.html">Ketrew_pure.Reactive.Source</a>]</td>
+<td></td></tr>
 <tr><td><a href="Ketrew_pure.Protocol.Up_message.html#TYPEt">t</a> [<a href="Ketrew_pure.Protocol.Up_message.html">Ketrew_pure.Protocol.Up_message</a>]</td>
 <td></td></tr>
 <tr><td><a href="Ketrew_pure.Protocol.Down_message.html#TYPEt">t</a> [<a href="Ketrew_pure.Protocol.Down_message.html">Ketrew_pure.Protocol.Down_message</a>]</td>
+<td></td></tr>
+<tr><td><a href="Ketrew_pure.Protocol.Process_sub_protocol.Command_output.html#TYPEt">t</a> [<a href="Ketrew_pure.Protocol.Process_sub_protocol.Command_output.html">Ketrew_pure.Protocol.Process_sub_protocol.Command_output</a>]</td>
+<td></td></tr>
+<tr><td><a href="Ketrew_pure.Protocol.Process_sub_protocol.Ssh_connection.html#TYPEt">t</a> [<a href="Ketrew_pure.Protocol.Process_sub_protocol.Ssh_connection.html">Ketrew_pure.Protocol.Process_sub_protocol.Ssh_connection</a>]</td>
+<td></td></tr>
+<tr><td><a href="Ketrew_pure.Protocol.Process_sub_protocol.Command.html#TYPEt">t</a> [<a href="Ketrew_pure.Protocol.Process_sub_protocol.Command.html">Ketrew_pure.Protocol.Process_sub_protocol.Command</a>]</td>
 <td></td></tr>
 <tr><td><a href="Ketrew_pure.Protocol.Server_status.html#TYPEt">t</a> [<a href="Ketrew_pure.Protocol.Server_status.html">Ketrew_pure.Protocol.Server_status</a>]</td>
 <td></td></tr>
@@ -256,6 +315,27 @@ Timeout specification for execution functions below.
 <tr><td><a href="Ketrew.Configuration.html#TYPEui">ui</a> [<a href="Ketrew.Configuration.html">Ketrew.Configuration</a>]</td>
 <td><div class="info">
 General configuration of the text-based user interface.
+</div>
+</td></tr>
+<tr><td><a href="Ketrew.EDSL.html#TYPEunknown_product">unknown_product</a> [<a href="Ketrew.EDSL.html">Ketrew.EDSL</a>]</td>
+<td><div class="info">
+The type of the products that have been “hidden” or “forgotten,”
+    see <a href="Ketrew.EDSL.html#VALforget_product"><code class="code"><span class="constructor">Ketrew</span>.<span class="constructor">EDSL</span>.forget_product</code></a>.
+</div>
+</td></tr>
+<tr><td><a href="Ketrew_pure.Protocol.Process_sub_protocol.html#TYPEup">up</a> [<a href="Ketrew_pure.Protocol.Process_sub_protocol.html">Ketrew_pure.Protocol.Process_sub_protocol</a>]</td>
+<td></td></tr>
+<tr><td align="left"><br>W</td></tr>
+<tr><td><a href="Ketrew.EDSL.html#TYPEworkflow_edge">workflow_edge</a> [<a href="Ketrew.EDSL.html">Ketrew.EDSL</a>]</td>
+<td><div class="info">
+The edges of the graph (<code class="code">?edges</code> argument of the <a href="Ketrew.EDSL.html#VALworkflow_node"><code class="code"><span class="constructor">Ketrew</span>.<span class="constructor">EDSL</span>.workflow_node</code></a>
+    function).
+</div>
+</td></tr>
+<tr><td><a href="Ketrew.EDSL.html#TYPEworkflow_node">workflow_node</a> [<a href="Ketrew.EDSL.html">Ketrew.EDSL</a>]</td>
+<td><div class="info">
+The main building bloc of the worfklow graph is workflow node, it
+    carries a “product” accessible with the <code class="code"><span class="keywordsign">#</span>product</code> method.
 </div>
 </td></tr>
 </table>

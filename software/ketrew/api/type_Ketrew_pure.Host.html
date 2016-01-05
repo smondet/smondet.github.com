@@ -54,9 +54,21 @@
 &nbsp;&nbsp;&nbsp;&nbsp;?default_shell:<span class="constructor">Ketrew_pure</span>.<span class="constructor">Host</span>.default_shell&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;?playground:<span class="constructor">Path</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;?port:int&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;?user:string&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;?name:string&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;string&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Ketrew_pure</span>.<span class="constructor">Host</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;named&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;?execution_timeout:<span class="constructor">Internal_pervasives</span>.<span class="constructor">Time</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?default_shell:<span class="constructor">Ketrew_pure</span>.<span class="constructor">Host</span>.default_shell&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?playground:<span class="constructor">Path</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;string&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Ketrew_pure</span>.<span class="constructor">Host</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;with_ssh_connection&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Ketrew_pure</span>.<span class="constructor">Host</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Ketrew_pure</span>.<span class="constructor">Host</span>.<span class="constructor">Ssh</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Ketrew_pure</span>.<span class="constructor">Host</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;shell_of_default_shell&nbsp;:&nbsp;<span class="constructor">Ketrew_pure</span>.<span class="constructor">Host</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;string&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;string&nbsp;list<br>
-&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;of_uri&nbsp;:&nbsp;<span class="constructor">Uri</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Ketrew_pure</span>.<span class="constructor">Host</span>.t<br>
-&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;of_string&nbsp;:&nbsp;string&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Ketrew_pure</span>.<span class="constructor">Host</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;of_uri&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Uri</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">Ketrew_pure</span>.<span class="constructor">Host</span>.t,&nbsp;[&gt;&nbsp;<span class="keywordsign">`</span><span class="constructor">Host_uri_parsing_error</span>&nbsp;<span class="keyword">of</span>&nbsp;string&nbsp;*&nbsp;string&nbsp;])<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Pvem</span>.<span class="constructor">Result</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;of_string&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;string&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">Ketrew_pure</span>.<span class="constructor">Host</span>.t,&nbsp;[&gt;&nbsp;<span class="keywordsign">`</span><span class="constructor">Host_uri_parsing_error</span>&nbsp;<span class="keyword">of</span>&nbsp;string&nbsp;*&nbsp;string&nbsp;])<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Pvem</span>.<span class="constructor">Result</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;to_uri&nbsp;:&nbsp;<span class="constructor">Ketrew_pure</span>.<span class="constructor">Host</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Uri</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;to_string_hum&nbsp;:&nbsp;<span class="constructor">Ketrew_pure</span>.<span class="constructor">Host</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;string<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;log&nbsp;:&nbsp;<span class="constructor">Ketrew_pure</span>.<span class="constructor">Host</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Internal_pervasives</span>.<span class="constructor">Log</span>.t<br>
@@ -64,6 +76,7 @@
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;execution_timeout&nbsp;:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Ketrew_pure</span>.<span class="constructor">Host</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Internal_pervasives</span>.<span class="constructor">Time</span>.t&nbsp;option<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;connection&nbsp;:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Ketrew_pure</span>.<span class="constructor">Host</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;[&nbsp;<span class="keywordsign">`</span><span class="constructor">Localhost</span>&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Ssh</span>&nbsp;<span class="keyword">of</span>&nbsp;<span class="constructor">Ketrew_pure</span>.<span class="constructor">Host</span>.<span class="constructor">Ssh</span>.t&nbsp;]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Ketrew_pure</span>.<span class="constructor">Host</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;[&nbsp;<span class="keywordsign">`</span><span class="constructor">Localhost</span>&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Named</span>&nbsp;<span class="keyword">of</span>&nbsp;string&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Ssh</span>&nbsp;<span class="keyword">of</span>&nbsp;<span class="constructor">Ketrew_pure</span>.<span class="constructor">Host</span>.<span class="constructor">Ssh</span>.t&nbsp;]<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;playground&nbsp;:&nbsp;<span class="constructor">Ketrew_pure</span>.<span class="constructor">Host</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Path</span>.t&nbsp;option<br>
 <span class="keyword">end</span></code></body></html>

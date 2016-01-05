@@ -14,8 +14,9 @@
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Stdin</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;return&nbsp;<span class="constructor">Lwt_io</span>.stdin<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Channel</span>&nbsp;c&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;return&nbsp;c<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">File</span>&nbsp;file&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;buffer&nbsp;=&nbsp;buffer_option&nbsp;buffer_size&nbsp;<span class="keyword">in</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;wrap_deferred_io&nbsp;(<span class="keyword">fun</span>&nbsp;()&nbsp;<span class="keywordsign">-&gt;</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Lwt_io</span>.open_file&nbsp;~mode:<span class="constructor">Lwt_io</span>.input&nbsp;?buffer_size&nbsp;file)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Lwt_io</span>.open_file&nbsp;~mode:<span class="constructor">Lwt_io</span>.input&nbsp;?buffer&nbsp;file)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;inchan&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">begin</span><br>

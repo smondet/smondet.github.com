@@ -3,47 +3,48 @@
 <div class="col-md-3">
 <h2>Contents</h2><ul><li><a href='#EDSLConcepts'>EDSL Concepts</a>
 </li><li><a href='#Ketrew39sEngine'>Ketrew&#39;s Engine</a>
-</li></ul><h2>Menu</h2><ul><li><a href='index.html'>Home</a></li><li><a href='Alternative_CLI_Application.html'>Alternative CLI Application</a></li><li><a href='Database_Backends.html'>Database Backends</a></li><li><a href='Developer_Documentation.html'>Developer Documentation</a></li><li><a href='Glossary.html'>Glossary</a></li><li><a href='Long-Running_Plugins.html'>Long-Running Plugins</a></li><li><a href='Server_Commands.html'>Server Commands</a></li><li><a href='Standalone_Mode.html'>Standalone Mode</a></li><li><a href='The_Configuration_File.html'>The Configuration File</a></li><li><a href='The_HTTP_API.html'>The HTTP API</a></li><li><a href='Workflow_Examples.html'>Workflow Examples</a></li><li><a href='dummy_plugin_user.html'>Plugin-Usage Example</a></li><li><a href='dummy_plugin.html'>Plugin Example</a></li><li><a href='./api/index.html'>API Documentation</a></li><li>Documentation for <a href='./doc.0.0.0/index.html'>version 0.0.0</a></li><li>Documentation for <a href='./doc.1.0.0/index.html'>version 1.0.0</a></li><li>Documentation for <a href='./doc.1.1.0/index.html'>version 1.1.0</a></li><li>Documentation for <a href='./doc.1.1.1/index.html'>version 1.1.1</a></li><li>Documentation for <a href='./doc.2.0.0/index.html'>version 2.0.0</a></li><li>Repository <a href='https://github.com/hammerlab/ketrew'>at Github</a></li><li>Up: <a href='../index.html'>Software Projects</a></li></ul></div><div class="col-md-9"><h1 id="Glossary">Glossary</h1>
+</li></ul><h2>Menu</h2><ul><li><a href='index.html'>Home</a></li><li><a href='Alternative_CLI_Application.html'>Alternative CLI Application</a></li><li><a href='Database_Backends.html'>Database Backends</a></li><li><a href='Developer_Documentation.html'>Developer Documentation</a></li><li><a href='FAQ.html'>FAQ</a></li><li><a href='Glossary.html'>Glossary</a></li><li><a href='Long-Running_Plugins.html'>Long-Running Plugins</a></li><li><a href='Server_Commands.html'>Server Commands</a></li><li><a href='Standalone_Mode.html'>Standalone Mode</a></li><li><a href='The_Configuration_File.html'>The Configuration File</a></li><li><a href='The_HTTP_API.html'>The HTTP API</a></li><li><a href='Workflow_Examples.html'>Workflow Examples</a></li><li><a href='dummy_plugin_user.html'>Plugin-Usage Example</a></li><li><a href='dummy_plugin.html'>Plugin Example</a></li><li><a href='./api/index.html'>API Documentation</a></li><li>Documentation for <a href='./doc.0.0.0/index.html'>version 0.0.0</a></li><li>Documentation for <a href='./doc.1.0.0/index.html'>version 1.0.0</a></li><li>Documentation for <a href='./doc.1.1.0/index.html'>version 1.1.0</a></li><li>Documentation for <a href='./doc.1.1.1/index.html'>version 1.1.1</a></li><li>Documentation for <a href='./doc.2.0.0/index.html'>version 2.0.0</a></li><li>Repository <a href='https://github.com/hammerlab/ketrew'>at Github</a></li><li>Up: <a href='../index.html'>Software Projects</a></li></ul></div><div class="col-md-9"><h1 id="Glossary">Glossary</h1>
 
 <p>Here are some common terms used in this documentation.</p>
 <h2 id="EDSLConcepts">EDSL Concepts</h2>
 
-<p>A <strong>target</strong> (function <a href='api/Ketrew.EDSL.html#VALtarget' title='Ketrew.EDSL.target'><code>Ketrew.EDSL.target</code></a>) is the basic building block of a
-workflow, a target has many components:</p>
-<ul><li>A <strong>build-process</strong> wraps a way for a target of running a program, usually on
- a given host; for example the function <a href='api/Ketrew.EDSL.html#VALpbs' title='Ketrew.EDSL.pbs'><code>Ketrew.EDSL.pbs</code></a> returns a
- datastructure representing the action of running a program on a host with the
- PBS batch scheduler. It is the parameter <code>?make</code> of <a href='api/Ketrew.EDSL.html#VALtarget' title='Ketrew.EDSL.target'><code>Ketrew.EDSL.target</code></a>.<ul><li>A <strong>host</strong> (<a href='api/Ketrew.EDSL.Host.html#TYPEt' title='Ketrew.EDSL.Host.t'><code>Ketrew.EDSL.Host.t</code></a>) is a place where one can run things.
+<p>A <strong>node</strong> (function <a href='api/Ketrew.EDSL.html#VALworkflow_node' title='Ketrew.EDSL.workflow_node'><code>Ketrew.EDSL.workflow_node</code></a>) is the basic building block of
+a workflow (it is often also called a “target”). A workflow-node has many
+components:</p>
+<ul><li>A <strong>build-process</strong> describes how a program should be run, usually on a given
+ host; for example the function <a href='api/Ketrew.EDSL.html#VALpbs' title='Ketrew.EDSL.pbs'><code>Ketrew.EDSL.pbs</code></a> returns a datastructure
+ representing the action of running a program on a host with the PBS batch
+ scheduler. It is the parameter <code>?make</code> of <a href='api/Ketrew.EDSL.html#VALworkflow_node' title='Ketrew.EDSL.workflow_node'><code>Ketrew.EDSL.workflow_node</code></a>.<ul><li>A <strong>host</strong> (<a href='api/Ketrew.EDSL.Host.html#TYPEt' title='Ketrew.EDSL.Host.t'><code>Ketrew.EDSL.Host.t</code></a>) is a place where one can run things.
  Usually a host is an SSH host with a “playground”, and a few other
  options.</li><li>A <strong>playground</strong> is a directory on a host where the Ketrew engine and its
  plugins can (and will) write log files, temporary scripts, etc.
  Most features which use hosts require playgrounds and will fail if not
  provided.</li><li>A <strong>program</strong> (<a href='api/Ketrew.EDSL.Program.html#TYPEt' title='Ketrew.EDSL.Program.t'><code>Ketrew.EDSL.Program.t</code></a>) is a datastructure representing
  shell scripts on steroids, Ketrew provides high-level combinators to build
- programs.</li></ul></li><li>A <strong>condition</strong> (<a href='api/Ketrew.EDSL.Condition.html#TYPEt' title='Ketrew.EDSL.Condition.t'><code>Ketrew.EDSL.Condition.t</code></a>) defines how to tell if a target
- should be run or not (the argument <code>?done_when</code> of <a href='api/Ketrew.EDSL.html#VALtarget' title='Ketrew.EDSL.target'><code>Ketrew.EDSL.target</code></a>).</li><li>Links to other targets:<ul><li><strong>dependencies</strong> are targets that need to be satisfied or run before a
- target can start,</li><li><strong>on-failure-activate</strong> targets that will be activated if the target fails, and</li><li><strong>on-success-activate</strong> targets that will be activated only <em>after</em> a target
- succeeds.</li></ul></li><li><strong>Metadata</strong> and <strong>tags</strong> are user-provided information; the <code>?metadata</code> is,
+ programs.</li></ul></li><li>A <strong>condition</strong> (<a href='api/Ketrew.EDSL.Condition.html#TYPEt' title='Ketrew.EDSL.Condition.t'><code>Ketrew.EDSL.Condition.t</code></a>) defines how to tell if a node
+ should be run or not (it is set by the “product” of the node or by the
+ argument <code>?done_when</code> of <a href='api/Ketrew.EDSL.html#VALworkflow_node' title='Ketrew.EDSL.workflow_node'><code>Ketrew.EDSL.workflow_node</code></a>).</li><li>Links to other nodes, i.e., <strong>edges</strong>:<ul><li><a href='api/Ketrew.EDSL.html#VALdepends_on' title='Ketrew.EDSL.depends_on'><code>Ketrew.EDSL.depends_on</code></a> are nodes that need to be satisfied or run before a
+ node can start running,</li><li><a href='api/Ketrew.EDSL.html#VALon_failure_activate' title='Ketrew.EDSL.on_failure_activate'><code>Ketrew.EDSL.on_failure_activate</code></a> are nodes that will be activated if the
+ node fails (being killed is considered failing here), and</li><li><a href='api/Ketrew.EDSL.html#VALon_success_activate' title='Ketrew.EDSL.on_success_activate'><code>Ketrew.EDSL.on_success_activate</code></a> are nodes that will be activated only
+ <em>after</em> a node succeeds.</li></ul></li><li><strong>Metadata</strong> and <strong>tags</strong> are user-provided information; the <code>?metadata</code> is,
  for now, just a raw string; the <code>?tags</code> are a list of strings which are
- “searchable” (see “filters” sub-menu in the test-user-interface).</li><li>An <strong>Equivalence</strong> specification tells the engine when to consider a target
- redundant, the default value is the most common:<br /><ul><li>when adding a target, if an active or activable target already has the
- same <em>condition</em> then the new one is considered redundant and will be
- replaced with a pointer to the older one;</li><li>the behavior above can be cancelled by providing <code>`None</code>
+ “searchable” (see “filters” in the UI).</li><li>An <strong>Equivalence</strong> specification tells the engine when to consider a node
+ redundant, the default value is the most common and obvious,
+ <code>`Same_active_condition</code>:<br /><ul><li>when adding a node to the engine, if an active or activable node already
+ has the same <em>condition</em> then the new one is considered redundant and will
+ be replaced with a pointer to the older one;</li><li>the behavior above can be cancelled by providing <code>`None</code>
  (cf. <a href='api/Ketrew_pure.Target.Equivalence.html#TYPEt' title='Ketrew_pure.Target.Equivalence.t'><code>Ketrew_pure.Target.Equivalence.t</code></a>).</li></ul></li></ul>
 
-<p>In the EDSL, a target may have a <strong>product</strong>, which is, for now, just a facility
-for the EDSL itself (the engine does not keep track of products).
-The <code>?product</code> argument can be used to track file-paths within your EDSL
-program (see for example the function <a href='api/Ketrew.EDSL.html#VALfile_target' title='Ketrew.EDSL.file_target'><code>Ketrew.EDSL.file_target</code></a> which
-just sets the product and the condition of a target for a given file-path; the
-path can be retrieved with <code>my_target#product#path</code>).</p>
+<p>In the EDSL, a workflow-node has a <strong>product</strong> which defines, via its <code>#is_done</code>
+method, how the <em>condition</em> of the node is tested.  The product of a node can be
+accessed through the <code>#product</code> method.</p>
 <h2 id="Ketrew39sEngine">Ketrew&#39;s Engine</h2>
 
 <p>Ketrew&#39;s <strong>engine</strong> is the process in charge of orchestrating and monitoring
 the run of the workflows.</p>
-<ul><li>In <strong>standalone</strong> mode, the command line application has to run the
-engine manually.</li><li>In <strong>client-server</strong> mode, the engine is run by the server; the client
-applications just “submit” workflows.</li></ul>
+<ul><li>In <strong>standalone</strong> mode, the command line application has to run the engine
+ manually.</li><li>In <strong>client-server</strong> mode, the engine is run by the server; the client
+ applications just “submit” workflows.</li></ul>
 
 <p>The engine runs long-running processes through <strong>plugins</strong>
 (see <a href='./Long-Running_Plugins.html'>documentation</a>).</p>

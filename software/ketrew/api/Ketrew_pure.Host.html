@@ -70,8 +70,14 @@ The host <code class="code"><span class="string">"localhost"</span></code>, with
 Create an SSH host.<br>
 </div>
 
+<pre><span id="VALnamed"><span class="keyword">val</span> named</span> : <code class="type">?execution_timeout:Internal_pervasives.Time.t -><br>       ?default_shell:<a href="Ketrew_pure.Host.html#TYPEdefault_shell">default_shell</a> -><br>       ?playground:Path.t -> string -> <a href="Ketrew_pure.Host.html#TYPEt">t</a></code></pre><div class="info ">
+Create an "named" host, the actual connection will be resolved
+    form the name by the engine.<br>
+</div>
+
+<pre><span id="VALwith_ssh_connection"><span class="keyword">val</span> with_ssh_connection</span> : <code class="type"><a href="Ketrew_pure.Host.html#TYPEt">t</a> -> <a href="Ketrew_pure.Host.Ssh.html#TYPEt">Ssh.t</a> -> <a href="Ketrew_pure.Host.html#TYPEt">t</a></code></pre>
 <pre><span id="VALshell_of_default_shell"><span class="keyword">val</span> shell_of_default_shell</span> : <code class="type"><a href="Ketrew_pure.Host.html#TYPEt">t</a> -> string -> string list</code></pre>
-<pre><span id="VALof_uri"><span class="keyword">val</span> of_uri</span> : <code class="type">Uri.t -> <a href="Ketrew_pure.Host.html#TYPEt">t</a></code></pre><div class="info ">
+<pre><span id="VALof_uri"><span class="keyword">val</span> of_uri</span> : <code class="type">Uri.t -><br>       (<a href="Ketrew_pure.Host.html#TYPEt">t</a>, [> `Host_uri_parsing_error of string * string ])<br>       Pvem.Result.t</code></pre><div class="info ">
 Get a <code class="code"><span class="constructor">Host</span>.t</code> from an URI (library <a href="https://github.com/mirage/ocaml-uri">ocaml-uri</a>);
     the “path” part of the URI is the playground.
 <p>
@@ -86,7 +92,7 @@ Get a <code class="code"><span class="constructor">Host</span>.t</code> from an 
 </ul>
 
     For example
-    <code class="code">of_string <span class="string">"//user@SomeHost:42/tmp/pg?shell=bash,-l,--init-file,bouh,-c&amp;timeout=42"</span></code>
+    <code class="code">of_string <span class="string">"ssh://user@SomeHost:42/tmp/pg?shell=bash,-l,--init-file,bouh,-c&amp;timeout=42"</span></code>
     will be like using 
     <pre class="codepre"><code class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ssh&nbsp;~default_shell:(default_shell&nbsp;&nbsp;<span class="string">"bash"</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;~command_name&nbsp;~options:[<span class="string">"-l"</span>;&nbsp;<span class="string">"--init-file"</span>;&nbsp;<span class="string">"bouh"</span>]<br>
@@ -95,9 +101,9 @@ Get a <code class="code"><span class="constructor">Host</span>.t</code> from an 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;~port:42&nbsp;~user:<span class="string">"user"</span>&nbsp;<span class="string">"SomeHost"</span></code></pre><br>
 </div>
 
-<pre><span id="VALof_string"><span class="keyword">val</span> of_string</span> : <code class="type">string -> <a href="Ketrew_pure.Host.html#TYPEt">t</a></code></pre><div class="info ">
+<pre><span id="VALof_string"><span class="keyword">val</span> of_string</span> : <code class="type">string -><br>       (<a href="Ketrew_pure.Host.html#TYPEt">t</a>, [> `Host_uri_parsing_error of string * string ])<br>       Pvem.Result.t</code></pre><div class="info ">
 Parse an <a href="http://www.ietf.org/rfc/rfc3986.txt">RFC-3986</a>-compliant
-  string into a host, see <a href="Ketrew_pure.Host.html#VALof_uri"><code class="code"><span class="constructor">Ketrew_pure</span>.<span class="constructor">Host</span>.of_uri</code></a>.<br>
+    string into a host, see <a href="Ketrew_pure.Host.html#VALof_uri"><code class="code"><span class="constructor">Ketrew_pure</span>.<span class="constructor">Host</span>.of_uri</code></a>.<br>
 </div>
 
 <pre><span id="VALto_uri"><span class="keyword">val</span> to_uri</span> : <code class="type"><a href="Ketrew_pure.Host.html#TYPEt">t</a> -> Uri.t</code></pre><div class="info ">
@@ -120,5 +126,5 @@ Get a higher-level display document.<br>
 The execution timeout configured for the host.<br>
 </div>
 
-<pre><span id="VALconnection"><span class="keyword">val</span> connection</span> : <code class="type"><a href="Ketrew_pure.Host.html#TYPEt">t</a> -> [ `Localhost | `Ssh of <a href="Ketrew_pure.Host.Ssh.html#TYPEt">Ssh.t</a> ]</code></pre>
+<pre><span id="VALconnection"><span class="keyword">val</span> connection</span> : <code class="type"><a href="Ketrew_pure.Host.html#TYPEt">t</a> -><br>       [ `Localhost | `Named of string | `Ssh of <a href="Ketrew_pure.Host.Ssh.html#TYPEt">Ssh.t</a> ]</code></pre>
 <pre><span id="VALplayground"><span class="keyword">val</span> playground</span> : <code class="type"><a href="Ketrew_pure.Host.html#TYPEt">t</a> -> Path.t option</code></pre></body></html>

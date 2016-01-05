@@ -462,11 +462,20 @@
   </span><span class="comment">(******************************************************************************)</span><span class="text">
   </span><span class="comment">(* Channels *)</span><span class="text">
 
+  </span><span class="comment">(* This transforms the legacy `?buffer_size` option into the `?buffer` option
+     that `Lwt_io` expects after backwards incompatible change in Lwt
+     2.5.0.  *)</span><span class="text">
+  </span><span class="kw">let</span><span class="text"> </span><span class="id">buffer_option</span><span class="text"> </span><span class="id">buffer_size_option</span><span class="text"> =
+    </span><span class="kw1">match</span><span class="text"> </span><span class="id">buffer_size_option</span><span class="text"> </span><span class="kw1">with</span><span class="text">
+    | </span><span class="kw2">None</span><span class="text"> -&gt; </span><span class="kw2">None</span><span class="text">
+    | </span><span class="kw2">Some</span><span class="text"> </span><span class="id">s</span><span class="text"> -&gt; </span><span class="kw2">Some</span><span class="text"> (</span><span class="kw2">Lwt_bytes</span><span class="text">.</span><span class="id">create</span><span class="text"> </span><span class="id">s</span><span class="text">)
+
   </span><span class="kw">let</span><span class="text"> </span><span class="id">with_out_channel</span><span class="text"> ?</span><span class="id">buffer_size</span><span class="text"> </span><span class="kw4">~f</span><span class="text"> </span><span class="id">out</span><span class="text"> =
     </span><span class="kw1">begin</span><span class="text">
+      </span><span class="kw">let</span><span class="text"> </span><span class="id">buffer</span><span class="text"> = </span><span class="id">buffer_option</span><span class="text"> </span><span class="id">buffer_size</span><span class="text"> </span><span class="kw">in</span><span class="text">
       </span><span class="kw">let</span><span class="text"> </span><span class="id">open_file</span><span class="text"> </span><span class="kw4">~flags</span><span class="text"> </span><span class="id">file</span><span class="text"> =
         </span><span class="id">wrap_deferred_io</span><span class="text"> (</span><span class="kw">fun</span><span class="text"> () -&gt;
-            </span><span class="kw2">Lwt_io</span><span class="text">.</span><span class="id">open_file</span><span class="text"> </span><span class="kw4">~mode</span><span class="text">:</span><span class="kw2">Lwt_io</span><span class="text">.</span><span class="id">output</span><span class="text"> ?</span><span class="id">buffer_size</span><span class="text"> </span><span class="kw4">~flags</span><span class="text"> </span><span class="id">file</span><span class="text">)
+            </span><span class="kw2">Lwt_io</span><span class="text">.</span><span class="id">open_file</span><span class="text"> </span><span class="kw4">~mode</span><span class="text">:</span><span class="kw2">Lwt_io</span><span class="text">.</span><span class="id">output</span><span class="text"> ?</span><span class="id">buffer</span><span class="text"> </span><span class="kw4">~flags</span><span class="text"> </span><span class="id">file</span><span class="text">)
       </span><span class="kw">in</span><span class="text">
       </span><span class="kw1">begin</span><span class="text"> </span><span class="kw1">match</span><span class="text"> </span><span class="id">out</span><span class="text"> </span><span class="kw1">with</span><span class="text">
       | `</span><span class="kw2">Stdout</span><span class="text"> -&gt; </span><span class="id">return</span><span class="text"> </span><span class="kw2">Lwt_io</span><span class="text">.</span><span class="id">stdout</span><span class="text">
@@ -520,8 +529,9 @@
     | `</span><span class="kw2">Stdin</span><span class="text"> -&gt; </span><span class="id">return</span><span class="text"> </span><span class="kw2">Lwt_io</span><span class="text">.</span><span class="id">stdin</span><span class="text">
     | `</span><span class="kw2">Channel</span><span class="text"> </span><span class="id">c</span><span class="text"> -&gt; </span><span class="id">return</span><span class="text"> </span><span class="id">c</span><span class="text">
     | `</span><span class="kw2">File</span><span class="text"> </span><span class="id">file</span><span class="text"> -&gt;
+      </span><span class="kw">let</span><span class="text"> </span><span class="id">buffer</span><span class="text"> = </span><span class="id">buffer_option</span><span class="text"> </span><span class="id">buffer_size</span><span class="text"> </span><span class="kw">in</span><span class="text">
       </span><span class="id">wrap_deferred_io</span><span class="text"> (</span><span class="kw">fun</span><span class="text"> () -&gt;
-          </span><span class="kw2">Lwt_io</span><span class="text">.</span><span class="id">open_file</span><span class="text"> </span><span class="kw4">~mode</span><span class="text">:</span><span class="kw2">Lwt_io</span><span class="text">.</span><span class="id">input</span><span class="text"> ?</span><span class="id">buffer_size</span><span class="text"> </span><span class="id">file</span><span class="text">)
+          </span><span class="kw2">Lwt_io</span><span class="text">.</span><span class="id">open_file</span><span class="text"> </span><span class="kw4">~mode</span><span class="text">:</span><span class="kw2">Lwt_io</span><span class="text">.</span><span class="id">input</span><span class="text"> ?</span><span class="id">buffer</span><span class="text"> </span><span class="id">file</span><span class="text">)
     </span><span class="kw1">end</span><span class="text">
     </span><span class="kw10">&gt;&gt;=</span><span class="text"> </span><span class="kw">fun</span><span class="text"> </span><span class="id">inchan</span><span class="text"> -&gt;
     </span><span class="kw1">begin</span><span class="text">

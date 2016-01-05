@@ -4,7 +4,7 @@
 <link rel="stylesheet" href="style.css" type="text/css">
 <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
 <link rel="Start" href="index.html">
-<link rel="next" href="Ketrew_pure.Protocol.Down_message.html">
+<link rel="next" href="Ketrew_pure.Protocol.Process_sub_protocol.html">
 <link rel="Up" href="Ketrew_pure.Protocol.html">
 <link title="Index of types" rel=Appendix href="index_types.html">
 <link title="Index of values" rel=Appendix href="index_values.html">
@@ -17,7 +17,7 @@
 </head>
 <body>
 <div class="navbar">&nbsp;<a class="up" href="Ketrew_pure.Protocol.html" title="Ketrew_pure.Protocol">Up</a>
-&nbsp;<a class="post" href="Ketrew_pure.Protocol.Down_message.html" title="Ketrew_pure.Protocol.Down_message">Next</a>
+&nbsp;<a class="post" href="Ketrew_pure.Protocol.Process_sub_protocol.html" title="Ketrew_pure.Protocol.Process_sub_protocol">Next</a>
 </div>
 <h1>Module <a href="type_Ketrew_pure.Protocol.Server_status.html">Ketrew_pure.Protocol.Server_status</a></h1>
 
@@ -64,6 +64,34 @@
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
 <code><span id="TYPEELTt.libev">libev</span>&nbsp;: <code class="type">bool</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTt.database">database</span>&nbsp;: <code class="type">string</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTt.host_timeout_upper_bound">host_timeout_upper_bound</span>&nbsp;: <code class="type">float option</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTt.maximum_successive_attempts">maximum_successive_attempts</span>&nbsp;: <code class="type">int</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTt.concurrent_automaton_steps">concurrent_automaton_steps</span>&nbsp;: <code class="type">int</code>;</code></td>
 
 </tr>
 <tr>
@@ -135,9 +163,16 @@
 <td align="left" valign="top" >
 <code><span id="TYPEELTt.gc_stack_size">gc_stack_size</span>&nbsp;: <code class="type">int</code>;</code></td>
 
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTt.enable_ssh_ui">enable_ssh_ui</span>&nbsp;: <code class="type">bool</code>;</code></td>
+
 </tr></table>
 }
 
 
 
-<pre><span id="VALcreate"><span class="keyword">val</span> create</span> : <code class="type">time:float -><br>       read_only:bool -><br>       tls:[ `Native | `None | `OpenSSL ] -><br>       preemptive_bounds:int * int -><br>       preemptive_queue:int -><br>       libev:bool -> gc:Gc.stat -> <a href="Ketrew_pure.Protocol.Server_status.html#TYPEt">t</a></code></pre></body></html>
+<pre><span id="VALcreate"><span class="keyword">val</span> create</span> : <code class="type">database:string -><br>       host_timeout_upper_bound:float option -><br>       maximum_successive_attempts:int -><br>       concurrent_automaton_steps:int -><br>       enable_ssh_ui:bool -><br>       time:float -><br>       read_only:bool -><br>       tls:[ `Native | `None | `OpenSSL ] -><br>       preemptive_bounds:int * int -><br>       preemptive_queue:int -><br>       libev:bool -> gc:Gc.stat -> <a href="Ketrew_pure.Protocol.Server_status.html#TYPEt">t</a></code></pre></body></html>

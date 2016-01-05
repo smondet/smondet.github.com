@@ -1,4 +1,69 @@
 (** The library that actually does things in a UNIX environment (contains the engine and the server) *)
+module Authentication : sig
+(**************************************************************************)
+(*    Copyright 2014, 2015:                                               *)
+(*          Sebastien Mondet <seb@mondet.org>,                            *)
+(*          Leonid Rozenberg <leonidr@gmail.com>,                         *)
+(*          Arun Ahuja <aahuja11@gmail.com>,                              *)
+(*          Jeff Hammerbacher <jeff.hammerbacher@gmail.com>               *)
+(*                                                                        *)
+(*  Licensed under the Apache License, Version 2.0 (the "License");       *)
+(*  you may not use this file except in compliance with the License.      *)
+(*  You may obtain a copy of the License at                               *)
+(*                                                                        *)
+(*      http://www.apache.org/licenses/LICENSE-2.0                        *)
+(*                                                                        *)
+(*  Unless required by applicable law or agreed to in writing, software   *)
+(*  distributed under the License is distributed on an "AS IS" BASIS,     *)
+(*  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or       *)
+(*  implied.  See the License for the specific language governing         *)
+(*  permissions and limitations under the License.                        *)
+(**************************************************************************)
+
+(** Server Authentication.
+
+  Module dealing with access tokens and access rights. There are no
+  “sessions” here; just a file that looks like SSH's `authorized_keys`, and a
+  function: token × capability → bool.
+
+  Capabilities are defined with polymorphic variants.
+*)
+
+open Ketrew_pure
+open Internal_pervasives
+open Unix_io
+
+type t
+
+val log : t -> Log.t
+(** Describe the source of the authentication. *)
+
+val load : [ `Inline of string * string | `Path of String.t ] list ->
+    (t, [> `IO of [> `Read_file_exn of IO.path * exn ] ]) Deferred_result.t
+(** Load tokens that represent your authentication.*)
+
+val reload : t ->
+    (t, [> `IO of [> `Read_file_exn of IO.path * exn ] ]) Deferred_result.t
+(** Reload tokens based upon their original source.
+    
+    This makes sense if the they were originall loaded from a specific `Path. *)
+
+(** The capabilities that are validated, these are grouped according to the
+    {{!type:Ketrew_pure.Protocol.Up_message.t} Up_message.t} that is received.*)
+type capabilities = [
+  | `Browse_gui                 (** Can we open up web gui *)
+  | `See_targets                (** Can we show the targets tracked by the server. *)
+  | `Query_targets              (** Can we perform individual query targets, see {{!val:Ketrew_pure.Protocol.Up_message.`Call_query} `Call_query}*)
+  | `See_server_status          (** Can we inspect the servers status. *)
+  | `Restart_targets            (** Can the server restart targets. *)
+  | `Submit_targets             (** Is the server accepting new targets. *)
+  | `Kill_targets               (** Can the server kill targets. *)
+  | `Play_with_process_holder   (** Modify the process controling targets. *)
+]
+
+(** Determine if we have the desired capabilities *)
+val can : t -> read_only_mode:bool -> ?token:string -> capabilities -> bool
+end
 module Client : sig
 (**************************************************************************)
 (*    Copyright 2014, 2015:                                               *)
@@ -57,14 +122,14 @@ val as_client:
   f:(client:t ->
      (unit,
       [> `Database of Trakeva.Error.t
-      | `Database_unavailable of bytes
+      | `Database_unavailable of string
       | `Dyn_plugin of
            [> `Dynlink_error of Dynlink.error | `Findlib of exn ]
-      | `Failure of bytes
-      | `Missing_data of bytes
-      | `Target of [> `Deserilization of bytes ]
+      | `Failure of string
+      | `Missing_data of string
+      | `Target of [> `Deserilization of string ]
       | `Wrong_configuration of
-           [> `Found of bytes ] * [> `Exn of exn ] ]
+           [> `Found of string ] * [> `Exn of exn ] ]
       as 'a)
        Deferred_result.t) ->
   (unit, 'a) Deferred_result.t
@@ -86,6 +151,7 @@ val all_targets: t ->
   (Ketrew_pure.Target.t list,
    [> `Client of Error.t
    | `Database of Trakeva.Error.t
+   | `Database_unavailable of string
    | `IO of
         [> `Read_file_exn of string * exn | `Write_file_exn of string * exn ]
    | `Missing_data of Ketrew_pure.Target.id
@@ -99,6 +165,7 @@ val get_list_of_target_ids : t ->
   (Ketrew_pure.Target.id list,
    [> `Client of Error.t
    | `Database of Trakeva.Error.t
+   | `Database_unavailable of string
    | `Missing_data of string
    | `Target of [> `Deserilization of string ] ])
     Deferred_result.t
@@ -108,6 +175,7 @@ val get_target: t ->
   id:Ketrew_pure.Target.id ->
   (Ketrew_pure.Target.t,
    [> `Client of Error.t
+   | `Database_unavailable of string
    | `Database of Trakeva.Error.t
    | `Missing_data of string
    | `Target of [> `Deserilization of string ] ])
@@ -119,6 +187,7 @@ val get_targets: t ->
   (Ketrew_pure.Target.t list,
    [> `Client of Error.t
    | `Database of Trakeva.Error.t
+   | `Database_unavailable of string
    | `Missing_data of string
    | `Target of [> `Deserilization of string ] ])
    Deferred_result.t
@@ -150,10 +219,10 @@ val restart: t ->
     Deferred_result.t
 (** Restart a set of targets. *)
 
-val submit:
+val submit_workflow:
   ?override_configuration:Configuration.t ->
-  ?add_tags: string list ->
-  EDSL.user_target ->
+  ?add_tags:string list ->
+  'any EDSL.product EDSL.workflow_node ->
   unit
 (** Submit a high-level workflow description to the engine; this
     function calls [Lwt_main.run].
@@ -161,6 +230,16 @@ val submit:
     One can add tags to all the targets in the workflow before
     submitting with the [add_tags] option.
 *)
+
+val submit:
+  ?override_configuration:Configuration.t ->
+  ?add_tags: string list ->
+  EDSL.user_target ->
+  unit
+(** This is like {!submit_workflow} but for the deprecated/legacy API
+    (i.e. created with calls to {!EDSL.user_target}).
+*)
+
 end
 module Command_line : sig
 (**************************************************************************)
@@ -303,6 +382,7 @@ val engine:
   ?turn_unix_ssh_failure_into_target_failure: bool ->
   ?host_timeout_upper_bound: float ->
   ?maximum_successive_attempts: int ->
+  ?concurrent_automaton_steps: int ->
   unit -> engine
 (** Build an [engine] configuration:
 
@@ -319,6 +399,9 @@ val engine:
       will be “≤ upper-bound” (in seconds, default is [60.]).
     - [maximum_successive_attempts]: number of successive non-fatal
       failures allowed before declaring a target dead (default is [10]).
+    - [concurrent_automaton_steps]: maximum number of steps in the
+      state machine that engine will try to run concurrently (default
+      is [4]).
 *)
 
 type authorized_tokens 
@@ -327,6 +410,9 @@ type authorized_tokens
 
     Tokens have a name and a value; the value is the one checked
     against the ["token"] argument of the HTTP queries.
+
+    A token's value must consist only of
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_=".
  *)
 
 val authorized_token: name: string -> string -> authorized_tokens
@@ -344,6 +430,14 @@ val authorized_tokens_path: string -> authorized_tokens
       v}
   *)
 
+type ssh_connection
+(** Preconfigured named SSH connections. *)
+
+val ssh_connection:  uri: string -> string -> ssh_connection
+(** Create a named {!ssh_connection} (cf. {!sever}). *)
+
+val ssh_connection_name_uri: ssh_connection -> string * string
+
 type server
 (** The configuration of the server. *)
 
@@ -358,6 +452,8 @@ val server:
   ?max_blocking_time: float ->
   ?block_step_time: float ->
   ?read_only_mode: bool ->
+  ?ssh_connections:ssh_connection list ->
+  ?ssh_processes_ui:bool ->
   [ `Tcp of int | `Tls of string * string * int ] ->
   [> `Server of server]
 (** Create a server configuration (to pass as optional argument to the
@@ -374,8 +470,12 @@ val server:
       terminal and change the process directory to ["/"]; hence if you
       use this option it is required to provide absolute paths for all
       other parameters requiring paths.
-    - [log_path]: if set together with [daemonize], ask the server to
-      redirect logs to this path (if not set, daemon logs go to ["/dev/null"]).
+    - [log_path]: path to the server;s log directory; if present
+      (highly recommended), the server will dump JSON files containing
+      the logs periodically. Moreover, if set together with
+      [daemonize], the server redirect debug-style logs to a
+      ["debug.txt"] file in that directory (if not set, daemon debug
+      info goes to ["/dev/null"]).
     - [max_blocking_time]: 
       upper bound on the request for blocking in the protocol (seconds,
       default [300.]).
@@ -384,6 +484,7 @@ val server:
       hopefully disapear soon) (seconds, default [3.]).
     - [read_only_mode]:
       run the server in read-only mode (default [false]).
+    - [ssh_connections]: preconfigure named SSH connections (default [[]]).
     = [`Tcp port]: configure the server the unsercurely listen on [port].
     - [`Tls ("certificate.pem", "privatekey.pem", port)]: configure the OpenSSL
       server to listen on [port].
@@ -455,6 +556,12 @@ val is_unix_ssh_failure_fatal: engine -> bool
 val maximum_successive_attempts: engine -> int
 (** Get the maximum number of successive non-fatal failures. *)
   
+val concurrent_automaton_steps: engine -> int
+(** Get the maximum number of concurrent automaton steps. *)
+
+val host_timeout_upper_bound : engine -> float option
+(** Get the upper bound for the timeout of SSH calls, if any. *)
+
 val plugins: t ->  plugin list
 (** Get the configured list of plugins. *)
 
@@ -466,6 +573,9 @@ val server_engine: server -> engine
 val server_configuration: t -> server option
 (** Get the potentiel server configuration. *)
 
+val ssh_connections: server -> ssh_connection list
+val ssh_processes_ui: server -> bool
+    
 val authorized_tokens: server ->
   [ `Path of string | `Inline of (string * string)] list
 (** The path to the [authorized_tokens] file. *)
@@ -483,7 +593,7 @@ val daemon: server -> bool
 (** Tell whether the server should detach. *)
 
 val log_path: server -> string option
-(** Get the path to the server's log file. *)
+(** Get the path to the server's log directory. *)
 
 val log: t -> Log.t
 (** Get a display-friendly list of configuration items. *)
@@ -687,26 +797,47 @@ module Host: sig
   (** Alias for the host type. *)
 
   val parse : string -> t
-  (** Parse an URI string into a host.
+  (** Parse a
+      {{:https://en.wikipedia.org/wiki/Uniform_Resource_Identifier}URI}
+      string into a Ketrew-host.
 
-      For example:
-      ["ssh://user@SomeHost:42/tmp/pg?shell=bash,-l,--init-file,bouh,-c&timeout=42&ssh-option=-K"]
+      The “scheme” and “host” part of the URI define the connection type:
 
-      - ["ssh:"] means to connect with SSH (if a hostname is defined this is the
-      default and only way).
-      - ["user"] is the user to connect as.
-      - ["SomeHost"] is the hostname, if the “host-connection” part of the URI is
-      not provided, “localhost” will be assumed (and SSH won't be used).
-      - ["42"] is the port.
-      - ["/tmp/pg"] is the “playground”; a directory where the Ketrew-engine will
-      create temporary and monitoring files.
-      - ["shell=bash,-l,--init-file,bouh,-c"] the option [shell] define the
-      shell, and the options, to use on the host.
-      - ["timeout=42.5"] is the execution timeout, an optional float setting the
-      maximal duration Ketrew will wait for SSH commands to return.
-      - ["ssh-option=-K"] are options to pass to the SSH client.
+      - {b SSH Hosts}: use ["ssh:"] as the scheme means (if a hostname is
+        defined but no scheme, SSH is the default).
+        Then you can add a user, a hostname, and a port number.
+        You can aslo add options to pass to the SSH client through the
+        URI's query parameters ["ssh-option=-K"].
+      - {b Named hosts}: use the scheme ["named://"] and the hostname
+        as a {i name}. Named hosts are dynamic connections managed by the
+        Ketrew server.
+      - {b Engine's host}: if no scheme, and no host part are
+        provided, Ketrew will create a host for the local-host (the
+        host where the Engine is running).
 
-      See also {!Host.of_uri}. *)
+      The “path” part of the URI defines the “playground”; a directory
+      where the Ketrew-engine will create temporary and monitoring files.
+      
+      Other query options can be used to configure the host:
+      
+      - ["shell=<comma-separated-list-of-command-line-arguments"]
+        defines the shell, with more command-line options, to use on
+        the host.
+      - ["timeout=<float>"] is the execution timeout, an optional
+        float setting the maximal duration Ketrew will wait for SSH
+        commands to return.
+
+      Examples:
+
+      - ["ssh://user@SomeHost:42/tmp/pg?shell=bash,-l,--init-file,bouh,-c&timeout=42&ssh-option=-K"]
+        is an SSH host.
+      - ["named://TheNameOfTheHost/tmp/ketrew-playground/"] is a named
+        host: Ketrew will try to find its active connection called
+        ["TheNameOfTheHost"] and use it at every call.
+      - ["/tmp/KT?shell=ksh,-c"] is the engine's host, using ["tmp/KT"]
+        as a playground, and ["ksh"] as a shell.
+
+      See also {!Ketrew_pure.Host.of_uri}. *)
 
   val tmp_on_localhost: t
 
@@ -768,10 +899,291 @@ module Condition: sig
 
 end
 
-(** {3 Artifacts} *)
+(** {3 Build Processes } *)
 
-(** Artifacts are things to be built (they may already exist), most often
-    file-tree-locations on a given [host] (see also {!Artifact.t}).
+module Build_process : sig
+  type t = Target.Build_process.t
+end
+
+val daemonize :
+  ?starting_timeout:float ->
+  ?call_script:(string -> string list) ->
+  ?using:[`Nohup_setsid | `Python_daemon] ->
+  ?host:Host.t ->
+  ?no_log_is_ok: bool ->
+  Program.t ->
+  Build_process.t
+(** Create a “daemonize” build process:
+
+    - [?host]: the [Host.t] on which the program is to be run.
+    - [?starting_timeout]: how long to wait before considering that a
+      script failed to start (default: [5.] seconds).
+    - [?call_script]: function creating a [Unix.exec]-style command
+      given a shell script path 
+      (default: [(fun script -> ["bash"; script])]).
+    - [?using]: which method to use when damonizing on the [host]
+    (see {!Ketrew_daemonize} for more details).
+    - [?no_log_is_ok]: consider that if the script run does not
+      produce a log file, the process still has succeeded (the default
+      and most common is [false], this can be useful for example when
+      the [Program.t] or [call_script] do something special over the
+      network).
+
+*)
+
+val lsf :
+  ?host:Host.t ->
+  ?queue:string ->
+  ?name:string ->
+  ?wall_limit:string ->
+  ?processors:[ `Min of int | `Min_max of int * int ] ->
+  ?project:string ->
+  Program.t -> Build_process.t
+(** Create an “LSF” build process. *)
+
+val pbs :
+  ?host:Host.t ->
+  ?queue:string ->
+  ?name:string ->
+  ?wall_limit:[ `Hours of float ] ->
+  ?processors:int ->
+  ?email_user:[ `Always of string | `Never ] ->
+  ?shell:string ->
+  Program.t -> Build_process.t
+(** Create a “PSB” build process. *)
+
+
+val yarn_application :
+  ?host:Host.t ->
+  ?daemonize_using:[ `Nohup_setsid | `Python_daemon ] ->
+  ?daemon_start_timeout:float ->
+  Program.t -> Build_process.t
+(** Create a build process that requests resources from Yarn, the
+    command must be an application in the Yarn sense (i.e.
+    a program that is going to contact Yarn by itself to request
+    containers):
+
+    - [?host]: the “login” node of the Yarn cluster (default: localhost).
+    - [?daemonize_using]: how to daemonize the process that calls and
+      waits-for the application-manager (default: [`Python_daemon]).
+    - [?daemon_start_timeout]: the timeout for the daemon.
+
+*)
+
+val yarn_distributed_shell :
+  ?host:Host.t ->
+  ?daemonize_using:[ `Nohup_setsid | `Python_daemon ] ->
+  ?daemon_start_timeout:float ->
+  ?hadoop_bin:string ->
+  ?distributed_shell_shell_jar:string ->
+  ?container_vcores : int ->
+  container_memory:[ `GB of int | `MB of int | `Raw of string ] ->
+  timeout:[ `Raw of string | `Seconds of int ] ->
+  application_name:string ->
+  Program.t -> Build_process.t
+(** Create a build process that will use Hadoop's `DistributedShell`  class
+    to request a container to run the given arbitrary program.
+
+    - [?host]: the “login” node of the Yarn cluster (default: localhost).
+    - [?daemonize_using]: how to daemonize the process that calls and
+      waits-for the application-manager (default: [`Python_daemon]).
+    - [?daemon_start_timeout]: the timeout for the daemon.
+    - [hadoop_bin]: the [hdaoop] executable (default: ["hadoop"]).
+    - [distributed_shell_shell_jar]:
+    path to the Jar file containing the
+    [org.apache.hadoop.yarn.applications.distributedshell.Client] class
+    (default: ["/opt/cloudera/parcels/CDH/lib/hadoop-yarn/hadoop-yarn-applications-distributedshell.jar"]
+    which seems to be the default installation path when using Cloudera-manager).
+    - [container_vcores]: how many virtual cores to request (default [1]).
+    - [container_memory]: how much memory to request from Yarn for the container
+    ([`GB 42] for 42 GB; [`Raw some_string] to pass directly [some_string]
+    to the option ["-container_memory"] of [distributedshell.Cllient]).
+    - [timeout]: the “whole application” timeout
+    ([`Seconds (24 * 60 * 60)] for about a day, [`Raw some_string] to
+    pass directly [some_string] to the option ["-timeout"] of
+    [distributedshell.Cllient]).
+    - [application_name]: name of the application for Yarn (it is not
+      sanitized by Ketrew and, at least with some configurations, Yarn
+      can fail if this string contains spaces for example).
+
+*)
+
+(** {3 Workflow Nodes and Edges} *)
+
+module Internal_representation : sig
+  (* We expose this type because we want to preserve backwards
+     compatibility. The function `Ketrew.Client.submit` has to expect an
+     `EDSL.user_target` so to avoid code duplcation we mimic it with the
+     “workflow_node” API. The ideal would be to have
+     `Ketrew.Client.submit` take a list of `Target.t` values as argument
+     and have `workflow_node#render` produce directly that list. 
+  *)
+  (**/**)
+  type t =
+    < name : string;
+      activate : unit;
+      add_tags : string list -> unit;
+      id : Ketrew_pure.Internal_pervasives.Unique_id.t;
+      depends_on : t list;
+      on_failure_activate : t list;
+      on_success_activate : t list;
+      render : Ketrew_pure.Target.t;  >
+    (**/**)
+end
+
+type 'a product = 'a
+  constraint 'a = < is_done : Condition.t option ; .. >
+(** The type of the things produced by workflow nodes.
+    A product is an object that has at least one method giving its
+    {!Condition.t}. *)
+
+type 'product workflow_node = <
+  product : 'product product;
+  render: Internal_representation.t;
+>
+(** The main building bloc of the worfklow graph is workflow node, it
+    carries a “product” accessible with the [#product] method.
+
+    The [#render] method is used internally by
+    {!Ketrew.Client.submit_workflow}.
+ *)
+
+type workflow_edge
+(** The edges of the graph ([?edges] argument of the {!workflow_node}
+    function). *)
+
+val depends_on: 'any workflow_node -> workflow_edge
+(** Create a “dependency” edge, in other words, the node using the
+    edges “depends on” the node given as argument. *)
+
+val on_success_activate: 'any workflow_node -> workflow_edge
+(** Create an edge to a node that will be activated after a node {i
+    succeeds}. *)
+
+val on_failure_activate: 'any workflow_node -> workflow_edge
+(** Create an edge to a node that will be activated after a node {i
+    fails}. *)
+
+val workflow_node:
+  ?name:string ->
+  ?active:bool ->
+  ?make:Build_process.t ->
+  ?done_when:Condition.t ->
+  ?metadata:[ `String of string ] ->
+  ?equivalence:Ketrew_pure.Target.Equivalence.t ->
+  ?tags:string list ->
+  ?edges:workflow_edge list ->
+  'product_type product ->
+  'product_type workflow_node
+(** Create a workflow node:
+
+    - [?name]: give a name to the node (visible in the UIs).
+    - [?active]: whether this node should be started by the engine or
+    wait to be ativated by another node (through an edge)
+    The default is [false], i.e., inactive, normal workflows should not
+    set this value since the function {!Ketrew.Client.submit_workflow}
+    will activate the toplevel node automatically.
+    - [?make]: the build-process used to “run/build” the node; where the
+    computation happens.
+    - [?done_when]: the condition that the node ensures (checked
+    before potentially running and after running, by default it is
+    provided by the product's [#is_done] method, this argument allows
+    to override it, for convenience).
+    - [?metadata]: arbitrary metadata to attach to the node.
+    - [?equivalence]: how to tell if two nodes are equivalent (and
+    then will be merged by the engine). The default is
+    [`Same_active_condition] which means that if two nodes have the
+    same non-[None] [?done_when] argument they will be considered
+    equivalent (i.e. they try to “ensure the same condition”).
+    - [?tags]: arbitrary tags to add to the node (e.g. for
+    search/filter in the UI)
+    - [?edges]: links to other nodes from the current node
+    (list of edges created with the {!depends_on},
+    {!on_failure_activate}, and {!on_success_activate} functions).
+    - ['product_type product]: the main argument of the function is
+    the artifact produced by the node (returned by the [#product]
+    method of the node).
+
+ *)
+
+type not_already_done = < is_done : Condition.t option >
+(** The type of “empty” products. *)
+
+val without_product : not_already_done
+(** Create an “empty” product, it won't require checking any condition,
+    so the node carrying it (unless
+    forced with the [?is_done] argument) will always run.
+
+    This can be understood as a [".PHONY"] target in
+    {{:https://www.gnu.org/software/make/manual/html_node/Phony-Targets.html}make}.
+*)
+
+type single_file = <
+  exists: Ketrew_pure.Target.Condition.t;
+  is_done: Ketrew_pure.Target.Condition.t option;
+  path : string;
+  is_bigger_than: int -> Ketrew_pure.Target.Condition.t;
+>
+(** The type of products that carry a simple file (on a given
+    [Host.t]). *)
+
+val single_file: ?host:Host.t -> string -> single_file product
+(** Create a [single_file] product.
+
+    The path argument should be absolute since the notion of “current
+    directory” is very ill-defined when it comes to this kind of
+    distributed application.
+    
+    The condition returned by the [#is_done] method (used by default
+    in any worfklow-node that uses the [single_file product]) is to
+    check the existence of the file.
+ *)
+
+
+type list_of_files = <
+  is_done: Ketrew_pure.Target.Condition.t option;
+  paths : string list;
+>
+(** The type of products that carry a list of files (on a same [Host.t]). *)
+
+val list_of_files:
+  ?host:Host.t ->
+  string list -> list_of_files product
+(** Create a [list_of_files] product ([#is_done] checks the existence
+    of all these files). *)
+
+val workflow_to_string:
+  ?ansi_colors:bool ->
+  ?indentation:int ->
+  'any workflow_node -> string
+(** Build a display-friendly string summarizing the workflow. *)
+
+type unknown_product = < is_done : Condition.t option >
+(** The type of the products that have been “hidden” or “forgotten,”
+    see {!forget_product}. *)
+
+val forget_product:
+  'any_product workflow_node ->
+  unknown_product workflow_node 
+(** “Cast” a node to the [unknown_product workflow_node] type, this is
+    useful to make some programs that generate workflows type check
+    (putting nodes into lists, or in different branches of a [match
+    .. with]). *)
+
+(** {3 Legacy Deprecated API: Artifacts and Targets}
+
+This is the old and deprecated API to build workflows (deprecated
+since Ketrew 2.1.0).
+    
+Using functions like {!target} is still possible but they will trigger
+a compilation warning e.g. ["Warning 3: deprecated: Ketrew.EDSL.target"].
+
+*)
+
+(** {4 Artifacts}
+
+Artifacts are things to be built (they may already exist), most often
+file-tree-locations on a given [host].
 *)
 class type user_artifact = object
 
@@ -793,7 +1205,7 @@ val unit : user_artifact
 (** The artifact that is “never done” (i.e. the target associated will always
     be (re-)run if activated). *)
 
-(** {3 Targets} *)
+(** {4 Targets} *)
 
 (** Targets are the nodes in the workflow arborescence (see also
     {!Target.t}). *)
@@ -826,7 +1238,7 @@ class type user_target =
 val target :
   ?active:bool ->
   ?depends_on:user_target list ->
-  ?make:Target.Build_process.t ->
+  ?make:Build_process.t ->
   ?done_when:Target.Condition.t ->
   ?metadata:[ `String of string ] ->
   ?product:user_artifact ->
@@ -835,6 +1247,7 @@ val target :
   ?on_success_activate:user_target list ->
   ?tags: string list ->
   string -> user_target
+  [@@ocaml.deprecated]
 (** Construct a new target, the node of a workflow graph. The main
     argument (the [string]) is its name, then all optional arguments mean:
 
@@ -842,7 +1255,7 @@ val target :
     wait to be ativated by another target (through [depends_on] or
     [on_{success,failure}_activate]) (default:
     [false], i.e., inactive). Usual workflows should not set this
-    value since the function {!Ketrew.Cliean.submit} will activate the
+    value since the function {!Ketrew.Client.submit} will activate the
     toplevel target automatically.
   - [?depends_on]: list of the dependencies of the target.
   - [?make]: the build-process used to “build” the target; where the
@@ -866,7 +1279,7 @@ val target :
 
 val file_target:
   ?depends_on:user_target list ->
-  ?make:Target.Build_process.t ->
+  ?make:Build_process.t ->
   ?metadata:[ `String of string ] ->
   ?name:string ->
   ?host:Host.t ->
@@ -876,6 +1289,7 @@ val file_target:
   ?tags: string list ->
   string ->
   user_target
+  [@@ocaml.deprecated]
 (** Create a file {!user_artifact} and the {!user_target} that produces it.
 
     The [?product] of the target will be the file given as argument on
@@ -886,111 +1300,7 @@ val file_target:
     This can be seen as a classical [make]-like file-producing target,
     but on any arbitrary host.
 *)
-
-val daemonize :
-  ?starting_timeout:float ->
-  ?call_script:(string -> string list) ->
-  ?using:[`Nohup_setsid | `Python_daemon] ->
-  ?host:Host.t ->
-  ?no_log_is_ok: bool ->
-  Program.t ->
-  Target.Build_process.t
-(** Create a “daemonize” build process:
-
-    - [?host]: the [Host.t] on which the program is to be run.
-    - [?starting_timeout]: how long to wait before considering that a
-      script failed to start (default: [5.] seconds).
-    - [?call_script]: function creating a [Unix.exec]-style command
-      given a shell script path 
-      (default: [(fun script -> ["bash"; script])]).
-    - [?using]: which method to use when damonizing on the [host]
-    (see {!Ketrew_daemonize} for more details).
-    - [?no_log_is_ok]: consider that if the script run does not
-      produce a log file, the process still has succeeded (the default
-      and most common is [false], this can be useful for example when
-      the [Program.t] or [call_script] do something special over the
-      network).
-
-*)
-
-val lsf :
-  ?host:Host.t ->
-  ?queue:string ->
-  ?name:string ->
-  ?wall_limit:string ->
-  ?processors:[ `Min of int | `Min_max of int * int ] ->
-  ?project:string ->
-  Program.t -> Target.Build_process.t
-(** Create an “LSF” build process. *)
-
-val pbs :
-  ?host:Host.t ->
-  ?queue:string ->
-  ?name:string ->
-  ?wall_limit:[ `Hours of float ] ->
-  ?processors:int ->
-  ?email_user:[ `Always of string | `Never ] ->
-  ?shell:string ->
-  Program.t ->
-  [> `Long_running of string * string ]
-(** Create a “PSB” build process. *)
-
-
-val yarn_application :
-  ?host:Host.t ->
-  ?daemonize_using:[ `Nohup_setsid | `Python_daemon ] ->
-  ?daemon_start_timeout:float ->
-  Program.t -> [> `Long_running of string * string ]
-(** Create a build process that requests resources from Yarn, the
-    command must be an application in the Yarn sense (i.e.
-    a program that is going to contact Yarn by itself to request
-    containers):
-
-    - [?host]: the “login” node of the Yarn cluster (default: localhost).
-    - [?daemonize_using]: how to daemonize the process that calls and
-      waits-for the application-manager (default: [`Python_daemon]).
-    - [?daemon_start_timeout]: the timeout for the daemon.
-
-*)
-
-val yarn_distributed_shell :
-  ?host:Host.t ->
-  ?daemonize_using:[ `Nohup_setsid | `Python_daemon ] ->
-  ?daemon_start_timeout:float ->
-  ?hadoop_bin:string ->
-  ?distributed_shell_shell_jar:string ->
-  container_memory:[ `GB of int | `MB of int | `Raw of string ] ->
-  timeout:[ `Raw of string | `Seconds of int ] ->
-  application_name:string ->
-  Program.t -> [> `Long_running of string * string ]
-(** Create a build process that will use Hadoop's `DistributedShell`  class
-    to request a container to run the given arbitrary program.
-
-    - [?host]: the “login” node of the Yarn cluster (default: localhost).
-    - [?daemonize_using]: how to daemonize the process that calls and
-      waits-for the application-manager (default: [`Python_daemon]).
-    - [?daemon_start_timeout]: the timeout for the daemon.
-    - [hadoop_bin]: the [hdaoop] executable (default: ["hadoop"]).
-    - [distributed_shell_shell_jar]:
-    path to the Jar file containing the
-    [org.apache.hadoop.yarn.applications.distributedshell.Client] class
-    (default: ["/opt/cloudera/parcels/CDH/lib/hadoop-yarn/hadoop-yarn-applications-distributedshell.jar"]
-    which seems to be the default installation path when using Cloudera-manager).
-    - [container_memory]: how much memory to request from Yarn for the container
-    ([`GB 42] for 42 GB; [`Raw some_string] to pass directly [some_string]
-    to the option ["-container_memory"] of [distributedshell.Cllient]).
-    - [timeout]: the “whole application” timeout
-    ([`Seconds (24 * 60 * 60)] for about a day, [`Raw some_string] to
-    pass directly [some_string] to the option ["-timeout"] of
-    [distributedshell.Cllient]).
-    - [application_name]: name of the application for Yarn (it is not
-      sanitized by Ketrew and, at least with some configurations, Yarn
-      can fail if this string contains spaces for example).
-
-*)
-
-
-(** {2 Utilities } *)
+(** {4 Utilities } *)
 
 val to_display_string :
   ?ansi_colors:bool ->
@@ -1030,32 +1340,33 @@ open Unix_io
 type t
 (** The contents of the application engine. *)
 
-val with_engine: 
+val with_engine:
   configuration:Configuration.engine ->
   (engine:t ->
    (unit, [> `Database of Trakeva.Error.t
           | `Failure of string
-          | `Missing_data of bytes
+          | `Missing_data of string
           | `Database_unavailable of Ketrew_pure.Target.id
-          | `Target of [> `Deserilization of bytes ]
+          | `Target of [> `Deserilization of string ]
           | `Dyn_plugin of
                [> `Dynlink_error of Dynlink.error | `Findlib of exn ]
           ] as 'merge_error) Deferred_result.t) ->
   (unit, 'merge_error) Deferred_result.t
 (** Create a {!engine.t}, run the function passed as argument, and properly dispose of it. *)
 
-val load: 
+val load:
   configuration:Configuration.engine ->
   (t,
    [> `Database of Trakeva.Error.t
+   | `Database_unavailable of string
    | `Failure of string
-   | `Missing_data of bytes
-   | `Target of [> `Deserilization of bytes ]
+   | `Missing_data of string
+   | `Target of [> `Deserilization of string ]
    | `Dyn_plugin of
         [> `Dynlink_error of Dynlink.error | `Findlib of exn ]
    ]) Deferred_result.t
 
-val unload: t -> 
+val unload: t ->
   (unit, [>
       | `Database_unavailable of Ketrew_pure.Target.id
       | `Database of  Trakeva.Error.t
@@ -1078,6 +1389,7 @@ val add_targets :
 val get_target: t -> Unique_id.t ->
   (Ketrew_pure.Target.t,
    [> `Database of Trakeva.Error.t
+   | `Database_unavailable of string
    | `Missing_data of string
    | `Target of [> `Deserilization of string ] ])
     Deferred_result.t
@@ -1087,6 +1399,7 @@ val all_targets :
   t ->
   (Ketrew_pure.Target.t list,
    [> `Database of Trakeva.Error.t
+   | `Database_unavailable of string
     | `IO of
         [> `Read_file_exn of string * exn | `Write_file_exn of string * exn ]
     | `Missing_data of Ketrew_pure.Target.id
@@ -1099,10 +1412,11 @@ val get_list_of_target_ids: t ->
   Ketrew_pure.Protocol.Up_message.target_query ->
   (Ketrew_pure.Target.id list,
    [> `Database of Trakeva.Error.t
+   | `Database_unavailable of string
    | `Missing_data of string
    | `Target of [> `Deserilization of string ] ]) Deferred_result.t
 (** Get only the Ids of the targets for a given “query”:
-    
+
 - [`All] for all the targets visible to the engine.
 - [`Not_finished_before _] for the targets that were not finished at a given date.
 *)
@@ -1131,6 +1445,7 @@ end
 val get_status : t -> Ketrew_pure.Target.id ->
   (Ketrew_pure.Target.State.t,
    [> `Database of Trakeva.Error.t
+   | `Database_unavailable of string
    | `IO of
         [> `Read_file_exn of string * exn | `Write_file_exn of string * exn ]
    | `Missing_data of string
@@ -1139,9 +1454,7 @@ val get_status : t -> Ketrew_pure.Target.id ->
     Deferred_result.t
 (** Get the state description of a given target (by “id”). *)
 
-val kill :
-  t ->
-  id:string ->
+val kill : t -> id:Unique_id.t ->
   (unit,
    [> `Database of
         [> `Act of Trakeva.Action.t | `Load of string ] * string
@@ -1149,8 +1462,8 @@ val kill :
     Deferred_result.t
 (** Kill a target *)
 
-val restart_target: t -> Ketrew_pure.Target.id -> 
-  (Ketrew_pure.Target.id, 
+val restart_target: t -> Ketrew_pure.Target.id ->
+  (Ketrew_pure.Target.id,
    [> `Database of Trakeva.Error.t
    | `Database_unavailable of Ketrew_pure.Target.id
    | `Missing_data of Ketrew_pure.Target.id
@@ -1158,6 +1471,7 @@ val restart_target: t -> Ketrew_pure.Target.id ->
 (** Make new activated targets out of a given target and its “transitive
     reverse dependencies” *)
 
+val host_io: t -> Host_io.t
 end
 module Eval_condition : sig
 (**************************************************************************)
@@ -1186,21 +1500,11 @@ open Ketrew_pure.Internal_pervasives
 
 open Unix_io
 
-val bool: Ketrew_pure.Target.Condition.t ->
+val bool:
+  host_io:Host_io.t ->
+  Ketrew_pure.Target.Condition.t ->
     (bool,
-     [> `Host of
-          [> `Execution of
-               < host : string; message : string;
-                 stderr : string option; stdout : string option >
-          | `Non_zero of string * int
-          | `Ssh_failure of
-               [> `Wrong_log of string
-               | `Wrong_status of Unix_process.Exit_code.t ] *
-               string
-          | `System of [> `Sleep of float ] * [> `Exn of exn ]
-          | `Timeout of float
-          | `Unix_exec of string ]
-            Host_io.Error.execution
+     [> `Host of  _ Host_io.Error.non_zero_execution 
      | `Volume of [> `No_size of Log.t ] ]) Deferred_result.t
 
 
@@ -1272,7 +1576,8 @@ module Host_io : sig
 (**************************************************************************)
 
 (** Definition of a host; a place to run commands or handle files. *)
-open Ketrew_pure.Internal_pervasives
+open Ketrew_pure
+open Internal_pervasives
 open Unix_io
 
 
@@ -1299,6 +1604,7 @@ module Error: sig
         [> `Wrong_log of string
         | `Wrong_status of Unix_process.Exit_code.t ] * string 
     | `System of [> `Sleep of float ] * [> `Exn of exn ]
+    | `Named_host_not_found of string
     | `Timeout of float
   ]
 
@@ -1325,24 +1631,28 @@ module Error: sig
     | `Non_zero of string * int
     | `System of [ `Sleep of float ] * [ `Exn of exn ]
     | `Timeout of float
+    | `Named_host_not_found of string
     | `Ssh_failure of
         [> `Wrong_log of string
         | `Wrong_status of Unix_process.Exit_code.t ] *
         string
     | `Unix_exec of string ] ->
-    [ `Execution | `Ssh | `Unix ]
+    [ `Command_execution | `Connectivity | `Local_system ]
   (**
      Get a glance at the gravity of the situation: {ul
-     {li [`Unix]: a function of the kind {!Unix.exec} failed.}
-     {li [`Ssh]: SSH failed to run something but it does not mean that the
-     actual command is wrong.}
-     {li [`Execution]: SSH/[Unix] succeeded but the command failed.}
+     {li [`Local_system]: a function of the kind {!Unix.exec} failed.}
+     {li [`Connectivity]: [Host_io] failed to run something but it does not
+          mean that the actual command is wrong; connectivity can be
+          restored later.}
+     {li [`Command_execution]: the system and networking did their job
+          but the particular command failed.}
      } *)
 
   val log :
     [< `Unix_exec of string
     | `Non_zero of (string * int)
     | `System of [< `Sleep of float ] * [< `Exn of exn ]
+    | `Named_host_not_found of string
     | `Timeout of float
     | `Execution of
          < host : string; message : string; stderr : string option;
@@ -1354,7 +1664,9 @@ module Error: sig
 
 end
 
-type t = Ketrew_pure.Host.t
+type t
+
+val create: unit -> t
 
 val default_timeout_upper_bound: float ref
 (** Default (upper bound) of the `?timeout` arguments. *)
@@ -1377,7 +1689,15 @@ type timeout = [
 
 *)
 
-val execute: ?timeout:timeout -> t -> string list ->
+
+val set_named_host :
+  t -> name:string -> Ketrew_pure.Host.Ssh.t ->
+  (unit, 'a) Deferred_result.t
+
+val delete_named_host: t  -> name: string -> (unit, 'a) Deferred_result.t
+
+
+val execute: ?timeout:timeout -> t -> host:Host.t -> string list ->
   (<stdout: string; stderr: string; exited: int>,
    [> `Host of _ Error.execution ]) Deferred_result.t
 (** Generic execution which tries to behave like [Unix.execv] even
@@ -1395,7 +1715,7 @@ val shell_sh: sh:string -> shell
 val get_shell_command_output :
   ?timeout:timeout ->
   ?with_shell:shell ->
-  t ->
+  t -> host:Host.t ->
   string ->
   (string * string, [> `Host of  _ Error.non_zero_execution]) Deferred_result.t
 (** Run a shell command on the host, and return its [(stdout, stderr)] pair
@@ -1404,7 +1724,7 @@ val get_shell_command_output :
 val get_shell_command_return_value :
   ?timeout:timeout ->
   ?with_shell:shell ->
-  t ->
+  t -> host:Host.t ->
   string ->
   (int, [> `Host of _ Error.execution ]) Deferred_result.t
 (** Run a shell command on the host, and return its exit status value. *)
@@ -1412,7 +1732,7 @@ val get_shell_command_return_value :
 val run_shell_command :
   ?timeout:timeout ->
   ?with_shell:shell ->
-  t ->
+  t -> host:Host.t ->
   string ->
   (unit, [> `Host of  _ Error.non_zero_execution])  Deferred_result.t
 (** Run a shell command on the host (succeeds {i iff } the exit status is [0]).
@@ -1421,27 +1741,27 @@ val run_shell_command :
 val do_files_exist :
   ?timeout:timeout ->
   ?with_shell:shell ->
-  t ->
+  t -> host:Host.t ->
   Ketrew_pure.Path.t list ->
   (bool, [> `Host of _ Error.execution ])
   Deferred_result.t
 (** Check existence of a list of files/directories. *)
 
 val get_fresh_playground :
-  t -> Ketrew_pure.Path.t option
+  t -> host:Host.t -> Ketrew_pure.Path.t option
 (** Get a new subdirectory in the host's playground *)
 
 val ensure_directory :
   ?timeout:timeout ->
   ?with_shell:shell ->
-  t ->
+  t -> host:Host.t ->
   path:Ketrew_pure.Path.t ->
   (unit, [> `Host of _ Error.non_zero_execution ]) Deferred_result.t
 (** Make sure the directory [path] exists on the host. *)
 
 val put_file :
   ?timeout:timeout ->
-  t ->
+  t -> host:Host.t ->
   path: Ketrew_pure.Path.t ->
   content:string ->
   (unit,
@@ -1452,17 +1772,17 @@ val put_file :
 
 val get_file :
   ?timeout:timeout ->
-  t ->
+  t -> host:Host.t ->
   path:Ketrew_pure.Path.t ->
   (string,
    [> `Cannot_read_file of string * string
-    | `Timeout of Time.t ])
-  Deferred_result.t
+   | `Host of [> `Named_host_not_found of string ]
+   | `Timeout of Time.t ]) Deferred_result.t
 (** Read the file from the host at [path]. *)
 
 val grab_file_or_log:
   ?timeout:timeout ->
-  t -> 
+  t -> host:Host.t -> 
   Ketrew_pure.Path.t ->
   (string, Log.t) Deferred_result.t
 (** Weakly typed version of {!get_file}, it fails with a {!Log.t}
@@ -1542,6 +1862,7 @@ val build_sublist_of_targets :
     ([> `Cancel | `Go of string list ],
      [> `Client of Client.Error.t
       | `Database of Trakeva.Error.t
+      | `Database_unavailable of string
       | `Failure of string
       | `IO of [> `Read_file_exn of string * exn | `Write_file_exn of string * exn ]
       | `Missing_data of string
@@ -1603,14 +1924,16 @@ val script_path : playground:Ketrew_pure.Path.t -> Ketrew_pure.Path.t
 val classify_and_transform_errors :
   ('a,
    [< `Fatal of string
-   | `Host of
+   | `Host of 
         [ `Execution of
             < host : string; message : string; stderr : string option;
               stdout : string option >
+        | `Named_host_not_found of string
         | `Non_zero of string * int
         | `Ssh_failure of
             [ `Wrong_log of string
-            | `Wrong_status of Unix_process.Exit_code.t ] * string
+            | `Wrong_status of Unix_process.Exit_code.t ] * 
+            string
         | `System of [ `Sleep of float ] * [ `Exn of exn ]
         | `Timeout of float
         | `Unix_exec of string ]
@@ -1649,10 +1972,13 @@ val classify_and_transform_errors :
     {!Ketrew_pure.Host.Error.classify}.  *)
 
 val fresh_playground_or_fail :
-  Ketrew_pure.Host.t -> (Ketrew_pure.Path.t, [> `Fatal of string ]) Deferred_result.t
+  host_io:Host_io.t ->
+  Ketrew_pure.Host.t ->
+  (Ketrew_pure.Path.t, [> `Fatal of string ]) Deferred_result.t
 (** Get a fresh-playground from a [Host.t]. *)
 
 val get_log_of_monitored_script :
+  host_io:Host_io.t ->
   host:Ketrew_pure.Host.t ->
   script:Ketrew_pure.Monitored_script.t ->
   ([ `After of string * string * string
@@ -1661,17 +1987,21 @@ val get_log_of_monitored_script :
    | `Failure of string * string * string
    | `Start of string
    | `Success of string ] list option,
-   [> `Timeout of Time.t ])
-  Deferred_result.t
+   [> `Host of [> `Named_host_not_found of string ]
+   | `Timeout of float ]) Deferred_result.t
 (** Fetch and parse the [log] file of a monitored-script. *)
 
 val get_pid_of_monitored_script :
+  host_io:Host_io.t ->
   host:Ketrew_pure.Host.t ->
   script:Ketrew_pure.Monitored_script.t ->
-  (int option, [> `Timeout of Time.t ]) Deferred_result.t
+  (int option,
+   [> `Host of [> `Named_host_not_found of string ]
+   | `Timeout of float ]) Deferred_result.t
 (** Fetch and parse the [pid] file of a monitored-script. *)
 
 val shell_command_output_or_log :
+  host_io:Host_io.t ->
   host:Ketrew_pure.Host.t ->
   string -> (string, Log.t) Deferred_result.t
 (** Call {!Host_io.get_shell_command_output} and transform errors
@@ -1842,11 +2172,8 @@ type t
 val create :
   database_parameters:string ->
   (t,
-   [> `Database of
-        [> `Get of Trakeva.Key_in_collection.t
-        | `Get_all of string
-        | `Load of string ] *
-        string
+   [> `Database of Trakeva.Error.t
+   | `Database_unavailable of string
    | `Missing_data of string
    | `Target of [> `Deserilization of string ] ])
     Deferred_result.t
@@ -1858,9 +2185,8 @@ val get_target:
   t ->
   Target.id ->
   (Ketrew_pure.Target.t,
-   [> `Database of
-        [> `Get of Trakeva.Key_in_collection.t | `Load of string ] *
-        string
+   [> `Database of Trakeva.Error.t
+   | `Database_unavailable of string
    | `Missing_data of string
    | `Target of [> `Deserilization of string ] ])
     Deferred_result.t
@@ -1868,11 +2194,8 @@ val get_target:
 val all_targets :
   t ->
   (Ketrew_pure.Target.t list,
-   [> `Database of
-        [> `Get of Trakeva.Key_in_collection.t
-        | `Get_all of string
-        | `Load of string ] *
-        string
+   [>  `Database of Trakeva.Error.t
+   | `Database_unavailable of string
    | `Missing_data of string
    | `Target of [> `Deserilization of string ] ])
     Deferred_result.t
@@ -1905,15 +2228,6 @@ val fold_active_targets :
       as 'combined_errors)
        Deferred_result.t) ->
   ('a, 'combined_errors) Deferred_result.t
-
-val move_target_to_finished_collection : (* TODO: rename to “declare_finished” or something *)
-  t ->
-  target:Target.t ->
-  (unit,
-   [> `Database of
-        [> `Act of Trakeva.Action.t | `Load of string ] * string
-   | `Database_unavailable of string ])
-    Deferred_result.t
 
 val update_target :
   t ->
@@ -1979,18 +2293,18 @@ module Synchronize: sig
     string ->
     (unit,
      [> `Database of Trakeva.Error.t
-     | `Database_unavailable of bytes
+     | `Database_unavailable of string
      | `IO of
-          [> `Read_file_exn of bytes * exn
-          | `Write_file_exn of bytes * exn ]
-     | `Missing_data of bytes
-     | `Not_a_directory of bytes
+          [> `Read_file_exn of string * exn
+          | `Write_file_exn of string * exn ]
+     | `Missing_data of string
+     | `Not_a_directory of string
      | `System of
-          [> `File_info of bytes
-          | `List_directory of bytes
-          | `Make_directory of bytes ] *
+          [> `File_info of string
+          | `List_directory of string
+          | `Make_directory of string ] *
           [> `Exn of exn | `Wrong_access_rights of int ]
-     | `Target of [> `Deserilization of bytes ] ])
+     | `Target of [> `Deserilization of string ] ])
       Deferred_result.t
 end
 end
@@ -2036,7 +2350,7 @@ val additional_queries: Ketrew_pure.Target.t -> (string * Log.t) list
 (** Get the potential additional queries ([(key, description)] pairs) that can
     be called on the target. *)
 
-val call_query:  target:Ketrew_pure.Target.t -> string ->
+val call_query: target:Ketrew_pure.Target.t -> host_io:Host_io.t -> string ->
   (string, Log.t) Deferred_result.t
 (** Call a query on a target. *)
 
@@ -2057,6 +2371,119 @@ val load_plugins_no_lwt_exn :
     The specification is (structurally) the same type as
     {!Ketrew_pure.Configuration.plugin}.
 *)
+end
+module Process_holder : sig
+(**************************************************************************)
+(*    Copyright 2014, 2015:                                               *)
+(*          Sebastien Mondet <seb@mondet.org>,                            *)
+(*          Leonid Rozenberg <leonidr@gmail.com>,                         *)
+(*          Arun Ahuja <aahuja11@gmail.com>,                              *)
+(*          Jeff Hammerbacher <jeff.hammerbacher@gmail.com>               *)
+(*                                                                        *)
+(*  Licensed under the Apache License, Version 2.0 (the "License");       *)
+(*  you may not use this file except in compliance with the License.      *)
+(*  You may obtain a copy of the License at                               *)
+(*                                                                        *)
+(*      http://www.apache.org/licenses/LICENSE-2.0                        *)
+(*                                                                        *)
+(*  Unless required by applicable law or agreed to in writing, software   *)
+(*  distributed under the License is distributed on an "AS IS" BASIS,     *)
+(*  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or       *)
+(*  implied.  See the License for the specific language governing         *)
+(*  permissions and limitations under the License.                        *)
+(**************************************************************************)
+
+(** A container for internal server-side processes (for now SSH
+    connections/tunnels). *)
+
+open Unix_io
+
+(** A module encapsulating daemonized SSH connections, the functions
+    {!Ssh_connection.setsid_ssh} is exposed to the {!Command_line} module
+    for the ["ketrew internal-ssh"] command.
+
+    The other items exported are used only for tests.
+*)
+module Ssh_connection : sig
+
+  val setsid_ssh:
+    ?session_id_file:Unix_io.IO.path ->
+    ?control_path:string ->
+    ?log_to:Unix_io.IO.path ->
+    ?pipe_in:string ->
+    ?pipe_out:string ->
+    ?command:string ->
+    string ->
+    (unit,
+     [> `IO of
+          [> `Exn of exn
+          | `File_exists of string
+          | `Write_file_exn of Unix_io.IO.path * exn
+          | `Wrong_path of string ] ])
+      Deferred_result.t
+  (** Daemonize an SSH connection with a control-path as a
+      control-master, one can communicate with the client (as an SSH
+      ["ASKPASS"] program) with the [pipe_in] and [pipe_out] named
+      fifo files. *)
+
+  (**/**)
+
+  type t
+  val create:
+    ?ketrew_bin:string -> ?command:string -> name: string -> string -> t
+  val markup_with_daemon_logs :
+    t ->
+    (Ketrew_pure.Internal_pervasives.Display_markup.t, 'a) Deferred_result.t
+  val write_to_fifo:
+    t -> string -> (unit, [> `Failure of string ]) Deferred_result.t
+  val host_uri: t -> string
+  val kill :
+    t ->
+    (unit,
+     [> `Failure of string
+     | `IO of [> `Read_file_exn of string * exn ]
+     | `Shell of
+          string *
+          [> `Exited of int
+          | `Exn of exn
+          | `Signaled of int
+          | `Stopped of int ] ])
+      Deferred_result.t
+
+  (**/**)
+
+end
+
+type t
+(** The container for mnoitored server-side processes. *)
+
+val load :
+  ?preconfigure: Configuration.ssh_connection list ->
+  unit -> (t, 'a) Deferred_result.t
+(** Create a new process-holder. *)
+
+val unload :
+  t ->
+  (unit,
+   [> `List of
+        [> `Failure of string
+        | `IO of [> `Read_file_exn of string * exn ]
+        | `Shell of
+             string *
+             [> `Exited of int
+             | `Exn of exn
+             | `Signaled of int
+             | `Stopped of int ] ]
+          list ])
+    Deferred_result.t
+(** Destroy a process-holder by attempting to kill all its processes. *)
+
+
+val answer_message: t ->
+  host_io:Host_io.t ->
+  Ketrew_pure.Protocol.Process_sub_protocol.up ->
+  (Ketrew_pure.Protocol.Process_sub_protocol.down, 'a) Deferred_result.t
+(** Answer a request from the sub-protocol of the process-holder. *)
 end
 module Server : sig
 (**************************************************************************)
@@ -2089,22 +2516,31 @@ open Ketrew_pure.Internal_pervasives
 open Unix_io
 
 
-val start: configuration:Configuration.server ->
-  (unit,
-   [> `Database of Trakeva.Error.t
-   | `Dyn_plugin of
-        [> `Dynlink_error of Dynlink.error | `Findlib of exn ]
-   | `Failure of bytes
-   | `IO of [> `Read_file_exn of bytes * exn ]
-   | `Missing_data of bytes
-   | `Server_status_error of bytes
-   | `Start_server_error of bytes
-   | `System of
-        [> `File_info of bytes
-        | `List_directory of bytes
-        | `Remove of bytes ] *
-        [> `Exn of exn ]
-   | `Target of [> `Deserilization of bytes ] ]) Deferred_result.t
+val start :
+  just_before_listening:(
+    unit ->
+    (unit,
+     [> `Database of Trakeva.Error.t
+     | `Database_unavailable of string
+     | `Dyn_plugin of
+          [> `Dynlink_error of Dynlink.error
+          | `Findlib of exn ]
+     | `Failure of string
+     | `IO of
+          [> `Read_file_exn of string * exn ]
+     | `Missing_data of string
+     | `Server_status_error of string
+     | `Start_server_error of string
+     | `System of
+          [> `File_info of string
+          | `List_directory of string
+          | `Remove of string ] *
+          [> `Exn of exn ]
+     | `Target of
+          [> `Deserilization of string ] ]
+     as 'propagated_error) Unix_io.t) ->
+  configuration:Configuration.server ->
+  (unit, 'propagated_error) Unix_io.t
 (** Start the server according to its configuration.  *)
 
 
@@ -2230,6 +2666,7 @@ type distributed_shell_parameters
 val distributed_shell_program :
   ?hadoop_bin:string ->
   ?distributed_shell_shell_jar:string ->
+  ?container_vcores: int ->
   container_memory:[ `GB of int | `MB of int | `Raw of string ] ->
   timeout:[ `Raw of string | `Seconds of int ] ->
   application_name:string ->
@@ -2292,11 +2729,13 @@ module type LONG_RUNNING = sig
       and assumes that no exception will be thrown in that case. *)
 
   val start: run_parameters ->
+    host_io:Host_io.t ->
     (run_parameters, Host_io.Error.classified) Deferred_result.t
   (** Start the long-running computation, the returned [run_parameters] will be
       stored and used for the first call to {!update}. *)
 
   val update: run_parameters ->
+    host_io:Host_io.t ->
     ([`Succeeded of run_parameters
      | `Failed of run_parameters * string
      | `Still_running of run_parameters], Host_io.Error.classified) Deferred_result.t
@@ -2305,6 +2744,7 @@ module type LONG_RUNNING = sig
       will receive those parameters. *)
 
   val kill: run_parameters ->
+    host_io:Host_io.t ->
     ([`Killed of run_parameters], Host_io.Error.classified) Deferred_result.t
   (** Kill the long-running computation. *)
 
@@ -2315,7 +2755,9 @@ module type LONG_RUNNING = sig
   (** List of potential [(query, description)] pairs that can be passed
       to {!query}. *)
 
-  val query: run_parameters -> string -> (string, Log.t) Deferred_result.t
+  val query: run_parameters ->
+    host_io:Host_io.t ->
+    string -> (string, Log.t) Deferred_result.t
   (** Perform a query. *)
 end
 end

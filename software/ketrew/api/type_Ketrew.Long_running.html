@@ -23,11 +23,13 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;string&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Ketrew</span>.<span class="constructor">Long_running</span>.<span class="constructor">LONG_RUNNING</span>.run_parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;start&nbsp;:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Ketrew</span>.<span class="constructor">Long_running</span>.<span class="constructor">LONG_RUNNING</span>.run_parameters&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;host_io:<span class="constructor">Ketrew</span>.<span class="constructor">Host_io</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">Ketrew</span>.<span class="constructor">Long_running</span>.<span class="constructor">LONG_RUNNING</span>.run_parameters,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Ketrew</span>.<span class="constructor">Host_io</span>.<span class="constructor">Error</span>.classified)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Unix_io</span>.<span class="constructor">Deferred_result</span>.t<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;update&nbsp;:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Ketrew</span>.<span class="constructor">Long_running</span>.<span class="constructor">LONG_RUNNING</span>.run_parameters&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;host_io:<span class="constructor">Ketrew</span>.<span class="constructor">Host_io</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;([&nbsp;<span class="keywordsign">`</span><span class="constructor">Failed</span>&nbsp;<span class="keyword">of</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Ketrew</span>.<span class="constructor">Long_running</span>.<span class="constructor">LONG_RUNNING</span>.run_parameters&nbsp;*&nbsp;string<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Still_running</span>&nbsp;<span class="keyword">of</span>&nbsp;<span class="constructor">Ketrew</span>.<span class="constructor">Long_running</span>.<span class="constructor">LONG_RUNNING</span>.run_parameters<br>
@@ -36,6 +38,7 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Unix_io</span>.<span class="constructor">Deferred_result</span>.t<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;kill&nbsp;:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Ketrew</span>.<span class="constructor">Long_running</span>.<span class="constructor">LONG_RUNNING</span>.run_parameters&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;host_io:<span class="constructor">Ketrew</span>.<span class="constructor">Host_io</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;([&nbsp;<span class="keywordsign">`</span><span class="constructor">Killed</span>&nbsp;<span class="keyword">of</span>&nbsp;<span class="constructor">Ketrew</span>.<span class="constructor">Long_running</span>.<span class="constructor">LONG_RUNNING</span>.run_parameters&nbsp;],<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Ketrew</span>.<span class="constructor">Host_io</span>.<span class="constructor">Error</span>.classified)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Unix_io</span>.<span class="constructor">Deferred_result</span>.t<br>
@@ -47,6 +50,7 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(string&nbsp;*&nbsp;<span class="constructor">Ketrew_pure</span>.<span class="constructor">Internal_pervasives</span>.<span class="constructor">Log</span>.t)&nbsp;list<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;query&nbsp;:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Ketrew</span>.<span class="constructor">Long_running</span>.<span class="constructor">LONG_RUNNING</span>.run_parameters&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;host_io:<span class="constructor">Ketrew</span>.<span class="constructor">Host_io</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;string&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(string,&nbsp;<span class="constructor">Ketrew_pure</span>.<span class="constructor">Internal_pervasives</span>.<span class="constructor">Log</span>.t)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Unix_io</span>.<span class="constructor">Deferred_result</span>.t<br>

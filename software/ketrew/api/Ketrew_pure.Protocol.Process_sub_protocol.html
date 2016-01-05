@@ -1,0 +1,36 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<link rel="stylesheet" href="style.css" type="text/css">
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<link rel="Start" href="index.html">
+<link rel="previous" href="Ketrew_pure.Protocol.Server_status.html">
+<link rel="next" href="Ketrew_pure.Protocol.Down_message.html">
+<link rel="Up" href="Ketrew_pure.Protocol.html">
+<link title="Index of types" rel=Appendix href="index_types.html">
+<link title="Index of values" rel=Appendix href="index_values.html">
+<link title="Index of class methods" rel=Appendix href="index_methods.html">
+<link title="Index of class types" rel=Appendix href="index_class_types.html">
+<link title="Index of modules" rel=Appendix href="index_modules.html">
+<link title="Index of module types" rel=Appendix href="index_module_types.html">
+<link title="Ketrew_pure" rel="Chapter" href="Ketrew_pure.html">
+<link title="Ketrew" rel="Chapter" href="Ketrew.html"><title>Ketrew API : Ketrew_pure.Protocol.Process_sub_protocol</title>
+</head>
+<body>
+<div class="navbar"><a class="pre" href="Ketrew_pure.Protocol.Server_status.html" title="Ketrew_pure.Protocol.Server_status">Previous</a>
+&nbsp;<a class="up" href="Ketrew_pure.Protocol.html" title="Ketrew_pure.Protocol">Up</a>
+&nbsp;<a class="post" href="Ketrew_pure.Protocol.Down_message.html" title="Ketrew_pure.Protocol.Down_message">Next</a>
+</div>
+<h1>Module <a href="type_Ketrew_pure.Protocol.Process_sub_protocol.html">Ketrew_pure.Protocol.Process_sub_protocol</a></h1>
+
+<pre><span class="keyword">module</span> Process_sub_protocol: <code class="code"><span class="keyword">sig</span></code> <a href="Ketrew_pure.Protocol.Process_sub_protocol.html">..</a> <code class="code"><span class="keyword">end</span></code></pre><hr width="100%">
+
+<pre><span class="keyword">module</span> <a href="Ketrew_pure.Protocol.Process_sub_protocol.Command.html">Command</a>: <code class="code"><span class="keyword">sig</span></code> <a href="Ketrew_pure.Protocol.Process_sub_protocol.Command.html">..</a> <code class="code"><span class="keyword">end</span></code></pre>
+<pre><span id="TYPEup"><span class="keyword">type</span> <code class="type"></code>up</span> = <code class="type">[ `Get_all_ssh_ids of string<br>       | `Get_logs of string * [ `Full ]<br>       | `Kill of string<br>       | `Send_command of <a href="Ketrew_pure.Protocol.Process_sub_protocol.Command.html#TYPEt">Command.t</a><br>       | `Send_ssh_input of string * string<br>       | `Start_ssh_connetion of [ `Configured of string | `New of string * string ] ]</code> </pre>
+
+
+<pre><span class="keyword">module</span> <a href="Ketrew_pure.Protocol.Process_sub_protocol.Ssh_connection.html">Ssh_connection</a>: <code class="code"><span class="keyword">sig</span></code> <a href="Ketrew_pure.Protocol.Process_sub_protocol.Ssh_connection.html">..</a> <code class="code"><span class="keyword">end</span></code></pre>
+<pre><span class="keyword">module</span> <a href="Ketrew_pure.Protocol.Process_sub_protocol.Command_output.html">Command_output</a>: <code class="code"><span class="keyword">sig</span></code> <a href="Ketrew_pure.Protocol.Process_sub_protocol.Command_output.html">..</a> <code class="code"><span class="keyword">end</span></code></pre>
+<pre><span id="TYPEdown"><span class="keyword">type</span> <code class="type"></code>down</span> = <code class="type">[ `Command_output of<br>           <a href="Ketrew_pure.Protocol.Process_sub_protocol.Command_output.html#TYPEt">Command_output.t</a><br>       | `Error of string<br>       | `List_of_ssh_ids of<br>           <a href="Ketrew_pure.Protocol.Process_sub_protocol.Ssh_connection.html#TYPEt">Ssh_connection.t</a> list<br>       | `Logs of string * string<br>       | `Ok ]</code> </pre>
+
+</body></html>

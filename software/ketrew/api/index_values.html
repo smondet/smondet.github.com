@@ -87,6 +87,11 @@ Get all the current targets.
 </td></tr>
 <tr><td><a href="Ketrew_pure.Target.State.Is.html#VALalready_done">already_done</a> [<a href="Ketrew_pure.Target.State.Is.html">Ketrew_pure.Target.State.Is</a>]</td>
 <td></td></tr>
+<tr><td><a href="Ketrew.Process_holder.html#VALanswer_message">answer_message</a> [<a href="Ketrew.Process_holder.html">Ketrew.Process_holder</a>]</td>
+<td><div class="info">
+Answer a request from the sub-protocol of the process-holder.
+</div>
+</td></tr>
 <tr><td><a href="Ketrew.Client.html#VALas_client">as_client</a> [<a href="Ketrew.Client.html">Ketrew.Client</a>]</td>
 <td><div class="info">
 Run the function <code class="code">f</code> with a fresh-client created with the <code class="code">configuration</code>.
@@ -113,6 +118,8 @@ Ask the server to load tokens from a file at the given path.
 </div>
 </td></tr>
 <tr><td align="left"><br>B</td></tr>
+<tr><td><a href="Ketrew_pure.Reactive.Signal.html#VALbind">bind</a> [<a href="Ketrew_pure.Reactive.Signal.html">Ketrew_pure.Reactive.Signal</a>]</td>
+<td></td></tr>
 <tr><td><a href="Ketrew.Configuration.html#VALblock_step_time">block_step_time</a> [<a href="Ketrew.Configuration.html">Ketrew.Configuration</a>]</td>
 <td></td></tr>
 <tr><td><a href="Ketrew.Eval_condition.html#VALbool">bool</a> [<a href="Ketrew.Eval_condition.html">Ketrew.Eval_condition</a>]</td>
@@ -144,6 +151,11 @@ Call a query on a target.
 Call a target's plugin query by name.
 </div>
 </td></tr>
+<tr><td><a href="Ketrew.Authentication.html#VALcan">can</a> [<a href="Ketrew.Authentication.html">Ketrew.Authentication</a>]</td>
+<td><div class="info">
+Determine if we have the desired capabilities
+</div>
+</td></tr>
 <tr><td><a href="Ketrew.EDSL.Program.html#VALchain">chain</a> [<a href="Ketrew.EDSL.Program.html">Ketrew.EDSL.Program</a>]</td>
 <td><div class="info">
 Chain a list of programs like with <code class="code"><span class="keywordsign">&amp;&amp;</span></code>.
@@ -155,8 +167,10 @@ Chain a list of programs like with <code class="code"><span class="keywordsign">
 <td></td></tr>
 <tr><td><a href="Ketrew.Host_io.Error.html#VALclassify">classify</a> [<a href="Ketrew.Host_io.Error.html">Ketrew.Host_io.Error</a>]</td>
 <td><div class="info">
-Get a glance at the gravity of the situation:  <code class="code"><span class="keywordsign">`</span><span class="constructor">Unix</span></code>: a function of the kind <code class="code"><span class="constructor">Unix</span>.exec</code> failed., <code class="code"><span class="keywordsign">`</span><span class="constructor">Ssh</span></code>: SSH failed to run something but it does not mean that the
-     actual command is wrong., <code class="code"><span class="keywordsign">`</span><span class="constructor">Execution</span></code>: SSH/<code class="code"><span class="constructor">Unix</span></code> succeeded but the command failed.
+Get a glance at the gravity of the situation:  <code class="code"><span class="keywordsign">`</span><span class="constructor">Local_system</span></code>: a function of the kind <code class="code"><span class="constructor">Unix</span>.exec</code> failed., <code class="code"><span class="keywordsign">`</span><span class="constructor">Connectivity</span></code>: <code class="code"><span class="constructor">Host_io</span></code> failed to run something but it does not
+          mean that the actual command is wrong; connectivity can be
+          restored later., <code class="code"><span class="keywordsign">`</span><span class="constructor">Command_execution</span></code>: the system and networking did their job
+          but the particular command failed.
 </div>
 </td></tr>
 <tr><td><a href="Ketrew.Long_running_utilities.html#VALclassify_and_transform_errors">classify_and_transform_errors</a> [<a href="Ketrew.Long_running_utilities.html">Ketrew.Long_running_utilities</a>]</td>
@@ -183,6 +197,11 @@ Get the path to the “command” named pipe.
 <tr><td><a href="Ketrew_pure.Path.html#VALconcat">concat</a> [<a href="Ketrew_pure.Path.html">Ketrew_pure.Path</a>]</td>
 <td><div class="info">
 Safely concatenate two paths (calls <code class="code"><span class="constructor">Filename</span>.concat</code>).
+</div>
+</td></tr>
+<tr><td><a href="Ketrew.Configuration.html#VALconcurrent_automaton_steps">concurrent_automaton_steps</a> [<a href="Ketrew.Configuration.html">Ketrew.Configuration</a>]</td>
+<td><div class="info">
+Get the maximum number of concurrent automaton steps.
 </div>
 </td></tr>
 <tr><td><a href="Ketrew_pure.Target.Summary.html#VALcondition">condition</a> [<a href="Ketrew_pure.Target.Summary.html">Ketrew_pure.Target.Summary</a>]</td>
@@ -216,6 +235,8 @@ Count how many times a current non-fatal failure state
       “repeats.” I.e.
 </div>
 </td></tr>
+<tr><td><a href="Ketrew_pure.Reactive.Signal.html#VALconstant">constant</a> [<a href="Ketrew_pure.Reactive.Signal.html">Ketrew_pure.Reactive.Signal</a>]</td>
+<td></td></tr>
 <tr><td><a href="Ketrew.Persistent_data.Synchronize.html#VALcopy">copy</a> [<a href="Ketrew.Persistent_data.Synchronize.html">Ketrew.Persistent_data.Synchronize</a>]</td>
 <td></td></tr>
 <tr><td><a href="Ketrew.Yarn.html#VALcreate">create</a> [<a href="Ketrew.Yarn.html">Ketrew.Yarn</a>]</td>
@@ -240,6 +261,8 @@ Create a “long-running” <a href="Ketrew_pure.Target.html#VALbuild_process"><
     already serialized):  <code class="code">?queue</code> is the name of the LSF queue requested (<code class="code"><span class="string">"-q"</span></code> option). , <code class="code">?name</code> is the job name (<code class="code"><span class="string">"-J"</span></code> option). , <code class="code">?wall_limit</code> is the job's Wall-time timeout (<code class="code"><span class="string">"-W"</span></code> option). , <code class="code">?processors</code> is the “processors” request (<code class="code"><span class="string">"-n"</span></code> option). , <code class="code">?project</code> is the job assigned “project” (<code class="code"><span class="string">"-P"</span></code> option). 
 </div>
 </td></tr>
+<tr><td><a href="Ketrew.Host_io.html#VALcreate">create</a> [<a href="Ketrew.Host_io.html">Ketrew.Host_io</a>]</td>
+<td></td></tr>
 <tr><td><a href="Ketrew.Explorer.html#VALcreate">create</a> [<a href="Ketrew.Explorer.html">Ketrew.Explorer</a>]</td>
 <td></td></tr>
 <tr><td><a href="Ketrew.Daemonize.html#VALcreate">create</a> [<a href="Ketrew.Daemonize.html">Ketrew.Daemonize</a>]</td>
@@ -266,6 +289,8 @@ Create a summary of a target value.
 Create a target value (not stored in the DB yet).
 </div>
 </td></tr>
+<tr><td><a href="Ketrew_pure.Reactive.Source.html#VALcreate">create</a> [<a href="Ketrew_pure.Reactive.Source.html">Ketrew_pure.Reactive.Source</a>]</td>
+<td></td></tr>
 <tr><td><a href="Ketrew_pure.Protocol.Server_status.html#VALcreate">create</a> [<a href="Ketrew_pure.Protocol.Server_status.html">Ketrew_pure.Protocol.Server_status</a>]</td>
 <td></td></tr>
 <tr><td><a href="Ketrew_pure.Monitored_script.html#VALcreate">create</a> [<a href="Ketrew_pure.Monitored_script.html">Ketrew_pure.Monitored_script</a>]</td>
@@ -325,8 +350,16 @@ Specification of the default shell of a Host.
 Default (upper bound) of the `?timeout` arguments.
 </div>
 </td></tr>
+<tr><td><a href="Ketrew.Host_io.html#VALdelete_named_host">delete_named_host</a> [<a href="Ketrew.Host_io.html">Ketrew.Host_io</a>]</td>
+<td></td></tr>
 <tr><td><a href="Ketrew_pure.Target.State.Is.html#VALdependencies_failed">dependencies_failed</a> [<a href="Ketrew_pure.Target.State.Is.html">Ketrew_pure.Target.State.Is</a>]</td>
 <td></td></tr>
+<tr><td><a href="Ketrew.EDSL.html#VALdepends_on">depends_on</a> [<a href="Ketrew.EDSL.html">Ketrew.EDSL</a>]</td>
+<td><div class="info">
+Create a “dependency” edge, in other words, the node using the
+    edges “depends on” the node given as argument.
+</div>
+</td></tr>
 <tr><td><a href="Ketrew_pure.Target.Summary.html#VALdepends_on">depends_on</a> [<a href="Ketrew_pure.Target.Summary.html">Ketrew_pure.Target.Summary</a>]</td>
 <td></td></tr>
 <tr><td><a href="Ketrew_pure.Target.html#VALdepends_on">depends_on</a> [<a href="Ketrew_pure.Target.html">Ketrew_pure.Target</a>]</td>
@@ -475,6 +508,14 @@ Run <a href="Ketrew.Engine.Run_automaton.html#VALstep"><code class="code"><span 
 </td></tr>
 <tr><td><a href="Ketrew.Persistent_data.html#VALfold_active_targets">fold_active_targets</a> [<a href="Ketrew.Persistent_data.html">Ketrew.Persistent_data</a>]</td>
 <td></td></tr>
+<tr><td><a href="Ketrew.EDSL.html#VALforget_product">forget_product</a> [<a href="Ketrew.EDSL.html">Ketrew.EDSL</a>]</td>
+<td><div class="info">
+“Cast” a node to the <code class="code">unknown_product workflow_node</code> type, this is
+    useful to make some programs that generate workflows type check
+    (putting nodes into lists, or in different branches of a <code class="code"><span class="keyword">match</span>
+    .. <span class="keyword">with</span></code>).
+</div>
+</td></tr>
 <tr><td><a href="Ketrew.Long_running_utilities.html#VALfresh_playground_or_fail">fresh_playground_or_fail</a> [<a href="Ketrew.Long_running_utilities.html">Ketrew.Long_running_utilities</a>]</td>
 <td><div class="info">
 Get a fresh-playground from a <code class="code"><span class="constructor">Host</span>.t</code>.
@@ -571,6 +612,13 @@ Weakly typed version of <a href="Ketrew.Host_io.html#VALget_file"><code class="c
 <tr><td align="left"><br>H</td></tr>
 <tr><td><a href="Ketrew_pure.Target.State.Flat.html#VALhistory">history</a> [<a href="Ketrew_pure.Target.State.Flat.html">Ketrew_pure.Target.State.Flat</a>]</td>
 <td></td></tr>
+<tr><td><a href="Ketrew.Engine.html#VALhost_io">host_io</a> [<a href="Ketrew.Engine.html">Ketrew.Engine</a>]</td>
+<td></td></tr>
+<tr><td><a href="Ketrew.Configuration.html#VALhost_timeout_upper_bound">host_timeout_upper_bound</a> [<a href="Ketrew.Configuration.html">Ketrew.Configuration</a>]</td>
+<td><div class="info">
+Get the upper bound for the timeout of SSH calls, if any.
+</div>
+</td></tr>
 <tr><td align="left"><br>I</td></tr>
 <tr><td><a href="Ketrew_pure.Target.Summary.html#VALid">id</a> [<a href="Ketrew_pure.Target.Summary.html">Ketrew_pure.Target.Summary</a>]</td>
 <td><div class="info">
@@ -644,13 +692,31 @@ Get the most recent serialized
     <code class="code"><span class="constructor">None</span></code> otherwise.
 </div>
 </td></tr>
+<tr><td><a href="Ketrew_pure.Reactive.Signal.html#VALlist">list</a> [<a href="Ketrew_pure.Reactive.Signal.html">Ketrew_pure.Reactive.Signal</a>]</td>
+<td></td></tr>
+<tr><td><a href="Ketrew.EDSL.html#VALlist_of_files">list_of_files</a> [<a href="Ketrew.EDSL.html">Ketrew.EDSL</a>]</td>
+<td><div class="info">
+Create a <code class="code">list_of_files</code> product (<code class="code"><span class="keywordsign">#</span>is_done</code> checks the existence
+    of all these files).
+</div>
+</td></tr>
 <tr><td><a href="Ketrew.Configuration.html#VALlisten_to">listen_to</a> [<a href="Ketrew.Configuration.html">Ketrew.Configuration</a>]</td>
 <td><div class="info">
 Get the OpenSSL-or-not server configuration.
 </div>
 </td></tr>
+<tr><td><a href="Ketrew.Process_holder.html#VALload">load</a> [<a href="Ketrew.Process_holder.html">Ketrew.Process_holder</a>]</td>
+<td><div class="info">
+Create a new process-holder.
+</div>
+</td></tr>
 <tr><td><a href="Ketrew.Engine.html#VALload">load</a> [<a href="Ketrew.Engine.html">Ketrew.Engine</a>]</td>
 <td></td></tr>
+<tr><td><a href="Ketrew.Authentication.html#VALload">load</a> [<a href="Ketrew.Authentication.html">Ketrew.Authentication</a>]</td>
+<td><div class="info">
+Load tokens that represent your authentication.
+</div>
+</td></tr>
 <tr><td><a href="Ketrew.Configuration.html#VALload_exn">load_exn</a> [<a href="Ketrew.Configuration.html">Ketrew.Configuration</a>]</td>
 <td><div class="info">
 Load a configuration.
@@ -683,6 +749,11 @@ Get a display-friendly list of configuration items.
 </td></tr>
 <tr><td><a href="Ketrew.Client.Error.html#VALlog">log</a> [<a href="Ketrew.Client.Error.html">Ketrew.Client.Error</a>]</td>
 <td></td></tr>
+<tr><td><a href="Ketrew.Authentication.html#VALlog">log</a> [<a href="Ketrew.Authentication.html">Ketrew.Authentication</a>]</td>
+<td><div class="info">
+Describe the source of the authentication.
+</div>
+</td></tr>
 <tr><td><a href="Ketrew_pure.Target.State.html#VALlog">log</a> [<a href="Ketrew_pure.Target.State.html">Ketrew_pure.Target.State</a>]</td>
 <td></td></tr>
 <tr><td><a href="Ketrew_pure.Target.Condition.html#VALlog">log</a> [<a href="Ketrew_pure.Target.Condition.html">Ketrew_pure.Target.Condition</a>]</td>
@@ -716,7 +787,7 @@ Path to the log file of the script.
 </td></tr>
 <tr><td><a href="Ketrew.Configuration.html#VALlog_path">log_path</a> [<a href="Ketrew.Configuration.html">Ketrew.Configuration</a>]</td>
 <td><div class="info">
-Get the path to the server's log file.
+Get the path to the server's log directory.
 </div>
 </td></tr>
 <tr><td><a href="Ketrew_pure.Target.Volume.html#VALlog_structure">log_structure</a> [<a href="Ketrew_pure.Target.Volume.html">Ketrew_pure.Target.Volume</a>]</td>
@@ -740,6 +811,10 @@ Create an “LSF” build process.
 Create a menu with the targets.
 </div>
 </td></tr>
+<tr><td><a href="Ketrew_pure.Reactive.Signal.html#VALmap">map</a> [<a href="Ketrew_pure.Reactive.Signal.html">Ketrew_pure.Reactive.Signal</a>]</td>
+<td></td></tr>
+<tr><td><a href="Ketrew_pure.Reactive.Source.html#VALmap_signal">map_signal</a> [<a href="Ketrew_pure.Reactive.Source.html">Ketrew_pure.Reactive.Source</a>]</td>
+<td></td></tr>
 <tr><td><a href="Ketrew.Daemonize.html#VALmarkup">markup</a> [<a href="Ketrew.Daemonize.html">Ketrew.Daemonize</a>]</td>
 <td></td></tr>
 <tr><td><a href="Ketrew_pure.Target.Condition.html#VALmarkup">markup</a> [<a href="Ketrew_pure.Target.Condition.html">Ketrew_pure.Target.Condition</a>]</td>
@@ -787,9 +862,11 @@ Merge two flat states into a sorted new one.
 <td></td></tr>
 <tr><td><a href="Ketrew.Configuration.html#VALmode">mode</a> [<a href="Ketrew.Configuration.html">Ketrew.Configuration</a>]</td>
 <td></td></tr>
-<tr><td><a href="Ketrew_pure.Target.State.Flat.html#VALmore_info">more_info</a> [<a href="Ketrew_pure.Target.State.Flat.html">Ketrew_pure.Target.State.Flat</a>]</td>
+<tr><td><a href="Ketrew_pure.Reactive.Source.html#VALmodify">modify</a> [<a href="Ketrew_pure.Reactive.Source.html">Ketrew_pure.Reactive.Source</a>]</td>
 <td></td></tr>
-<tr><td><a href="Ketrew.Persistent_data.html#VALmove_target_to_finished_collection">move_target_to_finished_collection</a> [<a href="Ketrew.Persistent_data.html">Ketrew.Persistent_data</a>]</td>
+<tr><td><a href="Ketrew_pure.Reactive.Source.html#VALmodify_opt">modify_opt</a> [<a href="Ketrew_pure.Reactive.Source.html">Ketrew_pure.Reactive.Source</a>]</td>
+<td></td></tr>
+<tr><td><a href="Ketrew_pure.Target.State.Flat.html#VALmore_info">more_info</a> [<a href="Ketrew_pure.Target.State.Flat.html">Ketrew_pure.Target.State.Flat</a>]</td>
 <td></td></tr>
 <tr><td align="left"><br>N</td></tr>
 <tr><td><a href="Ketrew.Long_running.LONG_RUNNING.html#VALname">name</a> [<a href="Ketrew.Long_running.LONG_RUNNING.html">Ketrew.Long_running.LONG_RUNNING</a>]</td>
@@ -811,6 +888,12 @@ Get a target's user-defined name.
 Get a target's user-defined name.
 </div>
 </td></tr>
+<tr><td><a href="Ketrew_pure.Host.html#VALnamed">named</a> [<a href="Ketrew_pure.Host.html">Ketrew_pure.Host</a>]</td>
+<td><div class="info">
+Create an "named" host, the actual connection will be resolved
+    form the name by the engine.
+</div>
+</td></tr>
 <tr><td><a href="Ketrew.EDSL.Condition.html#VALnever">never</a> [<a href="Ketrew.EDSL.Condition.html">Ketrew.EDSL.Condition</a>]</td>
 <td></td></tr>
 <tr><td><a href="Ketrew_pure.Target.Build_process.html#VALnop">nop</a> [<a href="Ketrew_pure.Target.Build_process.html">Ketrew_pure.Target.Build_process</a>]</td>
@@ -824,7 +907,7 @@ A build process that does nothing.
 <tr><td><a href="Ketrew_pure.Host.html#VALof_string">of_string</a> [<a href="Ketrew_pure.Host.html">Ketrew_pure.Host</a>]</td>
 <td><div class="info">
 Parse an <a href="http://www.ietf.org/rfc/rfc3986.txt">RFC-3986</a>-compliant
-  string into a host, see <a href="Ketrew_pure.Host.html#VALof_uri"><code class="code"><span class="constructor">Ketrew_pure</span>.<span class="constructor">Host</span>.of_uri</code></a>.
+    string into a host, see <a href="Ketrew_pure.Host.html#VALof_uri"><code class="code"><span class="constructor">Ketrew_pure</span>.<span class="constructor">Host</span>.of_uri</code></a>.
 </div>
 </td></tr>
 <tr><td><a href="Ketrew_pure.Target.Stored_target.html#VALof_target">of_target</a> [<a href="Ketrew_pure.Target.Stored_target.html">Ketrew_pure.Target.Stored_target</a>]</td>
@@ -872,10 +955,20 @@ The type of SSH-based hosts.
 Host container.
 </div>
 </td></tr>
+<tr><td><a href="Ketrew.EDSL.html#VALon_failure_activate">on_failure_activate</a> [<a href="Ketrew.EDSL.html">Ketrew.EDSL</a>]</td>
+<td><div class="info">
+Create an edge to a node that will be activated after a node <i>    fails</i>.
+</div>
+</td></tr>
 <tr><td><a href="Ketrew_pure.Target.Summary.html#VALon_failure_activate">on_failure_activate</a> [<a href="Ketrew_pure.Target.Summary.html">Ketrew_pure.Target.Summary</a>]</td>
 <td></td></tr>
 <tr><td><a href="Ketrew_pure.Target.html#VALon_failure_activate">on_failure_activate</a> [<a href="Ketrew_pure.Target.html">Ketrew_pure.Target</a>]</td>
 <td></td></tr>
+<tr><td><a href="Ketrew.EDSL.html#VALon_success_activate">on_success_activate</a> [<a href="Ketrew.EDSL.html">Ketrew.EDSL</a>]</td>
+<td><div class="info">
+Create an edge to a node that will be activated after a node <i>    succeeds</i>.
+</div>
+</td></tr>
 <tr><td><a href="Ketrew_pure.Target.Summary.html#VALon_success_activate">on_success_activate</a> [<a href="Ketrew_pure.Target.Summary.html">Ketrew_pure.Target.Summary</a>]</td>
 <td></td></tr>
 <tr><td><a href="Ketrew_pure.Target.html#VALon_success_activate">on_success_activate</a> [<a href="Ketrew_pure.Target.html">Ketrew_pure.Target</a>]</td>
@@ -898,7 +991,9 @@ Output a configuration file containing a list of profiles to <code class="code">
 <tr><td align="left"><br>P</td></tr>
 <tr><td><a href="Ketrew.EDSL.Host.html#VALparse">parse</a> [<a href="Ketrew.EDSL.Host.html">Ketrew.EDSL.Host</a>]</td>
 <td><div class="info">
-Parse an URI string into a host.
+Parse a
+      <a href="https://en.wikipedia.org/wiki/Uniform_Resource_Identifier">URI</a>
+      string into a Ketrew-host.
 </div>
 </td></tr>
 <tr><td><a href="Ketrew_pure.Monitored_script.html#VALparse_log">parse_log</a> [<a href="Ketrew_pure.Monitored_script.html">Ketrew_pure.Monitored_script</a>]</td>
@@ -985,6 +1080,11 @@ Create a relative to a file, raises <code class="code"><span class="constructor"
     is not relative.
 </div>
 </td></tr>
+<tr><td><a href="Ketrew.Authentication.html#VALreload">reload</a> [<a href="Ketrew.Authentication.html">Ketrew.Authentication</a>]</td>
+<td><div class="info">
+Reload tokens based upon their original source.
+</div>
+</td></tr>
 <tr><td><a href="Ketrew.Configuration.html#VALrequest_targets_ids">request_targets_ids</a> [<a href="Ketrew.Configuration.html">Ketrew.Configuration</a>]</td>
 <td></td></tr>
 <tr><td><a href="Ketrew.Client.html#VALrestart">restart</a> [<a href="Ketrew.Client.html">Ketrew.Client</a>]</td>
@@ -1069,6 +1169,18 @@ Get the potentiel server configuration.
 </td></tr>
 <tr><td><a href="Ketrew.Configuration.html#VALserver_engine">server_engine</a> [<a href="Ketrew.Configuration.html">Ketrew.Configuration</a>]</td>
 <td></td></tr>
+<tr><td><a href="Ketrew_pure.Reactive.Source.html#VALset">set</a> [<a href="Ketrew_pure.Reactive.Source.html">Ketrew_pure.Reactive.Source</a>]</td>
+<td></td></tr>
+<tr><td><a href="Ketrew.Host_io.html#VALset_named_host">set_named_host</a> [<a href="Ketrew.Host_io.html">Ketrew.Host_io</a>]</td>
+<td></td></tr>
+<tr><td><a href="Ketrew.Process_holder.Ssh_connection.html#VALsetsid_ssh">setsid_ssh</a> [<a href="Ketrew.Process_holder.Ssh_connection.html">Ketrew.Process_holder.Ssh_connection</a>]</td>
+<td><div class="info">
+Daemonize an SSH connection with a control-path as a
+      control-master, one can communicate with the client (as an SSH
+      <code class="code"><span class="string">"ASKPASS"</span></code> program) with the <code class="code">pipe_in</code> and <code class="code">pipe_out</code> named
+      fifo files.
+</div>
+</td></tr>
 <tr><td><a href="Ketrew.EDSL.Program.html#VALsh">sh</a> [<a href="Ketrew.EDSL.Program.html">Ketrew.EDSL.Program</a>]</td>
 <td><div class="info">
 Create a program that runs a shell command.
@@ -1097,6 +1209,8 @@ Call sh-style commands using the command argument (e.g.
 Printf-like function to create shell commands.
 </div>
 </td></tr>
+<tr><td><a href="Ketrew_pure.Reactive.Source.html#VALsignal">signal</a> [<a href="Ketrew_pure.Reactive.Source.html">Ketrew_pure.Reactive.Source</a>]</td>
+<td></td></tr>
 <tr><td><a href="Ketrew_pure.Target.State.Flat.html#VALsimple">simple</a> [<a href="Ketrew_pure.Target.State.Flat.html">Ketrew_pure.Target.State.Flat</a>]</td>
 <td></td></tr>
 <tr><td><a href="Ketrew_pure.Target.State.html#VALsimple_of_yojson">simple_of_yojson</a> [<a href="Ketrew_pure.Target.State.html">Ketrew_pure.Target.State</a>]</td>
@@ -1111,6 +1225,13 @@ Filter the history with a date, returning a flat-state
         containing only newer items if any.
 </div>
 </td></tr>
+<tr><td><a href="Ketrew.EDSL.html#VALsingle_file">single_file</a> [<a href="Ketrew.EDSL.html">Ketrew.EDSL</a>]</td>
+<td><div class="info">
+Create a <code class="code">single_file</code> product.
+</div>
+</td></tr>
+<tr><td><a href="Ketrew_pure.Reactive.Signal.html#VALsingleton">singleton</a> [<a href="Ketrew_pure.Reactive.Signal.html">Ketrew_pure.Reactive.Signal</a>]</td>
+<td></td></tr>
 <tr><td><a href="Ketrew_pure.Path.html#VALsize_shell_command">size_shell_command</a> [<a href="Ketrew_pure.Path.html">Ketrew_pure.Path</a>]</td>
 <td><div class="info">
 Create a <code class="code"><span class="string">"/bin/sh"</span></code> command that outputs <code class="code"><span class="string">"0"</span></code> for directories and
@@ -1130,6 +1251,17 @@ Get the right option for the SSH client, for now this does not
       actually depend on the Host.
 </div>
 </td></tr>
+<tr><td><a href="Ketrew.Configuration.html#VALssh_connection">ssh_connection</a> [<a href="Ketrew.Configuration.html">Ketrew.Configuration</a>]</td>
+<td><div class="info">
+Create a named <a href="Ketrew.Configuration.html#VALssh_connection"><code class="code"><span class="constructor">Ketrew</span>.<span class="constructor">Configuration</span>.ssh_connection</code></a> (cf.
+</div>
+</td></tr>
+<tr><td><a href="Ketrew.Configuration.html#VALssh_connection_name_uri">ssh_connection_name_uri</a> [<a href="Ketrew.Configuration.html">Ketrew.Configuration</a>]</td>
+<td></td></tr>
+<tr><td><a href="Ketrew.Configuration.html#VALssh_connections">ssh_connections</a> [<a href="Ketrew.Configuration.html">Ketrew.Configuration</a>]</td>
+<td></td></tr>
+<tr><td><a href="Ketrew.Configuration.html#VALssh_processes_ui">ssh_processes_ui</a> [<a href="Ketrew.Configuration.html">Ketrew.Configuration</a>]</td>
+<td></td></tr>
 <tr><td><a href="Ketrew.Configuration.html#VALstandalone">standalone</a> [<a href="Ketrew.Configuration.html">Ketrew.Configuration</a>]</td>
 <td></td></tr>
 <tr><td><a href="Ketrew.Configuration.html#VALstandalone_engine">standalone_engine</a> [<a href="Ketrew.Configuration.html">Ketrew.Configuration</a>]</td>
@@ -1176,6 +1308,12 @@ Stop the server by calling the commad <code class="code"><span class="string">"d
 </div>
 </td></tr>
 <tr><td><a href="Ketrew.Client.html#VALsubmit">submit</a> [<a href="Ketrew.Client.html">Ketrew.Client</a>]</td>
+<td><div class="info">
+This is like <a href="Ketrew.Client.html#VALsubmit_workflow"><code class="code"><span class="constructor">Ketrew</span>.<span class="constructor">Client</span>.submit_workflow</code></a> but for the deprecated/legacy API
+    (i.e.
+</div>
+</td></tr>
+<tr><td><a href="Ketrew.Client.html#VALsubmit_workflow">submit_workflow</a> [<a href="Ketrew.Client.html">Ketrew.Client</a>]</td>
 <td><div class="info">
 Submit a high-level workflow description to the engine; this
     function calls <code class="code"><span class="constructor">Lwt_main</span>.run</code>.
@@ -1319,6 +1457,10 @@ Turn on or off messages about which key is pressed.
 <td></td></tr>
 <tr><td><a href="Ketrew_pure.Target.State.Is.html#VALtried_to_start">tried_to_start</a> [<a href="Ketrew_pure.Target.State.Is.html">Ketrew_pure.Target.State.Is</a>]</td>
 <td></td></tr>
+<tr><td><a href="Ketrew_pure.Reactive.Signal.html#VALtuple_2">tuple_2</a> [<a href="Ketrew_pure.Reactive.Signal.html">Ketrew_pure.Reactive.Signal</a>]</td>
+<td></td></tr>
+<tr><td><a href="Ketrew_pure.Reactive.Signal.html#VALtuple_3">tuple_3</a> [<a href="Ketrew_pure.Reactive.Signal.html">Ketrew_pure.Reactive.Signal</a>]</td>
+<td></td></tr>
 <tr><td align="left"><br>U</td></tr>
 <tr><td><a href="Ketrew.Configuration.html#VALui">ui</a> [<a href="Ketrew.Configuration.html">Ketrew.Configuration</a>]</td>
 <td><div class="info">
@@ -1328,6 +1470,11 @@ Create a configuration of the UI:
 <tr><td><a href="Ketrew.EDSL.html#VALunit">unit</a> [<a href="Ketrew.EDSL.html">Ketrew.EDSL</a>]</td>
 <td><div class="info">
 The artifact that is “never done” (i.e.
+</div>
+</td></tr>
+<tr><td><a href="Ketrew.Process_holder.html#VALunload">unload</a> [<a href="Ketrew.Process_holder.html">Ketrew.Process_holder</a>]</td>
+<td><div class="info">
+Destroy a process-holder by attempting to kill all its processes.
 </div>
 </td></tr>
 <tr><td><a href="Ketrew.Persistent_data.html#VALunload">unload</a> [<a href="Ketrew.Persistent_data.html">Ketrew.Persistent_data</a>]</td>
@@ -1347,6 +1494,10 @@ See the documentation of <code class="code">with_cbreak</code>.
 </div>
 </td></tr>
 <tr><td align="left"><br>V</td></tr>
+<tr><td><a href="Ketrew_pure.Reactive.Signal.html#VALvalue">value</a> [<a href="Ketrew_pure.Reactive.Signal.html">Ketrew_pure.Reactive.Signal</a>]</td>
+<td></td></tr>
+<tr><td><a href="Ketrew_pure.Reactive.Source.html#VALvalue">value</a> [<a href="Ketrew_pure.Reactive.Source.html">Ketrew_pure.Reactive.Source</a>]</td>
+<td></td></tr>
 <tr><td><a href="Ketrew_pure.Target.State.Is.html#VALverified_success">verified_success</a> [<a href="Ketrew_pure.Target.State.Is.html">Ketrew_pure.Target.State.Is</a>]</td>
 <td></td></tr>
 <tr><td><a href="Ketrew.Interaction.html#VALview_in_dollar_editor">view_in_dollar_editor</a> [<a href="Ketrew.Interaction.html">Ketrew.Interaction</a>]</td>
@@ -1360,6 +1511,25 @@ View a string in <code class="code"><span class="string">"$EDITOR"</span></code>
 <tr><td><a href="Ketrew.Engine.html#VALwith_engine">with_engine</a> [<a href="Ketrew.Engine.html">Ketrew.Engine</a>]</td>
 <td><div class="info">
 Create a <code class="code">engine.t</code>, run the function passed as argument, and properly dispose of it.
+</div>
+</td></tr>
+<tr><td><a href="Ketrew_pure.Host.html#VALwith_ssh_connection">with_ssh_connection</a> [<a href="Ketrew_pure.Host.html">Ketrew_pure.Host</a>]</td>
+<td></td></tr>
+<tr><td><a href="Ketrew.EDSL.html#VALwithout_product">without_product</a> [<a href="Ketrew.EDSL.html">Ketrew.EDSL</a>]</td>
+<td><div class="info">
+Create an “empty” product, it won't require checking any condition,
+    so the node carrying it (unless
+    forced with the <code class="code">?is_done</code> argument) will always run.
+</div>
+</td></tr>
+<tr><td><a href="Ketrew.EDSL.html#VALworkflow_node">workflow_node</a> [<a href="Ketrew.EDSL.html">Ketrew.EDSL</a>]</td>
+<td><div class="info">
+Create a workflow node:
+</div>
+</td></tr>
+<tr><td><a href="Ketrew.EDSL.html#VALworkflow_to_string">workflow_to_string</a> [<a href="Ketrew.EDSL.html">Ketrew.EDSL</a>]</td>
+<td><div class="info">
+Build a display-friendly string summarizing the workflow.
 </div>
 </td></tr>
 <tr><td align="left"><br>Y</td></tr>

@@ -30,29 +30,55 @@ Alias for the host type.<br>
 
 
 <pre><span id="VALparse"><span class="keyword">val</span> parse</span> : <code class="type">string -> <a href="Ketrew.EDSL.Host.html#TYPEt">t</a></code></pre><div class="info ">
-Parse an URI string into a host.
+Parse a
+      <a href="https://en.wikipedia.org/wiki/Uniform_Resource_Identifier">URI</a>
+      string into a Ketrew-host.
 <p>
 
-      For example:
-      <code class="code"><span class="string">"ssh://user@SomeHost:42/tmp/pg?shell=bash,-l,--init-file,bouh,-c&amp;timeout=42&amp;ssh-option=-K"</span></code>
+      The “scheme” and “host” part of the URI define the connection type:
 <p>
 <ul>
-<li><code class="code"><span class="string">"ssh:"</span></code> means to connect with SSH (if a hostname is defined this is the
-      default and only way).</li>
-<li><code class="code"><span class="string">"user"</span></code> is the user to connect as.</li>
-<li><code class="code"><span class="string">"SomeHost"</span></code> is the hostname, if the “host-connection” part of the URI is
-      not provided, “localhost” will be assumed (and SSH won't be used).</li>
-<li><code class="code"><span class="string">"42"</span></code> is the port.</li>
-<li><code class="code"><span class="string">"/tmp/pg"</span></code> is the “playground”; a directory where the Ketrew-engine will
-      create temporary and monitoring files.</li>
-<li><code class="code"><span class="string">"shell=bash,-l,--init-file,bouh,-c"</span></code> the option <code class="code">shell</code> define the
-      shell, and the options, to use on the host.</li>
-<li><code class="code"><span class="string">"timeout=42.5"</span></code> is the execution timeout, an optional float setting the
-      maximal duration Ketrew will wait for SSH commands to return.</li>
-<li><code class="code"><span class="string">"ssh-option=-K"</span></code> are options to pass to the SSH client.</li>
+<li><b>SSH Hosts</b>: use <code class="code"><span class="string">"ssh:"</span></code> as the scheme means (if a hostname is
+        defined but no scheme, SSH is the default).
+        Then you can add a user, a hostname, and a port number.
+        You can aslo add options to pass to the SSH client through the
+        URI's query parameters <code class="code"><span class="string">"ssh-option=-K"</span></code>.</li>
+<li><b>Named hosts</b>: use the scheme <code class="code"><span class="string">"named://"</span></code> and the hostname
+        as a <i>name</i>. Named hosts are dynamic connections managed by the
+        Ketrew server.</li>
+<li><b>Engine's host</b>: if no scheme, and no host part are
+        provided, Ketrew will create a host for the local-host (the
+        host where the Engine is running).</li>
 </ul>
 
-      See also <code class="code"><span class="constructor">Host</span>.of_uri</code>.<br>
+      The “path” part of the URI defines the “playground”; a directory
+      where the Ketrew-engine will create temporary and monitoring files.
+<p>
+
+      Other query options can be used to configure the host:
+<p>
+<ul>
+<li><code class="code"><span class="string">"shell=&lt;comma-separated-list-of-command-line-arguments"</span></code>
+        defines the shell, with more command-line options, to use on
+        the host.</li>
+<li><code class="code"><span class="string">"timeout=&lt;float&gt;"</span></code> is the execution timeout, an optional
+        float setting the maximal duration Ketrew will wait for SSH
+        commands to return.</li>
+</ul>
+
+      Examples:
+<p>
+<ul>
+<li><code class="code"><span class="string">"ssh://user@SomeHost:42/tmp/pg?shell=bash,-l,--init-file,bouh,-c&amp;timeout=42&amp;ssh-option=-K"</span></code>
+        is an SSH host.</li>
+<li><code class="code"><span class="string">"named://TheNameOfTheHost/tmp/ketrew-playground/"</span></code> is a named
+        host: Ketrew will try to find its active connection called
+        <code class="code"><span class="string">"TheNameOfTheHost"</span></code> and use it at every call.</li>
+<li><code class="code"><span class="string">"/tmp/KT?shell=ksh,-c"</span></code> is the engine's host, using <code class="code"><span class="string">"tmp/KT"</span></code>
+        as a playground, and <code class="code"><span class="string">"ksh"</span></code> as a shell.</li>
+</ul>
+
+      See also <a href="Ketrew_pure.Host.html#VALof_uri"><code class="code"><span class="constructor">Ketrew_pure</span>.<span class="constructor">Host</span>.of_uri</code></a>.<br>
 </div>
 
 <pre><span id="VALtmp_on_localhost"><span class="keyword">val</span> tmp_on_localhost</span> : <code class="type"><a href="Ketrew.EDSL.Host.html#TYPEt">t</a></code></pre>

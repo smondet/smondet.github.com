@@ -23,8 +23,8 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Dyn_plugin</span>&nbsp;<span class="keyword">of</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[&gt;&nbsp;<span class="keywordsign">`</span><span class="constructor">Dynlink_error</span>&nbsp;<span class="keyword">of</span>&nbsp;<span class="constructor">Dynlink</span>.error&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Findlib</span>&nbsp;<span class="keyword">of</span>&nbsp;exn&nbsp;]<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Failure</span>&nbsp;<span class="keyword">of</span>&nbsp;string<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Missing_data</span>&nbsp;<span class="keyword">of</span>&nbsp;bytes<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Target</span>&nbsp;<span class="keyword">of</span>&nbsp;[&gt;&nbsp;<span class="keywordsign">`</span><span class="constructor">Deserilization</span>&nbsp;<span class="keyword">of</span>&nbsp;bytes&nbsp;]&nbsp;]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Missing_data</span>&nbsp;<span class="keyword">of</span>&nbsp;string<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Target</span>&nbsp;<span class="keyword">of</span>&nbsp;[&gt;&nbsp;<span class="keywordsign">`</span><span class="constructor">Deserilization</span>&nbsp;<span class="keyword">of</span>&nbsp;string&nbsp;]&nbsp;]<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">as</span>&nbsp;<span class="keywordsign">'</span>merge_error)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Unix_io</span>.<span class="constructor">Deferred_result</span>.t)&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;(unit,&nbsp;<span class="keywordsign">'</span>merge_error)&nbsp;<span class="constructor">Unix_io</span>.<span class="constructor">Deferred_result</span>.t<br>
@@ -32,10 +32,11 @@
 &nbsp;&nbsp;&nbsp;&nbsp;configuration:<span class="constructor">Ketrew</span>.<span class="constructor">Configuration</span>.engine&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">Ketrew</span>.<span class="constructor">Engine</span>.t,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[&gt;&nbsp;<span class="keywordsign">`</span><span class="constructor">Database</span>&nbsp;<span class="keyword">of</span>&nbsp;<span class="constructor">Trakeva</span>.<span class="constructor">Error</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Database_unavailable</span>&nbsp;<span class="keyword">of</span>&nbsp;string<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Dyn_plugin</span>&nbsp;<span class="keyword">of</span>&nbsp;[&gt;&nbsp;<span class="keywordsign">`</span><span class="constructor">Dynlink_error</span>&nbsp;<span class="keyword">of</span>&nbsp;<span class="constructor">Dynlink</span>.error&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Findlib</span>&nbsp;<span class="keyword">of</span>&nbsp;exn&nbsp;]<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Failure</span>&nbsp;<span class="keyword">of</span>&nbsp;string<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Missing_data</span>&nbsp;<span class="keyword">of</span>&nbsp;bytes<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Target</span>&nbsp;<span class="keyword">of</span>&nbsp;[&gt;&nbsp;<span class="keywordsign">`</span><span class="constructor">Deserilization</span>&nbsp;<span class="keyword">of</span>&nbsp;bytes&nbsp;]&nbsp;])<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Missing_data</span>&nbsp;<span class="keyword">of</span>&nbsp;string<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Target</span>&nbsp;<span class="keyword">of</span>&nbsp;[&gt;&nbsp;<span class="keywordsign">`</span><span class="constructor">Deserilization</span>&nbsp;<span class="keyword">of</span>&nbsp;string&nbsp;]&nbsp;])<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Unix_io</span>.<span class="constructor">Deferred_result</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;unload&nbsp;:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Ketrew</span>.<span class="constructor">Engine</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
@@ -58,6 +59,7 @@
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Ketrew_pure</span>.<span class="constructor">Internal_pervasives</span>.<span class="constructor">Unique_id</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">Ketrew_pure</span>.<span class="constructor">Target</span>.t,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[&gt;&nbsp;<span class="keywordsign">`</span><span class="constructor">Database</span>&nbsp;<span class="keyword">of</span>&nbsp;<span class="constructor">Trakeva</span>.<span class="constructor">Error</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Database_unavailable</span>&nbsp;<span class="keyword">of</span>&nbsp;string<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Missing_data</span>&nbsp;<span class="keyword">of</span>&nbsp;string<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Target</span>&nbsp;<span class="keyword">of</span>&nbsp;[&gt;&nbsp;<span class="keywordsign">`</span><span class="constructor">Deserilization</span>&nbsp;<span class="keyword">of</span>&nbsp;string&nbsp;]&nbsp;])<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Unix_io</span>.<span class="constructor">Deferred_result</span>.t<br>
@@ -65,6 +67,7 @@
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Ketrew</span>.<span class="constructor">Engine</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">Ketrew_pure</span>.<span class="constructor">Target</span>.t&nbsp;list,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[&gt;&nbsp;<span class="keywordsign">`</span><span class="constructor">Database</span>&nbsp;<span class="keyword">of</span>&nbsp;<span class="constructor">Trakeva</span>.<span class="constructor">Error</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Database_unavailable</span>&nbsp;<span class="keyword">of</span>&nbsp;string<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">IO</span>&nbsp;<span class="keyword">of</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[&gt;&nbsp;<span class="keywordsign">`</span><span class="constructor">Read_file_exn</span>&nbsp;<span class="keyword">of</span>&nbsp;string&nbsp;*&nbsp;exn&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Write_file_exn</span>&nbsp;<span class="keyword">of</span>&nbsp;string&nbsp;*&nbsp;exn&nbsp;]<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Missing_data</span>&nbsp;<span class="keyword">of</span>&nbsp;<span class="constructor">Ketrew_pure</span>.<span class="constructor">Target</span>.id<br>
@@ -76,6 +79,7 @@
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Ketrew_pure</span>.<span class="constructor">Protocol</span>.<span class="constructor">Up_message</span>.target_query&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">Ketrew_pure</span>.<span class="constructor">Target</span>.id&nbsp;list,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[&gt;&nbsp;<span class="keywordsign">`</span><span class="constructor">Database</span>&nbsp;<span class="keyword">of</span>&nbsp;<span class="constructor">Trakeva</span>.<span class="constructor">Error</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Database_unavailable</span>&nbsp;<span class="keyword">of</span>&nbsp;string<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Missing_data</span>&nbsp;<span class="keyword">of</span>&nbsp;string<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Target</span>&nbsp;<span class="keyword">of</span>&nbsp;[&gt;&nbsp;<span class="keywordsign">`</span><span class="constructor">Deserilization</span>&nbsp;<span class="keyword">of</span>&nbsp;string&nbsp;]&nbsp;])<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Unix_io</span>.<span class="constructor">Deferred_result</span>.t<br>
@@ -103,6 +107,7 @@
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Ketrew_pure</span>.<span class="constructor">Target</span>.id&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">Ketrew_pure</span>.<span class="constructor">Target</span>.<span class="constructor">State</span>.t,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[&gt;&nbsp;<span class="keywordsign">`</span><span class="constructor">Database</span>&nbsp;<span class="keyword">of</span>&nbsp;<span class="constructor">Trakeva</span>.<span class="constructor">Error</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Database_unavailable</span>&nbsp;<span class="keyword">of</span>&nbsp;string<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">IO</span>&nbsp;<span class="keyword">of</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[&gt;&nbsp;<span class="keywordsign">`</span><span class="constructor">Read_file_exn</span>&nbsp;<span class="keyword">of</span>&nbsp;string&nbsp;*&nbsp;exn&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Write_file_exn</span>&nbsp;<span class="keyword">of</span>&nbsp;string&nbsp;*&nbsp;exn&nbsp;]<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Missing_data</span>&nbsp;<span class="keyword">of</span>&nbsp;string<br>
@@ -111,7 +116,7 @@
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Unix_io</span>.<span class="constructor">Deferred_result</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;kill&nbsp;:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Ketrew</span>.<span class="constructor">Engine</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;id:string&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;id:<span class="constructor">Ketrew_pure</span>.<span class="constructor">Internal_pervasives</span>.<span class="constructor">Unique_id</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;(unit,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[&gt;&nbsp;<span class="keywordsign">`</span><span class="constructor">Database</span>&nbsp;<span class="keyword">of</span>&nbsp;[&gt;&nbsp;<span class="keywordsign">`</span><span class="constructor">Act</span>&nbsp;<span class="keyword">of</span>&nbsp;<span class="constructor">Trakeva</span>.<span class="constructor">Action</span>.t&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Load</span>&nbsp;<span class="keyword">of</span>&nbsp;string&nbsp;]&nbsp;*&nbsp;string<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Database_unavailable</span>&nbsp;<span class="keyword">of</span>&nbsp;string&nbsp;])<br>
@@ -125,4 +130,5 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Missing_data</span>&nbsp;<span class="keyword">of</span>&nbsp;<span class="constructor">Ketrew_pure</span>.<span class="constructor">Target</span>.id<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Target</span>&nbsp;<span class="keyword">of</span>&nbsp;[&gt;&nbsp;<span class="keywordsign">`</span><span class="constructor">Deserilization</span>&nbsp;<span class="keyword">of</span>&nbsp;string&nbsp;]&nbsp;])<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Unix_io</span>.<span class="constructor">Deferred_result</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;host_io&nbsp;:&nbsp;<span class="constructor">Ketrew</span>.<span class="constructor">Engine</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Host_io</span>.t<br>
 <span class="keyword">end</span></code></body></html>

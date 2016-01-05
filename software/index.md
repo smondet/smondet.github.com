@@ -3,7 +3,7 @@
 ## Current
 
 - [Nonstd](./nonstd/index.html): Nano-library providing very few Core-like modules (like `List`, `Option`) (see on [Bitbucket](https://bitbucket.org/smondet/nonstd)).
-- [Sosa](./sosa/index.html): The “Sane OCaml String API” library is a set of APIs (module types) that define what a string of characters should be, and a set of modules and functors that implement them (see on [Github](https://github.com/hammerlab/sosa), and also the documentation for [version 0.0.1](sosa/doc.0.0.1/index.html) and for [version 0.1.0](sosa/doc.0.1.0/index.html)).
+- [Sosa](./sosa/index.html): The “Sane OCaml String API” library is a set of APIs (module types) that define what a string of characters should be, and a set of modules and functors that implement them (see on [Github](https://github.com/hammerlab/sosa), and also the documentation for [version 0.0.1](sosa/doc.0.0.1/index.html), [version 0.1.0](sosa/doc.0.1.0/index.html), and for [version 0.2.0](sosa/doc.0.2.0/index.html)).
 - [Docout](./docout/index.html): The functor `Docout.Make_logger` creates a nice embedded DSL on top of the [smart-print](https://github.com/clarus/smart-print) library (see on [Bitbucket](https://bitbucket.org/smondet/docout)).
 - [Pvem](./pvem/index.html): The "Polymorphic Variants-based Error Monad", `Pvem` (pronounce /pi:vɛm/), is a module providing simple handling of an error monad type based on polymorphic variants (see on [Bitbucket](https://bitbucket.org/smondet/pvem)).
 - [Pvem_lwt_unix](./pvem_lwt_unix/index.html): `Pvem_lwt_unix` provides a high-level API on top of `Lwt_unix`, with comprehensive error types (see on [Bitbucket](https://bitbucket.org/smondet/pvem_lwt_unix)).

@@ -474,11 +474,20 @@
 &nbsp;&nbsp;</code><table><tr><td>&nbsp;&nbsp;</td><td><span class="comment">(******************************************************************************)</span></td></tr></table><code class="code"><br>
 &nbsp;&nbsp;<span class="comment">(*&nbsp;Channels&nbsp;*)</span><br>
 <br>
+&nbsp;&nbsp;<span class="comment">(*&nbsp;This&nbsp;transforms&nbsp;the&nbsp;legacy&nbsp;`?buffer_size`&nbsp;option&nbsp;into&nbsp;the&nbsp;`?buffer`&nbsp;option<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;that&nbsp;`Lwt_io`&nbsp;expects&nbsp;after&nbsp;backwards&nbsp;incompatible&nbsp;change&nbsp;in&nbsp;Lwt<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2.5.0.&nbsp;&nbsp;*)</span><br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;buffer_option&nbsp;buffer_size_option&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">match</span>&nbsp;buffer_size_option&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">None</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">None</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Some</span>&nbsp;s&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Some</span>&nbsp;(<span class="constructor">Lwt_bytes</span>.create&nbsp;s)<br>
+<br>
 &nbsp;&nbsp;<span class="keyword">let</span>&nbsp;with_out_channel&nbsp;?buffer_size&nbsp;~f&nbsp;out&nbsp;=<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">begin</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;buffer&nbsp;=&nbsp;buffer_option&nbsp;buffer_size&nbsp;<span class="keyword">in</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;open_file&nbsp;~flags&nbsp;file&nbsp;=<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;wrap_deferred_io&nbsp;(<span class="keyword">fun</span>&nbsp;()&nbsp;<span class="keywordsign">-&gt;</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Lwt_io</span>.open_file&nbsp;~mode:<span class="constructor">Lwt_io</span>.output&nbsp;?buffer_size&nbsp;~flags&nbsp;file)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Lwt_io</span>.open_file&nbsp;~mode:<span class="constructor">Lwt_io</span>.output&nbsp;?buffer&nbsp;~flags&nbsp;file)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">in</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">begin</span>&nbsp;<span class="keyword">match</span>&nbsp;out&nbsp;<span class="keyword">with</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Stdout</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;return&nbsp;<span class="constructor">Lwt_io</span>.stdout<br>
@@ -532,8 +541,9 @@
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Stdin</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;return&nbsp;<span class="constructor">Lwt_io</span>.stdin<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Channel</span>&nbsp;c&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;return&nbsp;c<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">File</span>&nbsp;file&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;buffer&nbsp;=&nbsp;buffer_option&nbsp;buffer_size&nbsp;<span class="keyword">in</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;wrap_deferred_io&nbsp;(<span class="keyword">fun</span>&nbsp;()&nbsp;<span class="keywordsign">-&gt;</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Lwt_io</span>.open_file&nbsp;~mode:<span class="constructor">Lwt_io</span>.input&nbsp;?buffer_size&nbsp;file)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Lwt_io</span>.open_file&nbsp;~mode:<span class="constructor">Lwt_io</span>.input&nbsp;?buffer&nbsp;file)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;inchan&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">begin</span><br>

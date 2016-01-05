@@ -1,0 +1,28 @@
+ <!DOCTYPE html> <html> <head><link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootswatch/3.2.0/readable/bootstrap.min.css" type="text/css">
+<link rel="stylesheet" href="https://cdn.rawgit.com/hammerlab/ketrew/2d1c430cca52caa71e363a765ff8775a6ae14ba9/src/doc/code_style.css" type="text/css"><meta charset="utf-8"><title>Ketrew: FAQ</title></head><body><div class="container"><h1>Ketrew: FAQ</h1><div class="row">
+<div class="col-md-3">
+<h2>Contents</h2><ul><li><a href='#OptionalmakeArgument'>Optional `make? Argument</a>
+</li></ul><h2>Menu</h2><ul><li><a href='index.html'>Home</a></li><li><a href='Alternative_CLI_Application.html'>Alternative CLI Application</a></li><li><a href='Database_Backends.html'>Database Backends</a></li><li><a href='Developer_Documentation.html'>Developer Documentation</a></li><li><a href='FAQ.html'>FAQ</a></li><li><a href='Glossary.html'>Glossary</a></li><li><a href='Long-Running_Plugins.html'>Long-Running Plugins</a></li><li><a href='Server_Commands.html'>Server Commands</a></li><li><a href='Standalone_Mode.html'>Standalone Mode</a></li><li><a href='The_Configuration_File.html'>The Configuration File</a></li><li><a href='The_HTTP_API.html'>The HTTP API</a></li><li><a href='Workflow_Examples.html'>Workflow Examples</a></li><li><a href='dummy_plugin_user.html'>Plugin-Usage Example</a></li><li><a href='dummy_plugin.html'>Plugin Example</a></li><li><a href='./api/index.html'>API Documentation</a></li><li>Documentation for <a href='./doc.0.0.0/index.html'>version 0.0.0</a></li><li>Documentation for <a href='./doc.1.0.0/index.html'>version 1.0.0</a></li><li>Documentation for <a href='./doc.1.1.0/index.html'>version 1.1.0</a></li><li>Documentation for <a href='./doc.1.1.1/index.html'>version 1.1.1</a></li><li>Documentation for <a href='./doc.2.0.0/index.html'>version 2.0.0</a></li><li>Repository <a href='https://github.com/hammerlab/ketrew'>at Github</a></li><li>Up: <a href='../index.html'>Software Projects</a></li></ul></div><div class="col-md-9"><h1 id="FrequentlyAskedQuestions">Frequently Asked Questions</h1>
+
+<p>These are some more specific explanations that can be useful to read. If you
+have more questions submit a Github
+<a href='https://github.com/hammerlab/ketrew/issues'>issue</a> (with the
+<a href='https://github.com/hammerlab/ketrew/issues?utf8=%E2%9C%93&amp;q=+is%3Aissue+label%3Aquestion+'>“questions”</a>
+label).</p>
+<h2 id="OptionalmakeArgument">Optional `make? Argument</h2>
+
+<blockquote><p>Why is <code>?make</code>, the <code>Build_process.t</code> argument, optional in
+<code>EDSL.workflow_node</code>?<br />
+What&#39;s the use case for having &quot;no-ops&quot; as default targets?</p>
+</blockquote>
+
+<p>There are many use cases,</p>
+<ul><li>one may want to make sure a condition is there and fail early to tell the user
+ (like some software configuration that requires human intervention, e.g. using
+ <a href='https://github.com/google/skicka'><code>google/skicka</code></a> for backups requires
+ setting up authentication manually),</li><li>a target can be used only to put dependencies together (that&#39;s often the case
+ to submit a common ancestor for a bunch of stuff to do, for instance, see
+ <a href='https://github.com/hammerlab/biokepi/blob/0739e43d31ea62167716f96ef5ffa4a6891f5669/src/app/main.ml#L179'>Biokepi&#39;s demo</a>),
+ or</li><li>one may want to treat input data in a uniform way (“everything is a workflow
+ node”
+ <a href='https://github.com/hammerlab/biokepi/blob/master/src/lib/pipeline.ml#L454'>there</a>).</li></ul></div></div></div></body><html>

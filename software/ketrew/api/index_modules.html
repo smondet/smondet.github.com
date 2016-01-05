@@ -20,9 +20,13 @@
 <tr><td align="left"><br>A</td></tr>
 <tr><td><a href="Ketrew.Persistent_data.Adding_targets.html">Adding_targets</a> [<a href="Ketrew.Persistent_data.html">Ketrew.Persistent_data</a>]</td>
 <td></td></tr>
+<tr><td><a href="Ketrew.Authentication.html">Authentication</a> [<a href="Ketrew.html">Ketrew</a>]</td>
+<td></td></tr>
 <tr><td><a href="Ketrew_pure.Target.Automaton.html">Automaton</a> [<a href="Ketrew_pure.Target.html">Ketrew_pure.Target</a>]</td>
 <td></td></tr>
 <tr><td align="left"><br>B</td></tr>
+<tr><td><a href="Ketrew.EDSL.Build_process.html">Build_process</a> [<a href="Ketrew.EDSL.html">Ketrew.EDSL</a>]</td>
+<td></td></tr>
 <tr><td><a href="Ketrew_pure.Target.Build_process.html">Build_process</a> [<a href="Ketrew_pure.Target.html">Ketrew_pure.Target</a>]</td>
 <td></td></tr>
 <tr><td align="left"><br>C</td></tr>
@@ -33,7 +37,11 @@
 Definition of command-lines to run on a given <a href="Ketrew_pure.Host.html#TYPEt"><code class="code"><span class="constructor">Ketrew_pure</span>.<span class="constructor">Host</span>.t</code></a>.
 </div>
 </td></tr>
+<tr><td><a href="Ketrew_pure.Protocol.Process_sub_protocol.Command.html">Command</a> [<a href="Ketrew_pure.Protocol.Process_sub_protocol.html">Ketrew_pure.Protocol.Process_sub_protocol</a>]</td>
+<td></td></tr>
 <tr><td><a href="Ketrew.Command_line.html">Command_line</a> [<a href="Ketrew.html">Ketrew</a>]</td>
+<td></td></tr>
+<tr><td><a href="Ketrew_pure.Protocol.Process_sub_protocol.Command_output.html">Command_output</a> [<a href="Ketrew_pure.Protocol.Process_sub_protocol.html">Ketrew_pure.Protocol.Process_sub_protocol</a>]</td>
 <td></td></tr>
 <tr><td><a href="Ketrew.EDSL.Condition.html">Condition</a> [<a href="Ketrew.EDSL.html">Ketrew.EDSL</a>]</td>
 <td></td></tr>
@@ -94,6 +102,8 @@ A “flat” representation of the state (the “normal”
 <tr><td align="left"><br>I</td></tr>
 <tr><td><a href="Ketrew.Interaction.html">Interaction</a> [<a href="Ketrew.html">Ketrew</a>]</td>
 <td></td></tr>
+<tr><td><a href="Ketrew.EDSL.Internal_representation.html">Internal_representation</a> [<a href="Ketrew.EDSL.html">Ketrew.EDSL</a>]</td>
+<td></td></tr>
 <tr><td><a href="Ketrew_pure.Target.State.Is.html">Is</a> [<a href="Ketrew_pure.Target.State.html">Ketrew_pure.Target.State</a>]</td>
 <td></td></tr>
 <tr><td align="left"><br>K</td></tr>
@@ -128,6 +138,10 @@ The “pure” common library (mostly data)
 <td></td></tr>
 <tr><td><a href="Ketrew.Plugin.html">Plugin</a> [<a href="Ketrew.html">Ketrew</a>]</td>
 <td></td></tr>
+<tr><td><a href="Ketrew.Process_holder.html">Process_holder</a> [<a href="Ketrew.html">Ketrew</a>]</td>
+<td></td></tr>
+<tr><td><a href="Ketrew_pure.Protocol.Process_sub_protocol.html">Process_sub_protocol</a> [<a href="Ketrew_pure.Protocol.html">Ketrew_pure.Protocol</a>]</td>
+<td></td></tr>
 <tr><td><a href="Ketrew.EDSL.Program.html">Program</a> [<a href="Ketrew.EDSL.html">Ketrew.EDSL</a>]</td>
 <td><div class="info">
 Build “things to run”, i.e.
@@ -138,12 +152,18 @@ Build “things to run”, i.e.
 <tr><td><a href="Ketrew_pure.Protocol.html">Protocol</a> [<a href="Ketrew_pure.html">Ketrew_pure</a>]</td>
 <td></td></tr>
 <tr><td align="left"><br>R</td></tr>
+<tr><td><a href="Ketrew_pure.Reactive.html">Reactive</a> [<a href="Ketrew_pure.html">Ketrew_pure</a>]</td>
+<td></td></tr>
 <tr><td><a href="Ketrew.Engine.Run_automaton.html">Run_automaton</a> [<a href="Ketrew.Engine.html">Ketrew.Engine</a>]</td>
 <td></td></tr>
 <tr><td align="left"><br>S</td></tr>
 <tr><td><a href="Ketrew.Server.html">Server</a> [<a href="Ketrew.html">Ketrew</a>]</td>
 <td></td></tr>
 <tr><td><a href="Ketrew_pure.Protocol.Server_status.html">Server_status</a> [<a href="Ketrew_pure.Protocol.html">Ketrew_pure.Protocol</a>]</td>
+<td></td></tr>
+<tr><td><a href="Ketrew_pure.Reactive.Signal.html">Signal</a> [<a href="Ketrew_pure.Reactive.html">Ketrew_pure.Reactive</a>]</td>
+<td></td></tr>
+<tr><td><a href="Ketrew_pure.Reactive.Source.html">Source</a> [<a href="Ketrew_pure.Reactive.html">Ketrew_pure.Reactive</a>]</td>
 <td></td></tr>
 <tr><td><a href="Ketrew.Host_io.Ssh.html">Ssh</a> [<a href="Ketrew.Host_io.html">Ketrew.Host_io</a>]</td>
 <td><div class="info">
@@ -155,6 +175,15 @@ Helper functions to build SSH commands.
 Definitions specific to “SSH” hosts (see <a href="Ketrew_pure.Host.html#VALconnection"><code class="code"><span class="constructor">Ketrew_pure</span>.<span class="constructor">Host</span>.connection</code></a>).
 </div>
 </td></tr>
+<tr><td><a href="Ketrew.Process_holder.Ssh_connection.html">Ssh_connection</a> [<a href="Ketrew.Process_holder.html">Ketrew.Process_holder</a>]</td>
+<td><div class="info">
+A module encapsulating daemonized SSH connections, the functions
+    <a href="Ketrew.Process_holder.Ssh_connection.html#VALsetsid_ssh"><code class="code"><span class="constructor">Ketrew</span>.<span class="constructor">Process_holder</span>.<span class="constructor">Ssh_connection</span>.setsid_ssh</code></a> is exposed to the <a href="Ketrew.Command_line.html"><code class="code"><span class="constructor">Ketrew</span>.<span class="constructor">Command_line</span></code></a> module
+    for the <code class="code"><span class="string">"ketrew internal-ssh"</span></code> command.
+</div>
+</td></tr>
+<tr><td><a href="Ketrew_pure.Protocol.Process_sub_protocol.Ssh_connection.html">Ssh_connection</a> [<a href="Ketrew_pure.Protocol.Process_sub_protocol.html">Ketrew_pure.Protocol.Process_sub_protocol</a>]</td>
+<td></td></tr>
 <tr><td><a href="Ketrew_pure.Target.State.html">State</a> [<a href="Ketrew_pure.Target.html">Ketrew_pure.Target</a>]</td>
 <td></td></tr>
 <tr><td><a href="Ketrew_pure.Target.Stored_target.html">Stored_target</a> [<a href="Ketrew_pure.Target.html">Ketrew_pure.Target</a>]</td>

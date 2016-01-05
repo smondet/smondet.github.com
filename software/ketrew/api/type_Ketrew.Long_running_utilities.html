@@ -25,6 +25,7 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[&nbsp;<span class="keywordsign">`</span><span class="constructor">Execution</span>&nbsp;<span class="keyword">of</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;&nbsp;host&nbsp;:&nbsp;string;&nbsp;message&nbsp;:&nbsp;string;&nbsp;stderr&nbsp;:&nbsp;string&nbsp;option;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;stdout&nbsp;:&nbsp;string&nbsp;option&nbsp;&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Named_host_not_found</span>&nbsp;<span class="keyword">of</span>&nbsp;string<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Non_zero</span>&nbsp;<span class="keyword">of</span>&nbsp;string&nbsp;*&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Ssh_failure</span>&nbsp;<span class="keyword">of</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[&nbsp;<span class="keywordsign">`</span><span class="constructor">Wrong_log</span>&nbsp;<span class="keyword">of</span>&nbsp;string<br>
@@ -66,9 +67,11 @@
 &nbsp;&nbsp;&nbsp;&nbsp;(<span class="keywordsign">'</span>a,&nbsp;[&nbsp;<span class="keywordsign">`</span><span class="constructor">Fatal</span>&nbsp;<span class="keyword">of</span>&nbsp;string&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Recoverable</span>&nbsp;<span class="keyword">of</span>&nbsp;string&nbsp;])<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Unix_io</span>.<span class="constructor">Deferred_result</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;fresh_playground_or_fail&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;host_io:<span class="constructor">Ketrew</span>.<span class="constructor">Host_io</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Ketrew_pure</span>.<span class="constructor">Host</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">Ketrew_pure</span>.<span class="constructor">Path</span>.t,&nbsp;[&gt;&nbsp;<span class="keywordsign">`</span><span class="constructor">Fatal</span>&nbsp;<span class="keyword">of</span>&nbsp;string&nbsp;])&nbsp;<span class="constructor">Unix_io</span>.<span class="constructor">Deferred_result</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;get_log_of_monitored_script&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;host_io:<span class="constructor">Ketrew</span>.<span class="constructor">Host_io</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;host:<span class="constructor">Ketrew_pure</span>.<span class="constructor">Host</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;script:<span class="constructor">Ketrew_pure</span>.<span class="constructor">Monitored_script</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;([&nbsp;<span class="keywordsign">`</span><span class="constructor">After</span>&nbsp;<span class="keyword">of</span>&nbsp;string&nbsp;*&nbsp;string&nbsp;*&nbsp;string<br>
@@ -77,14 +80,17 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Failure</span>&nbsp;<span class="keyword">of</span>&nbsp;string&nbsp;*&nbsp;string&nbsp;*&nbsp;string<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Start</span>&nbsp;<span class="keyword">of</span>&nbsp;string<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Success</span>&nbsp;<span class="keyword">of</span>&nbsp;string&nbsp;]&nbsp;list&nbsp;option,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[&gt;&nbsp;<span class="keywordsign">`</span><span class="constructor">Timeout</span>&nbsp;<span class="keyword">of</span>&nbsp;<span class="constructor">Ketrew_pure</span>.<span class="constructor">Internal_pervasives</span>.<span class="constructor">Time</span>.t&nbsp;])<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[&gt;&nbsp;<span class="keywordsign">`</span><span class="constructor">Host</span>&nbsp;<span class="keyword">of</span>&nbsp;[&gt;&nbsp;<span class="keywordsign">`</span><span class="constructor">Named_host_not_found</span>&nbsp;<span class="keyword">of</span>&nbsp;string&nbsp;]&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Timeout</span>&nbsp;<span class="keyword">of</span>&nbsp;float&nbsp;])<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Unix_io</span>.<span class="constructor">Deferred_result</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;get_pid_of_monitored_script&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;host_io:<span class="constructor">Ketrew</span>.<span class="constructor">Host_io</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;host:<span class="constructor">Ketrew_pure</span>.<span class="constructor">Host</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;script:<span class="constructor">Ketrew_pure</span>.<span class="constructor">Monitored_script</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;(int&nbsp;option,&nbsp;[&gt;&nbsp;<span class="keywordsign">`</span><span class="constructor">Timeout</span>&nbsp;<span class="keyword">of</span>&nbsp;<span class="constructor">Ketrew_pure</span>.<span class="constructor">Internal_pervasives</span>.<span class="constructor">Time</span>.t&nbsp;])<br>
+&nbsp;&nbsp;&nbsp;&nbsp;(int&nbsp;option,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[&gt;&nbsp;<span class="keywordsign">`</span><span class="constructor">Host</span>&nbsp;<span class="keyword">of</span>&nbsp;[&gt;&nbsp;<span class="keywordsign">`</span><span class="constructor">Named_host_not_found</span>&nbsp;<span class="keyword">of</span>&nbsp;string&nbsp;]&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Timeout</span>&nbsp;<span class="keyword">of</span>&nbsp;float&nbsp;])<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Unix_io</span>.<span class="constructor">Deferred_result</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;shell_command_output_or_log&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;host_io:<span class="constructor">Ketrew</span>.<span class="constructor">Host_io</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;host:<span class="constructor">Ketrew_pure</span>.<span class="constructor">Host</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;string&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;(string,&nbsp;<span class="constructor">Ketrew_pure</span>.<span class="constructor">Internal_pervasives</span>.<span class="constructor">Log</span>.t)&nbsp;<span class="constructor">Unix_io</span>.<span class="constructor">Deferred_result</span>.t<br>

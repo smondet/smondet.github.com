@@ -11,9 +11,10 @@
 <body>
 <code class="code"><span class="keyword">let</span>&nbsp;with_out_channel&nbsp;?buffer_size&nbsp;~f&nbsp;out&nbsp;=<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">begin</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;buffer&nbsp;=&nbsp;buffer_option&nbsp;buffer_size&nbsp;<span class="keyword">in</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;open_file&nbsp;~flags&nbsp;file&nbsp;=<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;wrap_deferred_io&nbsp;(<span class="keyword">fun</span>&nbsp;()&nbsp;<span class="keywordsign">-&gt;</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Lwt_io</span>.open_file&nbsp;~mode:<span class="constructor">Lwt_io</span>.output&nbsp;?buffer_size&nbsp;~flags&nbsp;file)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Lwt_io</span>.open_file&nbsp;~mode:<span class="constructor">Lwt_io</span>.output&nbsp;?buffer&nbsp;~flags&nbsp;file)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">in</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">begin</span>&nbsp;<span class="keyword">match</span>&nbsp;out&nbsp;<span class="keyword">with</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Stdout</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;return&nbsp;<span class="constructor">Lwt_io</span>.stdout<br>

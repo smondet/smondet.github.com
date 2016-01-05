@@ -55,14 +55,39 @@
 <code><span class="keyword">|</span></code></td>
 <td align="left" valign="top" >
 <code><span id="TYPEELTt.Check"><span class="constructor">Check</span></span> <span class="keyword">of</span> <code class="type"><a href="Trakeva.Key_in_collection.html#TYPEt">Trakeva.Key_in_collection.t</a> * string option</code></code></td>
-
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+An action is a transaction that (attempts) to modify the database.<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr></table>
 
 
 
-<pre><span id="VALset"><span class="keyword">val</span> <a href="code_VALTrakeva.Action.set.html">set</a></span> : <code class="type">?collection:string -> key:string -> string -> <a href="Trakeva.Action.html#TYPEt">t</a></code></pre>
-<pre><span id="VALseq"><span class="keyword">val</span> <a href="code_VALTrakeva.Action.seq.html">seq</a></span> : <code class="type"><a href="Trakeva.Action.html#TYPEt">t</a> list -> <a href="Trakeva.Action.html#TYPEt">t</a></code></pre>
-<pre><span id="VALcontains"><span class="keyword">val</span> <a href="code_VALTrakeva.Action.contains.html">contains</a></span> : <code class="type">?collection:string -> key:string -> string -> <a href="Trakeva.Action.html#TYPEt">t</a></code></pre>
-<pre><span id="VALis_not_set"><span class="keyword">val</span> <a href="code_VALTrakeva.Action.is_not_set.html">is_not_set</a></span> : <code class="type">?collection:string -> string -> <a href="Trakeva.Action.html#TYPEt">t</a></code></pre>
-<pre><span id="VALunset"><span class="keyword">val</span> <a href="code_VALTrakeva.Action.unset.html">unset</a></span> : <code class="type">?collection:string -> string -> <a href="Trakeva.Action.html#TYPEt">t</a></code></pre>
-<pre><span id="VALto_string"><span class="keyword">val</span> <a href="code_VALTrakeva.Action.to_string.html">to_string</a></span> : <code class="type"><a href="Trakeva.Action.html#TYPEt">t</a> -> string</code></pre></body></html>
+<pre><span id="VALset"><span class="keyword">val</span> <a href="code_VALTrakeva.Action.set.html">set</a></span> : <code class="type">?collection:string -> key:string -> string -> <a href="Trakeva.Action.html#TYPEt">t</a></code></pre><div class="info ">
+Create a “set” action: <code class="code">set ~key v</code> will add or set the value <code class="code">v</code> for the
+      key <code class="code">key</code>, optionally in the collection <code class="code">collection</code>.<br>
+</div>
+
+<pre><span id="VALseq"><span class="keyword">val</span> <a href="code_VALTrakeva.Action.seq.html">seq</a></span> : <code class="type"><a href="Trakeva.Action.html#TYPEt">t</a> list -> <a href="Trakeva.Action.html#TYPEt">t</a></code></pre><div class="info ">
+Put a sequence of actions into a transaction.<br>
+</div>
+
+<pre><span id="VALcontains"><span class="keyword">val</span> <a href="code_VALTrakeva.Action.contains.html">contains</a></span> : <code class="type">?collection:string -> key:string -> string -> <a href="Trakeva.Action.html#TYPEt">t</a></code></pre><div class="info ">
+An action that checks that the <code class="code">key</code> is set in the DB and has the given
+      value.<br>
+</div>
+
+<pre><span id="VALis_not_set"><span class="keyword">val</span> <a href="code_VALTrakeva.Action.is_not_set.html">is_not_set</a></span> : <code class="type">?collection:string -> string -> <a href="Trakeva.Action.html#TYPEt">t</a></code></pre><div class="info ">
+An action that checks that the <code class="code">key</code> is not set in the DB.<br>
+</div>
+
+<pre><span id="VALunset"><span class="keyword">val</span> <a href="code_VALTrakeva.Action.unset.html">unset</a></span> : <code class="type">?collection:string -> string -> <a href="Trakeva.Action.html#TYPEt">t</a></code></pre><div class="info ">
+An actions that removes a value from the DB.<br>
+</div>
+
+<pre><span id="VALto_string"><span class="keyword">val</span> <a href="code_VALTrakeva.Action.to_string.html">to_string</a></span> : <code class="type"><a href="Trakeva.Action.html#TYPEt">t</a> -> string</code></pre><div class="info ">
+Convert the action to a display friendly string (the
+      implementation is quite naive and not tail-recursive, hence avoid
+      displaying huge transaction).<br>
+</div>
+</body></html>

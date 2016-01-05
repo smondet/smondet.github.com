@@ -106,7 +106,7 @@ The configuration of the engine, the component that orchestrates
 </div>
 
 
-<pre><span id="VALengine"><span class="keyword">val</span> engine</span> : <code class="type">?database_parameters:string -><br>       ?turn_unix_ssh_failure_into_target_failure:bool -><br>       ?host_timeout_upper_bound:float -><br>       ?maximum_successive_attempts:int -> unit -> <a href="Ketrew.Configuration.html#TYPEengine">engine</a></code></pre><div class="info ">
+<pre><span id="VALengine"><span class="keyword">val</span> engine</span> : <code class="type">?database_parameters:string -><br>       ?turn_unix_ssh_failure_into_target_failure:bool -><br>       ?host_timeout_upper_bound:float -><br>       ?maximum_successive_attempts:int -><br>       ?concurrent_automaton_steps:int -> unit -> <a href="Ketrew.Configuration.html#TYPEengine">engine</a></code></pre><div class="info ">
 Build an <code class="code">engine</code> configuration:
 <p>
 <ul>
@@ -123,6 +123,9 @@ Build an <code class="code">engine</code> configuration:
       will be “≤ upper-bound” (in seconds, default is <code class="code">60.</code>).</li>
 <li><code class="code">maximum_successive_attempts</code>: number of successive non-fatal
       failures allowed before declaring a target dead (default is <code class="code">10</code>).</li>
+<li><code class="code">concurrent_automaton_steps</code>: maximum number of steps in the
+      state machine that engine will try to run concurrently (default
+      is <code class="code">4</code>).</li>
 </ul>
 <br>
 </div>
@@ -134,7 +137,11 @@ This type is a container for one more authentication-tokens,
 <p>
 
     Tokens have a name and a value; the value is the one checked
-    against the <code class="code"><span class="string">"token"</span></code> argument of the HTTP queries.<br>
+    against the <code class="code"><span class="string">"token"</span></code> argument of the HTTP queries.
+<p>
+
+    A token's value must consist only of
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_=".<br>
 </div>
 
 
@@ -154,13 +161,24 @@ Ask the server to load tokens from a file at the given path.
      </pre><br>
 </div>
 
+<pre><span id="TYPEssh_connection"><span class="keyword">type</span> <code class="type"></code>ssh_connection</span> </pre>
+<div class="info ">
+Preconfigured named SSH connections.<br>
+</div>
+
+
+<pre><span id="VALssh_connection"><span class="keyword">val</span> ssh_connection</span> : <code class="type">uri:string -> string -> <a href="Ketrew.Configuration.html#TYPEssh_connection">ssh_connection</a></code></pre><div class="info ">
+Create a named <a href="Ketrew.Configuration.html#VALssh_connection"><code class="code"><span class="constructor">Ketrew</span>.<span class="constructor">Configuration</span>.ssh_connection</code></a> (cf. <code class="code">sever</code>).<br>
+</div>
+
+<pre><span id="VALssh_connection_name_uri"><span class="keyword">val</span> ssh_connection_name_uri</span> : <code class="type"><a href="Ketrew.Configuration.html#TYPEssh_connection">ssh_connection</a> -> string * string</code></pre>
 <pre><span id="TYPEserver"><span class="keyword">type</span> <code class="type"></code>server</span> </pre>
 <div class="info ">
 The configuration of the server.<br>
 </div>
 
 
-<pre><span id="VALserver"><span class="keyword">val</span> server</span> : <code class="type">?ui:<a href="Ketrew.Configuration.html#TYPEui">ui</a> -><br>       ?engine:<a href="Ketrew.Configuration.html#TYPEengine">engine</a> -><br>       ?authorized_tokens:<a href="Ketrew.Configuration.html#TYPEauthorized_tokens">authorized_tokens</a> list -><br>       ?return_error_messages:bool -><br>       ?command_pipe:string -><br>       ?daemon:bool -><br>       ?log_path:string -><br>       ?max_blocking_time:float -><br>       ?block_step_time:float -><br>       ?read_only_mode:bool -><br>       [ `Tcp of int | `Tls of string * string * int ] -><br>       [> `Server of <a href="Ketrew.Configuration.html#TYPEserver">server</a> ]</code></pre><div class="info ">
+<pre><span id="VALserver"><span class="keyword">val</span> server</span> : <code class="type">?ui:<a href="Ketrew.Configuration.html#TYPEui">ui</a> -><br>       ?engine:<a href="Ketrew.Configuration.html#TYPEengine">engine</a> -><br>       ?authorized_tokens:<a href="Ketrew.Configuration.html#TYPEauthorized_tokens">authorized_tokens</a> list -><br>       ?return_error_messages:bool -><br>       ?command_pipe:string -><br>       ?daemon:bool -><br>       ?log_path:string -><br>       ?max_blocking_time:float -><br>       ?block_step_time:float -><br>       ?read_only_mode:bool -><br>       ?ssh_connections:<a href="Ketrew.Configuration.html#TYPEssh_connection">ssh_connection</a> list -><br>       ?ssh_processes_ui:bool -><br>       [ `Tcp of int | `Tls of string * string * int ] -><br>       [> `Server of <a href="Ketrew.Configuration.html#TYPEserver">server</a> ]</code></pre><div class="info ">
 Create a server configuration (to pass as optional argument to the
     <a href="Ketrew.Configuration.html#VALcreate"><code class="code"><span class="constructor">Ketrew</span>.<span class="constructor">Configuration</span>.create</code></a> function).
 <p>
@@ -176,8 +194,12 @@ Create a server configuration (to pass as optional argument to the
       terminal and change the process directory to <code class="code"><span class="string">"/"</span></code>; hence if you
       use this option it is required to provide absolute paths for all
       other parameters requiring paths.</li>
-<li><code class="code">log_path</code>: if set together with <code class="code">daemonize</code>, ask the server to
-      redirect logs to this path (if not set, daemon logs go to <code class="code"><span class="string">"/dev/null"</span></code>).</li>
+<li><code class="code">log_path</code>: path to the server;s log directory; if present
+      (highly recommended), the server will dump JSON files containing
+      the logs periodically. Moreover, if set together with
+      <code class="code">daemonize</code>, the server redirect debug-style logs to a
+      <code class="code"><span class="string">"debug.txt"</span></code> file in that directory (if not set, daemon debug
+      info goes to <code class="code"><span class="string">"/dev/null"</span></code>).</li>
 <li><code class="code">max_blocking_time</code>: 
       upper bound on the request for blocking in the protocol (seconds,
       default <code class="code">300.</code>).</li>
@@ -185,7 +207,8 @@ Create a server configuration (to pass as optional argument to the
       granularity of the checking for blocking conditions (this will
       hopefully disapear soon) (seconds, default <code class="code">3.</code>).</li>
 <li><code class="code">read_only_mode</code>:
-      run the server in read-only mode (default <code class="code"><span class="keyword">false</span></code>).
+      run the server in read-only mode (default <code class="code"><span class="keyword">false</span></code>).</li>
+<li><code class="code">ssh_connections</code>: preconfigure named SSH connections (default <code class="code">[]</code>).
     = <code class="code"><span class="keywordsign">`</span><span class="constructor">Tcp</span> port</code>: configure the server the unsercurely listen on <code class="code">port</code>.</li>
 <li><code class="code"><span class="keywordsign">`</span><span class="constructor">Tls</span> (<span class="string">"certificate.pem"</span>, <span class="string">"privatekey.pem"</span>, port)</code>: configure the OpenSSL
       server to listen on <code class="code">port</code>.</li>
@@ -276,6 +299,14 @@ Should we kill targets on ssh/unix errors.<br>
 Get the maximum number of successive non-fatal failures.<br>
 </div>
 
+<pre><span id="VALconcurrent_automaton_steps"><span class="keyword">val</span> concurrent_automaton_steps</span> : <code class="type"><a href="Ketrew.Configuration.html#TYPEengine">engine</a> -> int</code></pre><div class="info ">
+Get the maximum number of concurrent automaton steps.<br>
+</div>
+
+<pre><span id="VALhost_timeout_upper_bound"><span class="keyword">val</span> host_timeout_upper_bound</span> : <code class="type"><a href="Ketrew.Configuration.html#TYPEengine">engine</a> -> float option</code></pre><div class="info ">
+Get the upper bound for the timeout of SSH calls, if any.<br>
+</div>
+
 <pre><span id="VALplugins"><span class="keyword">val</span> plugins</span> : <code class="type"><a href="Ketrew.Configuration.html#TYPEt">t</a> -> <a href="Ketrew.Configuration.html#TYPEplugin">plugin</a> list</code></pre><div class="info ">
 Get the configured list of plugins.<br>
 </div>
@@ -287,6 +318,8 @@ Get the configured list of plugins.<br>
 Get the potentiel server configuration.<br>
 </div>
 
+<pre><span id="VALssh_connections"><span class="keyword">val</span> ssh_connections</span> : <code class="type"><a href="Ketrew.Configuration.html#TYPEserver">server</a> -> <a href="Ketrew.Configuration.html#TYPEssh_connection">ssh_connection</a> list</code></pre>
+<pre><span id="VALssh_processes_ui"><span class="keyword">val</span> ssh_processes_ui</span> : <code class="type"><a href="Ketrew.Configuration.html#TYPEserver">server</a> -> bool</code></pre>
 <pre><span id="VALauthorized_tokens"><span class="keyword">val</span> authorized_tokens</span> : <code class="type"><a href="Ketrew.Configuration.html#TYPEserver">server</a> -><br>       [ `Inline of string * string | `Path of string ] list</code></pre><div class="info ">
 The path to the <code class="code">authorized_tokens</code> file.<br>
 </div>
@@ -308,7 +341,7 @@ Tell whether the server should detach.<br>
 </div>
 
 <pre><span id="VALlog_path"><span class="keyword">val</span> log_path</span> : <code class="type"><a href="Ketrew.Configuration.html#TYPEserver">server</a> -> string option</code></pre><div class="info ">
-Get the path to the server's log file.<br>
+Get the path to the server's log directory.<br>
 </div>
 
 <pre><span id="VALlog"><span class="keyword">val</span> log</span> : <code class="type"><a href="Ketrew.Configuration.html#TYPEt">t</a> -> Ketrew_pure.Internal_pervasives.Log.t</code></pre><div class="info ">

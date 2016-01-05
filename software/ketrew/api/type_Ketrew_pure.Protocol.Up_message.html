@@ -42,6 +42,7 @@
 &nbsp;&nbsp;<span class="keyword">type</span>&nbsp;t&nbsp;=<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[&nbsp;<span class="keywordsign">`</span><span class="constructor">Call_query</span>&nbsp;<span class="keyword">of</span>&nbsp;string&nbsp;*&nbsp;string<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Get_available_queries</span>&nbsp;<span class="keyword">of</span>&nbsp;string<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Get_deferred</span>&nbsp;<span class="keyword">of</span>&nbsp;string&nbsp;*&nbsp;int&nbsp;*&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Get_server_status</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Get_target_flat_states</span>&nbsp;<span class="keyword">of</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[&nbsp;<span class="keywordsign">`</span><span class="constructor">All</span>&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Since</span>&nbsp;<span class="keyword">of</span>&nbsp;float&nbsp;]&nbsp;*&nbsp;string&nbsp;list&nbsp;*<br>
@@ -52,6 +53,7 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Get_target_summaries</span>&nbsp;<span class="keyword">of</span>&nbsp;string&nbsp;list<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Get_targets</span>&nbsp;<span class="keyword">of</span>&nbsp;string&nbsp;list<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Kill_targets</span>&nbsp;<span class="keyword">of</span>&nbsp;string&nbsp;list<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Process</span>&nbsp;<span class="keyword">of</span>&nbsp;<span class="constructor">Ketrew_pure</span>.<span class="constructor">Protocol</span>.<span class="constructor">Process_sub_protocol</span>.up<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Restart_targets</span>&nbsp;<span class="keyword">of</span>&nbsp;string&nbsp;list<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Submit_targets</span>&nbsp;<span class="keyword">of</span>&nbsp;<span class="constructor">Target</span>.t&nbsp;list&nbsp;]<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;to_json&nbsp;:&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Yojson</span>.<span class="constructor">Safe</span>.json<br>

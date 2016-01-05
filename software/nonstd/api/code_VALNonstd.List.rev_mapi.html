@@ -9,9 +9,9 @@
 <link title="Nonstd" rel="Chapter" href="Nonstd.html"><title>Nonstd.List.rev_mapi</title>
 </head>
 <body>
-<code class="code"><span class="keyword">let</span>&nbsp;rev_mapi&nbsp;l&nbsp;~f&nbsp;=<br>
+<code class="code"><span class="keyword">let</span>&nbsp;rev_mapi&nbsp;l&nbsp;~f&nbsp;~i&nbsp;=<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;<span class="keyword">rec</span>&nbsp;loop&nbsp;i&nbsp;acc&nbsp;=&nbsp;<span class="keyword">function</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;[]&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;acc<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;h&nbsp;::&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;loop&nbsp;(i&nbsp;+&nbsp;1)&nbsp;(f&nbsp;i&nbsp;h&nbsp;::&nbsp;acc)&nbsp;t<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">in</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;loop&nbsp;0&nbsp;[]&nbsp;l</code></body></html>
+&nbsp;&nbsp;&nbsp;&nbsp;loop&nbsp;i&nbsp;[]&nbsp;l</code></body></html>
