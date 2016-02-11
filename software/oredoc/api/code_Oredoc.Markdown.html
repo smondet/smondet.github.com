@@ -49,12 +49,12 @@
 &nbsp;&nbsp;<span class="keyword">let</span>&nbsp;preprocess&nbsp;~configuration&nbsp;content&nbsp;=<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;highligh&nbsp;:&nbsp;<span class="constructor">Omd_representation</span>.extension&nbsp;=<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">object</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">method</span>&nbsp;parser_extension&nbsp;t&nbsp;read_tokens&nbsp;=&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">method</span>&nbsp;parser_extension&nbsp;t&nbsp;read_tokens&nbsp;=<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;<span class="keyword">open</span>&nbsp;<span class="constructor">Omd_representation</span>&nbsp;<span class="keyword">in</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;highlight_style&nbsp;=<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">"color:&nbsp;red;&nbsp;background-color:&nbsp;yellow;&nbsp;font-weight:&nbsp;bold"</span>&nbsp;<span class="keyword">in</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">(*&nbsp;dbg&nbsp;"highlight&nbsp;for:&nbsp;%s"&nbsp;(Omd_lexer.destring_of_tokens&nbsp;~limit:5&nbsp;&nbsp;read_tokens);&nbsp;*)</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">function</span>&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">function</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Exclamation</span>&nbsp;::&nbsp;<span class="constructor">Word</span>&nbsp;w&nbsp;::&nbsp;<span class="constructor">Exclamation</span>&nbsp;::&nbsp;more&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;in_red&nbsp;=&nbsp;sprintf&nbsp;&nbsp;<span class="string">"&lt;span&nbsp;style=%S&gt;%s&lt;/span&gt;"</span>&nbsp;highlight_style&nbsp;w&nbsp;<span class="keyword">in</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Some</span>&nbsp;(<span class="constructor">Raw</span>&nbsp;in_red&nbsp;::&nbsp;t,&nbsp;read_tokens,&nbsp;more)<br>
@@ -67,7 +67,7 @@
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;more_stuff_to_do&nbsp;=&nbsp;ref&nbsp;[]&nbsp;<span class="keyword">in</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;<span class="keyword">rec</span>&nbsp;transform_links&nbsp;(t:&nbsp;<span class="constructor">Omd</span>.element)&nbsp;:&nbsp;<span class="constructor">Omd</span>.element&nbsp;&nbsp;=<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;<span class="keyword">open</span>&nbsp;<span class="constructor">Omd</span>&nbsp;<span class="keyword">in</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">match</span>&nbsp;t&nbsp;<span class="keyword">with</span>&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">match</span>&nbsp;t&nbsp;<span class="keyword">with</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Paragraph</span>&nbsp;&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Paragraph</span>&nbsp;(<span class="constructor">List</span>.map&nbsp;~f:transform_links&nbsp;t)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Emph</span>&nbsp;&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Emph</span>&nbsp;(<span class="constructor">List</span>.map&nbsp;~f:transform_links&nbsp;t)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Bold</span>&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Bold</span>&nbsp;(<span class="constructor">List</span>.map&nbsp;~f:transform_links&nbsp;t)<br>
@@ -93,8 +93,8 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">X</span>&nbsp;_<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Raw</span>&nbsp;_&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Raw_block</span>&nbsp;_<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Img</span>&nbsp;_&nbsp;<span class="keyword">as</span>&nbsp;e&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;e<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Code</span>&nbsp;(lang,&nbsp;code)&nbsp;<span class="keyword">when</span>&nbsp;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">String</span>.sub&nbsp;code&nbsp;~index:(<span class="constructor">String</span>.length&nbsp;code&nbsp;-&nbsp;6)&nbsp;~length:6&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Code</span>&nbsp;(lang,&nbsp;code)&nbsp;<span class="keyword">when</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">String</span>.sub&nbsp;code&nbsp;~index:(<span class="constructor">String</span>.length&nbsp;code&nbsp;-&nbsp;6)&nbsp;~length:6<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;<span class="constructor">Some</span>&nbsp;<span class="string">"--help"</span>&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">(*&nbsp;dbg&nbsp;"Code:&nbsp;%s&nbsp;%s"&nbsp;lang&nbsp;code;&nbsp;*)</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;more_stuff_to_do&nbsp;:=&nbsp;<span class="keywordsign">`</span><span class="constructor">Create_man_page</span>&nbsp;code&nbsp;::&nbsp;!more_stuff_to_do;<br>
@@ -107,7 +107,7 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;(_&nbsp;:&nbsp;<span class="constructor">Higlo</span>.lexer)&nbsp;=&nbsp;<span class="constructor">Higlo</span>.get_lexer&nbsp;lang&nbsp;<span class="keyword">in</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Raw</span>&nbsp;(<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">"&lt;pre&gt;"</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;^&nbsp;(<span class="constructor">Higlo</span>.to_xtmpl&nbsp;~lang&nbsp;code&nbsp;|&gt;&nbsp;<span class="constructor">Xtmpl</span>.string_of_xmls)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;^&nbsp;(<span class="constructor">Higlo</span>.to_xml&nbsp;~lang&nbsp;code&nbsp;|&gt;&nbsp;<span class="constructor">Xtmpl_xml</span>.to_string)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;^&nbsp;<span class="string">"&lt;/pre&gt;"</span>)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">with</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;code_block<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
@@ -128,7 +128,7 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Ocaml_implementation</span>&nbsp;m&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Url</span>&nbsp;(sprintf&nbsp;<span class="string">"%s.html"</span>&nbsp;(<span class="constructor">Filename</span>.basename&nbsp;m),<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">List</span>.map&nbsp;~f:transform_links&nbsp;t,&nbsp;title)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Other</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Other</span>&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Url</span>&nbsp;(href,&nbsp;<span class="constructor">List</span>.map&nbsp;~f:transform_links&nbsp;t,&nbsp;title)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Ref</span>&nbsp;&nbsp;(ref_container,&nbsp;name,&nbsp;string,&nbsp;_)&nbsp;<span class="keyword">as</span>&nbsp;e&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;e<br>
@@ -143,7 +143,7 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&gt;&nbsp;make_paragraphs<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&gt;&nbsp;<span class="constructor">List</span>.map&nbsp;~f:transform_links)<br>
 <br>
-&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;to_html&nbsp;~(configuration:_&nbsp;configuration)&nbsp;content&nbsp;=&nbsp;<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;to_html&nbsp;~(configuration:_&nbsp;configuration)&nbsp;content&nbsp;=<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Meta_result</span>.(<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;preprocess&nbsp;~configuration&nbsp;content<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;p&nbsp;<span class="keywordsign">-&gt;</span><br>
@@ -157,7 +157,7 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;<span class="constructor">Omd</span>.(to_html&nbsp;(toc&nbsp;~start:[0]&nbsp;p))<br>
 &nbsp;&nbsp;&nbsp;&nbsp;)<br>
 <br>
-&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;to_html_and_toc&nbsp;~configuration&nbsp;content&nbsp;=&nbsp;<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;to_html_and_toc&nbsp;~configuration&nbsp;content&nbsp;=<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Meta_result</span>.(<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;preprocess&nbsp;~configuration&nbsp;content<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;p&nbsp;<span class="keywordsign">-&gt;</span><br>

@@ -8,7 +8,7 @@
 <link title="Oredoc" rel="Chapter" href="Oredoc.html"><title>Oredoc API : Oredoc.Utilities.succeed</title>
 </head>
 <body>
-<code class="code"><span class="keyword">let</span>&nbsp;succeed&nbsp;s&nbsp;=&nbsp;<br>
+<code class="code"><span class="keyword">let</span>&nbsp;succeed&nbsp;s&nbsp;=<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">match</span>&nbsp;<span class="constructor">Sys</span>.command&nbsp;s&nbsp;<span class="keyword">with</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;0&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;()<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;other&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;failwithf&nbsp;<span class="string">"Command&nbsp;%S&nbsp;did&nbsp;not&nbsp;succeed:&nbsp;%d"</span>&nbsp;s&nbsp;other</code></body></html>

@@ -16,7 +16,7 @@
 &nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">None</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;say&nbsp;<span class="string">"Warning,&nbsp;no&nbsp;API&nbsp;docs"</span><br>
 &nbsp;&nbsp;<span class="keyword">end</span>;<br>
 &nbsp;&nbsp;<span class="keyword">let</span>&nbsp;menu_md&nbsp;=<br>
-&nbsp;&nbsp;&nbsp;&nbsp;sprintf&nbsp;<span class="string">"-&nbsp;[Home](index.html)\n"</span>&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;sprintf&nbsp;<span class="string">"-&nbsp;[Home](index.html)\n"</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;::&nbsp;(<span class="constructor">List</span>.map&nbsp;configuration<span class="keywordsign">#</span>input_files&nbsp;~f:(<span class="keyword">fun</span>&nbsp;path&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">match</span>&nbsp;<span class="constructor">File_kind</span>.identify_file&nbsp;path&nbsp;<span class="keyword">with</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Markdown</span>&nbsp;m<br>
@@ -62,14 +62,14 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;content&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;write_file&nbsp;(configuration<span class="keywordsign">#</span>output_directory&nbsp;//&nbsp;sprintf&nbsp;<span class="string">"%s.html"</span>&nbsp;base)&nbsp;~content;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;()<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;m&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;m&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;succeedf&nbsp;<span class="string">"cp&nbsp;%s&nbsp;%s/"</span>&nbsp;(<span class="constructor">Filename</span>.quote&nbsp;path)&nbsp;configuration<span class="keywordsign">#</span>output_directory;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;()<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
 &nbsp;&nbsp;<span class="keyword">in</span><br>
 &nbsp;&nbsp;<span class="constructor">List</span>.dedup&nbsp;first_pass_result.more_things_todo&nbsp;|&gt;&nbsp;<span class="constructor">List</span>.iter&nbsp;~f:<span class="keyword">begin</span>&nbsp;<span class="keyword">function</span><br>
 &nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Create_man_page</span>&nbsp;cmd&nbsp;<span class="keywordsign">-&gt;</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;actual_cmd&nbsp;=&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;actual_cmd&nbsp;=<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;stripped&nbsp;=&nbsp;<span class="constructor">String</span>.strip&nbsp;cmd&nbsp;<span class="keyword">in</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">List</span>.find_map&nbsp;configuration<span class="keywordsign">#</span>command_substitutions&nbsp;~f:(<span class="keyword">fun</span>&nbsp;(left,&nbsp;right)&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">match</span>&nbsp;<span class="constructor">String</span>.(sub&nbsp;stripped&nbsp;~index:0&nbsp;~length:(length&nbsp;left))&nbsp;<span class="keyword">with</span><br>
@@ -80,13 +80,13 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">None</span>)&nbsp;|&gt;&nbsp;<span class="constructor">Option</span>.value&nbsp;~default:stripped<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">in</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;output_file&nbsp;=&nbsp;configuration<span class="keywordsign">#</span>output_directory&nbsp;//&nbsp;<span class="constructor">Markdown</span>.code_url&nbsp;cmd&nbsp;<span class="keyword">in</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">begin</span>&nbsp;<span class="keyword">try</span>&nbsp;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;bash_cmd&nbsp;=&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">begin</span>&nbsp;<span class="keyword">try</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;bash_cmd&nbsp;=<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sprintf&nbsp;<span class="string">"set&nbsp;-o&nbsp;pipefail&nbsp;;&nbsp;%s=groff&nbsp;|&nbsp;groff&nbsp;-Thtml&nbsp;-mandoc&nbsp;&gt;&nbsp;%s"</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;actual_cmd&nbsp;output_file&nbsp;<span class="keyword">in</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;succeedf&nbsp;<span class="string">"bash&nbsp;-c&nbsp;%s"</span>&nbsp;(<span class="constructor">Filename</span>.quote&nbsp;bash_cmd)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">with</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;e&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;e&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ignore&nbsp;(<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;succeedf&nbsp;<span class="string">"(echo&nbsp;'```'&nbsp;;&nbsp;%s&nbsp;;&nbsp;echo&nbsp;'```')&nbsp;&gt;&nbsp;%s"</span>&nbsp;actual_cmd&nbsp;output_file;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Markdown</span>.to_html_and_toc&nbsp;~configuration&nbsp;(read_file&nbsp;output_file)<br>

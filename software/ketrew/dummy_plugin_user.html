@@ -8,14 +8,14 @@
 </span><span class="comment">(*          Arun Ahuja &lt;aahuja11@gmail.com&gt;,                              *)</span><span class="text">
 </span><span class="comment">(*          Jeff Hammerbacher &lt;jeff.hammerbacher@gmail.com&gt;               *)</span><span class="text">
 </span><span class="comment">(*                                                                        *)</span><span class="text">
-</span><span class="comment">(*  Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);       *)</span><span class="text">
+</span><span class="comment">(*  Licensed under the Apache License, Version 2.0 (the "License");       *)</span><span class="text">
 </span><span class="comment">(*  you may not use this file except in compliance with the License.      *)</span><span class="text">
 </span><span class="comment">(*  You may obtain a copy of the License at                               *)</span><span class="text">
 </span><span class="comment">(*                                                                        *)</span><span class="text">
 </span><span class="comment">(*      http://www.apache.org/licenses/LICENSE-2.0                        *)</span><span class="text">
 </span><span class="comment">(*                                                                        *)</span><span class="text">
 </span><span class="comment">(*  Unless required by applicable law or agreed to in writing, software   *)</span><span class="text">
-</span><span class="comment">(*  distributed under the License is distributed on an &quot;AS IS&quot; BASIS,     *)</span><span class="text">
+</span><span class="comment">(*  distributed under the License is distributed on an "AS IS" BASIS,     *)</span><span class="text">
 </span><span class="comment">(*  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or       *)</span><span class="text">
 </span><span class="comment">(*  implied.  See the License for the specific language governing         *)</span><span class="text">
 </span><span class="comment">(*  permissions and limitations under the License.                        *)</span><span class="text">
@@ -32,9 +32,9 @@
   </span><span class="kw">let</span><span class="text"> </span><span class="kw">open</span><span class="text"> </span><span class="kw2">Ketrew</span><span class="text">.</span><span class="kw2">EDSL</span><span class="text"> </span><span class="kw">in</span><span class="text">
   </span><span class="kw2">Ketrew</span><span class="text">.</span><span class="kw2">Client</span><span class="text">.</span><span class="id">submit_workflow</span><span class="text"> (
     </span><span class="id">workflow_node</span><span class="text"> </span><span class="id">without_product</span><span class="text">
-      </span><span class="kw4">~name</span><span class="text">:(</span><span class="id">sprintf</span><span class="text"> </span><span class="string">&quot;%S with dummy-plugin&quot;</span><span class="text"> </span><span class="kw2">Sys</span><span class="text">.</span><span class="id">argv</span><span class="text">.(</span><span class="numeric">1</span><span class="text">))
+      </span><span class="kw4">~name</span><span class="text">:(</span><span class="id">sprintf</span><span class="text"> </span><span class="string">"%S with dummy-plugin"</span><span class="text"> </span><span class="kw2">Sys</span><span class="text">.</span><span class="id">argv</span><span class="text">.(</span><span class="numeric">1</span><span class="text">))
       </span><span class="kw4">~make</span><span class="text">:(</span><span class="kw2">Dummy_plugin_test_lib</span><span class="text">.</span><span class="kw2">Dummy_plugin</span><span class="text">.</span><span class="id">create</span><span class="text">
-               </span><span class="kw4">~host</span><span class="text">:(</span><span class="kw2">Host</span><span class="text">.</span><span class="id">parse</span><span class="text"> </span><span class="string">&quot;/tmp&quot;</span><span class="text">)
+               </span><span class="kw4">~host</span><span class="text">:(</span><span class="kw2">Host</span><span class="text">.</span><span class="id">parse</span><span class="text"> </span><span class="string">"/tmp"</span><span class="text">)
                (</span><span class="kw2">Program</span><span class="text">.</span><span class="id">sh</span><span class="text"> </span><span class="kw2">Sys</span><span class="text">.</span><span class="id">argv</span><span class="text">.(</span><span class="numeric">1</span><span class="text">)))
   )
 </span></pre></div></div></div></body><html>

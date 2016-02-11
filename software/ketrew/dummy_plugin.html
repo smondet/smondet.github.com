@@ -10,14 +10,14 @@
 </span><span class="comment">(*          Arun Ahuja &lt;aahuja11@gmail.com&gt;,                              *)</span><span class="text">
 </span><span class="comment">(*          Jeff Hammerbacher &lt;jeff.hammerbacher@gmail.com&gt;               *)</span><span class="text">
 </span><span class="comment">(*                                                                        *)</span><span class="text">
-</span><span class="comment">(*  Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);       *)</span><span class="text">
+</span><span class="comment">(*  Licensed under the Apache License, Version 2.0 (the "License");       *)</span><span class="text">
 </span><span class="comment">(*  you may not use this file except in compliance with the License.      *)</span><span class="text">
 </span><span class="comment">(*  You may obtain a copy of the License at                               *)</span><span class="text">
 </span><span class="comment">(*                                                                        *)</span><span class="text">
 </span><span class="comment">(*      http://www.apache.org/licenses/LICENSE-2.0                        *)</span><span class="text">
 </span><span class="comment">(*                                                                        *)</span><span class="text">
 </span><span class="comment">(*  Unless required by applicable law or agreed to in writing, software   *)</span><span class="text">
-</span><span class="comment">(*  distributed under the License is distributed on an &quot;AS IS&quot; BASIS,     *)</span><span class="text">
+</span><span class="comment">(*  distributed under the License is distributed on an "AS IS" BASIS,     *)</span><span class="text">
 </span><span class="comment">(*  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or       *)</span><span class="text">
 </span><span class="comment">(*  implied.  See the License for the specific language governing         *)</span><span class="text">
 </span><span class="comment">(*  permissions and limitations under the License.                        *)</span><span class="text">
@@ -43,7 +43,7 @@ useless).</p>
 <a href='api/Ketrew.Daemonize.html#VALcreate' title='Ketrew.Daemonize.create'><code>Ketrew.Daemonize.create</code></a> and changes the <code>name</code>:</p>
 
 <pre><span class="text">
-</span><span class="kw">let</span><span class="text"> </span><span class="id">name</span><span class="text"> = </span><span class="string">&quot;dummy&quot;</span><span class="text">
+</span><span class="kw">let</span><span class="text"> </span><span class="id">name</span><span class="text"> = </span><span class="string">"dummy"</span><span class="text">
 
 </span><span class="kw">let</span><span class="text"> </span><span class="id">create</span><span class="text"> </span><span class="kw4">~host</span><span class="text"> </span><span class="id">program</span><span class="text"> =
   </span><span class="kw">let</span><span class="text"> `</span><span class="kw2">Long_running</span><span class="text">  (</span><span class="numeric">_</span><span class="text">, </span><span class="id">serialized</span><span class="text">) =
@@ -61,20 +61,20 @@ or pass the baby to the <a href='api/Ketrew.Daemonize.html' title='Ketrew.Daemon
 
 </span><span class="kw">module</span><span class="text"> </span><span class="kw2">Another_long_running</span><span class="text"> : </span><span class="kw2">Ketrew</span><span class="text">.</span><span class="kw2">Long_running</span><span class="text">.</span><span class="kw2">LONG_RUNNING</span><span class="text"> = </span><span class="kw1">struct</span><span class="text">
   </span><span class="kw">include</span><span class="text"> </span><span class="kw2">Ketrew</span><span class="text">.</span><span class="kw2">Daemonize</span><span class="text">
-  </span><span class="kw">let</span><span class="text"> </span><span class="id">name</span><span class="text"> = </span><span class="string">&quot;dummy&quot;</span><span class="text">
+  </span><span class="kw">let</span><span class="text"> </span><span class="id">name</span><span class="text"> = </span><span class="string">"dummy"</span><span class="text">
 
   </span><span class="kw">let</span><span class="text"> </span><span class="id">additional_queries</span><span class="text"> </span><span class="id">run_param</span><span class="text"> =
-    (</span><span class="string">&quot;date&quot;</span><span class="text">, </span><span class="kw2">Log</span><span class="text">.(</span><span class="id">s</span><span class="text"> </span><span class="string">&quot;Display the date, not even on the right host&quot;</span><span class="text">))
+    (</span><span class="string">"date"</span><span class="text">, </span><span class="kw2">Log</span><span class="text">.(</span><span class="id">s</span><span class="text"> </span><span class="string">"Display the date, not even on the right host"</span><span class="text">))
     :: </span><span class="id">additional_queries</span><span class="text"> </span><span class="id">run_param</span><span class="text">
 
   </span><span class="kw">let</span><span class="text"> </span><span class="id">query</span><span class="text"> </span><span class="id">run_param</span><span class="text"> </span><span class="kw4">~host_io</span><span class="text"> </span><span class="id">item</span><span class="text"> =
-    </span><span class="kw1">if</span><span class="text"> </span><span class="id">item</span><span class="text"> = </span><span class="string">&quot;date&quot;</span><span class="text"> </span><span class="kw1">then</span><span class="text">
+    </span><span class="kw1">if</span><span class="text"> </span><span class="id">item</span><span class="text"> = </span><span class="string">"date"</span><span class="text"> </span><span class="kw1">then</span><span class="text">
       </span><span class="kw1">begin</span><span class="text"> </span><span class="kw2">Ketrew</span><span class="text">.</span><span class="kw2">Host_io</span><span class="text">.</span><span class="id">get_shell_command_output</span><span class="text"> </span><span class="id">host_io</span><span class="text">
-          </span><span class="kw4">~host</span><span class="text">:(</span><span class="kw2">Ketrew</span><span class="text">.</span><span class="kw2">EDSL</span><span class="text">.</span><span class="kw2">Host</span><span class="text">.</span><span class="id">parse</span><span class="text"> </span><span class="string">&quot;/tmp&quot;</span><span class="text">) </span><span class="string">&quot;date&quot;</span><span class="text">
+          </span><span class="kw4">~host</span><span class="text">:(</span><span class="kw2">Ketrew</span><span class="text">.</span><span class="kw2">EDSL</span><span class="text">.</span><span class="kw2">Host</span><span class="text">.</span><span class="id">parse</span><span class="text"> </span><span class="string">"/tmp"</span><span class="text">) </span><span class="string">"date"</span><span class="text">
         </span><span class="kw10">&gt;&gt;</span><span class="text">&lt; </span><span class="kw">function</span><span class="text">
         | `</span><span class="kw2">Ok</span><span class="text"> (</span><span class="id">o</span><span class="text">, </span><span class="numeric">_</span><span class="text">) -&gt; </span><span class="id">return</span><span class="text"> </span><span class="id">o</span><span class="text">
         | `</span><span class="kw2">Error</span><span class="text"> </span><span class="id">e</span><span class="text"> -&gt;
-          </span><span class="id">fail</span><span class="text"> </span><span class="kw2">Log</span><span class="text">.(</span><span class="id">s</span><span class="text"> </span><span class="string">&quot;Command `date` failed: &quot;</span><span class="text"> % </span><span class="id">s</span><span class="text"> (</span><span class="kw2">Ketrew</span><span class="text">.</span><span class="kw2">Error</span><span class="text">.</span><span class="id">to_string</span><span class="text"> </span><span class="id">e</span><span class="text">))
+          </span><span class="id">fail</span><span class="text"> </span><span class="kw2">Log</span><span class="text">.(</span><span class="id">s</span><span class="text"> </span><span class="string">"Command `date` failed: "</span><span class="text"> % </span><span class="id">s</span><span class="text"> (</span><span class="kw2">Ketrew</span><span class="text">.</span><span class="kw2">Error</span><span class="text">.</span><span class="id">to_string</span><span class="text"> </span><span class="id">e</span><span class="text">))
       </span><span class="kw1">end</span><span class="text">
     </span><span class="kw1">else</span><span class="text"> </span><span class="comment">(* call Ketrew.Daemonize's function: *)</span><span class="text">
       </span><span class="id">query</span><span class="text"> </span><span class="kw4">~host_io</span><span class="text"> </span><span class="id">run_param</span><span class="text"> </span><span class="id">item</span><span class="text">

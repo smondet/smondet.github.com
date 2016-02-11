@@ -1,0 +1,291 @@
+<html><head>
+<link rel="stylesheet" href="style.css" type="text/css">
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<link rel="Start" href="index.html">
+<link title="Index of types" rel=Appendix href="index_types.html">
+<link title="Index of exceptions" rel=Appendix href="index_exceptions.html">
+<link title="Index of values" rel=Appendix href="index_values.html">
+<link title="Index of modules" rel=Appendix href="index_modules.html">
+<link title="Index of module types" rel=Appendix href="index_module_types.html">
+<link title="Main" rel="Chapter" href="Main.html">
+<link title="Trakeva" rel="Chapter" href="Trakeva.html">
+<link title="Trakeva_cache" rel="Chapter" href="Trakeva_cache.html">
+<link title="Trakeva_of_uri" rel="Chapter" href="Trakeva_of_uri.html">
+<link title="Trakeva_postgresql" rel="Chapter" href="Trakeva_postgresql.html">
+<link title="Trakeva_sqlite" rel="Chapter" href="Trakeva_sqlite.html"><title>Trakeva API : Trakeva_postgresql</title>
+</head>
+<body>
+<code class="code"></code><table><tr><td></td><td><span class="comment">(**************************************************************************)</span></td></tr></table><code class="code"><br>
+<span class="comment">(*&nbsp;&nbsp;Copyright&nbsp;2014,&nbsp;2015,&nbsp;Sebastien&nbsp;Mondet&nbsp;&lt;seb@mondet.org&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*)</span><br>
+<span class="comment">(*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*)</span><br>
+<span class="comment">(*&nbsp;&nbsp;Licensed&nbsp;under&nbsp;the&nbsp;Apache&nbsp;License,&nbsp;Version&nbsp;2.0&nbsp;(the&nbsp;"License");&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*)</span><br>
+<span class="comment">(*&nbsp;&nbsp;you&nbsp;may&nbsp;not&nbsp;use&nbsp;this&nbsp;file&nbsp;except&nbsp;in&nbsp;compliance&nbsp;with&nbsp;the&nbsp;License.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*)</span><br>
+<span class="comment">(*&nbsp;&nbsp;You&nbsp;may&nbsp;obtain&nbsp;a&nbsp;copy&nbsp;of&nbsp;the&nbsp;License&nbsp;at&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*)</span><br>
+<span class="comment">(*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*)</span><br>
+<span class="comment">(*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;http://www.apache.org/licenses/LICENSE-2.0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*)</span><br>
+<span class="comment">(*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*)</span><br>
+<span class="comment">(*&nbsp;&nbsp;Unless&nbsp;required&nbsp;by&nbsp;applicable&nbsp;law&nbsp;or&nbsp;agreed&nbsp;to&nbsp;in&nbsp;writing,&nbsp;software&nbsp;&nbsp;&nbsp;*)</span><br>
+<span class="comment">(*&nbsp;&nbsp;distributed&nbsp;under&nbsp;the&nbsp;License&nbsp;is&nbsp;distributed&nbsp;on&nbsp;an&nbsp;"AS&nbsp;IS"&nbsp;BASIS,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*)</span><br>
+<span class="comment">(*&nbsp;&nbsp;WITHOUT&nbsp;WARRANTIES&nbsp;OR&nbsp;CONDITIONS&nbsp;OF&nbsp;ANY&nbsp;KIND,&nbsp;either&nbsp;express&nbsp;or&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*)</span><br>
+<span class="comment">(*&nbsp;&nbsp;implied.&nbsp;&nbsp;See&nbsp;the&nbsp;License&nbsp;for&nbsp;the&nbsp;specific&nbsp;language&nbsp;governing&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*)</span><br>
+<span class="comment">(*&nbsp;&nbsp;permissions&nbsp;and&nbsp;limitations&nbsp;under&nbsp;the&nbsp;License.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*)</span><br>
+</code><table><tr><td></td><td><span class="comment">(**************************************************************************)</span></td></tr></table><code class="code"><br>
+<br>
+<span class="keyword">open</span>&nbsp;<span class="constructor">Nonstd</span><br>
+<span class="keyword">open</span>&nbsp;<span class="constructor">Pvem_lwt_unix</span><br>
+<span class="keyword">open</span>&nbsp;<span class="constructor">Pvem_lwt_unix</span>.<span class="constructor">Deferred_result</span><br>
+<span class="keyword">module</span>&nbsp;<span class="constructor">String</span>&nbsp;=&nbsp;<span class="constructor">StringLabels</span><br>
+<br>
+<span class="keyword">module</span>&nbsp;<span class="constructor">PG</span>&nbsp;=&nbsp;<span class="constructor">Postgresql</span><br>
+&nbsp;&nbsp;<br>
+<span class="keyword">let</span>&nbsp;debug&nbsp;=&nbsp;ref&nbsp;<span class="keyword">false</span><br>
+<br>
+<span class="keyword">let</span>&nbsp;dbg&nbsp;fmt&nbsp;=&nbsp;ksprintf&nbsp;(eprintf&nbsp;<span class="string">"Trakeva_postgresql:&nbsp;%s\n%!"</span>)&nbsp;fmt<br>
+<br>
+<span class="keyword">type</span>&nbsp;t&nbsp;=&nbsp;{<br>
+&nbsp;&nbsp;handle:&nbsp;<span class="constructor">PG</span>.connection;<br>
+&nbsp;&nbsp;table_name:&nbsp;string;<br>
+&nbsp;&nbsp;conninfo:&nbsp;string;<br>
+&nbsp;&nbsp;action_mutex:&nbsp;<span class="constructor">Lwt_mutex</span>.t;<br>
+}<br>
+<br>
+<span class="keyword">let</span>&nbsp;dbg_handle&nbsp;{handle}&nbsp;fmt&nbsp;=<br>
+&nbsp;&nbsp;ksprintf&nbsp;(<span class="keyword">fun</span>&nbsp;s&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;eprintf&nbsp;<span class="string">"Trakeva_postgresql:&nbsp;%s\n"</span>&nbsp;s;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;eprintf&nbsp;<span class="string">"&nbsp;&nbsp;db&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;%s\n"</span>&nbsp;handle<span class="keywordsign">#</span>db;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;eprintf&nbsp;<span class="string">"&nbsp;&nbsp;user&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;%s\n"</span>&nbsp;handle<span class="keywordsign">#</span>user;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;eprintf&nbsp;<span class="string">"&nbsp;&nbsp;pass&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;%s\n"</span>&nbsp;handle<span class="keywordsign">#</span>pass;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;eprintf&nbsp;<span class="string">"&nbsp;&nbsp;host&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;%s\n"</span>&nbsp;handle<span class="keywordsign">#</span>host;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;eprintf&nbsp;<span class="string">"&nbsp;&nbsp;port&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;%s\n"</span>&nbsp;handle<span class="keywordsign">#</span>port;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;eprintf&nbsp;<span class="string">"&nbsp;&nbsp;tty&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;%s\n"</span>&nbsp;handle<span class="keywordsign">#</span>tty;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;eprintf&nbsp;<span class="string">"&nbsp;&nbsp;option&nbsp;&nbsp;=&nbsp;%s\n"</span>&nbsp;handle<span class="keywordsign">#</span>options;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;eprintf&nbsp;<span class="string">"&nbsp;&nbsp;pid&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;%i\n"</span>&nbsp;handle<span class="keywordsign">#</span>backend_pid<br>
+&nbsp;&nbsp;&nbsp;&nbsp;)&nbsp;fmt<br>
+<br>
+<span class="keyword">let</span>&nbsp;in_posix_thread&nbsp;~on_exn&nbsp;f&nbsp;=<br>
+&nbsp;&nbsp;<span class="constructor">Lwt_preemptive</span>.detach&nbsp;(<span class="keyword">fun</span>&nbsp;()&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;<span class="comment">(*&nbsp;(fun&nbsp;f&nbsp;()&nbsp;-&gt;&nbsp;Lwt.return&nbsp;(f&nbsp;()))&nbsp;&nbsp;(fun&nbsp;()&nbsp;-&gt;&nbsp;*)</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">try</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Ok</span>&nbsp;(f&nbsp;())<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">with</span>&nbsp;e&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;on_exn&nbsp;e)&nbsp;()<br>
+<br>
+<span class="keyword">let</span>&nbsp;create_table&nbsp;t&nbsp;=<br>
+&nbsp;&nbsp;sprintf&nbsp;<span class="string">"CREATE&nbsp;TABLE&nbsp;IF&nbsp;NOT&nbsp;EXISTS&nbsp;%s&nbsp;(collection&nbsp;BYTEA,&nbsp;key&nbsp;BYTEA,&nbsp;value&nbsp;BYTEA,&nbsp;UNIQUE&nbsp;(collection,&nbsp;key))"</span>&nbsp;t<br>
+<span class="keyword">let</span>&nbsp;default_table&nbsp;=&nbsp;<span class="string">"trakeva_default_table"</span><br>
+<br>
+<span class="keyword">let</span>&nbsp;table_name&nbsp;t&nbsp;=&nbsp;t.table_name<br>
+<br>
+<span class="keyword">let</span>&nbsp;load_exn&nbsp;conninfo&nbsp;=<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;handle&nbsp;=&nbsp;<span class="keyword">new</span>&nbsp;<span class="constructor">PG</span>.connection&nbsp;~conninfo&nbsp;()&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;table_name&nbsp;=&nbsp;default_table&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;res&nbsp;=&nbsp;handle<span class="keywordsign">#</span>exec&nbsp;(create_table&nbsp;table_name)&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;<span class="keyword">match</span>&nbsp;res<span class="keywordsign">#</span>status&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">PG</span>.<span class="constructor">Command_ok</span>&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;action_mutex&nbsp;=&nbsp;<span class="constructor">Lwt_mutex</span>.create&nbsp;()&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;{handle;&nbsp;table_name;&nbsp;conninfo;&nbsp;action_mutex}<br>
+&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">PG</span>.<span class="constructor">Empty_query</span>&nbsp;<br>
+&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">PG</span>.<span class="constructor">Tuples_ok</span>&nbsp;<br>
+&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">PG</span>.<span class="constructor">Copy_out</span>&nbsp;<br>
+&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">PG</span>.<span class="constructor">Copy_in</span>&nbsp;<br>
+&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">PG</span>.<span class="constructor">Bad_response</span>&nbsp;<br>
+&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">PG</span>.<span class="constructor">Nonfatal_error</span>&nbsp;<br>
+&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">PG</span>.<span class="constructor">Fatal_error</span>&nbsp;<br>
+&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">PG</span>.<span class="constructor">Copy_both</span>&nbsp;<br>
+&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">PG</span>.<span class="constructor">Single_tuple</span>&nbsp;&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;ksprintf&nbsp;failwith&nbsp;<span class="string">"Cannot&nbsp;create&nbsp;table&nbsp;%S:&nbsp;%s,&nbsp;%s"</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;table_name&nbsp;(<span class="constructor">PG</span>.result_status&nbsp;res<span class="keywordsign">#</span>status)&nbsp;res<span class="keywordsign">#</span>error<br>
+<br>
+<span class="keyword">let</span>&nbsp;exn_to_string&nbsp;=&nbsp;<span class="keyword">function</span><br>
+&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">PG</span>.<span class="constructor">Error</span>&nbsp;e&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;sprintf&nbsp;<span class="string">"Postgres-Error:&nbsp;%s"</span>&nbsp;(<span class="constructor">PG</span>.string_of_error&nbsp;e)<br>
+&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;e&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;sprintf&nbsp;<span class="string">"Exn:&nbsp;%s"</span>&nbsp;(<span class="constructor">Printexc</span>.to_string&nbsp;e)<br>
+<br>
+<span class="keyword">let</span>&nbsp;load&nbsp;conninfo&nbsp;=<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;on_exn&nbsp;e&nbsp;=&nbsp;<span class="keywordsign">`</span><span class="constructor">Error</span>&nbsp;(<span class="keywordsign">`</span><span class="constructor">Database</span>&nbsp;(<span class="keywordsign">`</span><span class="constructor">Load</span>&nbsp;conninfo,&nbsp;exn_to_string&nbsp;e))&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;in_posix_thread&nbsp;~on_exn&nbsp;(<span class="keyword">fun</span>&nbsp;()&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;load_exn&nbsp;conninfo)<br>
+<br>
+<span class="keyword">let</span>&nbsp;close&nbsp;{handle}&nbsp;=<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;on_exn&nbsp;e&nbsp;=&nbsp;<span class="keywordsign">`</span><span class="constructor">Error</span>&nbsp;(<span class="keywordsign">`</span><span class="constructor">Database</span>&nbsp;(<span class="keywordsign">`</span><span class="constructor">Close</span>,&nbsp;exn_to_string&nbsp;e))&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;in_posix_thread&nbsp;~on_exn&nbsp;<span class="keyword">begin</span>&nbsp;<span class="keyword">fun</span>&nbsp;()&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;handle<span class="keywordsign">#</span>finish<br>
+&nbsp;&nbsp;<span class="keyword">end</span><br>
+<br>
+<span class="keyword">let</span>&nbsp;exec_sql_exn&nbsp;{handle;&nbsp;table_name}&nbsp;sql_list&nbsp;=<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;show_res&nbsp;query&nbsp;args&nbsp;res&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;dbg&nbsp;<span class="string">"\n&nbsp;&nbsp;%s\n&nbsp;&nbsp;args:&nbsp;[%s]\n&nbsp;&nbsp;status:&nbsp;%s&nbsp;|&nbsp;error:&nbsp;%s&nbsp;|&nbsp;tuples:&nbsp;%d&nbsp;×&nbsp;%d"</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;query<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">Array</span>.map&nbsp;args&nbsp;~f:(<span class="keyword">function</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Null</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="string">"NULL"</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Blob</span>&nbsp;b&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;sprintf&nbsp;<span class="string">"%S"</span>&nbsp;b)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&gt;&nbsp;<span class="constructor">Array</span>.to_list<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&gt;&nbsp;<span class="constructor">String</span>.concat&nbsp;~sep:<span class="string">",&nbsp;"</span>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">PG</span>.result_status&nbsp;res<span class="keywordsign">#</span>status)&nbsp;res<span class="keywordsign">#</span>error&nbsp;res<span class="keywordsign">#</span>ntuples&nbsp;res<span class="keywordsign">#</span>nfields;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">for</span>&nbsp;i&nbsp;=&nbsp;0&nbsp;<span class="keyword">to</span>&nbsp;res<span class="keywordsign">#</span>ntuples&nbsp;-&nbsp;1&nbsp;<span class="keyword">do</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dbg&nbsp;<span class="string">"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(%s)"</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">List</span>.init&nbsp;res<span class="keywordsign">#</span>nfields&nbsp;(<span class="keyword">fun</span>&nbsp;j&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span>&nbsp;res<span class="keywordsign">#</span>getisnull&nbsp;i&nbsp;j&nbsp;<span class="keyword">then</span>&nbsp;<span class="string">"Null"</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">else</span>&nbsp;sprintf&nbsp;<span class="string">"%S"</span>&nbsp;(<span class="constructor">PG</span>.unescape_bytea&nbsp;(res<span class="keywordsign">#</span>getvalue&nbsp;i&nbsp;j)))<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&gt;&nbsp;<span class="constructor">String</span>.concat&nbsp;~sep:<span class="string">",&nbsp;"</span>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">done</span>;<br>
+&nbsp;&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;exec_one&nbsp;sql&nbsp;args&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;res&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;params&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Array</span>.map&nbsp;args&nbsp;~f:(<span class="keyword">function</span>&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Null</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">PG</span>.null&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Blob</span>&nbsp;s&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;s)&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;binary_params&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Array</span>.map&nbsp;args&nbsp;~f:(<span class="keyword">function</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Null</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keyword">false</span>&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Blob</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keyword">true</span>)&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;handle<span class="keywordsign">#</span>exec&nbsp;sql&nbsp;~params&nbsp;~binary_params<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;(<span class="keyword">if</span>&nbsp;!debug&nbsp;<span class="keyword">then</span>&nbsp;show_res&nbsp;sql&nbsp;&nbsp;args&nbsp;res);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">begin</span>&nbsp;<span class="keyword">match</span>&nbsp;res<span class="keywordsign">#</span>status&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">PG</span>.<span class="constructor">Command_ok</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Unit</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">PG</span>.<span class="constructor">Tuples_ok</span>&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">`</span><span class="constructor">Tuples</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">List</span>.init&nbsp;res<span class="keywordsign">#</span>ntuples&nbsp;(<span class="keyword">fun</span>&nbsp;i&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">List</span>.init&nbsp;res<span class="keywordsign">#</span>nfields&nbsp;(<span class="keyword">fun</span>&nbsp;j&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span>&nbsp;res<span class="keywordsign">#</span>getisnull&nbsp;i&nbsp;j&nbsp;<span class="keyword">then</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Null</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">else</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Blob</span>&nbsp;(<span class="constructor">PG</span>.unescape_bytea&nbsp;(res<span class="keywordsign">#</span>getvalue&nbsp;i&nbsp;j))))))<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">PG</span>.<span class="constructor">Empty_query</span>&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">PG</span>.<span class="constructor">Copy_out</span>&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">PG</span>.<span class="constructor">Copy_in</span>&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">PG</span>.<span class="constructor">Bad_response</span>&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">PG</span>.<span class="constructor">Nonfatal_error</span>&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">PG</span>.<span class="constructor">Fatal_error</span>&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">PG</span>.<span class="constructor">Copy_both</span>&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">PG</span>.<span class="constructor">Single_tuple</span>&nbsp;&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ksprintf&nbsp;failwith&nbsp;<span class="string">"SQL&nbsp;Query&nbsp;failed&nbsp;(%s):&nbsp;%s,&nbsp;%s"</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sql&nbsp;(<span class="constructor">PG</span>.result_status&nbsp;res<span class="keywordsign">#</span>status)&nbsp;res<span class="keywordsign">#</span>error<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
+&nbsp;&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;result&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;<span class="constructor">List</span>.map&nbsp;sql_list&nbsp;~f:(<span class="keyword">function</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;(sql,&nbsp;args)&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exec_one&nbsp;sql&nbsp;args<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)<br>
+&nbsp;&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;result<br>
+<br>
+<span class="keyword">let</span>&nbsp;exec_unit&nbsp;t&nbsp;sql&nbsp;args&nbsp;=<br>
+&nbsp;&nbsp;<span class="keyword">begin</span>&nbsp;<span class="keyword">match</span>&nbsp;exec_sql_exn&nbsp;t&nbsp;[sql,&nbsp;args]&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;[<span class="keywordsign">`</span><span class="constructor">Unit</span>]&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;()<br>
+&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;other&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;ksprintf&nbsp;failwith&nbsp;<span class="string">"Unexpected&nbsp;return&nbsp;from&nbsp;“unit&nbsp;query”:&nbsp;%S&nbsp;(length:&nbsp;%d)"</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sql&nbsp;(<span class="constructor">List</span>.length&nbsp;other)<br>
+&nbsp;&nbsp;<span class="keyword">end</span><br>
+<br>
+<span class="keyword">open</span>&nbsp;<span class="constructor">Trakeva</span><br>
+<br>
+<span class="keyword">let</span>&nbsp;collection_sql_arg&nbsp;collection&nbsp;=<br>
+&nbsp;&nbsp;<span class="keyword">match</span>&nbsp;collection&nbsp;<span class="keyword">with</span>&nbsp;<span class="constructor">None</span>&nbsp;&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Null</span>&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Some</span>&nbsp;c&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Blob</span>&nbsp;c<br>
+<span class="keyword">let</span>&nbsp;collection_sql_condition&nbsp;arg&nbsp;=<br>
+&nbsp;&nbsp;sprintf&nbsp;<span class="string">"(collection&nbsp;=&nbsp;%s&nbsp;or&nbsp;(%s&nbsp;is&nbsp;null&nbsp;AND&nbsp;collection&nbsp;is&nbsp;null))"</span>&nbsp;arg&nbsp;arg<br>
+<br>
+<span class="keyword">let</span>&nbsp;get_exn&nbsp;?collection&nbsp;t&nbsp;~key&nbsp;=<br>
+&nbsp;&nbsp;exec_sql_exn&nbsp;t&nbsp;[<br>
+&nbsp;&nbsp;&nbsp;&nbsp;sprintf&nbsp;<span class="string">"SELECT&nbsp;value&nbsp;FROM&nbsp;%s&nbsp;WHERE&nbsp;%s&nbsp;AND&nbsp;key&nbsp;=&nbsp;$2"</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;t.table_name&nbsp;(collection_sql_condition&nbsp;<span class="string">"$1"</span>),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;[|&nbsp;collection_sql_arg&nbsp;collection;&nbsp;<span class="keywordsign">`</span><span class="constructor">Blob</span>&nbsp;key&nbsp;|];<br>
+&nbsp;&nbsp;]&nbsp;|&gt;&nbsp;<span class="keyword">function</span><br>
+&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;[<span class="keywordsign">`</span><span class="constructor">Tuples</span>&nbsp;[[<span class="keywordsign">`</span><span class="constructor">Blob</span>&nbsp;value]]]&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Some</span>&nbsp;value<br>
+&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;[<span class="keywordsign">`</span><span class="constructor">Tuples</span>&nbsp;[]]&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">None</span><br>
+&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;other&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;ksprintf&nbsp;failwith&nbsp;<span class="string">"Did&nbsp;not&nbsp;get&nbsp;one&nbsp;of&nbsp;zero&nbsp;values&nbsp;for&nbsp;(%s,&nbsp;%s)"</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">Option</span>.value&nbsp;collection&nbsp;~default:<span class="string">"None"</span>)&nbsp;key<br>
+<br>
+<span class="keyword">let</span>&nbsp;get&nbsp;?collection&nbsp;t&nbsp;~key&nbsp;=<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;error_loc&nbsp;=&nbsp;(<span class="constructor">Key_in_collection</span>.create&nbsp;key&nbsp;?collection)&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;on_exn&nbsp;e&nbsp;=&nbsp;<span class="keywordsign">`</span><span class="constructor">Error</span>&nbsp;(<span class="keywordsign">`</span><span class="constructor">Database</span>&nbsp;(<span class="keywordsign">`</span><span class="constructor">Get</span>&nbsp;error_loc&nbsp;,&nbsp;exn_to_string&nbsp;e))&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;in_posix_thread&nbsp;~on_exn&nbsp;(<span class="keyword">fun</span>&nbsp;()&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;get_exn&nbsp;?collection&nbsp;t&nbsp;~key<br>
+&nbsp;&nbsp;&nbsp;&nbsp;)<br>
+<br>
+<br>
+<span class="keyword">let</span>&nbsp;act&nbsp;t&nbsp;~(action:&nbsp;<span class="constructor">Action</span>.t)&nbsp;=<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;<span class="keyword">rec</span>&nbsp;transact&nbsp;(action:&nbsp;<span class="constructor">Action</span>.t)&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;<span class="keyword">open</span>&nbsp;<span class="constructor">Key_in_collection</span>&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;<span class="keyword">open</span>&nbsp;<span class="constructor">Action</span>&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">match</span>&nbsp;action&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Set</span>&nbsp;({&nbsp;key;&nbsp;collection&nbsp;},&nbsp;value)&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exec_unit&nbsp;t&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(sprintf&nbsp;<span class="string">"UPDATE&nbsp;%s&nbsp;SET&nbsp;value&nbsp;=&nbsp;$3&nbsp;WHERE&nbsp;%s&nbsp;AND&nbsp;key&nbsp;=&nbsp;$2"</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;t.table_name&nbsp;(collection_sql_condition&nbsp;<span class="string">"$1"</span>))<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[|&nbsp;collection_sql_arg&nbsp;collection;&nbsp;<span class="keywordsign">`</span><span class="constructor">Blob</span>&nbsp;key;&nbsp;<span class="keywordsign">`</span><span class="constructor">Blob</span>&nbsp;value&nbsp;|];<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exec_unit&nbsp;t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(sprintf&nbsp;<span class="string">"INSERT&nbsp;INTO&nbsp;%s&nbsp;(collection,&nbsp;key,&nbsp;value)&nbsp;SELECT&nbsp;$1,&nbsp;$2,&nbsp;$3&nbsp;WHERE&nbsp;NOT&nbsp;EXISTS&nbsp;(SELECT&nbsp;1&nbsp;FROM&nbsp;%s&nbsp;WHERE&nbsp;%s&nbsp;AND&nbsp;key&nbsp;=&nbsp;$2)"</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;t.table_name&nbsp;t.table_name&nbsp;(collection_sql_condition&nbsp;<span class="string">"$1"</span>))<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[|&nbsp;collection_sql_arg&nbsp;collection;&nbsp;<span class="keywordsign">`</span><span class="constructor">Blob</span>&nbsp;key;&nbsp;<span class="keywordsign">`</span><span class="constructor">Blob</span>&nbsp;value&nbsp;|];<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">true</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Unset</span>&nbsp;{&nbsp;key;&nbsp;collection&nbsp;}&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exec_unit&nbsp;t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(sprintf&nbsp;<span class="string">"DELETE&nbsp;FROM&nbsp;%s&nbsp;WHERE&nbsp;%s&nbsp;AND&nbsp;key&nbsp;=&nbsp;$2"</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;t.table_name&nbsp;(collection_sql_condition&nbsp;<span class="string">"$1"</span>))<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[|&nbsp;collection_sql_arg&nbsp;collection;&nbsp;<span class="keywordsign">`</span><span class="constructor">Blob</span>&nbsp;key;&nbsp;|];<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">true</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Sequence</span>&nbsp;l&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">List</span>.for_all&nbsp;l&nbsp;~f:transact<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Check</span>&nbsp;({&nbsp;key;&nbsp;collection&nbsp;},&nbsp;opt)&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;got_opt&nbsp;=&nbsp;get_exn&nbsp;t&nbsp;?collection&nbsp;~key&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;opt&nbsp;=&nbsp;got_opt<br>
+&nbsp;&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;error_loc&nbsp;=&nbsp;<span class="keywordsign">`</span><span class="constructor">Act</span>&nbsp;action&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;on_exn&nbsp;e&nbsp;=&nbsp;<span class="keywordsign">`</span><span class="constructor">Error</span>&nbsp;(<span class="keywordsign">`</span><span class="constructor">Database</span>&nbsp;(error_loc&nbsp;,&nbsp;exn_to_string&nbsp;e))&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;<span class="constructor">Lwt_mutex</span>.with_lock&nbsp;t.action_mutex&nbsp;(<span class="keyword">fun</span>&nbsp;()&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;in_posix_thread&nbsp;~on_exn&nbsp;<span class="keyword">begin</span>&nbsp;<span class="keyword">fun</span>&nbsp;()&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exec_unit&nbsp;t&nbsp;<span class="string">"BEGIN"</span>&nbsp;[|&nbsp;|];<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exec_unit&nbsp;t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(sprintf&nbsp;<span class="string">"LOCK&nbsp;TABLE&nbsp;%s&nbsp;IN&nbsp;ACCESS&nbsp;EXCLUSIVE&nbsp;MODE"</span>&nbsp;t.table_name)&nbsp;[|&nbsp;|];<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">begin</span>&nbsp;<span class="keyword">match</span>&nbsp;transact&nbsp;action&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keyword">false</span>&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exec_unit&nbsp;t&nbsp;<span class="string">"ROLLBACK"</span>&nbsp;[|&nbsp;|];<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">`</span><span class="constructor">Not_done</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keyword">true</span>&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exec_unit&nbsp;t&nbsp;<span class="string">"END"</span>&nbsp;[|&nbsp;|];<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">`</span><span class="constructor">Done</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;)<br>
+<br>
+<span class="keyword">let</span>&nbsp;get_all_keys_exn&nbsp;t&nbsp;collection&nbsp;=<br>
+&nbsp;&nbsp;exec_sql_exn&nbsp;t&nbsp;[<br>
+&nbsp;&nbsp;&nbsp;&nbsp;sprintf&nbsp;<span class="string">"SELECT&nbsp;key&nbsp;FROM&nbsp;%s&nbsp;WHERE&nbsp;collection&nbsp;=&nbsp;$1&nbsp;ORDER&nbsp;BY&nbsp;key"</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;t.table_name,&nbsp;[|&nbsp;<span class="keywordsign">`</span><span class="constructor">Blob</span>&nbsp;collection&nbsp;|];<br>
+&nbsp;&nbsp;]&nbsp;|&gt;&nbsp;<span class="keyword">function</span><br>
+&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;[<span class="keywordsign">`</span><span class="constructor">Tuples</span>&nbsp;tuples]&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">List</span>.map&nbsp;tuples&nbsp;~f:(<span class="keyword">function</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;[<span class="keywordsign">`</span><span class="constructor">Blob</span>&nbsp;k]&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;k<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;other&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ksprintf&nbsp;failwith&nbsp;<span class="string">"Did&nbsp;not&nbsp;get&nbsp;one&nbsp;single&nbsp;row&nbsp;for&nbsp;get_all&nbsp;%S"</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;collection)<br>
+&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;other&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;ksprintf&nbsp;failwith&nbsp;<span class="string">"Did&nbsp;not&nbsp;get&nbsp;one&nbsp;list&nbsp;of&nbsp;tuples&nbsp;for&nbsp;get_all&nbsp;%S"</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;collection<br>
+<br>
+<span class="keyword">let</span>&nbsp;get_all&nbsp;t&nbsp;~collection&nbsp;=<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;error_loc&nbsp;=&nbsp;<span class="keywordsign">`</span><span class="constructor">Get_all</span>&nbsp;collection&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;on_exn&nbsp;e&nbsp;=&nbsp;<span class="keywordsign">`</span><span class="constructor">Error</span>&nbsp;(<span class="keywordsign">`</span><span class="constructor">Database</span>&nbsp;(error_loc&nbsp;,&nbsp;exn_to_string&nbsp;e))&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;in_posix_thread&nbsp;~on_exn&nbsp;(<span class="keyword">fun</span>&nbsp;()&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;get_all_keys_exn&nbsp;t&nbsp;collection)<br>
+<br>
+<br>
+<span class="keyword">let</span>&nbsp;iterator&nbsp;t&nbsp;~collection&nbsp;=<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;error_loc&nbsp;=&nbsp;<span class="keywordsign">`</span><span class="constructor">Iter</span>&nbsp;collection&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;on_exn&nbsp;e&nbsp;=&nbsp;<span class="keywordsign">`</span><span class="constructor">Error</span>&nbsp;(<span class="keywordsign">`</span><span class="constructor">Database</span>&nbsp;(error_loc&nbsp;,&nbsp;exn_to_string&nbsp;e))&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;state&nbsp;=&nbsp;ref&nbsp;<span class="keywordsign">`</span><span class="constructor">Not_started</span>&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;next_exn&nbsp;remaining_keys&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">match</span>&nbsp;remaining_keys&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;[]&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;state&nbsp;:=&nbsp;<span class="keywordsign">`</span><span class="constructor">Closed</span>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">None</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;head&nbsp;::&nbsp;tail&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;state&nbsp;:=&nbsp;<span class="keywordsign">`</span><span class="constructor">Active</span>&nbsp;tail;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Some</span>&nbsp;head<br>
+&nbsp;&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;<span class="keyword">begin</span>&nbsp;<span class="keyword">fun</span>&nbsp;()&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;in_posix_thread&nbsp;~on_exn&nbsp;(<span class="keyword">fun</span>&nbsp;()&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">match</span>&nbsp;!state&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Not_started</span>&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;all_keys&nbsp;=&nbsp;get_all_keys_exn&nbsp;t&nbsp;collection&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;next_exn&nbsp;all_keys<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Closed</span>&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ksprintf&nbsp;failwith&nbsp;<span class="string">"Iterator&nbsp;already&nbsp;closed:&nbsp;%S"</span>&nbsp;collection<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Active</span>&nbsp;remaining_keys&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;next_exn&nbsp;remaining_keys<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)<br>
+&nbsp;&nbsp;<span class="keyword">end</span><br>
+</code></body></html>

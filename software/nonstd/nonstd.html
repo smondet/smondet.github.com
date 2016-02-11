@@ -2,7 +2,7 @@
 <link rel="stylesheet" href="https://cdn.rawgit.com/hammerlab/ketrew/2d1c430cca52caa71e363a765ff8775a6ae14ba9/src/doc/code_style.css" type="text/css"><meta charset="utf-8"><title>Nonstd: Literate Implementation</title></head><body><div class="container"><h1>Nonstd: Literate Implementation</h1><div class="row">
 <div class="col-md-3">
 <h2>Contents</h2><h2>Menu</h2><ul><li><a href='index.html'>Home</a></li><li><a href='nonstd.html'>Literate Implementation</a></li><li><a href='./api/index.html'>API Documentation</a></li><li>Repository <a href='https://bitbucket.org/smondet/nonstd'>at Bitbucket</a></li><li>Up: <a href='../index.html'>Software Projects</a></li></ul></div><div class="col-md-9"><pre><span class="text">
-</span><span class="kw">external</span><span class="text"> (|&gt;) : '</span><span class="id">a</span><span class="text"> -&gt; ('</span><span class="id">a</span><span class="text"> -&gt; '</span><span class="id">b</span><span class="text">) -&gt; '</span><span class="id">b</span><span class="text"> = </span><span class="string">&quot;%revapply&quot;</span><span class="text">
+</span><span class="kw">external</span><span class="text"> (|&gt;) : '</span><span class="id">a</span><span class="text"> -&gt; ('</span><span class="id">a</span><span class="text"> -&gt; '</span><span class="id">b</span><span class="text">) -&gt; '</span><span class="id">b</span><span class="text"> = </span><span class="string">"%revapply"</span><span class="text">
 
 </span><span class="kw">include</span><span class="text"> </span><span class="kw2">Printf</span><span class="text">
 
@@ -44,7 +44,7 @@
   </span><span class="kw">let</span><span class="text"> </span><span class="id">nth_exn</span><span class="text"> </span><span class="id">t</span><span class="text"> </span><span class="id">n</span><span class="text"> =
     </span><span class="kw1">match</span><span class="text"> </span><span class="id">nth</span><span class="text"> </span><span class="id">t</span><span class="text"> </span><span class="id">n</span><span class="text"> </span><span class="kw1">with</span><span class="text">
     | </span><span class="kw2">None</span><span class="text"> -&gt;
-      </span><span class="id">ksprintf</span><span class="text"> </span><span class="id">invalid_arg</span><span class="text"> </span><span class="string">&quot;List.nth_exn %d called on list of length %d&quot;</span><span class="text">
+      </span><span class="id">ksprintf</span><span class="text"> </span><span class="id">invalid_arg</span><span class="text"> </span><span class="string">"List.nth_exn %d called on list of length %d"</span><span class="text">
         </span><span class="id">n</span><span class="text"> (</span><span class="id">length</span><span class="text"> </span><span class="id">t</span><span class="text">)
     | </span><span class="kw2">Some</span><span class="text"> </span><span class="id">a</span><span class="text"> -&gt; </span><span class="id">a</span><span class="text">
 
@@ -233,7 +233,7 @@
         (</span><span class="kw1">if</span><span class="text"> </span><span class="id">ctr</span><span class="text"> &gt; </span><span class="numeric">1000</span><span class="text">
           </span><span class="kw1">then</span><span class="text"> </span><span class="id">map2_slow</span><span class="text"> </span><span class="kw4">~f</span><span class="text"> </span><span class="id">tl1</span><span class="text"> </span><span class="id">tl2</span><span class="text">
           </span><span class="kw1">else</span><span class="text"> </span><span class="id">count_map2_exn</span><span class="text"> </span><span class="kw4">~f</span><span class="text"> </span><span class="id">tl1</span><span class="text"> </span><span class="id">tl2</span><span class="text"> (</span><span class="id">ctr</span><span class="text"> + </span><span class="numeric">1</span><span class="text">))
-    | </span><span class="numeric">_</span><span class="text">, </span><span class="numeric">_</span><span class="text"> -&gt; </span><span class="id">failwith</span><span class="text"> </span><span class="string">&quot;count_map2&quot;</span><span class="text">
+    | </span><span class="numeric">_</span><span class="text">, </span><span class="numeric">_</span><span class="text"> -&gt; </span><span class="id">failwith</span><span class="text"> </span><span class="string">"count_map2"</span><span class="text">
 
   </span><span class="kw">let</span><span class="text"> </span><span class="id">map2_exn</span><span class="text"> </span><span class="id">l1</span><span class="text"> </span><span class="id">l2</span><span class="text"> </span><span class="kw4">~f</span><span class="text"> = </span><span class="id">count_map2_exn</span><span class="text"> </span><span class="kw4">~f</span><span class="text"> </span><span class="id">l1</span><span class="text"> </span><span class="id">l2</span><span class="text"> </span><span class="numeric">0</span><span class="text">
 

@@ -1,0 +1,47 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<link rel="stylesheet" href="style.css" type="text/css">
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<link rel="Start" href="index.html">
+<link rel="Up" href="Main.Test_postgresql.html">
+<link title="Index of types" rel=Appendix href="index_types.html">
+<link title="Index of exceptions" rel=Appendix href="index_exceptions.html">
+<link title="Index of values" rel=Appendix href="index_values.html">
+<link title="Index of modules" rel=Appendix href="index_modules.html">
+<link title="Index of module types" rel=Appendix href="index_module_types.html">
+<link title="Main" rel="Chapter" href="Main.html">
+<link title="Trakeva" rel="Chapter" href="Trakeva.html">
+<link title="Trakeva_cache" rel="Chapter" href="Trakeva_cache.html">
+<link title="Trakeva_of_uri" rel="Chapter" href="Trakeva_of_uri.html">
+<link title="Trakeva_postgresql" rel="Chapter" href="Trakeva_postgresql.html">
+<link title="Trakeva_sqlite" rel="Chapter" href="Trakeva_sqlite.html"><title>Trakeva API : Main.Test_postgresql.DB</title>
+</head>
+<body>
+<div class="navbar">&nbsp;<a class="up" href="Main.Test_postgresql.html" title="Main.Test_postgresql">Up</a>
+&nbsp;</div>
+<h1>Module <a href="type_Main.Test_postgresql.DB.html">Main.Test_postgresql.DB</a> (<a href="code_Main.Test_postgresql.DB.html">.ml</a>)</h1>
+
+<pre><span class="keyword">module</span> DB: <code class="type"><a href="Trakeva_of_uri.html">Trakeva_of_uri</a></code></pre><hr width="100%">
+
+<pre><span class="keyword">include</span> <a href="Trakeva.KEY_VALUE_STORE.html">Trakeva.KEY_VALUE_STORE</a></pre>
+<div class="info ">
+<h3 id="3_ImplementationoftheAPI">Implementation of the API</h3>
+<p>
+
+The function <code class="code">create</code> takes a URI string:
+<p>
+<ul>
+<li>if the URI scheme is <code class="code"><span class="string">"postgresql"</span></code>
+  then <code class="code"><span class="constructor">Trakeva_postgresql</span></code> will be used,</li>
+<li>if the URI scheme is <code class="code"><span class="string">"sqlite"</span></code>, or there is no scheme, then
+  <code class="code"><span class="constructor">Trakeva_sqlite</span></code> will be used,</li>
+<li>an exception is raised for other schemes (reserved for future use).</li>
+</ul>
+<br>
+</div>
+
+<pre><span id="VALavailable_backends"><span class="keyword">val</span> available_backends</span> : <code class="type">string list</code></pre><div class="info ">
+The databases that are available via <code class="code">create</code><br>
+</div>
+</body></html>

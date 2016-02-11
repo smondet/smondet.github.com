@@ -173,9 +173,9 @@ toplevel). See the documentation of the EDSL API (<a href='api/Ketrew.EDSL.html'
 
 <p>The following script extends the previous shell-based example with the
 capability to send emails upon the success or failure of your command.</p>
-<pre><span class="directive">#use</span><span class="text"> </span><span class="string">&quot;topfind&quot;</span><span class="directive">
+<pre><span class="directive">#use</span><span class="text"> </span><span class="string">"topfind"</span><span class="directive">
 #thread</span><span class="directive">
-#require</span><span class="text"> </span><span class="string">&quot;ketrew&quot;</span><span class="text">
+#require</span><span class="text"> </span><span class="string">"ketrew"</span><span class="text">
 
 </span><span class="kw">let</span><span class="text"> </span><span class="id">run_command_with_daemonize</span><span class="text"> </span><span class="kw4">~cmd</span><span class="text"> </span><span class="kw4">~email</span><span class="text"> =
   </span><span class="kw">let</span><span class="text"> </span><span class="kw">module</span><span class="text"> </span><span class="kw2">KEDSL</span><span class="text"> = </span><span class="kw2">Ketrew</span><span class="text">.</span><span class="kw2">EDSL</span><span class="text"> </span><span class="kw">in</span><span class="text">
@@ -197,16 +197,16 @@ capability to send emails upon the success or failure of your command.</p>
 
   </span><span class="comment">(* A node that Ketrew will activate after cmd completes *)</span><span class="text">
   </span><span class="kw">let</span><span class="text"> </span><span class="id">email_target</span><span class="text"> </span><span class="kw4">~success</span><span class="text"> =
-    </span><span class="kw">let</span><span class="text"> </span><span class="id">sstring</span><span class="text"> = </span><span class="kw1">if</span><span class="text"> </span><span class="id">success</span><span class="text"> </span><span class="kw1">then</span><span class="text"> </span><span class="string">&quot;succeeded&quot;</span><span class="text"> </span><span class="kw1">else</span><span class="text"> </span><span class="string">&quot;failed&quot;</span><span class="text"> </span><span class="kw">in</span><span class="text">
+    </span><span class="kw">let</span><span class="text"> </span><span class="id">sstring</span><span class="text"> = </span><span class="kw1">if</span><span class="text"> </span><span class="id">success</span><span class="text"> </span><span class="kw1">then</span><span class="text"> </span><span class="string">"succeeded"</span><span class="text"> </span><span class="kw1">else</span><span class="text"> </span><span class="string">"failed"</span><span class="text"> </span><span class="kw">in</span><span class="text">
     </span><span class="kw">let</span><span class="text"> </span><span class="id">e_program</span><span class="text"> =
-      </span><span class="kw2">KEDSL</span><span class="text">.</span><span class="kw2">Program</span><span class="text">.</span><span class="id">shf</span><span class="text"> </span><span class="string">&quot;echo \&quot;'%s' %s\&quot; | mail -s \&quot;Status update\&quot; %s&quot;</span><span class="text">
+      </span><span class="kw2">KEDSL</span><span class="text">.</span><span class="kw2">Program</span><span class="text">.</span><span class="id">shf</span><span class="text"> </span><span class="string">"echo \"'%s' %s\" | mail -s \"Status update\" %s"</span><span class="text">
         </span><span class="id">cmd</span><span class="text"> </span><span class="id">sstring</span><span class="text">
         </span><span class="id">email</span><span class="text">
     </span><span class="kw">in</span><span class="text">
     </span><span class="kw">let</span><span class="text"> </span><span class="id">e_process</span><span class="text"> =
       </span><span class="kw2">KEDSL</span><span class="text">.</span><span class="id">daemonize</span><span class="text"> </span><span class="kw4">~using</span><span class="text">:`</span><span class="kw2">Python_daemon</span><span class="text"> </span><span class="kw4">~host</span><span class="text"> </span><span class="id">e_program</span><span class="text"> </span><span class="kw">in</span><span class="text">
     </span><span class="kw2">KEDSL</span><span class="text">.</span><span class="id">workflow_node</span><span class="text"> </span><span class="kw2">KEDSL</span><span class="text">.</span><span class="id">without_product</span><span class="text">
-      </span><span class="kw4">~name</span><span class="text">:(</span><span class="string">&quot;email result &quot;</span><span class="text"> ^ </span><span class="id">sstring</span><span class="text">)
+      </span><span class="kw4">~name</span><span class="text">:(</span><span class="string">"email result "</span><span class="text"> ^ </span><span class="id">sstring</span><span class="text">)
       </span><span class="kw4">~make</span><span class="text">:</span><span class="id">e_process</span><span class="text">
   </span><span class="kw">in</span><span class="text">
 
@@ -214,7 +214,7 @@ capability to send emails upon the success or failure of your command.</p>
      The value `KEDSL.without_product` means this node does not
      “produce” anything, it is like a `.PHONY` target in `make`. *)</span><span class="text">
   </span><span class="kw2">KEDSL</span><span class="text">.</span><span class="id">workflow_node</span><span class="text"> </span><span class="kw2">KEDSL</span><span class="text">.</span><span class="id">without_product</span><span class="text">
-    </span><span class="kw4">~name</span><span class="text">:</span><span class="string">&quot;daemonize command&quot;</span><span class="text">
+    </span><span class="kw4">~name</span><span class="text">:</span><span class="string">"daemonize command"</span><span class="text">
     </span><span class="kw4">~make</span><span class="text">:</span><span class="id">build_process</span><span class="text">
     </span><span class="kw4">~edges</span><span class="text">:[
       </span><span class="kw2">KEDSL</span><span class="text">.</span><span class="id">on_success_activate</span><span class="text"> (</span><span class="id">email_target</span><span class="text"> </span><span class="constant">true</span><span class="text">);
@@ -289,5 +289,6 @@ like <a href='api/Engine.html'><a href='api/Ketrew.Engine.html' title='Ketrew.En
 <p>It&#39;s <a href='http://www.apache.org/licenses/LICENSE-2.0'>Apache 2.0</a>.</p>
 <h2 id="Badges">Badges</h2>
 
-<p><a href='https://travis-ci.org/hammerlab/ketrew'><img src='https://travis-ci.org/hammerlab/ketrew.svg?branch=master' alt='master Branch Build Status' /></a></p>
+<p><a href='https://travis-ci.org/hammerlab/ketrew'><img src='https://travis-ci.org/hammerlab/ketrew.svg?branch=master' alt='master Branch Build Status' /></a>
+<a href='http://dx.doi.org/10.5281/zenodo.45295'><img src='https://zenodo.org/badge/doi/10.5281/zenodo.45295.svg' alt='DOI' /></a></p>
 </div></div></div></body><html>

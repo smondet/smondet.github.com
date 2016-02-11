@@ -35,9 +35,9 @@ things); see <a href='ketrew_init___help.html' title='ketrew init --help'><code>
 
 <p>A configuration file <code>configuration.ml</code> (that Ketrew will execute through
 <code>OCaml</code>) would look like:</p>
-<pre><span class="directive">#use</span><span class="text"> </span><span class="string">&quot;topfind&quot;</span><span class="directive">
+<pre><span class="directive">#use</span><span class="text"> </span><span class="string">"topfind"</span><span class="directive">
 #thread</span><span class="directive">
-#require</span><span class="text"> </span><span class="string">&quot;ketrew&quot;</span><span class="text">
+#require</span><span class="text"> </span><span class="string">"ketrew"</span><span class="text">
 
 </span><span class="kw">open</span><span class="text"> </span><span class="kw2">Ketrew</span><span class="text">.</span><span class="kw2">Configuration</span><span class="text">
 
@@ -50,8 +50,8 @@ things); see <a href='ketrew_init___help.html' title='ketrew init --help'><code>
 
 </span><span class="comment">(* Plugins to load: *)</span><span class="text">
 </span><span class="kw">let</span><span class="text"> </span><span class="id">plugins</span><span class="text"> = [
-  `</span><span class="kw2">OCamlfind</span><span class="text"> </span><span class="string">&quot;lwt.react&quot;</span><span class="text">;
-  `</span><span class="kw2">Compiled</span><span class="text"> </span><span class="string">&quot;/path/to/some/ketrew_plugin.cmxs&quot;</span><span class="text">;
+  `</span><span class="kw2">OCamlfind</span><span class="text"> </span><span class="string">"lwt.react"</span><span class="text">;
+  `</span><span class="kw2">Compiled</span><span class="text"> </span><span class="string">"/path/to/some/ketrew_plugin.cmxs"</span><span class="text">;
 ]
 
 </span><span class="comment">(* User-Interface preferences: *)</span><span class="text">
@@ -66,16 +66,16 @@ things); see <a href='ketrew_init___help.html' title='ketrew init --help'><code>
   configuration” that detaches or not from the shell. *)</span><span class="text">
 </span><span class="kw">let</span><span class="text"> </span><span class="id">my_servers</span><span class="text"> </span><span class="id">daemon</span><span class="text"> =
   </span><span class="id">server</span><span class="text"> </span><span class="kw4">~ui</span><span class="text">
-    </span><span class="kw4">~engine</span><span class="text">:(</span><span class="id">engine</span><span class="text"> </span><span class="kw4">~database_parameters</span><span class="text">:</span><span class="string">&quot;/path/to/sqlite-database-client-server&quot;</span><span class="text"> ())
+    </span><span class="kw4">~engine</span><span class="text">:(</span><span class="id">engine</span><span class="text"> </span><span class="kw4">~database_parameters</span><span class="text">:</span><span class="string">"/path/to/sqlite-database-client-server"</span><span class="text"> ())
     </span><span class="kw4">~authorized_tokens</span><span class="text">:[
-       </span><span class="id">authorized_tokens_path</span><span class="text"> </span><span class="string">&quot;/path/to/authorized-tokens&quot;</span><span class="text">;
-       </span><span class="id">authorized_token</span><span class="text"> </span><span class="kw4">~name</span><span class="text">:</span><span class="string">&quot;The-inline-one&quot;</span><span class="text"> </span><span class="string">&quot;inlinetoken&quot;</span><span class="text">;
+       </span><span class="id">authorized_tokens_path</span><span class="text"> </span><span class="string">"/path/to/authorized-tokens"</span><span class="text">;
+       </span><span class="id">authorized_token</span><span class="text"> </span><span class="kw4">~name</span><span class="text">:</span><span class="string">"The-inline-one"</span><span class="text"> </span><span class="string">"inlinetoken"</span><span class="text">;
      ]
     </span><span class="kw4">~return_error_messages</span><span class="text">:</span><span class="constant">true</span><span class="text">
-    </span><span class="kw4">~log_path</span><span class="text">:</span><span class="string">&quot;/path/to/logs-of-server.txt&quot;</span><span class="text">
+    </span><span class="kw4">~log_path</span><span class="text">:</span><span class="string">"/path/to/logs-of-server.txt"</span><span class="text">
     </span><span class="kw4">~daemon</span><span class="text">
-    </span><span class="kw4">~command_pipe</span><span class="text">:</span><span class="string">&quot;/path/to/command.pipe&quot;</span><span class="text">
-    (`</span><span class="kw2">Tls</span><span class="text"> (</span><span class="string">&quot;/path/to/cert.pem&quot;</span><span class="text">, </span><span class="string">&quot;/path/to/key.pem&quot;</span><span class="text">, </span><span class="numeric">8443</span><span class="text">))
+    </span><span class="kw4">~command_pipe</span><span class="text">:</span><span class="string">"/path/to/command.pipe"</span><span class="text">
+    (`</span><span class="kw2">Tls</span><span class="text"> (</span><span class="string">"/path/to/cert.pem"</span><span class="text">, </span><span class="string">"/path/to/key.pem"</span><span class="text">, </span><span class="numeric">8443</span><span class="text">))
 
 </span><span class="comment">(* We put together 4 profiles in this configuration and “output” them
    (literally, as Json, to `stdout`).
@@ -84,17 +84,17 @@ things); see <a href='ketrew_init___help.html' title='ketrew init --help'><code>
 *)</span><span class="text">
 </span><span class="kw">let</span><span class="text"> () =
   </span><span class="id">output</span><span class="text"> [
-    </span><span class="id">profile</span><span class="text"> </span><span class="string">&quot;standalone&quot;</span><span class="text">
+    </span><span class="id">profile</span><span class="text"> </span><span class="string">"standalone"</span><span class="text">
       (</span><span class="id">create</span><span class="text"> </span><span class="kw4">~debug_level</span><span class="text"> </span><span class="kw4">~plugins</span><span class="text">
          (</span><span class="id">standalone</span><span class="text"> </span><span class="kw4">~ui</span><span class="text"> ()
-            </span><span class="kw4">~engine</span><span class="text">:(</span><span class="id">engine</span><span class="text"> </span><span class="kw4">~database_parameters</span><span class="text">:</span><span class="string">&quot;/path/to/sqlite-database-standalone&quot;</span><span class="text"> ())));
-    </span><span class="id">profile</span><span class="text"> </span><span class="string">&quot;daemon&quot;</span><span class="text">
+            </span><span class="kw4">~engine</span><span class="text">:(</span><span class="id">engine</span><span class="text"> </span><span class="kw4">~database_parameters</span><span class="text">:</span><span class="string">"/path/to/sqlite-database-standalone"</span><span class="text"> ())));
+    </span><span class="id">profile</span><span class="text"> </span><span class="string">"daemon"</span><span class="text">
       (</span><span class="id">create</span><span class="text"> </span><span class="kw4">~debug_level</span><span class="text"> </span><span class="kw4">~plugins</span><span class="text"> (</span><span class="id">my_servers</span><span class="text"> </span><span class="constant">true</span><span class="text">));
-    </span><span class="id">profile</span><span class="text"> </span><span class="string">&quot;server&quot;</span><span class="text">
+    </span><span class="id">profile</span><span class="text"> </span><span class="string">"server"</span><span class="text">
       (</span><span class="id">create</span><span class="text"> </span><span class="kw4">~debug_level</span><span class="text"> </span><span class="kw4">~plugins</span><span class="text"> (</span><span class="id">my_servers</span><span class="text"> </span><span class="constant">false</span><span class="text">));
-    </span><span class="id">profile</span><span class="text"> </span><span class="string">&quot;client&quot;</span><span class="text">
+    </span><span class="id">profile</span><span class="text"> </span><span class="string">"client"</span><span class="text">
       (</span><span class="id">create</span><span class="text"> </span><span class="kw4">~debug_level</span><span class="text"> </span><span class="kw4">~plugins</span><span class="text"> (
-          </span><span class="id">client</span><span class="text"> </span><span class="kw4">~ui</span><span class="text"> </span><span class="kw4">~token</span><span class="text">:</span><span class="string">&quot;nekot&quot;</span><span class="text"> </span><span class="string">&quot;https://127.0.0.1:8443&quot;</span><span class="text">
+          </span><span class="id">client</span><span class="text"> </span><span class="kw4">~ui</span><span class="text"> </span><span class="kw4">~token</span><span class="text">:</span><span class="string">"nekot"</span><span class="text"> </span><span class="string">"https://127.0.0.1:8443"</span><span class="text">
           ));
   ]</span></pre>
 

@@ -22,13 +22,13 @@ produces a <a href='api/Docout.LOGGER.html' title='LOGGER'><code>LOGGER</code></
     </span><span class="kw">let</span><span class="text"> </span><span class="id">with_color</span><span class="text"> () = !</span><span class="id">global_with_color</span><span class="text">
     </span><span class="kw">let</span><span class="text"> </span><span class="id">line_width</span><span class="text"> = </span><span class="numeric">72</span><span class="text">
     </span><span class="kw">let</span><span class="text"> </span><span class="id">indent</span><span class="text"> = </span><span class="numeric">4</span><span class="text">
-    </span><span class="kw">let</span><span class="text"> </span><span class="id">print_string</span><span class="text"> = </span><span class="kw2">Printf</span><span class="text">.</span><span class="id">eprintf</span><span class="text"> </span><span class="string">&quot;%s%!&quot;</span><span class="text">
+    </span><span class="kw">let</span><span class="text"> </span><span class="id">print_string</span><span class="text"> = </span><span class="kw2">Printf</span><span class="text">.</span><span class="id">eprintf</span><span class="text"> </span><span class="string">"%s%!"</span><span class="text">
     </span><span class="kw">let</span><span class="text"> </span><span class="id">do_nothing</span><span class="text"> () = ()
-    </span><span class="kw">let</span><span class="text"> </span><span class="id">name</span><span class="text"> = </span><span class="string">&quot;docout-test&quot;</span><span class="text">
+    </span><span class="kw">let</span><span class="text"> </span><span class="id">name</span><span class="text"> = </span><span class="string">"docout-test"</span><span class="text">
   </span><span class="kw1">end</span><span class="text">)</span></pre>
 
 <p>Then, one can build documents and display them:</p>
-<pre><span class="kw2">Log</span><span class="text">.(</span><span class="id">s</span><span class="text"> </span><span class="string">&quot;Some string &quot;</span><span class="text"> % </span><span class="id">i</span><span class="text"> </span><span class="numeric">42</span><span class="text"> % </span><span class="id">sf</span><span class="text"> </span><span class="string">&quot;, %S&quot;</span><span class="text"> </span><span class="string">&quot;quoted&quot;</span><span class="text">
+<pre><span class="kw2">Log</span><span class="text">.(</span><span class="id">s</span><span class="text"> </span><span class="string">"Some string "</span><span class="text"> % </span><span class="id">i</span><span class="text"> </span><span class="numeric">42</span><span class="text"> % </span><span class="id">sf</span><span class="text"> </span><span class="string">", %S"</span><span class="text"> </span><span class="string">"quoted"</span><span class="text">
      % </span><span class="id">sp</span><span class="text"> % </span><span class="id">brakets</span><span class="text"> (</span><span class="kw2">OCaml</span><span class="text">.</span><span class="kw3">list</span><span class="text"> </span><span class="id">f</span><span class="text"> [</span><span class="numeric">3.14</span><span class="text">; </span><span class="numeric">4.2</span><span class="text">])
      @ </span><span class="id">very_verbose</span><span class="text">);</span></pre>
 

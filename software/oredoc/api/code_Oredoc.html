@@ -49,7 +49,7 @@ M*)</span><br>
 <br>
 <span class="comment">(*M<br>
 <br>
-Identify&nbsp;Files&nbsp;By&nbsp;Extension&nbsp;<br>
+Identify&nbsp;Files&nbsp;By&nbsp;Extension<br>
 ---------------------------<br>
 <br>
 This&nbsp;is&nbsp;used&nbsp;for&nbsp;both&nbsp;1)&nbsp;deciding&nbsp;which&nbsp;treatment&nbsp;to&nbsp;apply&nbsp;to&nbsp;files&nbsp;and&nbsp;2)<br>
@@ -133,12 +133,12 @@ M*)</span><br>
 &nbsp;&nbsp;<span class="keyword">let</span>&nbsp;preprocess&nbsp;~configuration&nbsp;content&nbsp;=<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;highligh&nbsp;:&nbsp;<span class="constructor">Omd_representation</span>.extension&nbsp;=<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">object</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">method</span>&nbsp;parser_extension&nbsp;t&nbsp;read_tokens&nbsp;=&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">method</span>&nbsp;parser_extension&nbsp;t&nbsp;read_tokens&nbsp;=<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;<span class="keyword">open</span>&nbsp;<span class="constructor">Omd_representation</span>&nbsp;<span class="keyword">in</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;highlight_style&nbsp;=<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">"color:&nbsp;red;&nbsp;background-color:&nbsp;yellow;&nbsp;font-weight:&nbsp;bold"</span>&nbsp;<span class="keyword">in</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">(*&nbsp;dbg&nbsp;"highlight&nbsp;for:&nbsp;%s"&nbsp;(Omd_lexer.destring_of_tokens&nbsp;~limit:5&nbsp;&nbsp;read_tokens);&nbsp;*)</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">function</span>&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">function</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Exclamation</span>&nbsp;::&nbsp;<span class="constructor">Word</span>&nbsp;w&nbsp;::&nbsp;<span class="constructor">Exclamation</span>&nbsp;::&nbsp;more&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;in_red&nbsp;=&nbsp;sprintf&nbsp;&nbsp;<span class="string">"&lt;span&nbsp;style=%S&gt;%s&lt;/span&gt;"</span>&nbsp;highlight_style&nbsp;w&nbsp;<span class="keyword">in</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Some</span>&nbsp;(<span class="constructor">Raw</span>&nbsp;in_red&nbsp;::&nbsp;t,&nbsp;read_tokens,&nbsp;more)<br>
@@ -151,7 +151,7 @@ M*)</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;more_stuff_to_do&nbsp;=&nbsp;ref&nbsp;[]&nbsp;<span class="keyword">in</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;<span class="keyword">rec</span>&nbsp;transform_links&nbsp;(t:&nbsp;<span class="constructor">Omd</span>.element)&nbsp;:&nbsp;<span class="constructor">Omd</span>.element&nbsp;&nbsp;=<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;<span class="keyword">open</span>&nbsp;<span class="constructor">Omd</span>&nbsp;<span class="keyword">in</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">match</span>&nbsp;t&nbsp;<span class="keyword">with</span>&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">match</span>&nbsp;t&nbsp;<span class="keyword">with</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Paragraph</span>&nbsp;&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Paragraph</span>&nbsp;(<span class="constructor">List</span>.map&nbsp;~f:transform_links&nbsp;t)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Emph</span>&nbsp;&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Emph</span>&nbsp;(<span class="constructor">List</span>.map&nbsp;~f:transform_links&nbsp;t)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Bold</span>&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Bold</span>&nbsp;(<span class="constructor">List</span>.map&nbsp;~f:transform_links&nbsp;t)<br>
@@ -177,8 +177,8 @@ M*)</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">X</span>&nbsp;_<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Raw</span>&nbsp;_&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Raw_block</span>&nbsp;_<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Img</span>&nbsp;_&nbsp;<span class="keyword">as</span>&nbsp;e&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;e<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Code</span>&nbsp;(lang,&nbsp;code)&nbsp;<span class="keyword">when</span>&nbsp;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">String</span>.sub&nbsp;code&nbsp;~index:(<span class="constructor">String</span>.length&nbsp;code&nbsp;-&nbsp;6)&nbsp;~length:6&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Code</span>&nbsp;(lang,&nbsp;code)&nbsp;<span class="keyword">when</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">String</span>.sub&nbsp;code&nbsp;~index:(<span class="constructor">String</span>.length&nbsp;code&nbsp;-&nbsp;6)&nbsp;~length:6<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;<span class="constructor">Some</span>&nbsp;<span class="string">"--help"</span>&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">(*&nbsp;dbg&nbsp;"Code:&nbsp;%s&nbsp;%s"&nbsp;lang&nbsp;code;&nbsp;*)</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;more_stuff_to_do&nbsp;:=&nbsp;<span class="keywordsign">`</span><span class="constructor">Create_man_page</span>&nbsp;code&nbsp;::&nbsp;!more_stuff_to_do;<br>
@@ -191,7 +191,7 @@ M*)</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;(_&nbsp;:&nbsp;<span class="constructor">Higlo</span>.lexer)&nbsp;=&nbsp;<span class="constructor">Higlo</span>.get_lexer&nbsp;lang&nbsp;<span class="keyword">in</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Raw</span>&nbsp;(<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">"&lt;pre&gt;"</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;^&nbsp;(<span class="constructor">Higlo</span>.to_xtmpl&nbsp;~lang&nbsp;code&nbsp;|&gt;&nbsp;<span class="constructor">Xtmpl</span>.string_of_xmls)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;^&nbsp;(<span class="constructor">Higlo</span>.to_xml&nbsp;~lang&nbsp;code&nbsp;|&gt;&nbsp;<span class="constructor">Xtmpl_xml</span>.to_string)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;^&nbsp;<span class="string">"&lt;/pre&gt;"</span>)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">with</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;code_block<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
@@ -212,7 +212,7 @@ M*)</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Ocaml_implementation</span>&nbsp;m&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Url</span>&nbsp;(sprintf&nbsp;<span class="string">"%s.html"</span>&nbsp;(<span class="constructor">Filename</span>.basename&nbsp;m),<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">List</span>.map&nbsp;~f:transform_links&nbsp;t,&nbsp;title)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Other</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Other</span>&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Url</span>&nbsp;(href,&nbsp;<span class="constructor">List</span>.map&nbsp;~f:transform_links&nbsp;t,&nbsp;title)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Ref</span>&nbsp;&nbsp;(ref_container,&nbsp;name,&nbsp;string,&nbsp;_)&nbsp;<span class="keyword">as</span>&nbsp;e&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;e<br>
@@ -227,7 +227,7 @@ M*)</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&gt;&nbsp;make_paragraphs<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&gt;&nbsp;<span class="constructor">List</span>.map&nbsp;~f:transform_links)<br>
 <br>
-&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;to_html&nbsp;~(configuration:_&nbsp;configuration)&nbsp;content&nbsp;=&nbsp;<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;to_html&nbsp;~(configuration:_&nbsp;configuration)&nbsp;content&nbsp;=<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Meta_result</span>.(<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;preprocess&nbsp;~configuration&nbsp;content<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;p&nbsp;<span class="keywordsign">-&gt;</span><br>
@@ -241,7 +241,7 @@ M*)</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;<span class="constructor">Omd</span>.(to_html&nbsp;(toc&nbsp;~start:[0]&nbsp;p))<br>
 &nbsp;&nbsp;&nbsp;&nbsp;)<br>
 <br>
-&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;to_html_and_toc&nbsp;~configuration&nbsp;content&nbsp;=&nbsp;<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;to_html_and_toc&nbsp;~configuration&nbsp;content&nbsp;=<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Meta_result</span>.(<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;preprocess&nbsp;~configuration&nbsp;content<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;p&nbsp;<span class="keywordsign">-&gt;</span><br>
@@ -265,28 +265,28 @@ M*)</span><br>
 &nbsp;&nbsp;<span class="keyword">open</span>&nbsp;<span class="constructor">Meta_result</span><br>
 <br>
 &nbsp;&nbsp;<span class="keyword">let</span>&nbsp;to_html&nbsp;~configuration&nbsp;code&nbsp;=<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;remove_comments&nbsp;s&nbsp;=&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;remove_comments&nbsp;s&nbsp;=<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">String</span>.sub_exn&nbsp;s&nbsp;~index:3&nbsp;~length:(<span class="constructor">String</span>.length&nbsp;s&nbsp;-&nbsp;6)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">in</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;<span class="keyword">open</span>&nbsp;<span class="constructor">Higlo</span>&nbsp;<span class="keyword">in</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;parsed&nbsp;=&nbsp;parse&nbsp;~lang:<span class="string">"ocaml"</span>&nbsp;code&nbsp;<span class="keyword">in</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;flush_tokens&nbsp;revtoklist&nbsp;=<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span>&nbsp;<span class="constructor">List</span>.for_all&nbsp;revtoklist&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span>&nbsp;<span class="constructor">List</span>.for_all&nbsp;revtoklist<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;~f:(<span class="keyword">function</span>&nbsp;<span class="constructor">Text</span>&nbsp;t&nbsp;<span class="keyword">when</span>&nbsp;<span class="constructor">String</span>.strip&nbsp;t&nbsp;=&nbsp;<span class="string">""</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keyword">true</span>&nbsp;<span class="keywordsign">|</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keyword">false</span>)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">then</span>&nbsp;<span class="string">""</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">else</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;html&nbsp;=<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Xtmpl</span>.string_of_xmls<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">List</span>.rev_map&nbsp;~f:<span class="constructor">Higlo</span>.token_to_xtmpl&nbsp;revtoklist)&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Xtmpl_xml</span>.to_string<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">List</span>.rev_map&nbsp;~f:<span class="constructor">Higlo</span>.token_to_xml&nbsp;revtoklist)&nbsp;<span class="keyword">in</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">"&lt;pre&gt;"</span>&nbsp;^&nbsp;html&nbsp;^&nbsp;<span class="string">"&lt;/pre&gt;"</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">in</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;<span class="keyword">rec</span>&nbsp;loop&nbsp;acc_tokens&nbsp;acc_html&nbsp;acc_toc&nbsp;tokens&nbsp;=&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;<span class="keyword">rec</span>&nbsp;loop&nbsp;acc_tokens&nbsp;acc_html&nbsp;acc_toc&nbsp;tokens&nbsp;=<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">match</span>&nbsp;tokens&nbsp;<span class="keyword">with</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;[]&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">List</span>.rev&nbsp;acc_toc&nbsp;|&gt;&nbsp;<span class="constructor">String</span>.concat&nbsp;~sep:<span class="string">"\n"</span>&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;[]&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">List</span>.rev&nbsp;acc_toc&nbsp;|&gt;&nbsp;<span class="constructor">String</span>.concat&nbsp;~sep:<span class="string">"\n"</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&gt;&nbsp;<span class="constructor">Markdown</span>.to_toc&nbsp;~configuration)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;toc&nbsp;<span class="keywordsign">-&gt;</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;(<span class="constructor">List</span>.rev&nbsp;(flush_tokens&nbsp;acc_tokens&nbsp;::&nbsp;acc_html)&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;(<span class="constructor">List</span>.rev&nbsp;(flush_tokens&nbsp;acc_tokens&nbsp;::&nbsp;acc_html)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&gt;&nbsp;<span class="constructor">String</span>.concat&nbsp;~sep:<span class="string">"\n"</span>,&nbsp;toc)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;one&nbsp;::&nbsp;more&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">begin</span>&nbsp;<span class="keyword">match</span>&nbsp;one&nbsp;<span class="keyword">with</span><br>
@@ -296,9 +296,9 @@ M*)</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;comment_content&nbsp;=&nbsp;remove_comments&nbsp;com&nbsp;<span class="keyword">in</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Markdown</span>.to_html&nbsp;~configuration&nbsp;comment_content<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;html_comment&nbsp;<span class="keywordsign">-&gt;</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;loop&nbsp;[]&nbsp;(html_comment&nbsp;::&nbsp;html_code&nbsp;::&nbsp;acc_html)&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;loop&nbsp;[]&nbsp;(html_comment&nbsp;::&nbsp;html_code&nbsp;::&nbsp;acc_html)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(comment_content&nbsp;::&nbsp;acc_toc)&nbsp;more<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;tok&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;tok&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;loop&nbsp;(tok&nbsp;::&nbsp;acc_tokens)&nbsp;acc_html&nbsp;acc_toc&nbsp;more<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">in</span><br>
@@ -323,7 +323,7 @@ M*)</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;^&nbsp;<span class="string">"&lt;meta&nbsp;charset=\"utf-8\"&gt;"</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;^&nbsp;sprintf&nbsp;<span class="string">"&lt;title&gt;%s&lt;/title&gt;"</span>&nbsp;title<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;^&nbsp;<span class="string">"&lt;/head&gt;"</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;^&nbsp;<span class="string">"&lt;body&gt;&lt;div&nbsp;class=\"container\"&gt;"</span>&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;^&nbsp;<span class="string">"&lt;body&gt;&lt;div&nbsp;class=\"container\"&gt;"</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;^&nbsp;sprintf&nbsp;<span class="string">"&lt;h1&gt;%s&lt;/h1&gt;"</span>&nbsp;title<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;^&nbsp;<span class="string">"&lt;div&nbsp;class=\"row\"&gt;\n&lt;div&nbsp;class=\"col-md-3\"&gt;\n&lt;h2&gt;Contents&lt;/h2&gt;"</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;^&nbsp;toc<br>
@@ -350,16 +350,16 @@ M*)</span><br>
 <br>
 &nbsp;&nbsp;<span class="keyword">let</span>&nbsp;failwithf&nbsp;fmt&nbsp;=&nbsp;ksprintf&nbsp;failwith&nbsp;fmt<br>
 <br>
-&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;succeed&nbsp;s&nbsp;=&nbsp;<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;succeed&nbsp;s&nbsp;=<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">match</span>&nbsp;<span class="constructor">Sys</span>.command&nbsp;s&nbsp;<span class="keyword">with</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;0&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;()<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;other&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;failwithf&nbsp;<span class="string">"Command&nbsp;%S&nbsp;did&nbsp;not&nbsp;succeed:&nbsp;%d"</span>&nbsp;s&nbsp;other<br>
 &nbsp;&nbsp;<span class="keyword">let</span>&nbsp;succeedf&nbsp;fmt=&nbsp;ksprintf&nbsp;succeed&nbsp;fmt<br>
 <br>
 &nbsp;&nbsp;<span class="keyword">let</span>&nbsp;all_files&nbsp;dir&nbsp;=<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Sys</span>.readdir&nbsp;dir&nbsp;|&gt;&nbsp;<span class="constructor">Array</span>.to_list&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Sys</span>.readdir&nbsp;dir&nbsp;|&gt;&nbsp;<span class="constructor">Array</span>.to_list<br>
 &nbsp;&nbsp;&nbsp;&nbsp;|&gt;&nbsp;<span class="constructor">List</span>.filter_map&nbsp;~f:(<span class="keyword">fun</span>&nbsp;d&nbsp;<span class="keywordsign">-&gt;</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;p&nbsp;=&nbsp;dir&nbsp;//&nbsp;d&nbsp;<span class="keyword">in</span>&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;p&nbsp;=&nbsp;dir&nbsp;//&nbsp;d&nbsp;<span class="keyword">in</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span>&nbsp;<span class="constructor">Sys</span>.is_directory&nbsp;p&nbsp;<span class="keyword">then</span>&nbsp;<span class="constructor">None</span>&nbsp;<span class="keyword">else</span>&nbsp;<span class="constructor">Some</span>&nbsp;p)<br>
 <br>
 &nbsp;&nbsp;<span class="keyword">let</span>&nbsp;read_file&nbsp;f&nbsp;=<br>
@@ -402,7 +402,7 @@ M*)</span><br>
 &nbsp;&nbsp;<span class="comment">(*&nbsp;&lt;link&nbsp;rel="stylesheet"&nbsp;href="code_style.css"&nbsp;type="text/css"&gt;&nbsp;*)</span><br>
 ]<br>
 <br>
-<span class="keyword">let</span>&nbsp;configuration&nbsp;=&nbsp;<br>
+<span class="keyword">let</span>&nbsp;configuration&nbsp;=<br>
 &nbsp;&nbsp;<span class="keyword">object</span>&nbsp;(self)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">method</span>&nbsp;output_directory&nbsp;=<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;env&nbsp;<span class="string">"OUTPUT_DIR"</span>&nbsp;|&gt;&nbsp;<span class="constructor">Option</span>.value&nbsp;~default:<span class="string">"_doc"</span><br>
@@ -428,24 +428,24 @@ M*)</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">method</span>&nbsp;title_substitutions&nbsp;=<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;env&nbsp;<span class="string">"TITLE_SUBSTITUTIONS"</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&gt;&nbsp;<span class="constructor">Option</span>.value_map&nbsp;~default:[]&nbsp;~f:parse_list_of_substitutions<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">method</span>&nbsp;title&nbsp;?(with_prefix=<span class="keyword">true</span>)&nbsp;t&nbsp;=&nbsp;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;tt&nbsp;=&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">method</span>&nbsp;title&nbsp;?(with_prefix=<span class="keyword">true</span>)&nbsp;t&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;tt&nbsp;=<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">List</span>.find_map&nbsp;self<span class="keywordsign">#</span>title_substitutions&nbsp;~f:(<span class="keyword">function</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;(a,&nbsp;b)&nbsp;<span class="keyword">when</span>&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;(a,&nbsp;b)&nbsp;<span class="keyword">when</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a&nbsp;=&nbsp;t&nbsp;<span class="keywordsign">||</span>&nbsp;(<span class="keyword">try</span>&nbsp;<span class="constructor">Filename</span>.chop_extension&nbsp;a&nbsp;=&nbsp;t&nbsp;<span class="keyword">with</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keyword">false</span>)&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Some</span>&nbsp;b<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">None</span>)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&gt;&nbsp;<span class="keyword">function</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Some</span>&nbsp;b&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;b<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">None</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">None</span>&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">String</span>.map&nbsp;t&nbsp;~f:(<span class="keyword">function</span>&nbsp;<span class="string">'_'</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="string">'&nbsp;'</span>&nbsp;<span class="keywordsign">|</span>&nbsp;c&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;c)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">in</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sprintf&nbsp;<span class="string">"%s%s"</span>&nbsp;(<span class="keyword">if</span>&nbsp;with_prefix&nbsp;<span class="keyword">then</span>&nbsp;self<span class="keywordsign">#</span>title_prefix&nbsp;<span class="keyword">else</span>&nbsp;<span class="string">""</span>)&nbsp;tt<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">method</span>&nbsp;command_substitutions&nbsp;=<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;env&nbsp;<span class="string">"COMMAND_SUBSTITUTIONS"</span>&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;env&nbsp;<span class="string">"COMMAND_SUBSTITUTIONS"</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&gt;&nbsp;<span class="constructor">Option</span>.value_map&nbsp;~default:[]&nbsp;~f:parse_list_of_substitutions<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">method</span>&nbsp;catch_module_paths&nbsp;=<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;env&nbsp;<span class="string">"CATCH_MODULE_PATHS"</span>&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;env&nbsp;<span class="string">"CATCH_MODULE_PATHS"</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&gt;&nbsp;<span class="constructor">Option</span>.value_map&nbsp;~default:[]&nbsp;~f:parse_list_of_substitutions<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&gt;&nbsp;<span class="constructor">List</span>.filter_map&nbsp;~f:(<span class="keyword">fun</span>&nbsp;(pattern,&nbsp;prefix)&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">try</span>&nbsp;<span class="constructor">Some</span>&nbsp;(pattern,&nbsp;<span class="constructor">Re_posix</span>.compile_pat&nbsp;pattern,&nbsp;prefix)<br>
@@ -501,7 +501,7 @@ M*)</span><br>
 &nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">None</span>&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;say&nbsp;<span class="string">"Warning,&nbsp;no&nbsp;API&nbsp;docs"</span><br>
 &nbsp;&nbsp;<span class="keyword">end</span>;<br>
 &nbsp;&nbsp;<span class="keyword">let</span>&nbsp;menu_md&nbsp;=<br>
-&nbsp;&nbsp;&nbsp;&nbsp;sprintf&nbsp;<span class="string">"-&nbsp;[Home](index.html)\n"</span>&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;sprintf&nbsp;<span class="string">"-&nbsp;[Home](index.html)\n"</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;::&nbsp;(<span class="constructor">List</span>.map&nbsp;configuration<span class="keywordsign">#</span>input_files&nbsp;~f:(<span class="keyword">fun</span>&nbsp;path&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">match</span>&nbsp;<span class="constructor">File_kind</span>.identify_file&nbsp;path&nbsp;<span class="keyword">with</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Markdown</span>&nbsp;m<br>
@@ -547,14 +547,14 @@ M*)</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;=&nbsp;<span class="keyword">fun</span>&nbsp;content&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;write_file&nbsp;(configuration<span class="keywordsign">#</span>output_directory&nbsp;//&nbsp;sprintf&nbsp;<span class="string">"%s.html"</span>&nbsp;base)&nbsp;~content;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;()<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;m&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;m&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;succeedf&nbsp;<span class="string">"cp&nbsp;%s&nbsp;%s/"</span>&nbsp;(<span class="constructor">Filename</span>.quote&nbsp;path)&nbsp;configuration<span class="keywordsign">#</span>output_directory;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;()<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
 &nbsp;&nbsp;<span class="keyword">in</span><br>
 &nbsp;&nbsp;<span class="constructor">List</span>.dedup&nbsp;first_pass_result.more_things_todo&nbsp;|&gt;&nbsp;<span class="constructor">List</span>.iter&nbsp;~f:<span class="keyword">begin</span>&nbsp;<span class="keyword">function</span><br>
 &nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="keywordsign">`</span><span class="constructor">Create_man_page</span>&nbsp;cmd&nbsp;<span class="keywordsign">-&gt;</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;actual_cmd&nbsp;=&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;actual_cmd&nbsp;=<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;stripped&nbsp;=&nbsp;<span class="constructor">String</span>.strip&nbsp;cmd&nbsp;<span class="keyword">in</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">List</span>.find_map&nbsp;configuration<span class="keywordsign">#</span>command_substitutions&nbsp;~f:(<span class="keyword">fun</span>&nbsp;(left,&nbsp;right)&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">match</span>&nbsp;<span class="constructor">String</span>.(sub&nbsp;stripped&nbsp;~index:0&nbsp;~length:(length&nbsp;left))&nbsp;<span class="keyword">with</span><br>
@@ -565,13 +565,13 @@ M*)</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">None</span>)&nbsp;|&gt;&nbsp;<span class="constructor">Option</span>.value&nbsp;~default:stripped<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">in</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;output_file&nbsp;=&nbsp;configuration<span class="keywordsign">#</span>output_directory&nbsp;//&nbsp;<span class="constructor">Markdown</span>.code_url&nbsp;cmd&nbsp;<span class="keyword">in</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">begin</span>&nbsp;<span class="keyword">try</span>&nbsp;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;bash_cmd&nbsp;=&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">begin</span>&nbsp;<span class="keyword">try</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;bash_cmd&nbsp;=<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sprintf&nbsp;<span class="string">"set&nbsp;-o&nbsp;pipefail&nbsp;;&nbsp;%s=groff&nbsp;|&nbsp;groff&nbsp;-Thtml&nbsp;-mandoc&nbsp;&gt;&nbsp;%s"</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;actual_cmd&nbsp;output_file&nbsp;<span class="keyword">in</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;succeedf&nbsp;<span class="string">"bash&nbsp;-c&nbsp;%s"</span>&nbsp;(<span class="constructor">Filename</span>.quote&nbsp;bash_cmd)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">with</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;e&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;e&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ignore&nbsp;(<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;succeedf&nbsp;<span class="string">"(echo&nbsp;'```'&nbsp;;&nbsp;%s&nbsp;;&nbsp;echo&nbsp;'```')&nbsp;&gt;&nbsp;%s"</span>&nbsp;actual_cmd&nbsp;output_file;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Markdown</span>.to_html_and_toc&nbsp;~configuration&nbsp;(read_file&nbsp;output_file)<br>
@@ -591,7 +591,7 @@ M*)</span><br>
 <span class="keyword">let</span>&nbsp;()&nbsp;=<br>
 &nbsp;&nbsp;<span class="keyword">match</span>&nbsp;<span class="constructor">Array</span>.to_list&nbsp;<span class="constructor">Sys</span>.argv&nbsp;<span class="keyword">with</span><br>
 &nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;[&nbsp;_&nbsp;]&nbsp;<span class="keywordsign">|</span>&nbsp;[]&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;&nbsp;main&nbsp;()<br>
-&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;exec&nbsp;::&nbsp;<span class="string">"--help"</span>&nbsp;::&nbsp;_&nbsp;<br>
+&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;exec&nbsp;::&nbsp;<span class="string">"--help"</span>&nbsp;::&nbsp;_<br>
 &nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;exec&nbsp;::&nbsp;<span class="string">"-h"</span>&nbsp;::&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;say&nbsp;<span class="string">"Usage:&nbsp;[ENV_VAR=...]&nbsp;%s"</span>&nbsp;exec;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;say&nbsp;<span class="string">"Current&nbsp;configuration:"</span>;<br>
@@ -599,5 +599,4 @@ M*)</span><br>
 &nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;exec&nbsp;::&nbsp;other&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;say&nbsp;<span class="string">"Wrong&nbsp;command&nbsp;line"</span>;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;exit&nbsp;1<br>
-<br>
 </code></body></html>
