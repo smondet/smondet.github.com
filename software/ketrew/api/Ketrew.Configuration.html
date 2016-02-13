@@ -246,7 +246,7 @@ Union of the possible configuration “modes.”<br>
 </div>
 
 
-<pre><span id="VALcreate"><span class="keyword">val</span> create</span> : <code class="type">?debug_level:int -><br>       ?plugins:<a href="Ketrew.Configuration.html#TYPEplugin">plugin</a> list -><br>       <a href="Ketrew.Configuration.html#TYPEmode">mode</a> -> <a href="Ketrew.Configuration.html#TYPEt">t</a></code></pre><div class="info ">
+<pre><span id="VALcreate"><span class="keyword">val</span> create</span> : <code class="type">?debug_level:int -><br>       ?plugins:<a href="Ketrew.Configuration.html#TYPEplugin">plugin</a> list -><br>       ?tmp_dir:string -> <a href="Ketrew.Configuration.html#TYPEmode">mode</a> -> <a href="Ketrew.Configuration.html#TYPEt">t</a></code></pre><div class="info ">
 Create a complete configuration:
 <p>
 <ul>
@@ -256,6 +256,8 @@ Create a complete configuration:
       noticeably).</li>
 <li><code class="code">plugins</code>: cf. <a href="Ketrew.Configuration.html#TYPEplugin"><code class="code"><span class="constructor">Ketrew</span>.<span class="constructor">Configuration</span>.plugin</code></a>.</li>
 <li><code class="code">mode</code>: cf. <a href="Ketrew.Configuration.html#VALstandalone"><code class="code"><span class="constructor">Ketrew</span>.<span class="constructor">Configuration</span>.standalone</code></a>, <a href="Ketrew.Configuration.html#VALclient"><code class="code"><span class="constructor">Ketrew</span>.<span class="constructor">Configuration</span>.client</code></a>, and <a href="Ketrew.Configuration.html#VALserver"><code class="code"><span class="constructor">Ketrew</span>.<span class="constructor">Configuration</span>.server</code></a>.</li>
+<li><code class="code">tmp_dir</code>: Temporary directory to use (the default is
+      <code class="code"><span class="constructor">Filename</span>.get_temp_dir_name ()</code>).</li>
 </ul>
 <br>
 </div>

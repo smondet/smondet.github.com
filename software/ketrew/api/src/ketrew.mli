@@ -515,7 +515,8 @@ type mode = [
 ]
 (** Union of the possible configuration “modes.” *)
 
-val create : ?debug_level:int -> ?plugins: plugin list -> mode  -> t
+val create :
+  ?debug_level:int -> ?plugins: plugin list -> ?tmp_dir : string -> mode  -> t
 (** Create a complete configuration:
 
     - [debug_level]: integer specifying the amount of verbosity
@@ -524,6 +525,8 @@ val create : ?debug_level:int -> ?plugins: plugin list -> mode  -> t
       noticeably).
     - [plugins]: cf. {!type:plugin}.
     - [mode]: cf. {!standalone}, {!client}, and {!server}.
+    - [tmp_dir]: Temporary directory to use (the default is
+      [Filename.get_temp_dir_name ()]).
 
  *)
 
@@ -718,6 +721,8 @@ val create:
 
 
 val markup : run_parameters -> Ketrew_pure.Internal_pervasives.Display_markup.t
+
+val get_playground: run_parameters -> Ketrew_pure.Path.t option
 end
 module Document : sig
 (**************************************************************************)
