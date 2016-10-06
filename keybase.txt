@@ -1,0 +1,70 @@
+
+==================================================================
+https://keybase.io/smondet
+--------------------------------------------------------------------
+
+I hereby claim:
+
+  * I am an admin of http://seb.mondet.org
+  * I am smondet (https://keybase.io/smondet) on keybase.
+  * I have a public key with fingerprint 48E8 876A 5F5B E376 19F2  AB8A ABDE 8FF0 8479 CA0C
+
+To do so, I am signing this object:
+
+{
+    "body": {
+        "key": {
+            "eldest_kid": "0101cceaa945e3c7a3793f2c8023d41b643c1af72aeb576c96cc4d26e728632f4aee0a",
+            "fingerprint": "48e8876a5f5be37619f2ab8aabde8ff08479ca0c",
+            "host": "keybase.io",
+            "key_id": "abde8ff08479ca0c",
+            "kid": "0101cceaa945e3c7a3793f2c8023d41b643c1af72aeb576c96cc4d26e728632f4aee0a",
+            "uid": "c32b448c4b97ae007cfe03312685c719",
+            "username": "smondet"
+        },
+        "service": {
+            "hostname": "seb.mondet.org",
+            "protocol": "http:"
+        },
+        "type": "web_service_binding",
+        "version": 1
+    },
+    "ctime": 1475789611,
+    "expire_in": 157680000,
+    "prev": "9399eec9dc5f9d5a34bf0dfef7d326c36501c25105c9a7fa6c8ebca674ce2411",
+    "seqno": 3,
+    "tag": "signature"
+}
+
+which yields the signature:
+
+-----BEGIN PGP MESSAGE-----
+Version: Keybase OpenPGP v2.0.58
+Comment: https://keybase.io/crypto
+
+yMImAnicrZJrSBVBGIaPVpaGYUpEYBFbYdrB9j67J7tBURSCdtWUDrOz3x7Xy+5x
+d48lUpiRSFTYhaKQIlAi6EBB0IXAS2VRVKQShkRBgRXVLztkljVr+a+fzZ9hvnne
+d97vY+6lTwmkJZXdnH36c17iaNLj7jOxwM7E3WUNjGbr9UyogamCiQ2qdXC9cJWp
+MyGG5ViOEMBYFSUQCMICUgWDJwrLC7rIabIoEA4biMegSUgmqkyIqPMyIF6RBd4Q
+MQCLmSBjmFYEnKhjWh61FRVQFCRjyZA0EJDMqQaPNQVjTQfFMFhFRCrBLKHCCtv1
+FTSchl3IN21ao4fwRLx/8P85d2zCjgi8JooKETUVYWBZRAxgBYHjZUUiiFN90AXH
+wjVAabfGtnTwmH1BhhbrTAL+XP1GJgHQ8v8w+bYToeKoY3s2savpXYXnRUO+1KuP
++uwe0MJ/XcKaael0jlRQB45r2hYT4ihJPNO35UQkIUWVOS7IwN6o6UDY9Anan8LS
+5T8DddRSFVQVgKg6kQxVl7AgagarG2AgXeBlIsgSHR4vcaxEVIwMLBMFNIJlJBLg
+RY5j/L5qLZsJCTQmjvgdmRELezEHmH09XeVTA0lpgZRpyf7/CqSlZkz+uvTy6T/n
+NerZBS0zE/fHfuXtWnXl1cDTxntfj1/7tuatRVpuDDfXzBg9n/EsM/l58ui5HaWp
+R8a35jQ+jC5hLmePtC9vXV0Cr9vmDs6Zs/bnJXd/a/f1027xyQtDIx2di4u/HBi/
+1gmB3P4oii9c0LWht2lt+tmnfS/ebe5tXxlr2jNw+1nwx4oZ647dspPLE8vKBj/y
+SuenoSd3CjN3fx/SZ6XEcjtCDaeClb0fHpSEs9rd1OYmnHi7OR549CIwKx7p39C8
+MStr09IT03Mq3xulVd7Fonih/L15PH5/+fz10o/+RT3FRbuG3+RuH0vrKzi8s62l
+elCvPdjZ1ZM13LrlasYhR3gZ3fYbi6BGeg==
+=J7Dm
+-----END PGP MESSAGE-----
+
+And finally, I am proving ownership of this host by posting or
+appending to this document.
+
+View my publicly-auditable identity here: https://keybase.io/smondet
+
+==================================================================
+
