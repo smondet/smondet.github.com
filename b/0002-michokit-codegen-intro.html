@@ -1,214 +1,177 @@
-<html>
-<head>
-    <meta charset="utf-8">
-    <title>Protected Page</title>
-    <!-- do not cache this page -->
-    <meta http-equiv="cache-control" content="max-age=0"/>
-    <meta http-equiv="cache-control" content="no-cache"/>
-    <meta http-equiv="expires" content="0"/>
-    <meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT"/>
-    <meta http-equiv="pragma" content="no-cache"/>
-    </style>
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/openpgp/4.0.0/openpgp.min.js"
-    ></script>
-</head>
-<body>
-<h2>PGP-Encrypted Page, please provide a passphrase.</h2>
-<form id="staticrypt-form" action="#" method="post">
-   <input id="staticrypt-password"
-          type="password"
-          name="password"
-          placeholder="passphrase"
-          autofocus/>
-   <input id="staticrypt-form-submit"
-          type="submit"
-          value="DECRYPT"/>
-</form>
-<div id="errors"></div>
-<code><pre id="armored-content">
------BEGIN PGP MESSAGE-----
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"><head><title>Generating OCaml From Michelson Types</title><meta charset="utf-8"/></head><body><style>body {font-family: sans;max-width: 70em;margin: auto}blockquote {padding: 3px;border-left: solid #888 3px}details.details-inline {display: inline}details.details-inline[open] {display: block}details.module-menu { display: inline }
+details.module-menu[open] { display: block }.hundred-days-heading {font-style: italic}.tag-in-list-of-tags {font-family: monospace;color: #800}.remark-block {background-color: #f0f0f0;padding: 7px;margin: 0px;border: solid 2px #aaa;border-radius: 15px}h2 {color: #050;padding: 0px}.header-block {padding: 4px}.header-title {font-size: 300%;color: #050}.header-description {font-size: 120%;font-style: italic;color: #555}.header-metadata {margin-top: 1em;font-size: 80%}.header-author {font-weight: bold}.header-status {margin-left: 1em;font-style: italic}.header-tags {margin-left: 1em}.header-tags::before {content: '⏣ Tags: '}.header-tags::after {content: '.'}.post-status::before {content: '⏰ '}.header-author::before {content: '✍ '}.header-social-links {margin-left: 1em}.header-social-links::before {content: '🔗 '}.header-social-links::after {content: '.'}.code-block {background-color: #f0f0f0;padding: 2px 2em 2px 2em;border-radius: 4px}
+code{white-space: pre-wrap;}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; } /* Alert */
+code span.an { color: #008000; } /* Annotation */
+code span.at { } /* Attribute */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #0000ff; } /* ControlFlow */
+code span.ch { color: #008080; } /* Char */
+code span.cn { } /* Constant */
+code span.co { color: #008000; } /* Comment */
+code span.cv { color: #008000; } /* CommentVar */
+code span.do { color: #008000; } /* Documentation */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.im { } /* Import */
+code span.in { color: #008000; } /* Information */
+code span.kw { color: #0000ff; } /* Keyword */
+code span.op { } /* Operator */
+code span.ot { color: #ff4000; } /* Other */
+code span.pp { color: #ff4000; } /* Preprocessor */
+code span.sc { color: #008080; } /* SpecialChar */
+code span.ss { color: #008080; } /* SpecialString */
+code span.st { color: #008080; } /* String */
+code span.va { } /* Variable */
+code span.vs { color: #008080; } /* VerbatimString */
+code span.wa { color: #008000; font-weight: bold; } /* Warning */
+</style><div><a href="./index.html">home</a><hr/></div><div class="content"><div><div class="header-block"><h1 class="header-title">Generating OCaml From Michelson Types</h1><div class="header-description">Statically typed interaction between smart contracts and application code:<br/>🖝 code-generator: Michelson-type → OCaml-modules</div><div class="header-metadata"><span class="header-author"><a href="https://seb.mondet.org">Seb Mondet</a></span><span class="header-status"><span class="post-status">Posted on: Tue, 23 Jun 2020</span></span><span class="header-tags"><span class="tag-in-list-of-tags">#OCaml</span>, <span class="tag-in-list-of-tags">#MetaProgramming</span>, <span class="tag-in-list-of-tags">#Tezos</span>, <span class="tag-in-list-of-tags">#Michelson</span>, <span class="tag-in-list-of-tags">#SmartContracts</span></span><span></span></div></div> <section class="depth-2"><h2 id="Whyat__">Whyat??</h2><div class="section-content section-content-2"><p><em>Most of the code of a
+<a href='https://en.wikipedia.org/wiki/Decentralized_application'>DApp</a> should be
+off-chain.</em> I&#39;ve been working with <a href='https://smartpy.io'>SmartPy</a> for contracts
+and some of the tests, but I still want a decent programming language,
+i.e. <a href='https://ocaml.org'>OCaml</a>, for writing infrastructure around the
+contracts.</p>
+<p>So, as part of some confined-weekend-hacking, I&#39;ve started writing a
+<strong>michelson-type → ocaml</strong> code generator.</p>
+<p>It takes a type, or the parameter and storage from a full contract and generates
+a big (hopefully) well-typed OCaml module with (de)serializers and such. It
+rebuilds high-level variants and records out of annotations while remembering
+the pairing/or-ing layouts.</p>
+<p>It&#39;s WIP, but it&#39;s there, and so far it&#39;s useful
+(see merge-request
+<a href='https://gitlab.com/tezos/flextesa/-/merge_requests/22'><code>tezos/flextesa!22</code></a>).
+It is part of the Flextesa repository because it comes as one of the
+improvements of the already existing
+<code>lib_michokit</code>, which for instance provides
+the
+<code>flextesa transform-michelson</code> command (to strip error messages, replace
+annotations, etc.).</p>
+<p>The new <code>flextesa ocaml-of-michelson</code> command to generate
+code already has a few interesting options (see <code>--help</code>):</p>
+<ul><li><code>--deriving-*</code>: add custom <code>[@@deriving ..]</code> annotations on generated types,</li><li><code>--integer-types</code>: can be just <code>int</code> or can add <code>big_int</code> and/or <code>Zarith.t</code>,</li><li><code>--output-dune</code>: generate a <code>dune</code> file for the resulting module/library.</li></ul>
 
-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
-=fs36
------END PGP MESSAGE-----
-</pre></code>
-<script>
-
-function tryPassphrase(passphrase,silent) {
-    console.log("tryPassphrase " + passphrase);
-    var openpgp = window.openpgp;
-    var options, encrypted;
-    var encryptedMsg = document.getElementById('armored-content').innerHTML ;
-    
-    var armoredmsg = encryptedMsg.replace(/@/g, "\n");
-    console.log("armoredmsg:\n" + armoredmsg);
-    return openpgp.message.readArmored(armoredmsg).then(function (msg) {
-        // console.log("msg " + JSON.stringify(msg));
-        console.log("passphrase " + JSON.stringify(passphrase));
-        options = {
-            message: msg,
-            passwords: [passphrase], // decrypt with password
-            armor: true,
-            format: 'utf8'
-        };
-        openpgp.decrypt(options).then(function(plaintext) {
-            console.log("plaintext of msg " + JSON.stringify(plaintext));
-            document.open("text/html", "replace");
-            document.write(plaintext.data);
-            document.close();
-            return true;
-        }).catch(function (error) {
-            if (silent) {
-                console.log("error: " + error);
-            } else {
-                var errors = document.getElementById('errors');
-                errors.innerHTML = '<b>ERROR: decryption failed: </b><code>'
-                    + error
-                    + '</code> <i>(usually means wrong password …)</i>';
-            };
-        });
-    });
-};
-console.log("Setting on submit");
-document.getElementById('staticrypt-form').addEventListener('submit', function(e) {
-    e.preventDefault();
-    console.log("on the submit");
-    var passphrase = document.getElementById('staticrypt-password').value;
-    console.log("on the submit passph: " + passphrase);
-    tryPassphrase(passphrase, false);
-});
-window.onload = function() { 
-    var firstAttempt = "";
-    if (window.location.hash.charAt(0) == '#') {
-        firstAttempt = window.location.hash.substring(1);
-    } else {
-        firstAttempt = window.location.hash
-    };
-    tryPassphrase(firstAttempt, true).then(function(ret) {
-        if (ret) {
-            console.log("on the else of firstAttempt");
-        } else {
-            console.log("Nope from the hash: " + firstAttempt);
-        };
-    }, function(error) {
-        console.log("Error from tryPassphrase: " + error);
-    });
-};
-</script>
-</body>
-</html>
+<p>The generated code can be made <code>js_of_ocaml</code>-friendly, and so far does not
+depend on <code>tezos-*</code> libraries.</p>
+</div></section><section class="depth-2"><h2 id="Example">Example</h2><div class="section-content section-content-2"><p>The example files, in full, are available in this
+<a href='https://gist.github.com/smondet/229a88efbaeeab28f7d889a968a5b954'>gist</a>.</p>
+<p>We start from a basic, meaningless, but didactic piece of Michelson:</p>
+<div class="code-block"><div class="sourceCode" id="michelson-code"><pre class="sourceCode numberSource ocaml numberLines"><code class="sourceCode ocaml"><span id="michelson-code-1"><a href="#michelson-code-1"></a>parameter</span>
+<span id="michelson-code-2"><a href="#michelson-code-2"></a>  (<span class="kw">or</span></span>
+<span id="michelson-code-3"><a href="#michelson-code-3"></a>    (address %ep1)</span>
+<span id="michelson-code-4"><a href="#michelson-code-4"></a>    (<span class="kw">or</span></span>
+<span id="michelson-code-5"><a href="#michelson-code-5"></a>      (signature %sign_stuff)</span>
+<span id="michelson-code-6"><a href="#michelson-code-6"></a>      (<span class="dt">unit</span> %default)));</span>
+<span id="michelson-code-7"><a href="#michelson-code-7"></a>storage</span>
+<span id="michelson-code-8"><a href="#michelson-code-8"></a>  (pair</span>
+<span id="michelson-code-9"><a href="#michelson-code-9"></a>    (pair</span>
+<span id="michelson-code-10"><a href="#michelson-code-10"></a>      (nat %some_counter)</span>
+<span id="michelson-code-11"><a href="#michelson-code-11"></a>      (<span class="dt">string</span> %some_name))</span>
+<span id="michelson-code-12"><a href="#michelson-code-12"></a>    (<span class="kw">or</span> %a_variant_thing (<span class="dt">bytes</span> %some_data) (key %the_key)));</span>
+<span id="michelson-code-13"><a href="#michelson-code-13"></a>code {FAILWITH};</span></code></pre></div></div><p>The <code>code { }</code> section is irrelevant for this example, hence we just use
+<code>FAILWITH</code>.</p>
+<p>One generates the corresponding OCaml code with:</p>
+<div class="code-block"><div class="sourceCode" id="cb1"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1"></a><span class="ex">flextesa</span> ocaml-of-michel example.tz example.ml</span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="ex">ocamlformat</span> -i --enable-out example.ml</span></code></pre></div></div><p><code>ocamlformat</code> is icing on the cake for code-generators which do not need to
+care about pretty-printing any more.</p>
+<p>In the case of a whole contract (likely most common), we generate
+one <code>Parameter</code> and one <code>Storage</code> sub-modules, following all their
+dependencies down to representations of Michelson primitive types
+(called <code>M_*</code>).</p>
+<p>Here we see the corresponding parameter type:</p>
+<div class="code-block"><div class="sourceCode" id="parameter-type" data-startFrom="254"><pre class="sourceCode numberSource ocaml numberLines"><code class="sourceCode ocaml" style="counter-reset: source-line 253;"><span id="parameter-type-254"><a href="#parameter-type-254"></a>  <span class="kw">type</span> t =</span>
+<span id="parameter-type-255"><a href="#parameter-type-255"></a>    | Default <span class="kw">of</span> M_unit.t</span>
+<span id="parameter-type-256"><a href="#parameter-type-256"></a>    | Ep1 <span class="kw">of</span> M_address.t</span>
+<span id="parameter-type-257"><a href="#parameter-type-257"></a>    | Sign_stuff <span class="kw">of</span> M_signature.t</span>
+<span id="parameter-type-258"><a href="#parameter-type-258"></a>  [@@deriving show, eq]</span></code></pre></div></div><p>→ the code generator has reconstructed an OCaml
+<a href='https://en.wikipedia.org/wiki/Algebraic_data_type'>variant</a> from the
+annotations of multiple <code>or</code>s of the parameter-type (a.k.a. “entry-points” 😉,
+cf. <a href='#michelson-code-2'>example.tz l. 2</a>). It has also assigned a couple of
+<a href='https://github.com/ocaml-ppx/ppx_deriving'><code>ppx_deriving</code></a>
+AST-attributes.</p>
+<p>Similarly records are reconstructed from <em>“pairs of pairs”</em> for the storage
+type, and an intermediary <code>A_variant_thing</code> module has been created for the more
+complex type of the field <a href='#michelson-code-12'><code>%a_variant_thing</code></a>:</p>
+<div class="code-block"><div class="sourceCode" id="storage-type" data-startFrom="150"><pre class="sourceCode numberSource ocaml numberLines"><code class="sourceCode ocaml" style="counter-reset: source-line 149;"><span id="storage-type-150"><a href="#storage-type-150"></a><span class="kw">module</span> Storage = <span class="kw">struct</span></span>
+<span id="storage-type-151"><a href="#storage-type-151"></a>  <span class="kw">open</span>! Result_extras</span>
+<span id="storage-type-152"><a href="#storage-type-152"></a></span>
+<span id="storage-type-153"><a href="#storage-type-153"></a>  <span class="kw">type</span> t = {</span>
+<span id="storage-type-154"><a href="#storage-type-154"></a>    a_variant_thing : A_variant_thing.t;</span>
+<span id="storage-type-155"><a href="#storage-type-155"></a>    some_counter : M_nat.t;</span>
+<span id="storage-type-156"><a href="#storage-type-156"></a>    some_name : M_string.t;</span>
+<span id="storage-type-157"><a href="#storage-type-157"></a>  }</span>
+<span id="storage-type-158"><a href="#storage-type-158"></a>  [@@deriving show, eq, make]</span>
+<span id="storage-type-159"><a href="#storage-type-159"></a></span>
+<span id="storage-type-160"><a href="#storage-type-160"></a>  <span class="kw">let</span> layout () : Pairing_layout.t = `P (`P (`V, `V), `V)</span></code></pre></div></div><p>We also see the value <code>layout</code> which remembers how the arrangement of pairs
+is in the original Michelson.</p>
+<p>For now, the code-generator creates <code>to_concrete</code> and <code>of_json</code> functions which
+are helpful to generate <code>tezos-client</code> commands and to parse the results or RPCs
+respectively. In the case of variants, a special <code>to_concrete_entry_point</code> which
+returns an entry-point name and its parameter (hence without the <code>Left/Right</code>
+“path”).</p>
+<p>One can check the result of <code>ocamlc -i example.ml</code>,
+or better, of <code>ocamlfind ocamlc -i example.ml -package ppx_deriving.std</code> to get,
+and overview. See the module-type for <code>Parameter</code>:</p>
+<div class="code-block"><div class="sourceCode" id="parameter-module-type" data-startFrom="210"><pre class="sourceCode numberSource ocaml numberLines"><code class="sourceCode ocaml" style="counter-reset: source-line 209;"><span id="parameter-module-type-210"><a href="#parameter-module-type-210"></a><span class="kw">module</span> Parameter :</span>
+<span id="parameter-module-type-211"><a href="#parameter-module-type-211"></a>  <span class="kw">sig</span></span>
+<span id="parameter-module-type-212"><a href="#parameter-module-type-212"></a>    <span class="kw">type</span> t =</span>
+<span id="parameter-module-type-213"><a href="#parameter-module-type-213"></a>        Default <span class="kw">of</span> M_unit.t</span>
+<span id="parameter-module-type-214"><a href="#parameter-module-type-214"></a>      | Ep1 <span class="kw">of</span> M_address.t</span>
+<span id="parameter-module-type-215"><a href="#parameter-module-type-215"></a>      | Sign_stuff <span class="kw">of</span> M_signature.t</span>
+<span id="parameter-module-type-216"><a href="#parameter-module-type-216"></a>    <span class="kw">val</span> pp :</span>
+<span id="parameter-module-type-217"><a href="#parameter-module-type-217"></a>      Ppx_deriving_runtime.<span class="dt">Format</span>.formatter -&gt; t -&gt; Ppx_deriving_runtime.<span class="dt">unit</span></span>
+<span id="parameter-module-type-218"><a href="#parameter-module-type-218"></a>    <span class="kw">val</span> show : t -&gt; Ppx_deriving_runtime.<span class="dt">string</span></span>
+<span id="parameter-module-type-219"><a href="#parameter-module-type-219"></a>    <span class="kw">val</span> equal : t -&gt; t -&gt; Ppx_deriving_runtime.<span class="dt">bool</span></span>
+<span id="parameter-module-type-220"><a href="#parameter-module-type-220"></a>    <span class="kw">val</span> layout : <span class="dt">unit</span> -&gt; Pairing_layout.t</span>
+<span id="parameter-module-type-221"><a href="#parameter-module-type-221"></a>    <span class="kw">val</span> to_concrete : t -&gt; <span class="dt">string</span></span>
+<span id="parameter-module-type-222"><a href="#parameter-module-type-222"></a>    <span class="kw">val</span> to_concrete_entry_point :</span>
+<span id="parameter-module-type-223"><a href="#parameter-module-type-223"></a>      t -&gt; [ `Name <span class="kw">of</span> <span class="dt">string</span> ] * [ `Literal <span class="kw">of</span> <span class="dt">string</span> ]</span>
+<span id="parameter-module-type-224"><a href="#parameter-module-type-224"></a>    <span class="kw">val</span> of_json : Json_value.t -&gt; (t, [&gt; Json_value.parse_error ]) result</span>
+<span id="parameter-module-type-225"><a href="#parameter-module-type-225"></a>  <span class="kw">end</span></span></code></pre></div></div></div></section><section class="depth-2"><h2 id="___Real_World____Usage">“Real World” Usage</h2><div class="section-content section-content-2"><p>This has been in use in
+<a href='https://gitlab.com/smondet/fa2-smartpy/'><code>smondet/fa2-smartpy</code></a> to make
+stronger tests, a testing-wallet app, and benchmarks of various “builds” of the
+<a href='https://gitlab.com/tzip/tzip/-/blob/master/proposals/tzip-12/tzip-12.md'>FA2</a>
+implementation (which will be the subject of further blog posts).  It has
+allowed me to follow along the many changes in the FA2 specification
+with the comfort of
+OCaml types.  The <em>testing-wallet</em> is also in use in the new FA2-SmartPy
+<a href='https://assets.tqtezos.com/docs/token-contracts/fa2/1-fa2-smartpy/#the-fatoo-application'>tutorial</a>.</p>
+</div></section><section class="depth-2"><h2 id="Stuff_To_Do">Stuff To Do</h2><div class="section-content section-content-2"><p>Among the many improvements one could think of, the most urgent
+seems to be:</p>
+<ul><li>Fix all the cases of sanitization of the Michelson annotations to be used
+ properly as OCaml identifiers (right now it should be easy to generate wrong
+ OCaml).</li><li>Add an option to use the <code>tezos-micheline</code> library instead of custom
+ parsers and printers (and hence gain the <code>of_concrete</code> and <code>to_json</code> functions!).</li></ul></div></section> <div class="remark-block" style="margin: 4em 0 4em 0"><p><span class="hundred-days-heading">After <a href='https://seb.mondet.org/blog/'>8 years</a> of <em>blograstination</em>, this is post #2 of my attempt at not getting too fast lagging behind on the <a href="https://100daystooffload.com/"><code>#100DaysToOffload</code></a> “challenge” … Let&#39;s see where <a href='https://seb.mondet.org/b/'>this</a> goes.</span></p></div></div></div></body></html>
