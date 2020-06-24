@@ -138,7 +138,7 @@ complex type of the field <a href='#michelson-code-12'><code>%a_variant_thing</c
 <span id="storage-type-160"><a href="#storage-type-160"></a>  <span class="kw">let</span> layout () : Pairing_layout.t = `P (`P (`V, `V), `V)</span></code></pre></div></div><p>We also see the value <code>layout</code> which remembers how the arrangement of pairs
 is in the original Michelson.</p>
 <p>For now, the code-generator creates <code>to_concrete</code> and <code>of_json</code> functions which
-are helpful to generate <code>tezos-client</code> commands and to parse the results or RPCs
+are helpful to generate <code>tezos-client</code> commands and to parse the results of RPCs
 respectively. In the case of variants, a special <code>to_concrete_entry_point</code> which
 returns an entry-point name and its parameter (hence without the <code>Left/Right</code>
 “path”).</p>
