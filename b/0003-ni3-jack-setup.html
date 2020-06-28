@@ -1,189 +1,127 @@
-<html>
-<head>
-    <meta charset="utf-8">
-    <title>Protected Page</title>
-    <!-- do not cache this page -->
-    <meta http-equiv="cache-control" content="max-age=0"/>
-    <meta http-equiv="cache-control" content="no-cache"/>
-    <meta http-equiv="expires" content="0"/>
-    <meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT"/>
-    <meta http-equiv="pragma" content="no-cache"/>
-    </style>
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/openpgp/4.0.0/openpgp.min.js"
-    ></script>
-</head>
-<body>
-<h2>PGP-Encrypted Page, please provide a passphrase.</h2>
-<form id="staticrypt-form" action="#" method="post">
-   <input id="staticrypt-password"
-          type="password"
-          name="password"
-          placeholder="passphrase"
-          autofocus/>
-   <input id="staticrypt-form-submit"
-          type="submit"
-          value="DECRYPT"/>
-</form>
-<div id="errors"></div>
-<code><pre id="armored-content">
------BEGIN PGP MESSAGE-----
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"><head><title>JackAudio Setup for NI3 Dance</title><meta charset="utf-8"/></head><body><style>body {font-family: sans;max-width: 70em;margin: auto;padding: 10px}blockquote {padding: 3px;border-left: solid #888 3px}details.details-inline {display: inline}details.details-inline[open] {display: block}details.module-menu { display: inline }
+details.module-menu[open] { display: block }.hundred-days-heading {font-style: italic}.tag-in-list-of-tags {font-family: monospace;color: #800}.remark-block {background-color: #f0f0f0;padding: 7px;margin: 0px;border: solid 2px #aaa;border-radius: 15px}h2 {color: #050;padding: 0px}.header-block {padding: 4px}.header-title {font-size: 300%;color: #050}.header-description {font-size: 120%;font-style: italic;color: #555}.header-metadata {margin-top: 1.5em;margin-bottom: 1em;font-size: 100%;padding: 10px;border-left: solid 5px #ccc}.header-author {font-weight: bold;display: block}.header-status {font-style: italic;display: block}.header-tags {display: block}.header-tags::before {content: '⏣ Tags: '}.header-tags::after {content: '.'}.post-status::before {content: '⏰ ';font-style: normal}.header-author::before {content: '✍ '}.header-social-links {display: block}.header-social-links::before {content: '🔗 '}.header-social-links::after {content: '.'}.header-license-badge {opacity: 0.6;display: block}.header-license-badge:hover {opacity: 0.9}.header-license-badge::before {content: '♲ ';opacity: 0.9}.code-block {background-color: #f0f0f0;padding: 2px 2em 2px 2em;border-radius: 4px}.index-item-bloc {margin: 1em 0em 1em 0em}
+code{white-space: pre-wrap;}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; } /* Alert */
+code span.an { color: #008000; } /* Annotation */
+code span.at { } /* Attribute */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #0000ff; } /* ControlFlow */
+code span.ch { color: #008080; } /* Char */
+code span.cn { } /* Constant */
+code span.co { color: #008000; } /* Comment */
+code span.cv { color: #008000; } /* CommentVar */
+code span.do { color: #008000; } /* Documentation */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.im { } /* Import */
+code span.in { color: #008000; } /* Information */
+code span.kw { color: #0000ff; } /* Keyword */
+code span.op { } /* Operator */
+code span.ot { color: #ff4000; } /* Other */
+code span.pp { color: #ff4000; } /* Preprocessor */
+code span.sc { color: #008080; } /* SpecialChar */
+code span.ss { color: #008080; } /* SpecialString */
+code span.st { color: #008080; } /* String */
+code span.va { } /* Variable */
+code span.vs { color: #008080; } /* VerbatimString */
+code span.wa { color: #008000; font-weight: bold; } /* Warning */
+</style><div><a href="./index.html">home</a><hr/></div><div class="content"><div><div class="header-block"><h1 class="header-title">JackAudio Setup for NI3 Dance</h1><div class="header-description">A post that describes NI3 Dance's live software setup:<br/>All free and open-source software, MIDI and Audio routed with Jack.</div><div class="header-metadata"><span class="header-author"><a href="https://seb.mondet.org">Seb Mondet</a></span><span class="header-status"><span class="post-status">Posted on: Sun, 28 Jun 2020</span></span><span class="header-license-badge"><a href="http://creativecommons.org/licenses/by/4.0/"><img src="https://i.creativecommons.org/l/by/4.0/80x15.png" alt="Creative Commons License: CC-By"/></a></span><span class="header-tags"><span class="tag-in-list-of-tags">#NI3Dance</span>, <span class="tag-in-list-of-tags">#JackAudio</span>, <span class="tag-in-list-of-tags">#LinuxMusic</span></span><span></span></div></div> <p>I presented <a href='https://gitlab.com/smondet/vecosek'>Vecosek</a> and
+<a href='https://gitlab.com/smondet/vimebac'>Vimebac</a> a couple of years ago at
+<a href='https://wr.mondet.org/slides/vecosek@ocaml2018/#/'>OCaml-2018</a> and
+<a href='https://wr.mondet.org/slides/vecosek@farm2018/#/'>FARM-2018</a>.  Afterwards, I
+swore to some people I&#39;d describe a bit more my particular usage within <a href='https://ni3.dance'>NI3
+Dance</a>; so here it is.</p>
+<div style="margin: auto; width: 70%; border: solid 3px #bbb; padding: 5px"><a href="https://user-images.githubusercontent.com/617111/85911133-17a65700-b7f1-11ea-98cf-bfe16aaba6d1.gif"><img src="https://user-images.githubusercontent.com/617111/85911133-17a65700-b7f1-11ea-98cf-bfe16aaba6d1.gif" alt="Desktop with the setup" style="width: 100% ; "/></a></div><p>I&#39;ve never managed to make “native” session management work for me
+reliably. I
+need my setup to be resilient to to missing items
+or some changes in configuration (e.g. presence or not of MIDI/Audio extra
+hardware, like my
+“<a href='https://loopcommunity.com/en-us/looptimus'>Looptimus</a>”).
+<!-- things like connecting the pedal should be able to fail --></p>
+<p>⇒ My session management is <em>GNU-Screen</em> 👴</p>
+<p>A script just starts the various applications like this:</p>
+<div class="code-block"><pre><code>screen -S ni3_session -X screen -t Sampson ./start_sampson</code></pre></div><p>It seems archaic but it provides easy logging and easier killing.</p>
+<p>I start everything 4 phases called manually
+(they are just different key combinations
+using <a href='https://seb.mondet.org/b/0001-comk-intro.html'>Comk</a> ☺).</p>
+<p>The first only starts
+QJackCtl
+(<a href='https://github.com/rncbc/qjackctl'><code>rncbc/qjackctl</code></a>); it
+can be useful to change the configuration before starting the
+rest.
+Starting <code>jackd</code> can sometimes just fail, it&#39;s nice to have a simple setup to
+debug.</p>
+<p>The second start all the small applications that can live happily by themselves:</p>
+<ul><li><a href='https://drumkv1.sourceforge.io/'>Drumkv1</a> <em>“is an old-school
+ all-digital drum-kit sampler synthesizer with stereo fx.”</em></li><li><a href='https://github.com/zynaddsubfx/zynaddsubfx'>ZynAddSubFx</a>
+ is a famous synth in the Music-on-Linux community.</li><li><a href='https://bitbucket.org/andyyates/sampson-forked/'>Sampson</a> is a very simple
+ command-line sampler, it is obscure and may be abandoned.</li><li><a href='https://repo.or.cz/a2jmidid.git'>a2jmidid</a> is a bridge between ASLA-MIDI
+ interfaces and Jack, it is useful to connect to MIDI hardware.</li><li><a href='https://gitlab.com/smondet/vimebac'>Vimebac</a> is the visual feedback, band
+ conductor, and MIDI controller (written by <em>me</em> in OCaml).</li></ul>
 
-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
-esHqUHI=
-=QEE4
------END PGP MESSAGE-----
-</pre></code>
-<script>
+<p>The third stage only starts
+<a href='https://ardour.org/'>Ardour</a>
+with a custom session.
+Ardour knows about its <em>Jack-connections</em>,
+so it&#39;s better if all other software is started by the time it initializes.
+It used here as a mixer and effects host, I use
+simple things from
+<a href='https://calf-studio-gear.org/'>calf-studio-gear</a>.</p>
+<p>The last stage is often restarted and tweaked: it runs
+<a href='https://gitlab.com/smondet/vecosek'>Vecosek</a> with a freshly generated
+<em>“scene”</em> <em>and</em> then runs an OCaml script to connect the various
+jack-endpoints (with the <code>--start-hook</code> option).</p>
+<p>I only ever use <a href='https://drobilla.net/software/patchage'>patchage</a> to make nice
+screenshots:</p>
+<div style="margin: auto; width: 70%; border: solid 3px #bbb; padding: 5px"><a href="https://user-images.githubusercontent.com/617111/85911449-46253180-b7f3-11ea-9126-5b8d2b75c534.png"><img src="https://user-images.githubusercontent.com/617111/85911449-46253180-b7f3-11ea-9126-5b8d2b75c534.png" alt="Patchage screenshot of the setup" style="width: 100% ; "/></a></div><p>We see <code>a2jmidid</code> and Vimebac being control inputs for vecosek, itself connected
+to MIDI-instruments as well as back to Vimebac for visual feedback. Then the
+flow leaves the MIDI-world (in <span style='color: #900'>red</span>) onto the
+Audio world (<span style='color: #090'>green</span>) for mixing, effects, and
+output (“system playback”).</p>
+<center><b>⁂</b></center>
 
-function tryPassphrase(passphrase,silent) {
-    console.log("tryPassphrase " + passphrase);
-    var openpgp = window.openpgp;
-    var options, encrypted;
-    var encryptedMsg = document.getElementById('armored-content').innerHTML ;
-    
-    var armoredmsg = encryptedMsg.replace(/@/g, "\n");
-    console.log("armoredmsg:\n" + armoredmsg);
-    return openpgp.message.readArmored(armoredmsg).then(function (msg) {
-        // console.log("msg " + JSON.stringify(msg));
-        console.log("passphrase " + JSON.stringify(passphrase));
-        options = {
-            message: msg,
-            passwords: [passphrase], // decrypt with password
-            armor: true,
-            format: 'utf8'
-        };
-        openpgp.decrypt(options).then(function(plaintext) {
-            console.log("plaintext of msg " + JSON.stringify(plaintext));
-            document.open("text/html", "replace");
-            document.write(plaintext.data);
-            document.close();
-            return true;
-        }).catch(function (error) {
-            if (silent) {
-                console.log("error: " + error);
-            } else {
-                var errors = document.getElementById('errors');
-                errors.innerHTML = '<b>ERROR: decryption failed: </b><code>'
-                    + error
-                    + '</code> <i>(usually means wrong password …)</i>';
-            };
-        });
-    });
-};
-console.log("Setting on submit");
-document.getElementById('staticrypt-form').addEventListener('submit', function(e) {
-    e.preventDefault();
-    console.log("on the submit");
-    var passphrase = document.getElementById('staticrypt-password').value;
-    console.log("on the submit passph: " + passphrase);
-    tryPassphrase(passphrase, false);
-});
-window.onload = function() { 
-    var firstAttempt = "";
-    if (window.location.hash.charAt(0) == '#') {
-        firstAttempt = window.location.hash.substring(1);
-    } else {
-        firstAttempt = window.location.hash
-    };
-    tryPassphrase(firstAttempt, true).then(function(ret) {
-        if (ret) {
-            console.log("on the else of firstAttempt");
-        } else {
-            console.log("Nope from the hash: " + firstAttempt);
-        };
-    }, function(error) {
-        console.log("Error from tryPassphrase: " + error);
-    });
-};
-</script>
-</body>
-</html>
+<p>At some point, instead of Ardour, it used to be <a href='https://non.tuxfamily.org/wiki/Non%20Mixer'>Non
+Mixer</a> together with the Calf
+plugins in <em>standalone</em> mode.  But Ardour, while heavy and capricious,
+simplifies a lot, and provides quick “record snapshot” functionality to get a
+jam on tape.</p>
+<p>There are still a couple of pain points:</p>
+<ul><li>The whole thing is still a bit annoying to kill, Ardour seems to really
+ dislike being quit improperly, and <code>jackd</code> needs to be shutdown explicitly.</li><li>The configuration of <code>jackd</code> is is hard to control, and even harder to
+ automate and make portable.  Next thing to do would be to figure out how to
+ configure it manually (incl. to automate the sound-card choice) and manage the
+ jack-server process separately instead of letting QJackCtl start/stop it.</li></ul> <div class="remark-block" style="margin: 4em 0 4em 0"><p><span class="hundred-days-heading">After <a href='https://seb.mondet.org/blog/'>8 years</a> of <em>blograstination</em>, this is post #3 of my attempt at not getting too fast lagging behind on the <a href="https://100daystooffload.com/"><code>#100DaysToOffload</code></a> “challenge” … Let&#39;s see where <a href='https://seb.mondet.org/b/'>this</a> goes.</span></p></div></div></div></body></html>
