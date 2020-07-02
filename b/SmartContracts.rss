@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0">
+ <channel><title>Seb's blog /b/</title>
+  <description>Feed for tag “SmartContracts”</description>
+  <link>https://seb.mondet.org/b/</link>
+  <lastBuildDate>Wed, 01 Jul 2020 22:35:24 -0400</lastBuildDate>
+  <pubDate>Wed, 01 Jul 2020 22:35:24 -0400</pubDate>
+  <!--RSS Feed for Seb's blog /b/-->
+  <item><title>Generating OCaml From Michelson Types</title>
+   <description>
+    Statically typed interaction between smart contracts and application
+    code:
+    🖝 code-generator: Michelson-type → OCaml-modules
+   </description>
+   <link>https://seb.mondet.org/b/0002-michokit-codegen-intro.html</link>
+   <guid>https://seb.mondet.org/b/0002-michokit-codegen-intro.html</guid>
+   <pubDate>Tue, 23 Jun 2020 13:00:42 -0400</pubDate>
+  </item>
+ </channel>
+</rss>

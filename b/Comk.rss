@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0">
+ <channel><title>Seb's blog /b/</title>
+  <description>Feed for tag “Comk”</description>
+  <link>https://seb.mondet.org/b/</link>
+  <lastBuildDate>Wed, 01 Jul 2020 22:35:24 -0400</lastBuildDate>
+  <pubDate>Wed, 01 Jul 2020 22:35:24 -0400</pubDate>
+  <!--RSS Feed for Seb's blog /b/-->
+  <item><title>Comk: Graphical Menus In OCaml</title>
+   <description>
+    Re-Introducing the Comk library:
+    Making single-key and dmenu-like fast graphical menus with an OCaml EDSL.
+   </description><link>https://seb.mondet.org/b/0001-comk-intro.html</link>
+   <guid>https://seb.mondet.org/b/0001-comk-intro.html</guid>
+   <pubDate>Sat, 20 Jun 2020 13:00:42 -0400</pubDate>
+  </item>
+ </channel>
+</rss>

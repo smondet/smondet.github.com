@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0">
+ <channel><title>Seb's blog /b/</title>
+  <description>Feed for tag “NI3Dance”</description>
+  <link>https://seb.mondet.org/b/</link>
+  <lastBuildDate>Wed, 01 Jul 2020 22:35:24 -0400</lastBuildDate>
+  <pubDate>Wed, 01 Jul 2020 22:35:24 -0400</pubDate>
+  <!--RSS Feed for Seb's blog /b/-->
+  <item><title>JackAudio Setup for NI3 Dance</title>
+   <description>
+    A post that describes NI3 Dance's live software setup:
+    All free and open-source software, MIDI and Audio routed with Jack.
+   </description>
+   <link>https://seb.mondet.org/b/0003-ni3-jack-setup.html</link>
+   <guid>https://seb.mondet.org/b/0003-ni3-jack-setup.html</guid>
+   <pubDate>Sun, 28 Jun 2020 13:00:42 -0400</pubDate>
+  </item>
+ </channel>
+</rss>
