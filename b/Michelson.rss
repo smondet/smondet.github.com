@@ -3,8 +3,8 @@
  <channel><title>Seb's blog /b/</title>
   <description>Feed for tag “Michelson”</description>
   <link>https://seb.mondet.org/b/</link>
-  <lastBuildDate>Wed, 01 Jul 2020 22:35:24 -0400</lastBuildDate>
-  <pubDate>Wed, 01 Jul 2020 22:35:24 -0400</pubDate>
+  <lastBuildDate>Fri, 03 Jul 2020 09:43:41 -0400</lastBuildDate>
+  <pubDate>Fri, 03 Jul 2020 09:43:41 -0400</pubDate>
   <!--RSS Feed for Seb's blog /b/-->
   <item><title>Generating OCaml From Michelson Types</title>
    <description>
