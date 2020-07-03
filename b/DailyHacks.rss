@@ -3,8 +3,8 @@
  <channel><title>Seb's blog /b/</title>
   <description>Feed for tag “DailyHacks”</description>
   <link>https://seb.mondet.org/b/</link>
-  <lastBuildDate>Fri, 03 Jul 2020 12:10:23 -0400</lastBuildDate>
-  <pubDate>Fri, 03 Jul 2020 12:10:23 -0400</pubDate>
+  <lastBuildDate>Fri, 03 Jul 2020 12:20:33 -0400</lastBuildDate>
+  <pubDate>Fri, 03 Jul 2020 12:20:33 -0400</pubDate>
   <!--RSS Feed for Seb's blog /b/-->
   <item><title>Comk: Graphical Menus In OCaml</title>
    <description>
@@ -15,9 +15,7 @@
    <pubDate>Sat, 20 Jun 2020 13:00:42 -0400</pubDate>
   </item>
   <item><title>Adding an RSS Feed to This Blog</title>
-   <description>
-    Adding an RSS feed to this blog.
-    Quick OCaml hack to generate some old-school XML.
+   <description>Quick OCaml hack to generate some old-school XML.
    </description>
    <link>https://seb.mondet.org/b/0004-adding-an-rss-feed.html</link>
    <guid>https://seb.mondet.org/b/0004-adding-an-rss-feed.html</guid>
