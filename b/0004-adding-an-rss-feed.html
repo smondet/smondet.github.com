@@ -1,190 +1,147 @@
-<html>
-<head>
-    <meta charset="utf-8">
-    <title>Protected Page</title>
-    <!-- do not cache this page -->
-    <meta http-equiv="cache-control" content="max-age=0"/>
-    <meta http-equiv="cache-control" content="no-cache"/>
-    <meta http-equiv="expires" content="0"/>
-    <meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT"/>
-    <meta http-equiv="pragma" content="no-cache"/>
-    </style>
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/openpgp/4.0.0/openpgp.min.js"
-    ></script>
-</head>
-<body>
-<h2>PGP-Encrypted Page, please provide a passphrase.</h2>
-<form id="staticrypt-form" action="#" method="post">
-   <input id="staticrypt-password"
-          type="password"
-          name="password"
-          placeholder="passphrase"
-          autofocus/>
-   <input id="staticrypt-form-submit"
-          type="submit"
-          value="DECRYPT"/>
-</form>
-<div id="errors"></div>
-<code><pre id="armored-content">
------BEGIN PGP MESSAGE-----
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"><head><title>Adding an RSS Feed to This Blog</title><meta charset="utf-8"/></head><body><style>body {font-family: sans;max-width: 70em;margin: auto;padding: 10px}blockquote {padding: 3px;border-left: solid #888 3px}details.details-inline {display: inline}details.details-inline[open] {display: block}details.module-menu { display: inline }
+details.module-menu[open] { display: block }.hundred-days-heading {font-style: italic}.tag-in-list-of-tags {font-family: monospace;color: #800}.remark-block {background-color: #f0f0f0;padding: 7px;margin: 0px;border: solid 2px #aaa;border-radius: 15px}h2 {color: #050;padding: 0px}.header-block {padding: 4px}.header-title {font-size: 300%;color: #050}.header-description {font-size: 120%;font-style: italic;color: #555}.header-metadata {margin-top: 1.5em;margin-bottom: 1em;font-size: 100%;padding: 10px;border-left: solid 5px #ccc}.header-author {font-weight: bold;display: block}.header-status {font-style: italic;display: block}.header-tags {display: block}.header-tags::before {content: '⏣ Tags: '}.header-tags::after {content: '.'}.post-status::before {content: '⏰ ';font-style: normal}.header-author::before {content: '✍ '}.header-social-links {display: block}.header-social-links::before {content: '🔗 '}.header-social-links::after {content: '.'}.header-license-badge {opacity: 0.6;display: block}.header-license-badge:hover {opacity: 0.9}.header-license-badge::before {content: '♲ ';opacity: 0.9}.code-block {background-color: #f0f0f0;padding: 2px 2em 2px 2em;border-radius: 4px}.index-item-bloc {margin: 1em 0em 1em 0em}
+code{white-space: pre-wrap;}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; } /* Alert */
+code span.an { color: #008000; } /* Annotation */
+code span.at { } /* Attribute */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #0000ff; } /* ControlFlow */
+code span.ch { color: #008080; } /* Char */
+code span.cn { } /* Constant */
+code span.co { color: #008000; } /* Comment */
+code span.cv { color: #008000; } /* CommentVar */
+code span.do { color: #008000; } /* Documentation */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.im { } /* Import */
+code span.in { color: #008000; } /* Information */
+code span.kw { color: #0000ff; } /* Keyword */
+code span.op { } /* Operator */
+code span.ot { color: #ff4000; } /* Other */
+code span.pp { color: #ff4000; } /* Preprocessor */
+code span.sc { color: #008080; } /* SpecialChar */
+code span.ss { color: #008080; } /* SpecialString */
+code span.st { color: #008080; } /* String */
+code span.va { } /* Variable */
+code span.vs { color: #008080; } /* VerbatimString */
+code span.wa { color: #008000; font-weight: bold; } /* Warning */
+</style><div><a href="./index.html">home</a><hr/></div><div class="content"><div><div class="header-block"><h1 class="header-title">Adding an RSS Feed to This Blog</h1><div class="header-description">Adding an RSS feed to this blog.<br/>Quick OCaml hack to generate some old-school XML.</div><div class="header-metadata"><span class="header-author"><a href="https://seb.mondet.org">Seb Mondet</a></span><span class="header-status"><span class="post-status">Posted on: Fri, 3 Jul 2020</span></span><span class="header-license-badge"><a href="http://creativecommons.org/licenses/by/4.0/"><img src="https://i.creativecommons.org/l/by/4.0/80x15.png" alt="Creative Commons License: CC-By"/></a></span><span class="header-tags"><span class="tag-in-list-of-tags">#OCaml</span>, <span class="tag-in-list-of-tags">#DailyHacks</span></span><span></span></div></div> <p>A blog needs an RSS feed; a good old
+<a href='https://validator.w3.org/feed/docs/rss2.html'>standard</a> that <em>just works.</em></p>
+<p>I found the
+<a href='https://github.com/smondet/dibrawi/blob/b468122ec9c7b71eee05243bd719492bbf0af266/src/lib/dibrawi_mix.ml#L667'><code>rss</code></a>
+function of my previous blog (see
+<a href='https://seb.mondet.org/blog/feed/ocaml.rss'><code>ocaml.rss</code></a>); untouched for 9
+years.  It still <em>works</em> but I didn&#39;t want to go back to that dirty pile of
+<code>sprintf</code>.</p>
+<p>This current blog already depends on
+<a href='https://ocsigen.org/tyxml/4.4.0/manual/intro'>Tyxml</a> and the module
+<a href='https://ocsigen.org/tyxml/4.4.0/api/Tyxml.Xml'><code>Tyxml.Xml</code></a> has everything we
+need.</p>
+<p>Sometimes a piece of code is just dump and obvious; RSS is a easy as this (uses
+<a href='https://ocaml.janestreet.com/ocaml-core/latest/doc/base/Base/index.html'>Base</a>
+and <a href='https://erratique.ch/software/fmt'>Fmt</a>):</p>
+<div class="code-block"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource ocaml numberLines"><code class="sourceCode ocaml"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw">module</span> Rss_feed = <span class="kw">struct</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a>  <span class="kw">type</span> item = <span class="dt">unit</span> -&gt; Tyxml.Xml.elt</span>
+<span id="cb1-3"><a href="#cb1-3"></a>  <span class="co">(* ⮤ Laziness not really useful in this use-case, only makes</span></span>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="co">     merlin/error-messages use the right name without a module type. *)</span></span>
+<span id="cb1-5"><a href="#cb1-5"></a></span>
+<span id="cb1-6"><a href="#cb1-6"></a>  <span class="kw">type</span> t = Tyxml.Xml.elt</span>
+<span id="cb1-7"><a href="#cb1-7"></a></span>
+<span id="cb1-8"><a href="#cb1-8"></a>  <span class="kw">let</span> item ~title ~description ~link ~guid ~pub_date : item =</span>
+<span id="cb1-9"><a href="#cb1-9"></a>   <span class="kw">fun</span> () -&gt;</span>
+<span id="cb1-10"><a href="#cb1-10"></a>    <span class="kw">let</span> <span class="kw">open</span> Tyxml.Xml <span class="kw">in</span></span>
+<span id="cb1-11"><a href="#cb1-11"></a>    node <span class="st">&quot;item&quot;</span></span>
+<span id="cb1-12"><a href="#cb1-12"></a>      [ node <span class="st">&quot;title&quot;</span> [pcdata title]</span>
+<span id="cb1-13"><a href="#cb1-13"></a>      ; node <span class="st">&quot;description&quot;</span> [pcdata description]</span>
+<span id="cb1-14"><a href="#cb1-14"></a>      ; node <span class="st">&quot;link&quot;</span> [pcdata link]</span>
+<span id="cb1-15"><a href="#cb1-15"></a>      ; node <span class="st">&quot;guid&quot;</span> [pcdata guid]</span>
+<span id="cb1-16"><a href="#cb1-16"></a>      ; node <span class="st">&quot;pubDate&quot;</span> [pcdata pub_date] ]</span>
+<span id="cb1-17"><a href="#cb1-17"></a></span>
+<span id="cb1-18"><a href="#cb1-18"></a>  <span class="kw">let</span> make ~title ~description ~last_build_date ~pub_date ~link items : t =</span>
+<span id="cb1-19"><a href="#cb1-19"></a>    <span class="kw">let</span> <span class="kw">open</span> Tyxml.Xml <span class="kw">in</span></span>
+<span id="cb1-20"><a href="#cb1-20"></a>    <span class="kw">let</span> doc =</span>
+<span id="cb1-21"><a href="#cb1-21"></a>      <span class="kw">let</span> channel =</span>
+<span id="cb1-22"><a href="#cb1-22"></a>        [ node <span class="st">&quot;title&quot;</span> [pcdata title]</span>
+<span id="cb1-23"><a href="#cb1-23"></a>        ; node <span class="st">&quot;description&quot;</span> [pcdata description]</span>
+<span id="cb1-24"><a href="#cb1-24"></a>        ; node <span class="st">&quot;link&quot;</span> [pcdata link]</span>
+<span id="cb1-25"><a href="#cb1-25"></a>        ; node <span class="st">&quot;lastBuildDate&quot;</span> [pcdata last_build_date]</span>
+<span id="cb1-26"><a href="#cb1-26"></a>        ; node <span class="st">&quot;pubDate&quot;</span> [pcdata pub_date]</span>
+<span id="cb1-27"><a href="#cb1-27"></a>        ; Fmt.kstr comment <span class="st">&quot;RSS Feed for %s&quot;</span> title ]</span>
+<span id="cb1-28"><a href="#cb1-28"></a>      <span class="kw">in</span></span>
+<span id="cb1-29"><a href="#cb1-29"></a>      node <span class="st">&quot;rss&quot;</span></span>
+<span id="cb1-30"><a href="#cb1-30"></a>        [node <span class="st">&quot;channel&quot;</span> (channel @ <span class="dt">List</span>.map ~f:(<span class="kw">fun</span> x -&gt; x ()) items)]</span>
+<span id="cb1-31"><a href="#cb1-31"></a>        ~a:[string_attrib <span class="st">&quot;version&quot;</span> <span class="st">&quot;2.0&quot;</span>]</span>
+<span id="cb1-32"><a href="#cb1-32"></a>    <span class="kw">in</span></span>
+<span id="cb1-33"><a href="#cb1-33"></a>    doc</span>
+<span id="cb1-34"><a href="#cb1-34"></a></span>
+<span id="cb1-35"><a href="#cb1-35"></a>  <span class="kw">let</span> pp : t Fmt.t =</span>
+<span id="cb1-36"><a href="#cb1-36"></a>    <span class="kw">let</span> header = <span class="st">&quot;&lt;?xml version=</span><span class="ch">\&quot;</span><span class="st">1.0</span><span class="ch">\&quot;</span><span class="st"> encoding=</span><span class="ch">\&quot;</span><span class="st">UTF-8</span><span class="ch">\&quot;</span><span class="st"> ?&gt;&quot;</span> <span class="kw">in</span></span>
+<span id="cb1-37"><a href="#cb1-37"></a>    Fmt.(const <span class="dt">string</span> header ++ cut ++ Tyxml.Xml.pp ~indent:<span class="kw">true</span> () ++ cut)</span>
+<span id="cb1-38"><a href="#cb1-38"></a>  <span class="co">(* ⮤ Format all the things! *)</span></span>
+<span id="cb1-39"><a href="#cb1-39"></a></span>
+<span id="cb1-40"><a href="#cb1-40"></a>  <span class="kw">let</span> test () =</span>
+<span id="cb1-41"><a href="#cb1-41"></a>    <span class="kw">let</span> example =</span>
+<span id="cb1-42"><a href="#cb1-42"></a>      make ~title:<span class="st">&quot;Example RSS feed&quot;</span></span>
+<span id="cb1-43"><a href="#cb1-43"></a>        ~last_build_date:<span class="st">&quot;Tue, 30 Jun 2020 22:17:46 -0400&quot;</span></span>
+<span id="cb1-44"><a href="#cb1-44"></a>        ~pub_date:<span class="st">&quot;Tue, 30 Jun 2020 22:17:57 -0400&quot;</span></span>
+<span id="cb1-45"><a href="#cb1-45"></a>        ~link:<span class="st">&quot;https://seb.mondet.org/b/&quot;</span></span>
+<span id="cb1-46"><a href="#cb1-46"></a>        ~description:<span class="st">&quot;The description of the example RSS feed.&quot;</span></span>
+<span id="cb1-47"><a href="#cb1-47"></a>        [ item ~title:<span class="st">&quot;Ttlee 1&quot;</span> ~description:<span class="st">&quot;some description&quot;</span></span>
+<span id="cb1-48"><a href="#cb1-48"></a>            ~link:<span class="st">&quot;https://seb.mondet.org/b/0000-zerozero.html&quot;</span></span>
+<span id="cb1-49"><a href="#cb1-49"></a>            ~guid:<span class="st">&quot;https://seb.mondet.org/b/0000-zerozero.html&quot;</span></span>
+<span id="cb1-50"><a href="#cb1-50"></a>            ~pub_date:<span class="st">&quot;Tue, 30 Jun 2020 22:26:59 -0400&quot;</span></span>
+<span id="cb1-51"><a href="#cb1-51"></a>        ; item ~title:<span class="st">&quot;Ttlee 2nd&quot;</span> ~description:<span class="st">&quot;some other description&quot;</span></span>
+<span id="cb1-52"><a href="#cb1-52"></a>            ~link:<span class="st">&quot;https://seb.mondet.org/b/000z-zzzjzerozero.html&quot;</span></span>
+<span id="cb1-53"><a href="#cb1-53"></a>            ~guid:<span class="st">&quot;https://seb.mondet.org/b/000z-zzzjzerozero.html&quot;</span></span>
+<span id="cb1-54"><a href="#cb1-54"></a>            ~pub_date:<span class="st">&quot;Tue, 30 Jun 2020 22:26:59 -0400&quot;</span> ]</span>
+<span id="cb1-55"><a href="#cb1-55"></a>    <span class="kw">in</span></span>
+<span id="cb1-56"><a href="#cb1-56"></a>    Fmt.pr <span class="st">&quot;%a</span><span class="ch">\n</span><span class="st">%!&quot;</span> pp example</span>
+<span id="cb1-57"><a href="#cb1-57"></a><span class="kw">end</span></span></code></pre></div></div>
 
-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
-=zw4m
------END PGP MESSAGE-----
-</pre></code>
-<script>
+<p>Just don&#39;t forget that dates have to be “Email Dates” (a.k.a.  <a href='https://tools.ietf.org/html/rfc5322'>RFC
+5322</a> or <code>date -R</code> (for <em>GNU</em> date).)</p>
+<p>Even the <em>RSS validator “dot CGI”</em> still works also after a couple of decades:
+<a href='https://validator.w3.org/feed/check.cgi'>https://validator.w3.org/feed/check.cgi</a>.</p>
+<p>Then, it is just about iterating over the blog-posts to collect the tags and
+generate an RSS file for each of them, deploy,
+on <a href='https://seb.mondet.org/b/'>https://seb.mondet.org/b/</a>:</p>
+<div style="margin: auto; width: 70%; border: solid 3px #bbb; padding: 5px"><a href="https://user-images.githubusercontent.com/617111/86474231-629ffd00-bd10-11ea-9299-3e4729504ffa.png"><img src="https://user-images.githubusercontent.com/617111/86474231-629ffd00-bd10-11ea-9299-3e4729504ffa.png" alt="Screenshot of the blog-index page." style="width: 100% ; "/></a></div>
 
-function tryPassphrase(passphrase,silent) {
-    console.log("tryPassphrase " + passphrase);
-    var openpgp = window.openpgp;
-    var options, encrypted;
-    var encryptedMsg = document.getElementById('armored-content').innerHTML ;
-    
-    var armoredmsg = encryptedMsg.replace(/@/g, "\n");
-    console.log("armoredmsg:\n" + armoredmsg);
-    return openpgp.message.readArmored(armoredmsg).then(function (msg) {
-        // console.log("msg " + JSON.stringify(msg));
-        console.log("passphrase " + JSON.stringify(passphrase));
-        options = {
-            message: msg,
-            passwords: [passphrase], // decrypt with password
-            armor: true,
-            format: 'utf8'
-        };
-        openpgp.decrypt(options).then(function(plaintext) {
-            console.log("plaintext of msg " + JSON.stringify(plaintext));
-            document.open("text/html", "replace");
-            document.write(plaintext.data);
-            document.close();
-            return true;
-        }).catch(function (error) {
-            if (silent) {
-                console.log("error: " + error);
-            } else {
-                var errors = document.getElementById('errors');
-                errors.innerHTML = '<b>ERROR: decryption failed: </b><code>'
-                    + error
-                    + '</code> <i>(usually means wrong password …)</i>';
-            };
-        });
-    });
-};
-console.log("Setting on submit");
-document.getElementById('staticrypt-form').addEventListener('submit', function(e) {
-    e.preventDefault();
-    console.log("on the submit");
-    var passphrase = document.getElementById('staticrypt-password').value;
-    console.log("on the submit passph: " + passphrase);
-    tryPassphrase(passphrase, false);
-});
-window.onload = function() { 
-    var firstAttempt = "";
-    if (window.location.hash.charAt(0) == '#') {
-        firstAttempt = window.location.hash.substring(1);
-    } else {
-        firstAttempt = window.location.hash
-    };
-    tryPassphrase(firstAttempt, true).then(function(ret) {
-        if (ret) {
-            console.log("on the else of firstAttempt");
-        } else {
-            console.log("Nope from the hash: " + firstAttempt);
-        };
-    }, function(error) {
-        console.log("Error from tryPassphrase: " + error);
-    });
-};
-</script>
-</body>
-</html>
+<p>Then add <code>OCaml.rss</code> to <a href='https://ocaml.org/community/planet/'>The OCaml
+Planet</a> (→ PR
+<a href='https://github.com/ocaml/ocaml.org/pull/1133'><code>ocaml/ocaml.org#1133</code></a>).</p>
+ <div class="remark-block" style="margin: 4em 0 4em 0"><p><span class="hundred-days-heading">After <a href='https://seb.mondet.org/blog/'>8 years</a> of <em>blograstination</em>, this is post #4 of my attempt at not getting too fast lagging behind on the <a href="https://100daystooffload.com/"><code>#100DaysToOffload</code></a> “challenge” … Let&#39;s see where <a href='https://seb.mondet.org/b/'>this</a> goes.</span></p></div></div></div></body></html>
