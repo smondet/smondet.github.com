@@ -1,167 +1,103 @@
-<html>
-<head>
-    <meta charset="utf-8">
-    <title>Protected Page</title>
-    <!-- do not cache this page -->
-    <meta http-equiv="cache-control" content="max-age=0"/>
-    <meta http-equiv="cache-control" content="no-cache"/>
-    <meta http-equiv="expires" content="0"/>
-    <meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT"/>
-    <meta http-equiv="pragma" content="no-cache"/>
-    </style>
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/openpgp/4.0.0/openpgp.min.js"
-    ></script>
-</head>
-<body>
-<h2>PGP-Encrypted Page, please provide a passphrase.</h2>
-<form id="staticrypt-form" action="#" method="post">
-   <input id="staticrypt-password"
-          type="password"
-          name="password"
-          placeholder="passphrase"
-          autofocus/>
-   <input id="staticrypt-form-submit"
-          type="submit"
-          value="DECRYPT"/>
-</form>
-<div id="errors"></div>
-<code><pre id="armored-content">
------BEGIN PGP MESSAGE-----
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"><head><title>A Quick Website for HSCrypt</title><meta charset="utf-8"/></head><body><style>body {font-family: sans;max-width: 70em;margin: auto;padding: 10px}blockquote {padding: 3px;border-left: solid #888 3px}details.details-inline {display: inline}details.details-inline[open] {display: block}details.module-menu { display: inline }
+details.module-menu[open] { display: block }.hundred-days-heading {font-style: italic}.tag-in-list-of-tags {font-family: monospace;color: #800}.remark-block {background-color: #f0f0f0;padding: 7px;margin: 0px;border: solid 2px #aaa;border-radius: 15px}h2 {color: #050;padding: 0px}.header-block {padding: 4px}.header-title {font-size: 300%;color: #050}.header-description {font-size: 120%;font-style: italic;color: #555}.header-metadata {margin-top: 1.5em;margin-bottom: 1em;font-size: 100%;padding: 10px;border-left: solid 5px #ccc}.header-author {font-weight: bold;display: block}.header-status {font-style: italic;display: block}.header-tags {display: block}.header-tags::before {content: '⏣ Tags: '}.header-tags::after {content: '.'}.post-status::before {content: '⏰ ';font-style: normal}.header-author::before {content: '✍ '}.header-social-links {display: block}.header-social-links::before {content: '🔗 '}.header-social-links::after {content: '.'}.header-license-badge {opacity: 0.6;display: block}.header-license-badge:hover {opacity: 0.9}.header-license-badge::before {content: '♲ ';opacity: 0.9}.code-block {background-color: #f0f0f0;padding: 2px 2em 2px 2em;border-radius: 4px}.index-item-bloc {margin: 1em 0em 1em 0em}
+code{white-space: pre-wrap;}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; } /* Alert */
+code span.an { color: #008000; } /* Annotation */
+code span.at { } /* Attribute */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #0000ff; } /* ControlFlow */
+code span.ch { color: #008080; } /* Char */
+code span.cn { } /* Constant */
+code span.co { color: #008000; } /* Comment */
+code span.cv { color: #008000; } /* CommentVar */
+code span.do { color: #008000; } /* Documentation */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.im { } /* Import */
+code span.in { color: #008000; } /* Information */
+code span.kw { color: #0000ff; } /* Keyword */
+code span.op { } /* Operator */
+code span.ot { color: #ff4000; } /* Other */
+code span.pp { color: #ff4000; } /* Preprocessor */
+code span.sc { color: #008080; } /* SpecialChar */
+code span.ss { color: #008080; } /* SpecialString */
+code span.st { color: #008080; } /* String */
+code span.va { } /* Variable */
+code span.vs { color: #008080; } /* VerbatimString */
+code span.wa { color: #008000; font-weight: bold; } /* Warning */
+</style><div><a href="./index.html">home</a><hr/></div><div class="content"><div><div class="header-block"><h1 class="header-title">A Quick Website for HSCrypt</h1><div class="header-description">HSCrypt got a new small website with examples<br/>… an occasion to re-present this quick hack …</div><div class="header-metadata"><span class="header-author"><a href="https://seb.mondet.org">Seb Mondet</a></span><span class="header-status"><span class="post-status">Posted on: Thu, 16 Jul 2020</span></span><span class="header-license-badge"><a href="http://creativecommons.org/licenses/by/4.0/"><img src="https://i.creativecommons.org/l/by/4.0/80x15.png" alt="Creative Commons License: CC-By"/></a></span><span class="header-tags"><span class="tag-in-list-of-tags">#DailyHacks</span>, <span class="tag-in-list-of-tags">#Privacy</span>, <span class="tag-in-list-of-tags">#PGP</span></span><span></span></div></div> <p><strong>HSCrypt</strong> is a little POSIX shell script that transforms a blob of bytes
+(preferably an HTML document) and a pass-phrase, into a web page presenting the
+blob but PGP-encrypted, with some Javascript to decrypt it. The pass-phrase
+is input into a text-box or taken from the URL fragment (part of the URL
+not sent by browsers to web-servers).</p>
+<p>The project started its life as “<code>staticrypt-cli</code>” and was recently renamed to
+<a href='https://gitlab.com/smondet/hscrypt'><code>hscrypt</code></a>.  Indeed, the idea was kinda
+stolen from
+<a href='https://github.com/robinmoisson/staticrypt'><code>robinmoisson/staticrypt</code></a> where,
+at the time, the issue
+<a href='https://github.com/robinmoisson/staticrypt/issues/97'><code>robinmoisson/staticrypt#97</code></a>
+was still just an issue (it seems there is an CLI implementation now).</p>
+<p>The first version I hacked together was compatible with Staticrypt thanks to
+<a href='https://www.openssl.org/docs/manmaster/man1/openssl.html'><code>openssl</code></a> but it
+wasn&#39;t scaling well (big JS strings), and (at the time) the implementation and
+maintenance status of <a href='https://www.npmjs.com/package/crypto-js'>crypt-js</a> seemed
+very suspicious.</p>
+<p>So I switched to <a href='https://openpgpjs.org/'>OpenPGP.js</a> (maintained by
+ProtonMail&#39;s <a href='https://protonmail.com/blog/openpgpjs-email-encryption/'>team</a>)
+and the script does the encryption with <a href='https://gnupg.org/'>GnuPG</a>.  The
+encrypted version of the page nicely shows the <em>armored blob</em> and a password
+prompt.  Having the armor means that if for some reason you don&#39;t want to input
+a password into a web-browser which is pulling Javascript from a website/CDN,
+you can just copy the blob and decrypt it in your favorite tool (with Emacs,
+just try <code>epa-decrypt-region</code>).</p>
+<p>The new thing prompting this post is that <code>hscrypt</code> now has a little website
+built by the Gitlab CI using <code>pandoc</code>
+(MR <a href='https://gitlab.com/smondet/hscrypt/-/merge_requests/2/diffs'><code>!2</code></a>):</p>
+<ul><li><a href='https://smondet.gitlab.io/hscrypt/'><code>smondet.gitlab.io/hscrypt</code></a>, with</li><li>an example encrypted page:
+ <a href='https://smondet.gitlab.io/hscrypt/hscrypt-test.html'><code>smondet.gitlab.io/hscrypt/hscrypt-test.html</code></a>
+ which one can compare to</li><li>the decryption result:
+ <a href='https://smondet.gitlab.io/hscrypt/hscrypt-test.html#test-pass-phrase'><code>smondet.gitlab.io/hscrypt/hscrypt-test.html#test-pass-phrase</code></a>.</li></ul><div style="margin: auto; width: 70%; border: solid 3px #bbb; padding: 5px"><a href="https://user-images.githubusercontent.com/617111/87619614-91dc4400-c6ea-11ea-81f1-224dcff22b51.png"><img src="https://user-images.githubusercontent.com/617111/87619614-91dc4400-c6ea-11ea-81f1-224dcff22b51.png" alt="With and without password." style="width: 100% ; "/></a></div>
 
-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
-4LnXOrkmBe5/H7M=
-=GaH8
------END PGP MESSAGE-----
-</pre></code>
-<script>
-
-function tryPassphrase(passphrase,silent) {
-    console.log("tryPassphrase " + passphrase);
-    var openpgp = window.openpgp;
-    var options, encrypted;
-    var encryptedMsg = document.getElementById('armored-content').innerHTML ;
-    
-    var armoredmsg = encryptedMsg.replace(/@/g, "\n");
-    console.log("armoredmsg:\n" + armoredmsg);
-    return openpgp.message.readArmored(armoredmsg).then(function (msg) {
-        // console.log("msg " + JSON.stringify(msg));
-        console.log("passphrase " + JSON.stringify(passphrase));
-        options = {
-            message: msg,
-            passwords: [passphrase], // decrypt with password
-            armor: true,
-            format: 'utf8'
-        };
-        openpgp.decrypt(options).then(function(plaintext) {
-            console.log("plaintext of msg " + JSON.stringify(plaintext));
-            document.open("text/html", "replace");
-            document.write(plaintext.data);
-            document.close();
-            return true;
-        }).catch(function (error) {
-            if (silent) {
-                console.log("error: " + error);
-            } else {
-                var errors = document.getElementById('errors');
-                errors.innerHTML = '<b>ERROR: decryption failed: </b><code>'
-                    + error
-                    + '</code> <i>(usually means wrong password …)</i>';
-            };
-        });
-    });
-};
-console.log("Setting on submit");
-document.getElementById('staticrypt-form').addEventListener('submit', function(e) {
-    e.preventDefault();
-    console.log("on the submit");
-    var passphrase = document.getElementById('staticrypt-password').value;
-    console.log("on the submit passph: " + passphrase);
-    tryPassphrase(passphrase, false);
-});
-window.onload = function() { 
-    var firstAttempt = "";
-    if (window.location.hash.charAt(0) == '#') {
-        firstAttempt = window.location.hash.substring(1);
-    } else {
-        firstAttempt = window.location.hash
-    };
-    tryPassphrase(firstAttempt, true).then(function(ret) {
-        if (ret) {
-            console.log("on the else of firstAttempt");
-        } else {
-            console.log("Nope from the hash: " + firstAttempt);
-        };
-    }, function(error) {
-        console.log("Error from tryPassphrase: " + error);
-    });
-};
-</script>
-</body>
-</html>
+<p>One can use this to share web-pages with friends &amp; proof-readers. For instance
+if one had been
+<a href='https://github.com/smondet/smondet.github.com/commits/master'><em>git-stalking</em></a>
+me, they would have seen that <code>hscrypt</code> is used for the draft posts of this blog
+e.g. in the page
+<a href='https://seb.mondet.org/b/index-debug.html'><code>seb.mondet.org/b/index-debug.html</code></a>.</p>
+<p>As always the project needs help →
+<a href='https://gitlab.com/smondet/hscrypt/-/issues'><code>gitlab.com/smondet/hscrypt/-/issues</code></a>.</p>
+ <div class="remark-block" style="margin: 4em 0 4em 0"><p><span class="hundred-days-heading">After <a href='https://seb.mondet.org/blog/'>8 years</a> of <em>blograstination</em>, this is post #5 of my attempt at not getting too fast lagging behind on the <a href="https://100daystooffload.com/"><code>#100DaysToOffload</code></a> “challenge” … Let&#39;s see where <a href='https://seb.mondet.org/b/'>this</a> goes.</span></p></div></div></div></body></html>
