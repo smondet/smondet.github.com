@@ -3,8 +3,8 @@
  <channel><title>Seb's blog /b/</title>
   <description>Feed for tag “SmartContracts”</description>
   <link>https://seb.mondet.org/b/</link>
-  <lastBuildDate>Fri, 02 Oct 2020 22:07:51 -0400</lastBuildDate>
-  <pubDate>Fri, 02 Oct 2020 22:07:51 -0400</pubDate>
+  <lastBuildDate>Mon, 05 Oct 2020 21:54:37 -0400</lastBuildDate>
+  <pubDate>Mon, 05 Oct 2020 21:54:37 -0400</pubDate>
   <!--RSS Feed for Seb's blog /b/-->
   <item><title>Generating OCaml From Michelson Types</title>
    <description>
@@ -15,6 +15,15 @@
    <link>https://seb.mondet.org/b/0002-michokit-codegen-intro.html</link>
    <guid>https://seb.mondet.org/b/0002-michokit-codegen-intro.html</guid>
    <pubDate>Tue, 23 Jun 2020 13:00:42 -0400</pubDate>
+  </item>
+  <item><title>Lazy-set in FA2-SmartPy</title>
+   <description>
+    Quick post detailing the use of “lazy-sets” in FA2-SmartPy.
+    And trying to get back at the blog …
+   </description>
+   <link>https://seb.mondet.org/b/0006-fa2-operator-set.html</link>
+   <guid>https://seb.mondet.org/b/0006-fa2-operator-set.html</guid>
+   <pubDate>Mon, 5 Oct 2020 13:00:42 -0400</pubDate>
   </item>
  </channel>
 </rss>

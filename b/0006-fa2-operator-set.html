@@ -1,196 +1,142 @@
-<html>
-<head>
-    <meta charset="utf-8">
-    <title>Protected Page</title>
-    <!-- do not cache this page -->
-    <meta http-equiv="cache-control" content="max-age=0"/>
-    <meta http-equiv="cache-control" content="no-cache"/>
-    <meta http-equiv="expires" content="0"/>
-    <meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT"/>
-    <meta http-equiv="pragma" content="no-cache"/>
-    </style>
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/openpgp/4.0.0/openpgp.min.js"
-    ></script>
-</head>
-<body>
-<h2>PGP-Encrypted Page, please provide a passphrase.</h2>
-<form id="staticrypt-form" action="#" method="post">
-   <input id="staticrypt-password"
-          type="password"
-          name="password"
-          placeholder="passphrase"
-          autofocus/>
-   <input id="staticrypt-form-submit"
-          type="submit"
-          value="DECRYPT"/>
-</form>
-<div id="errors"></div>
-<code><pre id="armored-content">
------BEGIN PGP MESSAGE-----
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"><head><title>Lazy-set in FA2-SmartPy</title><meta charset="utf-8"/></head><body><style>body {font-family: sans;max-width: 70em;margin: auto;padding: 10px}blockquote {padding: 3px;border-left: solid #888 3px}details.details-inline {display: inline}details.details-inline[open] {display: block}details.module-menu { display: inline }
+details.module-menu[open] { display: block }.hundred-days-heading {font-style: italic}.tag-in-list-of-tags {font-family: monospace;color: #800}.remark-block {background-color: #f0f0f0;padding: 7px;margin: 0px;border: solid 2px #aaa;border-radius: 15px}h2 {color: #050;padding: 0px}.header-block {padding: 4px}.header-title {font-size: 300%;color: #050}.header-description {font-size: 120%;font-style: italic;color: #555}.header-metadata {margin-top: 1.5em;margin-bottom: 1em;font-size: 100%;padding: 10px;border-left: solid 5px #ccc}.header-author {font-weight: bold;display: block}.header-status {font-style: italic;display: block}.header-tags {display: block}.header-tags::before {content: '⏣ Tags: '}.header-tags::after {content: '.'}.post-status::before {content: '⏰ ';font-style: normal}.header-author::before {content: '✍ '}.header-social-links {display: block}.header-social-links::before {content: '🔗 '}.header-social-links::after {content: '.'}.header-license-badge {opacity: 0.6;display: block}.header-license-badge:hover {opacity: 0.9}.header-license-badge::before {content: '♲ ';opacity: 0.9}.code-block {background-color: #f0f0f0;padding: 2px 2em 2px 2em;border-radius: 4px}.index-item-bloc {margin: 1em 0em 1em 0em}
+code{white-space: pre-wrap;}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; } /* Alert */
+code span.an { color: #008000; } /* Annotation */
+code span.at { } /* Attribute */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #0000ff; } /* ControlFlow */
+code span.ch { color: #008080; } /* Char */
+code span.cn { } /* Constant */
+code span.co { color: #008000; } /* Comment */
+code span.cv { color: #008000; } /* CommentVar */
+code span.do { color: #008000; } /* Documentation */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.im { } /* Import */
+code span.in { color: #008000; } /* Information */
+code span.kw { color: #0000ff; } /* Keyword */
+code span.op { } /* Operator */
+code span.ot { color: #ff4000; } /* Other */
+code span.pp { color: #ff4000; } /* Preprocessor */
+code span.sc { color: #008080; } /* SpecialChar */
+code span.ss { color: #008080; } /* SpecialString */
+code span.st { color: #008080; } /* String */
+code span.va { } /* Variable */
+code span.vs { color: #008080; } /* VerbatimString */
+code span.wa { color: #008000; font-weight: bold; } /* Warning */
+</style><div><a href="./index.html">home</a><hr/></div><div class="content"><div><div class="header-block"><h1 class="header-title">Lazy-set in FA2-SmartPy</h1><div class="header-description">Quick post detailing the use of “lazy-sets” in FA2-SmartPy.<br/>And trying to get back at the blog …</div><div class="header-metadata"><span class="header-author"><a href="https://seb.mondet.org">Seb Mondet</a></span><span class="header-status"><span class="post-status">Posted on: Mon, 5 Oct 2020</span></span><span class="header-license-badge"><a href="http://creativecommons.org/licenses/by/4.0/"><img src="https://i.creativecommons.org/l/by/4.0/80x15.png" alt="Creative Commons License: CC-By"/></a></span><span class="header-tags"><span class="tag-in-list-of-tags">#Tezos</span>, <span class="tag-in-list-of-tags">#Michelson</span>, <span class="tag-in-list-of-tags">#SmartContracts</span>, <span class="tag-in-list-of-tags">#SmartPy</span></span><span></span></div></div> <p>Some people found it surprising, the implementation of
+<a href='https://gitlab.com/smondet/fa2-smartpy/'>FA2-SmartPy</a> contains this in its
+storage type:</p>
+<pre><code>(big_map %operators
+   (pair (address %owner) (pair (address %operator) (nat %token_id)))
+   unit))</code></pre>
 
-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
-/5Jate8hpJo=
-=BRq7
------END PGP MESSAGE-----
-</pre></code>
-<script>
+<p>See for instance the compiled output:
+<a href='https://gitlab.com/smondet/fa2-smartpy/blob/fa0d9aeee5220c4dee35865e42070897785e490e/michelson/20200910-203659+0000_5060996_mutran_contract.tz#L30-32'><code>20200910-203659+0000_5060996_mutran_contract.tz#L30-32</code></a>
+or the corresponding source:
+<a href='https://gitlab.com/smondet/fa2-smartpy/blob/fa0d9aeee5220c4dee35865e42070897785e490e/multi_asset.py#L224-258'><code>multi_asset.py#L224-258</code></a>.</p>
+<p>The idea is that this is a <strong>“lazy set.”</strong> It quacks like a <em>set data-structure</em>
+but it is implemented with a big-map:</p>
+<p><strong><code>(set &lt;VALUE-TYPE&gt;)</code> → <code>(big_map &lt;VALUE-TYPE&gt; unit)</code></strong></p>
+<ul><li>Cons: higher storage and gas costs for sets on the <em>smaller</em> side + some
+ functionality is not available (one cannot iterate on the keys of a big-map).</li><li>Pros: no size limit, hence ensuring that locking down the contract is not
+ possible.</li></ul>
 
-function tryPassphrase(passphrase,silent) {
-    console.log("tryPassphrase " + passphrase);
-    var openpgp = window.openpgp;
-    var options, encrypted;
-    var encryptedMsg = document.getElementById('armored-content').innerHTML ;
-    
-    var armoredmsg = encryptedMsg.replace(/@/g, "\n");
-    console.log("armoredmsg:\n" + armoredmsg);
-    return openpgp.message.readArmored(armoredmsg).then(function (msg) {
-        // console.log("msg " + JSON.stringify(msg));
-        console.log("passphrase " + JSON.stringify(passphrase));
-        options = {
-            message: msg,
-            passwords: [passphrase], // decrypt with password
-            armor: true,
-            format: 'utf8'
-        };
-        openpgp.decrypt(options).then(function(plaintext) {
-            console.log("plaintext of msg " + JSON.stringify(plaintext));
-            document.open("text/html", "replace");
-            document.write(plaintext.data);
-            document.close();
-            return true;
-        }).catch(function (error) {
-            if (silent) {
-                console.log("error: " + error);
-            } else {
-                var errors = document.getElementById('errors');
-                errors.innerHTML = '<b>ERROR: decryption failed: </b><code>'
-                    + error
-                    + '</code> <i>(usually means wrong password …)</i>';
-            };
-        });
-    });
-};
-console.log("Setting on submit");
-document.getElementById('staticrypt-form').addEventListener('submit', function(e) {
-    e.preventDefault();
-    console.log("on the submit");
-    var passphrase = document.getElementById('staticrypt-password').value;
-    console.log("on the submit passph: " + passphrase);
-    tryPassphrase(passphrase, false);
-});
-window.onload = function() { 
-    var firstAttempt = "";
-    if (window.location.hash.charAt(0) == '#') {
-        firstAttempt = window.location.hash.substring(1);
-    } else {
-        firstAttempt = window.location.hash
-    };
-    tryPassphrase(firstAttempt, true).then(function(ret) {
-        if (ret) {
-            console.log("on the else of firstAttempt");
-        } else {
-            console.log("Nope from the hash: " + firstAttempt);
-        };
-    }, function(error) {
-        console.log("Error from tryPassphrase: " + error);
-    });
-};
-</script>
-</body>
-</html>
+<p>Indeed the issue to avoid is the case where a contract&#39;s storage is so big that
+its deserialization consumes too much gas <em>before</em> even starting the execution
+of the entrypoint.</p>
+<p>The Delphi protocol pushes the limit further than the current protocol but it&#39;s
+still very reachable.</p>
+<p><em>Let&#39;s figure out how much …</em></p>
+<p>This is a small contract that fills up a set of consecutive <code>nat</code> values every
+time it is called, it has another <code>unit</code> entrypoint with <em>minimal</em> gas usage
+(You can <em>also</em>
+<a href='http://smartpy.io/dev/index.html?code=eJyFkU1rxCAQhu_@iiEnpYuQQi8LC4Xe99LSqwyJaQWjorOB_Puq2c3allIhYGZe32c@mJmDjwRpxkhhBUyQAmODxZTglXzU72gvmqcgX7yjiAOJI4N8Rj2BUsYZUoonbacDLEV6TZdTorIoeCpOcMreMmnitF3fzkhCsKp_zv86A1YVvHG0I3Acr@4BI86pta9mitag@ZaUtYLD7t1KJx9hAePKPaL7qD1Z7aq7HJFQ1irFjSR_trO3dBfLUt7yTwv5w4ulCmrsQh4xY2aCjvQcLJJOHThPpUalHM5aqeNunEEqK4iXRB5fd19OJ3ZUVTSMoc_SZo39YzOTQTuMxm@7KC_VLcR_q@RnzzcmtNBvRg@nDPwjvE2qvMy8_kmwLzehvdM-'>open it in the SmartPy.io editor</a>):</p>
+<div class="code-block"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource python numberLines"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="im">import</span> smartpy <span class="im">as</span> sp</span>
+<span id="cb1-2"><a href="#cb1-2"></a></span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="kw">class</span> StoreValue(sp.Contract):</span>
+<span id="cb1-4"><a href="#cb1-4"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, value):</span>
+<span id="cb1-5"><a href="#cb1-5"></a>        <span class="va">self</span>.init(store <span class="op">=</span> sp.<span class="bu">set</span>(t <span class="op">=</span> sp.TNat))</span>
+<span id="cb1-6"><a href="#cb1-6"></a></span>
+<span id="cb1-7"><a href="#cb1-7"></a>    <span class="at">@sp.entry_point</span></span>
+<span id="cb1-8"><a href="#cb1-8"></a>    <span class="kw">def</span> add(<span class="va">self</span>, params):</span>
+<span id="cb1-9"><a href="#cb1-9"></a>        sp.<span class="cf">for</span> v <span class="kw">in</span> sp.<span class="bu">range</span>(sp.<span class="bu">len</span>(<span class="va">self</span>.data.store), params.value):</span>
+<span id="cb1-10"><a href="#cb1-10"></a>            <span class="va">self</span>.data.store.add(v)</span>
+<span id="cb1-11"><a href="#cb1-11"></a></span>
+<span id="cb1-12"><a href="#cb1-12"></a>    <span class="at">@sp.entry_point</span></span>
+<span id="cb1-13"><a href="#cb1-13"></a>    <span class="kw">def</span> default(<span class="va">self</span>):</span>
+<span id="cb1-14"><a href="#cb1-14"></a>        <span class="cf">pass</span></span>
+<span id="cb1-15"><a href="#cb1-15"></a></span>
+<span id="cb1-16"><a href="#cb1-16"></a><span class="cf">if</span> <span class="st">&quot;templates&quot;</span> <span class="kw">not</span> <span class="kw">in</span> <span class="va">__name__</span>:</span>
+<span id="cb1-17"><a href="#cb1-17"></a>    <span class="at">@sp.add_test</span>(name <span class="op">=</span> <span class="st">&quot;StoreValue&quot;</span>)</span>
+<span id="cb1-18"><a href="#cb1-18"></a>    <span class="kw">def</span> test():</span>
+<span id="cb1-19"><a href="#cb1-19"></a>        c1 <span class="op">=</span> StoreValue(<span class="dv">12</span>)</span>
+<span id="cb1-20"><a href="#cb1-20"></a>        scenario <span class="op">=</span> sp.test_scenario()</span>
+<span id="cb1-21"><a href="#cb1-21"></a>        scenario.h1(<span class="st">&quot;Store Value&quot;</span>)</span>
+<span id="cb1-22"><a href="#cb1-22"></a>        scenario <span class="op">+=</span> c1</span>
+<span id="cb1-23"><a href="#cb1-23"></a>        scenario <span class="op">+=</span> c1.add(value <span class="op">=</span> <span class="dv">15</span>)</span></code></pre></div></div>
+
+<p>Let&#39;s experiment with a
+<a href='https://tezos.gitlab.io/flextesa/mini-net.html#Manual-Sandbox-and-Shell-Environment'>“manual”</a>
+Flextesa sandbox …</p>
+<p>Originate the contract with an empty set:</p>
+<pre><code>tezos-client originate contract c0 transferring 0 from bootacc-0 running setz.tz --init {} --burn-cap 10</code></pre>
+
+<p>Every call adds new elements from the current size of the set to the value of
+the argument, like this:</p>
+<pre><code>tezos-client transfer 0 from bootacc-0 to c0 --arg 60000 --burn-cap 10 --entrypoint add</code></pre>
+
+<!-- 70000 fails to add, so limit between 50 and 60000 -->
+
+<p>After some <em>dichotomy</em>, we can see that the limit is at around 59 100. At which
+point we had enough gas to add a bunch of elements to the set but we put the
+contract in a state where <em>“doing nothing”</em> fails:</p>
+<pre><code>tezos-client transfer 0 from bootacc-0 to c0 --burn-cap 10 --entrypoint default</code></pre>
+
+<p>With Carthage the limit is much lower (I got around 3 100).</p>
+<p>In that state, the contract is fully locked-down, in particular any balance
+cannot be transferred back. This is what the <em>lazy-set</em> is avoiding: a big-map&#39;s
+growth does not impact deserialization gas consumption.</p>
+ <div class="remark-block" style="margin: 4em 0 4em 0"><p><span class="hundred-days-heading">After <a href='https://seb.mondet.org/blog/'>8 years</a> of <em>blograstination</em>, this is post #6 of my attempt at not getting too fast lagging behind on the <a href="https://100daystooffload.com/"><code>#100DaysToOffload</code></a> “challenge” … <p>And yes … that&#39;s already a <strong>long pause</strong> between
+<a href='https://seb.mondet.org/b/'>posts</a> … Quite the slow down on the blogging cadence
+right there! I have however done <em>some</em> writing
+<a href='https://discuss.ocaml.org/t/why-did-you-learn-ocaml/4980/155'>here</a> and
+<a href='https://gitlab.com/tzip/tzip/-/blob/master/proposals/tzip-16/tzip-16.md'>there</a>
+and even some
+<a href='https://discuss.ocaml.org/t/ocaml-workshop-2020-online-conference-is-live-now/6287/20'>video-talking</a>.</p>
+</span></p></div></div></div></body></html>
