@@ -3,8 +3,8 @@
  <channel><title>Seb's blog /b/</title>
   <description>Feed for tag “DailyHacks”</description>
   <link>https://seb.mondet.org/b/</link>
-  <lastBuildDate>Sun, 25 Oct 2020 17:28:09 -0400</lastBuildDate>
-  <pubDate>Sun, 25 Oct 2020 17:28:09 -0400</pubDate>
+  <lastBuildDate>Mon, 26 Oct 2020 22:45:58 -0400</lastBuildDate>
+  <pubDate>Mon, 26 Oct 2020 22:45:58 -0400</pubDate>
   <!--RSS Feed for Seb's blog /b/-->
   <item><title>Comk: Graphical Menus In OCaml</title>
    <description>
@@ -29,6 +29,15 @@
    <link>https://seb.mondet.org/b/0005-hscrypt-website.html</link>
    <guid>https://seb.mondet.org/b/0005-hscrypt-website.html</guid>
    <pubDate>Thu, 16 Jul 2020 13:00:42 -0400</pubDate>
+  </item>
+  <item><title>SmartPy@OCaml2020: The Making Of</title>
+   <description>
+    A quick experience report …
+    Tools used for the paper, the slides, and the video.
+   </description>
+   <link>https://seb.mondet.org/b/0007-ocaml-2020-making-of.html</link>
+   <guid>https://seb.mondet.org/b/0007-ocaml-2020-making-of.html</guid>
+   <pubDate>Mon, 26 Oct 2020 13:00:42 -0400</pubDate>
   </item>
  </channel>
 </rss>
