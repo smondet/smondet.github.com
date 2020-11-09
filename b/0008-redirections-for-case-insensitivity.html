@@ -1,159 +1,91 @@
-<html>
-<head>
-    <meta charset="utf-8">
-    <title>Protected Page</title>
-    <!-- do not cache this page -->
-    <meta http-equiv="cache-control" content="max-age=0"/>
-    <meta http-equiv="cache-control" content="no-cache"/>
-    <meta http-equiv="expires" content="0"/>
-    <meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT"/>
-    <meta http-equiv="pragma" content="no-cache"/>
-    </style>
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/openpgp/4.0.0/openpgp.min.js"
-    ></script>
-</head>
-<body>
-<h2>PGP-Encrypted Page, please provide a passphrase.</h2>
-<form id="staticrypt-form" action="#" method="post">
-   <input id="staticrypt-password"
-          type="password"
-          name="password"
-          placeholder="passphrase"
-          autofocus/>
-   <input id="staticrypt-form-submit"
-          type="submit"
-          value="DECRYPT"/>
-</form>
-<div id="errors"></div>
-<code><pre id="armored-content">
------BEGIN PGP MESSAGE-----
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"><head><title>Github-Pages Redirections — Case Insensitivity</title><meta charset="utf-8"/></head><body><style>body {font-family: sans;max-width: 70em;margin: auto;padding: 10px}blockquote {padding: 3px;border-left: solid #888 3px}details.details-inline {display: inline}details.details-inline[open] {display: block}details.module-menu { display: inline }
+details.module-menu[open] { display: block }.hundred-days-heading {font-style: italic}.tag-in-list-of-tags {font-family: monospace;color: #800}.remark-block {background-color: #f0f0f0;padding: 7px;margin: 0px;border: solid 2px #aaa;border-radius: 15px}h2 {color: #050;padding: 0px}.header-block {padding: 4px}.header-title {font-size: 300%;color: #050}.header-description {font-size: 120%;font-style: italic;color: #555}.header-metadata {margin-top: 1.5em;margin-bottom: 1em;font-size: 100%;padding: 10px;border-left: solid 5px #ccc}.header-author {font-weight: bold;display: block}.header-status {font-style: italic;display: block}.header-tags {display: block}.header-tags::before {content: '⏣ Tags: '}.header-tags::after {content: '.'}.post-status::before {content: '⏰ ';font-style: normal}.header-author::before {content: '✍ '}.header-social-links {display: block}.header-social-links::before {content: '🔗 '}.header-social-links::after {content: '.'}.header-license-badge {opacity: 0.6;display: block}.header-license-badge:hover {opacity: 0.9}.header-license-badge::before {content: '♲ ';opacity: 0.9}.code-block {background-color: #f0f0f0;padding: 2px 2em 2px 2em;border-radius: 4px}.index-item-bloc {margin: 1em 0em 1em 0em}
+code{white-space: pre-wrap;}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; } /* Alert */
+code span.an { color: #008000; } /* Annotation */
+code span.at { } /* Attribute */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #0000ff; } /* ControlFlow */
+code span.ch { color: #008080; } /* Char */
+code span.cn { } /* Constant */
+code span.co { color: #008000; } /* Comment */
+code span.cv { color: #008000; } /* CommentVar */
+code span.do { color: #008000; } /* Documentation */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.im { } /* Import */
+code span.in { color: #008000; } /* Information */
+code span.kw { color: #0000ff; } /* Keyword */
+code span.op { } /* Operator */
+code span.ot { color: #ff4000; } /* Other */
+code span.pp { color: #ff4000; } /* Preprocessor */
+code span.sc { color: #008080; } /* SpecialChar */
+code span.ss { color: #008080; } /* SpecialString */
+code span.st { color: #008080; } /* String */
+code span.va { } /* Variable */
+code span.vs { color: #008080; } /* VerbatimString */
+code span.wa { color: #008000; font-weight: bold; } /* Warning */
+</style><div><a href="./index.html">home</a><hr/></div><div class="content"><div><div class="header-block"><h1 class="header-title">Github-Pages Redirections — Case Insensitivity</h1><div class="header-description">Quick-hack: bringing some case-insensitivity to https://tqtezos.github.io/TZComet/</div><div class="header-metadata"><span class="header-author"><a href="https://seb.mondet.org">Seb Mondet</a></span><span class="header-status"><span class="post-status">Posted on: Sun, 8 Nov 2020</span></span><span class="header-license-badge"><a href="http://creativecommons.org/licenses/by/4.0/"><img src="https://i.creativecommons.org/l/by/4.0/80x15.png" alt="Creative Commons License: CC-By"/></a></span><span class="header-tags"><span class="tag-in-list-of-tags">#DailyHacks</span>, <span class="tag-in-list-of-tags">#Tezos</span></span><span></span></div></div> <p>I was asked to rename the project <code>comevitz</code> to TZComet
+(cf. <a href='https://github.com/tqtezos/TZComet'><code>github.com/tqtezos/TZComet</code></a> …
+more blog posts on its implementation <em>soon</em>).  I had been deploying development versions to
+<a href='https://wr.mondet.org/comevitz/'><code>wr.mondet.org/comevitz</code></a>,
+but for the <em>real</em> one I used “Github-pages” →
+<a href='https://tqtezos.github.io/TZComet/'><code>tqtezos.github.io/TZComet/</code></a>.</p>
+<p>Of course, people do not handle properly the case-sensitiveness of the paths of
+HTTP URLs, and links to
+<a href='https://tqtezos.github.io/tzcomet/'><code>tqtezos.github.io/tzcomet/</code></a> and
+<a href='https://tqtezos.github.io/tzcomet'><code>tqtezos.github.io/tzcomet</code></a> started being
+used and 404-shouting (Octocats)[https://github.com/404] were being displayed.</p>
+<p>Github projects are “case-aware” — macOS-style — for instance
+<a href='https://github.com/tqtezos/tzcomet'><code>github.com/tqtezos/tzcomet</code></a> still goes to
+the right place, but these redirections do
+<a href='https://stackoverflow.com/questions/6650488/why-are-github-project-document-page-urls-case-sensitive-what-are-the-negative'>not</a>
+happen for project-pages.</p>
+<p><strong>The Solution:</strong> Let&#39;s add a bunch of redirections to our website.</p>
+<ul><li>Create the Github-pages for <a href='https://tqtezos.github.io'><code>tqtezos.github.io</code></a>,
+ it is in the (private) repository
+ <a href='https://github.com/tqtezos/tqtezos.github.io'><code>github.com/tqtezos/tqtezos.github.io</code></a>.</li><li>Create both <code>./tzcomet.html</code> (for the <code>/tzcomet</code> path) and
+ <code>tzcomet/index.html</code> (for <code>/tzcomet/</code>) with a simple
+ <a href='https://www.bitdegree.org/learn/html-redirect'>HTML-redirect</a>.</li><li>Push.</li></ul>
 
-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
-=LXUy
------END PGP MESSAGE-----
-</pre></code>
-<script>
-
-function tryPassphrase(passphrase,silent) {
-    console.log("tryPassphrase " + passphrase);
-    var openpgp = window.openpgp;
-    var options, encrypted;
-    var encryptedMsg = document.getElementById('armored-content').innerHTML ;
-    
-    var armoredmsg = encryptedMsg.replace(/@/g, "\n");
-    console.log("armoredmsg:\n" + armoredmsg);
-    return openpgp.message.readArmored(armoredmsg).then(function (msg) {
-        // console.log("msg " + JSON.stringify(msg));
-        console.log("passphrase " + JSON.stringify(passphrase));
-        options = {
-            message: msg,
-            passwords: [passphrase], // decrypt with password
-            armor: true,
-            format: 'utf8'
-        };
-        openpgp.decrypt(options).then(function(plaintext) {
-            console.log("plaintext of msg " + JSON.stringify(plaintext));
-            document.open("text/html", "replace");
-            document.write(plaintext.data);
-            document.close();
-            return true;
-        }).catch(function (error) {
-            if (silent) {
-                console.log("error: " + error);
-            } else {
-                var errors = document.getElementById('errors');
-                errors.innerHTML = '<b>ERROR: decryption failed: </b><code>'
-                    + error
-                    + '</code> <i>(usually means wrong password …)</i>';
-            };
-        });
-    });
-};
-console.log("Setting on submit");
-document.getElementById('staticrypt-form').addEventListener('submit', function(e) {
-    e.preventDefault();
-    console.log("on the submit");
-    var passphrase = document.getElementById('staticrypt-password').value;
-    console.log("on the submit passph: " + passphrase);
-    tryPassphrase(passphrase, false);
-});
-window.onload = function() { 
-    var firstAttempt = "";
-    if (window.location.hash.charAt(0) == '#') {
-        firstAttempt = window.location.hash.substring(1);
-    } else {
-        firstAttempt = window.location.hash
-    };
-    tryPassphrase(firstAttempt, true).then(function(ret) {
-        if (ret) {
-            console.log("on the else of firstAttempt");
-        } else {
-            console.log("Nope from the hash: " + firstAttempt);
-        };
-    }, function(error) {
-        console.log("Error from tryPassphrase: " + error);
-    });
-};
-</script>
-</body>
-</html>
+<p>Note that I also had to rename the <code>main</code> branch, now chosen by default, (back)
+to <code>master</code> to make Github-pages actually deploy something (a bug?).</p>
+<p>It <em>just</em> works.</p>
+<p>I wanted to start playing with variations like <code>TzComet</code>, <code>Tzcomet</code>, etc. but I
+need to share this repository with <em>macOS people</em> and don&#39;t want to be <em>that
+guy</em> …</p>
+ <div class="remark-block" style="margin: 4em 0 4em 0"><p><span class="hundred-days-heading">After <a href='https://seb.mondet.org/blog/'>8 years</a> of <em>blograstination</em>, this is post #8 of my attempt at using the <a href="https://100daystooffload.com/"><code>#100DaysToOffload</code></a> completely unrealistic “challenge” to remind me to write stuff once in a while … Let&#39;s see where <a href='https://seb.mondet.org/b/'>this</a> goes.</span></p></div></div></div></body></html>
