@@ -3,8 +3,8 @@
  <channel><title>Seb's blog /b/</title>
   <description>Feed for tag “OCaml”</description>
   <link>https://seb.mondet.org/b/</link>
-  <lastBuildDate>Sun, 08 Nov 2020 21:46:37 -0500</lastBuildDate>
-  <pubDate>Sun, 08 Nov 2020 21:46:37 -0500</pubDate>
+  <lastBuildDate>Mon, 09 Nov 2020 08:03:27 -0500</lastBuildDate>
+  <pubDate>Mon, 09 Nov 2020 08:03:27 -0500</pubDate>
   <!--RSS Feed for Seb's blog /b/-->
   <item><title>Comk: Graphical Menus In OCaml</title>
    <description>
