@@ -1,165 +1,96 @@
-<html>
-<head>
-    <meta charset="utf-8">
-    <title>Protected Page</title>
-    <!-- do not cache this page -->
-    <meta http-equiv="cache-control" content="max-age=0"/>
-    <meta http-equiv="cache-control" content="no-cache"/>
-    <meta http-equiv="expires" content="0"/>
-    <meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT"/>
-    <meta http-equiv="pragma" content="no-cache"/>
-    </style>
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/openpgp/4.0.0/openpgp.min.js"
-      integrity="sha512-LsI4YA/OY2EMDyHS4lWWUweqqcQXRi5RACGFsemrbqQAguNpNNhjRaJcua7Pvu+SZxGR1vbINmbRM1StWO9Z/Q=="
-      crossorigin="anonymous"
-    ></script>
-</head>
-<body>
-<h2>PGP-Encrypted Page, please provide a passphrase.</h2>
-<form id="staticrypt-form" action="#" method="post">
-   <input id="staticrypt-password"
-          type="password"
-          name="password"
-          placeholder="passphrase"
-          autofocus/>
-   <input id="staticrypt-form-submit"
-          type="submit"
-          value="DECRYPT"/>
-</form>
-<div id="errors"></div>
-<code><pre id="armored-content">
------BEGIN PGP MESSAGE-----
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"><head><title>“Universal” Dune Tip: Rebuild Stuff, Sometimes</title><meta charset="utf-8"/></head><body><style>body {font-family: sans;max-width: 70em;margin: auto;padding: 10px}blockquote {padding: 3px;border-left: solid #888 3px}details.details-inline {display: inline}details.details-inline[open] {display: block}details.module-menu { display: inline }
+details.module-menu[open] { display: block }.hundred-days-heading {font-style: italic}.tag-in-list-of-tags {font-family: monospace;color: #800}.remark-block {background-color: #f0f0f0;padding: 7px;margin: 0px;border: solid 2px #aaa;border-radius: 15px}h2 {color: #050;padding: 0px}.header-block {padding: 4px}.header-title {font-size: 300%;color: #050}.header-description {font-size: 120%;font-style: italic;color: #555}.header-metadata {margin-top: 1.5em;margin-bottom: 1em;font-size: 100%;padding: 10px;border-left: solid 5px #ccc}.header-author {font-weight: bold;display: block}.header-status {font-style: italic;display: block}.header-tags {display: block}.header-tags::before {content: '⏣ Tags: '}.header-tags::after {content: '.'}.post-status::before {content: '⏰ ';font-style: normal}.header-author::before {content: '✍ '}.header-social-links {display: block}.header-social-links::before {content: '🔗 '}.header-social-links::after {content: '.'}.header-license-badge {opacity: 0.6;display: block}.header-license-badge:hover {opacity: 0.9}.header-license-badge::before {content: '♲ ';opacity: 0.9}.code-block {background-color: #f0f0f0;padding: 2px 2em 2px 2em;border-radius: 4px}.index-item-bloc {margin: 1em 0em 1em 0em}
+code{white-space: pre-wrap;}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; } /* Alert */
+code span.an { color: #008000; } /* Annotation */
+code span.at { } /* Attribute */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #0000ff; } /* ControlFlow */
+code span.ch { color: #008080; } /* Char */
+code span.cn { } /* Constant */
+code span.co { color: #008000; } /* Comment */
+code span.cv { color: #008000; } /* CommentVar */
+code span.do { color: #008000; } /* Documentation */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.im { } /* Import */
+code span.in { color: #008000; } /* Information */
+code span.kw { color: #0000ff; } /* Keyword */
+code span.op { } /* Operator */
+code span.ot { color: #ff4000; } /* Other */
+code span.pp { color: #ff4000; } /* Preprocessor */
+code span.sc { color: #008080; } /* SpecialChar */
+code span.ss { color: #008080; } /* SpecialString */
+code span.st { color: #008080; } /* String */
+code span.va { } /* Variable */
+code span.vs { color: #008080; } /* VerbatimString */
+code span.wa { color: #008000; font-weight: bold; } /* Warning */
+</style><div><a href="./index.html">home</a><hr/></div><div class="content"><div><div class="header-block"><h1 class="header-title">“Universal” Dune Tip: Rebuild Stuff, Sometimes</h1><div class="header-description">Quick hack to make “at most every n seconds” dune targets.</div><div class="header-metadata"><span class="header-author"><a href="https://seb.mondet.org">Seb Mondet</a></span><span class="header-status"><span class="post-status">Posted on: Sat, 21 Nov 2020</span></span><span class="header-license-badge"><a href="http://creativecommons.org/licenses/by/4.0/"><img src="https://i.creativecommons.org/l/by/4.0/80x15.png" alt="Creative Commons License: CC-By"/></a></span><span class="header-tags"><span class="tag-in-list-of-tags">#OCaml</span>, <span class="tag-in-list-of-tags">#DailyHacks</span></span><span></span></div></div> <p>How to make something happen less often …</p>
+<p>My use case is a web-page that is built by dune using the current status of my
+<a href='https://notmuchmail.org/'>Notmuch</a> inbox, with a few shell commands
+<code>notmuch search --format=json …</code> one can build a nice summary.
+But I don&#39;t want each rebuild to
+waste a few hundred milliseconds recomputing the same thing over and over.</p>
+<p>It would be nice to be able to
+to have a “witness” of changes to the notmuch database
+but this doesn&#39;t seem obvious since the database is changed in
+various ways, some of which are also very latency-sensitive (Emacs keybindings).</p>
+<p>Enter the <strong><code>(universe)</code></strong> special
+<a href='https://dune.readthedocs.io/en/stable/concepts.html#deps-field'>dependency</a>, it
+means “always rebuild” (i.e. that our universe is changing <em>quite</em> often).</p>
+<p>Let&#39;s use it to rebuild something all the time, something that builds very
+quickly and produces a different output only once every <code>n</code> seconds.  And make
+our more expensive process depend on it, its rebuilding will be stopped there
+since the dependency produces the exact same result</p>
+<p>Here it is:</p>
+<pre><code>(rule
+ (targets every-60-seconds)
+ (deps (universe))
+ (action
+  (run bash -c &quot;echo $(( $(date +%s) / 60 )) &gt; every-60-seconds&quot;)))
 
-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
-aPnx
-=pUQh
------END PGP MESSAGE-----
-</pre></code>
-<script>
+(rule
+ (targets notmuch-status.data)
+ (deps every-60-seconds)
+ (action
+  (run ./make-notmuch-data.sh notmuch-status.data)))</code></pre>
 
-function tryPassphrase(passphrase,silent) {
-    console.log("tryPassphrase " + passphrase);
-    var openpgp = window.openpgp;
-    var options, encrypted;
-    var encryptedMsg = document.getElementById('armored-content').innerHTML ;
-    
-    var armoredmsg = encryptedMsg.replace(/@/g, "\n");
-    console.log("armoredmsg:\n" + armoredmsg);
-    return openpgp.message.readArmored(armoredmsg).then(function (msg) {
-        // console.log("msg " + JSON.stringify(msg));
-        console.log("passphrase " + JSON.stringify(passphrase));
-        options = {
-            message: msg,
-            passwords: [passphrase], // decrypt with password
-            armor: true,
-            format: 'utf8'
-        };
-        openpgp.decrypt(options).then(function(plaintext) {
-            console.log("plaintext of msg " + JSON.stringify(plaintext));
-            document.open("text/html", "replace");
-            document.write(plaintext.data);
-            var meta = document.createElement('meta');
-            meta.name = "referrer";
-            meta.content = "no-referrer";
-            document.getElementsByTagName('head')[0].appendChild(meta);
-            document.close();
-            return true;
-        }).catch(function (error) {
-            if (silent) {
-                console.log("error: " + error);
-            } else {
-                var errors = document.getElementById('errors');
-                errors.innerHTML = '<b>ERROR: decryption failed: </b><code>'
-                    + error
-                    + '</code> <i>(usually means wrong password …)</i>';
-            };
-        });
-    });
-};
-console.log("Setting on submit");
-document.getElementById('staticrypt-form').addEventListener('submit', function(e) {
-    e.preventDefault();
-    console.log("on the submit");
-    var passphrase = document.getElementById('staticrypt-password').value;
-    console.log("on the submit passph: " + passphrase);
-    tryPassphrase(passphrase, false);
-});
-window.onload = function() { 
-    var firstAttempt = "";
-    if (window.location.hash.charAt(0) == '#') {
-        firstAttempt = window.location.hash.substring(1);
-    } else {
-        firstAttempt = window.location.hash
-    };
-    tryPassphrase(firstAttempt, true).then(function(ret) {
-        if (ret) {
-            console.log("on the else of firstAttempt");
-        } else {
-            console.log("Nope from the hash: " + firstAttempt);
-        };
-    }, function(error) {
-        console.log("Error from tryPassphrase: " + error);
-    });
-};
-</script>
-</body>
-</html>
+<p><strong>→</strong> <code>every-60-seconds</code> is built all the time but takes an imperceptible amount
+of time.</p>
+<p><strong>→</strong> <code>notmuch-status.data</code> actually takes some time, <strong>and</strong> then triggers the
+rebuild of all its dependents.</p>
+ <div class="remark-block" style="margin: 4em 0 4em 0"><p><span class="hundred-days-heading">After <a href='https://seb.mondet.org/blog/'>8 years</a> of <em>blograstination</em>, this is post #9 of my attempt at not getting too fast lagging behind on the <a href="https://100daystooffload.com/"><code>#100DaysToOffload</code></a> “challenge” … Let&#39;s see where <a href='https://seb.mondet.org/b/'>this</a> goes.</span></p></div></div></div></body></html>

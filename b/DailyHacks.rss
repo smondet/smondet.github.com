@@ -3,8 +3,8 @@
  <channel><title>Seb's blog /b/</title>
   <description>Feed for tag “DailyHacks”</description>
   <link>https://seb.mondet.org/b/</link>
-  <lastBuildDate>Fri, 20 Nov 2020 22:33:13 -0500</lastBuildDate>
-  <pubDate>Fri, 20 Nov 2020 22:33:13 -0500</pubDate>
+  <lastBuildDate>Sat, 21 Nov 2020 16:07:21 -0500</lastBuildDate>
+  <pubDate>Sat, 21 Nov 2020 16:07:21 -0500</pubDate>
   <!--RSS Feed for Seb's blog /b/-->
   <item><title>Comk: Graphical Menus In OCaml</title>
    <description>
@@ -50,6 +50,14 @@
    <guid>
     https://seb.mondet.org/b/0008-redirections-for-case-insensitivity.html
    </guid><pubDate>Sun, 8 Nov 2020 13:00:42 -0400</pubDate>
+  </item>
+  <item><title>“Universal” Dune Tip: Rebuild Stuff, Sometimes</title>
+   <description>
+    Quick hack to make “at most every n seconds” dune targets.
+   </description>
+   <link>https://seb.mondet.org/b/0009-dune-universe-hack.html</link>
+   <guid>https://seb.mondet.org/b/0009-dune-universe-hack.html</guid>
+   <pubDate>Sat, 21 Nov 2020 13:00:42 -0400</pubDate>
   </item>
  </channel>
 </rss>

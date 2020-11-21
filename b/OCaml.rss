@@ -3,8 +3,8 @@
  <channel><title>Seb's blog /b/</title>
   <description>Feed for tag “OCaml”</description>
   <link>https://seb.mondet.org/b/</link>
-  <lastBuildDate>Fri, 20 Nov 2020 22:33:13 -0500</lastBuildDate>
-  <pubDate>Fri, 20 Nov 2020 22:33:13 -0500</pubDate>
+  <lastBuildDate>Sat, 21 Nov 2020 16:07:21 -0500</lastBuildDate>
+  <pubDate>Sat, 21 Nov 2020 16:07:21 -0500</pubDate>
   <!--RSS Feed for Seb's blog /b/-->
   <item><title>Comk: Graphical Menus In OCaml</title>
    <description>
@@ -39,6 +39,14 @@
    <link>https://seb.mondet.org/b/0007-ocaml-2020-making-of.html</link>
    <guid>https://seb.mondet.org/b/0007-ocaml-2020-making-of.html</guid>
    <pubDate>Mon, 26 Oct 2020 13:00:42 -0400</pubDate>
+  </item>
+  <item><title>“Universal” Dune Tip: Rebuild Stuff, Sometimes</title>
+   <description>
+    Quick hack to make “at most every n seconds” dune targets.
+   </description>
+   <link>https://seb.mondet.org/b/0009-dune-universe-hack.html</link>
+   <guid>https://seb.mondet.org/b/0009-dune-universe-hack.html</guid>
+   <pubDate>Sat, 21 Nov 2020 13:00:42 -0400</pubDate>
   </item>
  </channel>
 </rss>
