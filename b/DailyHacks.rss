@@ -3,8 +3,8 @@
  <channel><title>Seb's blog /b/</title>
   <description>Feed for tag “DailyHacks”</description>
   <link>https://seb.mondet.org/b/</link>
-  <lastBuildDate>Mon, 21 Dec 2020 22:03:04 -0500</lastBuildDate>
-  <pubDate>Mon, 21 Dec 2020 22:03:04 -0500</pubDate>
+  <lastBuildDate>Wed, 23 Dec 2020 21:28:39 -0500</lastBuildDate>
+  <pubDate>Wed, 23 Dec 2020 21:28:39 -0500</pubDate>
   <!--RSS Feed for Seb's blog /b/-->
   <item><title>Comk: Graphical Menus In OCaml</title>
    <description>
