@@ -3,8 +3,8 @@
  <channel><title>Seb's blog /b/</title>
   <description>Feed for all posts.</description>
   <link>https://seb.mondet.org/b/</link>
-  <lastBuildDate>Fri, 01 Jan 2021 18:38:37 -0500</lastBuildDate>
-  <pubDate>Fri, 01 Jan 2021 18:38:37 -0500</pubDate>
+  <lastBuildDate>Sat, 02 Jan 2021 15:20:32 -0500</lastBuildDate>
+  <pubDate>Sat, 02 Jan 2021 15:20:32 -0500</pubDate>
   <!--RSS Feed for Seb's blog /b/-->
   <item><title>Comk: Graphical Menus In OCaml</title>
    <description>
@@ -97,6 +97,16 @@
    </link>
    <guid>https://seb.mondet.org/b/0010-delphi-challenge-post-vivum.html
    </guid><pubDate>Wed, 23 Dec 2020 13:00:42 -0400</pubDate>
+  </item>
+  <item><title>Calling The Generic Multisig In Pure Shell</title>
+   <description>
+    Because search engines do not report enough PACK-ed and signed Michelson
+    lambdas …
+   </description>
+   <link>https://seb.mondet.org/b/0011-generic-multisig-pure-shell.html
+   </link>
+   <guid>https://seb.mondet.org/b/0011-generic-multisig-pure-shell.html
+   </guid><pubDate>Sat, 2 Jan 2021 13:00:42 -0400</pubDate>
   </item>
  </channel>
 </rss>
