@@ -115,38 +115,38 @@ glorious hack:</p>
 <div class="code-block"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource bash numberLines"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">build ()</span> <span class="kw">{</span></span>
 <span id="cb1-2"><a href="#cb1-2"></a>    <span class="va">name=</span>20200828-smondet-smartpy</span>
 <span id="cb1-3"><a href="#cb1-3"></a>    <span class="va">tmpml=</span>/tmp/ocaml20.ml</span>
-<span id="cb1-4"><a href="#cb1-4"></a>    <span class="fu">sed</span> <span class="st">&#39;s/&lt;!-- *(\*/{&lt; let () = cmt {cmt|/g&#39;</span> slides.md <span class="kw">|</span> <span class="kw">\</span></span>
-<span id="cb1-5"><a href="#cb1-5"></a>        <span class="fu">sed</span> <span class="st">&#39;s/\*) *--&gt;/|cmt} &gt;}/g&#39;</span>  <span class="kw">|</span> <span class="kw">\</span></span>
-<span id="cb1-6"><a href="#cb1-6"></a>        <span class="ex">mpp</span> -l ocaml -so <span class="st">&#39;{:&#39;</span> -sc <span class="st">&#39;:}&#39;</span> <span class="op">&gt;</span> <span class="va">$tmpml</span></span>
+<span id="cb1-4"><a href="#cb1-4"></a>    <span class="fu">sed</span> <span class="st">&#39;s/&lt;!-- *(\*/{&lt; let () = cmt {cmt|/g&#39;</span> slides.md <span class="kw">|</span> <span class="dt">\</span></span>
+<span id="cb1-5"><a href="#cb1-5"></a>        sed <span class="st">&#39;s/\*) *--&gt;/|cmt} &gt;}/g&#39;</span>  <span class="kw">|</span> <span class="dt">\</span></span>
+<span id="cb1-6"><a href="#cb1-6"></a>        mpp <span class="at">-l</span> ocaml <span class="at">-so</span> <span class="st">&#39;{:&#39;</span> <span class="at">-sc</span> <span class="st">&#39;:}&#39;</span> <span class="op">&gt;</span> <span class="va">$tmpml</span></span>
 <span id="cb1-7"><a href="#cb1-7"></a>    <span class="bu">export</span> <span class="va">with_comments=</span>true</span>
-<span id="cb1-8"><a href="#cb1-8"></a>    <span class="ex">ocaml</span> <span class="va">$tmpml</span> <span class="kw">|</span> <span class="ex">pandoc</span> --self-contained -s -o <span class="va">$name</span>.html <span class="kw">\</span></span>
-<span id="cb1-9"><a href="#cb1-9"></a>                          <span class="ex">--number-sections</span> <span class="kw">\</span></span>
-<span id="cb1-10"><a href="#cb1-10"></a>                          <span class="ex">--css</span> quick.css</span>
+<span id="cb1-8"><a href="#cb1-8"></a>    <span class="ex">ocaml</span> <span class="va">$tmpml</span> <span class="kw">|</span> <span class="ex">pandoc</span> <span class="at">--self-contained</span> <span class="at">-s</span> <span class="at">-o</span> <span class="va">$name</span>.html <span class="dt">\</span></span>
+<span id="cb1-9"><a href="#cb1-9"></a>                          <span class="at">--number-sections</span> <span class="dt">\</span></span>
+<span id="cb1-10"><a href="#cb1-10"></a>                          <span class="at">--css</span> quick.css</span>
 <span id="cb1-11"><a href="#cb1-11"></a>    <span class="bu">echo</span> <span class="st">&quot;HTML-Done: file://</span><span class="va">$PWD</span><span class="st">/</span><span class="va">$name</span><span class="st">.html&quot;</span></span>
 <span id="cb1-12"><a href="#cb1-12"></a>    <span class="bu">export</span> <span class="va">with_comments=</span>false</span>
-<span id="cb1-13"><a href="#cb1-13"></a>    <span class="ex">ocaml</span> <span class="va">$tmpml</span> <span class="kw">|</span> <span class="ex">pandoc</span> -t beamer <span class="kw">\</span></span>
-<span id="cb1-14"><a href="#cb1-14"></a>           <span class="ex">-V</span> fontsize:11pt <span class="kw">\</span></span>
-<span id="cb1-15"><a href="#cb1-15"></a>           <span class="ex">-V</span> colorlinks:true <span class="kw">\</span></span>
-<span id="cb1-16"><a href="#cb1-16"></a>           <span class="ex">--highlight-style</span> tango <span class="kw">\</span></span>
-<span id="cb1-17"><a href="#cb1-17"></a>           <span class="ex">-V</span> monofont:DejaVuSansMono <span class="kw">\</span></span>
-<span id="cb1-18"><a href="#cb1-18"></a>           <span class="ex">-V</span> monofontoptions:<span class="st">&#39;Scale=0.8&#39;</span> <span class="kw">\</span></span>
-<span id="cb1-19"><a href="#cb1-19"></a>           <span class="ex">-V</span> theme:Rochester <span class="kw">\</span></span>
-<span id="cb1-20"><a href="#cb1-20"></a>           <span class="ex">-V</span> colortheme:dove <span class="kw">\</span></span>
-<span id="cb1-21"><a href="#cb1-21"></a>           <span class="ex">-V</span> aspectratio=169 <span class="kw">\</span></span>
-<span id="cb1-22"><a href="#cb1-22"></a>           <span class="ex">--pdf-engine</span>=xelatex <span class="kw">\</span></span>
-<span id="cb1-23"><a href="#cb1-23"></a>           <span class="ex">-s</span> <span class="kw">\</span></span>
-<span id="cb1-24"><a href="#cb1-24"></a>           <span class="ex">-o</span> <span class="va">$name</span>.pdf</span>
+<span id="cb1-13"><a href="#cb1-13"></a>    <span class="ex">ocaml</span> <span class="va">$tmpml</span> <span class="kw">|</span> <span class="ex">pandoc</span> <span class="at">-t</span> beamer <span class="dt">\</span></span>
+<span id="cb1-14"><a href="#cb1-14"></a>           <span class="at">-V</span> fontsize:11pt <span class="dt">\</span></span>
+<span id="cb1-15"><a href="#cb1-15"></a>           <span class="at">-V</span> colorlinks:true <span class="dt">\</span></span>
+<span id="cb1-16"><a href="#cb1-16"></a>           <span class="at">--highlight-style</span> tango <span class="dt">\</span></span>
+<span id="cb1-17"><a href="#cb1-17"></a>           <span class="at">-V</span> monofont:DejaVuSansMono <span class="dt">\</span></span>
+<span id="cb1-18"><a href="#cb1-18"></a>           <span class="at">-V</span> monofontoptions:<span class="st">&#39;Scale=0.8&#39;</span> <span class="dt">\</span></span>
+<span id="cb1-19"><a href="#cb1-19"></a>           <span class="at">-V</span> theme:Rochester <span class="dt">\</span></span>
+<span id="cb1-20"><a href="#cb1-20"></a>           <span class="at">-V</span> colortheme:dove <span class="dt">\</span></span>
+<span id="cb1-21"><a href="#cb1-21"></a>           <span class="at">-V</span> aspectratio=169 <span class="dt">\</span></span>
+<span id="cb1-22"><a href="#cb1-22"></a>           <span class="at">--pdf-engine</span><span class="op">=</span>xelatex <span class="dt">\</span></span>
+<span id="cb1-23"><a href="#cb1-23"></a>           <span class="at">-s</span> <span class="dt">\</span></span>
+<span id="cb1-24"><a href="#cb1-24"></a>           <span class="at">-o</span> <span class="va">$name</span>.pdf</span>
 <span id="cb1-25"><a href="#cb1-25"></a>    <span class="bu">echo</span> <span class="st">&quot;Pandoc done.&quot;</span></span>
-<span id="cb1-26"><a href="#cb1-26"></a>    <span class="ex">exiftool</span> -Title=<span class="st">&quot;SmartPy 20200828 @smondet &quot;</span> <span class="kw">\</span></span>
-<span id="cb1-27"><a href="#cb1-27"></a>             <span class="ex">-Author</span>=<span class="st">&quot;Seb Mondet&quot;</span> <span class="kw">\</span></span>
-<span id="cb1-28"><a href="#cb1-28"></a>             <span class="ex">-Subject</span>=<span class="st">&quot;Slides for OCaml 2020, Aug 28&quot;</span> <span class="kw">\</span></span>
-<span id="cb1-29"><a href="#cb1-29"></a>             <span class="ex">-Keywords</span>=<span class="st">&quot;smartpy;python;ocaml&quot;</span> <span class="kw">\</span></span>
-<span id="cb1-30"><a href="#cb1-30"></a>             <span class="ex">-Creator</span>=<span class="st">&quot;@smondet&quot;</span> <span class="kw">\</span></span>
-<span id="cb1-31"><a href="#cb1-31"></a>             <span class="ex">-Producer</span>=<span class="st">&quot;@smondet&quot;</span> <span class="kw">\</span></span>
-<span id="cb1-32"><a href="#cb1-32"></a>             <span class="va">$name</span><span class="ex">.pdf</span></span>
-<span id="cb1-33"><a href="#cb1-33"></a>    <span class="ex">pdftoppm</span> <span class="va">$name</span>.pdf <span class="va">$name</span> -png</span>
+<span id="cb1-26"><a href="#cb1-26"></a>    <span class="ex">exiftool</span> <span class="at">-Title</span><span class="op">=</span><span class="st">&quot;SmartPy 20200828 @smondet &quot;</span> <span class="dt">\</span></span>
+<span id="cb1-27"><a href="#cb1-27"></a>             <span class="at">-Author</span><span class="op">=</span><span class="st">&quot;Seb Mondet&quot;</span> <span class="dt">\</span></span>
+<span id="cb1-28"><a href="#cb1-28"></a>             <span class="at">-Subject</span><span class="op">=</span><span class="st">&quot;Slides for OCaml 2020, Aug 28&quot;</span> <span class="dt">\</span></span>
+<span id="cb1-29"><a href="#cb1-29"></a>             <span class="at">-Keywords</span><span class="op">=</span><span class="st">&quot;smartpy;python;ocaml&quot;</span> <span class="dt">\</span></span>
+<span id="cb1-30"><a href="#cb1-30"></a>             <span class="at">-Creator</span><span class="op">=</span><span class="st">&quot;@smondet&quot;</span> <span class="dt">\</span></span>
+<span id="cb1-31"><a href="#cb1-31"></a>             <span class="at">-Producer</span><span class="op">=</span><span class="st">&quot;@smondet&quot;</span> <span class="dt">\</span></span>
+<span id="cb1-32"><a href="#cb1-32"></a>             <span class="va">$name</span>.pdf</span>
+<span id="cb1-33"><a href="#cb1-33"></a>    <span class="ex">pdftoppm</span> <span class="va">$name</span>.pdf <span class="va">$name</span> <span class="at">-png</span></span>
 <span id="cb1-34"><a href="#cb1-34"></a>    <span class="bu">echo</span> <span class="st">&quot;Done: file://</span><span class="va">$PWD</span><span class="st">/</span><span class="va">$name</span><span class="st">.pdf&quot;</span></span>
-<span id="cb1-35"><a href="#cb1-35"></a><span class="kw">}</span></span></code></pre></div></div><ul><li>Using <code>mpp</code>, a.k.a.
+<span id="cb1-35"><a href="#cb1-35"></a><span class="er">}</span></span></code></pre></div></div><ul><li>Using <code>mpp</code>, a.k.a.
  <a href='https://github.com/ocaml/MPP-language-blender'><code>ocaml/MPP-language-blender</code></a>,
  as the glue it&#39;s meant to be.</li><li>Some <code>sed</code> to transform special markdown/HTML comments, like
  <code>&lt;!--(* ... *)--&gt;</code> into <code>mpp</code>&#39;s “guest language” syntax:
