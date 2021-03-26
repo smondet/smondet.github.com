@@ -3,8 +3,8 @@
  <channel><title>Seb's blog /b/</title>
   <description>Feed for tag “Tezos”</description>
   <link>https://seb.mondet.org/b/</link>
-  <lastBuildDate>Thu, 25 Mar 2021 18:11:20 -0400</lastBuildDate>
-  <pubDate>Thu, 25 Mar 2021 18:11:20 -0400</pubDate>
+  <lastBuildDate>Thu, 25 Mar 2021 20:01:24 -0400</lastBuildDate>
+  <pubDate>Thu, 25 Mar 2021 20:01:24 -0400</pubDate>
   <!--RSS Feed for Seb's blog /b/-->
   <item><title>Generating OCaml From Michelson Types</title>
    <description>
