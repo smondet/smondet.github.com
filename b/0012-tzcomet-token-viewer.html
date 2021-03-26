@@ -1,207 +1,97 @@
-<html>
-<head>
-    <meta charset="utf-8">
-    <title>Protected Page</title>
-    <!-- do not cache this page -->
-    <meta http-equiv="cache-control" content="max-age=0"/>
-    <meta http-equiv="cache-control" content="no-cache"/>
-    <meta http-equiv="expires" content="0"/>
-    <meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT"/>
-    <meta http-equiv="pragma" content="no-cache"/>
-    </style>
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/openpgp/4.0.0/openpgp.min.js"
-      integrity="sha512-LsI4YA/OY2EMDyHS4lWWUweqqcQXRi5RACGFsemrbqQAguNpNNhjRaJcua7Pvu+SZxGR1vbINmbRM1StWO9Z/Q=="
-      crossorigin="anonymous"
-    ></script>
-</head>
-<body>
-<h2>PGP-Encrypted Page, please provide a passphrase.</h2>
-<form id="staticrypt-form" action="#" method="post">
-   <input id="staticrypt-password"
-          type="password"
-          name="password"
-          placeholder="passphrase"
-          autofocus/>
-   <input id="staticrypt-form-submit"
-          type="submit"
-          value="DECRYPT"/>
-</form>
-<div id="errors"></div>
-<code><pre id="armored-content">
------BEGIN PGP MESSAGE-----
-
-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
-=dLhE
------END PGP MESSAGE-----
-</pre></code>
-<script>
-
-function tryPassphrase(passphrase,silent) {
-    console.log("tryPassphrase " + passphrase);
-    var openpgp = window.openpgp;
-    var options, encrypted;
-    var encryptedMsg = document.getElementById('armored-content').innerHTML ;
-    
-    var armoredmsg = encryptedMsg.replace(/@/g, "\n");
-    console.log("armoredmsg:\n" + armoredmsg);
-    return openpgp.message.readArmored(armoredmsg).then(function (msg) {
-        // console.log("msg " + JSON.stringify(msg));
-        console.log("passphrase " + JSON.stringify(passphrase));
-        options = {
-            message: msg,
-            passwords: [passphrase], // decrypt with password
-            armor: true,
-            format: 'utf8'
-        };
-        openpgp.decrypt(options).then(function(plaintext) {
-            console.log("plaintext of msg " + JSON.stringify(plaintext));
-            document.open("text/html", "replace");
-            document.write(plaintext.data);
-            var meta = document.createElement('meta');
-            meta.name = "referrer";
-            meta.content = "no-referrer";
-            document.getElementsByTagName('head')[0].appendChild(meta);
-            document.close();
-            return true;
-        }).catch(function (error) {
-            if (silent) {
-                console.log("error: " + error);
-            } else {
-                var errors = document.getElementById('errors');
-                errors.innerHTML = '<b>ERROR: decryption failed: </b><code>'
-                    + error
-                    + '</code> <i>(usually means wrong password …)</i>';
-            };
-        });
-    });
-};
-console.log("Setting on submit");
-document.getElementById('staticrypt-form').addEventListener('submit', function(e) {
-    e.preventDefault();
-    console.log("on the submit");
-    var passphrase = document.getElementById('staticrypt-password').value;
-    console.log("on the submit passph: " + passphrase);
-    tryPassphrase(passphrase, false);
-});
-window.onload = function() { 
-    var firstAttempt = "";
-    if (window.location.hash.charAt(0) == '#') {
-        firstAttempt = window.location.hash.substring(1);
-    } else {
-        firstAttempt = window.location.hash
-    };
-    tryPassphrase(firstAttempt, true).then(function(ret) {
-        if (ret) {
-            console.log("on the else of firstAttempt");
-        } else {
-            console.log("Nope from the hash: " + firstAttempt);
-        };
-    }, function(error) {
-        console.log("Error from tryPassphrase: " + error);
-    });
-};
-</script>
-</body>
-</html>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"><head><title>TZComet's New Token Viewer</title><meta charset="utf-8"/></head><body><style>body {font-family: sans;max-width: 80ch;margin: auto;padding: 10px}blockquote {padding: 3px;border-left: solid #888 3px}details.details-inline {display: inline}details.details-inline[open] {display: block}details.module-menu { display: inline }
+details.module-menu[open] { display: block }.hundred-days-heading {font-style: italic}.tag-in-list-of-tags {font-family: monospace;color: #800}.remark-block {background-color: #f0f0f0;padding: 7px;margin: 0px;border: solid 2px #aaa;border-radius: 15px}h2 {color: #050;padding: 0px}.header-block {padding: 4px}.header-title {font-size: 300%;color: #050}.header-description {font-size: 120%;font-style: italic;color: #555}.header-metadata {margin-top: 1.5em;margin-bottom: 1em;font-size: 100%;padding: 10px;border-left: solid 5px #ccc}.header-author {font-weight: bold;display: block}.header-status {font-style: italic;display: block}.header-tags {display: block}.header-tags::before {content: '⏣ Tags: '}.header-tags::after {content: '.'}.post-status::before {content: '⏰ ';font-style: normal}.header-author::before {content: '✍ '}.header-social-links {display: block}.header-social-links::before {content: '🔗 '}.header-social-links::after {content: '.'}.header-license-badge {opacity: 0.6;display: block}.header-license-badge:hover {opacity: 0.9}.header-license-badge::before {content: '♲ ';opacity: 0.9}.code-block {background-color: #f0f0f0;padding: 2px 2px 2px 2px;border-radius: 4px}.index-item-bloc {margin: 1em 0em 1em 0em}
+code{white-space: pre-wrap;}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 4px 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource {
+  margin-left: 5ch;
+  border-left: 1px solid #aaaaaa;
+  padding-left: 2px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; } /* Alert */
+code span.an { color: #008000; } /* Annotation */
+code span.at { } /* Attribute */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #0000ff; } /* ControlFlow */
+code span.ch { color: #008080; } /* Char */
+code span.cn { } /* Constant */
+code span.co { color: #008000; } /* Comment */
+code span.cv { color: #008000; } /* CommentVar */
+code span.do { color: #008000; } /* Documentation */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.im { } /* Import */
+code span.in { color: #008000; } /* Information */
+code span.kw { color: #0000ff; } /* Keyword */
+code span.op { } /* Operator */
+code span.ot { color: #ff4000; } /* Other */
+code span.pp { color: #ff4000; } /* Preprocessor */
+code span.sc { color: #008080; } /* SpecialChar */
+code span.ss { color: #008080; } /* SpecialString */
+code span.st { color: #008080; } /* String */
+code span.va { } /* Variable */
+code span.vs { color: #008080; } /* VerbatimString */
+code span.wa { color: #008000; font-weight: bold; } /* Warning */
+</style><div><a href="./index.html">home</a><hr/></div><div class="content"><div><div class="header-block"><h1 class="header-title">TZComet's New Token Viewer</h1><div class="header-description">TZComet and CleanNFT Metadata: a generic token-viewer ☄<br/>Also new domain tzcomet.io 🌠</div><div class="header-metadata"><span class="header-author"><a href="https://seb.mondet.org">Seb Mondet</a></span><span class="header-status"><span class="post-status">Posted on: Fri, 26 Mar 2021</span></span><span class="header-license-badge"><a href="http://creativecommons.org/licenses/by/4.0/"><img src="https://i.creativecommons.org/l/by/4.0/80x15.png" alt="Creative Commons License: CC-By"/></a></span><span class="header-tags"><span class="tag-in-list-of-tags">#OCaml</span>, <span class="tag-in-list-of-tags">#Tezos</span>, <span class="tag-in-list-of-tags">#NFT</span>, <span class="tag-in-list-of-tags">#CleanNFT</span>, <span class="tag-in-list-of-tags">#CleanNFTs</span></span><span></span></div></div> <p>As the Tezos ecosystem converges around metadata standards for NFTs
+(a.k.a. <a href='https://tqtezos.medium.com/proof-of-work-vs-proof-of-stake-the-ecological-footprint-c58029faee44'>Clean NFTs</a>),
+TZComet now provides a “token-viewer” (already 2 iterations, first blog
+post …). It also got upgraded to its own fancy domain name:
+<a href='https://tzcomet.io'>tzcomet.io</a>.</p>
+<p>The token-viewer, instead of trying to validate and report errors like the
+“explorer” does, attempts at nicely displaying as much as possible of a token
+(NFT or <em>not-non-fungible</em> as well ☺) filling-in for incomplete or erroneous
+metadata as much as possible.</p>
+<div style="margin: auto; width: 70%; border: solid 3px #bbb; padding: 5px"><a href="https://user-images.githubusercontent.com/617111/112543359-05f7dd00-8d8c-11eb-8c6a-249c179c7714.gif"><img src="https://user-images.githubusercontent.com/617111/112543359-05f7dd00-8d8c-11eb-8c6a-249c179c7714.gif" alt="Some GIF of the token-viewer." style="width: 100% ; "/></a></div><p>The constraint of talking only to Tezos-nodes and IPFS gateways is still there so
+of course nothing is pre-computed, but the nice people at SmartPy take good care
+of their <a href='https://smartpy.io/nodes'>nodes</a>; it&#39;s surprisingly fast.</p>
+<p>The UI tries to simplify interactions to a few buttons: “random token”, “<code>+ 1</code>”,
+and “<code>– 1</code>”, but there is a complication with the <em>“Show Potentially NSFW”</em>
+option. Check the box or be asked every time for an extra click to show images,
+videos, etc.  It is all multimedia coming from anyone on the Internet; anything
+you can imagine or don&#39;t want to …  If you want a high-level view of a big set
+of visual NFTs you can check-out
+<a href='https://here-or-there.glitch.me/index_clip.html'>here-or-there.glitch.me</a> by
+<em>Mario Klingemann</em> (<a href='https://quasimondo.com/'>quasimondo.com</a>).</p>
+<p>SVGs can also execute arbitrary Javascript code on the page; including
+<em>phoning-home</em> to track you, or trying to exploit vulnerabilities in your
+browser.</p>
+<p>Here are a too many examples:</p>
+<ul><li><a href="https://auctions.alchememist.com/">The Alchememist</a> has been minting a few on the same contract: <a href="https://tzcomet.io/#/token/KT1W4wh1qDc2g22DToaTfnCtALLJ7jHn38Xc/0%3Falways-show-multimedia%3Dtrue"><code>KT1W4wh1…/0</code></a>, <a href="https://tzcomet.io/#/token/KT1W4wh1qDc2g22DToaTfnCtALLJ7jHn38Xc/1%3Falways-show-multimedia%3Dtrue"><code>KT1W4wh1…/1</code></a>, <a href="https://tzcomet.io/#/token/KT1W4wh1qDc2g22DToaTfnCtALLJ7jHn38Xc/2%3Falways-show-multimedia%3Dtrue"><code>KT1W4wh1…/2</code></a> … <a href="https://tzcomet.io/#/token/KT1W4wh1qDc2g22DToaTfnCtALLJ7jHn38Xc/15%3Falways-show-multimedia%3Dtrue"><code>KT1W4wh1…/15</code></a> ; they are all images on IPFS, the formats are not provided, in that case
+TZComet guesses them by downloading the few first bytes of the binary blob and
+doing some <a href="https://stackoverflow.com/questions/55869/determine-file-type-of-an-image">magic-number</a> matching.</li><li>The website <a href="https://www.hicetnunc.xyz/">Hic Et Nunc</a> has allowed people to mint thousands of NFTs with a lot freedom in multimedia-formats. It is also all on IPFS but, at least in version 2 of the contract, MIME/content-types are provided in the metadata.<ul><li><a href="https://tzcomet.io/#/token/KT1RJ6PbjHpwc3M5rw5s2Nbmefwbuwbdxton/3000%3Falways-show-multimedia%3Dtrue"><code>KT1RJ6Pb…/3000</code></a>: a video.</li><li><a href="https://tzcomet.io/#/token/KT1RJ6PbjHpwc3M5rw5s2Nbmefwbuwbdxton/3001%3Falways-show-multimedia%3Dtrue"><code>KT1RJ6Pb…/3001</code></a>: an animated GIF.</li><li><a href="https://tzcomet.io/#/token/KT1RJ6PbjHpwc3M5rw5s2Nbmefwbuwbdxton/7577%3Falways-show-multimedia%3Dtrue"><code>KT1RJ6Pb…/7577</code></a>: the “Jumpy Dot” is an interactive-SVG game, cf. <strong>@mrdoob</strong>&#39;s <a href='https://twitter.com/mrdoob/status/1372491106886254597'>tweet</a>, It works really depending on your device/browser, my best score is 2905 with Firefox and “real” USB mouse …</li><li><a href="https://tzcomet.io/#/token/KT1RJ6PbjHpwc3M5rw5s2Nbmefwbuwbdxton/8280%3Falways-show-multimedia%3Dtrue"><code>KT1RJ6Pb…/8280</code></a>: SVG that does an API call to better-call-dev, cf. <strong>@quasimondo</strong>&#39;s <a href='https://twitter.com/quasimondo/status/1372851040245084161?s=09'>tweet</a>.</li><li>There are of course formats that TZComet doesn't handle (yet), like <a href="https://en.wikipedia.org/wiki/GlTF">glTF</a> in <a href="https://tzcomet.io/#/token/KT1RJ6PbjHpwc3M5rw5s2Nbmefwbuwbdxton/6369%3Falways-show-multimedia%3Dtrue"><code>KT1RJ6Pb…/6369</code></a> or <a href="https://tzcomet.io/#/token/KT1RJ6PbjHpwc3M5rw5s2Nbmefwbuwbdxton/8424%3Falways-show-multimedia%3Dtrue"><code>KT1RJ6Pb…/8424</code></a>, the content-type <code>application/x-directory</code> used at <a href="https://tzcomet.io/#/token/KT1RJ6PbjHpwc3M5rw5s2Nbmefwbuwbdxton/12537%3Falways-show-multimedia%3Dtrue"><code>KT1RJ6Pb…/12537</code></a>.</li><li>Most links in this blog-post pass the option to show all the content by default, but there is definitely “unsafe-or-unwanted-for-some-people” content: <a href="https://tzcomet.io/#/token/KT1RJ6PbjHpwc3M5rw5s2Nbmefwbuwbdxton/3974%3Falways-show-multimedia%3Dfalse"><code>KT1RJ6Pb…/3974</code></a>, <a href="https://tzcomet.io/#/token/KT1RJ6PbjHpwc3M5rw5s2Nbmefwbuwbdxton/6255%3Falways-show-multimedia%3Dfalse"><code>KT1RJ6Pb…/6255</code></a>, <a href="https://tzcomet.io/#/token/KT1RJ6PbjHpwc3M5rw5s2Nbmefwbuwbdxton/8385%3Falways-show-multimedia%3Dfalse"><code>KT1RJ6Pb…/8385</code></a> …</li></ul></li><li>Very recently <a href="https://kalamint.io/">Kalamint</a> launched. The TZIP-016 metadata of their contract is itself <a href="https://tzcomet.io/#/explorer%3Fgo%3Dtrue%26explorer-input%3DKT1EpGgjQs73QfFJs9z7m1Mxm5MTnpC2tqse">invalid</a> but TZComet manages to display the tokens:<ul><li><a href="https://tzcomet.io/#/token/KT1EpGgjQs73QfFJs9z7m1Mxm5MTnpC2tqse/1%3Falways-show-multimedia%3Dtrue"><code>KT1EpGgj…/1</code></a> is a <em>zoomfie</em> of the founders (actually looks like google-meet).</li><li><a href='https://twitter.com/MaikeulMaikeul'><strong>@MaikeulMaikeul</strong></a>&#39;s collection starts at <a href="https://tzcomet.io/#/token/KT1EpGgjQs73QfFJs9z7m1Mxm5MTnpC2tqse/2%3Falways-show-multimedia%3Dtrue"><code>KT1EpGgj…/2</code></a> , then there are a few <a href='https://twitter.com/TezteesOfficial'>TezTees</a> cards at <a href="https://tzcomet.io/#/token/KT1EpGgjQs73QfFJs9z7m1Mxm5MTnpC2tqse/16%3Falways-show-multimedia%3Dtrue"><code>KT1EpGgj…/16</code></a>.</li></ul></li><li>For demo/testing I've originated an FA2.py with a few tokens:<ul><li><a href="https://tzcomet.io/#/token/KT1RHSiA9vt9A7B9DupLKQw2Re8SH3QdsLmN/0%3Falways-show-multimedia%3Dtrue"><code>KT1RHSiA…/0</code></a> is a very-normal fungible token without multimedia.</li><li><a href="https://tzcomet.io/#/token/KT1RHSiA9vt9A7B9DupLKQw2Re8SH3QdsLmN/1%3Falways-show-multimedia%3Dtrue"><code>KT1RHSiA…/1</code></a> and <a href="https://tzcomet.io/#/token/KT1RHSiA9vt9A7B9DupLKQw2Re8SH3QdsLmN/2%3Falways-show-multimedia%3Dtrue"><code>KT1RHSiA…/2</code></a> have something wrong about them.</li><li><a href="https://tzcomet.io/#/token/KT1RHSiA9vt9A7B9DupLKQw2Re8SH3QdsLmN/3%3Falways-show-multimedia%3Dtrue"><code>KT1RHSiA…/3</code></a> stores the multimedia on-chain (instead of, e.g., IPFS) — <strong>please don&#39;t do that in production</strong> — TZComet fetches the whole content from a tezos-node, guesses its format, and displays it.</li></ul></li></ul><p>This is still a 100% OCaml project using the stack described
+<a href='https://discuss.ocaml.org/t/your-production-web-stack-in-2020/6691/10'>here</a>
+and discussed
+<a href='https://discuss.ocaml.org/t/jsoo-production-use-and-user-facing-applications-questions/7266/2?u=smondet'>here</a>.</p>
+<p>There are <a href='https://github.com/tqtezos/TZComet/issues'>issues</a> to work on (and
+many more to report).</p>
+ <div class="remark-block" style="margin: 4em 0 4em 0"><p><span class="hundred-days-heading">After <a href='https://seb.mondet.org/blog/'>8 years</a> of <em>blograstination</em>, this is post #12 of my attempt at using the <a href="https://100daystooffload.com/"><code>#100DaysToOffload</code></a> completely unrealistic “challenge” to remind me to write stuff once in a while … Won&#39;t lie, keeping <a href='https://seb.mondet.org/b/'>this</a> up is hard …</span></p></div></div></div></body></html>

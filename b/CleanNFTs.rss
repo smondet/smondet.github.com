@@ -3,8 +3,17 @@
  <channel><title>Seb's blog /b/</title>
   <description>Feed for tag “CleanNFTs”</description>
   <link>https://seb.mondet.org/b/</link>
-  <lastBuildDate>Thu, 25 Mar 2021 18:11:20 -0400</lastBuildDate>
-  <pubDate>Thu, 25 Mar 2021 18:11:20 -0400</pubDate>
+  <lastBuildDate>Fri, 26 Mar 2021 09:22:56 -0400</lastBuildDate>
+  <pubDate>Fri, 26 Mar 2021 09:22:56 -0400</pubDate>
   <!--RSS Feed for Seb's blog /b/-->
+  <item><title>TZComet's New Token Viewer</title>
+   <description>
+    TZComet and CleanNFT Metadata: a generic token-viewer ☄
+    Also new domain tzcomet.io 🌠
+   </description>
+   <link>https://seb.mondet.org/b/0012-tzcomet-token-viewer.html</link>
+   <guid>https://seb.mondet.org/b/0012-tzcomet-token-viewer.html</guid>
+   <pubDate>Fri, 26 Mar 2021 13:00:42 -0400</pubDate>
+  </item>
  </channel>
 </rss>
