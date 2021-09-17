@@ -1,65 +1,167 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"><head><title>Blog index</title><meta charset="utf-8"/></head><body><style>body {font-family: sans;max-width: 80ch;margin: auto;padding: 10px}blockquote {padding: 3px;border-left: solid #888 3px}details.details-inline {display: inline}details.details-inline[open] {display: block}details.module-menu { display: inline }
-details.module-menu[open] { display: block }.hundred-days-heading {font-style: italic}.tag-in-list-of-tags {font-family: monospace;color: #800}.remark-block {background-color: #f0f0f0;padding: 7px;margin: 0px;border: solid 2px #aaa;border-radius: 15px}h2 {color: #050;padding: 0px}.header-block {padding: 4px}.header-title {font-size: 300%;color: #050}.header-description {font-size: 120%;font-style: italic;color: #555}.header-metadata {margin-top: 1.5em;margin-bottom: 1em;font-size: 100%;padding: 10px;border-left: solid 5px #ccc}.header-author {font-weight: bold;display: block}.header-status {font-style: italic;display: block}.header-tags {display: block}.header-tags::before {content: '⏣ Tags: '}.header-tags::after {content: '.'}.post-status::before {content: '⏰ ';font-style: normal}.header-author::before {content: '✍ '}.header-social-links {display: block}.header-social-links::before {content: '🔗 '}.header-social-links::after {content: '.'}.header-license-badge {opacity: 0.6;display: block}.header-license-badge:hover {opacity: 0.9}.header-license-badge::before {content: '♲ ';opacity: 0.9}.code-block {background-color: #f0f0f0;padding: 2px 2px 2px 2px;border-radius: 4px}.index-item-bloc {margin: 1em 0em 1em 0em}
-code{white-space: pre-wrap;}
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 4px 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Blog Index</title>
+  <style>
+    html {
+      line-height: 1.5;
+      font-family: Georgia, serif;
+      font-size: 20px;
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      word-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 1em;
+      }
+    }
+    @media print {
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, 'Lucida Console', Consolas, monospace;
+      font-size: 85%;
+      margin: 0;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<style>
+body {
+    max-width: 50em;
+    font-family: sans;
+    padding-top: 1px;
 }
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-    color: #aaaaaa;
-  }
-pre.numberSource {
-  margin-left: 5ch;
-  border-left: 1px solid #aaaaaa;
-  padding-left: 2px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
-code span.al { color: #ff0000; } /* Alert */
-code span.an { color: #008000; } /* Annotation */
-code span.at { } /* Attribute */
-code span.bu { } /* BuiltIn */
-code span.cf { color: #0000ff; } /* ControlFlow */
-code span.ch { color: #008080; } /* Char */
-code span.cn { } /* Constant */
-code span.co { color: #008000; } /* Comment */
-code span.cv { color: #008000; } /* CommentVar */
-code span.do { color: #008000; } /* Documentation */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.im { } /* Import */
-code span.in { color: #008000; } /* Information */
-code span.kw { color: #0000ff; } /* Keyword */
-code span.op { } /* Operator */
-code span.ot { color: #ff4000; } /* Other */
-code span.pp { color: #ff4000; } /* Preprocessor */
-code span.sc { color: #008080; } /* SpecialChar */
-code span.ss { color: #008080; } /* SpecialString */
-code span.st { color: #008080; } /* String */
-code span.va { } /* Variable */
-code span.vs { color: #008080; } /* VerbatimString */
-code span.wa { color: #008000; font-weight: bold; } /* Warning */
-</style><div></div><div class="content"><div><section class="depth-2"><h2 id="40bd4a869826d6565b059b008dc53065">Some Blogging</h2><div class="section-content section-content-2"><div class="index-item-bloc"><i>2021-03-26:</i> <a href="0012-tzcomet-token-viewer.html"><b>TZComet's New Token Viewer</b></a>  — #012 in the <code>#100daystooffload</code> series: <div><p style="font-style: italic"><span>TZComet and CleanNFT Metadata: a generic token-viewer ☄</span><br/><span>Also new domain tzcomet.io 🌠</span></p><p>Tags: <span><span class="tag-in-list-of-tags">OCaml</span>, <span class="tag-in-list-of-tags">Tezos</span>, <span class="tag-in-list-of-tags">NFT</span>, <span class="tag-in-list-of-tags">CleanNFT</span>, <span class="tag-in-list-of-tags">CleanNFTs</span></span>.</p></div></div><hr/><div class="index-item-bloc"><i>2021-01-02:</i> <a href="0011-generic-multisig-pure-shell.html"><b>Calling The Generic Multisig In Pure Shell</b></a>  — #011 in the <code>#100daystooffload</code> series: <div><p style="font-style: italic"><span>Because search engines do not report enough PACK-ed and signed Michelson lambdas …</span></p><p>Tags: <span><span class="tag-in-list-of-tags">DailyHacks</span>, <span class="tag-in-list-of-tags">Tezos</span>, <span class="tag-in-list-of-tags">Michelson</span>, <span class="tag-in-list-of-tags">SmartContracts</span></span>.</p></div></div><hr/><div class="index-item-bloc"><i>2020-12-23:</i> <a href="0010-delphi-challenge-post-vivum.html"><b>How We Lost at The Delphi Oracle Challenge</b></a>  — #010 in the <code>#100daystooffload</code> series: <div><p style="font-style: italic"><span>Because the method — some messing around with the tezos-crypto library — could be useful to others.</span><br/><span>Also, some code annotated in SVG.</span></p><p>Tags: <span><span class="tag-in-list-of-tags">OCaml</span>, <span class="tag-in-list-of-tags">Tezos</span>, <span class="tag-in-list-of-tags">Michelson</span>, <span class="tag-in-list-of-tags">SmartContracts</span></span>.</p></div></div><hr/><div class="index-item-bloc"><i>2020-11-21:</i> <a href="0009-dune-universe-hack.html"><b>“Universal” Dune Tip: Rebuild Stuff, Sometimes</b></a>  — #009 in the <code>#100daystooffload</code> series: <div><p style="font-style: italic"><span>Quick hack to make “at most every n seconds” dune targets.</span></p><p>Tags: <span><span class="tag-in-list-of-tags">OCaml</span>, <span class="tag-in-list-of-tags">DailyHacks</span></span>.</p></div></div><hr/><div class="index-item-bloc"><i>2020-11-08:</i> <a href="0008-redirections-for-case-insensitivity.html"><b>Github-Pages Redirections — Case Insensitivity</b></a>  — #008 in the <code>#100daystooffload</code> series: <div><p style="font-style: italic"><span>Quick-hack: bringing some case-insensitivity to https://tqtezos.github.io/TZComet/</span></p><p>Tags: <span><span class="tag-in-list-of-tags">DailyHacks</span>, <span class="tag-in-list-of-tags">Tezos</span></span>.</p></div></div><hr/><div class="index-item-bloc"><i>2020-10-26:</i> <a href="0007-ocaml-2020-making-of.html"><b>SmartPy@OCaml2020: The Making Of</b></a>  — #007 in the <code>#100daystooffload</code> series: <div><p style="font-style: italic"><span>A quick experience report …</span><br/><span>Tools used for the paper, the slides, and the video.</span></p><p>Tags: <span><span class="tag-in-list-of-tags">OCaml</span>, <span class="tag-in-list-of-tags">DailyHacks</span>, <span class="tag-in-list-of-tags">SmartPy</span></span>.</p></div></div><hr/><div class="index-item-bloc"><i>2020-10-05:</i> <a href="0006-fa2-operator-set.html"><b>Lazy-set in FA2-SmartPy</b></a>  — #006 in the <code>#100daystooffload</code> series: <div><p style="font-style: italic"><span>Quick post detailing the use of “lazy-sets” in FA2-SmartPy.</span><br/><span>And trying to get back at the blog …</span></p><p>Tags: <span><span class="tag-in-list-of-tags">Tezos</span>, <span class="tag-in-list-of-tags">Michelson</span>, <span class="tag-in-list-of-tags">SmartContracts</span>, <span class="tag-in-list-of-tags">SmartPy</span></span>.</p></div></div><hr/><div class="index-item-bloc"><i>2020-07-16:</i> <a href="0005-hscrypt-website.html"><b>A Quick Website for HSCrypt</b></a>  — #005 in the <code>#100daystooffload</code> series: <div><p style="font-style: italic"><span>HSCrypt got a new small website with examples</span><br/><span>… an occasion to re-present this quick hack …</span></p><p>Tags: <span><span class="tag-in-list-of-tags">DailyHacks</span>, <span class="tag-in-list-of-tags">Privacy</span>, <span class="tag-in-list-of-tags">PGP</span></span>.</p></div></div><hr/><div class="index-item-bloc"><i>2020-07-03:</i> <a href="0004-adding-an-rss-feed.html"><b>Adding an RSS Feed to This Blog</b></a>  — #004 in the <code>#100daystooffload</code> series: <div><p style="font-style: italic"><span>Quick OCaml hack to generate some old-school XML.</span></p><p>Tags: <span><span class="tag-in-list-of-tags">OCaml</span>, <span class="tag-in-list-of-tags">DailyHacks</span></span>.</p></div></div><hr/><div class="index-item-bloc"><i>2020-06-28:</i> <a href="0003-ni3-jack-setup.html"><b>JackAudio Setup for NI3 Dance</b></a>  — #003 in the <code>#100daystooffload</code> series: <div><p style="font-style: italic"><span>A post that describes NI3 Dance's live software setup:</span><br/><span>All free and open-source software, MIDI and Audio routed with Jack.</span></p><p>Tags: <span><span class="tag-in-list-of-tags">NI3Dance</span>, <span class="tag-in-list-of-tags">JackAudio</span>, <span class="tag-in-list-of-tags">LinuxMusic</span></span>.</p></div></div><hr/><div class="index-item-bloc"><i>2020-06-23:</i> <a href="0002-michokit-codegen-intro.html"><b>Generating OCaml From Michelson Types</b></a>  — #002 in the <code>#100daystooffload</code> series: <div><p style="font-style: italic"><span>Statically typed interaction between smart contracts and application code:</span><br/><span>🖝 code-generator: Michelson-type → OCaml-modules</span></p><p>Tags: <span><span class="tag-in-list-of-tags">OCaml</span>, <span class="tag-in-list-of-tags">MetaProgramming</span>, <span class="tag-in-list-of-tags">Tezos</span>, <span class="tag-in-list-of-tags">Michelson</span>, <span class="tag-in-list-of-tags">SmartContracts</span></span>.</p></div></div><hr/><div class="index-item-bloc"><i>2020-06-20:</i> <a href="0001-comk-intro.html"><b>Comk: Graphical Menus In OCaml</b></a>  — #001 in the <code>#100daystooffload</code> series: <div><p style="font-style: italic"><span>Re-Introducing the Comk library:</span><br/><span>Making single-key and dmenu-like fast graphical menus with an OCaml EDSL.</span></p><p>Tags: <span><span class="tag-in-list-of-tags">OCaml</span>, <span class="tag-in-list-of-tags">DailyHacks</span>, <span class="tag-in-list-of-tags">Comk</span></span>.</p></div></div></div></section><section class="depth-2"><h2 id="RSS_Feeds">RSS Feeds</h2><div class="section-content section-content-2"><p><b>All posts:</b> <a href="./all-posts.rss"><code>all-posts.rss</code></a></p><p><b>Tags:</b> <a href="./CleanNFT.rss"><code>#CleanNFT</code></a>, <a href="./CleanNFTs.rss"><code>#CleanNFTs</code></a>, <a href="./Comk.rss"><code>#Comk</code></a>, <a href="./DailyHacks.rss"><code>#DailyHacks</code></a>, <a href="./JackAudio.rss"><code>#JackAudio</code></a>, <a href="./LinuxMusic.rss"><code>#LinuxMusic</code></a>, <a href="./MetaProgramming.rss"><code>#MetaProgramming</code></a>, <a href="./Michelson.rss"><code>#Michelson</code></a>, <a href="./NFT.rss"><code>#NFT</code></a>, <a href="./NI3Dance.rss"><code>#NI3Dance</code></a>, <a href="./OCaml.rss"><code>#OCaml</code></a>, <a href="./PGP.rss"><code>#PGP</code></a>, <a href="./Privacy.rss"><code>#Privacy</code></a>, <a href="./SmartContracts.rss"><code>#SmartContracts</code></a>, <a href="./SmartPy.rss"><code>#SmartPy</code></a>, <a href="./Tezos.rss"><code>#Tezos</code></a>.</p></div></section></div></div></body></html>
+pre {padding: 2px 0px 2px 0px}
+pre.sourceCode {background-color: #e5e5e5; padding: 4px}
+code { color: #400 }
+code.sourceCode { color: revert }
+a {color: #070}
+a:visited {color: #040}
+</style>
+<section class="depth-2"><h2 id="050d3070ddd6f0c988f85838688d1af8">Blog</h2><div class="section-content section-content-2"><div style="padding-bottom: 10px; border-bottom: 4px solid #777; margin-bottom: 15px"><div> <span style="color: #500; border: 2px solid #595; padding: 2px"><code>2021-09-17</code></span> <a href="0013-gcrypt-bad-signature-fix/index.html" style="color:#040"><b>Workaround For Git-Remote-Gcrypt's Bad Signature</b></a> </div><div style="color: #444"><p>Pretty niche, how to repair broken git-remote-gcrypt repositories …</p><p>Hope this helps anyway.</p></div><div>Tags: <span style="color: #500"><code>#PGP</code></span>, <span style="color: #500"><code>#DailyHacks</code></span></div></div><div style="padding-bottom: 10px; border-bottom: 4px solid #777; margin-bottom: 15px"><div> <span style="color: #500; border: 2px solid #595; padding: 2px"><code>2021-03-26</code></span> <a href="0012-tzcomet-token-viewer.html" style="color:#040"><b>TZComet's New Token Viewer</b></a> <span style="color:#777;font-size:85%">[<a href="https://twitter.com/smondet/status/1375439082206158850" style="color:#595">Tweet</a>|<a href="https://framapiaf.org/@smondet/105956318076813557" style="color:#595">Toot</a>]</span></div><div style="color: #444"><p>TZComet and CleanNFT Metadata: a generic token-viewer ☄</p><p>Also new domain tzcomet.io 🌠</p></div><div>Tags: <span style="color: #500"><code>#OCaml</code></span>, <span style="color: #500"><code>#Tezos</code></span>, <span style="color: #500"><code>#NFT</code></span>, <span style="color: #500"><code>#CleanNFT</code></span>, <span style="color: #500"><code>#CleanNFTs</code></span></div></div><div style="padding-bottom: 10px; border-bottom: 4px solid #777; margin-bottom: 15px"><div> <span style="color: #500; border: 2px solid #595; padding: 2px"><code>2021-01-02</code></span> <a href="0011-generic-multisig-pure-shell.html" style="color:#040"><b>Calling The Generic Multisig In Pure Shell</b></a> <span style="color:#777;font-size:85%">[<a href="https://twitter.com/smondet/status/1345465519005118464" style="color:#595">Tweet</a>|<a href="https://framapiaf.org/@smondet/105487991342125262" style="color:#595">Toot</a>]</span></div><div style="color: #444"><p>Because search engines do not report enough PACK-ed and signed Michelson lambdas …</p></div><div>Tags: <span style="color: #500"><code>#DailyHacks</code></span>, <span style="color: #500"><code>#Tezos</code></span>, <span style="color: #500"><code>#Michelson</code></span>, <span style="color: #500"><code>#SmartContracts</code></span></div></div><div style="padding-bottom: 10px; border-bottom: 4px solid #777; margin-bottom: 15px"><div> <span style="color: #500; border: 2px solid #595; padding: 2px"><code>2020-12-23</code></span> <a href="0010-delphi-challenge-post-vivum.html" style="color:#040"><b>How We Lost at The Delphi Oracle Challenge</b></a> <span style="color:#777;font-size:85%">[<a href="https://twitter.com/smondet/status/1341934992293842946" style="color:#595">Tweet</a>|<a href="https://framapiaf.org/@smondet/105432829287312548" style="color:#595">Toot</a>]</span></div><div style="color: #444"><p>Because the method — some messing around with the tezos-crypto library — could be useful to others.</p><p>Also, some code annotated in SVG.</p></div><div>Tags: <span style="color: #500"><code>#OCaml</code></span>, <span style="color: #500"><code>#Tezos</code></span>, <span style="color: #500"><code>#Michelson</code></span>, <span style="color: #500"><code>#SmartContracts</code></span></div></div><div style="padding-bottom: 10px; border-bottom: 4px solid #777; margin-bottom: 15px"><div> <span style="color: #500; border: 2px solid #595; padding: 2px"><code>2020-11-21</code></span> <a href="0009-dune-universe-hack.html" style="color:#040"><b>“Universal” Dune Tip: Rebuild Stuff, Sometimes</b></a> <span style="color:#777;font-size:85%">[<a href="https://twitter.com/smondet/status/1330258085374550027" style="color:#595">Tweet</a>|<a href="https://framapiaf.org/@smondet/105250359942284442" style="color:#595">Toot</a>]</span></div><div style="color: #444"><p>Quick hack to make “at most every n seconds” dune targets.</p></div><div>Tags: <span style="color: #500"><code>#OCaml</code></span>, <span style="color: #500"><code>#DailyHacks</code></span></div></div><div style="padding-bottom: 10px; border-bottom: 4px solid #777; margin-bottom: 15px"><div> <span style="color: #500; border: 2px solid #595; padding: 2px"><code>2020-11-08</code></span> <a href="0008-redirections-for-case-insensitivity.html" style="color:#040"><b>Github-Pages Redirections — Case Insensitivity</b></a> <span style="color:#777;font-size:85%">[<a href="https://twitter.com/smondet/status/1325630305672290305" style="color:#595">Tweet</a>|<a href="https://framapiaf.org/@smondet/105178064901635146" style="color:#595">Toot</a>]</span></div><div style="color: #444"><p>Quick-hack: bringing some case-insensitivity to https://tqtezos.github.io/TZComet/</p></div><div>Tags: <span style="color: #500"><code>#DailyHacks</code></span>, <span style="color: #500"><code>#Tezos</code></span></div></div><div style="padding-bottom: 10px; border-bottom: 4px solid #777; margin-bottom: 15px"><div> <span style="color: #500; border: 2px solid #595; padding: 2px"><code>2020-10-26</code></span> <a href="0007-ocaml-2020-making-of.html" style="color:#040"><b>SmartPy@OCaml2020: The Making Of</b></a> <span style="color:#777;font-size:85%">[<a href="https://twitter.com/smondet/status/1320920390433230854" style="color:#595">Tweet</a>|<a href="https://framapiaf.org/@smondet/105104473963659085" style="color:#595">Toot</a>]</span></div><div style="color: #444"><p>A quick experience report …</p><p>Tools used for the paper, the slides, and the video.</p></div><div>Tags: <span style="color: #500"><code>#OCaml</code></span>, <span style="color: #500"><code>#DailyHacks</code></span>, <span style="color: #500"><code>#SmartPy</code></span></div></div><div style="padding-bottom: 10px; border-bottom: 4px solid #777; margin-bottom: 15px"><div> <span style="color: #500; border: 2px solid #595; padding: 2px"><code>2020-10-05</code></span> <a href="0006-fa2-operator-set.html" style="color:#040"><b>Lazy-set in FA2-SmartPy</b></a> <span style="color:#777;font-size:85%">[<a href="https://twitter.com/smondet/status/1313297198835281920" style="color:#595">Tweet</a>|<a href="https://framapiaf.org/@smondet/104985359689713666" style="color:#595">Toot</a>]</span></div><div style="color: #444"><p>Quick post detailing the use of “lazy-sets” in FA2-SmartPy.</p><p>And trying to get back at the blog …</p></div><div>Tags: <span style="color: #500"><code>#Tezos</code></span>, <span style="color: #500"><code>#Michelson</code></span>, <span style="color: #500"><code>#SmartContracts</code></span>, <span style="color: #500"><code>#SmartPy</code></span></div></div><div style="padding-bottom: 10px; border-bottom: 4px solid #777; margin-bottom: 15px"><div> <span style="color: #500; border: 2px solid #595; padding: 2px"><code>2020-07-16</code></span> <a href="0005-hscrypt-website.html" style="color:#040"><b>A Quick Website for HSCrypt</b></a> <span style="color:#777;font-size:85%">[<a href="https://twitter.com/smondet/status/1283905256435392512" style="color:#595">Tweet</a>|<a href="https://framapiaf.org/@smondet/104526105608311319" style="color:#595">Toot</a>]</span></div><div style="color: #444"><p>HSCrypt got a new small website with examples</p><p>… an occasion to re-present this quick hack …</p></div><div>Tags: <span style="color: #500"><code>#DailyHacks</code></span>, <span style="color: #500"><code>#Privacy</code></span>, <span style="color: #500"><code>#PGP</code></span></div></div><div style="padding-bottom: 10px; border-bottom: 4px solid #777; margin-bottom: 15px"><div> <span style="color: #500; border: 2px solid #595; padding: 2px"><code>2020-07-03</code></span> <a href="0004-adding-an-rss-feed.html" style="color:#040"><b>Adding an RSS Feed to This Blog</b></a> <span style="color:#777;font-size:85%">[<a href="https://twitter.com/smondet/status/1279086294266675200" style="color:#595">Tweet</a>|<a href="https://framapiaf.org/@smondet/104450814588010085" style="color:#595">Toot</a>]</span></div><div style="color: #444"><p>Quick OCaml hack to generate some old-school XML.</p></div><div>Tags: <span style="color: #500"><code>#OCaml</code></span>, <span style="color: #500"><code>#DailyHacks</code></span></div></div><div style="padding-bottom: 10px; border-bottom: 4px solid #777; margin-bottom: 15px"><div> <span style="color: #500; border: 2px solid #595; padding: 2px"><code>2020-06-28</code></span> <a href="0003-ni3-jack-setup.html" style="color:#040"><b>JackAudio Setup for NI3 Dance</b></a> <span style="color:#777;font-size:85%">[<a href="https://framapiaf.org/@smondet/104422914291745581" style="color:#595">Toot</a>|<a href="https://twitter.com/smondet/status/1277300700914081792" style="color:#595">Tweet</a>]</span></div><div style="color: #444"><p>A post that describes NI3 Dance's live software setup:</p><p>All free and open-source software, MIDI and Audio routed with Jack.</p></div><div>Tags: <span style="color: #500"><code>#NI3Dance</code></span>, <span style="color: #500"><code>#JackAudio</code></span>, <span style="color: #500"><code>#LinuxMusic</code></span></div></div><div style="padding-bottom: 10px; border-bottom: 4px solid #777; margin-bottom: 15px"><div> <span style="color: #500; border: 2px solid #595; padding: 2px"><code>2020-06-23</code></span> <a href="0002-michokit-codegen-intro.html" style="color:#040"><b>Generating OCaml From Michelson Types</b></a> <span style="color:#777;font-size:85%">[<a href="https://twitter.com/smondet/status/1275621334895202304" style="color:#595">Tweet</a>|<a href="https://framapiaf.org/@smondet/104396675363759407" style="color:#595">Toot</a>]</span></div><div style="color: #444"><p>Statically typed interaction between smart contracts and application code:</p><p>🖝 code-generator: Michelson-type → OCaml-modules</p></div><div>Tags: <span style="color: #500"><code>#OCaml</code></span>, <span style="color: #500"><code>#MetaProgramming</code></span>, <span style="color: #500"><code>#Tezos</code></span>, <span style="color: #500"><code>#Michelson</code></span>, <span style="color: #500"><code>#SmartContracts</code></span></div></div><div style="padding-bottom: 10px; border-bottom: 4px solid #777; margin-bottom: 15px"><div> <span style="color: #500; border: 2px solid #595; padding: 2px"><code>2020-06-20</code></span> <a href="0001-comk-intro.html" style="color:#040"><b>Comk: Graphical Menus In OCaml</b></a> <span style="color:#777;font-size:85%">[<a href="https://framapiaf.org/@smondet/104377958535028399" style="color:#595">Toot</a>|<a href="https://twitter.com/smondet/status/1274424051340115969" style="color:#595">Tweet</a>|<a href="https://reddit.com/r/ocaml/comments/hcw9s5/comk_graphical_menus_in_ocaml/" style="color:#595">Reddit</a>]</span></div><div style="color: #444"><p>Re-Introducing the Comk library:</p><p>Making single-key and dmenu-like fast graphical menus with an OCaml EDSL.</p></div><div>Tags: <span style="color: #500"><code>#OCaml</code></span>, <span style="color: #500"><code>#DailyHacks</code></span>, <span style="color: #500"><code>#Comk</code></span></div></div></div></section><section class="depth-1"><h1 id="ab5d8fc580d8626c672c72f2b0cb1348">RSS Feeds</h1><div class="section-content section-content-1"><p><b>All Posts:</b></p> <a href="all-posts.rss" style="color:#040"><code>all-posts.rss</code></a></div></section><p><b>Tags:</b></p> <a href="./CleanNFT.rss" style="color:#040"><code>#CleanNFT</code></a>, <a href="./CleanNFTs.rss" style="color:#040"><code>#CleanNFTs</code></a>, <a href="./Comk.rss" style="color:#040"><code>#Comk</code></a>, <a href="./DailyHacks.rss" style="color:#040"><code>#DailyHacks</code></a>, <a href="./JackAudio.rss" style="color:#040"><code>#JackAudio</code></a>, <a href="./LinuxMusic.rss" style="color:#040"><code>#LinuxMusic</code></a>, <a href="./MetaProgramming.rss" style="color:#040"><code>#MetaProgramming</code></a>, <a href="./Michelson.rss" style="color:#040"><code>#Michelson</code></a>, <a href="./NFT.rss" style="color:#040"><code>#NFT</code></a>, <a href="./NI3Dance.rss" style="color:#040"><code>#NI3Dance</code></a>, <a href="./OCaml.rss" style="color:#040"><code>#OCaml</code></a>, <a href="./PGP.rss" style="color:#040"><code>#PGP</code></a>, <a href="./Privacy.rss" style="color:#040"><code>#Privacy</code></a>, <a href="./SmartContracts.rss" style="color:#040"><code>#SmartContracts</code></a>, <a href="./SmartPy.rss" style="color:#040"><code>#SmartPy</code></a>, <a href="./Tezos.rss" style="color:#040"><code>#Tezos</code></a>
+</body>
+</html>

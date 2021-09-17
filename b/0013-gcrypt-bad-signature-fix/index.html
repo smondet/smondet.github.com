@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Workaround For Git-Remote-Gcrypt's Bad Signature</title>
+  <style>
+    html {
+      line-height: 1.5;
+      font-family: Georgia, serif;
+      font-size: 20px;
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      word-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 1em;
+      }
+    }
+    @media print {
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, 'Lucida Console', Consolas, monospace;
+      font-size: 85%;
+      margin: 0;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<style>
+body {
+    max-width: 50em;
+    font-family: sans;
+    padding-top: 1px;
+}
+pre {padding: 2px 0px 2px 0px}
+pre.sourceCode {background-color: #e5e5e5; padding: 4px}
+code { color: #400 }
+code.sourceCode { color: revert }
+a {color: #070}
+a:visited {color: #040}
+</style><div style="font-size:80%;border:2px solid #494;padding:4px"><a href="https://seb.mondet.org">seb.mondet.org</a> | <a href="../index.html">blog-index</a></div><h1 style="color: #040">Workaround For Git-Remote-Gcrypt's Bad Signature</h1><div style="color:#777;font-style:italic"><div>Pretty niche, how to repair broken git-remote-gcrypt repositories …</div><div>Hope this helps anyway.</div></div><div class="post-metadaa" style="padding:10px 0px 10px 10px;margin-top:30px;margin-bottom:50px;border-left:4px solid #999;font-size:80%"><div><span style="width:1.4em;display:inline-block;text-align:center">⏰</span><i>Date: Fri, 17 Sep 2021.</i></div><span style="width:1.4em;display:inline-block;text-align:center">♲</span><a href="http://creativecommons.org/licenses/by/4.0/"><img src="https://i.creativecommons.org/l/by/4.0/80x15.png" alt="Creative Commons License: CC-By"/></a><div><span style="width:1.4em;display:inline-block;text-align:center">🗄</span>Tags: <span style="color:#400"><code>#PGP</code></span>, <span style="color:#400"><code>#DailyHacks</code></span>.</div><div><span style="width:1.4em;display:inline-block;text-align:center">🔗</span>Ø</div></div>
+<p>I recently switched a repository from <a href="https://github.com/glassroom/git-gpg/">git-gpg</a> to <a href="https://github.com/spwhitton/git-remote-gcrypt">git-remote-grcypt</a>, one of the reasons being better support by <a href="https://git-annex.branchable.com/tips/fully_encrypted_git_repositories_with_gcrypt/">git-annex</a> (so yes, that makes up a <code>gcrypt::rsync://</code> git-remote for a <code>git-annex</code> repository, that itself saves encrypted blobs with git-annex <a href="https://git-annex.branchable.com/special_remotes/">special remotes</a> … because <em>why not</em>).</p>
+<p>A problem I have, is that once in a while a random <code>pull</code> or <code>push</code> operation fails with the quite frustrating:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>| gcrypt: Decrypting manifest</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>| gpg: Signature made Thu 04 Sep 2021 08:59:18 AM EDT</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>| gpg:                using RSA key DEADBEEF122345678DEADBEEF122345678</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>| gpg: BAD signature from &quot;Yours Trully &lt;yours.truly@example.com&gt;&quot; [ultimate]</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>| gcrypt: Failed to decrypt manifest!</span></code></pre></div>
+<p>I haven't yet managed to fully fix it (my current guess is that git-annex is trying to do too many things concurrently), but at least <span id="gcrypt-signature-fix" 
+style="color: #600; background-color: #dd0; padding: 3px"> <b>I managed to repair it!</b> </span></p>
+<p>I didn't find any significant help online and, of course, “bad signatures” should not just be dismissed, but in the meantime, here is the workaround in case it helps:</p>
+<p>We find the manifest's filename from the <code>git-remote-gcrypt</code> script itself:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a> <span class="ex">$</span> grep <span class="at">-E</span> ^Manifestfile <span class="va">$gcrypt_remote_script</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="va">Manifestfile</span><span class="op">=</span>91bd0c092128cf2e60e1a608c31e92caf1f9c1595f83f2890ef17c0e4881aa0a</span></code></pre></div>
+<p>(in my case <code>$gcrypt_remote_script</code> is <code>"/nix/store/0wdr7av1zwbb2354a0rakl5rr156r0y7-git-remote-gcrypt-1.4/bin/.git-remote-gcrypt-wrapped"</code> but it is also on <a href="https://github.com/spwhitton/git-remote-gcrypt/blob/master/git-remote-gcrypt#L33">GitHub</a>).</p>
+<p>Then, basically, get it, decrypt it, and re-encrypt it:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a> <span class="ex">$</span> scp <span class="va">$git_host</span>/<span class="va">$gcrypt_repo</span>/<span class="va">$Manifestfile</span> .</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a> <span class="ex">$</span> gpg <span class="at">-d</span> <span class="va">$Manifestfile</span> <span class="op">&gt;</span> manifest-decrypted</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a> <span class="ex">$</span> gpg <span class="at">--encrypt</span> <span class="at">-r</span> yours.truly@example.com <span class="dt">\</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">-u</span> yours.truly@example.com <span class="at">--sign</span> manifest-decrypted</span></code></pre></div>
+<p>Worth checking that the new signature is good with <code>gpg -d manifest-decrypted.gpg</code>.</p>
+<p>Then, just put it back:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a> <span class="ex">$</span> scp manifest-decrypted.gpg <span class="va">$git_host</span>:<span class="va">$gcrypt_repo</span>/<span class="va">$Manifestfile</span></span></code></pre></div>
+<p>⇒ (Small) Victory! We can push/pull again, and go back to trying to understand the actual problem.</p>
+</body>
+</html>
