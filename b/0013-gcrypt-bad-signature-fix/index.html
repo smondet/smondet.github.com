@@ -234,6 +234,11 @@ a:visited {color: #040}
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>| gcrypt: Failed to decrypt manifest!</span></code></pre></div>
 <p>I haven't yet managed to fully fix it (my current guess is that git-annex is trying to do too many things concurrently), but at least <span id="gcrypt-signature-fix" 
 style="color: #600; background-color: #dd0; padding: 3px"> <b>I managed to repair it!</b> </span></p>
+<div style="border: 3px solid #bbb; padding: 5px; margin: 5px 15px 5px 15px; color: #333">
+
+<p><em>Addendum — Sat, 02 Oct 2021:</em> Indeed the problem seems to come from concurrency, I've been running <code>git-annex-sync</code> with <code>--jobs=1</code> for more than 10 days and I haven't seen the “bad signature” error.</p>
+</div>
+
 <p>I didn't find any significant help online and, of course, “bad signatures” should not just be dismissed, but in the meantime, here is the workaround in case it helps:</p>
 <p>We find the manifest's filename from the <code>git-remote-gcrypt</code> script itself:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a> <span class="ex">$</span> grep <span class="at">-E</span> ^Manifestfile <span class="va">$gcrypt_remote_script</span></span>
