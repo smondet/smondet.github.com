@@ -3,8 +3,8 @@
  <channel><title>Seb's blog /b/</title>
   <description>Feed for tag “OCaml”</description>
   <link>https://seb.mondet.org/b/</link>
-  <lastBuildDate>Sat, 02 Oct 2021 10:09:53 -0400</lastBuildDate>
-  <pubDate>Sat, 02 Oct 2021 10:09:53 -0400</pubDate>
+  <lastBuildDate>Thu, 05 Jan 2023 17:29:40 -0500</lastBuildDate>
+  <pubDate>Thu, 05 Jan 2023 17:29:40 -0500</pubDate>
   <!--RSS Feed for Seb's blog /b/-->
   <item><title>Comk: Graphical Menus In OCaml</title>
    <description>
@@ -12,7 +12,7 @@
     Making single-key and dmenu-like fast graphical menus with an OCaml EDSL.
    </description><link>https://seb.mondet.org/b/0001-comk-intro.html</link>
    <guid>https://seb.mondet.org/b/0001-comk-intro.html</guid>
-   <pubDate>Sat, 20 Jun 2020 13:00:42 -0400</pubDate>
+   <pubDate>Fri, 19 Jun 2020 13:00:42 -0400</pubDate>
   </item>
   <item><title>Generating OCaml From Michelson Types</title>
    <description>
@@ -22,14 +22,14 @@
    </description>
    <link>https://seb.mondet.org/b/0002-michokit-codegen-intro.html</link>
    <guid>https://seb.mondet.org/b/0002-michokit-codegen-intro.html</guid>
-   <pubDate>Tue, 23 Jun 2020 13:00:42 -0400</pubDate>
+   <pubDate>Mon, 22 Jun 2020 13:00:42 -0400</pubDate>
   </item>
   <item><title>Adding an RSS Feed to This Blog</title>
    <description>Quick OCaml hack to generate some old-school XML.
    </description>
    <link>https://seb.mondet.org/b/0004-adding-an-rss-feed.html</link>
    <guid>https://seb.mondet.org/b/0004-adding-an-rss-feed.html</guid>
-   <pubDate>Fri, 3 Jul 2020 13:00:42 -0400</pubDate>
+   <pubDate>Thu, 2 Jul 2020 13:00:42 -0400</pubDate>
   </item>
   <item><title>SmartPy@OCaml2020: The Making Of</title>
    <description>
@@ -38,7 +38,7 @@
    </description>
    <link>https://seb.mondet.org/b/0007-ocaml-2020-making-of.html</link>
    <guid>https://seb.mondet.org/b/0007-ocaml-2020-making-of.html</guid>
-   <pubDate>Mon, 26 Oct 2020 13:00:42 -0400</pubDate>
+   <pubDate>Sun, 25 Oct 2020 13:00:42 -0400</pubDate>
   </item>
   <item><title>“Universal” Dune Tip: Rebuild Stuff, Sometimes</title>
    <description>
@@ -46,7 +46,7 @@
    </description>
    <link>https://seb.mondet.org/b/0009-dune-universe-hack.html</link>
    <guid>https://seb.mondet.org/b/0009-dune-universe-hack.html</guid>
-   <pubDate>Sat, 21 Nov 2020 13:00:42 -0400</pubDate>
+   <pubDate>Fri, 20 Nov 2020 13:00:42 -0400</pubDate>
   </item>
   <item><title>How We Lost at The Delphi Oracle Challenge</title>
    <description>
@@ -57,7 +57,7 @@
    <link>https://seb.mondet.org/b/0010-delphi-challenge-post-vivum.html
    </link>
    <guid>https://seb.mondet.org/b/0010-delphi-challenge-post-vivum.html
-   </guid><pubDate>Wed, 23 Dec 2020 13:00:42 -0400</pubDate>
+   </guid><pubDate>Tue, 22 Dec 2020 13:00:42 -0400</pubDate>
   </item>
   <item><title>TZComet's New Token Viewer</title>
    <description>
@@ -66,7 +66,7 @@
    </description>
    <link>https://seb.mondet.org/b/0012-tzcomet-token-viewer.html</link>
    <guid>https://seb.mondet.org/b/0012-tzcomet-token-viewer.html</guid>
-   <pubDate>Fri, 26 Mar 2021 13:00:42 -0400</pubDate>
+   <pubDate>Thu, 25 Mar 2021 13:00:42 -0400</pubDate>
   </item>
  </channel>
 </rss>

@@ -3,8 +3,8 @@
  <channel><title>Seb's blog /b/</title>
   <description>Feed for tag “Tezos”</description>
   <link>https://seb.mondet.org/b/</link>
-  <lastBuildDate>Sat, 02 Oct 2021 10:09:53 -0400</lastBuildDate>
-  <pubDate>Sat, 02 Oct 2021 10:09:53 -0400</pubDate>
+  <lastBuildDate>Thu, 05 Jan 2023 17:29:40 -0500</lastBuildDate>
+  <pubDate>Thu, 05 Jan 2023 17:29:40 -0500</pubDate>
   <!--RSS Feed for Seb's blog /b/-->
   <item><title>Generating OCaml From Michelson Types</title>
    <description>
@@ -14,7 +14,7 @@
    </description>
    <link>https://seb.mondet.org/b/0002-michokit-codegen-intro.html</link>
    <guid>https://seb.mondet.org/b/0002-michokit-codegen-intro.html</guid>
-   <pubDate>Tue, 23 Jun 2020 13:00:42 -0400</pubDate>
+   <pubDate>Mon, 22 Jun 2020 13:00:42 -0400</pubDate>
   </item>
   <item><title>Lazy-set in FA2-SmartPy</title>
    <description>
@@ -23,7 +23,7 @@
    </description>
    <link>https://seb.mondet.org/b/0006-fa2-operator-set.html</link>
    <guid>https://seb.mondet.org/b/0006-fa2-operator-set.html</guid>
-   <pubDate>Mon, 5 Oct 2020 13:00:42 -0400</pubDate>
+   <pubDate>Sun, 4 Oct 2020 13:00:42 -0400</pubDate>
   </item>
   <item><title>Github-Pages Redirections — Case Insensitivity</title>
    <description>
@@ -35,7 +35,7 @@
    </link>
    <guid>
     https://seb.mondet.org/b/0008-redirections-for-case-insensitivity.html
-   </guid><pubDate>Sun, 8 Nov 2020 13:00:42 -0400</pubDate>
+   </guid><pubDate>Sat, 7 Nov 2020 13:00:42 -0400</pubDate>
   </item>
   <item><title>How We Lost at The Delphi Oracle Challenge</title>
    <description>
@@ -46,7 +46,7 @@
    <link>https://seb.mondet.org/b/0010-delphi-challenge-post-vivum.html
    </link>
    <guid>https://seb.mondet.org/b/0010-delphi-challenge-post-vivum.html
-   </guid><pubDate>Wed, 23 Dec 2020 13:00:42 -0400</pubDate>
+   </guid><pubDate>Tue, 22 Dec 2020 13:00:42 -0400</pubDate>
   </item>
   <item><title>Calling The Generic Multisig In Pure Shell</title>
    <description>
@@ -56,7 +56,7 @@
    <link>https://seb.mondet.org/b/0011-generic-multisig-pure-shell.html
    </link>
    <guid>https://seb.mondet.org/b/0011-generic-multisig-pure-shell.html
-   </guid><pubDate>Sat, 2 Jan 2021 13:00:42 -0400</pubDate>
+   </guid><pubDate>Fri, 1 Jan 2021 13:00:42 -0400</pubDate>
   </item>
   <item><title>TZComet's New Token Viewer</title>
    <description>
@@ -65,7 +65,7 @@
    </description>
    <link>https://seb.mondet.org/b/0012-tzcomet-token-viewer.html</link>
    <guid>https://seb.mondet.org/b/0012-tzcomet-token-viewer.html</guid>
-   <pubDate>Fri, 26 Mar 2021 13:00:42 -0400</pubDate>
+   <pubDate>Thu, 25 Mar 2021 13:00:42 -0400</pubDate>
   </item>
  </channel>
 </rss>

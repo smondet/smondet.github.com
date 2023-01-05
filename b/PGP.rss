@@ -3,8 +3,8 @@
  <channel><title>Seb's blog /b/</title>
   <description>Feed for tag “PGP”</description>
   <link>https://seb.mondet.org/b/</link>
-  <lastBuildDate>Sat, 02 Oct 2021 10:09:53 -0400</lastBuildDate>
-  <pubDate>Sat, 02 Oct 2021 10:09:53 -0400</pubDate>
+  <lastBuildDate>Thu, 05 Jan 2023 17:29:40 -0500</lastBuildDate>
+  <pubDate>Thu, 05 Jan 2023 17:29:40 -0500</pubDate>
   <!--RSS Feed for Seb's blog /b/-->
   <item><title>A Quick Website for HSCrypt</title>
    <description>
@@ -13,7 +13,7 @@
    </description>
    <link>https://seb.mondet.org/b/0005-hscrypt-website.html</link>
    <guid>https://seb.mondet.org/b/0005-hscrypt-website.html</guid>
-   <pubDate>Thu, 16 Jul 2020 13:00:42 -0400</pubDate>
+   <pubDate>Wed, 15 Jul 2020 13:00:42 -0400</pubDate>
   </item>
   <item><title>Workaround For Git-Remote-Gcrypt's Bad Signature</title>
    <description>
